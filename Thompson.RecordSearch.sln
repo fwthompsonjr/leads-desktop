@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thompson.RecordSearch.Utility", "Thompson.RecordSearch.Utility\Thompson.RecordSearch.Utility.csproj", "{B33E0015-DC54-4C71-BB13-038D46748EE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thompson.RecordSearch.Utility.Tests", "Thompson.RecordSearch.Utility.Tests\Thompson.RecordSearch.Utility.Tests.csproj", "{772888D9-7ECB-4116-9BA5-9E32AD7BBAAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C68AF7EF-946E-412F-895D-97D403F84ED9}"
+	ProjectSection(SolutionItems) = preProject
+		app.config = app.config
+		Shared\basAddress.bas.txt = Shared\basAddress.bas.txt
+		Shared\basCommon.bas.txt = Shared\basCommon.bas.txt
+		Shared\basPeople.bas.txt = Shared\basPeople.bas.txt
+		Shared\basTest.bas.txt = Shared\basTest.bas.txt
+		Shared\caselayout.xml = Shared\caselayout.xml
+		Shared\chromedriver.exe = Shared\chromedriver.exe
+		Shared\collinCountyCaseType.json = Shared\collinCountyCaseType.json
+		Shared\collinCountyMapping_1.json = Shared\collinCountyMapping_1.json
+		Shared\collinCountyUserMap.json = Shared\collinCountyUserMap.json
+		Shared\CourtRecordSearch.xlsm = Shared\CourtRecordSearch.xlsm
+		Shared\denton-settings.json = Shared\denton-settings.json
+		Shared\dentonCountyCaseType.json = Shared\dentonCountyCaseType.json
+		Shared\dentonDistrictCaseType.json = Shared\dentonDistrictCaseType.json
+		Shared\ExpectedConditions.cs = Shared\ExpectedConditions.cs
+		mail_settings.json = mail_settings.json
+		mail_settings.xml = mail_settings.xml
+		MailRepository.cs = MailRepository.cs
+		MailSettingReader.cs = MailSettingReader.cs
+		rsearch_validation.json = rsearch_validation.json
+		Shared\settings.xml = Shared\settings.xml
+		Shared\tarrantCountyCaseType.json = Shared\tarrantCountyCaseType.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalLead.PublicData.Search", "LegalLead.PublicData.Search\LegalLead.PublicData.Search.csproj", "{FDC972D5-85CC-418C-A08B-D2BD940D9A35}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B33E0015-DC54-4C71-BB13-038D46748EE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33E0015-DC54-4C71-BB13-038D46748EE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33E0015-DC54-4C71-BB13-038D46748EE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33E0015-DC54-4C71-BB13-038D46748EE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{772888D9-7ECB-4116-9BA5-9E32AD7BBAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{772888D9-7ECB-4116-9BA5-9E32AD7BBAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{772888D9-7ECB-4116-9BA5-9E32AD7BBAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{772888D9-7ECB-4116-9BA5-9E32AD7BBAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDC972D5-85CC-418C-A08B-D2BD940D9A35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDC972D5-85CC-418C-A08B-D2BD940D9A35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDC972D5-85CC-418C-A08B-D2BD940D9A35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDC972D5-85CC-418C-A08B-D2BD940D9A35}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
+		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
+	EndGlobalSection
+EndGlobal

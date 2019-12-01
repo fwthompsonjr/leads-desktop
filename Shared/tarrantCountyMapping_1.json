@@ -1,0 +1,113 @@
+{
+  "steps": [
+    {
+      "actionName": "navigate",
+      "displayName": "open-website-base-uri",
+      "wait": 1200,
+      "locator": {
+        "find": "page",
+        "query": "https://odyssey.tarrantcounty.com/PublicAccess/default.aspx"
+      }
+    },
+    {
+      "actionName": "exists",
+      "displayName": "case-type-selector",
+      "locator": {
+        "find": "css",
+        "query": "#sbxControlID2"
+      }
+    },
+    {
+      "actionName": "set-select-value",
+      "displayName": "case-type-selector",
+      "expectedValue": "1",
+      "locator": {
+        "find": "css",
+        "query": "#sbxControlID2"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "case-records-hyperlink",
+      "expectedValue": "Case Records Search",
+      "locator": {
+        "find": "xpath",
+        "query": "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[2]"
+      }
+    },
+    {
+      "actionName": "exists",
+      "displayName": "search-by-selector",
+      "locator": {
+        "find": "css",
+        "query": "#SearchBy"
+      }
+    },
+    {
+      "actionName": "set-select-value",
+      "displayName": "case-type-search",
+      "expectedValue": "3",
+      "locator": {
+        "find": "css",
+        "query": "#SearchBy"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "case-type-search",
+      "locator": {
+        "find": "css",
+        "query": "#SearchBy"
+      }
+    },
+    {
+      "actionName": "send-key",
+      "displayName": "case-type-search",
+      "expaectedValue": "K",
+      "locator": {
+        "find": "css",
+        "query": "#SearchBy"
+      }
+    },
+    {
+      "actionName": "set-text",
+      "displayName": "startDate",
+      "locator": {
+        "find": "css",
+        "query": "#DateFiledOnAfter"
+      }
+    },
+    {
+      "actionName": "set-text",
+      "displayName": "endDate",
+      "locator": {
+        "find": "css",
+        "query": "#DateFiledOnBefore"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "submit-button",
+      "locator": {
+        "find": "css",
+        "query": "#SearchSubmit"
+      }
+    },
+    {
+      "actionName": "break-point-ignore",
+      "displayName": "submit-button",
+      "locator": {
+        "find": "css",
+        "query": "#SearchSubmit"
+      }
+    },
+    {
+      "actionName": "get-table-html",
+      "displayName": "get-case-data-table",
+      "locator": {
+        "find": "xpath",
+        "query": "/html/body/table[4]"
+      }
+    }
+  ]
+}

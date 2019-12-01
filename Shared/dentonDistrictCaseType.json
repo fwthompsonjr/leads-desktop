@@ -1,0 +1,75 @@
+{
+  "dropDowns": [
+    {
+      "id": 0,
+      "name": "criminal courts",
+      "query": "#sbxControlID2",
+      "options": [
+        {
+          "id": 1,
+          "name": "All District Courts"
+        },
+        {
+          "id": 2,
+          "name": "16th Judicial District Court"
+        },
+        {
+          "id": 3,
+          "name": "158th Judicial District Court"
+        },
+        {
+          "id": 4,
+          "name": "211th Judicial District Court"
+        },
+        {
+          "id": 5,
+          "name": "362nd Judicial District Court"
+        },
+        {
+          "id": 6,
+          "name": "367th Judicial District Court"
+        },
+        {
+          "id": 7,
+          "name": "393rd Judicial District Court"
+        },
+        {
+          "id": 8,
+          "name": "431st Judicial District Court"
+        },
+        {
+          "id": 9,
+          "name": "442nd Judicial District Court"
+        },
+        {
+          "id": 10,
+          "name": "462nd Judicial District Court"
+        },
+        {
+          "id": 11,
+          "name": "County Court At Law #2 - BF"
+        },
+        {
+          "id": 12,
+          "name": "County Criminal Court No. 3-F"
+        },
+        {
+          "id": 13,
+          "name": "County Criminal Court No. 5-F"
+        }
+      ]
+    }
+  ],
+  "caseSearchTypes": [
+    {
+      "id": 0,
+      "name": "District Clerk Criminal Case Records",
+      "query": "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[1]"
+    },
+    {
+      "id": 1,
+      "name": "District Clerk Civil & Family Case Records",
+      "query": "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[2]"
+    }
+  ]
+}

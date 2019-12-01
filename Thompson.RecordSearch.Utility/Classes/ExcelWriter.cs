@@ -1,0 +1,198 @@
+﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Xml;
+using Thompson.RecordSearch.Utility.Interfaces;
+using Thompson.RecordSearch.Utility.Models;
+
+namespace Thompson.RecordSearch.Utility.Classes
+{
+    public class ExcelWriter
+    {
+        private IExcelFileWriter _fileWriter;
+        private IExcelFileWriter FileWriter
+        {
+            get { return _fileWriter ?? (_fileWriter = new ExcelFileWriter()); }
+            set { _fileWriter = value; }
+        }
+        private SettingsManager GetSettingsManager()
+        {
+            return new SettingsManager();
+        }
+        public ExcelWriter(IExcelFileWriter fileWriter = null)
+        {
+            FileWriter = fileWriter;
+        }
+
+        public void WriteToExcel(WebFetchResult fetchResult)
+        {
+            var writer = new ExcelWriter();
+            var tmpFileName = fetchResult.Result.Replace(".xml", ".xlsx");
+
+            var workBook = writer.ConvertToPersonTable(
+                addressList: fetchResult.PeopleList,
+                worksheetName: "Addresses",
+                saveFile: false,
+                outputFileName: tmpFileName);
+
+            writer.ConvertToDataTable(
+                excelPackage: workBook,
+                htmlTable: fetchResult.CaseList,
+                worksheetName: "CaseData",
+                saveFile: true,
+                outputFileName: tmpFileName);
+        }
+
+        public ExcelPackage ConvertToPersonTable(
+            List<PersonAddress> addressList,
+            string worksheetName,
+            ExcelPackage excelPackage = null,
+            bool saveFile = false,
+            string outputFileName = "",
+            int websiteId = 1)
+        {
+
+            var pck = excelPackage ?? new ExcelPackage();
+            var wsDt = pck.Workbook.Worksheets.Add(worksheetName);
+            var rowIndex = 1;
+            foreach (var item in addressList)
+            {
+                if(rowIndex == 1)
+                {
+                    // write header
+                    var headerIndex = 1;
+                    foreach (var field in item.FieldList)
+                    {
+
+                        var heading = wsDt.Cells[rowIndex, headerIndex];
+                        heading.Value = field;
+                        headerIndex++;
+                    }
+                    rowIndex++;
+                }
+                for (int i = 0; i < item.FieldList.Count; i++)
+                {
+                    wsDt.Cells[rowIndex, i+1].Value = item[i];
+                }
+                
+                rowIndex++;
+            }
+            addressList.Add(new PersonAddress());
+            ApplyGridFormatting(websiteId, "people", wsDt, addressList);
+            if (saveFile) { FileWriter.SaveAs(pck, outputFileName); }
+            return pck;
+        }
+
+        public ExcelPackage ConvertToDataTable(
+            string htmlTable, 
+            string worksheetName,
+            ExcelPackage excelPackage = null,
+            bool saveFile = false,
+            string outputFileName = "",
+            int websiteId = 1)
+        {
+            var pck = excelPackage ?? new ExcelPackage();
+            var namedStyle = pck.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            var wsDt = pck.Workbook.Worksheets.Add(worksheetName);
+            var webNav = GetSettingsManager().GetNavigation()
+                 .FirstOrDefault(n => n.Id.Equals(websiteId));
+            var hyperPrefix = webNav?.Keys.FirstOrDefault(h => h.Name.Equals("hlinkUri"));
+
+            var sb = new StringBuilder();
+            sb.AppendLine("<html>");
+            sb.AppendLine("<body id='body-wrapper'>");
+            sb.AppendLine(htmlTable);
+            sb.AppendLine("</body>");
+            sb.AppendLine("</html>");
+            // HTML-table to an excel worksheet
+            var doc = new XmlDocument();
+            doc.LoadXml(sb.ToString());
+            var body = doc.DocumentElement.SelectSingleNode("body");
+            var table = body.FirstChild;
+            var rows = table.ChildNodes.Cast<XmlNode>().ToList();
+            var rowIndex = 1;
+            foreach (var item in rows)
+            {
+                var colIndex = 1;
+                var tdCollection = item.InnerXml.Contains("<th") ?
+                    item.SelectNodes("th").Cast<XmlNode>().ToList() :
+                    item.SelectNodes("td").Cast<XmlNode>().ToList();
+                if (tdCollection != null)
+                {
+                    foreach (var td in tdCollection)
+                    {
+                        var sbb = new StringBuilder();
+                        var nodeList = td.ChildNodes.Cast<XmlNode>().ToList();
+                        var target = wsDt.Cells[rowIndex, colIndex];
+                        nodeList
+                            .ForEach(n => sbb.Append(n.InnerText.Trim() + " "));
+                        target.Value = sbb.ToString().Trim();
+                        colIndex++;
+                        if (hyperPrefix == null) continue;
+                        // does this node contain a hyperlink?
+                        var hyperlink = nodeList.FirstOrDefault(x => x.Name.Equals("a"));
+                        if (hyperlink == null) continue;
+                        var txHref = hyperlink.Attributes.GetNamedItem("href");
+                        if (txHref == null) continue;
+                        var hlink = string.Format(@"{0}{1}", hyperPrefix.Value, txHref.InnerText);
+                        target.Hyperlink = new System.Uri(hlink);
+                    }
+                }
+                rowIndex++;
+            }
+            // format rows
+            ApplyGridFormatting(websiteId, "caselayout", wsDt, rows);
+
+            // save data
+            if (saveFile) { FileWriter.SaveAs(pck, outputFileName); }
+            return pck;
+        }
+
+        private void ApplyGridFormatting<T>(int websiteId, 
+            string sectionName,
+            ExcelWorksheet wsDt, 
+            System.Collections.Generic.List<T> rows)
+        {
+            const int rowIndex = 1;
+            var columns = GetSettingsManager().GetColumnLayouts(websiteId, sectionName);
+            if (columns != null)
+            {
+                // format first row
+                for (int cidx = 0; cidx < columns.Count; cidx++)
+                {
+                    wsDt.Cells[rowIndex, cidx + 1].Value = columns[cidx].Name;
+                    wsDt.Column(cidx + 1).Width = columns[cidx].ColumnWidth;
+                }
+            }
+            // apply borders
+            var rcount = rows.Count;
+            var ccount = columns.Count;
+            var rngCells = wsDt.Cells[1, 1, rcount, ccount];
+            var rngTopRow = wsDt.Cells[1, 1, 1, ccount];
+            const OfficeOpenXml.Style.ExcelBorderStyle xlThin = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+            // set header background color
+            rngTopRow.Style.Font.Bold = true;
+            rngTopRow.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            rngTopRow.Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
+
+            // set borders
+            rngCells.Style.Border.Top.Style = xlThin;
+            rngCells.Style.Border.Left.Style = xlThin;
+            rngCells.Style.Border.Right.Style = xlThin;
+            rngCells.Style.Border.Bottom.Style = xlThin;
+
+            // set alignment
+
+            rngCells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+            rngCells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
+            rngCells.Style.WrapText = true;
+
+        }
+    }
+}

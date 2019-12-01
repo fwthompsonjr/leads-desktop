@@ -1,0 +1,142 @@
+Attribute VB_Name = "basPeople"
+Option Explicit
+
+Public Sub TranserPeopleList(obj, objParser)
+    Dim xNodeA As Object
+    Dim wrk As Worksheet
+    Dim txt As String
+    Dim rgAa As Range
+    Set xNodeA = objParser.SelectSingleNode("//results/result[@name='person']")
+    Set wrk = ThisWorkbook.Worksheets("PeopleList")
+    On Error GoTo ErrHandler
+    
+    wrk.UsedRange.Clear
+    'Put some text inside a string variable
+    Dim parentElement As Object
+    Dim childElement As Object
+    Dim childCount As Integer
+    Dim chd As Integer
+    Dim cindex As Integer
+    Set rgAa = wrk.Range("A1")
+    Set parentElement = xNodeA.ChildNodes(0)
+    childCount = parentElement.ChildNodes.Length - 1
+    For chd = 0 To childCount
+        Set childElement = parentElement.ChildNodes(chd)
+        For cindex = 0 To childElement.ChildNodes.Length - 1
+            If chd = 0 Then
+                ' add column headers
+                rgAa.Offset(0, cindex) = childElement.ChildNodes(cindex).NodeName
+            End If
+            
+            If childElement.ChildNodes(cindex).HasChildNodes Then
+                rgAa.Offset(chd + 1, cindex) = childElement.ChildNodes(cindex).ChildNodes(0).Data
+            Else
+                rgAa.Offset(chd + 1, cindex) = childElement.ChildNodes(cindex).Text
+            End If
+        Next
+    Next
+    
+    For chd = childCount To 1 Step -1
+        If IsEmpty(rgAa.Offset(chd)) Or IsEmpty(rgAa.Offset(chd, 1)) Then
+            rgAa.Offset(chd).EntireRow.Delete
+        End If
+    Next
+    Exit Sub
+ErrHandler:
+    Application.ScreenUpdating = True
+    MsgBox Err.Number & " - " & Err.Description
+    Resume ErrExit
+    
+ErrExit:
+    Exit Sub
+    
+    '-- wrk.Range("A1").PasteSpecial xlPasteAll
+    Application.CutCopyMode = False
+    
+    Exit Sub
+    
+    On Error Resume Next
+    
+    Dim sh As Shape
+    Dim addr As String
+    Dim r As Range
+    Dim rgA As Range
+    Dim rc As Long
+    Const topCell As String = "$A$2"
+    
+    wrk.Select
+    wrk.Range(topCell).Activate
+    wrk.Range(topCell).Select
+    
+    Set rgA = wrk.Range(topCell).CurrentRegion
+    rc = rgA.Rows.Count
+    Set rgA = wrk.Range(wrk.Range(topCell), wrk.Range(topCell).Offset(rc))
+    
+    For Each r In rgA.Cells
+        If Not r.Hyperlinks Is Nothing Then r.Hyperlinks.Delete
+    Next
+    
+    For Each sh In wrk.Shapes
+        addr = sh.TopLeftCell.Address
+        If (wrk.Range(addr).Column = 1) Then
+            sh.Delete
+        End If
+    Next
+End Sub
+
+
+Public Sub TransferCaseInformation(wbk As Workbook)
+    Dim wPeople As Worksheet
+    Dim wAddress As Worksheet
+    Dim rgPeep As Range
+    Dim rgAddr As Range
+    Dim rr As Integer
+    Dim cc As Integer
+    Dim rcount As Integer
+    Dim arrFriendlyName As Variant
+    Dim friendlyNames As String
+    friendlyNames = "Case Number,Date Filed,Court,Case Type"
+    arrFriendlyName = Split(friendlyNames, ",")
+    Set wPeople = wbk.Worksheets("PeopleList")
+    Set wAddress = wbk.Worksheets("AddressList")
+    '-- copy data from people list to address list
+    Set rgPeep = wPeople.Range("$C$1")
+    Set rgAddr = wAddress.Range("$G$1")
+    rcount = rgPeep.CurrentRegion.Rows.Count
+    For rr = 0 To rgPeep.CurrentRegion.Rows.Count
+        For cc = 0 To 3
+            If rr = 0 Then
+                rgAddr.Offset(rr, cc) = arrFriendlyName(cc)
+            Else
+                rgAddr.Offset(rr, cc) = rgPeep.Offset(rr, cc)
+            End If
+            If rr = rcount Then
+                wAddress.Range(rgAddr.Offset(1, 1), rgAddr.Offset(rcount - 1, 1)).NumberFormat = "MM/dd/yyyy"
+            End If
+        Next
+        
+    Next
+    wAddress.Columns("G:J").AutoFit
+    With wAddress.Range(rgAddr.Offset(1), rgAddr.Offset(rcount - 1, 3))
+        .Borders(xlInsideVertical).LineStyle = xlSolid
+        .Borders(xlInsideHorizontal).LineStyle = xlSolid
+        .Borders(xlEdgeTop).LineStyle = xlSolid
+        .Borders(xlEdgeBottom).LineStyle = xlSolid
+        .Borders(xlEdgeLeft).LineStyle = xlSolid
+        .Borders(xlEdgeRight).LineStyle = xlSolid
+        .Borders(xlInsideVertical).Weight = xlThin
+        .Borders(xlInsideHorizontal).Weight = xlThin
+        .Borders(xlEdgeTop).Weight = xlThin
+        .Borders(xlEdgeBottom).Weight = xlThin
+        .Borders(xlEdgeLeft).Weight = xlThin
+        .Borders(xlEdgeRight).Weight = xlThin
+    End With
+    
+    wAddress.Range("$F$1").EntireColumn.Delete
+    
+    '
+    'rgAddr.Offset(0, -1).Copy
+    'rgAddr.Range(rgAddr, rgAddr.Offset(0, 3)).PasteSpecial xlPasteFormats
+    'Application.CutCopyMode = False
+End Sub
+

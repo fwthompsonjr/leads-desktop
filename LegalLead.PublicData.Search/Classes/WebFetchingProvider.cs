@@ -1,0 +1,42 @@
+﻿using System;
+using System.Linq;
+using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Models;
+
+namespace LegalLead.PublicData.Search
+{
+    internal class WebFetchingProvider
+    {
+        internal static IWebInteractive GetInteractive(
+            WebNavigationParameter siteData,
+            DateTime startDate,
+            DateTime endingDate)
+        {
+            switch (siteData.Id)
+            {
+                case 10:
+                    return new TarrantWebInteractive(siteData, startDate, endingDate);
+                case 20:
+                    return new CollinWebInteractive(siteData, startDate, endingDate);
+                default:
+                    var districtKey = Program.DentonCustomKeys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType"));
+                    var siteDistrictKey = siteData.Keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType"));
+                    if(districtKey == null)
+                    {
+                        if(siteDistrictKey != null)
+                        {
+                            siteData.Keys.Remove(siteDistrictKey);
+                        }
+                    }
+                    else
+                    {
+                        if (siteDistrictKey == null)
+                        {
+                            siteData.Keys.Add(districtKey);
+                        }
+                    }
+                    return new WebInteractive(siteData, startDate, endingDate);
+            }
+        }
+    }
+}

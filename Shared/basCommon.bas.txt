@@ -1,0 +1,22 @@
+Attribute VB_Name = "basCommon"
+Option Explicit
+
+
+Public Function TryParseZip(zipCode As String) As String
+    Dim pieces() As String
+    Dim pcnt As Integer
+    Dim parsed As String
+    
+    If Len(zipCode) = 0 Then
+        Exit Function
+    End If
+    pieces = Split(zipCode, " ")
+    pcnt = UBound(pieces)
+    parsed = pieces(pcnt)
+    If InStr(parsed, "-") > 0 Then
+        parsed = Split(parsed, "-")(0)
+    End If
+    If (IsNumeric(parsed)) Then
+        TryParseZip = pieces(pcnt)
+    End If
+End Function

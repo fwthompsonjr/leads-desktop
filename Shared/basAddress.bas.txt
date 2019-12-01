@@ -1,0 +1,133 @@
+Attribute VB_Name = "basAddress"
+Option Explicit
+
+    Const topCell As String = "$a$1"
+
+Public Sub ClearAddressList()
+
+    Dim wrk As Worksheet
+    Dim rc As Long
+    Dim cc As Long
+    Set wrk = ThisWorkbook.Worksheets("AddressList")
+    rc = wrk.Range(topCell).CurrentRegion.Rows.Count
+    cc = wrk.Range(topCell).CurrentRegion.Rows.Count
+    wrk.Range(wrk.Range(topCell).Offset(1), wrk.Range(topCell).Offset(rc, cc)).Clear
+    
+End Sub
+
+
+Public Sub TransferAddressList(wsrc As Worksheet)
+    Dim wrk As Worksheet
+    Dim rgSrc As Range
+    Dim rgAddr As Range
+    Dim rc As Long
+    Dim cc As Long
+    Dim mmm As Long, mergeCount As Long
+    Dim rcount As Long
+    Dim topAddr As String
+    Dim targetAddr As String
+    
+    '-- clear values from target
+    Set wrk = ThisWorkbook.Worksheets("AddressList")
+    wrk.Visible = xlSheetVisible
+    
+    rc = wrk.Range(topCell).CurrentRegion.Rows.Count + 2
+    cc = wrk.Range(topCell).CurrentRegion.Columns.Count
+    wrk.Range(wrk.Range(topCell).Offset(2), wrk.Range(topCell).Offset(rc, cc)).Clear
+    
+    rc = wsrc.Range(topCell).CurrentRegion.Rows.Count
+    For rcount = 1 To rc
+        Set rgSrc = wsrc.Cells(rcount + 1, 1)
+        mergeCount = rgSrc.MergeArea.Cells.Count
+        If (mergeCount > 0) Then
+            topAddr = Split(rgSrc.MergeArea.Address, ":")(0)
+            targetAddr = Replace(topAddr, "$A$", "$B$")
+            If (rgSrc.Address = topAddr) Then
+                wrk.Range(topCell).Offset(rcount) = rgSrc.Value
+                For mmm = 1 To mergeCount
+                    Set rgAddr = wsrc.Range(targetAddr).Offset(mmm - 1)
+                    wrk.Range(topCell).Offset(rcount, mmm + 1) = rgAddr.Value
+                Next
+                wrk.Range(topCell).Offset(rcount, 1) = TryParseZip(wsrc.Range(targetAddr).Offset(mergeCount - 1))
+            End If
+        End If
+    Next
+    For rcount = rc To 1 Step -1
+        Set rgSrc = wrk.Cells(rcount, 1)
+        If (IsEmpty(rgSrc)) Then rgSrc.EntireRow.Delete
+    Next
+    rc = wrk.Cells(2, 1).CurrentRegion.Rows.Count
+    Dim rgA As Range
+    Set rgA = wrk.Range(topCell).Offset(1)
+    With wrk.Range(rgA, rgA.Offset(rc - 2, cc - 1))
+        .Borders(xlInsideVertical).LineStyle = xlSolid
+        .Borders(xlInsideHorizontal).LineStyle = xlSolid
+        .Borders(xlEdgeTop).LineStyle = xlSolid
+        .Borders(xlEdgeBottom).LineStyle = xlSolid
+        .Borders(xlEdgeLeft).LineStyle = xlSolid
+        .Borders(xlEdgeRight).LineStyle = xlSolid
+        .Borders(xlInsideVertical).Weight = xlThin
+        .Borders(xlInsideHorizontal).Weight = xlThin
+        .Borders(xlEdgeTop).Weight = xlThin
+        .Borders(xlEdgeBottom).Weight = xlThin
+        .Borders(xlEdgeLeft).Weight = xlThin
+        .Borders(xlEdgeRight).Weight = xlThin
+    End With
+    
+    Call StandardizeAddress(wrk)
+    
+End Sub
+
+
+Public Sub StandardizeAddress(wrk As Worksheet)
+Const colNames As String = "Name,Zip,Address1,Address2,Address3,Address4"
+Const intZipCode As Integer = 1
+Const intAddress1 As Integer = 2
+Const intAddress2 As Integer = 3
+Const intAddress3 As Integer = 4
+Const intAddress4 As Integer = 5
+    Dim rgA As Range
+    Dim rgCurrent As Range
+    Dim rw As Integer, y As Integer
+    Dim arrFields As Variant
+    Dim arrColumns(6) As String
+    
+    
+    Set rgA = wrk.Range(topCell).Offset(1)
+    
+    arrFields = Split(colNames, ",")
+    For rw = 0 To rgA.CurrentRegion.Rows.Count - 2
+        Set rgCurrent = rgA.Offset(rw)
+        For y = LBound(arrFields) To UBound(arrFields)
+            arrColumns(y) = rgCurrent.Offset(0, y)
+        Next
+        
+        If Len(arrColumns(intZipCode)) = 0 Then
+            GoTo ContLoop
+        End If
+        
+        '-- if there are only two address columns
+        If (Len(arrColumns(intAddress3)) = 0 And Len(arrColumns(intAddress4)) = 0) Then
+            arrColumns(intAddress3) = arrColumns(intAddress2)
+            arrColumns(intAddress2) = ""
+            GoTo ReAssign
+        End If
+        '-- if there are four address columns
+        If (Len(arrColumns(5)) > 0) Then
+            
+            arrColumns(intAddress2) = arrColumns(intAddress2) & ", " & arrColumns(intAddress3)
+            arrColumns(intAddress3) = arrColumns(intAddress4)
+            arrColumns(intAddress4) = ""
+            GoTo ReAssign
+        End If
+        
+ReAssign:
+        For y = LBound(arrFields) To UBound(arrFields)
+            rgCurrent.Offset(0, y) = UCase(arrColumns(y))
+        Next
+ContLoop:
+        '-- goto next number
+    Next
+    
+    
+End Sub

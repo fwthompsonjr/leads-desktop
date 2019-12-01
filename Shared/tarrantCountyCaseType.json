@@ -1,0 +1,55 @@
+{
+  "dropDowns": [
+    {
+      "id": 0,
+      "name": "criminal courts",
+      "query": "#sbxControlID2",
+      "options": [
+        {
+          "id": 0,
+          "name": "All Probate Courts"
+        },
+        {
+          "id": 1,
+          "name": "All JP Courts"
+        },
+        {
+          "id": 2,
+          "name": "All CCL Courts"
+        },
+        {
+          "id": 3,
+          "name": "JP No. 1"
+        },
+        {
+          "id": 4,
+          "name": "JP No. 2"
+        },
+        {
+          "id": 5,
+          "name": "JP No. 3"
+        },
+        {
+          "id": 6,
+          "name": "JP No. 4"
+        },
+        {
+          "id": 7,
+          "name": "JP No. 5"
+        },
+        {
+          "id": 8,
+          "name": "JP No. 6"
+        },
+        {
+          "id": 9,
+          "name": "JP No. 7"
+        },
+        {
+          "id": 10,
+          "name": "JP No. 8"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B33E0015-DC54-4C71-BB13-038D46748EE9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Thompson.RecordSearch.Utility</RootNamespace>
+    <AssemblyName>Thompson.RecordSearch.Utility</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>77f53d20</NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>D:\Projects\Personal\Publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <PublisherName>Thompson Data Solutions</PublisherName>
+    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>898F18BD85CBA418B8AB2BEF001B045E21E953D4</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Thompson.RecordSearch.Utility_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="SgmlReaderDll, Version=1.8.14.0, Culture=neutral, PublicKeyToken=46b2db9ca481831b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xml.SgmlReader.1.8.14\lib\net45\SgmlReaderDll.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.7.1\lib\net45\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Deployment, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Shared\ExpectedConditions.cs">
+      <Link>Classes\ExpectedConditions.cs</Link>
+    </Compile>
+    <Compile Include="Addressing\FindApplicantByWordMatch.cs" />
+    <Compile Include="Addressing\FindDefendantBase.cs" />
+    <Compile Include="Addressing\FindDefendantByCondemneeMatch.cs" />
+    <Compile Include="Addressing\FindDefendantByPrId.cs" />
+    <Compile Include="Addressing\FindDefendantByWordMatch.cs" />
+    <Compile Include="Addressing\FindDefendantNavigation.cs" />
+    <Compile Include="Addressing\FindMultipleDefendantMatch.cs" />
+    <Compile Include="Addressing\FindOwnerByWordMatch.cs" />
+    <Compile Include="Addressing\FindPetitionerByWordMatch.cs" />
+    <Compile Include="Addressing\FindPrincipalByWordMatch.cs" />
+    <Compile Include="Addressing\FindRespondentByWordMatch.cs" />
+    <Compile Include="Addressing\GetDefendantUpperCaseMatch.cs" />
+    <Compile Include="Addressing\NoFoundMatch.cs" />
+    <Compile Include="Classes\BaseWebIneractive.cs" />
+    <Compile Include="Classes\CollinWebInteractive.cs" />
+    <Compile Include="Classes\ConsoleWriter.cs" />
+    <Compile Include="Classes\ContextManagment.cs" />
+    <Compile Include="Classes\CryptoEngine.cs" />
+    <Compile Include="Classes\ElementAssertion.cs" />
+    <Compile Include="Classes\ExcAutomationServer.cs" />
+    <Compile Include="Classes\ExcelFileWriter.cs" />
+    <Compile Include="Classes\ExcelWriter.cs" />
+    <Compile Include="Classes\IWebInteractive.cs" />
+    <Compile Include="Classes\TarrantWebInteractive.cs" />
+    <Compile Include="Classes\SettingsManager.cs" />
+    <Compile Include="Classes\WebDriverExtensions.cs" />
+    <Compile Include="Classes\WebElementExtensions.cs" />
+    <Compile Include="Classes\WebInteractive.cs" />
+    <Compile Include="Classes\WebUtilities.cs" />
+    <Compile Include="Classes\XmlContentHolder.cs" />
+    <Compile Include="Dto\CaseTypeSelectionDto.cs" />
+    <Compile Include="Dto\NavigationInstructionDto.cs" />
+    <Compile Include="Dto\ParseCaseDataResponseDto.cs" />
+    <Compile Include="Dto\UserAccessDto.cs" />
+    <Compile Include="Interfaces\IElementActionBase.cs" />
+    <Compile Include="Interfaces\IExcelFileWriter.cs" />
+    <Compile Include="Models\CaseData.cs" />
+    <Compile Include="Models\ExcelColumnLayout.cs" />
+    <Compile Include="Models\PersonAddress.cs" />
+    <Compile Include="Dto\SearchSettingDto.cs" />
+    <Compile Include="Models\WebFetchResult.cs" />
+    <Compile Include="Models\WebNavigationParameter.cs" />
+    <Compile Include="Parsing\ICaseDataParser.cs" />
+    <Compile Include="Parsing\ParseCaseByVDot.cs" />
+    <Compile Include="Parsing\ParseCaseDataByEstateStrategy.cs" />
+    <Compile Include="Parsing\ParseCaseDataByInTheEstateStrategy.cs" />
+    <Compile Include="Parsing\ParseCaseDataByVersusStrategy.cs" />
+    <Compile Include="Parsing\ParseCaseDataByVsStrategy.cs" />
+    <Compile Include="Parsing\ParseCaseExParteMatch.cs" />
+    <Compile Include="Parsing\ParseCaseInInterestMatch.cs" />
+    <Compile Include="Parsing\ParseCaseInTheMatterMarriage.cs" />
+    <Compile Include="Parsing\ParseCaseNameChange.cs" />
+    <Compile Include="Parsing\ParseCaseOrderForForeclosure.cs" />
+    <Compile Include="Parsing\ParseMatterOfNameChange.cs" />
+    <Compile Include="Parsing\ParseNameChangeByCaseType.cs" />
+    <Compile Include="Parsing\ParseProtectiveOrderCaseType.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\ActionElementContainer.cs" />
+    <Compile Include="Web\ActionElementRegistry.cs" />
+    <Compile Include="Web\BreakPointAction.cs" />
+    <Compile Include="Web\DefaultAction.cs" />
+    <Compile Include="Web\ElementActionBase.cs" />
+    <Compile Include="Web\ElementClickAction.cs" />
+    <Compile Include="Web\ElementCountAction.cs" />
+    <Compile Include="Web\ElementExistsAction.cs" />
+    <Compile Include="Web\ElementGetHtmlAction.cs" />
+    <Compile Include="Web\ElementSendKeyAction.cs" />
+    <Compile Include="Web\ElementSetComboBoxValue.cs" />
+    <Compile Include="Web\ElementSetPasswordAction.cs" />
+    <Compile Include="Web\ElementSetValueAction.cs" />
+    <Compile Include="Web\ElementTextConfirmAction.cs" />
+    <Compile Include="Web\WebNavAction.cs" />
+    <Content Include="WebDriver.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Content Include="..\Shared\chromedriver.exe">
+      <Link>chromedriver.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\CourtRecordSearch.xlsm">
+      <Link>Utilities\CourtRecordSearch.xlsm</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\Shared\collinCountyCaseType.json">
+      <Link>xml\collinCountyCaseType.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\collinCountyMapping_1.json">
+      <Link>xml\collinCountyMapping_1.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Shared\denton-settings.json">
+      <Link>xml\denton-settings.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\Shared\dentonCountyCaseType.json">
+      <Link>xml\dentonCountyCaseType.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\dentonDistrictCaseType.json">
+      <Link>xml\dentonDistrictCaseType.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\tarrantCountyCaseType.json">
+      <Link>xml\tarrantCountyCaseType.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\tarrantCountyMapping_1.json">
+      <Link>xml\tarrantCountyMapping_1.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Thompson.RecordSearch.Utility_TemporaryKey.pfx" />
+    <None Include="xml\collinCountyUserMap.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Shared\caselayout.xml">
+      <Link>xml\caselayout.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\settings.xml">
+      <Link>xml\settings.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.2.38\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.2.38\build\Selenium.Chrome.WebDriver.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.2.38\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.2.38\build\Selenium.Chrome.WebDriver.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

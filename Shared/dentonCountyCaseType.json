@@ -1,0 +1,83 @@
+{
+  "dropDowns": [
+    {
+      "id": 0,
+      "name": "criminal courts",
+      "query": "#sbxControlID2",
+      "options": [
+        {
+          "id": 1,
+          "name": "All JP Courts"
+        },
+        {
+          "id": 2,
+          "name": "Justice of the Peace Pct #1"
+        },
+        {
+          "id": 3,
+          "name": "Justice of the Peace Pct #2"
+        },
+        {
+          "id": 4,
+          "name": "Justice of the Peace Pct #3"
+        },
+        {
+          "id": 5,
+          "name": "Justice of the Peace Pct #4"
+        },
+        {
+          "id": 6,
+          "name": "Justice of the Peace Pct #5"
+        },
+        {
+          "id": 7,
+          "name": "Justice of the Peace Pct #6"
+        },
+        {
+          "id": 8,
+          "name": "All County Courts"
+        },
+        {
+          "id": 9,
+          "name": "County Court At Law #1"
+        },
+        {
+          "id": 10,
+          "name": "County Court At Law #2"
+        },
+        {
+          "id": 11,
+          "name": "County Criminal Court #1"
+        },
+        {
+          "id": 12,
+          "name": "County Criminal Court #2"
+        },
+        {
+          "id": 13,
+          "name": "County Criminal Court #3"
+        },
+        {
+          "id": 14,
+          "name": "County Criminal Court #4"
+        },
+        {
+          "id": 15,
+          "name": "County Criminal Court #5"
+        }
+      ]
+    }
+  ],
+  "caseSearchTypes": [
+    {
+      "id": 0,
+      "name": "JP and County Courts",
+      "query": "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[3]"
+    },
+    {
+      "id": 1,
+      "name": "District Courts",
+      "query": "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[1]"
+    }
+  ]
+}

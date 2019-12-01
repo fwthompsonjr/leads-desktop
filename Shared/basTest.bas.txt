@@ -1,0 +1,228 @@
+Attribute VB_Name = "basTest"
+Option Explicit
+
+
+Public Sub LoadResult()
+    Dim sourceFile As String
+    
+    Dim Filter As String, Title As String
+    Dim FilterIndex As Integer
+    Dim Filename As Variant
+
+    ' File filters
+    Filter = "XML Files (*.xml),*.xml"
+    ' Default Filter to *.*
+    
+    FilterIndex = 3
+    Call SetAppDirectory
+    
+    ' Set Dialog Caption
+    Title = "Select a File to Open"
+
+    ' Select Start Drive & Path
+    With Application
+        ' Set File Name to selected File
+        Filename = .GetOpenFilename(Filter, FilterIndex, Title)
+    End With
+
+    ' Exit on Cancel
+    If Filename = False Then
+        Exit Sub
+    End If
+
+    Dim obj
+    Set obj = CreateObject("New:{1C3B4210-F441-11CE-B9EA-00AA006B1A69}")
+    
+    Dim txt As String
+
+    sourceFile = Filename
+    
+    Dim objParser As Object
+    Set objParser = CreateObject("Microsoft.XMLDOM")
+    objParser.Load sourceFile
+    Dim ww As Worksheet
+    Set ww = ActiveSheet
+    
+    On Error Resume Next
+    
+    Application.ScreenUpdating = False
+    Call TranserResult(obj, objParser)
+    Call TranserCaseList(obj, objParser)
+    Call TranserPeopleList(obj, objParser)
+    
+    ww.Select
+    Dim wbnew As Workbook
+    Dim wnames() As String
+    Dim nn As Integer
+    
+    wnames = Split("CaseList,Results,AddressList,PeopleList", ",")
+    
+    Set wbnew = Application.Workbooks.Add
+    For nn = LBound(wnames) To UBound(wnames)
+        Call CopyWorksheet(wbnew, wnames(nn))
+        Set ww = ThisWorkbook.Worksheets(wnames(nn))
+        If (wnames(nn) = "AddressList") Then
+            Call ClearAddressList
+        Else
+            ww.UsedRange.Clear
+        End If
+        ww.Visible = xlSheetHidden
+    Next
+    Set ww = wbnew.Worksheets("Sheet1")
+    ww.Visible = xlSheetHidden
+    Call TransferCaseInformation(wbnew)
+    wbnew.Worksheets("AddressList").Activate
+    wbnew.Worksheets("AddressList").Select
+    Application.DisplayAlerts = False
+    For nn = UBound(wnames) To LBound(wnames) Step -1
+        If Not wnames(nn) = "AddressList" Then
+            wbnew.Worksheets(wnames(nn)).Delete
+        End If
+    Next
+    Application.DisplayAlerts = True
+    ''
+    Application.ScreenUpdating = True
+    
+    
+    ThisWorkbook.Saved = True
+    Set obj = Nothing
+    Set objParser = Nothing
+
+End Sub
+Private Sub SetAppDirectory()
+    On Error Resume Next
+    
+    Dim FS, d, YourDrive
+    Set FS = CreateObject("Scripting.FileSystemObject")
+    
+    Dim appFolder As String
+    Dim appParentFolder As String
+    Dim appDrive As String
+    Dim overrideFolder As String
+    overrideFolder = ThisWorkbook.Worksheets("ImportData").Range("$B$2")
+    If Len(overrideFolder) > 0 Then
+        appFolder = overrideFolder
+        Set YourDrive = FS.GetDrive(FS.GetDriveName(appFolder))
+        appDrive = YourDrive.driveletter & ":\"
+        GoTo AssignDrives
+    Else
+        appFolder = ThisWorkbook.Path
+    End If
+    Set YourDrive = FS.GetDrive(FS.GetDriveName(appFolder))
+    appDrive = YourDrive.driveletter & ":\"
+    appParentFolder = FS.GetParentFolderName(appFolder) & "\xml"
+    If FS.FolderExists(appParentFolder) Then
+        appFolder = appParentFolder
+        appParentFolder = appParentFolder & "\data"
+        If FS.FolderExists(appParentFolder) Then
+            appFolder = appParentFolder
+        End If
+    End If
+    
+AssignDrives:
+    
+    ChDrive appDrive
+    ChDir appFolder
+    
+    Set FS = Nothing
+    Set YourDrive = Nothing
+End Sub
+Private Sub TranserResult(obj, objParser)
+    Dim xNodeA As Object
+    Dim wrk As Worksheet
+    Dim txt As String
+    Const topCell As String = "$A$1"
+    
+    On Error Resume Next
+    
+    Set xNodeA = objParser.SelectSingleNode("//results/result[@name='peopledata']")
+    Set wrk = ThisWorkbook.Worksheets("Results")
+    
+    wrk.UsedRange.Clear
+    'Put some text inside a string variable
+    txt = xNodeA.ChildNodes(0).Data
+    
+    'Make object's text equal above string variable
+    obj.SetText txt
+
+    'Place DataObject's text into the Clipboard
+    obj.PutInClipboard
+    
+    wrk.Range(topCell).PasteSpecial xlPasteAll
+    wrk.Activate
+    wrk.Select
+    wrk.Range(topCell).Select
+    
+    Call TransferAddressList(wrk)
+    
+End Sub
+
+
+
+
+Private Sub TranserCaseList(obj, objParser)
+    Dim xNodeA As Object
+    Dim wrk As Worksheet
+    Dim txt As String
+    
+    Set xNodeA = objParser.SelectSingleNode("//results/result[@name='casedata']")
+    Set wrk = ThisWorkbook.Worksheets("CaseList")
+    
+    wrk.UsedRange.Clear
+    'Put some text inside a string variable
+    txt = xNodeA.ChildNodes(0).Data
+    
+    'Make object's text equal above string variable
+    obj.SetText txt
+
+    'Place DataObject's text into the Clipboard
+    obj.PutInClipboard
+    
+    wrk.Range("A1").PasteSpecial xlPasteAll
+    Application.CutCopyMode = False
+    
+    On Error Resume Next
+    
+    Dim sh As Shape
+    Dim addr As String
+    Dim r As Range
+    Dim rgA As Range
+    Dim rc As Long
+    Const topCell As String = "$A$2"
+    
+    wrk.Select
+    wrk.Range(topCell).Activate
+    wrk.Range(topCell).Select
+    
+    Set rgA = wrk.Range(topCell).CurrentRegion
+    rc = rgA.Rows.Count
+    Set rgA = wrk.Range(wrk.Range(topCell), wrk.Range(topCell).Offset(rc))
+    
+    For Each r In rgA.Cells
+        If Not r.Hyperlinks Is Nothing Then r.Hyperlinks.Delete
+    Next
+    
+    For Each sh In wrk.Shapes
+        addr = sh.TopLeftCell.Address
+        If (wrk.Range(addr).Column = 1) Then
+            sh.Delete
+        End If
+    Next
+End Sub
+
+
+Private Sub CopyWorksheet(wbook As Workbook, wkName As String)
+    Dim wb As Workbook
+    Dim ww As Worksheet
+    
+    Set wb = ThisWorkbook
+    Set ww = wb.Worksheets(wkName)
+    ww.Visible = xlSheetVisible
+    ww.Activate
+    ww.Range("$A$1").Select
+    ww.Copy After:=wbook.Worksheets(1)
+    
+    Set ww = wb.Worksheets("ImportData")
+    ww.Activate
+    wb.Saved = True
+End Sub

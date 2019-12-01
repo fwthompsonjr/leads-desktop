@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+  <setting name="Websites">
+    <keys id="1" name="Denton County">
+      <key name="baseUri"><![CDATA[http://justice1.dentoncounty.com/PublicAccess/Search.aspx]]></key>
+      <key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+      <key name="hlinkUri--inactive"><![CDATA[http://justice1.dentoncounty.com/PublicAccessDC/]]></key>
+      <key name="dateRangeMaxDays"><![CDATA[5]]></key>
+      <key name="startDate"><![CDATA[]]></key>
+      <key name="endDate"><![CDATA[]]></key>
+    </keys>
+    <keys id="10" name="Tarrant County">
+      <key name="baseUri"><![CDATA[https://odyssey.tarrantcounty.com/PublicAccess/default.aspx]]></key>
+      <key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+      <key name="dateRangeMaxDays"><![CDATA[5]]></key>
+      <key name="startDate"><![CDATA[]]></key>
+      <key name="endDate"><![CDATA[]]></key>
+      <key name="navigation.control.file"><![CDATA[tarrantCountyMapping_1]]></key>
+      <key name="hlinkUri"><![CDATA[https://odyssey.tarrantcounty.com/PublicAccess/{0}]]></key>
+      <key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+      <key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+    </keys>
+    <keys id="20" name="Collin County">
+      <key name="baseUri"><![CDATA[http://cijspub.co.collin.tx.us/secure/login.aspx]]></key>
+      <key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+      <key name="dateRangeMaxDays"><![CDATA[5]]></key>
+      <key name="startDate"><![CDATA[]]></key>
+      <key name="endDate"><![CDATA[]]></key>
+      <key name="navigation.control.file"><![CDATA[collinCountyMapping_1]]></key>
+      <key name="hlinkUri"><![CDATA[http://cijspub.co.collin.tx.us/Secure/{0}]]></key>
+      <key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+      <key name="personParentXath"><![CDATA[./..]]></key>
+      <key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+      <key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+      <key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+    </keys>
+  </setting>
+  <directions>
+    <instructions id="1">
+      <command type="GetCases" name="WaitForElementExist" By="Id" FriendlyName="Court-Type-Selection"><![CDATA[sbxControlID2]]></command>
+      <command type="GetCases" name="SetComboIndex" By="Id" FriendlyName="Court-Type-Selection"><![CDATA[sbxControlID2,?SetComboIndex]]></command>
+      <command type="GetCases" name="WaitForElementExist" By="XPath" FriendlyName="Search-Hyperlink"><![CDATA[/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[3]]]></command>
+      <command type="GetCases" name="Click" By="XPath" FriendlyName="Search-Hyperlink"><![CDATA[/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[3]]]></command>
+      <command type="GetCases" name="WaitForNavigation" By="" FriendlyName=""><![CDATA[ ]]></command>
+      <command type="GetCases" name="WaitForElementExist" By="Id" FriendlyName="District-Type-Selection"><![CDATA[sbxControlID2]]></command>
+      <command type="GetCases" name="SetComboIndex" By="Id" FriendlyName="District-Type-Selection"><![CDATA[sbxControlID2,?SetComboIndex]]></command>
+      <command type="GetCases" name="WaitForElementExist" By="XPath" FriendlyName="District-Hyperlink"><![CDATA[/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[2]]]></command>
+      <command type="GetCases" name="Click" By="XPath" FriendlyName="District-Hyperlink"><![CDATA[/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[2]]]></command>
+      <command type="GetCases" name="Click" By="XPath" FriendlyName="Date-Filed-Radio-Button"><![CDATA[//*[@id='DateFiled']]]></command>
+      <command type="GetCases" name="SetControlValue" By="Id" FriendlyName="Date-Filed-On-TextBox"><![CDATA[DateFiledOnAfter,?StartDate]]></command>
+      <command type="GetCases" name="SetControlValue" By="Id" FriendlyName="Date-Filed-Before-TextBox"><![CDATA[DateFiledOnBefore,?EndingDate]]></command>
+      <command type="GetCases" name="ClickElement" By="Id" FriendlyName="Search-Records-Submit"><![CDATA[SearchSubmit]]></command>
+      <command type="GetCases" name="WaitForNavigation" By="" FriendlyName=""><![CDATA[ ]]></command>
+      <command type="GetCases" name="GetElement" By="XPath" FriendlyName="Search-Records-Result-Table"><![CDATA[/html/body/table[4]]]></command>
+    </instructions>
+    <caseInspection id="1">
+      <command type="string" name="DateFiled" By="XPath" FriendlyName="Filing-Date-Selection"><![CDATA[td[3]/div[1]]]></command>
+      <command type="string" name="Case" By="XPath" FriendlyName="Case-Number-Selection"><![CDATA[td[1]/a]]></command>
+      <command type="string" name="Court" By="XPath" FriendlyName="Court-Name-Selection"><![CDATA[td[3]/div[2]]]></command>
+      <command type="string" name="CaseType" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[4]/div[1]]]></command>
+      <command type="string" name="CaseStyle" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[2]]]></command>
+    </caseInspection>
+    <caseInspection id="10">
+      <command type="string" name="DateFiled" By="XPath" FriendlyName="Filing-Date-Selection"><![CDATA[td[4]/div[1]]]></command>
+      <command type="string" name="Case" By="XPath" FriendlyName="Case-Number-Selection"><![CDATA[td[1]/a]]></command>
+      <command type="string" name="Court" By="XPath" FriendlyName="Court-Name-Selection"><![CDATA[td[4]/div[2]]]></command>
+      <command type="string" name="CaseType" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[5]/div[1]]]></command>
+    </caseInspection>
+    <caseInspection id="20">
+      <command type="string" name="DateFiled" By="XPath" FriendlyName="Filing-Date-Selection"><![CDATA[td[4]/div[1]]]></command>
+      <command type="string" name="Case" By="XPath" FriendlyName="Case-Number-Selection"><![CDATA[td[1]/a]]></command>
+      <command type="string" name="Court" By="XPath" FriendlyName="Court-Name-Selection"><![CDATA[td[4]/div[2]]]></command>
+      <command type="string" name="CaseType" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[5]/div[1]]]></command>
+    </caseInspection>
+  </directions>
+  <layouts>
+    <layout id="1" name="caselayout">
+      <columns>
+        <column name="Case Number" columnWidth="30"/>
+        <column name="Case Name" columnWidth="80"/>
+        <column name="Filed/Location/Judical Officer" columnWidth="40"/>
+        <column name="Type/Status" columnWidth="40"/>
+        <column name="Style" columnWidth="80"/>
+      </columns>
+    </layout>
+    <layout id="1" name="people">
+      <columns>
+        <column name="Name" columnWidth="30"/>
+        <column name="FirstName" columnWidth="20"/>
+        <column name="LastName" columnWidth="20"/>
+        <column name="Zip" columnWidth="20"/>
+        <column name="Address1" columnWidth="30"/>
+        <column name="Address2" columnWidth="30"/>
+        <column name="Address3" columnWidth="30"/>
+        <column name="CaseNumber" columnWidth="30"/>
+        <column name="Date Filed" columnWidth="30"/>
+        <column name="Court" columnWidth="30"/>
+        <column name="Case Type" columnWidth="30"/>
+        <column name="Case Style" columnWidth="30"/>
+        <column name="Plantiff" columnWidth="30"/>
+      </columns>
+    </layout>
+    <layout id="10" name="caselayout">
+      <columns>
+        <column name="Case Number" columnWidth="30"/>
+        <column name="Case Name" columnWidth="80"/>
+        <column name="Filed/Location/Judical Officer" columnWidth="40"/>
+        <column name="Type/Status" columnWidth="40"/>
+        <column name="Style" columnWidth="80"/>
+      </columns>
+    </layout>
+    <layout id="10" name="people">
+      <columns>
+        <column name="Name" columnWidth="30"/>
+        <column name="FirstName" columnWidth="20"/>
+        <column name="LastName" columnWidth="20"/>
+        <column name="Zip" columnWidth="20"/>
+        <column name="Address1" columnWidth="30"/>
+        <column name="Address2" columnWidth="30"/>
+        <column name="Address3" columnWidth="30"/>
+        <column name="CaseNumber" columnWidth="30"/>
+        <column name="Case Style" columnWidth="30"/>
+        <column name="Date Filed" columnWidth="30"/>
+        <column name="Court" columnWidth="30"/>
+        <column name="Case Type" columnWidth="30"/>
+        <column name="Case Style" columnWidth="30"/>
+        <column name="Plantiff" columnWidth="30"/>
+      </columns>
+    </layout>
+    <layout id="20" name="caselayout">
+      <columns>
+        <column name="Case Number" columnWidth="30"/>
+        <column name="Case Name" columnWidth="80"/>
+        <column name="Filed/Location/Judical Officer" columnWidth="40"/>
+        <column name="Type/Status" columnWidth="40"/>
+        <column name="Style" columnWidth="80"/>
+      </columns>
+    </layout>
+    <layout id="20" name="people">
+      <columns>
+        <column name="Name" columnWidth="30"/>
+        <column name="FirstName" columnWidth="20"/>
+        <column name="LastName" columnWidth="20"/>
+        <column name="Zip" columnWidth="20"/>
+        <column name="Address1" columnWidth="30"/>
+        <column name="Address2" columnWidth="30"/>
+        <column name="Address3" columnWidth="30"/>
+        <column name="CaseNumber" columnWidth="30"/>
+        <column name="Date Filed" columnWidth="30"/>
+        <column name="Court" columnWidth="30"/>
+        <column name="Case Type" columnWidth="30"/>
+        <column name="Case Style" columnWidth="30"/>
+        <column name="Plantiff" columnWidth="30"/>
+      </columns>
+    </layout>
+  </layouts>
+  <inactive>
+    <!-- 
+    <keys id="30" name="Dallas County">
+      <key name="baseUri"><![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/26]]></key>
+      <key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=%20All%20District%20Courts%20]]></key>
+      <key name="hlinkUri-inactive"><![CDATA[http://justice1.dentoncounty.com/PublicAccessDC/]]></key>
+      <key name="dateRangeMaxDays"><![CDATA[31]]></key>
+      <key name="startDate"><![CDATA[]]></key>
+      <key name="endDate"><![CDATA[]]></key>
+    </keys>
+    -->
+  </inactive>
+</settings>

@@ -1,0 +1,112 @@
+{
+  "steps": [
+    {
+      "actionName": "navigate",
+      "displayName": "open-website-base-uri",
+      "wait": 1200,
+      "locator": {
+        "find": "page",
+        "query": "http://cijspub.co.collin.tx.us/secure/login.aspx"
+      }
+    },
+    {
+      "actionName": "login",
+      "displayName": "login-to-website",
+      "expectedValue": "collinCountyUserMap",
+      "locator": {
+        "find": "css",
+        "query": "#UserName | #Password"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "login-submit",
+      "locator": {
+        "find": "css",
+        "query": "input[type='submit']"
+      }
+    },
+    {
+      "actionName": "set-select-value",
+      "displayName": "sbxControlID2",
+      "expectedValue": "1",
+      "locator": {
+        "find": "css",
+        "query": "#sbxControlID2"
+      }
+    },
+    {
+      "actionName": "break-point-ignore",
+      "displayName": "login-submit",
+      "locator": {
+        "find": "css",
+        "query": "input[type='submit']"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "search-type-hyperlink",
+      "expectedValue": "1",
+      "locator": {
+        "find": "css",
+        "query": "#tobesetdynamically"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "date-filed-option",
+      "locator": {
+        "find": "css",
+        "query": "#DateFiled"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "case-status-option",
+      "locator": {
+        "find": "css",
+        "query": "#OpenOption"
+      }
+    },
+    {
+      "actionName": "set-text",
+      "displayName": "startDate",
+      "locator": {
+        "find": "css",
+        "query": "#DateFiledOnAfter"
+      }
+    },
+    {
+      "actionName": "set-text",
+      "displayName": "endDate",
+      "locator": {
+        "find": "css",
+        "query": "#DateFiledOnBefore"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "case-type-search",
+      "locator": {
+        "find": "css",
+        "query": "#SearchSubmit"
+      }
+    },
+    {
+      "actionName": "break-point-ignore",
+      "displayName": "submit-button",
+      "locator": {
+        "find": "css",
+        "query": "#SearchSubmit"
+      }
+    },
+    {
+      "actionName": "get-table-html",
+      "displayName": "get-case-data-table",
+      "locator": {
+        "find": "xpath",
+        "query": "/html/body/table[4]"
+      }
+    }
+  ]
+}

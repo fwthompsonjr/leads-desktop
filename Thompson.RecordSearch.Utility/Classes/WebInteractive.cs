@@ -1,0 +1,180 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
+using Thompson.RecordSearch.Utility.Models;
+
+namespace Thompson.RecordSearch.Utility.Classes
+{
+    /// <summary>
+    /// Class defintion for WebInteractive class which is used to 
+    /// recieve in bound parameter collection and processes the request
+    /// </summary>
+    public class WebInteractive : BaseWebIneractive
+    {
+        #region Constructors
+        public WebInteractive()
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebInteractive"/> class.
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        public WebInteractive(WebNavigationParameter parameters)
+        {
+
+            Parameters = parameters;
+            StartDate = GetParameterValue<DateTime>("startDate");
+            EndingDate = GetParameterValue<DateTime>("endDate");
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebInteractive"/> class.
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endingDate">The ending date.</param>
+        public WebInteractive(WebNavigationParameter parameters, DateTime startDate, DateTime endingDate)
+        {
+            Parameters = parameters;
+            StartDate = startDate;
+            EndingDate = endingDate;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Performs web scraping activities to fetches data from web source.
+        /// </summary>
+        /// <returns></returns>
+        public override WebFetchResult Fetch()
+        {
+            var results = new SettingsManager().GetOutput(this);
+            var data = WebUtilities.GetCases(this);
+
+            Result = results.FileName;
+            foreach (var dta in data)
+            {
+                AppendExtraCaseInfo(dta);
+                var caseStyle = dta["CaseStyle"];
+                results.Append(dta);
+            }
+            // change output of this item.
+            // return the person-address collection
+            // and the case-list as html table
+            //results.Document
+            var caseList = ReadFromFile(Result);
+            var personAddresses = results.GetPersonAddresses();
+            personAddresses = MapCaseStyle(data, personAddresses);
+            personAddresses = CleanUp(personAddresses);
+            return new WebFetchResult
+            {
+                Result = Result,
+                CaseList = caseList,
+                PeopleList = personAddresses
+            };
+        }
+
+        private List<PersonAddress> CleanUp(List<PersonAddress> personAddresses)
+        {
+            var found = personAddresses.FindAll(f => f.Address1.Equals("Pro Se"));
+            if (found.Any())
+            {
+                foreach (var item in found)
+                {
+                    item.Zip = "00000";
+                    item.Address1 = "No Address Found";
+                    item.Address2 = string.Empty;
+                    item.Address3 = "Not, Available 00000";
+                }
+            }
+            found = personAddresses.FindAll(f => f.Address1.Equals("No Address Found") & string.IsNullOrEmpty(f.Zip));
+
+            if (found.Any())
+            {
+                foreach (var item in found)
+                {
+                    item.Zip = "00000";
+                }
+            }
+            return personAddresses;
+        }
+
+        /// <summary>
+        /// Maps the case style.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="personAddresses">The person addresses.</param>
+        /// <returns></returns>
+        private List<PersonAddress> MapCaseStyle(List<HLinkDataRow> data, 
+            List<PersonAddress> personAddresses)
+        {
+            if (personAddresses == null) return personAddresses;
+            if (data == null) return personAddresses;
+            data = data.FindAll(x => !string.IsNullOrEmpty(x.Case));
+            foreach (var person in personAddresses)
+            {
+                var caseNumber = person.CaseNumber;
+                if (string.IsNullOrEmpty(caseNumber)) continue;
+                var dataRow = data.Find(x => x.Case.Equals(caseNumber, 
+                    StringComparison.CurrentCultureIgnoreCase));
+                if (dataRow == null) continue;
+                person.CaseStyle = dataRow.CaseStyle;
+            }
+            return personAddresses;
+        }
+
+        #endregion
+        #region Private Methods
+
+        /// <summary>
+        /// Appends the extra case information to populate 
+        /// non-address fields in the PeopleData collection
+        /// </summary>
+        /// <param name="dta">The dta.</param>
+        private void AppendExtraCaseInfo(HLinkDataRow dta)
+        {
+            var doc = new XmlDocument();
+            var tableHtml = dta.Data;
+            if (tableHtml.Contains("<img"))
+            {
+                tableHtml = RemoveElement(tableHtml, "<img");
+            }
+            doc.LoadXml(tableHtml);
+
+            foreach (var item in Parameters.CaseInstructions)
+            {
+                var node = TryFindNode(doc, item.Value);
+                if (node == null) continue;
+                dta[item.Name] = node.InnerText;
+                dta.IsMapped = true;
+            }
+        }
+
+        /// <summary>
+        /// Tries the find node.
+        /// </summary>
+        /// <param name="doc">The document.</param>
+        /// <param name="xpath">The xpath.</param>
+        /// <returns></returns>
+        private XmlNode TryFindNode(XmlDocument doc, string xpath)
+        {
+            try
+            {
+                var node = doc.FirstChild.SelectSingleNode(xpath);
+                return node;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        #endregion
+    }
+}
