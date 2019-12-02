@@ -253,6 +253,10 @@
       <Link>xml\tarrantCountyCaseType.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Shared\tarrantCountyCustomType.json">
+      <Link>xml\tarrantCountyCustomType.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Shared\tarrantCountyMapping_1.json">
       <Link>xml\tarrantCountyMapping_1.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

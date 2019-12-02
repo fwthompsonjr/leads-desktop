@@ -17,10 +17,11 @@
           "id": 1.2,
           "name": "Tarrant County Criminal Case",
           "isFixed": false,
-          "fixVersion": 0,
+          "fixVersion": 1911,
           "description": [
             "When attempting to pull cases from Tarrant County",
-            "Criminal court cases are not included in search results."
+            "Criminal court cases are not included in search results.",
+            "Start Date: 2019-12-02 02:02:14Z"
           ]
         }
       ]
@@ -83,6 +84,11 @@
           "id": 0.0,
           "description": "infrastructure to allow change to criminal searches in tarrant county",
           "canPublish": true
+        },
+        {
+          "id": 1.2,
+          "description": "UI Changes to allow Tarrant County Criminal Case Search",
+          "canPublish": false
         }
       ]
     }

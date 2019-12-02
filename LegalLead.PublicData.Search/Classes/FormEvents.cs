@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -100,15 +101,28 @@ namespace LegalLead.PublicData.Search
         private void CboWebsite_SelectedValueChanged(object sender, EventArgs e)
         {
             var source = (WebNavigationParameter)cboWebsite.SelectedItem;
+            var customList = new List<int>
+            {
+                (int)SourceType.CollinCounty,
+                (int)SourceType.TarrantCounty
+            };
             ButtonDentonSetting.Visible = (source.Id == (int)SourceType.DentonCounty | source.Id == (int)SourceType.CollinCounty);
             cboSearchType.Visible = source.Id == (int)SourceType.CollinCounty;
-            cboCaseType.Visible = source.Id == (int)SourceType.CollinCounty;
+            cboCaseType.Visible = customList.Contains(source.Id);
+            labelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty ? "Custom Search" : "Search Type";
+
             cboCourts.Visible = source.Id == (int)SourceType.TarrantCounty;
+            // cboCourts
+            var showList = new List<int> 
+            {
+                4,
+                5
+            };
             for (int i = 3; i <= 5; i++)
             {
                 tableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
                 tableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.CollinCounty ? 49 : 0;
-                if (i == 5)
+                if (showList.Contains(i))
                 {
                     tableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.TarrantCounty ? 49 : 0;
                 }
@@ -123,6 +137,16 @@ namespace LegalLead.PublicData.Search
             {
                 ButtonDentonSetting.Text = "Password";
             }
+
+            if (!customList.Contains(source.Id)) return;
+            // custom combo mapping for case type
+            var caseTypeName = source.Id == (int)SourceType.CollinCounty ?
+                "collinCountyCaseType" :
+                "tarrantCountyCustomType";
+            var caseTypes = CaseTypeSelectionDto.GetDto(caseTypeName);
+            cboCaseType.DataSource = caseTypes.DropDowns.First().Options;
+            cboCaseType.DisplayMember = "Name";
+            cboCaseType.ValueMember = "Id";
         }
 
         private void SetDentonStatusLabelFromSetting()
