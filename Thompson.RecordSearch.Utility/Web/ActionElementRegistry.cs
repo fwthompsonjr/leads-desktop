@@ -1,9 +1,4 @@
 ﻿using StructureMap;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace Thompson.RecordSearch.Utility.Web

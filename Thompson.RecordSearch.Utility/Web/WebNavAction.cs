@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
-    using Byy = OpenQA.Selenium.By;
-
     public class WebNavAction : ElementActionBase
     {
         const string actionName = "navigate";

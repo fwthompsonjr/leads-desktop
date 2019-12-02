@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Thompson.RecordSearch.Utility.Dto;
-
-namespace Thompson.RecordSearch.Utility.Web
+﻿namespace Thompson.RecordSearch.Utility.Web
 {
     using Byy = OpenQA.Selenium.By;
-    using OpenQA.Selenium.Support.UI;
     using Thompson.RecordSearch.Utility.Dto;
     using OpenQA.Selenium;
     using System.Threading;

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LegalLead.Changed.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace LegalLead.Changed.Classes
 {
@@ -45,7 +43,7 @@ namespace LegalLead.Changed.Classes
         {
             try
             {
-                var sourceData = File.ReadAllText(sourceFileName);
+                var sourceData = GetFileContent(sourceFileName);
                 var changeLog = Newtonsoft.Json.JsonConvert.DeserializeObject<ChangeLog>(sourceData);
                 var lastChange = changeLog.Versions.LastOrDefault(v => v.Fixes.Any(f => f.CanPublish));
                 _sourceFileName = sourceFileName;
@@ -63,6 +61,14 @@ namespace LegalLead.Changed.Classes
             }
         }
 
+        private string GetFileContent(string sourceFileName)
+        {
+            using (var reader = new StreamReader(sourceFileName))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
         protected void ReSerialize()
         {
 
@@ -70,7 +76,8 @@ namespace LegalLead.Changed.Classes
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat
+                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
             using (var sw = new StreamWriter(SourceFile, false))
             {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LegalLead.Changed.Classes
+﻿namespace LegalLead.Changed.Classes
 {
     public interface IBuildCommand
     {

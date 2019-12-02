@@ -8,7 +8,6 @@ using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
-using Thompson.RecordSearch.Utility.Models;
 using Thompson.RecordSearch.Utility.Web;
 
 namespace Thompson.RecordSearch.Utility.Tests

@@ -1,16 +1,9 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
-    using Byy = OpenQA.Selenium.By;
-
     public class ElementClickAction : ElementActionBase
     {
         const string actionName = "click";
