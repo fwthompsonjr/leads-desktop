@@ -38,7 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BuildCommandBase.cs" />
+    <Compile Include="Classes\CommandFixCanPublish.cs" />
     <Compile Include="Classes\CommandLoadLog.cs" />
+    <Compile Include="Classes\CommandMapFixes.cs" />
     <Compile Include="Classes\CommandSetVersion.cs" />
     <Compile Include="Classes\IBuildCommand.cs" />
     <Compile Include="Models\ChangeLog.cs" />

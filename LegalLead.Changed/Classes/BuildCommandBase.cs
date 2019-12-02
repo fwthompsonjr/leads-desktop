@@ -38,6 +38,11 @@ namespace LegalLead.Changed.Classes
         {
             if (!string.IsNullOrEmpty(_sourceFileName)) return;
             if (!File.Exists(sourceFileName)) return;
+            ResetFileSource(sourceFileName);
+        }
+
+        protected void ResetFileSource(string sourceFileName)
+        {
             try
             {
                 var sourceData = File.ReadAllText(sourceFileName);
@@ -55,6 +60,22 @@ namespace LegalLead.Changed.Classes
             {
 
                 throw;
+            }
+        }
+
+        protected void ReSerialize()
+        {
+
+            var content = Newtonsoft.Json.JsonConvert.SerializeObject(Log, new Newtonsoft.Json.JsonSerializerSettings
+            {
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat
+            });
+            using (var sw = new StreamWriter(SourceFile, false))
+            {
+                sw.Write(content);
+                sw.Close();
             }
         }
     }

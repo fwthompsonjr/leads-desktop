@@ -9,7 +9,7 @@ namespace LegalLead.Changed.Classes
 {
     public class CommandSetVersion : BuildCommandBase
     {
-        public override int Index => 2;
+        public override int Index => 200;
 
         public override bool Execute()
         {

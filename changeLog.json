@@ -1,22 +1,24 @@
 {
   "Changes": [
     {
-      "reportedDate": "2019-10-03T11:30:00",
-      "issues": [
+      "ReportedDate": "2019-10-03T11:30:00",
+      "Issues": [
         {
-          "id": 1.1,
-          "name": "Tarrant County District Case",
-          "isFixed": false,
-          "fixVersion": 0,
-          "description": [
+          "Id": 1.1,
+          "Name": "Tarrant County District Case",
+          "IsFixed": false,
+          "FixVersion": 0,
+          "Description": [
             "When attempting to pull cases from Tarrant County",
             "District court cases are not included in search results."
           ]
         },
         {
-          "id": 1.2,
-          "name": "Tarrant County Criminal Case",
-          "description": [
+          "Id": 1.2,
+          "Name": "Tarrant County Criminal Case",
+          "IsFixed": false,
+          "FixVersion": 0,
+          "Description": [
             "When attempting to pull cases from Tarrant County",
             "Criminal court cases are not included in search results."
           ]
@@ -24,13 +26,14 @@
       ]
     },
     {
-      "reportedDate": "2019-10-03T11:30:00",
-      "issues": [
+      "ReportedDate": "2019-10-03T11:30:00",
+      "Issues": [
         {
-          "id": 2.1,
-          "name": "Collin County Probate Search Type",
-          "isFixed": false,
-          "description": [
+          "Id": 2.1,
+          "Name": "Collin County Probate Search Type",
+          "IsFixed": false,
+          "FixVersion": 0,
+          "Description": [
             "Under Search Type, probate is misspelled."
           ]
         }
@@ -39,33 +42,33 @@
   ],
   "Versions": [
     {
-      "id": 187,
-      "number": "1.8.7.0",
-      "fixes": [
+      "Id": 187,
+      "Number": "1.8.7.0",
+      "Fixes": [
         {
-          "id": 0.0,
-          "description": "baseline version",
-          "canPublish": true
+          "Id": 0.0,
+          "Description": "baseline version",
+          "CanPublish": true
         }
       ]
     },
     {
-      "id": 190,
-      "number": "1.9.0.1",
-      "fixes": [
+      "Id": 190,
+      "Number": "1.9.0.1",
+      "Fixes": [
         {
-          "id": 0.0,
-          "description": "change to allow tracking of version specific changes to version number",
-          "canPublish" : true
+          "Id": 0.0,
+          "Description": "change to allow tracking of version specific changes to version number",
+          "CanPublish": true
         }
       ]
     }
   ],
-  "template": [
+  "Template": [
     "using System.Reflection;",
     "",
     "[assembly: AssemblyVersion(\"{VersionNumber}\")]",
     "[assembly: AssemblyFileVersion(\"{VersionNumber}\")]"
   ],
-  "templateFile": "Version.cs"
+  "TemplateFile": "Version.cs"
 }
