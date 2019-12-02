@@ -155,6 +155,29 @@ namespace Thompson.RecordSearch.Utility.Tests
             Assert.IsNotNull(steps);
             Assert.IsTrue(steps.Steps.Any());
         }
+
+
+        [TestMethod]
+        [TestCategory("tarrant.county.actions")]
+        public void CanNavigateSteps2()
+        {
+
+            var fileName = "tarrantCountyMapping_2";
+            var steps = GetAppSteps(fileName);
+            Assert.IsNotNull(steps);
+            Assert.IsTrue(steps.Steps.Any());
+        }
+
+        [TestMethod]
+        [TestCategory("tarrant.county.versioning")]
+        public void CanInitVersionProvider()
+        {
+            var provider = new VersionNameProvider();
+            Assert.IsNotNull(provider);
+            Assert.IsFalse(string.IsNullOrEmpty(provider.Name));
+            Assert.IsFalse(string.IsNullOrEmpty(provider.FileVersion));
+            Assert.IsNotNull(provider.VersionNames);
+        }
         #endregion
 
 

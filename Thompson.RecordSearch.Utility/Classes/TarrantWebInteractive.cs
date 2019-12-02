@@ -12,7 +12,7 @@ using Thompson.RecordSearch.Utility.Web;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
-    public class TarrantWebInteractive : WebInteractive
+    public partial class TarrantWebInteractive : WebInteractive
     {
         #region Constructors
         public TarrantWebInteractive() { }
@@ -42,31 +42,41 @@ namespace Thompson.RecordSearch.Utility.Classes
             var endingDate = GetParameterValue<DateTime>("endDate");
             var peopleList = new List<PersonAddress>();
             WebFetchResult webFetch = null;
+            var fetchers = (new TarrantFetchProvider(this)).GetFetches();
+
             while (startingDate.CompareTo(endingDate) <= 0)
             {
 
                 SetParameterValue("startDate", startingDate.ToString("MM/dd/yyyy"));
                 SetParameterValue("endDate", startingDate.ToString("MM/dd/yyyy"));
+                foreach (var obj in fetchers)
+                {
 
-                var results = new SettingsManager().GetOutput(this);
-                // need to open the navigation file(s)
-                var steps = new List<Step>();
-                var navigationFile = GetParameterValue<string>("navigation.control.file");
-                var sources = navigationFile.Split(',').ToList();
-                var cases = new List<HLinkDataRow>();
-                var people = new List<PersonAddress>();
-                sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
-
-                var caseTypeId = GetParameterValue<int>("caseTypeSelectedIndex");
-                // set special item values
-                var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value"));
-                caseTypeSelect.ExpectedValue = caseTypeId.ToString();
-                webFetch = SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
-                peopleList.AddRange(people);
-                webFetch.PeopleList = peopleList;
+                    obj.Fetch(startingDate, out webFetch, out List<PersonAddress> people);
+                    peopleList.AddRange(people);
+                    webFetch.PeopleList = peopleList;
+                }
                 startingDate = startingDate.AddDays(1);
             }
             return webFetch;
+        }
+
+        private void WebFetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people)
+        {
+            var results = new SettingsManager().GetOutput(this);
+            // need to open the navigation file(s)
+            var steps = new List<Step>();
+            var navigationFile = GetParameterValue<string>("navigation.control.file");
+            var sources = navigationFile.Split(',').ToList();
+            var cases = new List<HLinkDataRow>();
+            people = new List<PersonAddress>();
+            sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
+
+            var caseTypeId = GetParameterValue<int>("caseTypeSelectedIndex");
+            // set special item values
+            var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value"));
+            caseTypeSelect.ExpectedValue = caseTypeId.ToString();
+            webFetch = SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
         }
 
         private WebFetchResult SearchWeb(XmlContentHolder results, 

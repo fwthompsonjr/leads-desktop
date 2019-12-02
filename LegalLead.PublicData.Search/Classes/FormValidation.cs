@@ -133,6 +133,9 @@ namespace LegalLead.PublicData.Search
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
                 SetKeyValue(siteData, "caseTypeSelectedIndex",
                 Convert.ToInt32(cboCourts.SelectedValue).ToString("0"));
+
+                SetKeyValue(siteData, "criminalCaseInclusion", 
+                    cboCaseType.SelectedValue.ToString());
             }
             return true;
         }

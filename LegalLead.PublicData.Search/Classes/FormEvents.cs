@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Classes;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -13,6 +14,58 @@ namespace LegalLead.PublicData.Search
 {
     public partial class FormMain : Form
     {
+
+        internal void SetDentonStatusLabelFromSetting()
+        {
+            var srcId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
+            if(srcId != (int)SourceType.DentonCounty)
+            {
+                return;
+            }
+            var sb = new StringBuilder();
+            var searchDto = SearchSettingDto.GetDto();
+            var showDistrict = searchDto.CountySearchTypeId == 1;
+            var courtNames = CaseTypeSelectionDto.GetDto(
+                showDistrict ? "dentonDistrictCaseType" : "dentonCountyCaseType");
+            sb.AppendFormat(
+                "Search: {0}.", showDistrict ?
+                "District Courts" : "JP - County Courts");
+
+            var subItemId = showDistrict ?
+                searchDto.DistrictSearchTypeId :
+                searchDto.CountySearchTypeId;
+
+            var courtItemId = showDistrict ? 
+                searchDto.DistrictCourtId + 1: 
+                searchDto.CountyCourtId + 1;
+
+            var courtDropDown = courtNames.DropDowns.First();
+            var nameDropDown = courtDropDown.Options.Find(x => x.Id == courtItemId);
+
+            sb.AppendFormat(" - {0}", nameDropDown.Name);
+            if (showDistrict)
+            {
+                sb.AppendFormat(" - {0}", "Criminal,Civil and Family".Split(',')[subItemId]);
+            }
+            tsStatusLabel.Text = sb.ToString();
+        }
+
+        private void CboWebsite_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var changeProvider = new WebsiteChangeProvider(this);
+            var changeHandler = changeProvider.GetProvider();
+            if (changeHandler == null) return;
+            changeHandler.Change();
+        }
+
+        private void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var source = (DropDown)cboSearchType.SelectedItem;
+            cboCaseType.DataSource = source.Options;
+            cboCaseType.DisplayMember = "Name";
+            cboCaseType.ValueMember = "Id";
+            cboCaseType.SelectedIndex = 0;
+        }
 
         private static System.Timers.Timer aTimer;
 
@@ -92,96 +145,6 @@ namespace LegalLead.PublicData.Search
             Application.DoEvents();
         }
 
-        private void CboWebsite_SelectedValueChanged(object sender, EventArgs e)
-        {
-            var source = (WebNavigationParameter)cboWebsite.SelectedItem;
-            var customList = new List<int>
-            {
-                (int)SourceType.CollinCounty,
-                (int)SourceType.TarrantCounty
-            };
-            ButtonDentonSetting.Visible = (source.Id == (int)SourceType.DentonCounty | source.Id == (int)SourceType.CollinCounty);
-            cboSearchType.Visible = source.Id == (int)SourceType.CollinCounty;
-            cboCaseType.Visible = customList.Contains(source.Id);
-            labelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty ? "Custom Search" : "Search Type";
-
-            cboCourts.Visible = source.Id == (int)SourceType.TarrantCounty;
-            // cboCourts
-            var showList = new List<int> 
-            {
-                4,
-                5
-            };
-            for (int i = 3; i <= 5; i++)
-            {
-                tableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
-                tableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.CollinCounty ? 49 : 0;
-                if (showList.Contains(i))
-                {
-                    tableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.TarrantCounty ? 49 : 0;
-                }
-            }
-            tsStatusLabel.Text = string.Empty;
-            // when in Denton County write Settings
-            if (source.Id == (int)SourceType.DentonCounty)
-            {
-                ButtonDentonSetting.Text = "Settings";
-                SetDentonStatusLabelFromSetting();
-            } else
-            {
-                ButtonDentonSetting.Text = "Password";
-            }
-
-            if (!customList.Contains(source.Id)) return;
-            // custom combo mapping for case type
-            var caseTypeName = source.Id == (int)SourceType.CollinCounty ?
-                "collinCountyCaseType" :
-                "tarrantCountyCustomType";
-            var caseTypes = CaseTypeSelectionDto.GetDto(caseTypeName);
-            cboCaseType.DataSource = caseTypes.DropDowns.First().Options;
-            cboCaseType.DisplayMember = "Name";
-            cboCaseType.ValueMember = "Id";
-        }
-
-        internal void SetDentonStatusLabelFromSetting()
-        {
-            var sb = new StringBuilder();
-            var searchDto = SearchSettingDto.GetDto();
-            var showDistrict = searchDto.CountySearchTypeId == 1;
-            var courtNames = CaseTypeSelectionDto.GetDto(
-                showDistrict ? "dentonDistrictCaseType" : "dentonCountyCaseType");
-            sb.AppendFormat(
-                "Search: {0}.", showDistrict ?
-                "District Courts" : "JP - County Courts");
-
-            var subItemId = showDistrict ?
-                searchDto.DistrictSearchTypeId :
-                searchDto.CountySearchTypeId;
-
-            var courtItemId = showDistrict ? 
-                searchDto.DistrictCourtId + 1: 
-                searchDto.CountyCourtId + 1;
-
-            var courtDropDown = courtNames.DropDowns.First();
-            var nameDropDown = courtDropDown.Options.Find(x => x.Id == courtItemId);
-
-            sb.AppendFormat(" - {0}", nameDropDown.Name);
-            if (showDistrict)
-            {
-                sb.AppendFormat(" - {0}", "Criminal,Civil and Family".Split(',')[subItemId]);
-            }
-            tsStatusLabel.Text = sb.ToString();
-        }
-
-        private void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var source = (DropDown)cboSearchType.SelectedItem;
-            cboCaseType.DataSource = source.Options;
-            cboCaseType.DisplayMember = "Name";
-            cboCaseType.ValueMember = "Id";
-            cboCaseType.SelectedIndex = 0;
-        }
-
 
         private void ProcessStartingMessage()
         {
@@ -220,6 +183,7 @@ namespace LegalLead.PublicData.Search
             Console.WriteLine(message);
 
         }
+
         private void TryOpenExcel()
         {
             var xmlFile = CaseData == null ? string.Empty : CaseData.Result;

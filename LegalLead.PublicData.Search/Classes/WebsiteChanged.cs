@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
@@ -50,14 +47,26 @@ namespace LegalLead.PublicData.Search
             }
 
             if (!customList.Contains(source.Id)) return;
+
+            GetMain.tsStatusLabel.Text = string.Empty;
             // custom combo mapping for case type
+            const string ccCaseName = "collinCountyCaseType";
             var caseTypeName = source.Id == (int)SourceType.CollinCounty ?
-                "collinCountyCaseType" :
+                ccCaseName :
                 "tarrantCountyCustomType";
             var caseTypes = CaseTypeSelectionDto.GetDto(caseTypeName);
-            CboCaseType.DataSource = caseTypes.DropDowns.First().Options;
+            var dropDownOptions = caseTypes.DropDowns.First().Options;
+            CboCaseType.DataSource = dropDownOptions;
             CboCaseType.DisplayMember = "Name";
             CboCaseType.ValueMember = "Id";
+
+            if (caseTypeName.Equals(ccCaseName)) return;
+            var selected = (Option)CboCaseType.SelectedItem;
+            var expected = dropDownOptions.FirstOrDefault(o => o.IsDefault) ?? selected;
+            if (selected.Id.Equals(expected.Id)) return;
+
+            CboCaseType.SelectedItem = expected;
+
         }
     }
 }

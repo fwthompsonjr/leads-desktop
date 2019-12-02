@@ -12,7 +12,8 @@
         },
         {
           "id": 1,
-          "name": "criminal case records",
+          "name": "include criminal case records",
+          "isDefault":  true,
           "query": "#divOption2 > a"
         }
       ]

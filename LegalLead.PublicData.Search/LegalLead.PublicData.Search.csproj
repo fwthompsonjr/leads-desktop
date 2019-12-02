@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>7035</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>7035</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>law-icon.ico</ApplicationIcon>
@@ -65,9 +67,9 @@
     <Compile Include="Classes\IWebsiteChangeEvent.cs" />
     <Compile Include="Classes\SourceType.cs" />
     <Compile Include="Classes\StatusHelper.cs" />
-    <Compile Include="Classes\VersionNameProvider.cs" />
     <Compile Include="Classes\WebsiteChanged.cs" />
     <Compile Include="Classes\WebsiteChangeEvent.cs" />
+    <Compile Include="Classes\WebsiteChangeProvider.cs" />
     <Compile Include="Command\CommandBase.cs" />
     <Compile Include="Command\CommandStartUp.cs" />
     <Compile Include="Command\CredentialCommand.cs" />

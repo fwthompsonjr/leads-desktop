@@ -9,6 +9,8 @@ namespace Thompson.RecordSearch.Utility.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public string Query { get; set; }
+
+        public bool IsDefault { get; set; }
     }
 
     public class DropDown

@@ -33,11 +33,11 @@ namespace LegalLead.Changed.Classes
             const string versionNumber = "{VersionNumber}";
             const string fileVersionNumber = "{FileVersionNumber}";
             var isPreRelease = LatestVersion.Fixes.Any(a => !a.CanPublish);
-            var futureStamp = isPreRelease ? ".Future" : string.Empty;
+            var futureStamp = isPreRelease ? "~Future" : string.Empty;
             var actual = File.ReadAllText(templateSource) ?? string.Empty;
             var expected = new StringBuilder(string.Join(Environment.NewLine, Log.Template))
                 .Replace(versionNumber, LatestVersion.Number)
-                .Replace(fileVersionNumber, $"{LatestVersion.Number}.{DateTime.Now.ToString("yyyy.MM")}{futureStamp}")
+                .Replace(fileVersionNumber, $"{LatestVersion.Number}{DateTime.Now.ToString("yyyyMM")}{futureStamp}")
                 .ToString();
             if (actual.Equals(expected, StringComparison.CurrentCultureIgnoreCase))
             {

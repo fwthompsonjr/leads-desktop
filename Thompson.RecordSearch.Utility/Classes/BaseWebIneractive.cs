@@ -134,7 +134,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <typeparam name="T"></typeparam>
         /// <param name="keyName">Name of the key.</param>
         /// <returns></returns>
-        protected T GetParameterValue<T>(string keyName)
+        internal T GetParameterValue<T>(string keyName)
         {
             if (Parameters == null) return default;
             if (Parameters.Keys == null) return default;

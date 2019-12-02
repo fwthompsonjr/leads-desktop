@@ -44,6 +44,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>7035</NoWarn>
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -54,6 +55,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>7035</NoWarn>
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
@@ -158,8 +160,10 @@
     <Compile Include="Classes\ExcelFileWriter.cs" />
     <Compile Include="Classes\ExcelWriter.cs" />
     <Compile Include="Classes\IWebInteractive.cs" />
+    <Compile Include="Classes\TarrantWebFetch.cs" />
     <Compile Include="Classes\TarrantWebInteractive.cs" />
     <Compile Include="Classes\SettingsManager.cs" />
+    <Compile Include="Classes\VersionNameProvider.cs" />
     <Compile Include="Classes\WebDriverExtensions.cs" />
     <Compile Include="Classes\WebElementExtensions.cs" />
     <Compile Include="Classes\WebInteractive.cs" />
