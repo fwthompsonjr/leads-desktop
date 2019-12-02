@@ -86,6 +86,11 @@
           "canPublish": true
         },
         {
+          "id": 0.0,
+          "description": "infrastructure to allow version specific execution",
+          "canPublish": true
+        },
+        {
           "id": 1.2,
           "description": "UI Changes to allow Tarrant County Criminal Case Search",
           "canPublish": false
@@ -97,7 +102,7 @@
     "using System.Reflection;",
     "",
     "[assembly: AssemblyVersion(\"{VersionNumber}\")]",
-    "[assembly: AssemblyFileVersion(\"{VersionNumber}\")]"
+    "[assembly: AssemblyFileVersion(\"{FileVersionNumber}\")]"
   ],
   "templateFile": "Version.cs"
 }

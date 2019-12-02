@@ -13,12 +13,6 @@ namespace LegalLead.PublicData.Search
 {
     public partial class FormMain : Form
     {
-        private enum SourceType
-        {
-            DentonCounty = 1,
-            CollinCounty = 20,
-            TarrantCounty = 10
-        }
 
         private static System.Timers.Timer aTimer;
 
@@ -149,7 +143,7 @@ namespace LegalLead.PublicData.Search
             cboCaseType.ValueMember = "Id";
         }
 
-        private void SetDentonStatusLabelFromSetting()
+        internal void SetDentonStatusLabelFromSetting()
         {
             var sb = new StringBuilder();
             var searchDto = SearchSettingDto.GetDto();

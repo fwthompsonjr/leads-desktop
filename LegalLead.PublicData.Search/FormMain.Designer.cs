@@ -313,28 +313,28 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dteStart;
-        private System.Windows.Forms.DateTimePicker dteEnding;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ComboBox cboWebsite;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem resetFormToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportDataToolStripMenuItem;
+        internal System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        internal System.Windows.Forms.Label label1;
+        internal System.Windows.Forms.Label label2;
+        internal System.Windows.Forms.DateTimePicker dteStart;
+        internal System.Windows.Forms.DateTimePicker dteEnding;
+        internal System.Windows.Forms.Button button1;
+        internal System.Windows.Forms.StatusStrip statusStrip1;
+        internal System.Windows.Forms.ComboBox cboWebsite;
+        internal System.Windows.Forms.Label label3;
+        internal System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        internal System.Windows.Forms.ToolStripMenuItem resetFormToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem exportDataToolStripMenuItem;
         public System.Windows.Forms.TextBox txConsole;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cboSearchType;
-        private System.Windows.Forms.Label labelCboCaseType;
-        private System.Windows.Forms.ComboBox cboCaseType;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cboCourts;
-        private System.Windows.Forms.Button ButtonDentonSetting;
-        private System.Windows.Forms.ToolStripStatusLabel tsStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
+        internal System.Windows.Forms.Label label4;
+        internal System.Windows.Forms.ComboBox cboSearchType;
+        internal System.Windows.Forms.Label labelCboCaseType;
+        internal System.Windows.Forms.ComboBox cboCaseType;
+        internal System.Windows.Forms.Label label6;
+        internal System.Windows.Forms.ComboBox cboCourts;
+        internal System.Windows.Forms.Button ButtonDentonSetting;
+        internal System.Windows.Forms.ToolStripStatusLabel tsStatusLabel;
+        internal System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
     }
 }
 

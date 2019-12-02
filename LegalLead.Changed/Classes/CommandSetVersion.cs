@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace LegalLead.Changed.Classes
@@ -29,10 +30,14 @@ namespace LegalLead.Changed.Classes
                 return false;
             }
             Console.WriteLine("Latest Version is :=  {0}", LatestVersion.Number);
-            const string replacement = "{VersionNumber}";
+            const string versionNumber = "{VersionNumber}";
+            const string fileVersionNumber = "{FileVersionNumber}";
+            var isPreRelease = LatestVersion.Fixes.Any(a => !a.CanPublish);
+            var futureStamp = isPreRelease ? ".Future" : string.Empty;
             var actual = File.ReadAllText(templateSource) ?? string.Empty;
-            var expected = (new StringBuilder(string.Join(Environment.NewLine, Log.Template)))
-                .Replace(replacement, LatestVersion.Number)
+            var expected = new StringBuilder(string.Join(Environment.NewLine, Log.Template))
+                .Replace(versionNumber, LatestVersion.Number)
+                .Replace(fileVersionNumber, $"{LatestVersion.Number}.{DateTime.Now.ToString("yyyy.MM")}{futureStamp}")
                 .ToString();
             if (actual.Equals(expected, StringComparison.CurrentCultureIgnoreCase))
             {
