@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -79,7 +80,15 @@ namespace LegalLead.PublicData.Search
 
             cboSearchType.SelectedIndex = 0;
             cboCourts.SelectedIndex = 0;
+#if DEBUG 
 
+            // change selected index based upon appSetting
+            var configIndex = ConfigurationManager.AppSettings["form-context-id"];
+            if (!string.IsNullOrEmpty(configIndex))
+            {
+                cboWebsite.SelectedIndex = Convert.ToInt32(configIndex);
+            } 
+#endif
             SetUpTimer();
         }
 

@@ -257,6 +257,10 @@
       <Link>xml\tarrantCountyMapping_1.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Shared\tarrantCountyMapping_2.json">
+      <Link>xml\tarrantCountyMapping_2.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

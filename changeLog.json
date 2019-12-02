@@ -74,6 +74,17 @@
           "canPublish": true
         }
       ]
+    },
+    {
+      "id": 1911,
+      "number": "1.9.1.1",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "infrastructure to allow change to criminal searches in tarrant county",
+          "canPublish": true
+        }
+      ]
     }
   ],
   "template": [

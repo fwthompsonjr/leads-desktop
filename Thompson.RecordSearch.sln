@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C68AF7
 		rsearch_validation.json = rsearch_validation.json
 		Shared\settings.xml = Shared\settings.xml
 		Shared\tarrantCountyCaseType.json = Shared\tarrantCountyCaseType.json
+		Shared\tarrantCountyMapping_2.json = Shared\tarrantCountyMapping_2.json
 		Version.cs = Version.cs
 	EndProjectSection
 EndProject
