@@ -1,0 +1,71 @@
+{
+  "Changes": [
+    {
+      "reportedDate": "2019-10-03T11:30:00",
+      "issues": [
+        {
+          "id": 1.1,
+          "name": "Tarrant County District Case",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "When attempting to pull cases from Tarrant County",
+            "District court cases are not included in search results."
+          ]
+        },
+        {
+          "id": 1.2,
+          "name": "Tarrant County Criminal Case",
+          "description": [
+            "When attempting to pull cases from Tarrant County",
+            "Criminal court cases are not included in search results."
+          ]
+        }
+      ]
+    },
+    {
+      "reportedDate": "2019-10-03T11:30:00",
+      "issues": [
+        {
+          "id": 2.1,
+          "name": "Collin County Probate Search Type",
+          "isFixed": false,
+          "description": [
+            "Under Search Type, probate is misspelled."
+          ]
+        }
+      ]
+    }
+  ],
+  "Versions": [
+    {
+      "id": 187,
+      "number": "1.8.7.0",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "baseline version",
+          "canPublish": true
+        }
+      ]
+    },
+    {
+      "id": 190,
+      "number": "1.9.0.1",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "change to allow tracking of version specific changes to version number",
+          "canPublish" : true
+        }
+      ]
+    }
+  ],
+  "template": [
+    "using System.Reflection;",
+    "",
+    "[assembly: AssemblyVersion(\"{VersionNumber}\")]",
+    "[assembly: AssemblyFileVersion(\"{VersionNumber}\")]"
+  ],
+  "templateFile": "Version.cs"
+}
