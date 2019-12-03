@@ -66,6 +66,72 @@
           ]
         }
       ]
+    },
+    {
+      "reportedDate": "2019-10-03T11:30:00",
+      "issues": [
+        {
+          "id": 3.1,
+          "name": "Denton County - Allow Criminal Extract",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "When searching JP and CC courts, include Criminal cases in extract."
+          ]
+        },
+        {
+          "id": 3.2,
+          "name": "Denton County - District - Correct Case Data Extract",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "When searching District courts, the data extract is not populating",
+            "the case information properly."
+          ]
+        },
+        {
+          "id": 3.3,
+          "name": "Denton County - Settings - Fix Court Listings",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "The drop-down values for Denton County need adjustments to match",
+            "the website, so that user can select [all courts], [all jp], etc."
+          ]
+        }
+      ]
+    },
+    {
+      "reportedDate": "2019-12-02T14:30:00",
+      "issues": [
+        {
+          "id": 4.1,
+          "name": "All - Extract - Case Style Contains Carriage Return",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "Remove hard-return from Case-Style and replace with space."
+          ]
+        },
+        {
+          "id": 4.2,
+          "name": "All - Extract - Add County to Data Extract",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "Add a new column [County] to extract"
+          ]
+        },
+        {
+          "id": 4.3,
+          "name": "All - Extract - Add Court Address to Data Extract",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "Add a new column [CourtAddress] to extract"
+          ]
+        }
+      ]
     }
   ],
   "versions": [
@@ -113,6 +179,11 @@
         {
           "id": 0.0,
           "description": "infrastructure to allow version specific execution",
+          "canPublish": true
+        },
+        {
+          "id": 0.0,
+          "description": "infrastructure to support creation of zip file",
           "canPublish": true
         },
         {
