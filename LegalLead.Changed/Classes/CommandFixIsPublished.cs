@@ -45,6 +45,7 @@ namespace LegalLead.Changed.Classes
                     .ToList();
                 targets.ForEach(x =>
                 {
+                    MarkAsStarted(x);
                     var startTime = x.Description.FirstOrDefault(a => a.StartsWith(changing));
                     if (startTime != null) return;
                     var timeStamp = DateTime.Now.ToString("u");

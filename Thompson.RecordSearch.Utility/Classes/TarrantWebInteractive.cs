@@ -40,9 +40,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             // get any output file to store data from extract
             var startingDate = GetParameterValue<DateTime>("startDate");
             var endingDate = GetParameterValue<DateTime>("endDate");
+            var customSearch = GetParameterValue<int>("criminalCaseInclusion");
             var peopleList = new List<PersonAddress>();
             WebFetchResult webFetch = null;
-            var fetchers = (new TarrantFetchProvider(this)).GetFetches();
+            var fetchers = (new FetchProvider(this)).GetFetches(customSearch);
 
             while (startingDate.CompareTo(endingDate) <= 0)
             {
@@ -61,29 +62,12 @@ namespace Thompson.RecordSearch.Utility.Classes
             return webFetch;
         }
 
-        private void WebFetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people)
-        {
-            var results = new SettingsManager().GetOutput(this);
-            // need to open the navigation file(s)
-            var steps = new List<Step>();
-            var navigationFile = GetParameterValue<string>("navigation.control.file");
-            var sources = navigationFile.Split(',').ToList();
-            var cases = new List<HLinkDataRow>();
-            people = new List<PersonAddress>();
-            sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
 
-            var caseTypeId = GetParameterValue<int>("caseTypeSelectedIndex");
-            // set special item values
-            var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value"));
-            caseTypeSelect.ExpectedValue = caseTypeId.ToString();
-            webFetch = SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
-        }
-
-        private WebFetchResult SearchWeb(XmlContentHolder results, 
-            List<Step> steps, 
-            DateTime startingDate, 
-            DateTime endingDate, 
-            ref List<HLinkDataRow> cases, 
+        private WebFetchResult SearchWeb(XmlContentHolder results,
+            List<Step> steps,
+            DateTime startingDate,
+            DateTime endingDate,
+            ref List<HLinkDataRow> cases,
             out List<PersonAddress> people)
         {
             IWebDriver driver = WebUtilities.GetWebDriver();
@@ -163,7 +147,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             return list;
         }
 
-        
+
         protected List<HLinkDataRow> ExtractCaseData(XmlContentHolder results, List<HLinkDataRow> cases, string actionName, IElementActionBase action)
         {
             if (!actionName.Equals("get-table-html")) return cases;
@@ -214,7 +198,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
             person.Address1 = pieces.First().Trim();
             person.Address3 = pieces.Last().Trim();
-            if(pieces.Count > 2) {
+            if (pieces.Count > 2)
+            {
                 var mx = pieces.Count - 1;
                 person.Address2 = string.Empty;
                 for (int i = 1; i < mx; i++)
@@ -261,7 +246,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
-        
+
         private void AppendToResult(string fileName, string caseData, string xpath)
         {
             var doc = new XmlDocument();

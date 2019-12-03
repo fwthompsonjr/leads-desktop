@@ -7,13 +7,18 @@
       "options": [
         {
           "id": 0,
-          "name": "none",
+          "name": "exclude criminal cases",
           "query": "#divOption1 > a"
         },
         {
           "id": 1,
           "name": "include criminal case records",
-          "isDefault":  true,
+          "isDefault": true,
+          "query": "#divOption2 > a"
+        },
+        {
+          "id": 2,
+          "name": "criminal case records only",
           "query": "#divOption2 > a"
         }
       ]

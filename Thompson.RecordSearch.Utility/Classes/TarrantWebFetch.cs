@@ -12,85 +12,103 @@ namespace Thompson.RecordSearch.Utility.Classes
     {
         interface ITarrantWebFetch
         {
-            TarrantWebInteractive TarrantWeb { get; }
+            string Name { get; }
+            TarrantWebInteractive Web { get; }
 
             void Fetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people);
         }
 
-        class TarrantWebFetch : ITarrantWebFetch
+        class NonCriminalFetch : ITarrantWebFetch
         {
-            public TarrantWebFetch(TarrantWebInteractive tarrantWeb)
+            public NonCriminalFetch(TarrantWebInteractive tarrantWeb)
             {
-                TarrantWeb = tarrantWeb;
+                Web = tarrantWeb;
             }
+            public virtual string Name => "NonCriminal";
 
-            public TarrantWebInteractive TarrantWeb { get; }
+            public TarrantWebInteractive Web { get; }
 
             public virtual void Fetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people)
             {
-                var results = new SettingsManager().GetOutput(TarrantWeb);
-                // need to open the navigation file(s)
                 var steps = new List<Step>();
-                var navigationFile = TarrantWeb.GetParameterValue<string>("navigation.control.file");
+                var navigationFile = Web.GetParameterValue<string>("navigation.control.file");
                 var sources = navigationFile.Split(',').ToList();
-                var cases = new List<HLinkDataRow>();
-                people = new List<PersonAddress>();
-                sources.ForEach(s => steps.AddRange(TarrantWeb.GetAppSteps(s).Steps));
+                sources.ForEach(s => steps.AddRange(Web.GetAppSteps(s).Steps));
+                SetupParameters(steps, out people, out XmlContentHolder results, out List<HLinkDataRow> cases);
+                webFetch = Web.SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
+            }
 
-                var caseTypeId = TarrantWeb.GetParameterValue<int>("caseTypeSelectedIndex");
+            protected void SetupParameters(List<Step> steps, out List<PersonAddress> people, out XmlContentHolder results, out List<HLinkDataRow> cases)
+            {
+                results = new SettingsManager().GetOutput(Web);
+                cases = new List<HLinkDataRow>();
+                people = new List<PersonAddress>();
+
+                var caseTypeId = Web.GetParameterValue<int>("caseTypeSelectedIndex");
                 // set special item values
                 var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value"));
                 caseTypeSelect.ExpectedValue = caseTypeId.ToString();
-                webFetch = TarrantWeb.SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
             }
         }
 
 
-        class TarrantWebCriminalFetch : TarrantWebFetch
+        class CriminalFetch : NonCriminalFetch
         {
-            public TarrantWebCriminalFetch(TarrantWebInteractive tarrantWeb) 
+            public CriminalFetch(TarrantWebInteractive tarrantWeb) 
                 : base(tarrantWeb)
             {
             }
-
+            public override string Name => "Criminal";
             public override void Fetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people)
             {
-                var results = new SettingsManager().GetOutput(TarrantWeb);
-                // need to open the navigation file(s)
                 var steps = new List<Step>();
-                const string navigationFile = @"tarrantCountyMapping_2";
+                var navigationFile = Web.GetParameterValue<string>("navigation.control.alternate.file");
                 var sources = navigationFile.Split(',').ToList();
-                var cases = new List<HLinkDataRow>();
-                people = new List<PersonAddress>();
-                sources.ForEach(s => steps.AddRange(TarrantWeb.GetAppSteps(s).Steps));
-
-                var caseTypeId = TarrantWeb.GetParameterValue<int>("caseTypeSelectedIndex");
-                // set special item values
-                var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value"));
-                caseTypeSelect.ExpectedValue = caseTypeId.ToString();
-                webFetch = TarrantWeb.SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
+                sources.ForEach(s => steps.AddRange(Web.GetAppSteps(s).Steps));
+                SetupParameters(steps, out people, out XmlContentHolder results, out List<HLinkDataRow> cases);
+                webFetch = Web.SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
             }
         }
 
 
-        class TarrantFetchProvider
+        class FetchProvider
         {
 
-            public TarrantWebInteractive TarrantWeb { get; }
-            public TarrantFetchProvider(TarrantWebInteractive tarrantWeb)
+            public TarrantWebInteractive Web { get; }
+            public FetchProvider(TarrantWebInteractive tarrantWeb)
             {
-                TarrantWeb = tarrantWeb;
+                Web = tarrantWeb;
             }
-            public List<ITarrantWebFetch> GetFetches()
+            public List<ITarrantWebFetch> GetFetches(int searchMode = 2)
             {
                 var provider = new VersionNameProvider();
                 var isFuture = provider.Name.Equals(provider.VersionNames.Last());
                 var fetchers = new List<ITarrantWebFetch> 
                 { 
-                    new TarrantWebFetch(TarrantWeb)
+                    new NonCriminalFetch(Web),
+                    new CriminalFetch(Web)
                 };
-                if (!isFuture) return fetchers;
-                fetchers.Add(new TarrantWebCriminalFetch(TarrantWeb));
+                switch (searchMode)
+                {
+                    case 0:
+                        fetchers.RemoveAt(1);
+                        break;
+                    case 2:
+                        fetchers.RemoveAt(0);
+                        break;
+                    default:
+                        break;
+                }
+                if (!isFuture)
+                {
+                    // reset list back to only have the NonCriminal
+                    fetchers = new List<ITarrantWebFetch>
+                    {
+                        new NonCriminalFetch(Web)
+                    };
+                }
+
+
                 return fetchers;
             }
         }

@@ -16,6 +16,7 @@
       <key name="startDate"><![CDATA[]]></key>
       <key name="endDate"><![CDATA[]]></key>
       <key name="navigation.control.file"><![CDATA[tarrantCountyMapping_1]]></key>
+      <key name="navigation.control.alternate.file"><![CDATA[tarrantCountyMapping_2]]></key>
       <key name="hlinkUri"><![CDATA[https://odyssey.tarrantcounty.com/PublicAccess/{0}]]></key>
       <key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
       <key name="criminalCaseInclusion"><![CDATA[0]]></key>

@@ -6,22 +6,46 @@
         {
           "id": 1.1,
           "name": "Tarrant County District Case",
-          "isFixed": false,
-          "fixVersion": 0,
+          "isFixed": true,
+          "fixVersion": 1911,
           "description": [
             "When attempting to pull cases from Tarrant County",
-            "District court cases are not included in search results."
+            "District court cases are not included in search results.",
+            "Start Date: 2019-12-02 22:40:12Z",
+            "End Date: 2019-12-02 22:40:12Z"
           ]
         },
         {
           "id": 1.2,
           "name": "Tarrant County Criminal Case",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 1911,
           "description": [
             "When attempting to pull cases from Tarrant County",
             "Criminal court cases are not included in search results.",
-            "Start Date: 2019-12-02 02:02:14Z"
+            "Start Date: 2019-12-02 02:02:14Z",
+            "End Date: 2019-12-02 22:26:22Z"
+          ]
+        },
+        {
+          "id": 1.2001,
+          "name": "Tarrant County Criminal Case",
+          "isFixed": false,
+          "fixVersion": 1911,
+          "description": [
+            "When attempting to pull criminal cases from Tarrant County",
+            "The Excel output for column L - case style - is incorrect",
+            "Start Date: 2019-12-02 22:26:22Z"
+          ]
+        },
+        {
+          "id": 1.2002,
+          "name": "Tarrant County Criminal Case",
+          "isFixed": false,
+          "fixVersion": 1911,
+          "description": [
+            "When attempting to pull cases from Tarrant County",
+            "The Excel output for column N - plantiff - is blank"
           ]
         }
       ]
@@ -91,8 +115,18 @@
           "canPublish": true
         },
         {
+          "id": 1.1,
+          "description": "Deffered corrections District search as this requires a new login",
+          "canPublish": true
+        },
+        {
           "id": 1.2,
           "description": "UI Changes to allow Tarrant County Criminal Case Search",
+          "canPublish": true
+        },
+        {
+          "id": 1.2001,
+          "description": "Corrections to populate Case Style correctly from Tarrant Lookup",
           "canPublish": false
         }
       ]

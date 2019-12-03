@@ -61,5 +61,24 @@ namespace LegalLead.Changed.Classes
                 }); 
             }
         }
+
+
+
+        protected void MarkAsStarted(Issue issue)
+        {
+            var startTime = issue.Description.FirstOrDefault(a => a.StartsWith(startDate));
+
+            if (startTime != null) return;
+            var timeStamp = DateTime.Now.ToString("u");
+            Console.WriteLine("Starting issue {0} -- [ {1} ] at {2}",
+                issue.Id.ToString("F3"),
+                issue.Name,
+                timeStamp
+                );
+            issue.Description.Add($@"{startDate}{timeStamp}");
+        }
+
+        
+        const string startDate = @"Start Date: ";
     }
 }

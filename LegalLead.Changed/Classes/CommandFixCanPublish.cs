@@ -30,7 +30,6 @@ namespace LegalLead.Changed.Classes
 
         protected override void UpdateChange(Fix obj)
         {
-            const string changing = @"Start Date: ";
             var issueList = Log.Changes
                 .Where(c => c.Issues.Any(x => x.Id == obj.Id & !x.IsFixed))
                 .ToList();
@@ -42,19 +41,9 @@ namespace LegalLead.Changed.Classes
                 var targets = item.Issues
                     .Where(x => x.Id == obj.Id && x.FixVersion == LatestVersion.Id)
                     .ToList();
-                targets.ForEach(x =>
-                {
-                    var startTime = x.Description.FirstOrDefault(a => a.StartsWith(changing));
-                    if (startTime != null) return;
-                    var timeStamp = DateTime.Now.ToString("u");
-                    Console.WriteLine("Starting issue {0} -- [ {1} ] at {2}",
-                        x.Id.ToString("F3"),
-                        x.Name,
-                        timeStamp
-                        );
-                    x.Description.Add($@"{changing}{timeStamp}");
-                });
+                targets.ForEach(MarkAsStarted);
             }
         }
+
     }
 }

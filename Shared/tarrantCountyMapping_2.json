@@ -32,7 +32,7 @@
       "expectedValue": "Criminal Case Records",
       "locator": {
         "find": "xpath",
-        "query": "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[1]"
+        "query": "//a[text()='Criminal Case Records']"
       }
     },
     {
@@ -44,9 +44,9 @@
       }
     },
     {
-      "actionName": "set-select-value",
+      "actionName": "set-dropdown-value",
       "displayName": "case-type-search",
-      "expectedValue": "3",
+      "expectedValue": "5",
       "locator": {
         "find": "css",
         "query": "#SearchBy"

@@ -208,6 +208,7 @@
     <Compile Include="Web\ElementGetHtmlAction.cs" />
     <Compile Include="Web\ElementSendKeyAction.cs" />
     <Compile Include="Web\ElementSetComboBoxValue.cs" />
+    <Compile Include="Web\ElementSetDropDownValue.cs" />
     <Compile Include="Web\ElementSetPasswordAction.cs" />
     <Compile Include="Web\ElementSetValueAction.cs" />
     <Compile Include="Web\ElementTextConfirmAction.cs" />
