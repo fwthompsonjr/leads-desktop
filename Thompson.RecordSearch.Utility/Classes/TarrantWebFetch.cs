@@ -1,8 +1,8 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -54,7 +54,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         class CriminalFetch : NonCriminalFetch
         {
-            public CriminalFetch(TarrantWebInteractive tarrantWeb) 
+            public CriminalFetch(TarrantWebInteractive tarrantWeb)
                 : base(tarrantWeb)
             {
             }
@@ -66,7 +66,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var sources = navigationFile.Split(',').ToList();
                 sources.ForEach(s => steps.AddRange(Web.GetAppSteps(s).Steps));
                 SetupParameters(steps, out people, out XmlContentHolder results, out List<HLinkDataRow> cases);
-                webFetch = Web.SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
+                webFetch = Web.SearchWeb(2, results, steps, startingDate, startingDate, ref cases, out people);
             }
         }
 
@@ -83,8 +83,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 var provider = new VersionNameProvider();
                 var isFuture = provider.Name.Equals(provider.VersionNames.Last());
-                var fetchers = new List<ITarrantWebFetch> 
-                { 
+                var fetchers = new List<ITarrantWebFetch>
+                {
                     new NonCriminalFetch(Web),
                     new CriminalFetch(Web)
                 };
@@ -112,5 +112,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 return fetchers;
             }
         }
+
+
     }
 }

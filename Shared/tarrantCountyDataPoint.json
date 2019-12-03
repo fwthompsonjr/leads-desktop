@@ -1,0 +1,14 @@
+{
+  "dataPoints": [
+    {
+      "name": "CaseStyle",
+      "xpath": "/html/body/table[3]/tbody/tr/td[1]/b",
+      "result": ""
+    },
+    {
+      "name": "Plantiff",
+      "xpath": "//th[text()='State']",
+      "result": ""
+    }
+  ]
+}

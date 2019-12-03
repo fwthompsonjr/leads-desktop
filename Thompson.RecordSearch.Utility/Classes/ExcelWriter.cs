@@ -75,7 +75,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
                 for (int i = 0; i < item.FieldList.Count; i++)
                 {
-                    wsDt.Cells[rowIndex, i+1].Value = item[i];
+                    var content = item[i];
+                    var cleaner = new StringBuilder(content)
+                        .Replace(System.Environment.NewLine, " ")
+                        .ToString();
+                    wsDt.Cells[rowIndex, i+1].Value = cleaner;
                 }
                 
                 rowIndex++;

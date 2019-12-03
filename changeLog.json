@@ -30,12 +30,13 @@
         {
           "id": 1.2001,
           "name": "Tarrant County Criminal Case",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 1911,
           "description": [
             "When attempting to pull criminal cases from Tarrant County",
             "The Excel output for column L - case style - is incorrect",
-            "Start Date: 2019-12-02 22:26:22Z"
+            "Start Date: 2019-12-02 22:26:22Z",
+            "End Date: 2019-12-03 01:44:37Z"
           ]
         },
         {
@@ -127,7 +128,7 @@
         {
           "id": 1.2001,
           "description": "Corrections to populate Case Style correctly from Tarrant Lookup",
-          "canPublish": false
+          "canPublish": true
         }
       ]
     }

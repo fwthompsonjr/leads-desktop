@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
@@ -74,39 +75,55 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             try
             {
+                return Search(results, steps, startingDate, endingDate, ref cases, out people, driver);
 
-                var assertion = new ElementAssertion(driver);
-                var caseList = string.Empty;
-                ElementActions.ForEach(x => x.GetAssertion = assertion);
-                ElementActions.ForEach(x => x.GetWeb = driver);
+            }
+            catch (Exception)
+            {
+                driver.Quit();
+                driver.Dispose();
+                throw;
+            }
+            finally
+            {
+                driver.Quit();
+                driver.Dispose();
+            }
+        }
 
-                foreach (var item in steps)
-                {
-                    // if item action-name = 'set-text'
-                    var actionName = item.ActionName;
-                    if (item.ActionName.Equals("set-text"))
-                    {
-                        if (item.DisplayName.Equals("startDate")) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
-                        if (item.DisplayName.Equals("endDate")) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
-                    }
-                    var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName));
-                    if (action == null) continue;
-                    action.Act(item);
-                    cases = ExtractCaseData(results, cases, actionName, action);
-                    if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
-                    {
-                        caseList = action.OuterHtml;
-                    }
-                }
-                cases.FindAll(c => string.IsNullOrEmpty(c.Address))
-                    .ForEach(c => GetAddressInformation(driver, this, c));
-                people = ExtractPeople(cases);
+        private WebFetchResult SearchWeb(
+            int customSearchType,
+            XmlContentHolder results,
+            List<Step> steps,
+            DateTime startingDate,
+            DateTime endingDate,
+            ref List<HLinkDataRow> cases,
+            out List<PersonAddress> people)
+        {
+            IWebDriver driver = WebUtilities.GetWebDriver();
+
+            try
+            {
+                var fetched = Search(results, steps, startingDate, endingDate, ref cases, out people, driver);
+                if (customSearchType != 2) return fetched;
+                var caseList = cases.ToList();
+                people = fetched.PeopleList;
+                people.ForEach(p => 
+                { 
+                    var source = caseList.FirstOrDefault(c => c.Case.Equals(p.CaseNumber));
+                    if (source == null) return;
+                    if (string.IsNullOrEmpty(source.PageHtml)) return;
+                    var dto = DataPointLocatorDto.Load(source.PageHtml);
+                    p.CaseStyle = dto.DataPoints.First(f => f.Name.Equals("CaseStyle")).Result;
+                });
+                // people = ExtractPeople(cases);
+
 
 
                 return new WebFetchResult
                 {
                     Result = results.FileName,
-                    CaseList = caseList,
+                    CaseList = fetched.CaseList,
                     PeopleList = people
                 };
 
@@ -122,6 +139,50 @@ namespace Thompson.RecordSearch.Utility.Classes
                 driver.Quit();
                 driver.Dispose();
             }
+        }
+
+        private WebFetchResult Search(XmlContentHolder results, 
+            List<Step> steps, DateTime startingDate, 
+            DateTime endingDate, 
+            ref List<HLinkDataRow> cases, 
+            out List<PersonAddress> people, 
+            IWebDriver driver)
+        {
+            var assertion = new ElementAssertion(driver);
+            var caseList = string.Empty;
+            ElementActions.ForEach(x => x.GetAssertion = assertion);
+            ElementActions.ForEach(x => x.GetWeb = driver);
+
+            foreach (var item in steps)
+            {
+                // if item action-name = 'set-text'
+                var actionName = item.ActionName;
+                if (item.ActionName.Equals("set-text"))
+                {
+                    if (item.DisplayName.Equals("startDate")) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
+                    if (item.DisplayName.Equals("endDate")) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
+                }
+                var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName));
+                if (action == null) continue;
+                action.Act(item);
+                cases = ExtractCaseData(results, cases, actionName, action);
+                if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
+                {
+                    caseList = action.OuterHtml;
+                }
+            }
+            cases.FindAll(c => string.IsNullOrEmpty(c.Address))
+                .ForEach(c => GetAddressInformation(driver, this, c));
+            people = ExtractPeople(cases);
+
+
+
+            return new WebFetchResult
+            {
+                Result = results.FileName,
+                CaseList = caseList,
+                PeopleList = people
+            };
         }
 
         protected virtual List<PersonAddress> ExtractPeople(List<HLinkDataRow> cases)
@@ -238,6 +299,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 parent = GetAddressRow(parent, trCol); // put this row-index into config... it can change
                 linkData.Address = new StringBuilder(parent.Text)
                     .Replace(Environment.NewLine, "<br/>").ToString();
+                var findCase = new FindCaseDataPoint();
+                findCase.Find(driver, linkData);
                 driver.Navigate().Back();
             }
             catch (Exception)

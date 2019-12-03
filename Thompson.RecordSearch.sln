@@ -36,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C68AF7
 		Shared\settings.xml = Shared\settings.xml
 		Shared\tarrantCountyCaseType.json = Shared\tarrantCountyCaseType.json
 		Shared\tarrantCountyCustomType.json = Shared\tarrantCountyCustomType.json
+		Shared\tarrantCountyDataPoint.json = Shared\tarrantCountyDataPoint.json
 		Shared\tarrantCountyMapping_2.json = Shared\tarrantCountyMapping_2.json
 		Version.cs = Version.cs
 	EndProjectSection
@@ -71,7 +72,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
+		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 	EndGlobalSection
 EndGlobal

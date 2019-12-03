@@ -138,6 +138,7 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Addressing\FindApplicantByWordMatch.cs" />
+    <Compile Include="Addressing\FindCaseDataPoint.cs" />
     <Compile Include="Addressing\FindDefendantBase.cs" />
     <Compile Include="Addressing\FindDefendantByCondemneeMatch.cs" />
     <Compile Include="Addressing\FindDefendantByPrId.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Classes\WebUtilities.cs" />
     <Compile Include="Classes\XmlContentHolder.cs" />
     <Compile Include="Dto\CaseTypeSelectionDto.cs" />
+    <Compile Include="Dto\DataPointLocatorDto.cs" />
     <Compile Include="Dto\NavigationInstructionDto.cs" />
     <Compile Include="Dto\ParseCaseDataResponseDto.cs" />
     <Compile Include="Dto\UserAccessDto.cs" />
@@ -260,6 +262,10 @@
     </None>
     <None Include="..\Shared\tarrantCountyCustomType.json">
       <Link>xml\tarrantCountyCustomType.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\tarrantCountyDataPoint.json">
+      <Link>xml\tarrantCountyDataPoint.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Shared\tarrantCountyMapping_1.json">
