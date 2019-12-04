@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -67,6 +68,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             // return the person-address collection
             // and the case-list as html table
             //results.Document
+            data.FindAll(x => x.IsCriminal & x.IsMapped & !string.IsNullOrEmpty(x.CriminalCaseStyle))
+                .ForEach(y => y.CaseStyle = y.CriminalCaseStyle);
+
             var caseList = ReadFromFile(Result);
             var personAddresses = results.GetPersonAddresses();
             personAddresses = MapCaseStyle(data, personAddresses);
@@ -116,6 +120,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (personAddresses == null) return personAddresses;
             if (data == null) return personAddresses;
             data = data.FindAll(x => !string.IsNullOrEmpty(x.Case));
+            if(personAddresses.Any(x => string.IsNullOrEmpty(x.CaseNumber)))
+            {
+                System.Diagnostics.Debugger.Break();
+            }
             foreach (var person in personAddresses)
             {
                 var caseNumber = person.CaseNumber;
@@ -125,6 +133,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (dataRow == null) continue;
                 person.CaseStyle = dataRow.CaseStyle;
             }
+            
             return personAddresses;
         }
 
@@ -145,13 +154,20 @@ namespace Thompson.RecordSearch.Utility.Classes
                 tableHtml = RemoveElement(tableHtml, "<img");
             }
             doc.LoadXml(tableHtml);
+            var instructions = SearchSettingDto.GetNonCriminalMapping()
+                    .NavInstructions
+                    .ToList();
             // if doc.DocumentElement.ChildNodes.Count == 4
-            if(doc.DocumentElement.ChildNodes.Count > 4)
+            if(dta.IsCriminal)
             {
-                // System.Diagnostics.Debugger.Break();
+                instructions =
+                    SearchSettingDto.GetCriminalMapping()
+                    .NavInstructions
+                    .ToList();
             }
-            foreach (var item in Parameters.CaseInstructions)
+            foreach (var item in instructions)
             {
+                if (dta.IsCriminal & item.Value.Equals("casestyle", StringComparison.CurrentCultureIgnoreCase)) continue;
                 var node = TryFindNode(doc, item.Value);
                 if (node == null) continue;
                 dta[item.Name] = node.InnerText;

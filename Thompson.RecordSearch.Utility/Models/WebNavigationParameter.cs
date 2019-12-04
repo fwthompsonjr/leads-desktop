@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Xml;
+using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Models
 {
@@ -23,6 +25,10 @@ namespace Thompson.RecordSearch.Utility.Models
         public string Value { get; set; }
     }
 
+    public class NavInstruction
+    {
+        public IList<WebNavInstruction> NavInstructions { get; set; }
+    }
 
     public class WebNavInstruction
     {
@@ -48,6 +54,7 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public string Address { get; set; }
 
+        public bool IsCriminal { get; set; }
         public bool IsMapped { get; set; }
 	    public string Case { get; set; }
 	    public string DateFiled { get; set; }
@@ -55,6 +62,9 @@ namespace Thompson.RecordSearch.Utility.Models
 	    public string CaseType { get; set; }
         public string CaseStyle { get; set; }
         public string PageHtml { get; internal set; }
+
+        public string CriminalCaseStyle
+        { get; set; }
 
         public string this[string fieldName]
         {
@@ -115,8 +125,15 @@ namespace Thompson.RecordSearch.Utility.Models
         private string GetFromData()
         {
             if (string.IsNullOrEmpty(Data)) return null;
+            var webHelper = new WebInteractive();
+            var data = new StringBuilder(Data).ToString();
+            if (data.Contains("<img"))
+            {
+                data = webHelper.RemoveElement(data, "<img");
+                Data = data;
+            }
             var doc = new XmlDocument();
-            doc.LoadXml(Data);
+            doc.LoadXml(data);
             var node = doc.FirstChild.ChildNodes[1];
             if (node == null) return string.Empty;
             return node.InnerText;

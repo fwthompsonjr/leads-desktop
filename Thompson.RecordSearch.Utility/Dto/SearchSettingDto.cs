@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Dto
 {
@@ -18,6 +20,24 @@ namespace Thompson.RecordSearch.Utility.Dto
         public int DistrictCourtId { get; set; }
         public int DistrictSearchTypeId { get; set; }
 
+        // private static NavInstruction _criminalInstructions;
+
+        public static NavInstruction GetNonCriminalMapping()
+        {
+            var dataFile = NonCriminalMappingFile();
+            var data = File.ReadAllText(dataFile);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<NavInstruction>(data);
+
+        }
+        public static NavInstruction GetCriminalMapping()
+        {
+            // if (_criminalInstructions != null) return _criminalInstructions;
+            var dataFile = CriminalMappingFile();
+            var data = File.ReadAllText(dataFile);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<NavInstruction>(data);
+            // _criminalInstructions = Newtonsoft.Json.JsonConvert.DeserializeObject<NavInstruction>(data);
+            // return _criminalInstructions;
+        }
 
         public static SearchSettingDto GetDto()
         {
@@ -45,6 +65,38 @@ namespace Thompson.RecordSearch.Utility.Dto
         {
 
             const string fileSuffix = "denton-settings";
+            const string dataFormat = @"{0}\xml\{1}.json";
+            var appDirectory = ContextManagment.AppDirectory;
+            var dataFile = string.Format(dataFormat,
+                appDirectory,
+                fileSuffix);
+            if (!File.Exists(dataFile))
+            {
+                throw new FileNotFoundException("Unable to find search setings access json");
+            }
+            return dataFile;
+        }
+
+        private static string CriminalMappingFile()
+        {
+
+            const string fileSuffix = "dentonCaseCustomInstruction";
+            const string dataFormat = @"{0}\xml\{1}.json";
+            var appDirectory = ContextManagment.AppDirectory;
+            var dataFile = string.Format(dataFormat,
+                appDirectory,
+                fileSuffix);
+            if (!File.Exists(dataFile))
+            {
+                throw new FileNotFoundException("Unable to find search setings access json");
+            }
+            return dataFile;
+        }
+
+        private static string NonCriminalMappingFile()
+        {
+
+            const string fileSuffix = "dentonCaseCustomInstruction_1";
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
             var dataFile = string.Format(dataFormat,

@@ -34,7 +34,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     parameter.Value = "0";
                 }
-                return Search(GetNavigationUrl(), Cases);
+                var cases = Search(GetNavigationUrl(), Cases);
+                return cases;
             }
 
             protected List<HLinkDataRow> Search(string navTo, List<HLinkDataRow> cases)
@@ -151,7 +152,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                     parameter.Value = "1";
                 }
                 ModifyInstructions("criminalLinkQuery");
-                return Search(GetNavigationUrl(), Cases);
+                var cases = Search(GetNavigationUrl(), Cases);
+                cases.ForEach(c => c.IsCriminal = true);
+                return cases;
             }
 
 

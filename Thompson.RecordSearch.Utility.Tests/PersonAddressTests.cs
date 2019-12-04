@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Tests
@@ -57,6 +59,173 @@ namespace Thompson.RecordSearch.Utility.Tests
             var endingDate = DateTime.Now.Date.AddDays(0);
             var webactive = new WebInteractive(sttg, startDate, endingDate);
             webactive.ReadFromFile(testFile);
+        }
+
+
+
+        [TestMethod]
+        public void CanMapPersonNonCriminalCaseInfo()
+        {
+            var caseInstructions = SearchSettingDto.GetNonCriminalMapping();
+            var expectedList = ExpectedNonCriminalValues();
+
+            var doc = new XmlDocument();
+            doc.LoadXml(NonCriminalRow());
+            var indx = 0;
+            foreach (var item in caseInstructions.NavInstructions)
+            {
+                var node = TryFindNode(doc, item.Value);
+                Assert.IsNotNull(node, $"{item.FriendlyName} is null");
+                Assert.IsFalse(string.IsNullOrEmpty(node.InnerText), $"{item.FriendlyName} is blank or empty");
+                // if (item.Name.Equals("CaseStyle")) continue;
+                Assert.AreEqual(expectedList[indx++].CommandType, node.InnerText,
+                    $"{item.FriendlyName} not matched. ");
+            }
+        }
+
+        [TestMethod]
+        public void CanMapPersonCriminalCaseInfo()
+        {
+            var caseInstructions = SearchSettingDto.GetCriminalMapping();
+            var expectedList = ExpectedNonCriminalValues();
+
+            var doc = new XmlDocument();
+            doc.LoadXml(CriminalRow());
+            var indx = 0;
+            foreach (var item in caseInstructions.NavInstructions)
+            {
+                var node = TryFindNode(doc, item.Value);
+                Assert.IsNotNull(node, $"{item.FriendlyName} is null");
+                Assert.IsFalse(string.IsNullOrEmpty(node.InnerText), $"{item.FriendlyName} is blank or empty");
+                if (item.Name.Equals("CaseStyle")) continue;
+                Assert.AreEqual(expectedList[indx++].CommandType, node.InnerText,
+                    $"{item.FriendlyName} not matched. ");
+            }
+        }
+
+
+
+        private XmlNode TryFindNode(XmlDocument doc, string xpath)
+        {
+            try
+            {
+                var node = doc.FirstChild.SelectSingleNode(xpath);
+                return node;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private string CriminalRow()
+        {
+
+            return " <tr> " + Environment.NewLine +
+            " <td index='1' nowrap='true' valign='top'> " + Environment.NewLine +
+            " <a href='CaseDetail.aspx?CaseID=2702640' style='color: blue'>19-1647J4</a> " + Environment.NewLine +
+            " </td> " + Environment.NewLine +
+            " <td index='2' nowrap='true' valign='top'> " + Environment.NewLine +
+            " <div style='overflow:hidden'>304097</div> " + Environment.NewLine +
+            " </td> " + Environment.NewLine +
+            " <td index='3' nowrap='true' valign='top'> " + Environment.NewLine +
+            " <div>Morton, Mason R</div> " + Environment.NewLine +
+            " <div>08/29/2001</div> " + Environment.NewLine +
+            " </td> " + Environment.NewLine +
+            " <td index='4' valign='top' nowrap='true'> " + Environment.NewLine +
+            " <div>12/03/2019</div> " + Environment.NewLine +
+            " <div>Justice of the Peace Pct #4</div> " + Environment.NewLine +
+            " <div>Hughey, Harris</div> " + Environment.NewLine +
+            " </td> " + Environment.NewLine +
+            " <td index='5' valign='top' nowrap='true'> " + Environment.NewLine +
+            " <div>Adult Traffic Citation</div> " + Environment.NewLine +
+            " <div>Filed</div> " + Environment.NewLine +
+            " </td> " + Environment.NewLine +
+            " <td index='6' nowrap='true' valign='top'> " + Environment.NewLine +
+            " <table border='0' cellpadding='0' cellspacing='0'  " + Environment.NewLine +
+            "  width='100%' style='table-layout: fixed; font-size: 8pt; font-family: arial'> " + Environment.NewLine +
+            " <tbody> " + Environment.NewLine +
+            " <tr> " + Environment.NewLine +
+            " <td style='vertical-align:top;'>SPEEDING &gt;10% ABOVE POSTED LIMIT </td> " + Environment.NewLine +
+            " </tr> " + Environment.NewLine +
+            " </tbody> " + Environment.NewLine +
+            " </table> " + Environment.NewLine +
+            " </td> " + Environment.NewLine +
+            " </tr>";
+        }
+
+        private string NonCriminalRow()
+        {
+            return "<tr> " + Environment.NewLine +
+            "<td index='1' nowrap='true' valign='top'>" + Environment.NewLine +
+            "<a href='CaseDetail.aspx?CaseID=2701630' " + Environment.NewLine +
+            "style='color: blue'>BF-2019-01279</a>" + Environment.NewLine +
+            "</td>" + Environment.NewLine +
+            "<td index='2' valign='top'>State of Texas VS. Jennifer Dansheal Lee</td>" + Environment.NewLine +
+            "<td index='3' valign='top' nowrap='true'>" + Environment.NewLine +
+            "<div>11/26/2019</div><div>County Court At Law #2</div>" + Environment.NewLine +
+            "<div>Ramirez, Robert C.</div></td><td valign='top' nowrap='true'>" + Environment.NewLine +
+            "<div>Bond Forfeiture-Surety</div><div>Active</div>" + Environment.NewLine +
+            "</td>" + Environment.NewLine +
+            "</tr>";
+        }
+        private IList<WebNavInstruction> ExpectedCriminalValues()
+        {
+            var caseInstructions = SearchSettingDto.GetCriminalMapping();
+            foreach (var item in caseInstructions.NavInstructions)
+            {
+                switch (item.Name)
+                {
+                    case "DateFiled":
+                        item.CommandType = "12/03/2019";
+                        break;
+                    case "Case":
+                        item.CommandType = "19-1647J4";
+                        break;
+                    case "Court":
+                        item.CommandType = "Justice of the Peace Pct #4";
+                        break;
+                    case "CaseType":
+                        item.CommandType = "Adult Traffic Citation";
+                        break;
+                    case "CaseStyle":
+                        item.CommandType = "SPEEDING &gt;10% ABOVE POSTED LIMIT";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return caseInstructions.NavInstructions;
+        }
+
+
+        private IList<WebNavInstruction> ExpectedNonCriminalValues()
+        {
+            var caseInstructions = SearchSettingDto.GetCriminalMapping();
+            foreach (var item in caseInstructions.NavInstructions)
+            {
+                switch (item.Name)
+                {
+                    case "DateFiled":
+                        item.CommandType = "11/26/2019";
+                        break;
+                    case "Case":
+                        item.CommandType = "BF-2019-01279";
+                        break;
+                    case "Court":
+                        item.CommandType = "County Court At Law #2";
+                        break;
+                    case "CaseType":
+                        item.CommandType = "Bond Forfeiture-Surety";
+                        break;
+                    case "CaseStyle":
+                        item.CommandType = "State of Texas VS. Jennifer Dansheal Lee";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return caseInstructions.NavInstructions;
         }
     }
 }

@@ -15,6 +15,18 @@ namespace Thompson.RecordSearch.Utility.Addressing
             var helper = new ElementAssertion(driver);
             helper.Navigate(linkData.Uri);
             driver.WaitForNavigation();
+            // get criminal hyperlink
+            // //a[contains(text(),'Criminal')]
+            var criminalLink = TryFindElement(driver, By.XPath("//a[@class = 'ssBlackNavBarHyperlink'][contains(text(),'Criminal')]"));
+            if (criminalLink != null)
+            {
+                var elementCaseName = TryFindElement(driver, By.XPath("/html/body/table[3]/tbody/tr/td[1]/b"));
+                if (elementCaseName != null)
+                {
+                    linkData.CriminalCaseStyle = elementCaseName.Text;
+                    linkData.IsCriminal = true;
+                } 
+            }
             linkData.PageHtml = 
                 GetTable(driver, By.XPath(@"//div[contains(text(),'Party Information')]"));
             

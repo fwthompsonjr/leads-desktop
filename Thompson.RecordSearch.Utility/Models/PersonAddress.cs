@@ -59,7 +59,8 @@ namespace Thompson.RecordSearch.Utility.Models
                 new ParseNameChangeByCaseType { CaseData =
                 string.Format("{0}| {1}", caseType, CaseStyle) },
                 new ParseProtectiveOrderCaseType { CaseData =
-                string.Format("{0}| {1}", caseType, CaseStyle) }
+                string.Format("{0}| {1}", caseType, CaseStyle) },
+                new ParseCaseDataByInGuardianshipStrategy{ CaseData = CaseStyle}
             };
         }
 
@@ -298,7 +299,10 @@ namespace Thompson.RecordSearch.Utility.Models
                     return parts.Split(' ').Last();
                 case "case":
                     var caseNode = personNode.SelectSingleNode("case");
-                    if (caseNode == null) return string.Empty;
+                    if (caseNode == null)
+                    {
+                        return string.Empty;
+                    }
                     return ((XmlCDataSection)caseNode.ChildNodes[0]).Data;
                 case "court":
                     var courtNode = personNode.SelectSingleNode("court");

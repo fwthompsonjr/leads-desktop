@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -54,10 +55,16 @@ namespace Thompson.RecordSearch.Utility.Classes
             string outputFileName = "",
             int websiteId = 1)
         {
-
+            var countyName = GetSettingsManager()
+                .GetNavigation().Find(x => x.Id == websiteId)
+                .Name.Replace("County", "").Trim();
             var pck = excelPackage ?? new ExcelPackage();
             var wsDt = pck.Workbook.Worksheets.Add(worksheetName);
             var rowIndex = 1;
+            int countyIndex = 0;
+            int courtAddressIndex = 0;
+            int courtNameId = 10;
+
             foreach (var item in addressList)
             {
                 if(rowIndex == 1)
@@ -71,6 +78,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                         heading.Value = field;
                         headerIndex++;
                     }
+                    // append new column for County
+                    countyIndex = headerIndex;
+                    courtAddressIndex = headerIndex + 1;
+                    wsDt.Cells[rowIndex, countyIndex].Value = "County";
+                    wsDt.Cells[rowIndex, courtAddressIndex].Value = "CourtAddress";
                     rowIndex++;
                 }
                 for (int i = 0; i < item.FieldList.Count; i++)
@@ -82,12 +94,21 @@ namespace Thompson.RecordSearch.Utility.Classes
                     wsDt.Cells[rowIndex, i+1].Value = cleaner;
                 }
                 
+                wsDt.Cells[rowIndex, countyIndex].Value = countyName;
+                wsDt.Cells[rowIndex, courtAddressIndex].Value =
+                    LookupCountyAddress(websiteId, 
+                    wsDt.Cells[rowIndex, courtNameId].Value.ToString());
                 rowIndex++;
             }
             addressList.Add(new PersonAddress());
             ApplyGridFormatting(websiteId, "people", wsDt, addressList);
             if (saveFile) { FileWriter.SaveAs(pck, outputFileName); }
             return pck;
+        }
+
+        private string LookupCountyAddress(int websiteId, string value)
+        {
+            return "1234 Somewhere, Dallas TX 75222";
         }
 
         public ExcelPackage ConvertToDataTable(
@@ -172,10 +193,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                     wsDt.Cells[rowIndex, cidx + 1].Value = columns[cidx].Name;
                     wsDt.Column(cidx + 1).Width = columns[cidx].ColumnWidth;
                 }
+                wsDt.Column(columns.Count + 2).Width = columns[10].ColumnWidth;
+                wsDt.Column(columns.Count + 1).Width = columns[10].ColumnWidth;
             }
             // apply borders
             var rcount = rows.Count;
-            var ccount = columns.Count;
+            var ccount = columns.Count + 2;
             var rngCells = wsDt.Cells[1, 1, rcount, ccount];
             var rngTopRow = wsDt.Cells[1, 1, 1, ccount];
             const OfficeOpenXml.Style.ExcelBorderStyle xlThin = OfficeOpenXml.Style.ExcelBorderStyle.Thin;

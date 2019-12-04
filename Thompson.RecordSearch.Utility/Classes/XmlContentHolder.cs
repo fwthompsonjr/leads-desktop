@@ -111,6 +111,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 CharacterData.ToString(),
                 closeTable);
             var person = People.FirstChild.CloneNode(true);
+            if(dta.IsCriminal & dta.IsMapped)
+            {
+                // System.Diagnostics.Debugger.Break();
+            }
             person.ChildNodes[0].InnerText = dta.Defendant;
             var addressNode = person.ChildNodes[1];
             ((XmlCDataSection)(addressNode.FirstChild)).Data = dta.Address;
@@ -210,8 +214,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (string.IsNullOrEmpty(dta.Defendant)) return string.Empty;
             if (string.IsNullOrEmpty(dta.Address)) return string.Empty;
-            const string rfmt = @"<tr><td>{0}</td><td>{1}</tr>";
-            return string.Format(rfmt, dta.Defendant, dta.Address);
+            const string rfmt = @"<tr><td caseNumber='{2}'>{0}</td><td>{1}</tr>";
+            return string.Format(rfmt, dta.Defendant, dta.Address, dta.Case ?? "");
         }
 
 

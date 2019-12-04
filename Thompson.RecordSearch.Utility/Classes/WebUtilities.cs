@@ -46,14 +46,21 @@ namespace Thompson.RecordSearch.Utility.Classes
             var isCriminalSearch = parameter != null && parameter.Value.Equals("1");
             tbResult = helper.Process(data, isCriminalSearch);
             var rows = tbResult.FindElements(By.TagName("tr"));
+            if (isCriminalSearch)
+            {
+                // System.Diagnostics.Debugger.Break();
+            }
             foreach (var rw in rows)
             {
                 var html = rw.GetAttribute("outerHTML");
                 var link = TryFindElement(rw, By.TagName("a"));
+                var tdCaseStyle = TryFindElement(rw, By.XPath("td[2]"));
+                var caseStyle = tdCaseStyle == null ? string.Empty : tdCaseStyle.Text;
                 var address = link == null ? string.Empty : link.GetAttribute("href");
-                var dataRow = new HLinkDataRow { Data = html, Uri = address };
+                var dataRow = new HLinkDataRow { Data = html, Uri = address, IsCriminal = isCriminalSearch };
                 if (link != null) {
                     dataRow.Case = link.Text.Trim();
+                    dataRow.CriminalCaseStyle = caseStyle;
                 }
                 cases.Add(new HLinkDataRow { Data = html, Uri = address });
             }

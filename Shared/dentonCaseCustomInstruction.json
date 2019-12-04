@@ -1,0 +1,35 @@
+{
+"NavInstructions":
+[
+	{
+		"Name": "DateFiled",
+		"By" : "XPath",
+		"FriendlyName": "Filing-Date-Selection",
+		"Value": "td[4]/div[1]"
+	},
+	{
+		"Name": "Case",
+		"By" : "XPath",
+		"FriendlyName": "Case-Number-Selection",
+		"Value": "td[1]/a"
+	},
+	{
+		"Name": "Court",
+		"By" : "XPath",
+		"FriendlyName": "Court-Name-Selection",
+		"Value": "td[4]/div[2]"
+	},
+	{
+		"Name": "CaseType",
+		"By" : "XPath",
+		"FriendlyName": "Case-Type-Selection",
+		"Value": "td[5]/div[1]"
+	},
+	{
+		"Name": "CaseStyle",
+		"By" : "XPath",
+		"FriendlyName": "Case-Style-Selection",
+		"Value": "td[6]"
+	}
+]
+}
