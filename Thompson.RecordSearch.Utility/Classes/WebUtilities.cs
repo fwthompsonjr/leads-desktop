@@ -12,7 +12,7 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
-    public class WebUtilities
+    public partial class WebUtilities
     {
 
         /// <summary>
@@ -24,37 +24,13 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns>A list of case information including person information associated to each case</returns>
         public static List<HLinkDataRow> GetCases(WebInteractive data)
         {
+            var fetchers = new List<ICaseFetch> 
+            { 
+                new NonCriminalCaseFetch(data),
+                new CriminalCaseFetch(data)
+            };
             var cases = new List<HLinkDataRow>();
-            var target = data.Parameters.Keys.First(n => n.Name == "baseUri");
-            if (target == null) return cases;
-            var query = data.Parameters.Keys.First(n => n.Name == "query");
-            if (query == null) return cases;
-            var navTo = string.Format("{0}?{1}", target.Value, query.Value);
-            using (var driver = GetWebDriver())
-            {
-                try
-                {
-                    IWebElement tbResult = null;
-                    var helper = new ElementAssertion(driver);
-                    // 
-                    tbResult = GetCaseData(data, ref cases, navTo, helper);
-
-                    var people = cases.FindAll(x => !string.IsNullOrEmpty(x.Uri));// .Take(4).ToList();
-                    people.ForEach(d => Find(driver, data, d));
-                    var found = people.Count(p => !string.IsNullOrEmpty(p.Defendant));
-
-                }
-                catch
-                {
-                    driver.Quit();
-                    throw;
-                }
-                finally
-                {
-                    driver.Close();
-                    driver.Quit();
-                } 
-            }
+            fetchers.ForEach(f => cases.AddRange(f.GetCases()));
             return cases;
         }
 
@@ -64,6 +40,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             IWebElement tbResult;
             helper.Navigate(navTo);
+            // this is where denton county does it's data fetching..... i think
+            // todo: allow criminal hyperlink click modification...
             tbResult = helper.Process(data);
             var rows = tbResult.FindElements(By.TagName("tr"));
             foreach (var rw in rows)

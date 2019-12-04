@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Classes;
@@ -50,6 +51,16 @@ namespace LegalLead.PublicData.Search
                 var startDate = dteStart.Value.Date;
                 var endingDate = dteEnding.Value.Date;
                 var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
+
+                // set parameter criminalCaseInclusion
+                var keys = siteData.Keys;
+                var isDistrictSearch = keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType")) != null;
+                var criminalToggle = keys.FirstOrDefault(x => x.Name.Equals("criminalCaseInclusion"));
+                if (criminalToggle != null)
+                {
+                    criminalToggle.Value = isDistrictSearch ? "0" : "1";
+                }
+
                 IWebInteractive webmgr =
                     WebFetchingProvider.
                     GetInteractive(siteData, startDate, endingDate);

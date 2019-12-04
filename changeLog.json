@@ -202,6 +202,22 @@
           "canPublish": true
         }
       ]
+    },
+    {
+      "id": 1922,
+      "number": "1.9.2.2",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "infrastructure to allow criminal searches in denton county",
+          "canPublish": true
+        },
+        {
+          "id": 0.0,
+          "description": "trouble-shoot issue in pulling criminal data",
+          "canPublish": false
+        }
+      ]
     }
   ],
   "template": [

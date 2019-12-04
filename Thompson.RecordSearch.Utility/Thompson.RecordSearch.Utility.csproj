@@ -169,6 +169,7 @@
     <Compile Include="Classes\WebElementExtensions.cs" />
     <Compile Include="Classes\WebInteractive.cs" />
     <Compile Include="Classes\WebUtilities.cs" />
+    <Compile Include="Classes\WebUtilities_01.cs" />
     <Compile Include="Classes\XmlContentHolder.cs" />
     <Compile Include="Dto\CaseTypeSelectionDto.cs" />
     <Compile Include="Dto\DataPointLocatorDto.cs" />

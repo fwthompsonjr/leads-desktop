@@ -1,0 +1,162 @@
+﻿
+
+using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Thompson.RecordSearch.Utility.Models;
+
+namespace Thompson.RecordSearch.Utility.Classes
+{
+    public partial class WebUtilities
+    {
+        protected interface ICaseFetch
+        {
+            List<HLinkDataRow> GetCases();
+        }
+
+        protected class NonCriminalCaseFetch : ICaseFetch
+        {
+            protected WebInteractive Data { get; }
+            public NonCriminalCaseFetch(WebInteractive data)
+            {
+                Data = data;
+            }
+
+            public virtual List<HLinkDataRow> GetCases()
+            {
+                if (Cases == null)
+                {
+                    return new List<HLinkDataRow>();
+                }
+                return Search(GetNavigationUrl(), Cases);
+            }
+
+            protected List<HLinkDataRow> Search(string navTo, List<HLinkDataRow> cases)
+            {
+                using (var driver = GetWebDriver())
+                {
+                    try
+                    {
+                        var data = Data;
+                        IWebElement tbResult = null;
+                        var helper = new ElementAssertion(driver);
+                        // 
+                        tbResult = GetCaseData(data, ref cases, navTo, helper);
+                        GetPersonData(cases, driver, data);
+
+                    }
+                    catch
+                    {
+                        driver.Quit();
+                        throw;
+                    }
+                    finally
+                    {
+                        driver.Close();
+                        driver.Quit();
+                    }
+                }
+
+                return cases;
+            }
+
+            protected virtual void GetPersonData(List<HLinkDataRow> cases, IWebDriver driver, WebInteractive data)
+            {
+                var people = cases.FindAll(x => !string.IsNullOrEmpty(x.Uri));
+                people.ForEach(d => Find(driver, data, d));
+                var found = people.Count(p => !string.IsNullOrEmpty(p.Defendant));
+            }
+
+            protected List<HLinkDataRow> Cases
+            {
+                get
+                {
+                    if (_dataRows != null) return _dataRows;
+                    var navTo = GetNavigationUrl();
+                    if (string.IsNullOrEmpty(navTo)) return _dataRows;
+                    _dataRows = new List<HLinkDataRow>();
+                    return _dataRows;
+                }
+            }
+
+            protected bool IncludeCriminalRecords()
+            {
+                var criminalCase = GetParameter("criminalCaseInclusion");
+                if (criminalCase == null) return false;
+                if (!int.TryParse(criminalCase.Value, out int index)) return false;
+                return (index == 1);
+            }
+
+            protected WebNavigationKey GetParameter(string parameterName)
+            {
+                if (Data == null) return null;
+                if (Data.Parameters == null) return null;
+                if (Data.Parameters.Keys == null) return null;
+                if (!Data.Parameters.Keys.Any()) return null;
+                const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
+                var keys = Data.Parameters.Keys;
+                return keys.FirstOrDefault(k => k.Name.Equals(parameterName, ccic));
+
+            }
+            protected void ModifyInstructions(string keyName)
+            {
+                const string searchLink = "Search-Hyperlink";
+                const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
+                var key = GetParameter(keyName);
+                if (key == null) return;
+                var searchLinks =
+                    Data.Parameters.Instructions
+                    .FindAll(a => a.FriendlyName.Equals(searchLink, ccic));
+                searchLinks.ForEach(s => s.Value = key.Value);
+            }
+
+            private WebNavigationKey GetBaseUri()
+            {
+                return GetParameter("baseUri");
+            }
+
+            private WebNavigationKey GetQuery()
+            {
+                return GetParameter("query");
+            }
+
+            protected string GetNavigationUrl()
+            {
+                var target = GetBaseUri();
+                var query = GetQuery();
+                if (target == null | query == null)
+                {
+                    return null;
+                }
+                return string.Format("{0}?{1}", target.Value, query.Value);
+            }
+
+            private List<HLinkDataRow> _dataRows;
+        }
+
+        protected class CriminalCaseFetch : NonCriminalCaseFetch
+        {
+            // criminalCaseInclusion
+            public CriminalCaseFetch(WebInteractive data) : base(data)
+            {
+
+            }
+
+            public override List<HLinkDataRow> GetCases()
+            {
+                if (Cases == null)
+                {
+                    return new List<HLinkDataRow>();
+                }
+                if (!IncludeCriminalRecords())
+                    return new List<HLinkDataRow>();
+
+                ModifyInstructions("criminalLinkQuery");
+                return Search(GetNavigationUrl(), Cases);
+            }
+
+
+        }
+    }
+}
