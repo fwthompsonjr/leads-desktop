@@ -200,7 +200,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns></returns>
-        internal IWebElement Process(WebInteractive data)
+        internal IWebElement Process(WebInteractive data, bool isCriminalSearch = false)
         {
             const string dteFmt = "MM/dd/yyyy";
             var startDate = data.StartDate.ToString(dteFmt);
@@ -228,6 +228,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             itms.ForEach(x => x.Value = x.Value.Replace("?SetComboIndex", searchTypeId.ToString()));
             if (!string.IsNullOrEmpty(caseType))
             {
+                var crimalLink = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("criminalLinkQuery"));
+                if(isCriminalSearch && crimalLink != null)
+                {
+                    caseType = crimalLink.Value;
+                }
                 var caseSearchItems = itms.FindAll(x => x.FriendlyName.Equals("Search-Hyperlink"));
                 caseSearchItems.ForEach(x => x.Value = caseType);
             }

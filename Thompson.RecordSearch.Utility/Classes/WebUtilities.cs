@@ -42,7 +42,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             helper.Navigate(navTo);
             // this is where denton county does it's data fetching..... i think
             // todo: allow criminal hyperlink click modification...
-            tbResult = helper.Process(data);
+            var parameter = GetParameter(data, "isCriminalSearch");
+            var isCriminalSearch = parameter != null && parameter.Value.Equals("1");
+            tbResult = helper.Process(data, isCriminalSearch);
             var rows = tbResult.FindElements(By.TagName("tr"));
             foreach (var rw in rows)
             {

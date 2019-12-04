@@ -145,7 +145,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 tableHtml = RemoveElement(tableHtml, "<img");
             }
             doc.LoadXml(tableHtml);
-
+            // if doc.DocumentElement.ChildNodes.Count == 4
+            if(doc.DocumentElement.ChildNodes.Count > 4)
+            {
+                // System.Diagnostics.Debugger.Break();
+            }
             foreach (var item in Parameters.CaseInstructions)
             {
                 var node = TryFindNode(doc, item.Value);

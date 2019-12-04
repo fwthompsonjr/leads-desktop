@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -40,6 +41,7 @@ namespace LegalLead.PublicData.Search
             
             try
             {
+                KillProcess("chromedriver");
                 SetStatus(StatusTypes.Running);
                 if (!ValidateCustom())
                 {
@@ -53,10 +55,11 @@ namespace LegalLead.PublicData.Search
                 var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
 
                 // set parameter criminalCaseInclusion
+                var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
                 var keys = siteData.Keys;
                 var isDistrictSearch = keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType")) != null;
                 var criminalToggle = keys.FirstOrDefault(x => x.Name.Equals("criminalCaseInclusion"));
-                if (criminalToggle != null)
+                if (isDentonCounty && criminalToggle != null)
                 {
                     criminalToggle.Value = isDistrictSearch ? "0" : "1";
                 }
@@ -69,6 +72,7 @@ namespace LegalLead.PublicData.Search
 
                 ProcessEndingMessage();
                 SetStatus(StatusTypes.Finished);
+                KillProcess("chromedriver");
                 if (CaseData == null)
                 {
                     throw new ApplicationException("No data found from case extract.");
@@ -146,6 +150,14 @@ namespace LegalLead.PublicData.Search
             else
             {
                 var result = new FormCredential().ShowDialog(this);
+            }
+        }
+
+        private void KillProcess(string processName)
+        {
+            foreach (var process in Process.GetProcessesByName(processName))
+            {
+                process.Kill();
             }
         }
     }

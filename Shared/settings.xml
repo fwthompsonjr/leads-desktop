@@ -8,6 +8,7 @@
       <key name="dateRangeMaxDays"><![CDATA[5]]></key>
       <key name="startDate"><![CDATA[]]></key>
       <key name="endDate"><![CDATA[]]></key>
+      <key name="isCriminalSearch"><![CDATA[0]]></key>
       <key name="criminalCaseInclusion"><![CDATA[0]]></key>
       <key name="criminalLinkQuery"><![CDATA[//a[text()='JP & County Court: Criminal Case Records']]]></key>
       <key name="nonCriminalLinkQuery"><![CDATA[//a[text()='JP & County Court: Civil, Family & Probate Case Records']]]></key>

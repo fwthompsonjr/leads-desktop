@@ -29,6 +29,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     return new List<HLinkDataRow>();
                 }
+                var parameter = GetParameter(Data, "isCriminalSearch");
+                if (parameter != null)
+                {
+                    parameter.Value = "0";
+                }
                 return Search(GetNavigationUrl(), Cases);
             }
 
@@ -82,28 +87,17 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             protected bool IncludeCriminalRecords()
             {
-                var criminalCase = GetParameter("criminalCaseInclusion");
+                var criminalCase = GetParameter(Data, "criminalCaseInclusion");
                 if (criminalCase == null) return false;
                 if (!int.TryParse(criminalCase.Value, out int index)) return false;
                 return (index == 1);
             }
 
-            protected WebNavigationKey GetParameter(string parameterName)
-            {
-                if (Data == null) return null;
-                if (Data.Parameters == null) return null;
-                if (Data.Parameters.Keys == null) return null;
-                if (!Data.Parameters.Keys.Any()) return null;
-                const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
-                var keys = Data.Parameters.Keys;
-                return keys.FirstOrDefault(k => k.Name.Equals(parameterName, ccic));
-
-            }
             protected void ModifyInstructions(string keyName)
             {
                 const string searchLink = "Search-Hyperlink";
                 const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
-                var key = GetParameter(keyName);
+                var key = GetParameter(Data, keyName);
                 if (key == null) return;
                 var searchLinks =
                     Data.Parameters.Instructions
@@ -113,12 +107,12 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             private WebNavigationKey GetBaseUri()
             {
-                return GetParameter("baseUri");
+                return GetParameter(Data, "baseUri");
             }
 
             private WebNavigationKey GetQuery()
             {
-                return GetParameter("query");
+                return GetParameter(Data, "query");
             }
 
             protected string GetNavigationUrl()
@@ -151,12 +145,34 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
                 if (!IncludeCriminalRecords())
                     return new List<HLinkDataRow>();
-
+                var parameter = GetParameter(Data, "isCriminalSearch");
+                if(parameter != null)
+                {
+                    parameter.Value = "1";
+                }
                 ModifyInstructions("criminalLinkQuery");
                 return Search(GetNavigationUrl(), Cases);
             }
 
 
         }
+
+
+        protected static WebNavigationKey GetParameter(
+            WebInteractive data,
+            string parameterName)
+        {
+            if (data == null) return null;
+            if (data.Parameters == null) return null;
+            if (data.Parameters.Keys == null) return null;
+            if (!data.Parameters.Keys.Any()) return null;
+            const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
+            var keys = data.Parameters.Keys;
+            return keys.FirstOrDefault(k => k.Name.Equals(parameterName, ccic));
+
+        }
+
+
+
     }
 }
