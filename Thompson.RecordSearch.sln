@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C68AF7
 		Shared\collinCountyCaseType.json = Shared\collinCountyCaseType.json
 		Shared\collinCountyMapping_1.json = Shared\collinCountyMapping_1.json
 		Shared\collinCountyUserMap.json = Shared\collinCountyUserMap.json
+		Shared\courtAddress.json = Shared\courtAddress.json
 		Shared\CourtRecordSearch.xlsm = Shared\CourtRecordSearch.xlsm
 		Shared\denton-settings.json = Shared\denton-settings.json
 		Shared\dentonCaseCustomInstruction.json = Shared\dentonCaseCustomInstruction.json
@@ -74,7 +75,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
+		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 	EndGlobalSection
 EndGlobal

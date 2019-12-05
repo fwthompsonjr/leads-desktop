@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -28,23 +29,32 @@ namespace Thompson.RecordSearch.Utility.Classes
             FileWriter = fileWriter;
         }
 
+#pragma warning disable CA1822 // Mark members as static
         public void WriteToExcel(WebFetchResult fetchResult)
+#pragma warning restore CA1822 // Mark members as static
         {
+            if(fetchResult == null)
+            {
+                throw new ArgumentNullException(nameof(fetchResult));
+            }
+
             var writer = new ExcelWriter();
             var tmpFileName = fetchResult.Result.Replace(".xml", ".xlsx");
-
-            var workBook = writer.ConvertToPersonTable(
+            using (var workBook = writer.ConvertToPersonTable(
                 addressList: fetchResult.PeopleList,
                 worksheetName: "Addresses",
                 saveFile: false,
-                outputFileName: tmpFileName);
-
-            writer.ConvertToDataTable(
+                outputFileName: tmpFileName))
+            {
+                writer.ConvertToDataTable(
                 excelPackage: workBook,
                 htmlTable: fetchResult.CaseList,
                 worksheetName: "CaseData",
                 saveFile: true,
                 outputFileName: tmpFileName);
+            }         
+
+            
         }
 
         public ExcelPackage ConvertToPersonTable(
@@ -106,9 +116,20 @@ namespace Thompson.RecordSearch.Utility.Classes
             return pck;
         }
 
-        private string LookupCountyAddress(int websiteId, string value)
+        private static string LookupCountyAddress(int websiteId, string value)
         {
-            return "1234 Somewhere, Dallas TX 75222";
+            const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
+            var list = SearchSettingDto.GetCourtLookupList.CourtLocations;
+            var court = list.FirstOrDefault(
+                c => c.Id.Equals(websiteId.ToString("0"), ccic));
+            if (court == null) return string.Empty;
+            var courtLocation = court.Courts
+                .FirstOrDefault(a => a.Name.Equals(value, ccic));
+            if (courtLocation != null) return courtLocation.Address;
+            var blankLocation = court.Courts
+                .FirstOrDefault(a => a.Name.Equals("default", ccic));
+
+            return blankLocation != null ? blankLocation.Address : string.Empty;
         }
 
         public ExcelPackage ConvertToDataTable(
@@ -184,7 +205,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             System.Collections.Generic.List<T> rows)
         {
             const int rowIndex = 1;
-            var columns = GetSettingsManager().GetColumnLayouts(websiteId, sectionName);
+            var isCaseLayout = "people" == sectionName;
+                var columns = GetSettingsManager().GetColumnLayouts(websiteId, sectionName);
             if (columns != null)
             {
                 // format first row
@@ -193,12 +215,15 @@ namespace Thompson.RecordSearch.Utility.Classes
                     wsDt.Cells[rowIndex, cidx + 1].Value = columns[cidx].Name;
                     wsDt.Column(cidx + 1).Width = columns[cidx].ColumnWidth;
                 }
-                wsDt.Column(columns.Count + 2).Width = columns[10].ColumnWidth;
-                wsDt.Column(columns.Count + 1).Width = columns[10].ColumnWidth;
+                if (isCaseLayout)
+                {
+                    wsDt.Column(columns.Count + 2).Width = columns[10].ColumnWidth;
+                    wsDt.Column(columns.Count + 1).Width = columns[10].ColumnWidth; 
+                }
             }
             // apply borders
             var rcount = rows.Count;
-            var ccount = columns.Count + 2;
+            var ccount = isCaseLayout ? columns.Count + 2 : columns.Count;
             var rngCells = wsDt.Cells[1, 1, rcount, ccount];
             var rngTopRow = wsDt.Cells[1, 1, 1, ccount];
             const OfficeOpenXml.Style.ExcelBorderStyle xlThin = OfficeOpenXml.Style.ExcelBorderStyle.Thin;

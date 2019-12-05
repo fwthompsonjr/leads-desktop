@@ -69,7 +69,9 @@ namespace OpenQA.Selenium.Support.UI
         /// <returns><see langword="true"/> when the URL is what it should be; otherwise, <see langword="false"/>.</returns>
         public static Func<IWebDriver, bool> UrlToBe(string url)
         {
+#pragma warning disable CA1308 // Normalize strings to uppercase
             return (driver) => { return driver.Url.ToLowerInvariant().Equals(url.ToLowerInvariant()); };
+#pragma warning restore CA1308 // Normalize strings to uppercase
         }
 
         /// <summary>

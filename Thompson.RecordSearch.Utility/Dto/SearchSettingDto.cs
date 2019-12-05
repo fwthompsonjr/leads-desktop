@@ -5,7 +5,23 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Dto
 {
+    public class Court
+    {
+        public string Name { get; set; }
+        public string FullName { get; set; }
+        public string Address { get; set; }
+    }
 
+    public class CourtLocation
+    {
+        public string Id { get; set; }
+        public IList<Court> Courts { get; set; }
+    }
+
+    public class CourtLookup
+    {
+        public IList<CourtLocation> CourtLocations { get; set; }
+    }
 
     public class Example
     {
@@ -20,7 +36,19 @@ namespace Thompson.RecordSearch.Utility.Dto
         public int DistrictCourtId { get; set; }
         public int DistrictSearchTypeId { get; set; }
 
-        // private static NavInstruction _criminalInstructions;
+        public static CourtLookup GetCourtLookupList
+        {
+            get { return _courtJson ?? (_courtJson = GetCourtLookup()); }
+        }
+
+        private static CourtLookup _courtJson;
+
+        private static CourtLookup GetCourtLookup()
+        {
+            var dataFile = CourtLookupFile();
+            var data = File.ReadAllText(dataFile);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CourtLookup>(data);
+        }
 
         public static NavInstruction GetNonCriminalMapping()
         {
@@ -97,6 +125,22 @@ namespace Thompson.RecordSearch.Utility.Dto
         {
 
             const string fileSuffix = "dentonCaseCustomInstruction_1";
+            const string dataFormat = @"{0}\xml\{1}.json";
+            var appDirectory = ContextManagment.AppDirectory;
+            var dataFile = string.Format(dataFormat,
+                appDirectory,
+                fileSuffix);
+            if (!File.Exists(dataFile))
+            {
+                throw new FileNotFoundException("Unable to find search setings access json");
+            }
+            return dataFile;
+        }
+
+        private static string CourtLookupFile()
+        {
+
+            const string fileSuffix = "courtAddress";
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
             var dataFile = string.Format(dataFormat,

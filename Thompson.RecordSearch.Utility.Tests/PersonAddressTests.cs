@@ -103,7 +103,12 @@ namespace Thompson.RecordSearch.Utility.Tests
             }
         }
 
-
+        [TestMethod]
+        public void CanGetCourtLookUpList()
+        {
+            var list = SearchSettingDto.GetCourtLookupList;
+            Assert.IsNotNull(list);
+        }
 
         private XmlNode TryFindNode(XmlDocument doc, string xpath)
         {

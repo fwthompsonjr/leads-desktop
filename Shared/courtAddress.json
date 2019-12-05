@@ -1,0 +1,171 @@
+{
+  "courtLocations": [
+    {
+      "id": "1",
+      "courts": [
+		{ "name": "default", "address": "" },
+        {
+          "name": "County Court At Law #1",
+          "fullName": "County Court at Law 1",
+          "address": "210 South Woodrow Lane Denton, TX 76205-6304"
+        },
+        {
+          "name": "County Court At Law #2",
+          "fullName": "County Court at Law 2",
+          "address": "1451 East McKinney Street, Denton TX 76209-4524"
+        },
+        {
+          "name": "Justice of the Peace Pct #1",
+          "fullName": "Justice of the Peace Pct #1",
+          "address": "1463 East McKinney Street, Denton TX 76209-4524"
+        },
+        {
+          "name": "Justice of the Peace Pct #2",
+          "fullName": "Justice of the Peace Pct #2",
+          "address": "1457 East McKinney Street, Denton TX 76209-4524"
+        },
+        {
+          "name": "Justice of the Peace Pct #3",
+          "fullName": "Justice of the Peace Pct #3",
+          "address": "1452 East McKinney Street, Denton TX 76209-4524"
+        },
+        {
+          "name": "Justice of the Peace Pct #4",
+          "fullName": "Justice of the Peace Pct #4",
+          "address": "1450 East McKinney Street, Denton TX 76209-4524"
+        },
+        {
+          "name": "Justice of the Peace Pct #5",
+          "fullName": "Justice of the Peace Pct #5",
+          "address": "1462 East McKinney Street, Denton TX 76209-4524"
+        },
+        {
+          "name": "Justice of the Peace Pct #6",
+          "fullName": "Justice of the Peace Pct #6",
+          "address": "1029 West Rosemeade Parkway, Carrollton, TX 75007-6251"
+        },
+        {
+          "name": "County Criminal Court #1",
+          "fullName": "County Criminal Court #1",
+          "address": "1450 East McKinney Street, Suite 1419, Denton, TX 76209-4524"
+        },
+        {
+          "name": "County Criminal Court #2",
+          "fullName": "County Criminal Court #2",
+          "address": "1450 East McKinney Street, Denton, TX 76209-4524"
+        },
+        {
+          "name": "County Criminal Court #3",
+          "fullName": "County Criminal Court #3",
+          "address": "1450 East McKinney Street, Suite 2447, Denton, TX 76209-4524"
+        },
+        {
+          "name": "County Criminal Court #4",
+          "fullName": "County Criminal Court #4",
+          "address": "1450 East McKinney Street, Suite 2306, Denton, TX 76209-4524"
+        },
+        {
+          "name": "County Criminal Court #5",
+          "fullName": "County Criminal Court #5",
+          "address": "1450 East McKinney Street, Suite 2315, Denton, TX 76209-4524"
+        },
+		{
+			"name": "Probate Court",
+			"fullName": "Probate Court",
+			"address": "1450 E McKinney St # 2412, Denton, TX 76209"
+		}
+      ]
+    },
+    {
+      "id": "10",
+      "courts": [
+		{ "name": "default", "address": "100 West Weatherford, Fort Worth, TX 76196-0240" },
+        {
+          "name": "County Court at Law No. 1",
+          "fullName": "County Court at Law No. 1",
+          "address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+        },
+        {
+          "name": "County Court at Law No. 2",
+          "fullName": "County Court at Law No. 2",
+          "address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+        },
+        {
+          "name": "County Court at Law No. 3",
+          "fullName": "County Court at Law No. 3",
+          "address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+        },
+        {
+          "name": "JP No. 1",
+          "fullName": "JP No. 1",
+          "address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+        },
+        {
+          "name": "JP No. 2",
+          "fullName": "JP No. 2",
+          "address": "701 East Abram Street, Suite 200, Arlington, Texas 76010"
+        },
+        {
+          "name": "JP No. 3",
+          "fullName": "JP No. 3",
+          "address": "Northeast Courthouse, 645 Grapevine Highway, Suite 220, Hurst, Texas 76054"
+        },
+        {
+          "name": "JP No. 4",
+          "fullName": "JP No. 4",
+          "address": "6713 Telephone Road, Suite 201, Lake Worth Texas 76135"
+        },
+        {
+          "name": "JP No. 5",
+          "fullName": "JP No. 5",
+          "address": "350 W. Belknap, Room 112-C, Fort Worth, Texas 76196"
+        },
+        {
+          "name": "JP No. 6",
+          "fullName": "JP No. 6",
+          "address": "6559 Granbury Road, Fort Worth, Texas 76133"
+        },
+        {
+          "name": "JP No. 7",
+          "fullName": "JP No. 7",
+          "address": "1105 E. Broad Street, Suite 202, Mansfield Texas 76063"
+        },
+        {
+          "name": "JP No. 8",
+          "fullName": "JP No. 8",
+          "address": "Poly Subcourthouse, 3500 Miller Avenue, Fort Worth, Texas 76119"
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "courts": [
+		{ "name": "default", "address": "2100 Bloomdale Road, McKinney, TX 75071" },
+        { "name": "JP 1", "fullName": "JP 1", "address": "2300 Bloomdale Rd., Suite 1164, McKinney, TX 75071" }, 
+		{ "name": "JP 2", "fullName": "JP 2", "address": "406A Raymond Street, Farmersville, TX 75442" }, 
+		{ "name": "JP 3-1", "fullName": "JP 3-1", "address": "920 E. Park Blvd., Plano, TX 75074" }, 
+		{ "name": "JP 3-2", "fullName": "JP 3-2", "address": "920 E. Park Blvd., Plano, TX 75074" }, 
+		{ "name": "JP 4", "fullName": "JP 4", "address": "8585 John Wesley, Suite 130, Frisco, TX 75034" }, 
+		{ "name": "CCL 1", "fullName": "CCL 1", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "CCL 2", "fullName": "CCL 2", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "CCL 3", "fullName": "CCL 3", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "CCL 4", "fullName": "CCL 4", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "CCL 5", "fullName": "CCL 5", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "CCL 6", "fullName": "CCL 6", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "CCL 7", "fullName": "CCL 7", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "199th District Court", "fullName": "199th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "296th District Court", "fullName": "296th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "429th District Court", "fullName": "429th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "471st District Court", "fullName": "471st District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "468th District Court", "fullName": "468th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "469th District Court", "fullName": "469th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "470th District Court", "fullName": "470th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "380th District Court", "fullName": "380th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "401st District Court", "fullName": "401st District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "416th District Court", "fullName": "416th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "417th District Court", "fullName": "417th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+		{ "name": "219th District Court", "fullName": "219th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }
+      ]
+    }
+  ]
+}

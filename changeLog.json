@@ -226,7 +226,18 @@
         {
           "id": 3.1,
           "description": "include Criminal cases in extract",
-          "canPublish": false
+          "canPublish": true
+        }
+      ]
+    },
+    {
+      "id": 1936,
+      "number": "1.9.3.6",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "publishing release for item fixes above",
+          "canPublish": true
         }
       ]
     }

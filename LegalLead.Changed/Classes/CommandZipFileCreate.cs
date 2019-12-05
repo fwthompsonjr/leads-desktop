@@ -16,7 +16,7 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
-                throw new ArgumentOutOfRangeException("SourceFile");
+                throw new InvalidOperationException();
 
             if (LatestVersion == null)
             {
@@ -25,7 +25,7 @@ namespace LegalLead.Changed.Classes
             var sourceDirectory = GetSourceDirectoryName();
             if (!Directory.Exists(sourceDirectory))
             {
-                throw new DirectoryNotFoundException("Project source directory is not accessible");
+                throw new DirectoryNotFoundException();
             }
             var zipFile = TargetFileName;
             if (IsBeta && File.Exists(zipFile))
