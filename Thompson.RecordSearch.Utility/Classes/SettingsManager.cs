@@ -105,7 +105,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (doc.DocumentElement == null) return null;
             var parent = doc.DocumentElement.SelectSingleNode(
                 string.Format("layouts/layout[@id='{0}' and @name='{1}']", 
-                id,
+                id != 1 ? 1 : id,
                 sectionName));
             if (parent == null) return null;
             var columnNode = parent.FirstChild;
@@ -300,6 +300,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             var targetFile = new Uri(string.Format(@"{0}\Utilities\CourtRecordSearch.xlsm", execName)).AbsolutePath;
             if (!File.Exists(targetFile)) return string.Empty;
             return targetFile;
+        }
+
+
+        /// <summary>
+        /// Gets the name of the application directory.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAppFolderName()
+        {
+            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            return Path.GetDirectoryName(execName);
         }
 
         public static List<WebNavInstruction> GetInstructions(int siteId)

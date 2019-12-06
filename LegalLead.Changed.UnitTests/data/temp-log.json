@@ -1,11 +1,9 @@
-{
+﻿{
   "changes": [
     {
-      "changeId": "100",
       "reportedDate": "2019-10-03T11:30:00",
       "issues": [
         {
-          "changeId": "100",
           "id": 1.1,
           "name": "Tarrant County District Case",
           "isFixed": true,
@@ -18,7 +16,6 @@
           ]
         },
         {
-          "changeId": "100",
           "id": 1.2,
           "name": "Tarrant County Criminal Case",
           "isFixed": true,
@@ -31,7 +28,6 @@
           ]
         },
         {
-          "changeId": "100",
           "id": 1.2001,
           "name": "Tarrant County Criminal Case",
           "isFixed": true,
@@ -44,7 +40,6 @@
           ]
         },
         {
-          "changeId": "100",
           "id": 1.2002,
           "name": "Tarrant County Criminal Case",
           "isFixed": false,
@@ -57,11 +52,9 @@
       ]
     },
     {
-      "changeId": "200",
       "reportedDate": "2019-10-03T11:30:00",
       "issues": [
         {
-          "changeId": "200",
           "id": 2.1,
           "name": "Collin County Probate Search Type",
           "isFixed": true,
@@ -75,11 +68,9 @@
       ]
     },
     {
-      "changeId": "300",
       "reportedDate": "2019-10-03T11:30:00",
       "issues": [
         {
-          "changeId": "300",
           "id": 3.1,
           "name": "Denton County - Allow Criminal Extract",
           "isFixed": false,
@@ -90,7 +81,6 @@
           ]
         },
         {
-          "changeId": "300",
           "id": 3.2,
           "name": "Denton County - District - Correct Case Data Extract",
           "isFixed": true,
@@ -103,7 +93,6 @@
           ]
         },
         {
-          "changeId": "300",
           "id": 3.3,
           "name": "Denton County - Settings - Fix Court Listings",
           "isFixed": true,
@@ -118,11 +107,9 @@
       ]
     },
     {
-      "changeId": "400",
       "reportedDate": "2019-12-02T14:30:00",
       "issues": [
         {
-          "changeId": "400",
           "id": 4.1,
           "name": "All - Extract - Case Style Contains Carriage Return",
           "isFixed": true,
@@ -134,7 +121,6 @@
           ]
         },
         {
-          "changeId": "400",
           "id": 4.2,
           "name": "All - Extract - Add County to Data Extract",
           "isFixed": true,
@@ -146,7 +132,6 @@
           ]
         },
         {
-          "changeId": "400",
           "id": 4.3,
           "name": "All - Extract - Add Court Address to Data Extract",
           "isFixed": true,
@@ -160,11 +145,9 @@
       ]
     },
     {
-      "changeId": "500",
       "reportedDate": "2019-12-05T10:15:00",
       "issues": [
         {
-          "changeId": "500",
           "id": 5.1,
           "name": "Collin County Address Mapping",
           "isFixed": true,
@@ -176,7 +159,6 @@
           ]
         },
         {
-          "changeId": "500",
           "id": 5.2,
           "name": "Collin County Case Style for Criminal Cases",
           "isFixed": true,
@@ -188,25 +170,12 @@
           ]
         },
         {
-          "changeId": "500",
           "id": 5.3,
           "name": "Tarrant County Criminal Cases",
           "isFixed": false,
           "fixVersion": 0,
           "description": [
             "Tarrant County - No criminal cases are being selected for tarrant county"
-          ]
-        },
-        {
-          "changeId": "500",
-          "id": 5.301,
-          "name": "Tarrant County Criminal Cases",
-          "isFixed": true,
-          "fixVersion": 11010,
-          "description": [
-            "Tarrant County - No criminal cases are being selected for tarrant county",
-            "Start Date: 2019-12-06 15:03:45Z",
-            "End Date: 2019-12-06 16:07:03Z"
           ]
         }
       ]
@@ -369,11 +338,6 @@
           "id": 0.0,
           "description": "Tarrant County - Does not fetch criminal cases",
           "canPublish": false
-        },
-        {
-          "id": 5.301,
-          "description": "Tarrant County - Excel output overwrites plaintiff",
-          "canPublish": true
         }
       ]
     }
@@ -443,12 +407,6 @@
       "id": 5.2,
       "correctionDate": "2019-12-05T21:46:31.7677324-06:00",
       "description": "Collin County - Collin criminal pulls through with Case Style being the person's name and birthdate Start Date: 2019-12-05 21:45:18Z End Date: 2019-12-05 21:45:18Z",
-      "isWritten": false
-    },
-    {
-      "id": 5.301,
-      "correctionDate": "2019-12-06T16:07:10.1112981-06:00",
-      "description": "Tarrant County - No criminal cases are being selected for tarrant county Start Date: 2019-12-06 15:03:45Z End Date: 2019-12-06 16:07:03Z",
       "isWritten": false
     }
   ],

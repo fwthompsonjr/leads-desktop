@@ -53,13 +53,16 @@
     <Compile Include="Classes\CommandFixCanPublish.cs" />
     <Compile Include="Classes\CommandFixIsPublished.cs" />
     <Compile Include="Classes\CommandLoadLog.cs" />
+    <Compile Include="Classes\CommandMapChangeIndexes.cs" />
     <Compile Include="Classes\CommandMapFixes.cs" />
     <Compile Include="Classes\CommandSetVersion.cs" />
+    <Compile Include="Classes\CommandUpdateReadMe.cs" />
     <Compile Include="Classes\CommandZipDirectoryCreate.cs" />
     <Compile Include="Classes\CommandZipFileCreate.cs" />
     <Compile Include="Classes\CommandZipVersionFolderCreate.cs" />
     <Compile Include="Classes\IBuildCommand.cs" />
     <Compile Include="Models\ChangeLog.cs" />
+    <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +88,11 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -64,7 +64,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             }
             return data;
         }
-        private static Random random = new Random();
+        private static Random random = new Random(DateTime.Now.Millisecond);
         public static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -138,6 +138,27 @@ namespace Thompson.RecordSearch.Utility.Tests
 
             Assert.IsTrue(File.Exists(tmpFileName), "Expected Excel file was not found");
             Console.WriteLine("Excel file created at: {0}", tmpFileName);
+        }
+
+        [TestMethod]
+        [TestCategory("Excel.Automation.Tests")]
+        public void CanCreateTestFile()
+        {
+            const string fileName = "tarrantSample.json";
+            var dir = SettingsManager.GetAppFolderName();
+            dir = new DirectoryInfo(dir).Parent.FullName;
+            dir = new DirectoryInfo(dir).Parent.FullName;
+            dir = new DirectoryInfo(dir).Parent.FullName;
+            dir = Path.Combine(dir, fileName);
+            if (File.Exists(dir)) return;
+
+            var people = SamplePeople().Take(2);
+            using (var writer = new StreamWriter(dir))
+            {
+                writer.WriteLine(Newtonsoft.Json.JsonConvert
+                    .SerializeObject(people, Newtonsoft.Json.Formatting.Indented));
+            }
+
         }
     }
 }

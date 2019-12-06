@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using LegalLead.Changed.Models;
 using Newtonsoft.Json.Serialization;
 
@@ -84,6 +85,26 @@ namespace LegalLead.Changed.Classes
                 sw.Write(content);
                 sw.Close();
             }
+        }
+
+        protected bool CanExecute()
+        {
+
+            if (string.IsNullOrEmpty(SourceFile))
+                throw new InvalidOperationException();
+
+            if (Log == null)
+                throw new InvalidOperationException();
+
+            return true;
+        }
+
+        protected static string ReadMeFileName()
+        {
+            var appFolder =
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var readMeFile = Path.Combine(appFolder, "ReadMe.txt");
+            return readMeFile;
         }
     }
 }
