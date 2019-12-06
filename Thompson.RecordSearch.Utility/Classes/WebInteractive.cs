@@ -85,7 +85,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private List<PersonAddress> CleanUp(List<PersonAddress> personAddresses)
         {
-            var found = personAddresses.FindAll(f => f.Address1.Equals("Pro Se"));
+            var found = personAddresses.FindAll(f => f.Address1.Equals("Pro Se", StringComparison.CurrentCultureIgnoreCase));
             if (found.Any())
             {
                 foreach (var item in found)
@@ -96,7 +96,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     item.Address3 = "Not, Available 00000";
                 }
             }
-            found = personAddresses.FindAll(f => f.Address1.Equals("No Address Found") & string.IsNullOrEmpty(f.Zip));
+            found = personAddresses.FindAll(f => f.Address1.Equals("No Address Found", StringComparison.CurrentCultureIgnoreCase) & string.IsNullOrEmpty(f.Zip));
 
             if (found.Any())
             {
@@ -181,14 +181,16 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="doc">The document.</param>
         /// <param name="xpath">The xpath.</param>
         /// <returns></returns>
-        private XmlNode TryFindNode(XmlDocument doc, string xpath)
+        private static XmlNode TryFindNode(XmlDocument doc, string xpath)
         {
             try
             {
                 var node = doc.FirstChild.SelectSingleNode(xpath);
                 return node;
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 return null;
             }

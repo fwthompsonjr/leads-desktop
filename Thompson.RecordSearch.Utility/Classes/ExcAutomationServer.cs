@@ -1,10 +1,11 @@
 ﻿namespace Thompson.RecordSearch.Utility.Classes
 {
-    public class ExcAutomationServer
+    public static class ExcAutomationServer
     {
-        public void Open(string workbookPath)
+        public static void Open(string workbookPath)
         {
             // do nothing
+            System.Console.WriteLine(workbookPath ?? "");
         }
     }
 }

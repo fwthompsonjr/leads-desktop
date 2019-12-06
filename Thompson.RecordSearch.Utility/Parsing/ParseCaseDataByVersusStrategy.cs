@@ -1,4 +1,5 @@
-﻿using Thompson.RecordSearch.Utility.Dto;
+﻿using System.Globalization;
+using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Parsing
 {
@@ -13,7 +14,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
         public virtual bool CanParse()
         {
             if (string.IsNullOrEmpty(CaseData)) return false;
-            if (!CaseData.ToLower().Contains(SearchFor)) return false;
+            if (!CaseData.ToLower(CultureInfo.CurrentCulture).Contains(SearchFor)) return false;
             return true;
         }
 
@@ -23,9 +24,9 @@ namespace Thompson.RecordSearch.Utility.Parsing
             if (!CanParse()) return response;
 
             if (string.IsNullOrEmpty(CaseData)) return response;
-            var fullName = CaseData.ToLower();
+            var fullName = CaseData.ToLower(CultureInfo.CurrentCulture);
             if (!fullName.Contains(SearchFor)) return response;
-            var findItIndex = fullName.IndexOf(SearchFor);
+            var findItIndex = fullName.IndexOf(SearchFor, System.StringComparison.CurrentCultureIgnoreCase);
             if (findItIndex < 0) return response;
             response.Defendant = CaseData.Substring(findItIndex).Trim();
             response.Plantiff = CaseData.Substring(0, findItIndex).Trim();

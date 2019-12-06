@@ -54,9 +54,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var searchTypeId = GetParameterValue<int>("searchTypeSelectedIndex");
                 var selectedCase = caseTypes.DropDowns[caseTypeId];
                 // set special item values
-                var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value"));
+                var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value", StringComparison.CurrentCultureIgnoreCase));
                 caseTypeSelect.ExpectedValue = caseTypeId.ToString();
-                var searchSelect = steps.First(x => x.DisplayName.Equals("search-type-hyperlink"));
+                var searchSelect = steps.First(x => x.DisplayName.Equals("search-type-hyperlink", StringComparison.CurrentCultureIgnoreCase));
                 searchSelect.Locator.Query = selectedCase.Options[searchTypeId].Query;
                 webFetch = SearchWeb(results, steps, startingDate, startingDate,
                     ref cases, out people);
@@ -83,12 +83,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     // if item action-name = 'set-text'
                     var actionName = item.ActionName;
-                    if (item.ActionName.Equals("set-text"))
+                    if (item.ActionName.Equals("set-text", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        if (item.DisplayName.Equals("startDate")) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
-                        if (item.DisplayName.Equals("endDate")) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
+                        if (item.DisplayName.Equals("startDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
+                        if (item.DisplayName.Equals("endDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
                     }
-                    var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName));
+                    var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName, StringComparison.CurrentCultureIgnoreCase));
                     if (action == null) continue;
                     action.Act(item);
                     cases = ExtractCaseData(results, cases, actionName, action);
@@ -99,6 +99,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
                 cases.FindAll(c => string.IsNullOrEmpty(c.Address))
                     .ForEach(c => GetAddressInformation(driver, this, c));
+
+                cases.FindAll(c => c.IsCriminal && !string.IsNullOrEmpty(c.CriminalCaseStyle))
+                    .ForEach(d => d.CaseStyle = d.CriminalCaseStyle);
 
                 people = ExtractPeople(cases);
 
@@ -132,7 +135,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
-                var styleInfo = GetCaseStyle(item, "td[3]/div");
+                var styleInfo = item.IsCriminal ? item.CriminalCaseStyle : GetCaseStyle(item, "td[3]/div");
                 var person = new PersonAddress
                 {
                     Name = item.Defendant,
@@ -160,40 +163,50 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
             if(uncleanAddress.Contains(driverLicense))
             {
-                var dlstart = uncleanAddress.IndexOf(driverLicense);
+                var dlstart = uncleanAddress.IndexOf(driverLicense, StringComparison.CurrentCultureIgnoreCase);
                 uncleanAddress = uncleanAddress.Substring(0, dlstart).Replace(driverLicense, "");
             }
             if (uncleanAddress.Contains(secondLicense))
             {
-                var dlstart = uncleanAddress.IndexOf(secondLicense);
+                var dlstart = uncleanAddress.IndexOf(secondLicense, StringComparison.CurrentCultureIgnoreCase);
                 uncleanAddress = uncleanAddress.Substring(0, dlstart).Replace(secondLicense, "");
             }
-            if(uncleanAddress.IndexOf("DOB: ") > 0)
+            if(uncleanAddress.IndexOf("DOB: ", StringComparison.CurrentCultureIgnoreCase) > 0)
             {
                 uncleanAddress = string.Empty;
             }
-            if (uncleanAddress.IndexOf("Retained") > 0)
+            if (uncleanAddress.IndexOf("Retained", StringComparison.CurrentCultureIgnoreCase) > 0)
             {
                 uncleanAddress = string.Empty;
             }
-            if(uncleanAddress.Equals("Pro Se"))
+            if(uncleanAddress.Equals("Pro Se", StringComparison.CurrentCultureIgnoreCase))
             {
                 uncleanAddress = string.Empty;
             }
             return uncleanAddress;
         }
 
+
+        /// <summary>
+        /// Gets the address information.
+        /// </summary>
+        /// <param name="driver">The driver.</param>
+        /// <param name="jsonWebInteractive">The json web interactive.</param>
+        /// <param name="linkData">The link data.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private void GetAddressInformation(IWebDriver driver, TarrantWebInteractive jsonWebInteractive, HLinkDataRow linkData)
         {
+            if (jsonWebInteractive == null) return;
             var fmt = GetParameterValue<string>("hlinkUri");
-            var xpath = GetParameterValue<string>("personNodeXpath");
-            var addrpath = GetParameterValue<string>("personParentXath");
-            var childpath = GetParameterValue<string>("childTdXath");
+            GetParameterValue<string>("personNodeXpath");
+            GetParameterValue<string>("personParentXath");
+            GetParameterValue<string>("childTdXath");
             var helper = new ElementAssertion(driver);
             helper.Navigate(string.Format(fmt, linkData.WebAddress));
             driver.WaitForNavigation();
             // we have weird situation where the defendant is sometimes PIr11, PIr12
-           
+            // heres where we will get the case style for criminal cases
+
             FindDefendant(driver, ref linkData);
             
             // can we get the case-style data here
@@ -201,8 +214,19 @@ namespace Thompson.RecordSearch.Utility.Classes
             driver.Navigate().Back();
         }
 
-        private void FindDefendant(IWebDriver driver, ref HLinkDataRow linkData)
+        private static void FindDefendant(IWebDriver driver, ref HLinkDataRow linkData)
         {
+
+            var criminalLink = TryFindElement(driver, By.XPath("//a[@class = 'ssBlackNavBarHyperlink'][contains(text(),'Criminal')]"));
+            if (criminalLink != null)
+            {
+                var elementCaseName = TryFindElement(driver, By.XPath("/html/body/table[3]/tbody/tr/td[1]/b"));
+                if (elementCaseName != null)
+                {
+                    linkData.CriminalCaseStyle = elementCaseName.Text;
+                    linkData.IsCriminal = true;
+                }
+            }
 
             var finders = new List<FindDefendantBase>
             {

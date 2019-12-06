@@ -24,7 +24,7 @@ namespace Thompson.RecordSearch.Utility.Web
         public WebNavigationParameter GetSettings(int index)
         {
 
-            var websites = new SettingsManager().GetNavigation();
+            var websites = SettingsManager.GetNavigation();
 
             var siteData = websites.First(x => x.Id == index);
             return siteData;

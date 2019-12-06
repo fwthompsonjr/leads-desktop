@@ -10,8 +10,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Excel.Automation.Tests")]
         public void CanOpenExcel()
         {
-            var excelAuto = new ExcAutomationServer();
-            excelAuto.Open("");
+            ExcAutomationServer.Open("");
         }
     }
 }

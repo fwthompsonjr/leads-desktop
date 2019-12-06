@@ -21,7 +21,7 @@ namespace LegalLead.PublicData.Search
         private void BindComboBoxes()
         {
 
-            var websites = new SettingsManager().GetNavigation();
+            var websites = SettingsManager.GetNavigation();
             var caseTypes = CaseTypeSelectionDto.GetDto("collinCountyCaseType");
             var tarrantCourt = CaseTypeSelectionDto.GetDto("tarrantCountyCaseType");
             cboWebsite.DataSource = websites;

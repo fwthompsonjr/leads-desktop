@@ -53,7 +53,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanReadFileAndGetCases()
         {
             const string testFile = @"C:/Code/SandBox/RecordSearch/Thompson.RecordSearch.Utility.Tests/bin/Debug/xml/data/data_rqst_dentoncounty_04152019_04172019.xml";
-            var settings = new SettingsManager().GetNavigation();
+            var settings = SettingsManager.GetNavigation();
             var sttg = settings.First();
             var startDate = DateTime.Now.Date.AddDays(-2);
             var endingDate = DateTime.Now.Date.AddDays(0);

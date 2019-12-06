@@ -6,7 +6,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 {
     public class VersionNameProvider
     {
-        public List<string> VersionNames
+        public static List<string> VersionNames
         {
             get
             {

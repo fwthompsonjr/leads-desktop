@@ -96,6 +96,7 @@ namespace Thompson.RecordSearch.Utility.Dto
 
         public static List<string> GetCredential(UserAccessDto dto)
         {
+            if (dto == null) return null;
             if (string.IsNullOrEmpty(dto.UserGuid)) return null;
             if (string.IsNullOrEmpty(dto.UserKey)) return null;
             var decoded = CryptoEngine.Decrypt(dto.UserGuid, dto.UserKey);

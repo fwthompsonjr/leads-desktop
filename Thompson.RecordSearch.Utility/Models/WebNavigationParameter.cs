@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Classes;
@@ -45,6 +46,8 @@ namespace Thompson.RecordSearch.Utility.Models
 
     public class HLinkDataRow
     {
+        private const System.StringComparison comparison = System.StringComparison.CurrentCultureIgnoreCase;
+
         public int WebsiteId { get; set; }
         public string Data { get; set; }
         
@@ -70,50 +73,50 @@ namespace Thompson.RecordSearch.Utility.Models
         {
             get
             {
-                if (fieldName.ToLower().Equals("case"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("case", comparison))
                 {
                     return Case;
                 }
-                if (fieldName.ToLower().Equals("datefiled"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("datefiled", comparison))
                 {
                     return DateFiled;
                 }
-                if (fieldName.ToLower().Equals("court"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("court", comparison))
                 {
                     return Court;
                 }
-                if (fieldName.ToLower().Equals("casetype"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("casetype", comparison))
                 {
                     return CaseType;
                 }
-                if (fieldName.ToLower().Equals("casestyle"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("casestyle", comparison))
                 {
                     return CaseStyle ?? (CaseStyle = GetFromData());
                 }
                 return string.Empty;
             }
             set {
-                if (fieldName.ToLower().Equals("case"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("case", comparison))
                 {
                     Case = value;
                     return;
                 }
-                if (fieldName.ToLower().Equals("datefiled"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("datefiled", comparison))
                 {
                     DateFiled = value;
                     return;
                 }
-                if (fieldName.ToLower().Equals("court"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("court", comparison))
                 {
                     Court = value;
                     return;
                 }
-                if (fieldName.ToLower().Equals("casetype"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("casetype", comparison))
                 {
                     CaseType = value;
                     return;
                 }
-                if (fieldName.ToLower().Equals("casestyle"))
+                if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("casestyle", comparison))
                 {
                     CaseStyle = value;
                     return;

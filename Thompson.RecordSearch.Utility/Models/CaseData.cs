@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Thompson.RecordSearch.Utility.Models
@@ -22,7 +23,7 @@ namespace Thompson.RecordSearch.Utility.Models
         {
             get
             {
-                return _fieldNames ?? (_fieldNames = FieldNames.ToLower());
+                return _fieldNames ?? (_fieldNames = FieldNames.ToLower(CultureInfo.CurrentCulture));
             }
         }
 
@@ -40,7 +41,7 @@ namespace Thompson.RecordSearch.Utility.Models
             get
             {
                 if (string.IsNullOrEmpty(indexName)) return string.Empty;
-                var keyName = indexName.ToLower();
+                var keyName = indexName.ToLower(CultureInfo.CurrentCulture);
                 if (!FieldList.Contains(keyName)) return string.Empty;
 
                 switch (keyName)
@@ -61,7 +62,7 @@ namespace Thompson.RecordSearch.Utility.Models
             {
 
                 if (string.IsNullOrEmpty(indexName)) return;
-                var keyName = indexName.ToLower();
+                var keyName = indexName.ToLower(CultureInfo.CurrentCulture);
                 if (!FieldList.Contains(keyName)) return;
 
                 switch (keyName)

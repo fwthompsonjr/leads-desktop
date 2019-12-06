@@ -20,7 +20,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             get { return _fileWriter ?? (_fileWriter = new ExcelFileWriter()); }
             set { _fileWriter = value; }
         }
-        private SettingsManager GetSettingsManager()
+        private static SettingsManager GetSettingsManager()
         {
             return new SettingsManager();
         }
@@ -70,7 +70,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (string.IsNullOrEmpty(worksheetName))
                 throw new ArgumentNullException(nameof(worksheetName));
 
-            var countyName = GetSettingsManager()
+            var countyName = SettingsManager
                 .GetNavigation().Find(x => x.Id == websiteId)
                 .Name.Replace("County", "").Trim();
             var pck = excelPackage ?? new ExcelPackage();
@@ -160,7 +160,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             namedStyle.Style.Font.UnderLine = true;
             namedStyle.Style.Font.Color.SetColor(Color.Blue);
             var wsDt = pck.Workbook.Worksheets.Add(worksheetName);
-            var webNav = GetSettingsManager().GetNavigation()
+            var webNav = SettingsManager.GetNavigation()
                  .FirstOrDefault(n => n.Id.Equals(websiteId));
             var hyperPrefix = webNav?.Keys.FirstOrDefault(h => h.Name.Equals("hlinkUri", StringComparison.CurrentCultureIgnoreCase));
 
@@ -195,7 +195,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                         colIndex++;
                         if (hyperPrefix == null) continue;
                         // does this node contain a hyperlink?
-                        var hyperlink = nodeList.FirstOrDefault(x => x.Name.Equals("a"));
+                        var hyperlink = nodeList.FirstOrDefault(x => x.Name.Equals("a", StringComparison.CurrentCultureIgnoreCase));
                         if (hyperlink == null) continue;
                         var txHref = hyperlink.Attributes.GetNamedItem("href");
                         if (txHref == null) continue;
@@ -220,7 +220,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             const int rowIndex = 1;
             var isCaseLayout = "people" == sectionName;
-                var columns = GetSettingsManager().GetColumnLayouts(websiteId, sectionName);
+                var columns = SettingsManager.GetColumnLayouts(websiteId, sectionName);
             if (columns != null)
             {
                 // format first row

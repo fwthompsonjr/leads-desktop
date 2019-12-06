@@ -44,6 +44,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     try
                     {
+                        if (cases == null) cases = new List<HLinkDataRow>();
                         var data = Data;
                         IWebElement tbResult = null;
                         var helper = new ElementAssertion(driver);
@@ -69,6 +70,9 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             protected virtual void GetPersonData(List<HLinkDataRow> cases, IWebDriver driver, WebInteractive data)
             {
+                if (cases == null) throw new ArgumentNullException(nameof(cases));
+                if (driver == null) throw new ArgumentNullException(nameof(driver));
+                if (data == null) throw new ArgumentNullException(nameof(data));
                 var people = cases.FindAll(x => !string.IsNullOrEmpty(x.WebAddress));
                 people.ForEach(d => Find(driver, data, d));
                 var found = people.Count(p => !string.IsNullOrEmpty(p.Defendant));

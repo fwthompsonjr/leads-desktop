@@ -400,7 +400,9 @@ namespace Thompson.RecordSearch.Utility.Models
                 if (childNode == null) return string.Empty;
                 return ((XmlCDataSection)(childNode.ChildNodes[0])).Data;
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 return string.Empty;
             }

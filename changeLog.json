@@ -161,10 +161,12 @@
         {
           "id": 5.2,
           "name": "Collin County Case Style for Criminal Cases",
-          "isFixed": false,
-          "fixVersion": 0,
+          "isFixed": true,
+          "fixVersion": 11010,
           "description": [
-            "Collin County - Collin criminal pulls through with Case Style being the person's name and birthdate"
+            "Collin County - Collin criminal pulls through with Case Style being the person's name and birthdate",
+            "Start Date: 2019-12-05 21:45:18Z",
+            "End Date: 2019-12-05 21:45:18Z"
           ]
         },
         {
@@ -328,8 +330,13 @@
           "canPublish": true
         },
         {
-          "id": 0.0,
+          "id": 5.2,
           "description": "Collin County - Collin County Case Style for Criminal Cases",
+          "canPublish": true
+        },
+        {
+          "id": 0.0,
+          "description": "Tarrant County - Does not fetch criminal cases",
           "canPublish": false
         }
       ]

@@ -9,6 +9,8 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public void SaveAs(ExcelPackage pck, string outputFileName)
         {
+            if (pck == null) throw new System.ArgumentNullException(nameof(pck));
+            if(string.IsNullOrEmpty(outputFileName)) throw new System.ArgumentNullException(nameof(outputFileName));
             FileInfo fileInfo = new FileInfo(outputFileName);
             pck.SaveAs(fileInfo);
         }

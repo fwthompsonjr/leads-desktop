@@ -8,6 +8,7 @@ namespace Thompson.RecordSearch.Utility.Classes
     {
         public static IWebElement FindElement(this IWebDriver driver, By by, int timeoutInSeconds)
         {
+            if (driver == null) throw new NullReferenceException(nameof(driver));
             if (timeoutInSeconds <= 0) return driver.FindElement(by);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
             wait.Until(drv => drv.FindElement(by).Displayed);

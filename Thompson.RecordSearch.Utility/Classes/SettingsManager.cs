@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -49,7 +50,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <value>
         /// The content.
         /// </value>
-        public string Content
+        public static string Content
         {
             get { return LoadFile("settings.xml"); }
         }
@@ -75,7 +76,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// settings for record search processes.
         /// </summary>
         /// <returns></returns>
-        public List<WebNavigationParameter> GetNavigation()
+        public static List<WebNavigationParameter> GetNavigation()
         {
             var data = Content;
 
@@ -97,7 +98,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="id">The website identifier.</param>
         /// <param name="sectionName">Name of the section.</param>
         /// <returns></returns>
-        public List<ExcelColumnLayout> GetColumnLayouts(int id, string sectionName)
+        public static List<ExcelColumnLayout> GetColumnLayouts(int id, string sectionName)
         {
             var data = Content;
             var doc = XmlDocProvider.GetDoc(data);
@@ -131,6 +132,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         public XmlContentHolder GetOutput(WebInteractive settingFile)
         {
+            if (settingFile == null) throw new ArgumentNullException(nameof(settingFile));
             const string dfmt = "MMddyyyy";
             var fileName = GetFileName(settingFile);
             var targetFile = fileName;
@@ -264,7 +266,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// </summary>
         /// <param name="settingFile">The setting file.</param>
         /// <returns></returns>
-        private string GetFileName(WebInteractive settingFile)
+        private static string GetFileName(WebInteractive settingFile)
         {
             // settingFile.StartDate.ToString("MMddyyyy")
             const string dfmt = "MMddyyyy";
@@ -273,7 +275,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var fileName = string.Format("data_rqst_{2}_{0}_{1}.xml",
                 dteStart,
                 dteEnding,
-                settingFile.Parameters.Name.Replace(" ","").ToLowerInvariant());
+                settingFile.Parameters.Name.Replace(" ","").ToLower(CultureInfo.CurrentCulture));
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             var targetPath = new Uri(string.Format(@"{0}\xml\", execName)).AbsolutePath;
@@ -291,7 +293,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// Gets the name of the excel file.
         /// </summary>
         /// <returns></returns>
-        private string GetExcelFileName()
+        private static string GetExcelFileName()
         {
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
@@ -303,9 +305,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         public static List<WebNavInstruction> GetInstructions(int siteId)
         {
             var instructions = new List<WebNavInstruction>();
-            var content = new SettingsManager().Content;
-            var doc = new XmlDocument();
-            doc.LoadXml(content);
+            var content = Content;
+            var doc = XmlDocProvider.GetDoc(content);
 
             var qpath = string.Format("directions/instructions[@id={0}]", siteId);
             var data = doc.DocumentElement.SelectSingleNode(qpath);

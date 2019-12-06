@@ -13,6 +13,7 @@ using Thompson.RecordSearch.Utility.Web;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
     public partial class TarrantWebInteractive : WebInteractive
     {
         const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
@@ -111,11 +112,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 people = fetched.PeopleList;
                 people.ForEach(p => 
                 { 
-                    var source = caseList.FirstOrDefault(c => c.Case.Equals(p.CaseNumber));
+                    var source = caseList.FirstOrDefault(c => c.Case.Equals(p.CaseNumber, StringComparison.CurrentCultureIgnoreCase));
                     if (source == null) return;
                     if (string.IsNullOrEmpty(source.PageHtml)) return;
                     var dto = DataPointLocatorDto.Load(source.PageHtml);
-                    p.CaseStyle = dto.DataPoints.First(f => f.Name.Equals("CaseStyle")).Result;
+                    p.CaseStyle = dto.DataPoints.First(f => f.Name.Equals("CaseStyle", StringComparison.CurrentCultureIgnoreCase)).Result;
                 });
                 // people = ExtractPeople(cases);
 
@@ -158,12 +159,12 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 // if item action-name = 'set-text'
                 var actionName = item.ActionName;
-                if (item.ActionName.Equals("set-text"))
+                if (item.ActionName.Equals("set-text", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    if (item.DisplayName.Equals("startDate")) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
-                    if (item.DisplayName.Equals("endDate")) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
+                    if (item.DisplayName.Equals("startDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
+                    if (item.DisplayName.Equals("endDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
                 }
-                var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName));
+                var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName, StringComparison.CurrentCultureIgnoreCase));
                 if (action == null) continue;
                 action.Act(item);
                 cases = ExtractCaseData(results, cases, actionName, action);
@@ -256,14 +257,15 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (node == null) return string.Empty;
             return node.InnerText;
         }
-        protected PersonAddress ParseAddress(string address, PersonAddress person)
+        protected static PersonAddress ParseAddress(string address, PersonAddress person)
         {
             var separator = @"<br/>";
             var pipe = '|';
             const string noMatch = "No Match Found|Not Matched 00000";
+            if (person == null) throw new ArgumentNullException(nameof(person));
             if (string.IsNullOrEmpty(address)) { address = noMatch; }
             address = new StringBuilder(address.Trim()).Replace(separator, pipe.ToString()).ToString();
-            if (address.EndsWith(pipe.ToString()))
+            if (address.EndsWith(pipe.ToString(), StringComparison.CurrentCultureIgnoreCase))
             {
                 address = address.Substring(0, address.Length - 1);
             }
@@ -291,7 +293,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             return person;
         }
 
-        private void GetAddressInformation(IWebDriver driver, TarrantWebInteractive jsonWebInteractive, HLinkDataRow linkData)
+        private static void GetAddressInformation(IWebDriver driver, TarrantWebInteractive jsonWebInteractive, HLinkDataRow linkData)
         {
             var fmt = jsonWebInteractive.GetParameterValue<string>("hlinkUri");
             var xpath = jsonWebInteractive.GetParameterValue<string>("personNodeXpath");
@@ -326,7 +328,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
 
-        private void AppendToResult(string fileName, string caseData, string xpath)
+        private static void AppendToResult(string fileName, string caseData, string xpath)
         {
             var doc = new XmlDocument();
             doc.Load(fileName);
@@ -338,7 +340,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             doc.Save(fileName);
         }
 
-        private List<HLinkDataRow> LoadFromHtml(string caseData)
+        private static List<HLinkDataRow> LoadFromHtml(string caseData)
         {
             var caseList = new List<HLinkDataRow>();
             XmlDocument doc = new XmlDocument();
@@ -364,9 +366,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             )
         {
             var parameterId = Parameters.Id;
-            var contents = new SettingsManager().Content;
-            var doc = new XmlDocument();
-            doc.LoadXml(contents);
+            var contents = SettingsManager.Content;
+            var doc = XmlDocProvider.GetDoc(contents);
             var caseInspetor = doc.DocumentElement.SelectSingleNode("directions").SelectNodes("caseInspection")
                 .Cast<XmlNode>().ToList()
                 .Find(x => x.Attributes.GetNamedItem("id").Value == parameterId.ToString())
@@ -375,8 +376,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var item in caseList)
             {
                 var data = item.Data;
-                var dcc = new XmlDocument();
-                dcc.LoadXml(data);
+                var dcc = XmlDocProvider.GetDoc(data);
                 var trow = dcc.ChildNodes[0];
                 foreach (var search in caseInspetor)
                 {
@@ -431,17 +431,17 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         protected static List<IElementActionBase> ElementActions
         {
-            get { return elementActions ?? (elementActions = GetElementActions()); }
+            get { return elementActions ?? (elementActions = GetActions()); }
         }
 
-        protected static List<IElementActionBase> GetElementActions()
+        protected static List<IElementActionBase> GetActions()
         {
             var container =
             ActionElementContainer.GetContainer;
             return container.GetAllInstances<IElementActionBase>().ToList();
         }
 
-        protected NavigationInstructionDto GetAppSteps(string suffix = "")
+        protected static NavigationInstructionDto GetAppSteps(string suffix = "")
         {
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;

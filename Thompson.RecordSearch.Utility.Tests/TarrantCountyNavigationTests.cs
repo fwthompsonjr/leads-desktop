@@ -32,7 +32,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             var startingDate = DateTime.Now.AddDays(-2);
             var endingDate = DateTime.Now.AddDays(-2);
-            var settings = new SettingsManager()
+            var settings = SettingsManager
                 .GetNavigation().Find(x => x.Id == 10);
             var datelist = new List<string> { "startDate", "endDate" };
             var keys = settings.Keys.FindAll(s => datelist.Contains(s.Name));
@@ -173,7 +173,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             Assert.IsNotNull(provider);
             Assert.IsFalse(string.IsNullOrEmpty(provider.Name));
             Assert.IsFalse(string.IsNullOrEmpty(provider.FileVersion));
-            Assert.IsNotNull(provider.VersionNames);
+            Assert.IsNotNull(VersionNameProvider.VersionNames);
         }
         #endregion
 

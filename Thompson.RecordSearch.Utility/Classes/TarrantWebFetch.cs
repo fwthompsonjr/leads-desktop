@@ -33,7 +33,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var steps = new List<Step>();
                 var navigationFile = Web.GetParameterValue<string>("navigation.control.file");
                 var sources = navigationFile.Split(',').ToList();
-                sources.ForEach(s => steps.AddRange(Web.GetAppSteps(s).Steps));
+                sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
                 SetupParameters(steps, out people, out XmlContentHolder results, out List<HLinkDataRow> cases);
                 webFetch = Web.SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
             }
@@ -64,7 +64,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var steps = new List<Step>();
                 var navigationFile = Web.GetParameterValue<string>("navigation.control.alternate.file");
                 var sources = navigationFile.Split(',').ToList();
-                sources.ForEach(s => steps.AddRange(Web.GetAppSteps(s).Steps));
+                sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
                 SetupParameters(steps, out people, out XmlContentHolder results, out List<HLinkDataRow> cases);
                 webFetch = Web.SearchWeb(2, results, steps, startingDate, startingDate, ref cases, out people);
             }
@@ -82,7 +82,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             public List<ITarrantWebFetch> GetFetches(int searchMode = 2)
             {
                 var provider = new VersionNameProvider();
-                var isFuture = provider.Name.Equals(provider.VersionNames.Last());
+                var isFuture = provider.Name.Equals(
+                        VersionNameProvider.VersionNames.Last(),
+                        StringComparison.CurrentCultureIgnoreCase);
                 var fetchers = new List<ITarrantWebFetch>
                 {
                     new NonCriminalFetch(Web),

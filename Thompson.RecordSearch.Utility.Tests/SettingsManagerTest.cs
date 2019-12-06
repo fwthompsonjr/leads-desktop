@@ -24,8 +24,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Configuration.Mapping")]
         public void CanGetNavigationContent()
         {
-            var navigation = new SettingsManager();
-            Assert.IsFalse(string.IsNullOrEmpty(navigation.Content));
+            Assert.IsFalse(string.IsNullOrEmpty(SettingsManager.Content));
         }
 
         [TestMethod]
@@ -50,8 +49,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Configuration.Mapping")]
         public void CanGetNavigationWebsites()
         {
-            var navigation = new SettingsManager();
-            var parms = navigation.GetNavigation();
+            var parms = SettingsManager.GetNavigation();
             Assert.IsNotNull(parms);
             Assert.IsTrue(parms.Count > 0);
         }
@@ -61,7 +59,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanGetGetOutput()
         {
             var navigation = new SettingsManager();
-            var parms = navigation.GetNavigation();
+            var parms = SettingsManager.GetNavigation();
             Assert.IsNotNull(parms);
             Assert.IsTrue(parms.Count > 0);
             var sttg = parms.First();
@@ -78,7 +76,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanGetGetOutputData()
         {
             var navigation = new SettingsManager();
-            var parms = navigation.GetNavigation();
+            var parms = SettingsManager.GetNavigation();
             Assert.IsNotNull(parms);
             Assert.IsTrue(parms.Count > 0);
             var sttg = parms.First();
@@ -96,7 +94,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanGetGetOutputPeople()
         {
             var navigation = new SettingsManager();
-            var parms = navigation.GetNavigation();
+            var parms = SettingsManager.GetNavigation();
             Assert.IsNotNull(parms);
             Assert.IsTrue(parms.Count > 0);
             var sttg = parms.First();
@@ -113,7 +111,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanAppendOutputPeople()
         {
             var navigation = new SettingsManager();
-            var parms = navigation.GetNavigation();
+            var parms = SettingsManager.GetNavigation();
             Assert.IsNotNull(parms);
             Assert.IsTrue(parms.Count > 0);
             var sttg = parms.First();
@@ -137,8 +135,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Configuration.Integration")]
         public void CanParseCaseInformation()
         {
-            var navigation = new SettingsManager();
-            var parms = navigation.GetNavigation();
+            var parms = SettingsManager.GetNavigation();
             Assert.IsNotNull(parms);
             Assert.IsTrue(parms.Count > 0);
             var sttg = parms.First();

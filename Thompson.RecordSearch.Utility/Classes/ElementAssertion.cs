@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types",
+        Justification = "Exception thrown from this method will stop automation.")]
     public class ElementAssertion
     {
         public ElementAssertion(IWebDriver driver)
@@ -184,6 +186,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
+                if (controlId == null) controlId = string.Empty;
+                if (controlValue == null) controlValue = string.Empty;
                 Console.WriteLine(" ... Setting value - {0} := {1}", controlId,
                     controlId.Equals("Password", StringComparison.CurrentCultureIgnoreCase) ? "xxxxxxxxx" : controlValue);
                 var jse = (IJavaScriptExecutor)PageDriver;
@@ -205,17 +209,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             const string dteFmt = "MM/dd/yyyy";
             var startDate = data.StartDate.ToString(dteFmt);
             var endDate = data.EndingDate.ToString(dteFmt);
-            var searchTypeIndex = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("SearchComboIndex"));
+            var searchTypeIndex = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("SearchComboIndex", StringComparison.CurrentCultureIgnoreCase));
             var searchTypeId = searchTypeIndex == null ? 0 : Convert.ToInt32(searchTypeIndex.Value);
-            var caseTypeIndex = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("CaseSearchType"));
+            var caseTypeIndex = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("CaseSearchType", StringComparison.CurrentCultureIgnoreCase));
             var caseType = caseTypeIndex == null ? string.Empty : caseTypeIndex.Value;
-            var districtSearchFlag = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType"));
+            var districtSearchFlag = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", StringComparison.CurrentCultureIgnoreCase));
             var districtType = districtSearchFlag == null ? string.Empty : districtSearchFlag.Value;
             var isDistrictSearch = districtSearchFlag != null;
             var itms = data.Parameters.Instructions;
             if (!isDistrictSearch)
             {
-                itms.RemoveAll(x => x.FriendlyName.StartsWith("District-"));
+                itms.RemoveAll(x => x.FriendlyName.StartsWith("District-", StringComparison.CurrentCultureIgnoreCase));
             }
             else if(isDistrictSearch & itms.Count < 15)
             {
@@ -228,17 +232,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             itms.ForEach(x => x.Value = x.Value.Replace("?SetComboIndex", searchTypeId.ToString()));
             if (!string.IsNullOrEmpty(caseType))
             {
-                var crimalLink = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("criminalLinkQuery"));
+                var crimalLink = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("criminalLinkQuery", StringComparison.CurrentCultureIgnoreCase));
                 if(isCriminalSearch && crimalLink != null)
                 {
                     caseType = crimalLink.Value;
                 }
-                var caseSearchItems = itms.FindAll(x => x.FriendlyName.Equals("Search-Hyperlink"));
+                var caseSearchItems = itms.FindAll(x => x.FriendlyName.Equals("Search-Hyperlink", StringComparison.CurrentCultureIgnoreCase));
                 caseSearchItems.ForEach(x => x.Value = caseType);
             }
             if (!string.IsNullOrEmpty(districtType))
             {
-                var districtItems = itms.FindAll(x => x.FriendlyName.Equals("District-Hyperlink"));
+                var districtItems = itms.FindAll(x => x.FriendlyName.Equals("District-Hyperlink", StringComparison.CurrentCultureIgnoreCase));
                 districtItems.ForEach(x => x.Value = districtType);
             }
             // ?SetComboIndex
@@ -278,7 +282,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                         var indexes = item.Value.Split(',');
                         var idx = indexes[0];
                         var txt = indexes[1];
-                        if (item.FriendlyName.Equals("Date-Filed-On-TextBox"))
+                        if (item.FriendlyName.Equals("Date-Filed-On-TextBox", StringComparison.CurrentCultureIgnoreCase))
                         {
                             txt = startDate;
                         }

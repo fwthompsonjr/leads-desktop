@@ -10,9 +10,12 @@ namespace Thompson.RecordSearch.Utility.Addressing
     {
         public override bool CanFind { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", 
+            Justification = "Exception thrown from this method will stop automation.")]
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
-
+            if (driver == null) throw new ArgumentNullException(nameof(driver));
+            if (linkData == null) throw new ArgumentNullException(nameof(linkData));
             var searchType = "Condemnee";
             // driver.FindElement(By.XPath("//th[contains(text(),'Principal')]"))
             CanFind = false;
@@ -34,7 +37,8 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 var table = parent.FindElement(By.XPath(".."));
                 var trCol = table.FindElements(By.TagName("tr")).ToList();
                 if (!int.TryParse(ridx, out int r)) return;
-                MapElementAddress(linkData, rowLabel, table, trCol, r, searchType.ToLower());
+                MapElementAddress(linkData, rowLabel, table, trCol, r, 
+                    searchType.ToLower(System.Globalization.CultureInfo.CurrentCulture));
             }
             catch (Exception)
             {

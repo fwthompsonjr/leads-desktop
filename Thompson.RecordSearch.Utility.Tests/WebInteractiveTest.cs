@@ -15,7 +15,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Configuration.Validation")]
         public void CanInitialize()
         {
-            var settings = new SettingsManager().GetNavigation();
+            var settings = SettingsManager.GetNavigation();
             var sttg = settings.First();
             var startDate = DateTime.Now.AddMonths(-5);
             var endingDate = DateTime.Now.AddMonths(-4);
@@ -33,7 +33,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             if (!CanExecuteFetch()) return;
             
-            var settings = new SettingsManager().GetNavigation();
+            var settings = SettingsManager.GetNavigation();
             var sttg = settings.First();
             var startDate = DateTime.Now.Date.AddDays(-4);
             var endingDate = DateTime.Now.Date.AddDays(-1);
@@ -89,7 +89,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             if (!CanExecuteFetch()) return;
 
-            var settings = new SettingsManager().GetNavigation();
+            var settings = SettingsManager.GetNavigation();
             var sttg = settings.First();
             var startDate = DateTime.Now.Date.AddDays(-4);
             var endingDate = DateTime.Now.Date.AddDays(-1);

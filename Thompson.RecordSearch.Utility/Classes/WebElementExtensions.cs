@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
     public static class WebElementExtensions
     {
 
@@ -25,6 +26,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
+                if (webElement == null) throw new NullReferenceException(nameof(webElement));
                 return webElement.FindElement(by);
             }
             catch (Exception)
@@ -50,6 +52,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
+                if (driver == null) throw new ArgumentNullException(nameof(driver));
                 return driver.FindElement(by);
             }
             catch (Exception)
@@ -75,6 +78,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
+                if (driver == null) throw new ArgumentNullException(nameof(driver));
                 return driver.FindElements(by);
             }
             catch (Exception)

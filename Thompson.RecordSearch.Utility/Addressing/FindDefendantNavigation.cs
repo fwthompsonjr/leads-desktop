@@ -5,12 +5,16 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Addressing
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types",
+        Justification = "Exception thrown from this method will stop automation.")]
     public class FindDefendantNavigation : FindDefendantBase
     {
         public override bool CanFind { get; set; }
 
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
+            if (driver == null) throw new System.ArgumentNullException(nameof(driver));
+            if (linkData == null) throw new System.ArgumentNullException(nameof(linkData));
             CanFind = false;
             var helper = new ElementAssertion(driver);
             helper.Navigate(linkData.WebAddress);

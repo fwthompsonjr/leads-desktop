@@ -4,7 +4,9 @@ using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Dto
 {
+#pragma warning disable CA1716 // Identifiers should not match keywords
     public class Option
+#pragma warning restore CA1716 // Identifiers should not match keywords
     {
         public int Id { get; set; }
         public string Name { get; set; }

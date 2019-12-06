@@ -12,7 +12,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
 
         #region Properties
-
+        protected const StringComparison comparisonIngore = StringComparison.CurrentCultureIgnoreCase;
         /// <summary>
         /// Gets or sets the parameters used to interact with public website.
         /// </summary>
@@ -58,7 +58,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         public string RemoveTag(string tableHtml, string tagName)
         {
-
+            if (string.IsNullOrEmpty(tableHtml)) return string.Empty;
+            if (string.IsNullOrEmpty(tagName)) return string.Empty;
             var openTg = string.Format(@"<{0}>", tagName);
             var closeTg = string.Format(@"</{0}>", tagName);
             var idx = tableHtml.IndexOf(openTg);
@@ -80,16 +81,17 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         public string RemoveElement(string tableHtml, string tagName)
         {
+            if (string.IsNullOrEmpty(tableHtml)) return tableHtml;
             if (string.IsNullOrEmpty(tagName)) return tableHtml;
             if (!tableHtml.Contains(tagName)) return tableHtml;
-            var idx = tableHtml.IndexOf(tagName);
+            var idx = tableHtml.IndexOf(tagName, comparisonIngore);
             while (idx > 0)
             {
                 var firstPart = tableHtml.Substring(0, idx);
                 var lastPart = tableHtml.Substring(idx);
-                var cidx = lastPart.IndexOf(">");
+                var cidx = lastPart.IndexOf(">", comparisonIngore);
                 tableHtml = string.Concat(firstPart, lastPart.Substring(cidx));
-                idx = tableHtml.IndexOf(tagName);
+                idx = tableHtml.IndexOf(tagName, comparisonIngore);
             }
             return tableHtml;
         }
@@ -177,7 +179,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             DateTime endingDate)
         {
 
-            var settings = new SettingsManager()
+            var settings = SettingsManager
                 .GetNavigation().Find(x => x.Id == id);
             var datelist = new List<string> { "startDate", "endDate" };
             var keys = settings.Keys.FindAll(s => datelist.Contains(s.Name));

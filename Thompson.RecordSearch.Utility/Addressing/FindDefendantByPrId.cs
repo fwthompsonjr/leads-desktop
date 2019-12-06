@@ -5,12 +5,16 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Addressing
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types",
+        Justification = "Exception thrown from this method will stop automation.")]
     public class FindDefendantByPrId : FindDefendantBase
     {
         public override bool CanFind { get; set; }
 
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
+            if (driver == null) throw new System.ArgumentNullException(nameof(driver));
+            if (linkData == null) throw new System.ArgumentNullException(nameof(linkData));
             CanFind = false;
             var tdName = TryFindElement(driver, By.XPath(@"//*[@id='PIr11']"));
             // this instance can find
@@ -19,7 +23,8 @@ namespace Thompson.RecordSearch.Utility.Addressing
             linkData.Defendant = tdName.GetAttribute("innerText");
             var parent = tdName.FindElement(By.XPath(".."));
             var rowLabel = parent.FindElements(By.TagName("th"))[0];
-            if(rowLabel.Text.Trim().ToLower() != "defendant")
+            if(rowLabel.Text.Trim()
+                .ToLower(System.Globalization.CultureInfo.CurrentCulture) != "defendant")
             {
                 return;
             }

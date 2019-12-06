@@ -43,7 +43,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             // this is where denton county does it's data fetching..... i think
             // todo: allow criminal hyperlink click modification...
             var parameter = GetParameter(data, "isCriminalSearch");
-            var isCriminalSearch = parameter != null && parameter.Value.Equals("1");
+            var isCriminalSearch = parameter != null && parameter.Value.Equals("1", StringComparison.CurrentCultureIgnoreCase);
             tbResult = helper.Process(data, isCriminalSearch);
             var rows = tbResult.FindElements(By.TagName("tr"));
             if (isCriminalSearch)
@@ -106,9 +106,12 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         private static IWebElement GetAddressRow(IWebElement parent, System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> trCol)
         {
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (trCol == null) throw new ArgumentNullException(nameof(trCol));
             int colIndex = 3;
             parent = trCol[colIndex];
-            if (parent.Text.Trim() == string.Empty) parent = trCol[colIndex - 1];
+            var parentTxt = string.IsNullOrEmpty(parent.Text) ? string.Empty : parent.Text;
+            if (string.IsNullOrEmpty(parentTxt)) parent = trCol[colIndex - 1];
             return parent;
         }
 
@@ -143,7 +146,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 return new ChromeDriver();
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 return null;
             }
@@ -173,7 +178,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 return parent.FindElement(by);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 return null;
             }
@@ -192,7 +199,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 return parent.FindElement(by);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 return null;
             }

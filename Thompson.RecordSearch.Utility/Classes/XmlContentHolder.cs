@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -7,6 +8,7 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
     public class XmlContentHolder
     {
         public string FileName { get; set; }
@@ -94,6 +96,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public void Append(Models.HLinkDataRow dta)
         {
+            if (dta == null) throw new ArgumentNullException(nameof(dta));
             if (CharacterData == null) CharacterData = new StringBuilder("");
             if (CharacterPeople == null) CharacterPeople = new StringBuilder("");
             var openTable = @"<table style='border-collapse: collapse; border: 1px solid black;'>";
@@ -160,9 +163,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 item.AppendChild(cdta);
             }
             addresses = RemoveBlank(addresses);
-            var firstItem = addresses.First().Trim().ToUpper();
-            var lastItem = addresses.Last().Trim().ToUpper();
-            var middleItem = GetMiddleAddress(addresses).Trim().ToUpper();
+            var firstItem = addresses.First().Trim().ToUpper(CultureInfo.CurrentCulture);
+            var lastItem = addresses.Last().Trim().ToUpper(CultureInfo.CurrentCulture);
+            var middleItem = GetMiddleAddress(addresses).Trim().ToUpper(CultureInfo.CurrentCulture);
             ((XmlCDataSection)(zipNode.FirstChild)).Data = ParseZipCode(lastItem);
             ((XmlCDataSection)(addressC.FirstChild)).Data = lastItem;
             ((XmlCDataSection)(addressA.FirstChild)).Data = firstItem;
@@ -171,13 +174,13 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         }
 
-        private string ParseZipCode(string lastItem)
+        private static string ParseZipCode(string lastItem)
         {
             var pieces = lastItem.Split(' ').ToList();
             return pieces.Last();
         }
 
-        private XmlNode MapExtraData(HLinkDataRow dta, XmlNode person)
+        private static XmlNode MapExtraData(HLinkDataRow dta, XmlNode person)
         {
             if (!dta.IsMapped) return person;
             var fields = "case,dateFiled,court,caseType,caseStyle".Split(',').ToList();
@@ -190,27 +193,26 @@ namespace Thompson.RecordSearch.Utility.Classes
             return person;
         }
 
-        private string CleanHtml(string rawHtml)
+        private static string CleanHtml(string rawHtml)
         {
             if (string.IsNullOrEmpty(rawHtml)) return rawHtml;
-            if (!rawHtml.ToLowerInvariant().Contains("href=")) return rawHtml;
-            var doc = new XmlDocument(); 
+            if (!rawHtml.ToLower(CultureInfo.CurrentCulture).Contains("href=")) return rawHtml;
             try
             {
-                doc.LoadXml(rawHtml);
+                var doc = XmlDocProvider.GetDoc(rawHtml);
+                var firstChild = doc.DocumentElement.FirstChild;
+                var hlink = firstChild.SelectSingleNode("a");
+                if (hlink == null) return rawHtml;
+                firstChild.InnerXml = string.Format("<span>{0}</span>", hlink.InnerText);
+                return doc.OuterXml;
             }
             catch (Exception)
             {
                 return rawHtml;
             }
-            var firstChild = doc.DocumentElement.FirstChild;
-            var hlink = firstChild.SelectSingleNode("a");
-            if (hlink == null) return rawHtml;
-            firstChild.InnerXml = string.Format("<span>{0}</span>", hlink.InnerText);
-            return doc.OuterXml;
         }
 
-        private string PersonHtml(Models.HLinkDataRow dta)
+        private static string PersonHtml(Models.HLinkDataRow dta)
         {
             if (string.IsNullOrEmpty(dta.Defendant)) return string.Empty;
             if (string.IsNullOrEmpty(dta.Address)) return string.Empty;
