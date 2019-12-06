@@ -7,7 +7,7 @@ namespace Thompson.RecordSearch.Utility.Classes
     /// <summary>
     /// Class definition providing access to application metadata
     /// </summary>
-    public class ContextManagment
+    public static class ContextManagment
     {
         /// <summary>
         /// The application directory

@@ -243,6 +243,9 @@
       <Link>Utilities\CourtRecordSearch.xlsm</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="..\Shared\collinCountyCaseType.json">
       <Link>xml\collinCountyCaseType.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

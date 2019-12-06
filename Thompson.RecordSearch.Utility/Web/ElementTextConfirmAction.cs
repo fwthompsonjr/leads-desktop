@@ -11,6 +11,7 @@
 
         public override void Act(Step item)
         {
+            if (item == null) throw new System.ArgumentNullException(nameof(item));
             var selector = Byy.CssSelector(item.Locator.Query);
             GetAssertion.MatchText(selector,
                 item.DisplayName, item.ExpectedValue);

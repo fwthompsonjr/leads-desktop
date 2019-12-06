@@ -8,6 +8,19 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
+
+    public static class XmlDocProvider
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is being passed to caller and must not be disposed.")]
+        public static XmlDocument GetDoc(string xml)
+        {
+            XmlDocument doc = new XmlDocument() { XmlResolver = null };
+            System.IO.StringReader sreader = new System.IO.StringReader(xml);
+            XmlReader reader = XmlReader.Create(sreader, new XmlReaderSettings() { XmlResolver = null });
+            doc.Load(reader);
+            return doc;
+        }
+    }
     /// <summary>Class definition for settings reader utility which reads the application settings xml file to map parameters to the search process.</summary>
     public class SettingsManager
     {
@@ -55,6 +68,8 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         #endregion
 
+
+
         /// <summary>
         /// Reads the settings file to gets the navigation 
         /// settings for record search processes.
@@ -63,8 +78,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         public List<WebNavigationParameter> GetNavigation()
         {
             var data = Content;
-            var doc = new XmlDocument();
-            doc.LoadXml(data);
+
+            var doc = XmlDocProvider.GetDoc(data);
             if (doc.DocumentElement == null) return null;
             var parent = doc.DocumentElement.SelectSingleNode("setting[@name='Websites']");
             var response = new List<WebNavigationParameter>();
@@ -85,8 +100,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public List<ExcelColumnLayout> GetColumnLayouts(int id, string sectionName)
         {
             var data = Content;
-            var doc = new XmlDocument();
-            doc.LoadXml(data);
+            var doc = XmlDocProvider.GetDoc(data);
             if (doc.DocumentElement == null) return null;
             var parent = doc.DocumentElement.SelectSingleNode(
                 string.Format("layouts/layout[@id='{0}' and @name='{1}']", 

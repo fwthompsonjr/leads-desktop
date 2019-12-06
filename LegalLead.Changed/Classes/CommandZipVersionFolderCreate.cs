@@ -12,7 +12,7 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
-                throw new ArgumentOutOfRangeException("SourceFile");
+                throw new InvalidOperationException();
 
             if (LatestVersion == null)
             {
@@ -21,7 +21,7 @@ namespace LegalLead.Changed.Classes
             var solutionDir = ZipDirectoryName;
             if (!Directory.Exists(solutionDir))
             {
-                throw new DirectoryNotFoundException("Project zip directory is not accessible");
+                throw new DirectoryNotFoundException();
             }
             var projectDir = ProjectDirectory;
             if (!Directory.Exists(projectDir))

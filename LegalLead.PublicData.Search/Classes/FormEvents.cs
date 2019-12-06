@@ -27,6 +27,7 @@ namespace LegalLead.PublicData.Search
             var courtNames = CaseTypeSelectionDto.GetDto(
                 showDistrict ? "dentonDistrictCaseType" : "dentonCountyCaseType");
             sb.AppendFormat(
+                System.Globalization.CultureInfo.CurrentCulture,
                 "Search: {0}.", showDistrict ?
                 "District Courts" : "JP - County Courts");
 
@@ -41,10 +42,14 @@ namespace LegalLead.PublicData.Search
             var courtDropDown = courtNames.DropDowns.First();
             var nameDropDown = courtDropDown.Options.Find(x => x.Id == courtItemId);
 
-            sb.AppendFormat(" - {0}", nameDropDown.Name);
+            _ = sb.AppendFormat(
+                System.Globalization.CultureInfo.CurrentCulture,
+                " - {0}", nameDropDown.Name);
             if (showDistrict)
             {
-                sb.AppendFormat(" - {0}", "Criminal,Civil and Family".Split(',')[subItemId]);
+                _ = sb.AppendFormat(
+                System.Globalization.CultureInfo.CurrentCulture,
+                " - {0}", "Criminal,Civil and Family".Split(',')[subItemId]);
             }
             tsStatusLabel.Text = sb.ToString();
         }
@@ -68,7 +73,7 @@ namespace LegalLead.PublicData.Search
 
         private static System.Timers.Timer aTimer;
 
-        private void SetUpTimer()
+        private static void SetUpTimer()
         {
 
             // Create a timer and set a two second interval.
@@ -133,7 +138,9 @@ namespace LegalLead.PublicData.Search
             var configIndex = ConfigurationManager.AppSettings["form-context-id"];
             if (!string.IsNullOrEmpty(configIndex))
             {
-                cboWebsite.SelectedIndex = Convert.ToInt32(configIndex);
+                cboWebsite.SelectedIndex = Convert.ToInt32(
+                    configIndex,
+                    System.Globalization.CultureInfo.CurrentCulture);
             } 
 #endif
             SetUpTimer();
@@ -155,7 +162,8 @@ namespace LegalLead.PublicData.Search
                 + Environment.NewLine +
                 " End Date: " + dteEnding.Value.Date.ToShortDateString()
                 + Environment.NewLine +
-                " Start time: " + DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")
+                " Start time: " + DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss", 
+                    System.Globalization.CultureInfo.CurrentCulture)
                 + Environment.NewLine +
                 "- - - - - - - - - - - - - - - - - - - - - - - - - ";
 
@@ -173,7 +181,8 @@ namespace LegalLead.PublicData.Search
                 + Environment.NewLine +
                 " End Date: " + dteEnding.Value.Date.ToShortDateString()
                 + Environment.NewLine +
-                " End time: " + DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")
+                " End time: " + DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss", 
+                    System.Globalization.CultureInfo.CurrentCulture)
                 + Environment.NewLine +
                 "- - - - - - - - - - - - - - - - - - - - - - - - - "
                 + Environment.NewLine +

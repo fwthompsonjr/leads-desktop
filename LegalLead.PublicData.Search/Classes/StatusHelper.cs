@@ -5,7 +5,7 @@ using System.Linq;
 namespace LegalLead.PublicData.Search
 {
 
-    public enum StatusTypes
+    public enum StatusType
     {
         Ready = 1,
         Running = 2,
@@ -17,14 +17,13 @@ namespace LegalLead.PublicData.Search
         public string Name { get; set; }
         public System.Drawing.Color Color { get; set; }
     }
-    public class StatusHelper
+    public static class StatusHelper
     {
-        public static StatusState GetStatus(StatusTypes status)
+        public static StatusState GetStatus(StatusType status)
         {
 
             var v = (int)status - 1;
-            var collectionName = Enum.GetName(typeof(StatusTypes), status);
-            var statuses = "Ready,Running,Finished,Error".Split(',').ToList();
+            var collectionName = Enum.GetName(typeof(StatusType), status);
             var colors = new List<System.Drawing.Color>()
             {
                 { System.Drawing.Color.Black },

@@ -4,10 +4,13 @@ using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Parsing
 {
+    using CCulture = System.Globalization.CultureInfo;
 
     public class ParseCaseInTheMatterMarriage : ICaseDataParser
     {
-        private static readonly string _searchKeyWord = @"in the matter of the marriage of ";
+        const System.StringComparison comparison =
+            System.StringComparison.CurrentCultureIgnoreCase;
+        private const string _searchKeyWord = @"in the matter of the marriage of ";
 
         public virtual string SearchFor => _searchKeyWord;
 
@@ -16,9 +19,10 @@ namespace Thompson.RecordSearch.Utility.Parsing
         public virtual bool CanParse()
         {
             if (string.IsNullOrEmpty(CaseData)) return false;
-            if (!CaseData.ToLower().StartsWith(SearchFor)) return false;
-            var lowered = CaseData.ToLower();
-            var firstAnd = lowered.Substring(SearchFor.Length).IndexOf(" and ");
+            if (!CaseData.ToLower(CCulture.CurrentCulture)
+                .StartsWith(SearchFor, comparison)) return false;
+            var lowered = CaseData.ToLower(CCulture.CurrentCulture);
+            var firstAnd = lowered.Substring(SearchFor.Length).IndexOf(" and ", comparison);
             if (firstAnd < 0) return false;
             return true;
         }
@@ -30,14 +34,14 @@ namespace Thompson.RecordSearch.Utility.Parsing
             if (!CanParse()) return response;
 
             if (string.IsNullOrEmpty(CaseData)) return response;
-            var fullName = CaseData.ToLower();
-            if (!fullName.StartsWith(SearchFor)) return response;
+            var fullName = CaseData.ToLower(CCulture.CurrentCulture);
+            if (!fullName.StartsWith(SearchFor, comparison)) return response;
 
-            var findItIndex = fullName.IndexOf(SearchFor);
+            var findItIndex = fullName.IndexOf(SearchFor, comparison);
             if (findItIndex < 0) return response;
             CaseData = CaseData.Replace(" And ", and);
             fullName = CaseData.Substring(SearchFor.Length);
-            var splitIndex = fullName.IndexOf(and);
+            var splitIndex = fullName.IndexOf(and, comparison);
             if(splitIndex < 0)
             {
                 response.Defendant = fullName.Trim();

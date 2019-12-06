@@ -12,6 +12,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override void Act(Step item)
         {
+            if (item == null) throw new System.ArgumentNullException(nameof(item));
             var selector = Byy.CssSelector(item.Locator.Query);
             GetAssertion.WaitForElementExist(
                 selector,

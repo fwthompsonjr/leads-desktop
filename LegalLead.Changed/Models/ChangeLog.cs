@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace LegalLead.Changed.Models
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only",
+        Justification = "This field needs to be read/write to allow proper serialization.")]
     public class Issue
     {
         public double Id { get; set; }
@@ -12,9 +14,22 @@ namespace LegalLead.Changed.Models
         public IList<string> Description { get; set; }
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only",
+        Justification = "This field needs to be read/write to allow proper serialization.")]
+    public class Correction
+    {
+        public double Id { get; set; }
+        
+        public DateTime CorrectionDate { get; set; }
+
+        public string Description { get; set; }
+    }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", 
+        Justification = "This field needs to be read/write to allow proper serialization.")]
     public class Change
     {
         public DateTime ReportedDate { get; set; }
+
         public IList<Issue> Issues { get; set; }
     }
 
@@ -25,6 +40,8 @@ namespace LegalLead.Changed.Models
         public bool CanPublish { get; set; }
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only",
+        Justification = "This field needs to be read/write to allow proper serialization.")]
     public class Version
     {
         public int Id { get; set; }
@@ -32,11 +49,16 @@ namespace LegalLead.Changed.Models
         public IList<Fix> Fixes { get; set; }
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only",
+        Justification = "This field needs to be read/write to allow proper serialization.")]
     public class ChangeLog
     {
         public IList<Change> Changes { get; set; }
         
         public IList<Version> Versions { get; set; }
+
+
+        public IList<Correction> Corrections { get; set; }
 
         /// <summary>
         /// Gets or sets the string content for the version assembly file

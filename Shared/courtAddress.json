@@ -138,21 +138,65 @@
       ]
     },
     {
-      "id": "30",
+      "id": "20",
       "courts": [
 		{ "name": "default", "address": "2100 Bloomdale Road, McKinney, TX 75071" },
-        { "name": "JP 1", "fullName": "JP 1", "address": "2300 Bloomdale Rd., Suite 1164, McKinney, TX 75071" }, 
-		{ "name": "JP 2", "fullName": "JP 2", "address": "406A Raymond Street, Farmersville, TX 75442" }, 
-		{ "name": "JP 3-1", "fullName": "JP 3-1", "address": "920 E. Park Blvd., Plano, TX 75074" }, 
-		{ "name": "JP 3-2", "fullName": "JP 3-2", "address": "920 E. Park Blvd., Plano, TX 75074" }, 
-		{ "name": "JP 4", "fullName": "JP 4", "address": "8585 John Wesley, Suite 130, Frisco, TX 75034" }, 
-		{ "name": "CCL 1", "fullName": "CCL 1", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
-		{ "name": "CCL 2", "fullName": "CCL 2", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
-		{ "name": "CCL 3", "fullName": "CCL 3", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
-		{ "name": "CCL 4", "fullName": "CCL 4", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
-		{ "name": "CCL 5", "fullName": "CCL 5", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
-		{ "name": "CCL 6", "fullName": "CCL 6", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
-		{ "name": "CCL 7", "fullName": "CCL 7", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
+    { "name": "JP 1", "fullName": "Precinct 1", "address": "2300 Bloomdale Rd., Suite 1164, McKinney, TX 75071" },
+        {
+          "name": "JP 2",
+          "fullName": "Precinct 2",
+          "address": "406A Raymond Street, Farmersville, TX 75442"
+        },
+        {
+          "name": "JP 3-1",
+          "fullName": "Precinct 3-1",
+          "address": "920 E. Park Blvd., Plano, TX 75074"
+        },
+        {
+          "name": "JP 3-2",
+          "fullName": "Precinct 3-2",
+          "address": "920 E. Park Blvd., Plano, TX 75074"
+        },
+        {
+          "name": "JP 4",
+          "fullName": "Precinct 4",
+          "address": "8585 John Wesley, Suite 130, Frisco, TX 75034"
+        },
+        {
+          "name": "CCL 1",
+          "fullName": "County Court at Law 1",
+          "address": "2100 Bloomdale Road, McKinney, TX 75071"
+        },
+        {
+          "name": "CCL 2",
+          "fullName": "County Court at Law 2",
+          "address": "2100 Bloomdale Road, McKinney, TX 75071"
+        },
+        {
+          "name": "CCL 3",
+          "fullName": "County Court at Law 3",
+          "address": "2100 Bloomdale Road, McKinney, TX 75071"
+        },
+        {
+          "name": "CCL 4",
+          "fullName": "County Court at Law 4",
+          "address": "2100 Bloomdale Road, McKinney, TX 75071"
+        },
+        {
+          "name": "CCL 5",
+          "fullName": "County Court at Law 5",
+          "address": "2100 Bloomdale Road, McKinney, TX 75071"
+        },
+        {
+          "name": "CCL 6",
+          "fullName": "County Court at Law 6",
+          "address": "2100 Bloomdale Road, McKinney, TX 75071"
+        },
+        {
+          "name": "CCL 7",
+          "fullName": "County Court at Law 7",
+          "address": "2100 Bloomdale Road, McKinney, TX 75071"
+        }, 
 		{ "name": "199th District Court", "fullName": "199th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
 		{ "name": "296th District Court", "fullName": "296th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 
 		{ "name": "429th District Court", "fullName": "429th District Court", "address": "2100 Bloomdale Road, McKinney, TX 75071" }, 

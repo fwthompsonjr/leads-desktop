@@ -61,7 +61,7 @@ namespace LegalLead.Changed.Classes
             }
         }
 
-        private string GetFileContent(string sourceFileName)
+        private static string GetFileContent(string sourceFileName)
         {
             using (var reader = new StreamReader(sourceFileName))
             {

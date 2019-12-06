@@ -101,8 +101,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         }
         private void WriteToExcel(WebFetchResult found)
         {
-            var writer = new ExcelWriter();
-            writer.WriteToExcel(found);
+            ExcelWriter.WriteToExcel(found);
         }
 
         private bool CanExecuteFetch()

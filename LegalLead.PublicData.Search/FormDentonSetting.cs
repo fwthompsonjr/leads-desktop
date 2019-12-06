@@ -37,27 +37,28 @@ namespace LegalLead.PublicData.Search
             cboDistrictSearchType.ValueMember = "Id";
 
             cboCaseSearchType.SelectedIndex = 0;
+            const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
             var keys = Program.DentonCustomKeys;
             if (!keys.Any()) {
                 LoadFromSearchSettings();
                 cboCaseSearchType.SelectedIndex = cboCaseSearchType.SelectedIndex;
                 return; }
-            var searchIndex = keys.Find(k => k.Name.Equals("CaseSearchType"));
+            var searchIndex = keys.Find(k => k.Name.Equals("CaseSearchType", comparison));
             var searchTarget = countyCaseTypes.CaseSearchTypes.Find(x => 
-                x.Query.Equals(searchIndex.Value));
+                x.Query.Equals(searchIndex.Value, comparison));
 
             cboCaseSearchType.SelectedIndex = searchTarget.Id;
-            var courtIndex = keys.Find(k => k.Name.Equals("SearchComboIndex"));
+            var courtIndex = keys.Find(k => k.Name.Equals("SearchComboIndex", comparison));
             var countIndexId = Convert.ToInt32(courtIndex.Value);
             var showDistrict = ((CaseSearchType)cboCaseSearchType.SelectedItem)
-                .Name.Equals("District Courts");
+                .Name.Equals("District Courts", comparison);
             cboCourtListA.SelectedIndex = showDistrict ? 0 : countIndexId;
             cboCourtListB.SelectedIndex = showDistrict ? countIndexId : 0;
             cboDistrictSearchType.SelectedIndex = 0;
             if (!showDistrict) return;
-            var districtIndex = keys.Find(k => k.Name.Equals("DistrictSearchType"));
+            var districtIndex = keys.Find(k => k.Name.Equals("DistrictSearchType", comparison));
             var districtTarget = districtCaseTypes.CaseSearchTypes.Find(x =>
-                x.Query.Equals(districtIndex.Value));
+                x.Query.Equals(districtIndex.Value, comparison));
             cboDistrictSearchType.SelectedIndex = districtTarget.Id;
             cboCaseSearchType.SelectedIndex = cboCaseSearchType.SelectedIndex;
         }
@@ -74,8 +75,9 @@ namespace LegalLead.PublicData.Search
 
         private void CboCaseSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
             var showDistrict = ((CaseSearchType)cboCaseSearchType.SelectedItem)
-                .Name.Equals("District Courts");
+                .Name.Equals("District Courts", comparison);
             foreach (Control control in tableLayoutPanel1.Controls)
             {
                 if (control.Tag == null) continue;
@@ -94,7 +96,7 @@ namespace LegalLead.PublicData.Search
         private void Save(bool writeFile = true)
         {
             var showDistrict = ((CaseSearchType)cboCaseSearchType.SelectedItem)
-                .Name.Equals("District Courts");
+                .Name.Equals("District Courts", StringComparison.CurrentCultureIgnoreCase);
             var caseSearchItem = (CaseSearchType)cboCaseSearchType.SelectedItem;
             var jpCourtItem = (Option)cboCourtListA.SelectedItem;
             var districtCourtItem = (Option)cboCourtListB.SelectedItem;

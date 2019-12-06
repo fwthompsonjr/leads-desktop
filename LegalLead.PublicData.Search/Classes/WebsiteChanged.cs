@@ -60,7 +60,7 @@ namespace LegalLead.PublicData.Search
             CboCaseType.DisplayMember = "Name";
             CboCaseType.ValueMember = "Id";
 
-            if (caseTypeName.Equals(ccCaseName)) return;
+            if (caseTypeName.Equals(ccCaseName, System.StringComparison.CurrentCultureIgnoreCase)) return;
             var selected = (Option)CboCaseType.SelectedItem;
             var expected = dropDownOptions.FirstOrDefault(o => o.IsDefault) ?? selected;
             if (selected.Id.Equals(expected.Id)) return;

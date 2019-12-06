@@ -29,29 +29,29 @@ namespace Thompson.RecordSearch.Utility.Classes
             FileWriter = fileWriter;
         }
 
-#pragma warning disable CA1822 // Mark members as static
-        public void WriteToExcel(WebFetchResult fetchResult)
-#pragma warning restore CA1822 // Mark members as static
+        public static void WriteToExcel(WebFetchResult fetchResult)
         {
             if(fetchResult == null)
             {
                 throw new ArgumentNullException(nameof(fetchResult));
             }
-
+            if (fetchResult.WebsiteId < 1) fetchResult.WebsiteId = 1;
             var writer = new ExcelWriter();
             var tmpFileName = fetchResult.Result.Replace(".xml", ".xlsx");
             using (var workBook = writer.ConvertToPersonTable(
                 addressList: fetchResult.PeopleList,
                 worksheetName: "Addresses",
                 saveFile: false,
-                outputFileName: tmpFileName))
+                outputFileName: tmpFileName,
+                websiteId: fetchResult.WebsiteId))
             {
                 writer.ConvertToDataTable(
                 excelPackage: workBook,
                 htmlTable: fetchResult.CaseList,
                 worksheetName: "CaseData",
                 saveFile: true,
-                outputFileName: tmpFileName);
+                outputFileName: tmpFileName,
+                websiteId: fetchResult.WebsiteId);
             }         
 
             
@@ -65,6 +65,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             string outputFileName = "",
             int websiteId = 1)
         {
+            if (addressList == null)
+                throw new ArgumentNullException(nameof(addressList));
+            if (string.IsNullOrEmpty(worksheetName))
+                throw new ArgumentNullException(nameof(worksheetName));
+
             var countyName = GetSettingsManager()
                 .GetNavigation().Find(x => x.Id == websiteId)
                 .Name.Replace("County", "").Trim();
@@ -121,10 +126,20 @@ namespace Thompson.RecordSearch.Utility.Classes
             const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
             var list = SearchSettingDto.GetCourtLookupList.CourtLocations;
             var court = list.FirstOrDefault(
-                c => c.Id.Equals(websiteId.ToString("0"), ccic));
+                c => c.Id.Equals(websiteId.ToString("0", new System.Globalization.NumberFormatInfo()), ccic));
             if (court == null) return string.Empty;
+            court.Courts
+                .Where(a => string.IsNullOrEmpty(a.FullName))
+                .ToList()
+                .ForEach(b => b.FullName = string.Empty);
+            court.Courts
+                .Where(a => string.IsNullOrEmpty(a.Name))
+                .ToList()
+                .ForEach(b => b.Name = string.Empty);
             var courtLocation = court.Courts
-                .FirstOrDefault(a => a.Name.Equals(value, ccic));
+                .FirstOrDefault(a => 
+                    a.Name.Equals(value, ccic) 
+                    | a.FullName.Equals(value, ccic));
             if (courtLocation != null) return courtLocation.Address;
             var blankLocation = court.Courts
                 .FirstOrDefault(a => a.Name.Equals("default", ccic));
@@ -147,7 +162,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var wsDt = pck.Workbook.Worksheets.Add(worksheetName);
             var webNav = GetSettingsManager().GetNavigation()
                  .FirstOrDefault(n => n.Id.Equals(websiteId));
-            var hyperPrefix = webNav?.Keys.FirstOrDefault(h => h.Name.Equals("hlinkUri"));
+            var hyperPrefix = webNav?.Keys.FirstOrDefault(h => h.Name.Equals("hlinkUri", StringComparison.CurrentCultureIgnoreCase));
 
             var sb = new StringBuilder();
             sb.AppendLine("<html>");
@@ -156,8 +171,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             sb.AppendLine("</body>");
             sb.AppendLine("</html>");
             // HTML-table to an excel worksheet
-            var doc = new XmlDocument();
-            doc.LoadXml(sb.ToString());
+            var doc = XmlDocProvider.GetDoc(sb.ToString());
             var body = doc.DocumentElement.SelectSingleNode("body");
             var table = body.FirstChild;
             var rows = table.ChildNodes.Cast<XmlNode>().ToList();

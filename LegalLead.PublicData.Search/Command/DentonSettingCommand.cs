@@ -8,8 +8,10 @@ namespace LegalLead.PublicData.Search.Command
 
         public override void Execute(FormMain mainForm)
         {
-            var form = new FormDentonSetting();
-            Application.Run(form);
+            using (var form = new FormDentonSetting())
+            {
+                Application.Run(form); 
+            }
         }
     }
 }

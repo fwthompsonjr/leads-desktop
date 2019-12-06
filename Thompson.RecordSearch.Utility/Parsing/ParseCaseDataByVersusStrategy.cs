@@ -4,7 +4,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
 {
     public class ParseCaseDataByVersusStrategy : ICaseDataParser
     {
-        private static readonly string _searchKeyWord = @"vs.";
+        private const string _searchKeyWord = @"vs.";
 
         public virtual string SearchFor => _searchKeyWord;
 

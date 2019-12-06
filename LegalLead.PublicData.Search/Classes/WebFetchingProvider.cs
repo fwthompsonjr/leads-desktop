@@ -19,8 +19,8 @@ namespace LegalLead.PublicData.Search
                 case 20:
                     return new CollinWebInteractive(siteData, startDate, endingDate);
                 default:
-                    var districtKey = Program.DentonCustomKeys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType"));
-                    var siteDistrictKey = siteData.Keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType"));
+                    var districtKey = Program.DentonCustomKeys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", StringComparison.CurrentCulture));
+                    var siteDistrictKey = siteData.Keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", StringComparison.CurrentCulture));
                     if(districtKey == null)
                     {
                         if(siteDistrictKey != null)

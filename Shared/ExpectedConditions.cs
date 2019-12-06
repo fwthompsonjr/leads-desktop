@@ -32,6 +32,8 @@ namespace OpenQA.Selenium.Support.UI
     /// IWebElement element = wait.Until(ExpectedConditions.ElementExists(By.Id("foo")));
     /// </code>
     /// </example>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
     [Obsolete("The ExpectedConditions implementation in the .NET bindings is deprecated and will be removed in a future release. This portion of the code has been migrated to the DotNetSeleniumExtras repository on GitHub (https://github.com/DotNetSeleniumTools/DotNetSeleniumExtras)")]
     public sealed class ExpectedConditions
     {
@@ -62,17 +64,21 @@ namespace OpenQA.Selenium.Support.UI
             return (driver) => { return driver.Title.Contains(title); };
         }
 
+
         /// <summary>
         /// An expectation for the URL of the current page to be a specific URL.
         /// </summary>
         /// <param name="url">The URL that the page should be on</param>
         /// <returns><see langword="true"/> when the URL is what it should be; otherwise, <see langword="false"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings", Justification = "<Pending>")]
         public static Func<IWebDriver, bool> UrlToBe(string url)
         {
 #pragma warning disable CA1308 // Normalize strings to uppercase
             return (driver) => { return driver.Url.ToLowerInvariant().Equals(url.ToLowerInvariant()); };
 #pragma warning restore CA1308 // Normalize strings to uppercase
         }
+
 
         /// <summary>
         /// An expectation for the URL of the current page to be a specific URL.
@@ -388,12 +394,14 @@ namespace OpenQA.Selenium.Support.UI
             };
         }
 
+
         /// <summary>
         /// An expectation for checking that an element with text is either invisible or not present on the DOM.
         /// </summary>
         /// <param name="locator">The locator used to find the element.</param>
         /// <param name="text">Text of the element</param>
         /// <returns><see langword="true"/> if the element is not displayed; otherwise, <see langword="false"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
         public static Func<IWebDriver, bool> InvisibilityOfElementWithText(By locator, string text)
         {
             return (driver) =>

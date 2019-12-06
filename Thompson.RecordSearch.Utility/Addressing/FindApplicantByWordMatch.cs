@@ -1,5 +1,6 @@
 ﻿// FindApplicantByWordMatch
 using System;
+using System.Globalization;
 using System.Linq;
 using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
@@ -12,10 +13,12 @@ namespace Thompson.RecordSearch.Utility.Addressing
 
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
+            if (driver == null) throw new ArgumentNullException(nameof(driver));
+            if (linkData == null) throw new ArgumentNullException(nameof(linkData));
             var searchType = "Applicant";
             CanFind = false;
             var tdName = TryFindElement(driver, By.XPath(
-                String.Format(@"//th[contains(text(),'{0}')]", searchType)));
+                string.Format(@"//th[contains(text(),'{0}')]", searchType)));
             // this instance can find
             if (tdName == null) return;
 
@@ -32,9 +35,11 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 var table = parent.FindElement(By.XPath(".."));
                 var trCol = table.FindElements(By.TagName("tr")).ToList();
                 if (!int.TryParse(ridx, out int r)) return;
-                MapElementAddress(linkData, rowLabel, table, trCol, r, searchType.ToLower());
+                MapElementAddress(linkData, rowLabel, table, trCol, r, searchType.ToLower(CultureInfo.CurrentCulture));
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
 
             }

@@ -1,6 +1,7 @@
 ﻿// CredentialEvents
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
@@ -39,17 +40,19 @@ namespace LegalLead.PublicData.Search
             var pwordlist = new List<UserPassword>();
             var history = UserAccessDto.GetListDto("collinCountyUserMap");
             history.ForEach(x => Append(pwordlist, x));
-            var bs = new BindingSource();
-            bs.DataSource = pwordlist;
+            var bs = new BindingSource
+            {
+                DataSource = pwordlist
+            };
             dataGridView1.DataSource = bs;
         }
 
-        private void Append(List<UserPassword> pwordlist, UserAccessDto x)
+        private static void Append(List<UserPassword> pwordlist, UserAccessDto x)
         {
             var credential = UserAccessDto.GetCredential(x);
             pwordlist.Add(new UserPassword
             {
-                Date = x.CreatedDate.GetValueOrDefault().ToString("MM/dd/yyyy"),
+                Date = x.CreatedDate.GetValueOrDefault().ToString("MM/dd/yyyy", CultureInfo.CurrentCulture),
                 UserId = credential[0],
                 Password = credential[1]
             });
@@ -79,8 +82,8 @@ namespace LegalLead.PublicData.Search
         protected void ChangePassword()
         {
             var dto = UserAccessDto.GetDto("collinCountyUserMap");
-            var cleared = string.Format(@"{0}|{1}", tbxUser.Text, tbxPwd.Text);
-            var encoded = UserAccessDto.CreateCredential(cleared, dto.UserKey, "collinCountyUserMap");
+            var cleared = string.Format(CultureInfo.CurrentCulture, @"{0}|{1}", tbxUser.Text, tbxPwd.Text);
+            UserAccessDto.CreateCredential(cleared, dto.UserKey, "collinCountyUserMap");
             BindPasswords();
             DialogResult = DialogResult.OK;
         }

@@ -14,6 +14,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override void Act(Step item)
         {
+            if (item == null) throw new System.ArgumentNullException(nameof(item));
             var driver = GetWeb;
             var userDto = UserAccessDto.GetDto(item.ExpectedValue);
             var pwordUser = CryptoEngine.Decrypt(userDto.UserGuid, userDto.UserKey);

@@ -24,10 +24,10 @@ namespace LegalLead.PublicData.Search
 
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
-            SetStatus(StatusTypes.Ready);
+            SetStatus(StatusType.Ready);
         }
 
-        private void SetStatus(StatusTypes status)
+        private void SetStatus(StatusType status)
         {
             var v = StatusHelper.GetStatus(status);
             toolStripStatus.Text = string.Format("{0}", v.Name);
@@ -36,16 +36,17 @@ namespace LegalLead.PublicData.Search
             Application.DoEvents();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         private void Button1_Click(object sender, EventArgs e)
         {
             
             try
             {
                 KillProcess("chromedriver");
-                SetStatus(StatusTypes.Running);
+                SetStatus(StatusType.Running);
                 if (!ValidateCustom())
                 {
-                    SetStatus(StatusTypes.Ready);
+                    SetStatus(StatusType.Ready);
                     return;
                 }
                 txConsole.Text = string.Empty;
@@ -54,11 +55,11 @@ namespace LegalLead.PublicData.Search
                 var endingDate = dteEnding.Value.Date;
                 var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
 
-                // set parameter criminalCaseInclusion
+                const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
                 var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
                 var keys = siteData.Keys;
-                var isDistrictSearch = keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType")) != null;
-                var criminalToggle = keys.FirstOrDefault(x => x.Name.Equals("criminalCaseInclusion"));
+                var isDistrictSearch = keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", ccic)) != null;
+                var criminalToggle = keys.FirstOrDefault(x => x.Name.Equals("criminalCaseInclusion", ccic));
                 if (isDentonCounty && criminalToggle != null)
                 {
                     criminalToggle.Value = isDistrictSearch ? "0" : "1";
@@ -71,7 +72,7 @@ namespace LegalLead.PublicData.Search
                 CaseData = webmgr.Fetch();
 
                 ProcessEndingMessage();
-                SetStatus(StatusTypes.Finished);
+                SetStatus(StatusType.Finished);
                 KillProcess("chromedriver");
                 if (CaseData == null)
                 {
@@ -81,9 +82,8 @@ namespace LegalLead.PublicData.Search
                 {
                     throw new ApplicationException("No data found from case extract.");
                 }
-
-                var writer = new ExcelWriter();
-                writer.WriteToExcel(CaseData);
+                CaseData.WebsiteId = siteData.Id;
+                ExcelWriter.WriteToExcel(CaseData);
 
                 var result = MessageBox.Show(
                     "Your data extract has completed. Would you like to view in Excel?",
@@ -92,15 +92,15 @@ namespace LegalLead.PublicData.Search
                     MessageBoxIcon.Question);
                 if (result != System.Windows.Forms.DialogResult.Yes)
                 {
-                    SetStatus(StatusTypes.Ready);
+                    SetStatus(StatusType.Ready);
                     return;
                 }
                 TryOpenExcel();
-                SetStatus(StatusTypes.Ready);
+                SetStatus(StatusType.Ready);
             }
             catch (Exception ex)
             {
-                SetStatus(StatusTypes.Error);
+                SetStatus(StatusType.Error);
                 Console.WriteLine("An unexpected error occurred.");
                 Console.WriteLine(ex.Message);
 
@@ -144,12 +144,18 @@ namespace LegalLead.PublicData.Search
             var sourceId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
             if(sourceId == (int)SourceType.DentonCounty)
             {
-                var result = new FormDentonSetting().ShowDialog(this);
-                SetDentonStatusLabelFromSetting();
+                using (var credential = new FormCredential())
+                {
+                    credential.ShowDialog(this);
+                    SetDentonStatusLabelFromSetting();
+                }
             }
             else
             {
-                var result = new FormCredential().ShowDialog(this);
+                using (var result = new FormCredential())
+                {
+                    result.ShowDialog(this); 
+                }
             }
         }
 

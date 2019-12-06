@@ -26,8 +26,9 @@ namespace LegalLead.PublicData.Search
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+            const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
             var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
-            var dateRange = siteData.Keys.FirstOrDefault(x => x.Name.Equals("dateRangeMaxDays"));
+            var dateRange = siteData.Keys.FirstOrDefault(x => x.Name.Equals("dateRangeMaxDays", comparison));
             if (dateRange != null)
             {
                 int maxDayInterval = Convert.ToInt32(dateRange.Value);
@@ -54,12 +55,13 @@ namespace LegalLead.PublicData.Search
 
         private bool ValidateCustomDenton(WebNavigationParameter siteData)
         {
+            const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
             if (siteData.Id != 1) return true;
             var keys = Program.DentonCustomKeys;
             if (!keys.Any()) return true;
             foreach (var customKey in keys)
             {
-                var found = siteData.Keys.FirstOrDefault(k => k.Name.Equals(customKey.Name));
+                var found = siteData.Keys.FirstOrDefault(k => k.Name.Equals(customKey.Name, comparison));
                 if(found != null)
                 {
                     found.Value = customKey.Value;
@@ -73,7 +75,7 @@ namespace LegalLead.PublicData.Search
             if (!isDistrictSearch)
             {
                 // remove district item from keys collection
-                var districtItem = keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType"));
+                var districtItem = keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", comparison));
                 if(districtItem != null)
                 {
                     keys.Remove(districtItem);
@@ -141,12 +143,12 @@ namespace LegalLead.PublicData.Search
         }
 
 
-        private void SetKeyValue(WebNavigationParameter siteData,
+        private static void SetKeyValue(WebNavigationParameter siteData,
             string keyName,
             string keyValue)
         {
             var keys = siteData.Keys;
-            var item = keys.First(k => k.Name.Equals(keyName));
+            var item = keys.First(k => k.Name.Equals(keyName, StringComparison.CurrentCultureIgnoreCase));
             if (item == null) return;
             item.Value = keyValue;
 

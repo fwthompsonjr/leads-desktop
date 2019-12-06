@@ -57,12 +57,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var tdCaseStyle = TryFindElement(rw, By.XPath("td[2]"));
                 var caseStyle = tdCaseStyle == null ? string.Empty : tdCaseStyle.Text;
                 var address = link == null ? string.Empty : link.GetAttribute("href");
-                var dataRow = new HLinkDataRow { Data = html, Uri = address, IsCriminal = isCriminalSearch };
+                var dataRow = new HLinkDataRow { Data = html, WebAddress = address, IsCriminal = isCriminalSearch };
                 if (link != null) {
                     dataRow.Case = link.Text.Trim();
                     dataRow.CriminalCaseStyle = caseStyle;
                 }
-                cases.Add(new HLinkDataRow { Data = html, Uri = address });
+                cases.Add(new HLinkDataRow { Data = html, WebAddress = address });
             }
 
             return tbResult;

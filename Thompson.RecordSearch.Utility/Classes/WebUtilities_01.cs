@@ -8,7 +8,7 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
-    public partial class WebUtilities
+    public static partial class WebUtilities
     {
         protected interface ICaseFetch
         {
@@ -25,7 +25,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             public virtual List<HLinkDataRow> GetCases()
             {
-                if (Cases == null)
+                if (DataRows == null)
                 {
                     return new List<HLinkDataRow>();
                 }
@@ -34,7 +34,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     parameter.Value = "0";
                 }
-                var cases = Search(GetNavigationUrl(), Cases);
+                var cases = Search(GetNavigationAddress(), DataRows);
                 return cases;
             }
 
@@ -69,17 +69,17 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             protected virtual void GetPersonData(List<HLinkDataRow> cases, IWebDriver driver, WebInteractive data)
             {
-                var people = cases.FindAll(x => !string.IsNullOrEmpty(x.Uri));
+                var people = cases.FindAll(x => !string.IsNullOrEmpty(x.WebAddress));
                 people.ForEach(d => Find(driver, data, d));
                 var found = people.Count(p => !string.IsNullOrEmpty(p.Defendant));
             }
 
-            protected List<HLinkDataRow> Cases
+            protected List<HLinkDataRow> DataRows
             {
                 get
                 {
                     if (_dataRows != null) return _dataRows;
-                    var navTo = GetNavigationUrl();
+                    var navTo = GetNavigationAddress();
                     if (string.IsNullOrEmpty(navTo)) return _dataRows;
                     _dataRows = new List<HLinkDataRow>();
                     return _dataRows;
@@ -116,7 +116,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 return GetParameter(Data, "query");
             }
 
-            protected string GetNavigationUrl()
+            protected string GetNavigationAddress()
             {
                 var target = GetBaseUri();
                 var query = GetQuery();
@@ -140,7 +140,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             public override List<HLinkDataRow> GetCases()
             {
-                if (Cases == null)
+                if (DataRows == null)
                 {
                     return new List<HLinkDataRow>();
                 }
@@ -152,7 +152,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     parameter.Value = "1";
                 }
                 ModifyInstructions("criminalLinkQuery");
-                var cases = Search(GetNavigationUrl(), Cases);
+                var cases = Search(GetNavigationAddress(), DataRows);
                 cases.ForEach(c => c.IsCriminal = true);
                 return cases;
             }
@@ -161,7 +161,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
 
-        protected static WebNavigationKey GetParameter(
+        internal static WebNavigationKey GetParameter(
             WebInteractive data,
             string parameterName)
         {

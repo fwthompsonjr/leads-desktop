@@ -13,10 +13,10 @@ namespace LegalLead.Changed.Classes
         {
 
             if (string.IsNullOrEmpty(SourceFile))
-                throw new ArgumentOutOfRangeException("SourceFile");
+                throw new InvalidOperationException();
 
             if (Log == null)
-                throw new ArgumentOutOfRangeException("Log");
+                throw new InvalidOperationException();
 
             if(LatestVersion == null)
             {

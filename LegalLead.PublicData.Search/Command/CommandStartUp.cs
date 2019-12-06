@@ -18,7 +18,7 @@ namespace LegalLead.PublicData.Search.Command
               .SelectMany(x => x.GetTypes())
               .Where(x => interfaceType.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
               .Select(x => Activator.CreateInstance(x) as CommandBase).ToList();
-            commands.Sort((a, b) => a.Name.CompareTo(b.Name));
+            commands.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
             return commands;
         }
     }

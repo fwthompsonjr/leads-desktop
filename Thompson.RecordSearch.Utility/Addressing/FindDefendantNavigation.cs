@@ -13,7 +13,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
         {
             CanFind = false;
             var helper = new ElementAssertion(driver);
-            helper.Navigate(linkData.Uri);
+            helper.Navigate(linkData.WebAddress);
             driver.WaitForNavigation();
             // get criminal hyperlink
             // //a[contains(text(),'Criminal')]

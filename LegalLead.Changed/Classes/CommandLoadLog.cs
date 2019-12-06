@@ -9,7 +9,7 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
-                throw new ArgumentOutOfRangeException("SourceFile");
+                throw new InvalidOperationException();
 
             if(Log == null)
             {

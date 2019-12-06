@@ -2,13 +2,18 @@
 
 namespace LegalLead.PublicData.Search.Command
 {
-    class CredentialCommand : CommandBase
+    internal class CredentialCommand : CommandBase
     {
         public override string Name => "Credentials";
 
         public override void Execute(FormMain mainForm)
         {
-            Application.Run(new FormCredential());
+            {
+                using (var form = new FormCredential())
+                {
+                    Application.Run(form);
+                }
+            }
         }
     }
 }

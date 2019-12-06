@@ -48,7 +48,7 @@ namespace Thompson.RecordSearch.Utility.Models
         public int WebsiteId { get; set; }
         public string Data { get; set; }
         
-        public string Uri { get; set; }
+        public string WebAddress { get; set; }
 
         public string Defendant { get; set; }
 

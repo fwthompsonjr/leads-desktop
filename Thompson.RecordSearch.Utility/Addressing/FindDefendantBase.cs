@@ -36,11 +36,15 @@ namespace Thompson.RecordSearch.Utility.Addressing
         /// <returns></returns>
         protected static IWebElement GetAddressRow(IWebElement parent, System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> trCol)
         {
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (trCol == null) throw new ArgumentNullException(nameof(trCol));
             int colIndex = 3;
             parent = trCol[colIndex];
-            if (parent.Text.Trim() == string.Empty) parent = trCol[colIndex - 1];
+            var parentTxt = string.IsNullOrEmpty(parent.Text) ? string.Empty : parent.Text;
+            if (string.IsNullOrEmpty(parentTxt)) parent = trCol[colIndex - 1];
             return parent;
         }
+
 
 
         /// <summary>
@@ -49,10 +53,12 @@ namespace Thompson.RecordSearch.Utility.Addressing
         /// <param name="parent">The parent web browser instance.</param>
         /// <param name="by">The by condition used to locate the element</param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         protected static IWebElement TryFindElement(IWebDriver parent, By by)
         {
             try
             {
+                if (parent == null) return null;
                 return parent.FindElement(by);
             }
             catch (Exception)
@@ -61,14 +67,18 @@ namespace Thompson.RecordSearch.Utility.Addressing
             }
         }
 
-        protected string GetAddress(int rowIndex, List<IWebElement> elements, string keyword = "defendant")
+        protected static string GetAddress(int rowIndex, List<IWebElement> elements, string keyword = "defendant")
         {
+            if (elements == null) throw new ArgumentNullException(nameof(elements));
+            if (string.IsNullOrEmpty(keyword)) { keyword = "defendant"; }
+            const StringComparison currentCase = StringComparison.CurrentCultureIgnoreCase;
+            var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
             var address = string.Empty;
             var addressHtml = string.Empty;
-            var findKey = keyword.ToLower();
+            var findKey = keyword.ToLower(cultureInfo);
             if (!elements.Any()) return string.Empty;
             rowIndex = 0;
-            while (address.ToLower().StartsWith(findKey) | string.IsNullOrEmpty(address))
+            while (address.ToLower(cultureInfo).StartsWith(findKey, currentCase) | string.IsNullOrEmpty(address))
             {
                 if (rowIndex > elements.Count - 1) break;
                 var currentRow = elements[rowIndex];
@@ -82,7 +92,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 
                 if (headings != null && headings.Count > 1)
                 {
-                    if (!address.ToLower().StartsWith(findKey)) {
+                    if (!address.ToLower(cultureInfo).StartsWith(findKey, currentCase)) {
                         address = string.Empty;
                         break; }
                 }
@@ -96,11 +106,11 @@ namespace Thompson.RecordSearch.Utility.Addressing
             // custom clean ups for collin-county
             const string noBr = @"<nobr>";
             const string br = @"<br/>";
-            if (addressHtml.IndexOf(noBr) < 0)
+            if (addressHtml.IndexOf(noBr, currentCase) < 0)
             {
                 return address;
             }
-            var endOfLine = addressHtml.IndexOf(noBr);
+            var endOfLine = addressHtml.IndexOf(noBr, currentCase);
             addressHtml = addressHtml.Substring(0, endOfLine);
             addressHtml = new StringBuilder(addressHtml)
                 .Replace("&nbsp;", " ")
@@ -110,13 +120,17 @@ namespace Thompson.RecordSearch.Utility.Addressing
             return addressHtml;
         }
 
-        protected void MapElementAddress(HLinkDataRow linkData,
+        protected static void MapElementAddress(HLinkDataRow linkData,
             IWebElement rowLabel,
             IWebElement table,
             List<IWebElement> trCol,
             int r,
             string searchTitle)
         {
+            if (linkData == null) throw new ArgumentNullException(nameof(linkData));
+            if (rowLabel == null) throw new ArgumentNullException(nameof(rowLabel));
+            if (table == null) throw new ArgumentNullException(nameof(table));
+            if (trCol == null) throw new ArgumentNullException(nameof(trCol));
             var nextTh = table.FindElements(By.TagName("th")).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
             var mxRowIndex = nextTh == null ? r : Convert.ToInt32(nextTh.FindElement(By.XPath("..")).GetAttribute("rowIndex"));
             while (r <= mxRowIndex)
@@ -126,7 +140,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 tdElements = tdElements.FindAll(x => x.Location.X >= rowLabel.Location.X & x.Location.X < (rowLabel.Location.X + rowLabel.Size.Width));
                 linkData.Address = GetAddress(r, tdElements, searchTitle);
                 if (!string.IsNullOrEmpty(linkData.Address)) break;
-                r = r + 1;
+                r += 1;
             }
             linkData.Address = NoFoundMatch.GetNoMatch(linkData.Address);
         }

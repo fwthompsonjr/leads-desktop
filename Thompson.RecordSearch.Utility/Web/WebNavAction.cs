@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Web
@@ -11,8 +12,10 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override void Act(Step item)
         {
+            if (item == null) throw new System.ArgumentNullException(nameof(item));
             var driver = GetWeb;
-            driver.Navigate().GoToUrl(item.Locator.Query);
+            var uri = new Uri(item.Locator.Query);
+            driver.Navigate().GoToUrl(uri);
             if (item.Wait > 0) { Thread.Sleep(item.Wait); }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// CommandBuildCorrections
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,9 +7,9 @@ using LegalLead.Changed.Models;
 
 namespace LegalLead.Changed.Classes
 {
-    public class CommandMapFixes : BuildCommandBase
+    public class CommandBuildCorrections : BuildCommandBase
     {
-        public override int Index => 300;
+        public override int Index => 1000;
 
         public override bool Execute()
         {
@@ -22,13 +23,31 @@ namespace LegalLead.Changed.Classes
             {
                 return true;
             }
-
-            var fixes = LatestVersion.Fixes
-                .Where(x => x.Id > 0)
+            var corrections = Log.Corrections ?? new List<Correction>();
+            var issues = new List<Issue>();
+            var issueList
+                = Log.Changes
+                .Select(c => c.Issues)
                 .ToList();
-
-            if (!fixes.Any()) return true;
-            MapChange(fixes);
+            issueList.ForEach(x => 
+            {
+                var children = x.ToList();
+                children.ForEach(c => 
+                { 
+                    if (!issues.Contains(c) && c.IsFixed && !corrections.Any(d => d.Id == c.Id)) issues.Add(c); 
+                });
+            });
+            issues.ForEach(a =>
+            {
+            corrections.Add(new Correction 
+            {
+                Id = a.Id,
+                CorrectionDate = DateTime.Now,
+                Description = string.Join(" ", a.Description)
+            });
+            });
+            if (!issues.Any()) return true;
+            Log.Corrections = corrections;
             ReSerialize();
             return true;
         }

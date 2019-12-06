@@ -6,7 +6,7 @@ namespace Thompson.RecordSearch.Utility.Web
     /// Class definition to supply DI container needed 
     /// to access action element automation objects
     /// </summary>
-    public class ActionElementContainer
+    public static class ActionElementContainer
     {
         private static Container _container;
 

@@ -15,6 +15,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 {
     public partial class TarrantWebInteractive : WebInteractive
     {
+        const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
         #region Constructors
         public TarrantWebInteractive() { }
 
@@ -209,9 +210,24 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
 
-        protected List<HLinkDataRow> ExtractCaseData(XmlContentHolder results, List<HLinkDataRow> cases, string actionName, IElementActionBase action)
+        /// <summary>
+        /// Extracts the case data.
+        /// </summary>
+        /// <param name="results">The results.</param>
+        /// <param name="cases">The cases.</param>
+        /// <param name="actionName">Name of the action.</param>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
+        protected List<HLinkDataRow> ExtractCaseData(XmlContentHolder results, 
+            List<HLinkDataRow> cases, 
+            string actionName, IElementActionBase action)
         {
-            if (!actionName.Equals("get-table-html")) return cases;
+            if (results == null) throw new ArgumentNullException(nameof(results));
+            if (cases == null) throw new ArgumentNullException(nameof(cases));
+            if (actionName == null) throw new ArgumentNullException(nameof(actionName));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            if (!actionName.Equals("get-table-html", comparison)) return cases;
             if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
 
             // create a list of hlinkdatarows from table
@@ -231,8 +247,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
         protected string GetCaseStyle(HLinkDataRow item, string xpath)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(item.Data);
+            if (item == null) return string.Empty;
+            var doc = XmlDocProvider.GetDoc(item.Data);
             if (!doc.FirstChild.HasChildNodes) return string.Empty;
             if (doc.FirstChild.ChildNodes.Count < 6) return string.Empty;
             var colIndex = Parameters.Id == 10 ? 2 : 2;
@@ -280,7 +296,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var fmt = jsonWebInteractive.GetParameterValue<string>("hlinkUri");
             var xpath = jsonWebInteractive.GetParameterValue<string>("personNodeXpath");
             var helper = new ElementAssertion(driver);
-            helper.Navigate(string.Format(fmt, linkData.Uri));
+            helper.Navigate(string.Format(fmt, linkData.WebAddress));
             driver.WaitForNavigation();
             var tdName = TryFindElement(driver, By.XPath(xpath));
             if (tdName == null) return;
@@ -336,7 +352,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (href == null) continue;
                 caseList.Add(new HLinkDataRow
                 {
-                    Uri = href.InnerText,
+                    WebAddress = href.InnerText,
                     Data = trow.OuterXml
                 });
             }
@@ -378,20 +394,25 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="parent">The parent.</param>
         /// <param name="trCol">The tr col.</param>
         /// <returns></returns>
-        private static IWebElement GetAddressRow(IWebElement parent, System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> trCol)
+        private static IWebElement GetAddressRow(IWebElement parent, 
+            System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> trCol)
         {
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
             int colIndex = 3;
             parent = trCol[colIndex];
-            if (parent.Text.Trim() == string.Empty) parent = trCol[colIndex - 1];
+            var txt = string.IsNullOrEmpty(parent.Text) ? "" : parent.Text.Trim();
+            if (string.IsNullOrEmpty(txt)) parent = trCol[colIndex - 1];
             return parent;
         }
 
-        /// <summary>
-        /// Tries the find element on a specfic web page using the By condition supplied.
-        /// </summary>
+
+        /// <summary>Tries the find element on a specfic web page using the By condition supplied.</summary>
         /// <param name="parent">The parent web browser instance.</param>
         /// <param name="by">The by condition used to locate the element</param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", 
+            "CA1031:Do not catch general exception types", 
+            Justification = "Returning a NULL allows the caller to handle")]
         internal static IWebElement TryFindElement(IWebDriver parent, By by)
         {
             try
@@ -406,17 +427,17 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         #region Element Action Helpers
 
-        protected List<IElementActionBase> elementActions;
+        private static List<IElementActionBase> elementActions;
 
-        protected List<IElementActionBase> ElementActions
+        protected static List<IElementActionBase> ElementActions
         {
             get { return elementActions ?? (elementActions = GetElementActions()); }
         }
 
-        protected List<IElementActionBase> GetElementActions()
+        protected static List<IElementActionBase> GetElementActions()
         {
             var container =
-ActionElementContainer.GetContainer;
+            ActionElementContainer.GetContainer;
             return container.GetAllInstances<IElementActionBase>().ToList();
         }
 

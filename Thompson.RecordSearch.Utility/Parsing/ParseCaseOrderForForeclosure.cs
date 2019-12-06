@@ -5,9 +5,12 @@ using Thompson.RecordSearch.Utility.Dto;
 namespace Thompson.RecordSearch.Utility.Parsing
 {
 
+    using CCulture = System.Globalization.CultureInfo;
     public class ParseCaseOrderForForeclosure : ICaseDataParser
     {
-        private static readonly string _searchKeyWord = @"in re: order for foreclosure concerning ";
+        const System.StringComparison comparison =
+            System.StringComparison.CurrentCultureIgnoreCase;
+        private const string _searchKeyWord = @"in re: order for foreclosure concerning ";
 
         public virtual string SearchFor => _searchKeyWord;
 
@@ -16,7 +19,8 @@ namespace Thompson.RecordSearch.Utility.Parsing
         public virtual bool CanParse()
         {
             if (string.IsNullOrEmpty(CaseData)) return false;
-            if (!CaseData.ToLower().Contains(SearchFor)) return false;
+            if (!CaseData.ToLower(CCulture.CurrentCulture)
+                .Contains(SearchFor)) return false;
             return true;
         }
 
@@ -28,13 +32,13 @@ namespace Thompson.RecordSearch.Utility.Parsing
             if (!CanParse()) return response;
 
             if (string.IsNullOrEmpty(CaseData)) return response;
-            var fullName = CaseData.ToLower();
-            if (!fullName.StartsWith(SearchFor)) return response;
+            var fullName = CaseData.ToLower(CCulture.CurrentCulture);
+            if (!fullName.StartsWith(SearchFor, comparison)) return response;
 
-            var findItIndex = fullName.IndexOf(SearchFor);
+            var findItIndex = fullName.IndexOf(SearchFor, comparison);
             if (findItIndex < 0) return response;
             fullName = CaseData.Substring(SearchFor.Length);
-            var splitIndex = fullName.IndexOf(petitioner);
+            var splitIndex = fullName.IndexOf(petitioner, comparison);
             fullName = fullName.Substring(0, splitIndex + petitioner.Length);
             fullName = CaseData.Substring(SearchFor.Length).Substring(fullName.Length).Trim();
             splitIndex = fullName.LastIndexOf(':');

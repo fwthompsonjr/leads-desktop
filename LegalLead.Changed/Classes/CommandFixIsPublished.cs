@@ -12,7 +12,7 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
-                throw new ArgumentOutOfRangeException("SourceFile");
+                throw new InvalidOperationException();
 
             if (LatestVersion == null)
             {
@@ -46,11 +46,11 @@ namespace LegalLead.Changed.Classes
                 targets.ForEach(x =>
                 {
                     MarkAsStarted(x);
-                    var startTime = x.Description.FirstOrDefault(a => a.StartsWith(changing));
+                    var startTime = x.Description.FirstOrDefault(a => a.StartsWith(changing, StringComparison.CurrentCultureIgnoreCase));
                     if (startTime != null) return;
                     var timeStamp = DateTime.Now.ToString("u");
                     Console.WriteLine("Completing issue {0} -- [ {1} ] at {2}",
-                        x.Id.ToString("F3"),
+                        x.Id.ToString("F3", new System.Globalization.NumberFormatInfo()),
                         x.Name,
                         timeStamp
                         );

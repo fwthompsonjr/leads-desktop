@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BuildCommandBase.cs" />
+    <Compile Include="Classes\CommandBuildCorrections.cs" />
     <Compile Include="Classes\CommandFixCanPublish.cs" />
     <Compile Include="Classes\CommandFixIsPublished.cs" />
     <Compile Include="Classes\CommandLoadLog.cs" />

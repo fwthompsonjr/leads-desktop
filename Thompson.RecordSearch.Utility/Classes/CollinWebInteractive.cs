@@ -190,7 +190,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var addrpath = GetParameterValue<string>("personParentXath");
             var childpath = GetParameterValue<string>("childTdXath");
             var helper = new ElementAssertion(driver);
-            helper.Navigate(string.Format(fmt, linkData.Uri));
+            helper.Navigate(string.Format(fmt, linkData.WebAddress));
             driver.WaitForNavigation();
             // we have weird situation where the defendant is sometimes PIr11, PIr12
            

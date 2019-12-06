@@ -105,8 +105,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             var interactive = new TarrantWebInteractive(webParameter);
             var result = interactive.Fetch();
             Assert.IsNotNull(result);
-            var writer = new ExcelWriter();
-            writer.WriteToExcel(result);
+            ExcelWriter.WriteToExcel(result);
 
         }
 
@@ -122,8 +121,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             var interactive = new TarrantWebInteractive(webParameter);
             var result = interactive.Fetch();
             Assert.IsNotNull(result);
-            var writer = new ExcelWriter();
-            writer.WriteToExcel(result);
+            ExcelWriter.WriteToExcel(result);
 
         }
 
@@ -141,8 +139,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
             var result = interactive.Fetch();
             Assert.IsNotNull(result);
-            var writer = new ExcelWriter();
-            writer.WriteToExcel(result);
+            ExcelWriter.WriteToExcel(result);
         }
 
         [TestMethod]

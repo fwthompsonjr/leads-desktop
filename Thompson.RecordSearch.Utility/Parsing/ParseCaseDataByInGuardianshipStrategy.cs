@@ -6,7 +6,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
 
     public class ParseCaseDataByInGuardianshipStrategy : ICaseDataParser
     {
-        private static readonly string _searchKeyWord = @"in the guardianship of";
+        private const string _searchKeyWord = @"in the guardianship of";
 
         public virtual string SearchFor => _searchKeyWord;
 

@@ -5,7 +5,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
 
     public class ParseCaseDataByEstateStrategy : ICaseDataParser
     {
-        private static readonly string _searchKeyWord = @"the estate of";
+        private const string _searchKeyWord = @"the estate of";
 
         public virtual string SearchFor => _searchKeyWord;
 

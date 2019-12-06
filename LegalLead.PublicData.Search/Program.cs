@@ -41,7 +41,11 @@ namespace LegalLead.PublicData.Search
                 Console.SetOut(consoleWriter);
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                new FormDentonSetting().Save();
+                using(var frm = new FormDentonSetting())
+                {
+                    frm.Save();
+                }
+                
                 mainForm = new FormMain();
                 command.Execute(mainForm);
             }

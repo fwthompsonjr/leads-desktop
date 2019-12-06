@@ -14,6 +14,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override void Act(Step item)
         {
+            if (item == null) throw new System.ArgumentNullException(nameof(item));
             var driver = GetWeb;
             var selector = Byy.CssSelector(item.Locator.Query);
             var elementToClick = driver.FindElement(selector);
