@@ -89,6 +89,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 new FindRespondentByWordMatch(),
                 new FindDefendantByCondemneeMatch(),
                 new FindApplicantByWordMatch(),
+                new FindDefendantByGuardianMatch(),
                 new NoFoundMatch()
             };
             foreach (var finder in finders)

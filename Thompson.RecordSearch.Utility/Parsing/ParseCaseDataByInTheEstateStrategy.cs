@@ -1,4 +1,6 @@
-﻿using Thompson.RecordSearch.Utility.Dto;
+﻿using System;
+using System.Globalization;
+using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Parsing
 {
@@ -6,7 +8,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
     public class ParseCaseDataByInTheEstateStrategy : ICaseDataParser
     {
         private const string _searchKeyWord = @"in the estate of";
-
+        private const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
         public virtual string SearchFor => _searchKeyWord;
 
         public string CaseData { get; set; }
@@ -14,7 +16,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
         public virtual bool CanParse()
         {
             if (string.IsNullOrEmpty(CaseData)) return false;
-            if (!CaseData.ToLower().Contains(SearchFor)) return false;
+            if (!CaseData.ToLower(CultureInfo.CurrentCulture).Contains(SearchFor)) return false;
             return true;
         }
 
@@ -24,10 +26,10 @@ namespace Thompson.RecordSearch.Utility.Parsing
             if (!CanParse()) return response;
 
             if (string.IsNullOrEmpty(CaseData)) return response;
-            var fullName = CaseData.ToLower();
-            if (!fullName.StartsWith(SearchFor)) return response;
+            var fullName = CaseData.ToLower(CultureInfo.CurrentCulture);
+            if (!fullName.StartsWith(SearchFor, comparison)) return response;
 
-            var findItIndex = fullName.IndexOf(SearchFor);
+            var findItIndex = fullName.IndexOf(SearchFor, comparison);
             if (findItIndex < 0) return response;
             response.Defendant = CaseData.Substring(findItIndex).Trim();
             response.Plantiff =

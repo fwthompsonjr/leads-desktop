@@ -39,6 +39,7 @@ namespace LegalLead.Changed
             var commands = new List<IBuildCommand>();
             types.ForEach(f => commands.Add((IBuildCommand)Activator.CreateInstance(f)));
             commands.ForEach(c => c.SetSource(sourceFileName));
+            commands = commands.FindAll(c => c.Index > 0);
             commands.Sort((a,b) => a.Index.CompareTo(b.Index));
             return commands;
         }

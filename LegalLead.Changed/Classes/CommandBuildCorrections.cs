@@ -23,7 +23,7 @@ namespace LegalLead.Changed.Classes
             {
                 return true;
             }
-            var corrections = Log.Corrections ?? new List<Correction>();
+            var corrections = (Log.Corrections ?? new List<Correction>()).ToList();
             var issues = new List<Issue>();
             var issueList
                 = Log.Changes
@@ -47,6 +47,7 @@ namespace LegalLead.Changed.Classes
             });
             });
             if (!issues.Any()) return true;
+            corrections.Sort((a, b) => a.Id.CompareTo(b.Id));
             Log.Corrections = corrections;
             ReSerialize();
             return true;

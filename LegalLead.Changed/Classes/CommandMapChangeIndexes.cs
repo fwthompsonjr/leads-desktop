@@ -21,6 +21,8 @@ namespace LegalLead.Changed.Classes
                 StringComparison.CurrentCulture);
             
             if (!CanExecute()) return false;
+            if (!allowExec) return false;
+
             const int indexInterval = 100;
             var indexId = indexInterval;
             var changeList = Log.Changes

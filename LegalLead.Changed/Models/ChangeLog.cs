@@ -7,7 +7,7 @@ using System.Text;
 namespace LegalLead.Changed.Models
 {
 
-    public class CorrectionColumnLength
+    public static class CorrectionColumnLength
     {
         public const int IssueId = 10;
         public const int ReportedDate = 15;

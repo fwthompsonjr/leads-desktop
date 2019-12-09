@@ -136,6 +136,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var item in cases)
             {
                 var styleInfo = item.IsCriminal ? item.CriminalCaseStyle : GetCaseStyle(item, "td[3]/div");
+                if (item.IsProbate) styleInfo = item.CaseStyle;
                 var person = new PersonAddress
                 {
                     Name = item.Defendant,
@@ -227,7 +228,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                     linkData.IsCriminal = true;
                 }
             }
-
+            var probateLink = TryFindElement(driver, By.XPath("//a[@class = 'ssBlackNavBarHyperlink'][contains(text(),'Probate')]"));
+            if(probateLink != null)
+            {
+                linkData.IsProbate = true;
+            }
             var finders = new List<FindDefendantBase>
             {
                 new FindMultipleDefendantMatch(),
@@ -236,6 +241,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 new FindPetitionerByWordMatch(),
                 new FindApplicantByWordMatch(),
                 new FindDefendantByCondemneeMatch(),
+                new FindDefendantByGuardianMatch(),
                 new FindOwnerByWordMatch()
             };
 

@@ -231,6 +231,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (!actionName.Equals("get-table-html", comparison)) return cases;
             if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
 
+            var isProbate = ((ElementGetHtmlAction)action).IsProbateSearch;
+
             // create a list of hlinkdatarows from table
             var caseData = RemoveElement(action.OuterHtml, "<img");
             // remove colspan? <colgroup>
@@ -238,6 +240,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             // load cases into [cases] object
 
             var newcases = LoadFromHtml(caseData);
+            newcases.FindAll(x => !x.IsProbate).ForEach(c => c.IsProbate = isProbate);
             // map case information using file xpath
             newcases = AppendCourtInformation(results.FileName, newcases);
 
@@ -368,17 +371,16 @@ namespace Thompson.RecordSearch.Utility.Classes
             var parameterId = Parameters.Id;
             var contents = SettingsManager.Content;
             var doc = XmlDocProvider.GetDoc(contents);
-            var caseInspetor = doc.DocumentElement.SelectSingleNode("directions").SelectNodes("caseInspection")
-                .Cast<XmlNode>().ToList()
-                .Find(x => x.Attributes.GetNamedItem("id").Value == parameterId.ToString())
-                .ChildNodes.Cast<XmlNode>().ToList();
+            List<XmlNode> caseInspetor = GetCaseInspector(parameterId, doc);
+            var probateInspector = GetCaseInspector(parameterId, doc, "probate");
             //var caseInfo = doc.DocumentElement.SelectSingleNode("");
             foreach (var item in caseList)
             {
                 var data = item.Data;
                 var dcc = XmlDocProvider.GetDoc(data);
                 var trow = dcc.ChildNodes[0];
-                foreach (var search in caseInspetor)
+                var inspector = item.IsProbate ? probateInspector : caseInspetor;
+                foreach (var search in inspector)
                 {
                     var node = trow.SelectSingleNode(search.InnerText);
                     var keyName = search.Attributes.GetNamedItem("name").InnerText;
@@ -386,6 +388,24 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
             }
             return caseList;
+        }
+
+        private static List<XmlNode> GetCaseInspector(int parameterId, XmlDocument doc, string typeName = "normal")
+        {
+            try
+            {
+
+                var inspector = doc.DocumentElement.SelectSingleNode("directions").SelectNodes("caseInspection")
+                    .Cast<XmlNode>().ToList()
+                    .FindAll(x => x.Attributes.GetNamedItem("id").Value == parameterId.ToString())
+                    .Find(x => x.Attributes.GetNamedItem("type").Value == typeName)
+                    .ChildNodes.Cast<XmlNode>().ToList();
+                return inspector;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>

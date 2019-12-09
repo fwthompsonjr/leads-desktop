@@ -1,6 +1,7 @@
-﻿using Thompson.RecordSearch.Utility.Classes;
+﻿using OpenQA.Selenium;
+using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
-
+// using Thompson.RecordSearch.Utility.Classes.WebElementExtensions;
 namespace Thompson.RecordSearch.Utility.Web
 {
     public class ElementGetHtmlAction : ElementActionBase
@@ -8,7 +9,9 @@ namespace Thompson.RecordSearch.Utility.Web
         const string actionName = "get-table-html";
 
         public override string ActionName => actionName;
-        
+
+        public bool IsProbateSearch { get; private set; }
+
         public override void Act(Step item)
         {
             var helper = new CollinWebInteractive();
@@ -19,8 +22,13 @@ namespace Thompson.RecordSearch.Utility.Web
             // remove colspan? <colgroup>
             outerHtml = helper.RemoveTag(outerHtml, "colgroup");
             // remove the image tags now
-
+            
             OuterHtml = outerHtml;
+            var probateLink =
+                GetWeb.TryFindElement(
+                    By.XPath("//a[@class = 'ssBlackNavBarHyperlink'][contains(text(),'Probate')]"));
+            
+            IsProbateSearch = probateLink != null;
         }
     }
 }
