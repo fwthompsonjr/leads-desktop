@@ -19,7 +19,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public virtual string ActionName { get; }
 
-        public abstract void Act(Step stepObject);
+        public abstract void Act(NavigationStep stepObject);
 
         public WebNavigationParameter GetSettings(int index)
         {
@@ -30,7 +30,7 @@ namespace Thompson.RecordSearch.Utility.Web
             return siteData;
         }
 
-        protected static By GetSelector(Step item)
+        protected static By GetSelector(NavigationStep item)
         {
             if (item == null) throw new System.ArgumentNullException(nameof(item));
             const System.StringComparison comparison = System.StringComparison.CurrentCultureIgnoreCase;

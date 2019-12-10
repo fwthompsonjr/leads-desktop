@@ -20,7 +20,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
             var searchType = "Applicant";
             CanFind = false;
             var tdName = TryFindElement(driver, By.XPath(
-                string.Format(@"//th[contains(text(),'{0}')]", searchType)));
+                string.Format(CultureInfo.CurrentCulture ,@"//th[contains(text(),'{0}')]", searchType)));
             // this instance can find
             if (tdName == null) return;
 

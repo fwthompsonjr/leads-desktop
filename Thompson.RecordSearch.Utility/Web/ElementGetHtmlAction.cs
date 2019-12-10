@@ -12,7 +12,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public bool IsProbateSearch { get; private set; }
 
-        public override void Act(Step item)
+        public override void Act(NavigationStep item)
         {
             var helper = new CollinWebInteractive();
             var selector = GetSelector(item);

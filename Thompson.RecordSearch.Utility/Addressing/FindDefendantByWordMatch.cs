@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
@@ -38,15 +39,17 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 if (!int.TryParse(ridx, out int r)) return;
 
                 var nextTh = table.FindElements(By.TagName("th")).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
-                var mxRowIndex = nextTh == null ? r + 1: Convert.ToInt32(nextTh.FindElement(By.XPath("..")).GetAttribute("rowIndex"));
+                var mxRowIndex = nextTh == null ? r + 1: 
+                    Convert.ToInt32(nextTh.FindElement(By.XPath("..")).GetAttribute("rowIndex"), 
+                    CultureInfo.CurrentCulture.NumberFormat);
                 while (r <= mxRowIndex)
                 {
                     var currentRow = trCol[r];
                     var tdElements = currentRow.FindElements(By.TagName("td")).ToList();
                     tdElements = tdElements.FindAll(x => x.Location.X >= rowLabel.Location.X & x.Location.X < (rowLabel.Location.X + rowLabel.Size.Width));
-                    linkData.Address = GetAddress(r, tdElements);
+                    linkData.Address = GetAddress(tdElements);
                     if (!string.IsNullOrEmpty(linkData.Address)) break;
-                    r = r + 1;
+                    r += 1;
                 }
                 // parent = GetAddressRow(parent, trCol); // put this row-index into config... it can change
                 // linkData.Address = new StringBuilder(parent.Text).Replace(Environment.NewLine, "<br/>").ToString();

@@ -23,7 +23,9 @@ namespace LegalLead.Changed
                     Console.WriteLine("Evaluating command line file: {0}", srcFile);
                     if (!File.Exists(srcFile)) return;
                     var commands = GetClasses(srcFile);
-                    commands.ForEach(c => c.Execute());
+                    commands.ForEach(c => {
+                        Console.WriteLine("Executing {0}", c.Name);
+                        c.Execute(); });
                 }
 
             }

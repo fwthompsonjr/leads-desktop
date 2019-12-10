@@ -54,7 +54,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             try
             {
 
-                var steps = new List<Step>();
+                var steps = new List<NavigationStep>();
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
                 
                 var startingDate = DateTime.Now.AddDays(-2);
@@ -172,7 +172,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             var provider = new VersionNameProvider();
             Assert.IsNotNull(provider);
             Assert.IsFalse(string.IsNullOrEmpty(provider.Name));
-            Assert.IsFalse(string.IsNullOrEmpty(provider.FileVersion));
+            Assert.IsFalse(string.IsNullOrEmpty(VersionNameProvider.FileVersion));
             Assert.IsNotNull(VersionNameProvider.VersionNames);
         }
         #endregion

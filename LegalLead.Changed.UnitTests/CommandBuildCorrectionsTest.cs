@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LegalLead.Changed.Classes;
 using System.Linq;
+using LegalLead.Changed.Classes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LegalLead.Changed.UnitTests
 {
-    /// <summary>
-    /// Summary description for CommandMapChangeIndexesTest
-    /// </summary>
     [TestClass]
-    public class CommandMapChangeIndexesTest
+    public class CommandBuildCorrectionsTest
     {
         protected const string sourceFile = @"D:\Alpha\LegalLead\LegalLead.Changed.UnitTests\bin\debug\data\temp-log.json";
 
         [TestMethod]
         public void CanInit()
         {
-            var command = new CommandMapChangeIndexes();
+            var command = new CommandBuildCorrections();
             Assert.IsNotNull(command);
         }
 
@@ -26,13 +21,13 @@ namespace LegalLead.Changed.UnitTests
         [ExpectedException(typeof(InvalidOperationException))]
         public void CanExecuteNeedsSourceFile()
         {
-            var command = new CommandMapChangeIndexes();
+            var command = new CommandBuildCorrections();
             command.Execute();
         }
         [TestMethod]
         public void CanLoadSource()
         {
-            var command = new CommandMapChangeIndexes();
+            var command = new CommandBuildCorrections();
             command.SetSource(sourceFile);
             Assert.IsNotNull(command.Log);
         }
@@ -40,7 +35,7 @@ namespace LegalLead.Changed.UnitTests
         [TestMethod]
         public void CanExecuteWithSource()
         {
-            var command = new CommandMapChangeIndexes();
+            var command = new CommandBuildCorrections();
             command.SetSource(sourceFile);
             command.Execute();
             // after execute

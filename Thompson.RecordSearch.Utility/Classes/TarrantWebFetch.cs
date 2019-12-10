@@ -30,7 +30,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             public virtual void Fetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people)
             {
-                var steps = new List<Step>();
+                var steps = new List<NavigationStep>();
                 var navigationFile = Web.GetParameterValue<string>("navigation.control.file");
                 var sources = navigationFile.Split(',').ToList();
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
@@ -38,7 +38,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 webFetch = Web.SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
             }
 
-            protected void SetupParameters(List<Step> steps, out List<PersonAddress> people, out XmlContentHolder results, out List<HLinkDataRow> cases)
+            protected void SetupParameters(List<NavigationStep> steps, out List<PersonAddress> people, out XmlContentHolder results, out List<HLinkDataRow> cases)
             {
                 results = new SettingsManager().GetOutput(Web);
                 cases = new List<HLinkDataRow>();
@@ -46,7 +46,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
                 var caseTypeId = Web.GetParameterValue<int>("caseTypeSelectedIndex");
                 // set special item values
-                var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value"));
+                var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value", StringComparison.CurrentCultureIgnoreCase));
                 caseTypeSelect.ExpectedValue = caseTypeId.ToString();
             }
         }
@@ -61,7 +61,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             public override string Name => "Criminal";
             public override void Fetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people)
             {
-                var steps = new List<Step>();
+                var steps = new List<NavigationStep>();
                 var navigationFile = Web.GetParameterValue<string>("navigation.control.alternate.file");
                 var sources = navigationFile.Split(',').ToList();
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));

@@ -21,6 +21,15 @@ namespace Thompson.RecordSearch.Utility.Classes
             doc.Load(reader);
             return doc;
         }
+
+        public static XmlDocument Load(string fileName)
+        {
+            using (var reader = new StreamReader(fileName))
+            {
+                var content = reader.ReadToEnd();
+                return GetDoc(content);
+            }
+        }
     }
     /// <summary>Class definition for settings reader utility which reads the application settings xml file to map parameters to the search process.</summary>
     public class SettingsManager
@@ -150,8 +159,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                 sw.Write(Layout);
                 sw.Close();
             }
-            var doc = new XmlDocument();
-            doc.Load(fileName);
+            var content = string.Empty;
+            using (var reader = new StreamReader(fileName))
+            {
+                content = reader.ReadToEnd();
+            }
+            var doc = XmlDocProvider.GetDoc(content);
             var nde = doc.DocumentElement.SelectSingleNode(@"parameters");
             var nds = new List<XmlNode>(nde.ChildNodes.Cast<XmlNode>());
             foreach (var item in nds)

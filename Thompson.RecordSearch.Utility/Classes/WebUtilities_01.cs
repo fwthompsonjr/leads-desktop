@@ -74,7 +74,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (driver == null) throw new ArgumentNullException(nameof(driver));
                 if (data == null) throw new ArgumentNullException(nameof(data));
                 var people = cases.FindAll(x => !string.IsNullOrEmpty(x.WebAddress));
-                people.ForEach(d => Find(driver, data, d));
+                people.ForEach(d => Find(driver, d));
                 var found = people.Count(p => !string.IsNullOrEmpty(p.Defendant));
             }
 

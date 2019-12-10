@@ -167,6 +167,7 @@
     <Compile Include="Classes\ExcelFileWriter.cs" />
     <Compile Include="Classes\ExcelWriter.cs" />
     <Compile Include="Classes\IWebInteractive.cs" />
+    <Compile Include="Classes\SafeWindowUtilites.cs" />
     <Compile Include="Classes\TarrantWebFetch.cs" />
     <Compile Include="Classes\TarrantWebInteractive.cs" />
     <Compile Include="Classes\SettingsManager.cs" />

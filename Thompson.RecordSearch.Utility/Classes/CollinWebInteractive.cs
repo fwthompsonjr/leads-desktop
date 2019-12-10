@@ -43,7 +43,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var results = new SettingsManager().GetOutput(this);
 
                 // need to open the navigation file(s)
-                var steps = new List<Step>();
+                var steps = new List<NavigationStep>();
                 var navigationFile = GetParameterValue<string>("navigation.control.file");
                 var sources = navigationFile.Split(',').ToList();
                 var cases = new List<HLinkDataRow>();
@@ -67,7 +67,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             return webFetch;
         }
 
-        private WebFetchResult SearchWeb(XmlContentHolder results, List<Step> steps, DateTime startingDate, DateTime endingDate, ref List<HLinkDataRow> cases, out List<PersonAddress> people)
+        private WebFetchResult SearchWeb(XmlContentHolder results, List<NavigationStep> steps, DateTime startingDate, DateTime endingDate, ref List<HLinkDataRow> cases, out List<PersonAddress> people)
         {
             IWebDriver driver = WebUtilities.GetWebDriver();
 
@@ -135,7 +135,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
-                var styleInfo = item.IsCriminal ? item.CriminalCaseStyle : GetCaseStyle(item, "td[3]/div");
+                var styleInfo = item.IsCriminal ? item.CriminalCaseStyle : GetCaseStyle(item);
                 if (item.IsProbate) styleInfo = item.CaseStyle;
                 var person = new PersonAddress
                 {

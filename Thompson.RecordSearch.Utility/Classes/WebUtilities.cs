@@ -76,7 +76,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="driver">the current browser instance with automation hooks</param>
         /// <param name="webInteractive">the wrapper for the users inbound parameters and any navigation instructions needed to read the website</param>
         /// <param name="linkData">the html of the source case result record</param>
-        internal static void Find(IWebDriver driver, WebInteractive webInteractive, HLinkDataRow linkData)
+        internal static void Find(IWebDriver driver, HLinkDataRow linkData)
         {
 
             var finders = new List<FindDefendantBase>
@@ -209,8 +209,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
         private const int SW_HIDE = 0;
         private const int SW_SHOW = 5;
-        [DllImport("User32")]
-        private static extern int ShowWindow(int hwnd, int nCmdShow);
 
         private static void HideWindow(string windowTitle)
         {
@@ -224,7 +222,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (!string.IsNullOrEmpty(process.MainWindowTitle))
                 {
                     var hWnd = process.MainWindowHandle.ToInt32();
-                    ShowWindow(hWnd, SW_HIDE);
+                    _ = SafeWindowUtilites.ShowWindow(hWnd, SW_HIDE);
                 }
             }
         }

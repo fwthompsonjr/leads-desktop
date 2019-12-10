@@ -149,7 +149,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         public void Navigate(string target)
         {
             Console.WriteLine("Navigate to URL: {0}", target);
-            PageDriver.Navigate().GoToUrl(target);
+            var newUri = new Uri(target);
+            PageDriver.Navigate().GoToUrl(newUri);
         }
 
 

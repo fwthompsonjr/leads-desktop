@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -62,9 +63,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (string.IsNullOrEmpty(tagName)) return string.Empty;
             var openTg = string.Format(@"<{0}>", tagName);
             var closeTg = string.Format(@"</{0}>", tagName);
-            var idx = tableHtml.IndexOf(openTg);
+            var idx = tableHtml.IndexOf(openTg, comparisonIngore);
             if (idx < 0) return tableHtml;
-            var eidx = tableHtml.IndexOf(closeTg);
+            var eidx = tableHtml.IndexOf(closeTg, comparisonIngore);
             var firstHalf = tableHtml.Substring(0, idx);
             var secHalf = tableHtml.Substring(eidx + closeTg.Length);
             return string.Concat(firstHalf, secHalf);
@@ -111,8 +112,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 contents = RemoveElement(contents, "<img");
             }
             var data = new List<CaseData>();
-            var doc = new XmlDocument();
-            doc.LoadXml(contents);
+            var doc = XmlDocProvider.GetDoc(contents);
             var ndeCase = doc.DocumentElement.SelectSingleNode("results/result[@name='casedata']");
             if (ndeCase == null) return string.Empty;
             if (!ndeCase.HasChildNodes) return string.Empty;
@@ -141,9 +141,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (Parameters == null) return default;
             if (Parameters.Keys == null) return default;
 
-            var item = Parameters.Keys.First(k => k.Name.Equals(keyName));
+            var item = Parameters.Keys.First(k => k.Name.Equals(keyName, comparisonIngore));
             if (item == null) return default;
-            var obj = Convert.ChangeType(item.Value, typeof(T));
+            var obj = Convert.ChangeType(item.Value, typeof(T), CultureInfo.CurrentCulture);
             return (T)obj;
         }
 
@@ -158,7 +158,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (Parameters == null) return;
             if (Parameters.Keys == null) return;
 
-            var item = Parameters.Keys.First(k => k.Name.Equals(keyName));
+            var item = Parameters.Keys.First(k => k.Name.Equals(keyName, comparisonIngore));
             if (item == null) return;
             item.Value = keyValue;
         }

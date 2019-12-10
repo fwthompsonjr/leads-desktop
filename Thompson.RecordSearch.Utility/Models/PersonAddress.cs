@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Parsing;
@@ -21,7 +22,7 @@ namespace Thompson.RecordSearch.Utility.Models
         {
             get
             {
-                return _fieldNames ?? (_fieldNames = FieldNames.ToLower());
+                return _fieldNames ?? (_fieldNames = FieldNames.ToLower(CultureInfo.CurrentCulture));
             }
         }
 
@@ -57,9 +58,9 @@ namespace Thompson.RecordSearch.Utility.Models
                 new ParseCaseInInterestMatch { CaseData = CaseStyle },
                 new ParseCaseExParteMatch { CaseData = CaseStyle },
                 new ParseNameChangeByCaseType { CaseData =
-                string.Format("{0}| {1}", caseType, CaseStyle) },
+                string.Format(CultureInfo.CurrentCulture, "{0}| {1}", caseType, CaseStyle) },
                 new ParseProtectiveOrderCaseType { CaseData =
-                string.Format("{0}| {1}", caseType, CaseStyle) },
+                string.Format(CultureInfo.CurrentCulture, "{0}| {1}", caseType, CaseStyle) },
                 new ParseCaseDataByInGuardianshipStrategy{ CaseData = CaseStyle}
             };
         }
@@ -126,7 +127,7 @@ namespace Thompson.RecordSearch.Utility.Models
             if (!fullName.Contains(',')) return postionId == 0 ? fullName : string.Empty;
             var nameParts = fullName.Split(',');
             var lastName = nameParts[0];
-            var findIt = string.Format("{0}{1}", lastName, ',');
+            var findIt = string.Format(CultureInfo.CurrentCulture, "{0}{1}", lastName, ',');
             var firstName = fullName.Remove(0, findIt.Length).Trim();
             if(firstName.Contains(' '))
             {
@@ -143,6 +144,7 @@ namespace Thompson.RecordSearch.Utility.Models
         /// <returns></returns>
         private string ParseFromCaseStyle(int postionId)
         {
+            if (postionId > 100) return string.Empty;
             if (string.IsNullOrEmpty(CaseStyle)) return string.Empty;
             var providers = GetCaseDataParses().FindAll(x => x.CanParse());
             if (!providers.Any()) return string.Empty;
@@ -164,7 +166,7 @@ namespace Thompson.RecordSearch.Utility.Models
             get
             {
                 if (string.IsNullOrEmpty(indexName)) return string.Empty;
-                var keyName = indexName.ToLower();
+                var keyName = indexName.ToLower(CultureInfo.CurrentCulture);
                 if (!FieldList.Contains(keyName)) return string.Empty;
 
                 switch (keyName)
@@ -203,7 +205,7 @@ namespace Thompson.RecordSearch.Utility.Models
             {
 
                 if (string.IsNullOrEmpty(indexName)) return;
-                var keyName = indexName.ToLower();
+                var keyName = indexName.ToLower(CultureInfo.CurrentCulture);
                 if (!FieldList.Contains(keyName)) return;
 
                 switch (keyName)
@@ -275,8 +277,9 @@ namespace Thompson.RecordSearch.Utility.Models
         public static string ConvertFrom(string nodeName, XmlNode personNode)
         {
             if (string.IsNullOrEmpty(nodeName)) return string.Empty;
+            if (personNode == null) return string.Empty;
             if (personNode.ChildNodes.Count < 2) return string.Empty;
-            var lowerNodeName = nodeName.ToLower();
+            var lowerNodeName = nodeName.ToLower(CultureInfo.CurrentCulture);
             var addressNode = personNode.ChildNodes[1].InnerText.Trim();
             var addressFields = "address1,address2,address3,zip".Split(',').ToList(); 
             if (addressFields.Contains(lowerNodeName) && string.IsNullOrEmpty(addressNode)) return string.Empty;
@@ -379,7 +382,7 @@ namespace Thompson.RecordSearch.Utility.Models
                 }
                 else
                 {
-                    if (childNodeName.StartsWith("address"))
+                    if (childNodeName.StartsWith("address", StringComparison.CurrentCultureIgnoreCase))
                     {
                         var fullAddress = ((XmlCDataSection)(node.ChildNodes[0])).Data;
                         var addressList = GetAddressList(fullAddress);

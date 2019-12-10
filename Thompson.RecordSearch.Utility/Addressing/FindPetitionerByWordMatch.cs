@@ -1,5 +1,6 @@
 ﻿// FindPetitionerByWordMatch
 using System;
+using System.Globalization;
 using System.Linq;
 using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
@@ -19,7 +20,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
             var searchType = "Petitioner";
             CanFind = false;
             var tdName = TryFindElement(driver, By.XPath(
-                String.Format(@"//th[contains(text(),'{0}')]", searchType)));
+                string.Format(CultureInfo.CurrentCulture, @"//th[contains(text(),'{0}')]", searchType)));
             // this instance can find
             if (tdName == null) return;
             var parent = tdName.FindElement(By.XPath(".."));
@@ -35,7 +36,8 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 var table = parent.FindElement(By.XPath(".."));
                 var trCol = table.FindElements(By.TagName("tr")).ToList();
                 if (!int.TryParse(ridx, out int r)) return;
-                MapElementAddress(linkData, rowLabel, table, trCol, r, searchType.ToLower());
+                MapElementAddress(linkData, rowLabel, table, trCol, r, 
+                    searchType.ToLower(CultureInfo.CurrentCulture));
             }
             catch (Exception)
             {

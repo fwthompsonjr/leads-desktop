@@ -8,7 +8,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         public string Query { get; set; }
     }
 
-    public class Step
+    public class NavigationStep
     {
         public string ActionName { get; set; }
         public string DisplayName { get; set; }
@@ -19,6 +19,6 @@ namespace Thompson.RecordSearch.Utility.Dto
 
     public class NavigationInstructionDto
     {
-        public List<Step> Steps { get; set; }
+        public List<NavigationStep> Steps { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override string ActionName => actionName;
 
-        public override void Act(Step item)
+        public override void Act(NavigationStep item)
         {
             // do nothing
         }

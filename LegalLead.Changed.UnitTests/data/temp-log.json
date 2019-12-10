@@ -1,9 +1,11 @@
 ﻿{
   "changes": [
     {
+      "changeId": "100",
       "reportedDate": "2019-10-03T11:30:00",
       "issues": [
         {
+          "changeId": "100",
           "id": 1.1,
           "name": "Tarrant County District Case",
           "isFixed": true,
@@ -16,6 +18,7 @@
           ]
         },
         {
+          "changeId": "100",
           "id": 1.2,
           "name": "Tarrant County Criminal Case",
           "isFixed": true,
@@ -28,6 +31,7 @@
           ]
         },
         {
+          "changeId": "100",
           "id": 1.2001,
           "name": "Tarrant County Criminal Case",
           "isFixed": true,
@@ -40,21 +44,26 @@
           ]
         },
         {
+          "changeId": "100",
           "id": 1.2002,
           "name": "Tarrant County Criminal Case",
-          "isFixed": false,
-          "fixVersion": 1911,
+          "isFixed": true,
+          "fixVersion": 1936,
           "description": [
             "When attempting to pull cases from Tarrant County",
-            "The Excel output for column N - plantiff - is blank"
+            "The Excel output for column N - plantiff - is blank",
+            "Start Date: 2019-12-02 22:26:22Z",
+            "End Date: 2019-12-03 01:44:37Z"
           ]
         }
       ]
     },
     {
+      "changeId": "200",
       "reportedDate": "2019-10-03T11:30:00",
       "issues": [
         {
+          "changeId": "200",
           "id": 2.1,
           "name": "Collin County Probate Search Type",
           "isFixed": true,
@@ -68,9 +77,11 @@
       ]
     },
     {
+      "changeId": "300",
       "reportedDate": "2019-10-03T11:30:00",
       "issues": [
         {
+          "changeId": "300",
           "id": 3.1,
           "name": "Denton County - Allow Criminal Extract",
           "isFixed": false,
@@ -81,6 +92,7 @@
           ]
         },
         {
+          "changeId": "300",
           "id": 3.2,
           "name": "Denton County - District - Correct Case Data Extract",
           "isFixed": true,
@@ -93,6 +105,7 @@
           ]
         },
         {
+          "changeId": "300",
           "id": 3.3,
           "name": "Denton County - Settings - Fix Court Listings",
           "isFixed": true,
@@ -107,9 +120,11 @@
       ]
     },
     {
+      "changeId": "400",
       "reportedDate": "2019-12-02T14:30:00",
       "issues": [
         {
+          "changeId": "400",
           "id": 4.1,
           "name": "All - Extract - Case Style Contains Carriage Return",
           "isFixed": true,
@@ -121,6 +136,7 @@
           ]
         },
         {
+          "changeId": "400",
           "id": 4.2,
           "name": "All - Extract - Add County to Data Extract",
           "isFixed": true,
@@ -132,6 +148,7 @@
           ]
         },
         {
+          "changeId": "400",
           "id": 4.3,
           "name": "All - Extract - Add Court Address to Data Extract",
           "isFixed": true,
@@ -145,9 +162,11 @@
       ]
     },
     {
+      "changeId": "500",
       "reportedDate": "2019-12-05T10:15:00",
       "issues": [
         {
+          "changeId": "500",
           "id": 5.1,
           "name": "Collin County Address Mapping",
           "isFixed": true,
@@ -159,6 +178,7 @@
           ]
         },
         {
+          "changeId": "500",
           "id": 5.2,
           "name": "Collin County Case Style for Criminal Cases",
           "isFixed": true,
@@ -170,12 +190,92 @@
           ]
         },
         {
+          "changeId": "500",
           "id": 5.3,
           "name": "Tarrant County Criminal Cases",
-          "isFixed": false,
-          "fixVersion": 0,
+          "isFixed": true,
+          "fixVersion": 11010,
           "description": [
-            "Tarrant County - No criminal cases are being selected for tarrant county"
+            "Tarrant County - No criminal cases are being selected for tarrant county",
+            "Start Date: 2019-12-08 21:36:41Z",
+            "End Date: 2019-12-08 21:36:41Z"
+          ]
+        },
+        {
+          "changeId": "500",
+          "id": 5.301,
+          "name": "Tarrant County Criminal Cases",
+          "isFixed": true,
+          "fixVersion": 11010,
+          "description": [
+            "Tarrant County - No criminal cases are being selected for tarrant county",
+            "Start Date: 2019-12-06 15:03:45Z",
+            "End Date: 2019-12-06 16:07:03Z"
+          ]
+        },
+        {
+          "changeId": "500",
+          "id": 5.302,
+          "name": "Tarrant County Probate Cases",
+          "isFixed": true,
+          "fixVersion": 11010,
+          "description": [
+            "Tarrant County - Probate cases.",
+            "Error: Object reference not set to an instance of an object.",
+            "Fxn: TarrantWebInteractive.AppendCourtInformation ",
+            "Line 385 ",
+            "Fxn: TarrantWebInteractive.ExtractCaseData ",
+            "Start Date: 2019-12-08 21:36:41Z",
+            "End Date: 2019-12-08 22:31:48Z"
+          ]
+        },
+        {
+          "changeId": "500",
+          "id": 5.303,
+          "name": "Tarrant County Probate Cases",
+          "isFixed": true,
+          "fixVersion": 11010,
+          "description": [
+            "SlowChetah add-in needed to ensure proper configuration on deployment.",
+            "Start Date: 2019-12-08 21:47:43Z",
+            "End Date: 2019-12-08 22:31:48Z"
+          ]
+        },
+        {
+          "changeId": "500",
+          "id": 5.304,
+          "name": "Tarrant County Probate Cases",
+          "isFixed": true,
+          "fixVersion": 11010,
+          "description": [
+            "Need mapping for Guardian address when available",
+            "Start Date: 2019-12-08 22:31:48Z",
+            "End Date: 2019-12-08 23:07:38Z"
+          ]
+        },
+        {
+          "changeId": "500",
+          "id": 5.305,
+          "name": "Tarrant County Probate Cases",
+          "isFixed": true,
+          "fixVersion": 11010,
+          "description": [
+            "Case Style is blank or not provided.",
+            "Start Date: 2019-12-08 22:31:48Z",
+            "End Date: 2019-12-08 23:07:38Z"
+          ]
+        },
+        {
+          "changeId": "500",
+          "id": 5.306,
+          "name": "Tarrant County Probate Cases",
+          "isFixed": true,
+          "fixVersion": 11010,
+          "description": [
+            "Case Style is not mapping Plantiff data for Tarrant County.",
+            "Tarrant County - Probate Cases - 'in the estate of'",
+            "Start Date: 2019-12-08 22:31:48Z",
+            "End Date: 2019-12-08 23:07:38Z"
           ]
         }
       ]
@@ -335,9 +435,35 @@
           "canPublish": true
         },
         {
-          "id": 0.0,
+          "id": 5.3,
           "description": "Tarrant County - Does not fetch criminal cases",
-          "canPublish": false
+          "canPublish": true
+        },
+        {
+          "id": 5.301,
+          "description": "Tarrant County - Excel output overwrites plaintiff",
+          "canPublish": true
+        },
+        {
+          "id": 5.302,
+          "description": "Tarrant County - Probate cases throws object reference expection",
+          "canPublish": true
+        },
+        {
+          "id": 5.303,
+          "canPublish": true
+        },
+        {
+          "id": 5.304,
+          "canPublish": true
+        },
+        {
+          "id": 5.305,
+          "canPublish": true
+        },
+        {
+          "id": 5.306,
+          "canPublish": true
         }
       ]
     }
@@ -347,67 +473,103 @@
       "id": 1.1,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "When attempting to pull cases from Tarrant County District court cases are not included in search results. Start Date: 2019-12-02 22:40:12Z End Date: 2019-12-02 22:40:12Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 1.2,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "When attempting to pull cases from Tarrant County Criminal court cases are not included in search results. Start Date: 2019-12-02 02:02:14Z End Date: 2019-12-02 22:26:22Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 1.2001,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "When attempting to pull criminal cases from Tarrant County The Excel output for column L - case style - is incorrect Start Date: 2019-12-02 22:26:22Z End Date: 2019-12-03 01:44:37Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 2.1,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "Under Search Type, probate is misspelled. Start Date: 2019-12-01 23:50:19Z End Date: 2019-12-02 00:22:22Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 3.2,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "When searching District courts, the data extract is not populating the case information properly. Start Date: 2019-12-05 09:23:22Z End Date: 2019-12-05 09:23:22Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 3.3,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "The drop-down values for Denton County need adjustments to match the website, so that user can select [all courts], [all jp], etc. Start Date: 2019-12-05 09:23:22Z End Date: 2019-12-05 09:23:22Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 4.1,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "Remove hard-return from Case-Style and replace with space. Start Date: 2019-12-05 09:23:22Z End Date: 2019-12-05 09:23:22Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 4.2,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "Add a new column [County] to extract Start Date: 2019-12-05 09:23:22Z End Date: 2019-12-05 09:23:22Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 4.3,
       "correctionDate": "2019-12-05T16:44:05.1674356-06:00",
       "description": "Add a new column [CourtAddress] to extract Start Date: 2019-12-05 09:23:22Z End Date: 2019-12-05 09:23:22Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 5.1,
       "correctionDate": "2019-12-05T18:22:27.6698235-06:00",
       "description": "Collin County - Civil pulls through showing as Denton County and no CourtAddress Start Date: 2019-12-05 18:22:19Z End Date: 2019-12-05 18:22:19Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 5.2,
       "correctionDate": "2019-12-05T21:46:31.7677324-06:00",
       "description": "Collin County - Collin criminal pulls through with Case Style being the person's name and birthdate Start Date: 2019-12-05 21:45:18Z End Date: 2019-12-05 21:45:18Z",
-      "isWritten": false
+      "isWritten": true
+    },
+    {
+      "id": 5.3,
+      "correctionDate": "2019-12-08T21:37:25.595714-06:00",
+      "description": "Tarrant County - No criminal cases are being selected for tarrant county Start Date: 2019-12-08 21:36:41Z End Date: 2019-12-08 21:36:41Z",
+      "isWritten": true
+    },
+    {
+      "id": 5.301,
+      "correctionDate": "2019-12-06T16:07:10.1112981-06:00",
+      "description": "Tarrant County - No criminal cases are being selected for tarrant county Start Date: 2019-12-06 15:03:45Z End Date: 2019-12-06 16:07:03Z",
+      "isWritten": true
+    },
+    {
+      "id": 5.302,
+      "correctionDate": "2019-12-08T22:43:57.8717886-06:00",
+      "description": "Tarrant County - Probate cases. Error: Object reference not set to an instance of an object. Fxn: TarrantWebInteractive.AppendCourtInformation  Line 385  Fxn: TarrantWebInteractive.ExtractCaseData  Start Date: 2019-12-08 21:36:41Z End Date: 2019-12-08 22:31:48Z",
+      "isWritten": true
+    },
+    {
+      "id": 5.303,
+      "correctionDate": "2019-12-08T22:43:57.8717886-06:00",
+      "description": "SlowChetah add-in needed to ensure proper configuration on deployment. Start Date: 2019-12-08 21:47:43Z End Date: 2019-12-08 22:31:48Z",
+      "isWritten": true
+    },
+    {
+      "id": 5.304,
+      "correctionDate": "2019-12-08T23:08:26.8355365-06:00",
+      "description": "Need mapping for Guardian address when available Start Date: 2019-12-08 22:31:48Z End Date: 2019-12-08 23:07:38Z",
+      "isWritten": true
+    },
+    {
+      "id": 5.305,
+      "correctionDate": "2019-12-08T23:08:26.8355365-06:00",
+      "description": "Case Style is blank or not provided. Start Date: 2019-12-08 22:31:48Z End Date: 2019-12-08 23:07:38Z",
+      "isWritten": true
     }
   ],
   "template": [

@@ -464,6 +464,17 @@
           "canPublish": true
         }
       ]
+    },
+    {
+      "id": 11111,
+      "number": "1.11.1.1",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "code quality corrections from fxCop",
+          "canPublish": false
+        }
+      ]
     }
   ],
   "corrections": [
@@ -573,7 +584,7 @@
       "id": 5.306,
       "correctionDate": "2019-12-08T23:08:26.8355365-06:00",
       "description": "Case Style is not mapping Plantiff data for Tarrant County. Tarrant County - Probate Cases - 'in the estate of' Start Date: 2019-12-08 22:31:48Z End Date: 2019-12-08 23:07:38Z",
-      "isWritten": true
+      "isWritten": false
     }
   ],
   "template": [

@@ -11,6 +11,10 @@ namespace LegalLead.Changed.Classes
     {
         private string _sourceFileName;
 
+        public string Name
+        {
+            get { return GetType().Name; }
+        }
         /// <summary>
         /// Determines the order of execution for command
         /// </summary>

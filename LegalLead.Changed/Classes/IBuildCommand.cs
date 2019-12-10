@@ -27,5 +27,7 @@
         /// Gets the log file associated to application changes
         /// </summary>
         Models.ChangeLog Log { get; }
+
+        string Name { get; }
     }
 }

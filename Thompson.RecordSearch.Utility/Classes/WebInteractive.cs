@@ -147,13 +147,12 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="dta">The dta.</param>
         private void AppendExtraCaseInfo(HLinkDataRow dta)
         {
-            var doc = new XmlDocument();
             var tableHtml = dta.Data;
             if (tableHtml.Contains("<img"))
             {
                 tableHtml = RemoveElement(tableHtml, "<img");
             }
-            doc.LoadXml(tableHtml);
+            var doc = XmlDocProvider.GetDoc(tableHtml);
             var instructions = SearchSettingDto.GetNonCriminalMapping()
                     .NavInstructions
                     .ToList();

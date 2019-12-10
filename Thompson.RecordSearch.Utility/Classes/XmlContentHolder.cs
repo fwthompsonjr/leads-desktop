@@ -140,7 +140,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             Document.Save(FileName);
         }
 
-        private XmlNode ParseAddressInformation(string address, XmlNode addressNode)
+        private static XmlNode ParseAddressInformation(string address, XmlNode addressNode)
         {
             const string lineBreak = @"<br/>";
             if (addressNode == null) return addressNode;

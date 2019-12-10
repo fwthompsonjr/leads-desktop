@@ -18,16 +18,17 @@ namespace LegalLead.Changed.Classes
             var fileName = ReadMeFileName();
             if (!File.Exists(fileName))
                 throw new FileNotFoundException(fileName);
+            // get Log
+            var corrections = Log.Corrections.
+                ToList()
+                .FindAll(c => !c.IsWritten);
+            if (!corrections.Any()) return true;
             var header = GetHeader();
             var footer = GetFooter();
             var lineSep = footer.Replace("=", "-");
             using (var writer = new StreamWriter(fileName, false))
             {
                 writer.Write(header);
-                // get Log
-                var corrections = Log.Corrections.
-                    ToList()
-                    .FindAll(c => !c.IsWritten);
                 var lastId = corrections.Last().Id;
                 corrections.ForEach(c => 
                 {

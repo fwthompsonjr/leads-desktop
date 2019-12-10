@@ -67,7 +67,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
 
         private WebFetchResult SearchWeb(XmlContentHolder results,
-            List<Step> steps,
+            List<NavigationStep> steps,
             DateTime startingDate,
             DateTime endingDate,
             ref List<HLinkDataRow> cases,
@@ -96,7 +96,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         private WebFetchResult SearchWeb(
             int customSearchType,
             XmlContentHolder results,
-            List<Step> steps,
+            List<NavigationStep> steps,
             DateTime startingDate,
             DateTime endingDate,
             ref List<HLinkDataRow> cases,
@@ -144,7 +144,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
         private WebFetchResult Search(XmlContentHolder results, 
-            List<Step> steps, DateTime startingDate, 
+            List<NavigationStep> steps, DateTime startingDate, 
             DateTime endingDate, 
             ref List<HLinkDataRow> cases, 
             out List<PersonAddress> people, 
@@ -194,7 +194,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
-                var styleInfo = GetCaseStyle(item, "td[3]/div");
+                var styleInfo = GetCaseStyle(item);
                 var person = new PersonAddress
                 {
                     Name = item.Defendant,
@@ -242,14 +242,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             var newcases = LoadFromHtml(caseData);
             newcases.FindAll(x => !x.IsProbate).ForEach(c => c.IsProbate = isProbate);
             // map case information using file xpath
-            newcases = AppendCourtInformation(results.FileName, newcases);
+            newcases = AppendCourtInformation(newcases);
 
             // add this to the result file
             AppendToResult(results.FileName, caseData, "results/result[@name='casedata']");
             cases.AddRange(newcases);
             return cases;
         }
-        protected string GetCaseStyle(HLinkDataRow item, string xpath)
+        protected string GetCaseStyle(HLinkDataRow item)
         {
             if (item == null) return string.Empty;
             var doc = XmlDocProvider.GetDoc(item.Data);
@@ -333,9 +333,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static void AppendToResult(string fileName, string caseData, string xpath)
         {
-            var doc = new XmlDocument();
-            doc.Load(fileName);
-
+            var doc = XmlDocProvider.Load(fileName);
             var ndeCase = doc.DocumentElement.SelectSingleNode(xpath);
             if (ndeCase == null) return;
             if (!ndeCase.HasChildNodes) return;
@@ -346,8 +344,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static List<HLinkDataRow> LoadFromHtml(string caseData)
         {
             var caseList = new List<HLinkDataRow>();
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(caseData);
+            XmlDocument doc = XmlDocProvider.GetDoc(caseData);
             var trElements = doc.FirstChild.ChildNodes[0].SelectNodes("tr").Cast<XmlNode>().ToList();
             foreach (var trow in trElements)
             {
@@ -365,7 +362,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             return caseList;
         }
 
-        private List<HLinkDataRow> AppendCourtInformation(string sourceFile, List<HLinkDataRow> caseList
+        private List<HLinkDataRow> AppendCourtInformation(List<HLinkDataRow> caseList
             )
         {
             var parameterId = Parameters.Id;

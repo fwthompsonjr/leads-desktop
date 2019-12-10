@@ -1,5 +1,6 @@
 ﻿// FindPrincipalByWordMatch
 using System;
+using System.Globalization;
 using System.Linq;
 using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
@@ -36,7 +37,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 var table = parent.FindElement(By.XPath(".."));
                 var trCol = table.FindElements(By.TagName("tr")).ToList();
                 if (!int.TryParse(ridx, out int r)) return;
-                MapElementAddress(linkData, rowLabel, table, trCol, r, searchType.ToLower());
+                MapElementAddress(linkData, rowLabel, table, trCol, r, searchType.ToLower(CultureInfo.CurrentCulture));
             }
             catch (Exception)
             {

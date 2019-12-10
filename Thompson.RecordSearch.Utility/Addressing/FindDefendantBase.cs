@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Thompson.RecordSearch.Utility.Models;
@@ -67,7 +68,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
             }
         }
 
-        protected static string GetAddress(int rowIndex, List<IWebElement> elements, string keyword = "defendant")
+        protected static string GetAddress(List<IWebElement> elements, string keyword = "defendant")
         {
             if (elements == null) throw new ArgumentNullException(nameof(elements));
             if (string.IsNullOrEmpty(keyword)) { keyword = "defendant"; }
@@ -77,7 +78,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
             var addressHtml = string.Empty;
             var findKey = keyword.ToLower(cultureInfo);
             if (!elements.Any()) return string.Empty;
-            rowIndex = 0;
+            var rowIndex = 0;
             while (address.ToLower(cultureInfo).StartsWith(findKey, currentCase) | string.IsNullOrEmpty(address))
             {
                 if (rowIndex > elements.Count - 1) break;
@@ -87,7 +88,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 addressHtml = firstTd != null ? firstTd.GetAttribute("innerHTML").Trim() : string.Empty;
                 address = currentRow.GetAttribute("innerText")
                     .Replace(Environment.NewLine, "<br/>").Trim();
-                rowIndex = rowIndex + 1;
+                rowIndex += 1;
                 var headings = currentRow.FindElements(By.TagName("th"));
                 
                 if (headings != null && headings.Count > 1)
@@ -132,13 +133,14 @@ namespace Thompson.RecordSearch.Utility.Addressing
             if (table == null) throw new ArgumentNullException(nameof(table));
             if (trCol == null) throw new ArgumentNullException(nameof(trCol));
             var nextTh = table.FindElements(By.TagName("th")).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
-            var mxRowIndex = nextTh == null ? r : Convert.ToInt32(nextTh.FindElement(By.XPath("..")).GetAttribute("rowIndex"));
+            var mxRowIndex = nextTh == null ? r : Convert.ToInt32(nextTh.FindElement(By.XPath("..")).GetAttribute("rowIndex"),
+                CultureInfo.CurrentCulture.NumberFormat);
             while (r <= mxRowIndex)
             {
                 var currentRow = trCol[r];
                 var tdElements = currentRow.FindElements(By.TagName("td")).ToList();
                 tdElements = tdElements.FindAll(x => x.Location.X >= rowLabel.Location.X & x.Location.X < (rowLabel.Location.X + rowLabel.Size.Width));
-                linkData.Address = GetAddress(r, tdElements, searchTitle);
+                linkData.Address = GetAddress(tdElements, searchTitle);
                 if (!string.IsNullOrEmpty(linkData.Address)) break;
                 r += 1;
             }

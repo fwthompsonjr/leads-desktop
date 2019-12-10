@@ -14,7 +14,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
-        public string FileVersion 
+        public static string FileVersion
         {
             get 
             {
@@ -25,7 +25,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public VersionNameProvider()
         {
             // when the assembly-file-version contains pre-release
-            var isPreRelease = FileVersion.EndsWith($"~{VersionNames.Last()}");
+            var isPreRelease = FileVersion.EndsWith($"~{VersionNames.Last()}", System.StringComparison.CurrentCultureIgnoreCase);
             Name = isPreRelease ? "Future" : "Default";
         }
         public string Name { get; private set; }
