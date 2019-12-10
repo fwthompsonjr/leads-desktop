@@ -472,6 +472,11 @@
         {
           "id": 0.0,
           "description": "code quality corrections from fxCop",
+          "canPublish": true
+        },
+        {
+          "id": 0.0,
+          "description": "implementation of custom resource table",
           "canPublish": false
         }
       ]

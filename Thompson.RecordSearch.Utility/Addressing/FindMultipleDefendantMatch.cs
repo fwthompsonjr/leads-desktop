@@ -30,28 +30,28 @@ namespace Thompson.RecordSearch.Utility.Addressing
             foreach (var tdItem in tdCollection)
             {
 
-                var parent = tdItem.FindElement(By.XPath(".."));
-                var rowLabel = parent.FindElements(By.TagName("th"))[1];
-                linkData.Defendant = rowLabel.GetAttribute("innerText");
+                var parent = tdItem.FindElement(By.XPath(IndexKeyNames.ParentElement));
+                var rowLabel = parent.FindElements(By.TagName(IndexKeyNames.ThElement))[1];
+                linkData.Defendant = rowLabel.GetAttribute(IndexKeyNames.InnerText);
                 CanFind = true;
                 linkData.Address = parent.Text;
                 try
                 {
 
                     // get row index of this element ... and then go one row beyond...
-                    var ridx = parent.GetAttribute("rowIndex");
-                    var table = parent.FindElement(By.XPath(".."));
-                    var trCol = table.FindElements(By.TagName("tr")).ToList();
+                    var ridx = parent.GetAttribute(IndexKeyNames.RowIndex);
+                    var table = parent.FindElement(By.XPath(IndexKeyNames.ParentElement));
+                    var trCol = table.FindElements(By.TagName(IndexKeyNames.TrElement)).ToList();
                     if (!int.TryParse(ridx, out int r)) return;
-                    var nextTh = table.FindElements(By.TagName("th")).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
+                    var nextTh = table.FindElements(By.TagName(IndexKeyNames.ThElement)).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
                     var mxRowIndex = nextTh == null ? r : 
                         Convert.ToInt32(
-                            nextTh.FindElement(By.XPath("..")).GetAttribute("rowIndex"),
+                            nextTh.FindElement(By.XPath(IndexKeyNames.ParentElement)).GetAttribute(IndexKeyNames.RowIndex),
                             CultureInfo.CurrentCulture.NumberFormat);
                     while (r <= mxRowIndex)
                     {
                         var currentRow = trCol[r];
-                        var tdElements = currentRow.FindElements(By.TagName("td")).ToList();
+                        var tdElements = currentRow.FindElements(By.TagName(IndexKeyNames.TdElement)).ToList();
                         tdElements = tdElements.FindAll(x => x.Location.X >= rowLabel.Location.X & x.Location.X < (rowLabel.Location.X + rowLabel.Size.Width));
                         linkData.Address = GetAddress(tdElements);
                         if (!string.IsNullOrEmpty(linkData.Address)) break;

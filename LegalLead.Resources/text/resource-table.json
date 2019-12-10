@@ -1,0 +1,431 @@
+﻿{
+  "resources": [
+    {
+      "type": "xml",
+      "name": "RowIndex",
+      "value": "rowIndex",
+      "keyIndex": 1,
+      "id": 1
+    },
+    {
+      "type": "FindDefendant",
+      "name": "Applicant",
+      "value": "Applicant",
+      "keyIndex": 100,
+      "id": 10
+    },
+    {
+      "type": "xml",
+      "name": "th-contains-text",
+      "value": "//th[contains(text(),'{0}')]",
+      "keyIndex": 110,
+      "id": 1
+    },
+    {
+      "type": "xml",
+      "name": "parent-element",
+      "value": "..",
+      "keyIndex": 120,
+      "id": 1
+    },
+    {
+      "type": "xml",
+      "name": "th-element",
+      "value": "th",
+      "keyIndex": 130,
+      "id": 1
+    },
+    {
+      "type": "xml",
+      "name": "inner-text",
+      "value": "innerText",
+      "keyIndex": 140,
+      "id": 1
+    },
+    {
+      "type": "xml",
+      "name": "tr-element",
+      "value": "tr",
+      "keyIndex": 150,
+      "id": 1
+    },
+    {
+      "type": "xml",
+      "name": "br-element-tag",
+      "value": "<br/>",
+      "keyIndex": 160,
+      "id": 1
+    },
+    {
+      "type": "FindDefendant",
+      "name": "Defendant",
+      "value": "Defendant",
+      "keyIndex": 170,
+      "id": 10
+    },
+    {
+      "type": "xml",
+      "name": "td-element",
+      "value": "td",
+      "keyIndex": 180,
+      "id": 1
+    },
+    {
+      "type": "ParameterName",
+      "name": "hlink-uri",
+      "value": "hlinkUri",
+      "keyIndex": 190,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "PersonNodeXpath",
+      "value": "personNodeXpath",
+      "keyIndex": 200,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "StartDate",
+      "value": "startDate",
+      "keyIndex": 210,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "EndDate",
+      "value": "endDate",
+      "keyIndex": 220,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "CriminalCaseInclusion",
+      "value": "criminalCaseInclusion",
+      "keyIndex": 230,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "CaseStyle",
+      "value": "CaseStyle",
+      "keyIndex": 240,
+      "id": 20
+    },
+    {
+      "type": "ActionName",
+      "name": "SetText",
+      "value": "set-text",
+      "keyIndex": 250,
+      "id": 30
+    },
+    {
+      "type": "FormatString",
+      "name": "DateTimeShort",
+      "value": "MM/dd/yyyy",
+      "keyIndex": 260,
+      "id": 40
+    },
+    {
+      "type": "ParameterName",
+      "name": "SearchComboIndex",
+      "value": "SearchComboIndex",
+      "keyIndex": 270,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "CaseSearchType",
+      "value": "CaseSearchType",
+      "keyIndex": 280,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "DistrictSearchType",
+      "value": "DistrictSearchType",
+      "keyIndex": 290,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "StartDateQuery",
+      "value": "?StartDate",
+      "keyIndex": 300,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "EndingDateQuery",
+      "value": "?EndingDate",
+      "keyIndex": 310,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "SetComboIndexQuery",
+      "value": "?SetComboIndex",
+      "keyIndex": 320,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "CriminalLinkQuery",
+      "value": "criminalLinkQuery",
+      "keyIndex": 330,
+      "id": 20
+    },
+    {
+      "type": "FormatString",
+      "name": "SearchingForElement",
+      "value": "Searching for element: {0}",
+      "keyIndex": 340,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "ElementNotFound",
+      "value": "Searching for element: {0}",
+      "keyIndex": 350,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "SetSelectElementIndex",
+      "value": "Setting SELECT index for element: {0} to {1}",
+      "keyIndex": 360,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "SetSelectOptionIndex",
+      "value": "Setting OPTION : {0} ",
+      "keyIndex": 370,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "WaitingForElement",
+      "value": "Waiting for element: {0}",
+      "keyIndex": 380,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "ElementTextNotFound",
+      "value": "Element {0}: expected text '{1}' not found.",
+      "keyIndex": 390,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "ElementMatchTextNotFound",
+      "value": "Element {0}: expected text '{1}' not matched to actual '{2}'.",
+      "keyIndex": 400,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "ElementClassNotFound",
+      "value": "Element {0}: expected class '{1}' not found.",
+      "keyIndex": 410,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "ElementAttributeNotFound",
+      "value": "Element {0}: expected attribute '{1}' not matched to expected '{2}', actual='{3}'.",
+      "keyIndex": 420,
+      "id": 40
+    },
+    {
+      "type": "xml",
+      "name": "IdLowerCase",
+      "value": "id",
+      "keyIndex": 430,
+      "id": 1
+    },
+    {
+      "type": "JscriptCommand",
+      "name": "GetElementSetIndex",
+      "value": "document.getElementById('{0}').selectedIndex={1};",
+      "keyIndex": 440,
+      "id": 50
+    },
+    {
+      "type": "JscriptCommand",
+      "name": "ElementFireOnChange",
+      "value": "document.getElementById('{0}').onchange();",
+      "keyIndex": 450,
+      "id": 50
+    },
+    {
+      "type": "JscriptCommand",
+      "name": "ElementGetOptionText",
+      "value": "var cbo = document.getElementById('{0}'); return cbo.options[{1}].text;",
+      "keyIndex": 460,
+      "id": 50
+    },
+    {
+      "type": "xml",
+      "name": "ClassAttribute",
+      "value": "class",
+      "keyIndex": 470,
+      "id": 1
+    },
+    {
+      "type": "FormatString",
+      "name": "ClassNameFound",
+      "value": "Element {0}: expected class '{1}' is found.",
+      "keyIndex": 480,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "NavigateToUrlMessage",
+      "value": "Navigate to URL: {0}",
+      "keyIndex": 490,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "DistrictDash",
+      "value": "District-",
+      "keyIndex": 500,
+      "id": 40
+    },
+    {
+      "type": "ParameterName",
+      "name": "SearchHyperlink",
+      "value": "Search-Hyperlink",
+      "keyIndex": 510,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "DistrictHyperlink",
+      "value": "District-Hyperlink",
+      "keyIndex": 520,
+      "id": 20
+    },
+    {
+      "type": "ActionName",
+      "name": "WaitForNavigation",
+      "value": "WaitForNavigation",
+      "keyIndex": 530,
+      "id": 30
+    },
+    {
+      "type": "ActionName",
+      "name": "WaitForElementExist",
+      "value": "WaitForElementExist",
+      "keyIndex": 540,
+      "id": 30
+    },
+    {
+      "type": "ActionName",
+      "name": "Click",
+      "value": "Click",
+      "keyIndex": 550,
+      "id": 30
+    },
+    {
+      "type": "ActionName",
+      "name": "ClickElement",
+      "value": "ClickElement",
+      "keyIndex": 560,
+      "id": 30
+    },
+    {
+      "type": "ActionName",
+      "name": "SetControlValue",
+      "value": "SetControlValue",
+      "keyIndex": 570,
+      "id": 30
+    },
+    {
+      "type": "ActionName",
+      "name": "GetElement",
+      "value": "GetElement",
+      "keyIndex": 580,
+      "id": 30
+    },
+    {
+      "type": "ActionName",
+      "name": "SetComboIndex",
+      "value": "SetComboIndex",
+      "keyIndex": 590,
+      "id": 30
+    },
+    {
+      "type": "FormatString",
+      "name": "WebNavInstructionMessage",
+      "value": "Name:= {0}, FriendlyName:= {1}, Value:= {2}",
+      "keyIndex": 600,
+      "id": 40
+    },
+    {
+      "type": "xml",
+      "name": "IdProperCase",
+      "value": "Id",
+      "keyIndex": 610,
+      "id": 1
+    },
+    {
+      "type": "xml",
+      "name": "XPath",
+      "value": "XPath",
+      "keyIndex": 620,
+      "id": 1
+    },
+    {
+      "type": "JscriptCommand",
+      "name": "ControlSetValue",
+      "value": "document.getElementById('{0}').value='{1}'",
+      "keyIndex": 630,
+      "id": 50
+    },
+    {
+      "type": "FormatString",
+      "name": "Password",
+      "value": "Password",
+      "keyIndex": 640,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "PasswordMask",
+      "value": "xxxxxxxxx",
+      "keyIndex": 650,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "SettingControlValue",
+      "value": " ... Setting value - {0} := {1}",
+      "keyIndex": 660,
+      "id": 40
+    },
+    {
+      "type": "JscriptCommand",
+      "name": "ClickElementJs",
+      "value": "document.getElementById('{0}').click();",
+      "keyIndex": 670,
+      "id": 50
+    },
+    {
+      "type": "FormatString",
+      "name": "ClickingOnElement",
+      "value": " ... Click element - {0} ",
+      "keyIndex": 680,
+      "id": 40
+    },
+    {
+      "type": "ParameterName",
+      "name": "DateFiledOnTextBox",
+      "value": "Date-Filed-On-TextBox",
+      "keyIndex": 690,
+      "id": 20
+    }
+  ]
+}

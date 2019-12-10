@@ -99,22 +99,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
-        /// <summary>
-        /// Locates the address element from the case-detail drill down page.
-        /// </summary>
-        /// <param name="parent">The parent.</param>
-        /// <param name="trCol">The tr col.</param>
-        /// <returns></returns>
-        private static IWebElement GetAddressRow(IWebElement parent, System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> trCol)
-        {
-            if (parent == null) throw new ArgumentNullException(nameof(parent));
-            if (trCol == null) throw new ArgumentNullException(nameof(trCol));
-            int colIndex = 3;
-            parent = trCol[colIndex];
-            var parentTxt = string.IsNullOrEmpty(parent.Text) ? string.Empty : parent.Text;
-            if (string.IsNullOrEmpty(parentTxt)) parent = trCol[colIndex - 1];
-            return parent;
-        }
 
 
         public static IWebDriver GetHiddenWebDriver()
@@ -188,27 +172,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
 
-        /// <summary>
-        /// Tries the find element on a specfic web page using the By condition supplied.
-        /// </summary>
-        /// <param name="parent">The parent web browser instance.</param>
-        /// <param name="by">The by condition used to locate the element</param>
-        /// <returns></returns>
-        private static IWebElement TryFindElement(IWebDriver parent, By by)
-        {
-            try
-            {
-                return parent.FindElement(by);
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch (Exception)
-#pragma warning restore CA1031 // Do not catch general exception types
-            {
-                return null;
-            }
-        }
         private const int SW_HIDE = 0;
-        private const int SW_SHOW = 5;
+        // private const int SW_SHOW = 5;
 
         private static void HideWindow(string windowTitle)
         {

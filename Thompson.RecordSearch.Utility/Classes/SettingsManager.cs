@@ -146,12 +146,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             var fileName = GetFileName(settingFile);
             var targetFile = fileName;
             var idx = 0;
+            var cultureInfo = CultureInfo.CurrentCulture;
+            var numberInfo = cultureInfo.NumberFormat;
             while (File.Exists(targetFile))
             {
                 idx = idx + 1;
                 var cleaned = Path.GetFileNameWithoutExtension(fileName);
-                cleaned = string.Format("{0}_{1}.xml", cleaned, idx.ToString("D9"));
-                targetFile = string.Format("{0}/{1}", Path.GetDirectoryName(fileName), cleaned);
+                cleaned = string.Format(cultureInfo, "{0}_{1}.xml", cleaned, idx.ToString("D9", numberInfo));
+                targetFile = string.Format(cultureInfo, "{0}/{1}", Path.GetDirectoryName(fileName), cleaned);
             }
             fileName = targetFile;
             using (var sw = new StreamWriter(fileName))

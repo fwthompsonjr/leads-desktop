@@ -85,8 +85,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                     var actionName = item.ActionName;
                     if (item.ActionName.Equals("set-text", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        if (item.DisplayName.Equals("startDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
-                        if (item.DisplayName.Equals("endDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
+                        if (item.DisplayName.Equals("startDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = startingDate.Date.ToString(CommonKeyIndexes.DateTimeShort);
+                        if (item.DisplayName.Equals("endDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = endingDate.Date.ToString(CommonKeyIndexes.DateTimeShort);
                     }
                     var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName, StringComparison.CurrentCultureIgnoreCase));
                     if (action == null) continue;

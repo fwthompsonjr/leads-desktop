@@ -82,7 +82,6 @@
     <Compile Include="Command\DentonSettingCommand.cs" />
     <Compile Include="Command\MainCommand.cs" />
     <Compile Include="Command\MdiCommand.cs" />
-    <Compile Include="Entity\FormNavigationKey.cs" />
     <Compile Include="FormCredential.cs">
       <SubType>Form</SubType>
     </Compile>

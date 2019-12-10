@@ -54,14 +54,20 @@ namespace LegalLead.Changed.Models
         {
             const string separator = "|";
             var builder = new StringBuilder();
-            builder.AppendFormat("{0} {1}",
+            builder.AppendFormat(
+                CultureInfo.CurrentCulture,
+                "{0} {1}",
                 separator,
                 Id.ToString("F4", CultureInfo.CurrentCulture.NumberFormat)
                 .ToFixedWidth(CorrectionColumnLength.IssueId));
-            builder.AppendFormat("{0} {1}",
+            builder.AppendFormat(
+                CultureInfo.CurrentCulture, 
+                "{0} {1}",
                 separator,
                 reportedDate);
-            builder.AppendFormat("{0} {1}",
+            builder.AppendFormat(
+                CultureInfo.CurrentCulture, 
+                "{0} {1}",
                 separator,
                 CorrectionDate.ToString("MM-dd-yyyy",
                 CultureInfo.CurrentCulture.DateTimeFormat)
@@ -72,15 +78,14 @@ namespace LegalLead.Changed.Models
             {
                 description.Add(string.Empty.ToFixedWidth(commentLength));
             }
-            builder.AppendFormat("{0} {1} {0}{2}", separator, description[0], Environment.NewLine);
+            builder.AppendFormat(
+                CultureInfo.CurrentCulture, 
+                "{0} {1} {0}{2}", 
+                separator, 
+                description[0], Environment.NewLine);
             if (description.Count > 1)
             {
                 const string line = "|           |                |                 |";
-                //var spaceLength = (5 +
-                //    CorrectionColumnLength.CorrectedDate +
-                //    CorrectionColumnLength.IssueId +
-                //    CorrectionColumnLength.ReportedDate);
-                //var spacer = string.Empty.ToFixedWidth(spaceLength);
                 for (int i = 1; i < description.Count; i++)
                 {
                     builder.AppendLine($"{line} {description[i].ToFixedWidth(commentLength)} {separator}");

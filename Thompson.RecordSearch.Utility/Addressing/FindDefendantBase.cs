@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.Resources;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -83,13 +84,13 @@ namespace Thompson.RecordSearch.Utility.Addressing
             {
                 if (rowIndex > elements.Count - 1) break;
                 var currentRow = elements[rowIndex];
-                var cells = currentRow.FindElements(By.TagName("td")).ToList();
+                var cells = currentRow.FindElements(By.TagName(IndexKeyNames.TdElement)).ToList();
                 var firstTd = cells.Any() ? cells[0] : null;
                 addressHtml = firstTd != null ? firstTd.GetAttribute("innerHTML").Trim() : string.Empty;
                 address = currentRow.GetAttribute("innerText")
-                    .Replace(Environment.NewLine, "<br/>").Trim();
+                    .Replace(Environment.NewLine, CommonKeyIndexes.BrElementTag).Trim();
                 rowIndex += 1;
-                var headings = currentRow.FindElements(By.TagName("th"));
+                var headings = currentRow.FindElements(By.TagName(IndexKeyNames.ThElement));
                 
                 if (headings != null && headings.Count > 1)
                 {
@@ -106,7 +107,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
             if (string.IsNullOrEmpty(addressHtml)) return address;
             // custom clean ups for collin-county
             const string noBr = @"<nobr>";
-            const string br = @"<br/>";
+            var br = CommonKeyIndexes.BrElementTag;
             if (addressHtml.IndexOf(noBr, currentCase) < 0)
             {
                 return address;
@@ -132,13 +133,13 @@ namespace Thompson.RecordSearch.Utility.Addressing
             if (rowLabel == null) throw new ArgumentNullException(nameof(rowLabel));
             if (table == null) throw new ArgumentNullException(nameof(table));
             if (trCol == null) throw new ArgumentNullException(nameof(trCol));
-            var nextTh = table.FindElements(By.TagName("th")).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
-            var mxRowIndex = nextTh == null ? r : Convert.ToInt32(nextTh.FindElement(By.XPath("..")).GetAttribute("rowIndex"),
+            var nextTh = table.FindElements(By.TagName(IndexKeyNames.ThElement)).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
+            var mxRowIndex = nextTh == null ? r : Convert.ToInt32(nextTh.FindElement(By.XPath(IndexKeyNames.ParentElement)).GetAttribute(IndexKeyNames.RowIndex),
                 CultureInfo.CurrentCulture.NumberFormat);
             while (r <= mxRowIndex)
             {
                 var currentRow = trCol[r];
-                var tdElements = currentRow.FindElements(By.TagName("td")).ToList();
+                var tdElements = currentRow.FindElements(By.TagName(IndexKeyNames.TdElement)).ToList();
                 tdElements = tdElements.FindAll(x => x.Location.X >= rowLabel.Location.X & x.Location.X < (rowLabel.Location.X + rowLabel.Size.Width));
                 linkData.Address = GetAddress(tdElements, searchTitle);
                 if (!string.IsNullOrEmpty(linkData.Address)) break;
@@ -146,5 +147,23 @@ namespace Thompson.RecordSearch.Utility.Addressing
             }
             linkData.Address = NoFoundMatch.GetNoMatch(linkData.Address);
         }
+
+
+
+        protected static class IndexKeyNames
+        {
+            public static readonly string RowIndex = ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.RowIndex);
+            public static readonly string ThContainsText = ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.ThContainsText);
+            public static readonly string ParentElement = ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.ParentElement);
+            public static readonly string ThElement = ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.ThElement);
+            public static readonly string InnerText = ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.InnerText);
+            public static readonly string TrElement = ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.TrElement);
+            public static readonly string Applicant = ResourceTable.GetText(ResourceType.FindDefendant, ResourceKeyIndex.Applicant);
+            public static readonly string Defendant
+                = ResourceTable.GetText(ResourceType.FindDefendant, ResourceKeyIndex.Defendant);
+            internal static string TdElement
+                = ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.TdElement);
+        }
+
     }
 }

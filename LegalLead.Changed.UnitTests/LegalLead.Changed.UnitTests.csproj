@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandMapChangeIndexesTest.cs" />
+    <Compile Include="Resources\ResourceTableTests.cs" />
     <Compile Include="StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CorrectionToStringTests.cs" />
@@ -70,6 +71,10 @@
     <ProjectReference Include="..\LegalLead.Changed\LegalLead.Changed.csproj">
       <Project>{0a9e83c4-aa86-4f7d-8baf-fcb8f174d190}</Project>
       <Name>LegalLead.Changed</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LegalLead.Resources\LegalLead.Resources.csproj">
+      <Project>{ab526db3-e334-4c6b-a634-1a890f63aadf}</Project>
+      <Name>LegalLead.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

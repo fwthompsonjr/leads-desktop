@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Models;
@@ -31,7 +32,7 @@ namespace LegalLead.PublicData.Search
             var dateRange = siteData.Keys.FirstOrDefault(x => x.Name.Equals("dateRangeMaxDays", comparison));
             if (dateRange != null)
             {
-                int maxDayInterval = Convert.ToInt32(dateRange.Value);
+                int maxDayInterval = Convert.ToInt32(dateRange.Value, CultureInfo.CurrentCulture.NumberFormat);
                 var dayInterval = Math.Abs(Convert.ToInt32(dteStart.Value.Date.Subtract(
                     dteEnding.Value.Date).TotalDays));
                 if (dayInterval > maxDayInterval)
@@ -40,7 +41,7 @@ namespace LegalLead.PublicData.Search
                         Environment.NewLine +
                         "Start date - End Date Date Range " +
                         Environment.NewLine +
-                        string.Format("exceeds maximum of ({0}) days.", maxDayInterval),
+                        string.Format(CultureInfo.CurrentCulture, "exceeds maximum of ({0}) days.", maxDayInterval),
                         "Data Validation Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
@@ -101,7 +102,9 @@ namespace LegalLead.PublicData.Search
                 // update site data with correct index
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
                 SetKeyValue(siteData, "caseTypeSelectedIndex",
-                Convert.ToInt32(cboCaseType.SelectedValue).ToString("0"));
+                Convert.ToInt32(cboCaseType.SelectedValue,
+                    CultureInfo.CurrentCulture.NumberFormat)
+                    .ToString("0", CultureInfo.CurrentCulture.NumberFormat));
             }
             if (cboSearchType.SelectedIndex < 0)
             {
@@ -116,7 +119,9 @@ namespace LegalLead.PublicData.Search
                 // update site data with correct index
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
                 SetKeyValue(siteData, "searchTypeSelectedIndex",
-                Convert.ToInt32(cboSearchType.SelectedValue).ToString("0"));
+                Convert.ToInt32(cboSearchType.SelectedValue, 
+                    CultureInfo.CurrentCulture.NumberFormat)
+                    .ToString("0", CultureInfo.CurrentCulture.NumberFormat));
             }
             return true;
         }
@@ -134,7 +139,9 @@ namespace LegalLead.PublicData.Search
                 // update site data with correct index
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
                 SetKeyValue(siteData, "caseTypeSelectedIndex",
-                Convert.ToInt32(cboCourts.SelectedValue).ToString("0"));
+                Convert.ToInt32(cboCourts.SelectedValue
+                    ,CultureInfo.CurrentCulture.NumberFormat)
+                    .ToString("0", CultureInfo.CurrentCulture.NumberFormat));
 
                 SetKeyValue(siteData, "criminalCaseInclusion", 
                     cboCaseType.SelectedValue.ToString());

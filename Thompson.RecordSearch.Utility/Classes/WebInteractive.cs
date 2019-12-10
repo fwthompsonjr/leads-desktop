@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -138,6 +139,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
         #endregion
+
         #region Private Methods
 
         /// <summary>
@@ -196,5 +198,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
         #endregion
+
     }
 }

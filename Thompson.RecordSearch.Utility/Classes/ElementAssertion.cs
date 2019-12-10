@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -18,35 +19,35 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public bool DoesElementExist(By selector, string elementName)
         {
-            Console.WriteLine("Searching for element: {0}", elementName);
+            Console.WriteLine(CommonKeyIndexes.SearchingForElement, elementName);
             var found = PageDriver.FindElement(selector);
-            Console.WriteLine(string.Format("Element {0}: was not found.", elementName));
+            Console.WriteLine(string.Format(CommonKeyIndexes.ElementNotFound, elementName));
             return true;
         }
 
         public void SetSelectedIndex(By selector, string elementName, int selectedIndex)
         {
-
-            Console.WriteLine("Setting SELECT index for element: {0} to {1}", elementName, selectedIndex);
+            var cmmd = CommonKeyIndexes.SetSelectElementIndex;
+            Console.WriteLine(cmmd, elementName, selectedIndex);
             var elementToClick = PageDriver.FindElement(selector);
-            var id = elementToClick.GetAttribute("id");
-            var command = string.Format("document.getElementById('{0}').selectedIndex={1};",
+            var id = elementToClick.GetAttribute(CommonKeyIndexes.IdLowerCase);
+            var command = string.Format(CommonKeyIndexes.GetElementSetIndex,
                 id, selectedIndex);
-            var changecommand = string.Format("document.getElementById('{0}').onchange();",
+            var changecommand = string.Format(CommonKeyIndexes.ElementFireOnChange,
                 id);
-            var optionName = string.Format("var cbo = document.getElementById('{0}'); return cbo.options[{1}].text;",
+            var optionName = string.Format(CommonKeyIndexes.ElementGetOptionText,
                 id, selectedIndex);
 
             var jse = (IJavaScriptExecutor)PageDriver;
             var rsp = jse.ExecuteScript(optionName);
-            Console.WriteLine("Setting OPTION : {0} ", rsp.ToString());
+            Console.WriteLine(CommonKeyIndexes.SetSelectOptionIndex, rsp.ToString());
             jse.ExecuteScript(command);
             jse.ExecuteScript(changecommand);
         }
 
         public void WaitForElementExist(By selector, string elementName, int secondsWait = 10)
         {
-            Console.WriteLine("Waiting for element: {0}", elementName);
+            Console.WriteLine(CommonKeyIndexes.WaitingForElement, elementName);
             try
             {
                 var wait = new WebDriverWait(PageDriver, TimeSpan.FromSeconds(secondsWait));
@@ -66,7 +67,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (!DoesElementExist(selector, elementName)) return false;
             var found = PageDriver.FindElement(selector, 10);
-            var message = string.Format("Element {0}: expected text '{1}' not found.", elementName, searchString);
+            var message = string.Format(CommonKeyIndexes.ElementTextNotFound, elementName, searchString);
             if (!found.Text.Contains(searchString))
             {
                 Console.WriteLine(message);
@@ -80,7 +81,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (!DoesElementExist(selector, elementName)) return false;
             var found = PageDriver.FindElement(selector, 10);
-            var message = string.Format("Element {0}: expected text '{1}' not matched to actual '{2}'.", elementName, searchString, found.Text);
+            var message = string.Format(CommonKeyIndexes.ElementMatchTextNotFound, elementName, searchString, found.Text);
             if (!found.Text.Equals(searchString, StringComparison.CurrentCulture))
             {
                 Console.WriteLine(message);
@@ -93,9 +94,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (!DoesElementExist(selector, elementName)) return false;
             var found = PageDriver.FindElement(selector, 10);
-            var classes = found.GetAttribute("class") ?? string.Empty;
+            var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
-            var message = string.Format("Element {0}: expected class '{1}' not found.", elementName, className);
+            var message = string.Format(CommonKeyIndexes.ElementClassNotFound, elementName, className);
             var hasClass = allClasses.Any(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
             if (!hasClass)
             {
@@ -108,7 +109,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (!DoesElementExist(selector, elementName)) return false;
             var found = PageDriver.FindElement(selector, 10);
-            var classes = found.GetAttribute("class") ?? string.Empty;
+            var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
             return allClasses.Any(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
         }
@@ -117,8 +118,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var found = PageDriver.FindElement(selector, 10);
             var actual = found.GetAttribute(attributeName) ?? string.Empty;
-            var message = string.Format("Element {0}: expected attribute '{1}' not matched to expected '{2}', actual='{3}'.",
-                found.GetAttribute("id"),
+            var message = string.Format(CommonKeyIndexes.ElementAttributeNotFound,
+                found.GetAttribute(CommonKeyIndexes.IdLowerCase),
                 attributeName,
                 attributeValue,
                 actual);
@@ -135,9 +136,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (!DoesElementExist(selector, elementName)) return false;
             var found = PageDriver.FindElement(selector, 10);
-            var classes = found.GetAttribute("class") ?? string.Empty;
+            var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
-            var message = string.Format("Element {0}: expected class '{1}' is found.", elementName, className);
+            var message = string.Format(CommonKeyIndexes.ClassNameFound, elementName, className);
             var hasClass = allClasses.Any(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
             if (hasClass)
             {
@@ -148,7 +149,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public void Navigate(string target)
         {
-            Console.WriteLine("Navigate to URL: {0}", target);
+            Console.WriteLine(CommonKeyIndexes.NavigateToUrlMessage, target);
             var newUri = new Uri(target);
             PageDriver.Navigate().GoToUrl(newUri);
         }
@@ -165,9 +166,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                Console.WriteLine(" ... Click element - {0} ", controlId);
+                Console.WriteLine(CommonKeyIndexes.ClickElementJs, controlId);
                 var jse = (IJavaScriptExecutor)PageDriver;
-                jse.ExecuteScript(string.Format("document.getElementById('{0}').click();", controlId));
+                jse.ExecuteScript(string.Format(CommonKeyIndexes.ClickingOnElement, controlId));
             }
             catch (Exception)
             {
@@ -189,10 +190,12 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 if (controlId == null) controlId = string.Empty;
                 if (controlValue == null) controlValue = string.Empty;
-                Console.WriteLine(" ... Setting value - {0} := {1}", controlId,
-                    controlId.Equals("Password", StringComparison.CurrentCultureIgnoreCase) ? "xxxxxxxxx" : controlValue);
+                Console.WriteLine(CommonKeyIndexes.SettingControlValue, controlId,
+                    controlId.Equals(CommonKeyIndexes.Password, 
+                        StringComparison.CurrentCultureIgnoreCase) ? 
+                        CommonKeyIndexes.PasswordMask : controlValue);
                 var jse = (IJavaScriptExecutor)PageDriver;
-                jse.ExecuteScript(string.Format("document.getElementById('{0}').value='{1}';", controlId, controlValue));
+                jse.ExecuteScript(string.Format(CommonKeyIndexes.ControlSetValue, controlId, controlValue));
             }
             catch (Exception)
             {
@@ -207,20 +210,26 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         internal IWebElement Process(WebInteractive data, bool isCriminalSearch = false)
         {
-            const string dteFmt = "MM/dd/yyyy";
+            var dteFmt = CommonKeyIndexes.DateTimeShort;
             var startDate = data.StartDate.ToString(dteFmt);
             var endDate = data.EndingDate.ToString(dteFmt);
-            var searchTypeIndex = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("SearchComboIndex", StringComparison.CurrentCultureIgnoreCase));
+            var searchTypeIndex = data.Parameters.Keys
+                .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.SearchComboIndex, 
+                StringComparison.CurrentCultureIgnoreCase));
             var searchTypeId = searchTypeIndex == null ? 0 : Convert.ToInt32(searchTypeIndex.Value);
-            var caseTypeIndex = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("CaseSearchType", StringComparison.CurrentCultureIgnoreCase));
+            var caseTypeIndex = data.Parameters.Keys
+                .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.CaseSearchType, 
+                StringComparison.CurrentCultureIgnoreCase));
             var caseType = caseTypeIndex == null ? string.Empty : caseTypeIndex.Value;
-            var districtSearchFlag = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", StringComparison.CurrentCultureIgnoreCase));
+            var districtSearchFlag = data.Parameters.Keys
+                .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType, 
+                StringComparison.CurrentCultureIgnoreCase));
             var districtType = districtSearchFlag == null ? string.Empty : districtSearchFlag.Value;
             var isDistrictSearch = districtSearchFlag != null;
             var itms = data.Parameters.Instructions;
             if (!isDistrictSearch)
             {
-                itms.RemoveAll(x => x.FriendlyName.StartsWith("District-", StringComparison.CurrentCultureIgnoreCase));
+                itms.RemoveAll(x => x.FriendlyName.StartsWith(CommonKeyIndexes.DistrictDash, StringComparison.CurrentCultureIgnoreCase));
             }
             else if(isDistrictSearch & itms.Count < 15)
             {
@@ -228,50 +237,62 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
 
             // substitute parameters
-            itms.ForEach(x => x.Value = x.Value.Replace("?StartDate", startDate));
-            itms.ForEach(x => x.Value = x.Value.Replace("?EndingDate", endDate));
-            itms.ForEach(x => x.Value = x.Value.Replace("?SetComboIndex", searchTypeId.ToString()));
+            itms.ForEach(x => x.Value = x.Value.Replace(CommonKeyIndexes.StartDateQuery, startDate));
+            itms.ForEach(x => x.Value = x.Value.Replace(CommonKeyIndexes.EndingDateQuery, endDate));
+            itms.ForEach(x => x.Value = x.Value.Replace(CommonKeyIndexes.SetComboIndexQuery, searchTypeId.ToString()));
             if (!string.IsNullOrEmpty(caseType))
             {
-                var crimalLink = data.Parameters.Keys.FirstOrDefault(x => x.Name.Equals("criminalLinkQuery", StringComparison.CurrentCultureIgnoreCase));
+                var crimalLink = data.Parameters.Keys
+                    .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.CriminalLinkQuery, 
+                    StringComparison.CurrentCultureIgnoreCase));
                 if(isCriminalSearch && crimalLink != null)
                 {
                     caseType = crimalLink.Value;
                 }
-                var caseSearchItems = itms.FindAll(x => x.FriendlyName.Equals("Search-Hyperlink", StringComparison.CurrentCultureIgnoreCase));
+                var caseSearchItems = itms.FindAll(x => 
+                    x.FriendlyName.Equals(CommonKeyIndexes.SearchHyperlink, 
+                        StringComparison.CurrentCultureIgnoreCase));
+
                 caseSearchItems.ForEach(x => x.Value = caseType);
             }
             if (!string.IsNullOrEmpty(districtType))
             {
-                var districtItems = itms.FindAll(x => x.FriendlyName.Equals("District-Hyperlink", StringComparison.CurrentCultureIgnoreCase));
+                var districtItems = itms.FindAll(x => 
+                    x.FriendlyName.Equals(CommonKeyIndexes.DistrictHyperlink, 
+                        StringComparison.CurrentCultureIgnoreCase));
                 districtItems.ForEach(x => x.Value = districtType);
             }
+            const char comma = ',';
             // ?SetComboIndex
             foreach (var item in itms)
             {
-                Console.WriteLine("Name:= {0}, FriendlyName:= {1}, Value:= {2}", item.Name, item.FriendlyName, item.Value);
+                Console.WriteLine(
+                    CommonKeyIndexes.WebNavInstructionMessage, 
+                    item.Name, 
+                    item.FriendlyName, 
+                    item.Value);
                 switch (item.Name)
                 {
                     case "WaitForNavigation":
                         PageDriver.WaitForNavigation();
                         break;
                     case "WaitForElementExist":
-                        if (item.By == "Id")
+                        if (item.By == CommonKeyIndexes.IdProperCase)
                         {
                             WaitForElementExist(By.Id(item.Value), item.FriendlyName);
                         }
-                        if (item.By == "XPath")
+                        if (item.By == CommonKeyIndexes.XPath)
                         {
                             WaitForElementExist(By.XPath(item.Value), item.FriendlyName);
                         }
                         break;
                     case "Click":
-                        if (item.By == "Id")
+                        if (item.By == CommonKeyIndexes.IdProperCase)
                         {
                             // WaitForElementExist(By.Id(item.Value), item.FriendlyName);
                             PageDriver.FindElement(By.Id(item.Value)).Click();
                         }
-                        if (item.By == "XPath")
+                        if (item.By == CommonKeyIndexes.XPath)
                         {
                             PageDriver.FindElement(By.XPath(item.Value)).Click();
                         }
@@ -280,28 +301,29 @@ namespace Thompson.RecordSearch.Utility.Classes
                         ClickElement(item.Value);
                         break;
                     case "SetControlValue":
-                        var indexes = item.Value.Split(',');
+                        var indexes = item.Value.Split(comma);
                         var idx = indexes[0];
                         var txt = indexes[1];
-                        if (item.FriendlyName.Equals("Date-Filed-On-TextBox", StringComparison.CurrentCultureIgnoreCase))
+                        if (item.FriendlyName.Equals(CommonKeyIndexes.DateFiledOnTextBox, 
+                            StringComparison.CurrentCultureIgnoreCase))
                         {
                             txt = startDate;
                         }
                         ControlSetValue(idx, txt);
                         break;
                     case "GetElement":
-                        if (item.By == "Id")
+                        if (item.By == CommonKeyIndexes.IdProperCase)
                         {
                             // WaitForElementExist(By.Id(item.Value), item.FriendlyName);
                             return PageDriver.FindElement(By.Id(item.Value));
                         }
-                        if (item.By == "XPath")
+                        if (item.By == CommonKeyIndexes.XPath)
                         {
                             return PageDriver.FindElement(By.XPath(item.Value));
                         }
                         break;
                     case "SetComboIndex":
-                        var parms = item.Value.Split(',');
+                        var parms = item.Value.Split(comma);
                         var parmId = parms[0];
                         if(!int.TryParse(parms[1], out int parmIndex)){
                             parmIndex = 0;

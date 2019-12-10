@@ -20,39 +20,40 @@ namespace Thompson.RecordSearch.Utility.Addressing
             if (driver == null) throw new System.ArgumentNullException(nameof(driver));
             if (linkData == null) throw new System.ArgumentNullException(nameof(linkData));
             CanFind = false;
-            var tdName = TryFindElement(driver, By.XPath(@"//th[contains(text(),'Defendant')]"));
+            var defendant = IndexKeyNames.Defendant;
+            var defendantXpath = string.Format(CultureInfo.CurrentCulture, 
+                IndexKeyNames.ThContainsText, defendant);
+            var tdName = TryFindElement(driver, By.XPath(defendantXpath));
             // this instance can find
             if (tdName == null) return;
 
-            var parent = tdName.FindElement(By.XPath(".."));
-            var rowLabel = parent.FindElements(By.TagName("th"))[1];
-            linkData.Defendant = rowLabel.GetAttribute("innerText");
+            var parent = tdName.FindElement(By.XPath(IndexKeyNames.ParentElement));
+            var rowLabel = parent.FindElements(By.TagName(IndexKeyNames.ThElement))[1];
+            linkData.Defendant = rowLabel.GetAttribute(IndexKeyNames.InnerText);
             CanFind = true;
             linkData.Address = parent.Text;
             try
             {
 
                 // get row index of this element ... and then go one row beyond...
-                var ridx = parent.GetAttribute("rowIndex");
-                var table = parent.FindElement(By.XPath(".."));
-                var trCol = table.FindElements(By.TagName("tr")).ToList();
+                var ridx = parent.GetAttribute(IndexKeyNames.RowIndex);
+                var table = parent.FindElement(By.XPath(IndexKeyNames.ParentElement));
+                var trCol = table.FindElements(By.TagName(IndexKeyNames.TrElement)).ToList();
                 if (!int.TryParse(ridx, out int r)) return;
 
-                var nextTh = table.FindElements(By.TagName("th")).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
+                var nextTh = table.FindElements(By.TagName(IndexKeyNames.ThElement)).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
                 var mxRowIndex = nextTh == null ? r + 1: 
-                    Convert.ToInt32(nextTh.FindElement(By.XPath("..")).GetAttribute("rowIndex"), 
+                    Convert.ToInt32(nextTh.FindElement(By.XPath(IndexKeyNames.ParentElement)).GetAttribute(IndexKeyNames.RowIndex), 
                     CultureInfo.CurrentCulture.NumberFormat);
                 while (r <= mxRowIndex)
                 {
                     var currentRow = trCol[r];
-                    var tdElements = currentRow.FindElements(By.TagName("td")).ToList();
+                    var tdElements = currentRow.FindElements(By.TagName(IndexKeyNames.TdElement)).ToList();
                     tdElements = tdElements.FindAll(x => x.Location.X >= rowLabel.Location.X & x.Location.X < (rowLabel.Location.X + rowLabel.Size.Width));
                     linkData.Address = GetAddress(tdElements);
                     if (!string.IsNullOrEmpty(linkData.Address)) break;
                     r += 1;
                 }
-                // parent = GetAddressRow(parent, trCol); // put this row-index into config... it can change
-                // linkData.Address = new StringBuilder(parent.Text).Replace(Environment.NewLine, "<br/>").ToString();
             }
             catch (Exception)
             {

@@ -26,8 +26,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
         public TarrantWebInteractive(WebNavigationParameter parameters, DateTime startDate, DateTime endingDate) : base(parameters, startDate, endingDate)
         {
-            SetParameterValue("startDate", startDate.ToString("MM/dd/yyyy"));
-            SetParameterValue("endDate", endingDate.ToString("MM/dd/yyyy"));
+            SetParameterValue("startDate", startDate.ToString(CommonKeyIndexes.DateTimeShort));
+            SetParameterValue("endDate", endingDate.ToString(CommonKeyIndexes.DateTimeShort));
         }
 
         #endregion
@@ -51,8 +51,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             while (startingDate.CompareTo(endingDate) <= 0)
             {
 
-                SetParameterValue("startDate", startingDate.ToString("MM/dd/yyyy"));
-                SetParameterValue("endDate", startingDate.ToString("MM/dd/yyyy"));
+                SetParameterValue("startDate", startingDate.ToString(CommonKeyIndexes.DateTimeShort));
+                SetParameterValue("endDate", startingDate.ToString(CommonKeyIndexes.DateTimeShort));
                 foreach (var obj in fetchers)
                 {
 
@@ -161,8 +161,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var actionName = item.ActionName;
                 if (item.ActionName.Equals("set-text", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    if (item.DisplayName.Equals("startDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
-                    if (item.DisplayName.Equals("endDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
+                    if (item.DisplayName.Equals("startDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = startingDate.Date.ToString(CommonKeyIndexes.DateTimeShort);
+                    if (item.DisplayName.Equals("endDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = endingDate.Date.ToString(CommonKeyIndexes.DateTimeShort);
                 }
                 var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName, StringComparison.CurrentCultureIgnoreCase));
                 if (action == null) continue;
@@ -298,24 +298,24 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static void GetAddressInformation(IWebDriver driver, TarrantWebInteractive jsonWebInteractive, HLinkDataRow linkData)
         {
-            var fmt = jsonWebInteractive.GetParameterValue<string>("hlinkUri");
-            var xpath = jsonWebInteractive.GetParameterValue<string>("personNodeXpath");
+            var fmt = jsonWebInteractive.GetParameterValue<string>(CommonKeyIndexes.HlinkUri);//"hlinkUri");
+            var xpath = jsonWebInteractive.GetParameterValue<string>(CommonKeyIndexes.PersonNodeXpath); // "personNodeXpath");
             var helper = new ElementAssertion(driver);
             helper.Navigate(string.Format(fmt, linkData.WebAddress));
             driver.WaitForNavigation();
             var tdName = TryFindElement(driver, By.XPath(xpath));
             if (tdName == null) return;
 
-            linkData.Defendant = tdName.GetAttribute("innerText");
-            var parent = tdName.FindElement(By.XPath(".."));
+            linkData.Defendant = tdName.GetAttribute(CommonKeyIndexes.InnerText);
+            var parent = tdName.FindElement(By.XPath(CommonKeyIndexes.ParentElement));
             linkData.Address = parent.Text;
             try
             {
 
                 // get row index of this element ... and then go one row beyond...
-                var ridx = parent.GetAttribute("rowIndex");
-                var table = parent.FindElement(By.XPath(".."));
-                var trCol = table.FindElements(By.TagName("tr"));
+                var ridx = parent.GetAttribute(CommonKeyIndexes.RowIndex);
+                var table = parent.FindElement(By.XPath(CommonKeyIndexes.ParentElement));
+                var trCol = table.FindElements(By.TagName(CommonKeyIndexes.TrElement));
                 if (!int.TryParse(ridx, out int r)) return;
                 parent = GetAddressRow(parent, trCol); // put this row-index into config... it can change
                 linkData.Address = new StringBuilder(parent.Text)

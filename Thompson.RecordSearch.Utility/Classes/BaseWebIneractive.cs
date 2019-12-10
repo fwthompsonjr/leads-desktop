@@ -183,8 +183,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 .GetNavigation().Find(x => x.Id == id);
             var datelist = new List<string> { "startDate", "endDate" };
             var keys = settings.Keys.FindAll(s => datelist.Contains(s.Name));
-            keys.First().Value = startingDate.ToString("MM/dd/yyyy");
-            keys.Last().Value = endingDate.ToString("MM/dd/yyyy");
+            keys.First().Value = startingDate.ToString(CommonKeyIndexes.DateTimeShort);
+            keys.Last().Value = endingDate.ToString(CommonKeyIndexes.DateTimeShort);
             return settings;
         }
 

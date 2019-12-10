@@ -59,6 +59,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{EB64B2C2-E247-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalLead.Changed.UnitTests", "LegalLead.Changed.UnitTests\LegalLead.Changed.UnitTests.csproj", "{2B85ABCC-B1B1-4A39-AC42-D78CDD10FB2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalLead.Resources", "LegalLead.Resources\LegalLead.Resources.csproj", "{AB526DB3-E334-4C6B-A634-1A890F63AADF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{2B85ABCC-B1B1-4A39-AC42-D78CDD10FB2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B85ABCC-B1B1-4A39-AC42-D78CDD10FB2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B85ABCC-B1B1-4A39-AC42-D78CDD10FB2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB526DB3-E334-4C6B-A634-1A890F63AADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB526DB3-E334-4C6B-A634-1A890F63AADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB526DB3-E334-4C6B-A634-1A890F63AADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB526DB3-E334-4C6B-A634-1A890F63AADF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,9 +100,10 @@ Global
 		{FDC972D5-85CC-418C-A08B-D2BD940D9A35} = {EB64B2C2-E247-475C-B0A1-5C261C693C57}
 		{0A9E83C4-AA86-4F7D-8BAF-FCB8F174D190} = {EB64B2C2-E247-475C-B0A1-5C261C693C57}
 		{2B85ABCC-B1B1-4A39-AC42-D78CDD10FB2C} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
+		{AB526DB3-E334-4C6B-A634-1A890F63AADF} = {EB64B2C2-E247-475C-B0A1-5C261C693C57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
+		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 	EndGlobalSection
 EndGlobal

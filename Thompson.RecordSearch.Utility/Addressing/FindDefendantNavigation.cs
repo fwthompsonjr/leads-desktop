@@ -41,10 +41,10 @@ namespace Thompson.RecordSearch.Utility.Addressing
             try
             {
                 var dv = driver.FindElement(by);
-                var parent = dv.FindElement(By.XPath(".."));
+                var parent = dv.FindElement(By.XPath(IndexKeyNames.ParentElement));
                 while(parent.TagName != "table")
                 {
-                    parent = parent.FindElement(By.XPath(".."));
+                    parent = parent.FindElement(By.XPath(IndexKeyNames.ParentElement));
                 }
                 return parent.GetAttribute("outerHTML");
             }

@@ -20,21 +20,21 @@ namespace Thompson.RecordSearch.Utility.Addressing
             var searchType = "Petitioner";
             CanFind = false;
             var tdName = TryFindElement(driver, By.XPath(
-                string.Format(CultureInfo.CurrentCulture, @"//th[contains(text(),'{0}')]", searchType)));
+                string.Format(CultureInfo.CurrentCulture, IndexKeyNames.ThContainsText, searchType)));
             // this instance can find
             if (tdName == null) return;
-            var parent = tdName.FindElement(By.XPath(".."));
-            var rowLabel = parent.FindElements(By.TagName("th"))[1];
-            linkData.Defendant = rowLabel.GetAttribute("innerText");
+            var parent = tdName.FindElement(By.XPath(IndexKeyNames.ParentElement));
+            var rowLabel = parent.FindElements(By.TagName(IndexKeyNames.ThElement))[1];
+            linkData.Defendant = rowLabel.GetAttribute(IndexKeyNames.InnerText);
             CanFind = true;
             linkData.Address = parent.Text;
             try
             {
 
                 // get row index of this element ... and then go one row beyond...
-                var ridx = parent.GetAttribute("rowIndex");
-                var table = parent.FindElement(By.XPath(".."));
-                var trCol = table.FindElements(By.TagName("tr")).ToList();
+                var ridx = parent.GetAttribute(IndexKeyNames.RowIndex);
+                var table = parent.FindElement(By.XPath(IndexKeyNames.ParentElement));
+                var trCol = table.FindElements(By.TagName(IndexKeyNames.TrElement)).ToList();
                 if (!int.TryParse(ridx, out int r)) return;
                 MapElementAddress(linkData, rowLabel, table, trCol, r, 
                     searchType.ToLower(CultureInfo.CurrentCulture));

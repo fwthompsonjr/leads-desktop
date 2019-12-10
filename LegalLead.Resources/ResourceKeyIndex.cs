@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LegalLead.Resources
+{
+    public enum ResourceKeyIndex
+    {
+        RowIndex = 1,
+        Applicant = 100,
+        ThContainsText = 110,
+        ThElement = 130,
+        ParentElement = 120,
+        InnerText = 140,
+        TrElement = 150,
+        BrElementTag = 160,
+        Defendant = 170,
+        TdElement = 180,
+        HlinkUri = 190,
+        PersonNodeXpath = 200,
+        StartDate = 210,
+        EndDate = 220,
+        CriminalCaseInclusion = 230,
+        CaseStyle = 240,
+        SetText = 250,
+        DateTimeShort = 260,
+        SearchComboIndex = 270,
+        CaseSearchType = 280,
+        DistrictSearchType = 290,
+        StartDateQuery = 300,
+        EndingDateQuery = 310,
+        SetComboIndexQuery = 320,
+        CriminalLinkQuery = 330,
+        SearchingForElement = 340,
+        ElementNotFound = 350,
+        SetSelectElementIndex = 360,
+        SetSelectOptionIndex = 370,
+        WaitingForElement = 380,
+        ElementTextNotFound = 390,
+        ElementMatchTextNotFound = 400,
+        ElementClassNotFound = 410,
+        ElementAttributeNotFound = 420,
+        IdLowerCase = 430,
+        GetElementSetIndex = 440,
+        ElementFireOnChange = 450,
+        ElementGetOptionText = 460,
+        ClassAttribute = 470,
+        ClassNameFound = 480,
+        NavigateToUrlMessage = 490,
+        DistrictDash = 500,
+        SearchHyperlink = 510,
+        DistrictHyperlink = 520,
+        WaitForNavigation = 530,
+        WaitForElementExist = 540,
+        Click = 550,
+        ClickElement = 560,
+        SetControlValue = 570,
+        GetElement = 580,
+        SetComboIndex = 590,
+        WebNavInstructionMessage = 600,
+        IdProperCase = 610,
+        XPath = 620,
+        ControlSetValue = 630,
+        Password = 640,
+        PasswordMask = 650,
+        SettingControlValue = 660,
+        ClickElementJs = 670,
+        ClickingOnElement = 680,
+        DateFiledOnTextBox = 690
+    }
+}
