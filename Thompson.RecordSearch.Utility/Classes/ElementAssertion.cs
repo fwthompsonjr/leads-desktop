@@ -262,7 +262,6 @@ namespace Thompson.RecordSearch.Utility.Classes
                         StringComparison.CurrentCultureIgnoreCase));
                 districtItems.ForEach(x => x.Value = districtType);
             }
-            const char comma = ',';
             var navigations = GetNavigationBases(startDate);
             // ?SetComboIndex
             foreach (var item in itms)
@@ -277,68 +276,6 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (navigator == null) continue;
                 var webElement = navigator.Execute(item);
                 if (webElement != null) return webElement;
-                //switch (item.Name)
-                //{
-                //    case "WaitForNavigation":
-                //        PageDriver.WaitForNavigation();
-                //        break;
-                //    case "WaitForElementExist":
-                //        if (item.By == CommonKeyIndexes.IdProperCase)
-                //        {
-                //            WaitForElementExist(By.Id(item.Value), item.FriendlyName);
-                //        }
-                //        if (item.By == CommonKeyIndexes.XPath)
-                //        {
-                //            WaitForElementExist(By.XPath(item.Value), item.FriendlyName);
-                //        }
-                //        break;
-                //    case "Click":
-                //        if (item.By == CommonKeyIndexes.IdProperCase)
-                //        {
-                //            // WaitForElementExist(By.Id(item.Value), item.FriendlyName);
-                //            PageDriver.FindElement(By.Id(item.Value)).Click();
-                //        }
-                //        if (item.By == CommonKeyIndexes.XPath)
-                //        {
-                //            PageDriver.FindElement(By.XPath(item.Value)).Click();
-                //        }
-                //        break;
-                //    case "ClickElement":
-                //        ClickElement(item.Value);
-                //        break;
-                //    case "SetControlValue":
-                //        var indexes = item.Value.Split(comma);
-                //        var idx = indexes[0];
-                //        var txt = indexes[1];
-                //        if (item.FriendlyName.Equals(CommonKeyIndexes.DateFiledOnTextBox, 
-                //            StringComparison.CurrentCultureIgnoreCase))
-                //        {
-                //            txt = startDate;
-                //        }
-                //        ControlSetValue(idx, txt);
-                //        break;
-                //    case "GetElement":
-                //        if (item.By == CommonKeyIndexes.IdProperCase)
-                //        {
-                //            // WaitForElementExist(By.Id(item.Value), item.FriendlyName);
-                //            return PageDriver.FindElement(By.Id(item.Value));
-                //        }
-                //        if (item.By == CommonKeyIndexes.XPath)
-                //        {
-                //            return PageDriver.FindElement(By.XPath(item.Value));
-                //        }
-                //        break;
-                //    case "SetComboIndex":
-                //        var parms = item.Value.Split(comma);
-                //        var parmId = parms[0];
-                //        if(!int.TryParse(parms[1], out int parmIndex)){
-                //            parmIndex = 0;
-                //        }
-                //        SetSelectedIndex(By.Id(parmId), item.FriendlyName, parmIndex);
-                //        break;
-                //    default:
-                //        break;
-                //}
             }
             return null;
         }

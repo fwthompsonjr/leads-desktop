@@ -155,7 +155,6 @@
     <Compile Include="Addressing\FindPetitionerByWordMatch.cs" />
     <Compile Include="Addressing\FindPrincipalByWordMatch.cs" />
     <Compile Include="Addressing\FindRespondentByWordMatch.cs" />
-    <Compile Include="Addressing\GetDefendantUpperCaseMatch.cs" />
     <Compile Include="Addressing\NoFoundMatch.cs" />
     <Compile Include="Classes\BaseWebIneractive.cs" />
     <Compile Include="Classes\CollinWebInteractive.cs" />

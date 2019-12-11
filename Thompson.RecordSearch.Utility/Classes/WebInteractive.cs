@@ -1,6 +1,7 @@
 ﻿using LegalLead.Resources;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Dto;
@@ -28,8 +29,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
 
             Parameters = parameters;
-            StartDate = GetParameterValue<DateTime>("startDate");
-            EndingDate = GetParameterValue<DateTime>("endDate");
+            StartDate = GetParameterValue<DateTime>(CommonKeyIndexes.StartDate); 
+            EndingDate = GetParameterValue<DateTime>(CommonKeyIndexes.EndDate); 
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var dta in data)
             {
                 AppendExtraCaseInfo(dta);
-                var caseStyle = dta["CaseStyle"];
+                var caseStyle = dta[CommonKeyIndexes.CaseStyle]; // "CaseStyle"];
                 results.Append(dta);
             }
             // change output of this item.
@@ -86,24 +87,28 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private List<PersonAddress> CleanUp(List<PersonAddress> personAddresses)
         {
-            var found = personAddresses.FindAll(f => f.Address1.Equals("Pro Se", StringComparison.CurrentCultureIgnoreCase));
+            var found = personAddresses
+                .FindAll(f => 
+                f.Address1.Equals("Pro Se", StringComparison.CurrentCultureIgnoreCase));
             if (found.Any())
             {
                 foreach (var item in found)
                 {
-                    item.Zip = "00000";
-                    item.Address1 = "No Address Found";
+                    item.Zip = CommonKeyIndexes.NonAddressZipCode; // "00000";
+                    item.Address1 = CommonKeyIndexes.NonAddressLine1;// "No Address Found";
                     item.Address2 = string.Empty;
-                    item.Address3 = "Not, Available 00000";
+                    item.Address3 = CommonKeyIndexes.NonAddressLine2; //"Not, Available 00000";
                 }
             }
-            found = personAddresses.FindAll(f => f.Address1.Equals("No Address Found", StringComparison.CurrentCultureIgnoreCase) & string.IsNullOrEmpty(f.Zip));
+            found = personAddresses
+                .FindAll(f => 
+                f.Address1.Equals(CommonKeyIndexes.NonAddressLine1, StringComparison.CurrentCultureIgnoreCase) & string.IsNullOrEmpty(f.Zip));
 
             if (found.Any())
             {
                 foreach (var item in found)
                 {
-                    item.Zip = "00000";
+                    item.Zip = CommonKeyIndexes.NonAddressZipCode;
                 }
             }
             return personAddresses;
@@ -121,10 +126,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (personAddresses == null) return personAddresses;
             if (data == null) return personAddresses;
             data = data.FindAll(x => !string.IsNullOrEmpty(x.Case));
-            if(personAddresses.Any(x => string.IsNullOrEmpty(x.CaseNumber)))
-            {
-                System.Diagnostics.Debugger.Break();
-            }
             foreach (var person in personAddresses)
             {
                 var caseNumber = person.CaseNumber;
@@ -150,9 +151,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         private void AppendExtraCaseInfo(HLinkDataRow dta)
         {
             var tableHtml = dta.Data;
-            if (tableHtml.Contains("<img"))
+            if (tableHtml.Contains(CommonKeyIndexes.ImageOpenTag))
             {
-                tableHtml = RemoveElement(tableHtml, "<img");
+                tableHtml = RemoveElement(tableHtml, CommonKeyIndexes.ImageOpenTag);
             }
             var doc = XmlDocProvider.GetDoc(tableHtml);
             var instructions = SearchSettingDto.GetNonCriminalMapping()
@@ -166,9 +167,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                     .NavInstructions
                     .ToList();
             }
+            var caseStyle = CommonKeyIndexes.CaseStyle.ToLower(CultureInfo.CurrentCulture);
             foreach (var item in instructions)
             {
-                if (dta.IsCriminal & item.Value.Equals("casestyle", StringComparison.CurrentCultureIgnoreCase)) continue;
+                if (dta.IsCriminal & item.Value.Equals(caseStyle, StringComparison.CurrentCultureIgnoreCase)) continue;
                 var node = TryFindNode(doc, item.Value);
                 if (node == null) continue;
                 dta[item.Name] = node.InnerText;

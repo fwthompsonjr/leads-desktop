@@ -173,15 +173,21 @@ namespace Thompson.RecordSearch.Utility
             ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberOne);
         public static readonly string NumberZero =
             ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberZero);
+        public static readonly string NonAddressZipCode =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressZipCode);
+        public static readonly string NonAddressLine1 =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressLine1);
+        public static readonly string NonAddressLine2 =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressLine2);
         /* 
          * 
 
-        public static readonly string IsCriminalSearch =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.IsCriminalSearch);
-        public static readonly string BaseUri =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.BaseUri);
-        public static readonly string Query =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.Query);
+        public static readonly string NonAddressZipCode =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressZipCode);
+        public static readonly string NonAddressLine1 =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressLine1);
+        public static readonly string NonAddressLine2 =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressLine2);
         public static readonly string QueryString =
             ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.QueryString);
         public static readonly string NumberOne =

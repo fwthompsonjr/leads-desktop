@@ -22,7 +22,7 @@ namespace LegalLead.PublicData.Search
         {
 
             var websites = SettingsManager.GetNavigation();
-            var caseTypes = CaseTypeSelectionDto.GetDto("collinCountyCaseType");
+            var caseTypes = CaseTypeSelectionDto.GetDto(Thompson.RecordSearch.Utility.CommonKeyIndexes.CollinCountyCaseType);
             var tarrantCourt = CaseTypeSelectionDto.GetDto("tarrantCountyCaseType");
             cboWebsite.DataSource = websites;
             cboWebsite.DisplayMember = "Name";

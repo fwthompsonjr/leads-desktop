@@ -21,10 +21,10 @@ namespace Thompson.RecordSearch.Utility.Addressing
             driver.WaitForNavigation();
             // get criminal hyperlink
             // //a[contains(text(),'Criminal')]
-            var criminalLink = TryFindElement(driver, By.XPath("//a[@class = 'ssBlackNavBarHyperlink'][contains(text(),'Criminal')]"));
+            var criminalLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.CriminalLinkXpath)); 
             if (criminalLink != null)
             {
-                var elementCaseName = TryFindElement(driver, By.XPath("/html/body/table[3]/tbody/tr/td[1]/b"));
+                var elementCaseName = TryFindElement(driver, By.XPath(CommonKeyIndexes.CaseStlyeBoldXpath)); 
                 if (elementCaseName != null)
                 {
                     linkData.CriminalCaseStyle = elementCaseName.Text;

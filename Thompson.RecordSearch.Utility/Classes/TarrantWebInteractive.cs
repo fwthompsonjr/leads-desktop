@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,8 +27,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
         public TarrantWebInteractive(WebNavigationParameter parameters, DateTime startDate, DateTime endingDate) : base(parameters, startDate, endingDate)
         {
-            SetParameterValue("startDate", startDate.ToString(CommonKeyIndexes.DateTimeShort));
-            SetParameterValue("endDate", endingDate.ToString(CommonKeyIndexes.DateTimeShort));
+            var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
+            SetParameterValue(CommonKeyIndexes.StartDate, 
+                startDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
+            SetParameterValue(CommonKeyIndexes.EndDate, 
+                endingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
         }
 
         #endregion
@@ -41,18 +45,20 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             // settings have been retrieved from the constructor
             // get any output file to store data from extract
-            var startingDate = GetParameterValue<DateTime>("startDate");
-            var endingDate = GetParameterValue<DateTime>("endDate");
-            var customSearch = GetParameterValue<int>("criminalCaseInclusion");
+            var startingDate = GetParameterValue<DateTime>(CommonKeyIndexes.StartDate);
+            var endingDate = GetParameterValue<DateTime>(CommonKeyIndexes.EndDate);
+            var customSearch = GetParameterValue<int>(CommonKeyIndexes.CriminalCaseInclusion); // "criminalCaseInclusion");
             var peopleList = new List<PersonAddress>();
             WebFetchResult webFetch = null;
             var fetchers = (new FetchProvider(this)).GetFetches(customSearch);
-
+            var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
             while (startingDate.CompareTo(endingDate) <= 0)
             {
 
-                SetParameterValue("startDate", startingDate.ToString(CommonKeyIndexes.DateTimeShort));
-                SetParameterValue("endDate", startingDate.ToString(CommonKeyIndexes.DateTimeShort));
+                SetParameterValue(CommonKeyIndexes.StartDate, 
+                    startingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
+                SetParameterValue(CommonKeyIndexes.EndDate, 
+                    startingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
                 foreach (var obj in fetchers)
                 {
 
@@ -116,7 +122,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                     if (source == null) return;
                     if (string.IsNullOrEmpty(source.PageHtml)) return;
                     var dto = DataPointLocatorDto.Load(source.PageHtml);
-                    p.CaseStyle = dto.DataPoints.First(f => f.Name.Equals("CaseStyle", StringComparison.CurrentCultureIgnoreCase)).Result;
+                    p.CaseStyle = dto.DataPoints
+                        .First(f => 
+                            f.Name.Equals(CommonKeyIndexes.CaseStyle, 
+                            StringComparison.CurrentCultureIgnoreCase)).Result;
                 });
                 // people = ExtractPeople(cases);
 
@@ -152,6 +161,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var assertion = new ElementAssertion(driver);
             var caseList = string.Empty;
+            var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
             ElementActions.ForEach(x => x.GetAssertion = assertion);
             ElementActions.ForEach(x => x.GetWeb = driver);
 
@@ -159,12 +169,22 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 // if item action-name = 'set-text'
                 var actionName = item.ActionName;
-                if (item.ActionName.Equals("set-text", StringComparison.CurrentCultureIgnoreCase))
+                if (item.ActionName.Equals(CommonKeyIndexes.SetText, 
+                    StringComparison.CurrentCultureIgnoreCase))
                 {
-                    if (item.DisplayName.Equals("startDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = startingDate.Date.ToString(CommonKeyIndexes.DateTimeShort);
-                    if (item.DisplayName.Equals("endDate", StringComparison.CurrentCultureIgnoreCase)) item.ExpectedValue = endingDate.Date.ToString(CommonKeyIndexes.DateTimeShort);
+                    if (item.DisplayName.Equals(CommonKeyIndexes.StartDate, //"startDate", 
+                        StringComparison.CurrentCultureIgnoreCase)) 
+                        item.ExpectedValue = 
+                            startingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate);
+                    if (item.DisplayName.Equals(CommonKeyIndexes.EndDate, 
+                        StringComparison.CurrentCultureIgnoreCase)) 
+                        item.ExpectedValue = 
+                            endingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate);
                 }
-                var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName, StringComparison.CurrentCultureIgnoreCase));
+                var action = ElementActions
+                    .FirstOrDefault(x => 
+                    x.ActionName.Equals(item.ActionName, 
+                    StringComparison.CurrentCultureIgnoreCase));
                 if (action == null) continue;
                 action.Act(item);
                 cases = ExtractCaseData(results, cases, actionName, action);

@@ -19,7 +19,8 @@ namespace Thompson.RecordSearch.Utility.Addressing
             if (linkData == null) throw new System.ArgumentNullException(nameof(linkData));
             CanFind = false;
             var dto = DataPointLocatorDto.GetDto("tarrantCountyDataPoint");
-            var search = dto.DataPoints.First(x => x.Name.Equals("CaseStyle", System.StringComparison.CurrentCultureIgnoreCase));
+            var search = dto.DataPoints.First(x => 
+                x.Name.Equals(CommonKeyIndexes.CaseStyle, System.StringComparison.CurrentCultureIgnoreCase));
             var element = driver.FindElement(By.XPath(search.Xpath));
             search.Result = element.Text;
             linkData.PageHtml = Newtonsoft.Json.JsonConvert.SerializeObject(dto);

@@ -31,7 +31,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             public virtual void Fetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people)
             {
                 var steps = new List<NavigationStep>();
-                var navigationFile = Web.GetParameterValue<string>("navigation.control.file");
+                var navigationFile = Web.GetParameterValue<string>(CommonKeyIndexes.NavigationControlFile); // "navigation.control.file");
                 var sources = navigationFile.Split(',').ToList();
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
                 SetupParameters(steps, out people, out XmlContentHolder results, out List<HLinkDataRow> cases);
@@ -44,9 +44,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 cases = new List<HLinkDataRow>();
                 people = new List<PersonAddress>();
 
-                var caseTypeId = Web.GetParameterValue<int>("caseTypeSelectedIndex");
+                var caseTypeId = Web.GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex); // "caseTypeSelectedIndex");
                 // set special item values
-                var caseTypeSelect = steps.First(x => x.ActionName.Equals("set-select-value", StringComparison.CurrentCultureIgnoreCase));
+                var caseTypeSelect = steps.First(x => x.ActionName.Equals(CommonKeyIndexes.SetSelectValue, StringComparison.CurrentCultureIgnoreCase));
                 caseTypeSelect.ExpectedValue = caseTypeId.ToString();
             }
         }

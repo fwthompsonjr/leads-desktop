@@ -88,6 +88,9 @@ namespace LegalLead.Resources
         Query = 860,
         QueryString = 870,
         NumberOne = 880,
-        NumberZero = 890
+        NumberZero = 890,
+        NonAddressZipCode = 900,
+        NonAddressLine1 = 910,
+        NonAddressLine2 = 920
     }
 }
