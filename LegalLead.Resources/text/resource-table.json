@@ -426,6 +426,146 @@
       "value": "Date-Filed-On-TextBox",
       "keyIndex": 690,
       "id": 20
+    },
+    {
+      "type": "FormatString",
+      "name": "OpenHtmlTag",
+      "value": "<{0}>",
+      "keyIndex": 700,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "CloseHtmlTag",
+      "value": "</{0}>",
+      "keyIndex": 710,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "ImageOpenTag",
+      "value": "<img",
+      "keyIndex": 720,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
+      "name": "ImageCloseTag",
+      "value": ">",
+      "keyIndex": 730,
+      "id": 40
+    },
+    {
+      "type": "xml",
+      "name": "CaseDataXpath",
+      "value": "results/result[@name='casedata']",
+      "keyIndex": 740,
+      "id": 1
+    },
+    {
+      "type": "ParameterName",
+      "name": "NavigationControlFile",
+      "value": "navigation.control.file",
+      "keyIndex": 750,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "CollinCountyCaseType",
+      "value": "collinCountyCaseType",
+      "keyIndex": 760,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "CaseTypeSelectedIndex",
+      "value": "caseTypeSelectedIndex",
+      "keyIndex": 770,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "SearchTypeSelectedIndex",
+      "value": "searchTypeSelectedIndex",
+      "keyIndex": 780,
+      "id": 20
+    },
+    {
+      "type": "ActionName",
+      "name": "SetSelectValue",
+      "value": "set-select-value",
+      "keyIndex": 790,
+      "id": 30
+    },
+    {
+      "type": "ActionName",
+      "name": "SearchTypeHyperlink",
+      "value": "search-type-hyperlink",
+      "keyIndex": 800,
+      "id": 30
+    },
+    {
+      "type": "xml",
+      "name": "CriminalLinkXpath",
+      "value": "//a[@class = 'ssBlackNavBarHyperlink'][contains(text(),'Criminal')]",
+      "keyIndex": 810,
+      "id": 1
+    },
+    {
+      "type": "xml",
+      "name": "ProbateLinkXpath",
+      "value": "//a[@class = 'ssBlackNavBarHyperlink'][contains(text(),'Probate')]",
+      "keyIndex": 820,
+      "id": 1
+    },
+    {
+      "type": "xml",
+      "name": "CaseStlyeBoldXpath",
+      "value": "/html/body/table[3]/tbody/tr/td[1]/b",
+      "keyIndex": 830,
+      "id": 1
+    },
+    {
+      "type": "ParameterName",
+      "name": "IsCriminalSearch",
+      "value": "isCriminalSearch",
+      "keyIndex": 840,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "BaseUri",
+      "value": "baseUri",
+      "keyIndex": 850,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "Query",
+      "value": "query",
+      "keyIndex": 860,
+      "id": 20
+    },
+    {
+      "type": "FormatString",
+      "name": "QueryString",
+      "value": "{0}?{1}",
+      "keyIndex": 870,
+      "id": 40
+    },
+    {
+      "type": "ParameterName",
+      "name": "NumberOne",
+      "value": "1",
+      "keyIndex": 880,
+      "id": 20
+    },
+    {
+      "type": "ParameterName",
+      "name": "NumberZero",
+      "value": "0",
+      "keyIndex": 890,
+      "id": 20
     }
   ]
 }

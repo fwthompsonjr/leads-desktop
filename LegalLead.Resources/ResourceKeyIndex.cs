@@ -68,6 +68,26 @@ namespace LegalLead.Resources
         SettingControlValue = 660,
         ClickElementJs = 670,
         ClickingOnElement = 680,
-        DateFiledOnTextBox = 690
+        DateFiledOnTextBox = 690,
+        OpenHtmlTag = 700,
+        CloseHtmlTag = 710,
+        ImageOpenTag = 720,
+        ImageCloseTag = 730,
+        CaseDataXpath = 740,
+        NavigationControlFile = 750,
+        CollinCountyCaseType = 760,
+        CaseTypeSelectedIndex = 770,
+        SearchTypeSelectedIndex = 780,
+        SetSelectValue = 790,
+        SearchTypeHyperlink = 800,
+        CriminalLinkXpath = 810,
+        ProbateLinkXpath = 820,
+        CaseStlyeBoldXpath = 830,
+        IsCriminalSearch = 840,
+        BaseUri = 850,
+        Query = 860,
+        QueryString = 870,
+        NumberOne = 880,
+        NumberZero = 890
     }
 }

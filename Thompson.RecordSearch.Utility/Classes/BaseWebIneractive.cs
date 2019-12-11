@@ -61,8 +61,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (string.IsNullOrEmpty(tableHtml)) return string.Empty;
             if (string.IsNullOrEmpty(tagName)) return string.Empty;
-            var openTg = string.Format(@"<{0}>", tagName);
-            var closeTg = string.Format(@"</{0}>", tagName);
+            var provider = CultureInfo.CurrentCulture;
+            var openTg = string.Format(provider, CommonKeyIndexes.OpenHtmlTag, tagName);
+            var closeTg = string.Format(provider, CommonKeyIndexes.CloseHtmlTag, tagName);
             var idx = tableHtml.IndexOf(openTg, comparisonIngore);
             if (idx < 0) return tableHtml;
             var eidx = tableHtml.IndexOf(closeTg, comparisonIngore);
@@ -90,7 +91,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 var firstPart = tableHtml.Substring(0, idx);
                 var lastPart = tableHtml.Substring(idx);
-                var cidx = lastPart.IndexOf(">", comparisonIngore);
+                var cidx = lastPart.IndexOf(CommonKeyIndexes.ImageCloseTag, comparisonIngore);
                 tableHtml = string.Concat(firstPart, lastPart.Substring(cidx));
                 idx = tableHtml.IndexOf(tagName, comparisonIngore);
             }
@@ -107,13 +108,13 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (!File.Exists(result)) return string.Empty; ;
             var contents = File.ReadAllText(result);
-            if (contents.Contains("<img"))
+            if (contents.Contains(CommonKeyIndexes.ImageOpenTag))
             {
-                contents = RemoveElement(contents, "<img");
+                contents = RemoveElement(contents, CommonKeyIndexes.ImageOpenTag);
             }
             var data = new List<CaseData>();
             var doc = XmlDocProvider.GetDoc(contents);
-            var ndeCase = doc.DocumentElement.SelectSingleNode("results/result[@name='casedata']");
+            var ndeCase = doc.DocumentElement.SelectSingleNode(CommonKeyIndexes.CaseDataXpath);
             if (ndeCase == null) return string.Empty;
             if (!ndeCase.HasChildNodes) return string.Empty;
             return ((XmlCDataSection)ndeCase.ChildNodes[0]).Data;
@@ -181,10 +182,10 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             var settings = SettingsManager
                 .GetNavigation().Find(x => x.Id == id);
-            var datelist = new List<string> { "startDate", "endDate" };
+            var datelist = new List<string> { CommonKeyIndexes.StartDate, CommonKeyIndexes.EndDate };
             var keys = settings.Keys.FindAll(s => datelist.Contains(s.Name));
-            keys.First().Value = startingDate.ToString(CommonKeyIndexes.DateTimeShort);
-            keys.Last().Value = endingDate.ToString(CommonKeyIndexes.DateTimeShort);
+            keys.First().Value = startingDate.ToString(CommonKeyIndexes.DateTimeShort, CultureInfo.CurrentCulture.DateTimeFormat);
+            keys.Last().Value = endingDate.ToString(CommonKeyIndexes.DateTimeShort, CultureInfo.CurrentCulture.DateTimeFormat);
             return settings;
         }
 

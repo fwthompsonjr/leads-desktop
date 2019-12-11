@@ -163,6 +163,14 @@
     <Compile Include="Classes\ContextManagment.cs" />
     <Compile Include="Classes\CryptoEngine.cs" />
     <Compile Include="Classes\ElementAssertion.cs" />
+    <Compile Include="Classes\ElementClick.cs" />
+    <Compile Include="Classes\ElementClickElement.cs" />
+    <Compile Include="Classes\ElementGetElement.cs" />
+    <Compile Include="Classes\ElementNavigationBase.cs" />
+    <Compile Include="Classes\ElementSetComboIndex.cs" />
+    <Compile Include="Classes\ElementSetControlValue.cs" />
+    <Compile Include="Classes\ElementWaitForElementExist.cs" />
+    <Compile Include="Classes\ElementWaitForNavigation.cs" />
     <Compile Include="Classes\ExcAutomationServer.cs" />
     <Compile Include="Classes\ExcelFileWriter.cs" />
     <Compile Include="Classes\ExcelWriter.cs" />

@@ -3,6 +3,7 @@
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -29,10 +30,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     return new List<HLinkDataRow>();
                 }
-                var parameter = GetParameter(Data, "isCriminalSearch");
+                var parameter = GetParameter(Data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
                 if (parameter != null)
                 {
-                    parameter.Value = "0";
+                    parameter.Value = CommonKeyIndexes.NumberZero; // "0";
                 }
                 var cases = Search(GetNavigationAddress(), DataRows);
                 return cases;
@@ -92,7 +93,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             protected bool IncludeCriminalRecords()
             {
-                var criminalCase = GetParameter(Data, "criminalCaseInclusion");
+                var criminalCase = GetParameter(Data, CommonKeyIndexes.CriminalCaseInclusion);
                 if (criminalCase == null) return false;
                 if (!int.TryParse(criminalCase.Value, out int index)) return false;
                 return (index == 1);
@@ -100,7 +101,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             protected void ModifyInstructions(string keyName)
             {
-                const string searchLink = "Search-Hyperlink";
+                var searchLink = CommonKeyIndexes.SearchHyperlink;
                 const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
                 var key = GetParameter(Data, keyName);
                 if (key == null) return;
@@ -112,12 +113,12 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             private WebNavigationKey GetBaseUri()
             {
-                return GetParameter(Data, "baseUri");
+                return GetParameter(Data, CommonKeyIndexes.BaseUri); // "baseUri");
             }
 
             private WebNavigationKey GetQuery()
             {
-                return GetParameter(Data, "query");
+                return GetParameter(Data, CommonKeyIndexes.Query); // "query");
             }
 
             protected string GetNavigationAddress()
@@ -128,7 +129,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     return null;
                 }
-                return string.Format("{0}?{1}", target.Value, query.Value);
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    CommonKeyIndexes.QueryString, target.Value, query.Value);
             }
 
             private List<HLinkDataRow> _dataRows;
@@ -150,12 +153,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
                 if (!IncludeCriminalRecords())
                     return new List<HLinkDataRow>();
-                var parameter = GetParameter(Data, "isCriminalSearch");
+                var parameter = GetParameter(Data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
                 if(parameter != null)
                 {
-                    parameter.Value = "1";
+                    parameter.Value = CommonKeyIndexes.NumberOne; // "1";
                 }
-                ModifyInstructions("criminalLinkQuery");
+                ModifyInstructions(CommonKeyIndexes.CriminalLinkQuery); //"criminalLinkQuery");
                 var cases = Search(GetNavigationAddress(), DataRows);
                 cases.ForEach(c => c.IsCriminal = true);
                 return cases;

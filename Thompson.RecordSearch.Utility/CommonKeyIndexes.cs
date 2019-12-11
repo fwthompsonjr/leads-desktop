@@ -133,11 +133,61 @@ namespace Thompson.RecordSearch.Utility
             ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ClickingOnElement);
         public static readonly string DateFiledOnTextBox =
             ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.DateFiledOnTextBox);
+        public static readonly string OpenHtmlTag =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.OpenHtmlTag);
+        public static readonly string CloseHtmlTag =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.CloseHtmlTag);
+        public static readonly string ImageOpenTag =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ImageOpenTag);
+        public static readonly string ImageCloseTag =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ImageCloseTag);
+        public static readonly string CaseDataXpath =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.CaseDataXpath);
+        public static readonly string NavigationControlFile =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NavigationControlFile);
+        public static readonly string CollinCountyCaseType =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.CollinCountyCaseType);
+        public static readonly string CaseTypeSelectedIndex =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.CaseTypeSelectedIndex);
+        public static readonly string SearchTypeSelectedIndex =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.SearchTypeSelectedIndex);
+        public static readonly string SetSelectValue =
+            ResourceTable.GetText(ResourceType.ActionName, ResourceKeyIndex.SetSelectValue);
+        public static readonly string SearchTypeHyperlink =
+            ResourceTable.GetText(ResourceType.ActionName, ResourceKeyIndex.SearchTypeHyperlink);
+        public static readonly string CriminalLinkXpath =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.CriminalLinkXpath);
+        public static readonly string ProbateLinkXpath =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.ProbateLinkXpath);
+        public static readonly string CaseStlyeBoldXpath =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.CaseStlyeBoldXpath);
+        public static readonly string IsCriminalSearch =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.IsCriminalSearch);
+        public static readonly string BaseUri =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.BaseUri);
+        public static readonly string Query =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.Query);
+        public static readonly string QueryString =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.QueryString);
+        public static readonly string NumberOne =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberOne);
+        public static readonly string NumberZero =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberZero);
         /* 
          * 
 
-        public static readonly string ClickingOnElement =
-            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ClickingOnElement);
+        public static readonly string IsCriminalSearch =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.IsCriminalSearch);
+        public static readonly string BaseUri =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.BaseUri);
+        public static readonly string Query =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.Query);
+        public static readonly string QueryString =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.QueryString);
+        public static readonly string NumberOne =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberOne);
+        public static readonly string NumberZero =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberZero);
          */
     }
 }

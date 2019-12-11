@@ -166,9 +166,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                Console.WriteLine(CommonKeyIndexes.ClickElementJs, controlId);
+                Console.WriteLine(CommonKeyIndexes.ClickingOnElement, controlId);
                 var jse = (IJavaScriptExecutor)PageDriver;
-                jse.ExecuteScript(string.Format(CommonKeyIndexes.ClickingOnElement, controlId));
+                jse.ExecuteScript(string.Format(CommonKeyIndexes.ClickElementJs, controlId));
             }
             catch (Exception)
             {
@@ -263,6 +263,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 districtItems.ForEach(x => x.Value = districtType);
             }
             const char comma = ',';
+            var navigations = GetNavigationBases(startDate);
             // ?SetComboIndex
             foreach (var item in itms)
             {
@@ -271,71 +272,105 @@ namespace Thompson.RecordSearch.Utility.Classes
                     item.Name, 
                     item.FriendlyName, 
                     item.Value);
-                switch (item.Name)
-                {
-                    case "WaitForNavigation":
-                        PageDriver.WaitForNavigation();
-                        break;
-                    case "WaitForElementExist":
-                        if (item.By == CommonKeyIndexes.IdProperCase)
-                        {
-                            WaitForElementExist(By.Id(item.Value), item.FriendlyName);
-                        }
-                        if (item.By == CommonKeyIndexes.XPath)
-                        {
-                            WaitForElementExist(By.XPath(item.Value), item.FriendlyName);
-                        }
-                        break;
-                    case "Click":
-                        if (item.By == CommonKeyIndexes.IdProperCase)
-                        {
-                            // WaitForElementExist(By.Id(item.Value), item.FriendlyName);
-                            PageDriver.FindElement(By.Id(item.Value)).Click();
-                        }
-                        if (item.By == CommonKeyIndexes.XPath)
-                        {
-                            PageDriver.FindElement(By.XPath(item.Value)).Click();
-                        }
-                        break;
-                    case "ClickElement":
-                        ClickElement(item.Value);
-                        break;
-                    case "SetControlValue":
-                        var indexes = item.Value.Split(comma);
-                        var idx = indexes[0];
-                        var txt = indexes[1];
-                        if (item.FriendlyName.Equals(CommonKeyIndexes.DateFiledOnTextBox, 
-                            StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            txt = startDate;
-                        }
-                        ControlSetValue(idx, txt);
-                        break;
-                    case "GetElement":
-                        if (item.By == CommonKeyIndexes.IdProperCase)
-                        {
-                            // WaitForElementExist(By.Id(item.Value), item.FriendlyName);
-                            return PageDriver.FindElement(By.Id(item.Value));
-                        }
-                        if (item.By == CommonKeyIndexes.XPath)
-                        {
-                            return PageDriver.FindElement(By.XPath(item.Value));
-                        }
-                        break;
-                    case "SetComboIndex":
-                        var parms = item.Value.Split(comma);
-                        var parmId = parms[0];
-                        if(!int.TryParse(parms[1], out int parmIndex)){
-                            parmIndex = 0;
-                        }
-                        SetSelectedIndex(By.Id(parmId), item.FriendlyName, parmIndex);
-                        break;
-                    default:
-                        break;
-                }
+                var navigator = navigations.FirstOrDefault(f =>
+                    f.Name.Equals(item.Name, StringComparison.CurrentCultureIgnoreCase));
+                if (navigator == null) continue;
+                var webElement = navigator.Execute(item);
+                if (webElement != null) return webElement;
+                //switch (item.Name)
+                //{
+                //    case "WaitForNavigation":
+                //        PageDriver.WaitForNavigation();
+                //        break;
+                //    case "WaitForElementExist":
+                //        if (item.By == CommonKeyIndexes.IdProperCase)
+                //        {
+                //            WaitForElementExist(By.Id(item.Value), item.FriendlyName);
+                //        }
+                //        if (item.By == CommonKeyIndexes.XPath)
+                //        {
+                //            WaitForElementExist(By.XPath(item.Value), item.FriendlyName);
+                //        }
+                //        break;
+                //    case "Click":
+                //        if (item.By == CommonKeyIndexes.IdProperCase)
+                //        {
+                //            // WaitForElementExist(By.Id(item.Value), item.FriendlyName);
+                //            PageDriver.FindElement(By.Id(item.Value)).Click();
+                //        }
+                //        if (item.By == CommonKeyIndexes.XPath)
+                //        {
+                //            PageDriver.FindElement(By.XPath(item.Value)).Click();
+                //        }
+                //        break;
+                //    case "ClickElement":
+                //        ClickElement(item.Value);
+                //        break;
+                //    case "SetControlValue":
+                //        var indexes = item.Value.Split(comma);
+                //        var idx = indexes[0];
+                //        var txt = indexes[1];
+                //        if (item.FriendlyName.Equals(CommonKeyIndexes.DateFiledOnTextBox, 
+                //            StringComparison.CurrentCultureIgnoreCase))
+                //        {
+                //            txt = startDate;
+                //        }
+                //        ControlSetValue(idx, txt);
+                //        break;
+                //    case "GetElement":
+                //        if (item.By == CommonKeyIndexes.IdProperCase)
+                //        {
+                //            // WaitForElementExist(By.Id(item.Value), item.FriendlyName);
+                //            return PageDriver.FindElement(By.Id(item.Value));
+                //        }
+                //        if (item.By == CommonKeyIndexes.XPath)
+                //        {
+                //            return PageDriver.FindElement(By.XPath(item.Value));
+                //        }
+                //        break;
+                //    case "SetComboIndex":
+                //        var parms = item.Value.Split(comma);
+                //        var parmId = parms[0];
+                //        if(!int.TryParse(parms[1], out int parmIndex)){
+                //            parmIndex = 0;
+                //        }
+                //        SetSelectedIndex(By.Id(parmId), item.FriendlyName, parmIndex);
+                //        break;
+                //    default:
+                //        break;
+                //}
             }
             return null;
         }
+
+
+        protected List<ElementNavigationBase> GetNavigationBases(string startDate)
+        {
+            var list = ElementNavigations;
+            list.ForEach(x => {
+                x.StartDate = startDate;
+                x.Assertion = this;
+            });
+            return list;
+        }
+
+        private static List<ElementNavigationBase> _navigationElements;
+
+        private static List<ElementNavigationBase> ElementNavigations => 
+            _navigationElements ?? (_navigationElements = GetNavigators());
+
+        private static List<ElementNavigationBase> GetNavigators()
+        {
+            var type = typeof(ElementNavigationBase);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract)
+                .ToList();
+            var commands = new List<ElementNavigationBase>();
+            types.ForEach(f => commands.Add((ElementNavigationBase)Activator.CreateInstance(f)));
+            return commands;
+        }
+
     }
 
 }
