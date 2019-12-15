@@ -55,7 +55,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (addressPerson == null) continue;
                 if (addressPerson.IsValid)
                 {
-                    string caseSytle = addressPerson["CaseStyle"];
+                    // string caseSytle = addressPerson["CaseStyle"];
                     addressList.Add(addressPerson);
                 }
                 else if(!string.IsNullOrEmpty(personNode.ChildNodes[0].InnerText))
@@ -101,15 +101,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (CharacterPeople == null) CharacterPeople = new StringBuilder("");
             var openTable = @"<table style='border-collapse: collapse; border: 1px solid black;'>";
             var opnTable = openTable + @"<tr style='border: 1px solid black;'>";
-            opnTable = opnTable + Environment.NewLine;
-            opnTable = opnTable + @"<td colspan='2' style='border: 1px solid black;'>Case Results</td></tr>";
-            opnTable = opnTable + Environment.NewLine;
+            opnTable += Environment.NewLine;
+            opnTable += @"<td colspan='2' style='border: 1px solid black;'>Case Results</td></tr>";
+            opnTable += Environment.NewLine;
             const string closeTable = @"</table>";
             const string fmttbl = @"{0}{1}{2}";
-            var tableRow = CleanHtml(dta.Data);
+            CleanHtml(dta.Data);
             CharacterData.AppendLine(dta.Data);
             var cnode = (XmlCDataSection)Data.FirstChild;
-            cnode.Data = string.Format(fmttbl, 
+            cnode.Data = string.Format(
+                CultureInfo.CurrentCulture,
+                fmttbl, 
                 openTable,
                 CharacterData.ToString(),
                 closeTable);
@@ -121,7 +123,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             person.ChildNodes[0].InnerText = dta.Defendant;
             var addressNode = person.ChildNodes[1];
             ((XmlCDataSection)(addressNode.FirstChild)).Data = dta.Address;
-            addressNode = ParseAddressInformation(dta.Address, addressNode);
+            ParseAddressInformation(dta.Address, addressNode);
             person = MapExtraData(dta, person);
             People.AppendChild(person);
 
@@ -131,7 +133,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 personHtml = personHtml.Replace(@"<tr>", @"<tr style='border: 1px solid black;'>");
                 CharacterPeople.AppendLine(personHtml);
                 cnode = (XmlCDataSection)PeopleData.FirstChild;
-                cnode.Data = string.Format(fmttbl,
+                cnode.Data = string.Format(
+                    CultureInfo.CurrentCulture,
+                    fmttbl,
                     opnTable,
                     CharacterPeople.ToString(),
                     closeTable);
@@ -203,7 +207,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var firstChild = doc.DocumentElement.FirstChild;
                 var hlink = firstChild.SelectSingleNode("a");
                 if (hlink == null) return rawHtml;
-                firstChild.InnerXml = string.Format("<span>{0}</span>", hlink.InnerText);
+                firstChild.InnerXml = string.Format(
+                    CultureInfo.CurrentCulture,
+                    "<span>{0}</span>", hlink.InnerText);
                 return doc.OuterXml;
             }
             catch (Exception)
@@ -217,7 +223,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (string.IsNullOrEmpty(dta.Defendant)) return string.Empty;
             if (string.IsNullOrEmpty(dta.Address)) return string.Empty;
             const string rfmt = @"<tr><td caseNumber='{2}'>{0}</td><td>{1}</tr>";
-            return string.Format(rfmt, dta.Defendant, dta.Address, dta.Case ?? "");
+            return string.Format(
+                CultureInfo.CurrentCulture,
+                rfmt, dta.Defendant, dta.Address, dta.Case ?? "");
         }
 
 
@@ -242,9 +250,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 if (!string.IsNullOrEmpty(addr))
                 {
-                    addr = addr + ", ";
+                    addr += ", ";
                 }
-                addr = addr + middle[i];
+                addr += middle[i];
             }
             return addr;
         }

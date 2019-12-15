@@ -29,6 +29,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         public ElementAssertion Assertion { get; set; }
         public abstract IWebElement Execute(WebNavInstruction item);
 
-        protected IWebDriver PageDriver => Assertion == null ? null : Assertion.PageDriver;
+        protected IWebDriver PageDriver => Assertion?.PageDriver;
     }
 }

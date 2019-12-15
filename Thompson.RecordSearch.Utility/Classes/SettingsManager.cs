@@ -113,7 +113,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             var doc = XmlDocProvider.GetDoc(data);
             if (doc.DocumentElement == null) return null;
             var parent = doc.DocumentElement.SelectSingleNode(
-                string.Format("layouts/layout[@id='{0}' and @name='{1}']", 
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    "layouts/layout[@id='{0}' and @name='{1}']", 
                 id != 1 ? 1 : id,
                 sectionName));
             if (parent == null) return null;
@@ -127,7 +129,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 layoutList.Add(new ExcelColumnLayout
                 {
                     Name = column.Attributes.GetNamedItem("name").InnerText,
-                    ColumnWidth = Convert.ToInt32(column.Attributes.GetNamedItem("columnWidth").InnerText)
+                    ColumnWidth = Convert.ToInt32(
+                        column.Attributes.GetNamedItem("columnWidth").InnerText,
+                        CultureInfo.CurrentCulture.NumberFormat)
                 });
             }
             return layoutList;
@@ -150,7 +154,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var numberInfo = cultureInfo.NumberFormat;
             while (File.Exists(targetFile))
             {
-                idx = idx + 1;
+                idx += 1;
                 var cleaned = Path.GetFileNameWithoutExtension(fileName);
                 cleaned = string.Format(cultureInfo, "{0}_{1}.xml", cleaned, idx.ToString("D9", numberInfo));
                 targetFile = string.Format(cultureInfo, "{0}/{1}", Path.GetDirectoryName(fileName), cleaned);
@@ -178,13 +182,13 @@ namespace Thompson.RecordSearch.Utility.Classes
                         item.InnerText = settingFile.Parameters.Name;
                         break;
                     case "StartDate":
-                        item.InnerText = settingFile.StartDate.ToString(dfmt);
+                        item.InnerText = settingFile.StartDate.ToString(dfmt, CultureInfo.CurrentCulture.DateTimeFormat);
                         break;
                     case "EndDate":
-                        item.InnerText = settingFile.EndingDate.ToString(dfmt);
+                        item.InnerText = settingFile.EndingDate.ToString(dfmt, CultureInfo.CurrentCulture.DateTimeFormat);
                         break;
                     case "SearchDate":
-                        item.InnerText = DateTime.Now.ToString(dfmt);
+                        item.InnerText = DateTime.Now.ToString(dfmt, CultureInfo.CurrentCulture.DateTimeFormat);
                         break;
                     default:
                         break;
@@ -207,7 +211,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var parameter = new WebNavigationParameter
             {
-                Id = Convert.ToInt32(node.Attributes.GetNamedItem("id").Value),
+                Id = Convert.ToInt32(
+                    node.Attributes.GetNamedItem("id").Value,
+                    CultureInfo.CurrentCulture.NumberFormat),
                 Name = node.Attributes.GetNamedItem("name").Value,
                 Keys = new List<WebNavigationKey>(),
                 Instructions = new List<WebNavInstruction>(),
@@ -222,7 +228,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                     Value = ((XmlCDataSection)nde.FirstChild).Data
                 });
             }
-            var qpath = string.Format("directions/instructions[@id={0}]", parameter.Id);
+            var qpath = string.Format(
+                CultureInfo.CurrentCulture,
+                "directions/instructions[@id={0}]", parameter.Id);
             
             var instructions = node.OwnerDocument
                 .DocumentElement.SelectSingleNode(qpath);
@@ -241,7 +249,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 });
             }
 
-            qpath = string.Format("directions/caseInspection[@id={0}]", parameter.Id);
+            qpath = string.Format(
+                CultureInfo.CurrentCulture,
+                "directions/caseInspection[@id={0}]", parameter.Id);
             instructions = node.OwnerDocument
                 .DocumentElement.SelectSingleNode(qpath);
             if (instructions == null) return parameter;
@@ -270,7 +280,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
-            var targetFile = new Uri(string.Format(@"{0}\xml\{1}", execName, fileName)).AbsolutePath;
+            var targetFile = new Uri(string.Format(
+                CultureInfo.CurrentCulture,
+                @"{0}\xml\{1}", execName, fileName)).AbsolutePath;
             return !File.Exists(targetFile) ? string.Empty : File.ReadAllText(targetFile);
         }
 
@@ -285,20 +297,28 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             // settingFile.StartDate.ToString("MMddyyyy")
             const string dfmt = "MMddyyyy";
-            var dteStart = settingFile.StartDate.ToString(dfmt);
-            var dteEnding = settingFile.EndingDate.ToString(dfmt);
-            var fileName = string.Format("data_rqst_{2}_{0}_{1}.xml",
+            var dteStart = settingFile.StartDate.ToString(dfmt, CultureInfo.CurrentCulture.DateTimeFormat);
+            var dteEnding = settingFile.EndingDate.ToString(dfmt, CultureInfo.CurrentCulture.DateTimeFormat);
+            var fileName = string.Format(
+                CultureInfo.CurrentCulture,
+                "data_rqst_{2}_{0}_{1}.xml",
                 dteStart,
                 dteEnding,
                 settingFile.Parameters.Name.Replace(" ","").ToLower(CultureInfo.CurrentCulture));
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
-            var targetPath = new Uri(string.Format(@"{0}\xml\", execName)).AbsolutePath;
+            var targetPath = new Uri(string.Format(
+                CultureInfo.CurrentCulture,
+                @"{0}\xml\", execName)).AbsolutePath;
             if (!Directory.Exists(targetPath)) Directory.CreateDirectory(targetPath);
-            targetPath = string.Format(@"{0}\data\", targetPath);
+            targetPath = string.Format(
+                CultureInfo.CurrentCulture,
+                @"{0}\data\", targetPath);
             if (!Directory.Exists(targetPath)) Directory.CreateDirectory(targetPath);
 
-            var targetFile = new Uri(string.Format(@"{0}\xml\data\{1}", execName, fileName)).AbsolutePath;
+            var targetFile = new Uri(string.Format(
+                CultureInfo.CurrentCulture, 
+                @"{0}\xml\data\{1}", execName, fileName)).AbsolutePath;
             return targetFile;
         }
 
@@ -312,7 +332,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
-            var targetFile = new Uri(string.Format(@"{0}\Utilities\CourtRecordSearch.xlsm", execName)).AbsolutePath;
+            var targetFile = new Uri(string.Format(
+                CultureInfo.CurrentCulture, 
+                @"{0}\Utilities\CourtRecordSearch.xlsm", execName)).AbsolutePath;
             if (!File.Exists(targetFile)) return string.Empty;
             return targetFile;
         }
@@ -334,7 +356,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             var content = Content;
             var doc = XmlDocProvider.GetDoc(content);
 
-            var qpath = string.Format("directions/instructions[@id={0}]", siteId);
+            var qpath = string.Format(
+                CultureInfo.CurrentCulture, 
+                "directions/instructions[@id={0}]", siteId);
             var data = doc.DocumentElement.SelectSingleNode(qpath);
             if (data == null) return instructions;
 

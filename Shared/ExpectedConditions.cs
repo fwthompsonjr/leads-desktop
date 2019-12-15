@@ -32,6 +32,7 @@ namespace OpenQA.Selenium.Support.UI
     /// IWebElement element = wait.Until(ExpectedConditions.ElementExists(By.Id("foo")));
     /// </code>
     /// </example>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "<Pending>")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
     [Obsolete("The ExpectedConditions implementation in the .NET bindings is deprecated and will be removed in a future release. This portion of the code has been migrated to the DotNetSeleniumExtras repository on GitHub (https://github.com/DotNetSeleniumTools/DotNetSeleniumExtras)")]
@@ -116,6 +117,7 @@ namespace OpenQA.Selenium.Support.UI
         {
             return (driver) => { return driver.FindElement(locator); };
         }
+
 
         /// <summary>
         /// An expectation for checking that an element is present on the DOM of a page

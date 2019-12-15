@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Thompson.RecordSearch.Utility.Classes;
 
@@ -13,6 +14,7 @@ namespace Thompson.RecordSearch.Utility.Dto
 
     public class DataPointLocatorDto
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public IList<DataPoint> DataPoints { get; set; }
 
 
@@ -21,12 +23,14 @@ namespace Thompson.RecordSearch.Utility.Dto
 
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
-            var dataFile = string.Format(dataFormat,
+            var dataFile = string.Format(
+                CultureInfo.CurrentCulture,
+                dataFormat,
                 appDirectory,
                 fileSuffix);
             if (!File.Exists(dataFile))
             {
-                throw new FileNotFoundException("Unable to find user access json");
+                throw new FileNotFoundException(CommonKeyIndexes.NavigationFileNotFound);
             }
             var data = File.ReadAllText(dataFile);
             return Newtonsoft.Json.JsonConvert.DeserializeObject<DataPointLocatorDto>(data);

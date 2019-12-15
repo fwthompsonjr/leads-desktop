@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
@@ -47,7 +48,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var caseTypeId = Web.GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex); // "caseTypeSelectedIndex");
                 // set special item values
                 var caseTypeSelect = steps.First(x => x.ActionName.Equals(CommonKeyIndexes.SetSelectValue, StringComparison.CurrentCultureIgnoreCase));
-                caseTypeSelect.ExpectedValue = caseTypeId.ToString();
+                caseTypeSelect.ExpectedValue = caseTypeId.ToString(CultureInfo.CurrentCulture);
             }
         }
 

@@ -284,11 +284,12 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var separator = @"<br/>";
             var pipe = '|';
+            var pipeString = "|";
             const string noMatch = "No Match Found|Not Matched 00000";
             if (person == null) throw new ArgumentNullException(nameof(person));
             if (string.IsNullOrEmpty(address)) { address = noMatch; }
-            address = new StringBuilder(address.Trim()).Replace(separator, pipe.ToString()).ToString();
-            if (address.EndsWith(pipe.ToString(), StringComparison.CurrentCultureIgnoreCase))
+            address = new StringBuilder(address.Trim()).Replace(separator, pipeString).ToString();
+            if (address.EndsWith(pipeString, StringComparison.CurrentCultureIgnoreCase))
             {
                 address = address.Substring(0, address.Length - 1);
             }
@@ -306,7 +307,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 person.Address2 = string.Empty;
                 for (int i = 1; i < mx; i++)
                 {
-                    person.Address2 = string.Format("{0} {1}",
+                    person.Address2 = string.Format(
+                        CultureInfo.CurrentCulture,
+                        "{0} {1}",
                         person.Address2, pieces[i].Trim()).Trim();
                 }
             }
@@ -321,7 +324,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             var fmt = jsonWebInteractive.GetParameterValue<string>(CommonKeyIndexes.HlinkUri);//"hlinkUri");
             var xpath = jsonWebInteractive.GetParameterValue<string>(CommonKeyIndexes.PersonNodeXpath); // "personNodeXpath");
             var helper = new ElementAssertion(driver);
-            helper.Navigate(string.Format(fmt, linkData.WebAddress));
+            helper.Navigate(string.Format(CultureInfo.CurrentCulture,
+                fmt, linkData.WebAddress));
             driver.WaitForNavigation();
             var tdName = TryFindElement(driver, By.XPath(xpath));
             if (tdName == null) return;
@@ -414,7 +418,8 @@ namespace Thompson.RecordSearch.Utility.Classes
 
                 var inspector = doc.DocumentElement.SelectSingleNode("directions").SelectNodes("caseInspection")
                     .Cast<XmlNode>().ToList()
-                    .FindAll(x => x.Attributes.GetNamedItem("id").Value == parameterId.ToString())
+                    .FindAll(x => x.Attributes.GetNamedItem("id").Value == parameterId
+                        .ToString(CultureInfo.CurrentCulture.NumberFormat))
                     .Find(x => x.Attributes.GetNamedItem("type").Value == typeName)
                     .ChildNodes.Cast<XmlNode>().ToList();
                 return inspector;
@@ -482,12 +487,15 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
-            var dataFile = string.Format(dataFormat,
+            var dataFile = string.Format(
+                CultureInfo.CurrentCulture,
+                dataFormat,
                 appDirectory,
                 suffix);
             if (!File.Exists(dataFile))
             {
-                throw new FileNotFoundException("Unable to find navigation json");
+                throw new FileNotFoundException(
+                    CommonKeyIndexes.NavigationFileNotFound);
             }
             var data = File.ReadAllText(dataFile);
             return Newtonsoft.Json.JsonConvert.DeserializeObject<NavigationInstructionDto>(data);

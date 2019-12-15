@@ -87,7 +87,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanMapPersonCriminalCaseInfo()
         {
             var caseInstructions = SearchSettingDto.GetCriminalMapping();
-            var expectedList = ExpectedNonCriminalValues();
+            var expectedList = ExpectedCriminalValues();
 
             var doc = new XmlDocument();
             doc.LoadXml(CriminalRow());

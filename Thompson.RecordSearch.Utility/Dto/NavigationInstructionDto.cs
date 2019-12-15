@@ -19,6 +19,7 @@ namespace Thompson.RecordSearch.Utility.Dto
 
     public class NavigationInstructionDto
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public List<NavigationStep> Steps { get; set; }
     }
 }

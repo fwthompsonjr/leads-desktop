@@ -6,6 +6,8 @@ using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Models
 {
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
     public class WebNavigationParameter
     {
         public int Id { get; set; }
@@ -26,6 +28,7 @@ namespace Thompson.RecordSearch.Utility.Models
         public string Value { get; set; }
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
     public class NavInstruction
     {
         public IList<WebNavInstruction> NavInstructions { get; set; }

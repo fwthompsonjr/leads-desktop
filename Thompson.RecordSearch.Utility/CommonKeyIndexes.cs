@@ -179,6 +179,11 @@ namespace Thompson.RecordSearch.Utility
             ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressLine1);
         public static readonly string NonAddressLine2 =
             ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressLine2);
+
+        public static readonly string NavigationFileNotFound =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NavigationFileNotFound);
+        public static readonly string SearchSettingFileNotFound =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.SearchSettingFileNotFound);
         /* 
          * 
 
@@ -192,8 +197,8 @@ namespace Thompson.RecordSearch.Utility
             ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.QueryString);
         public static readonly string NumberOne =
             ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberOne);
-        public static readonly string NumberZero =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberZero);
+        public static readonly string SearchSettingFileNotFound =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.SearchSettingFileNotFound);
          */
     }
 }

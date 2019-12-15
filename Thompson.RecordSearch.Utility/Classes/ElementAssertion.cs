@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -20,8 +21,10 @@ namespace Thompson.RecordSearch.Utility.Classes
         public bool DoesElementExist(By selector, string elementName)
         {
             Console.WriteLine(CommonKeyIndexes.SearchingForElement, elementName);
-            var found = PageDriver.FindElement(selector);
-            Console.WriteLine(string.Format(CommonKeyIndexes.ElementNotFound, elementName));
+            PageDriver.FindElement(selector);
+            Console.WriteLine(string.Format(
+                CultureInfo.CurrentCulture,
+                CommonKeyIndexes.ElementNotFound, elementName));
             return true;
         }
 
@@ -31,11 +34,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             Console.WriteLine(cmmd, elementName, selectedIndex);
             var elementToClick = PageDriver.FindElement(selector);
             var id = elementToClick.GetAttribute(CommonKeyIndexes.IdLowerCase);
-            var command = string.Format(CommonKeyIndexes.GetElementSetIndex,
+            var command = string.Format(
+                CultureInfo.CurrentCulture, CommonKeyIndexes.GetElementSetIndex,
                 id, selectedIndex);
-            var changecommand = string.Format(CommonKeyIndexes.ElementFireOnChange,
+            var changecommand = string.Format(
+                CultureInfo.CurrentCulture, CommonKeyIndexes.ElementFireOnChange,
                 id);
-            var optionName = string.Format(CommonKeyIndexes.ElementGetOptionText,
+            var optionName = string.Format(
+                CultureInfo.CurrentCulture, CommonKeyIndexes.ElementGetOptionText,
                 id, selectedIndex);
 
             var jse = (IJavaScriptExecutor)PageDriver;
@@ -67,7 +73,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (!DoesElementExist(selector, elementName)) return false;
             var found = PageDriver.FindElement(selector, 10);
-            var message = string.Format(CommonKeyIndexes.ElementTextNotFound, elementName, searchString);
+            var message = string.Format(
+                CultureInfo.CurrentCulture, 
+                CommonKeyIndexes.ElementTextNotFound, elementName, searchString);
             if (!found.Text.Contains(searchString))
             {
                 Console.WriteLine(message);
@@ -81,7 +89,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (!DoesElementExist(selector, elementName)) return false;
             var found = PageDriver.FindElement(selector, 10);
-            var message = string.Format(CommonKeyIndexes.ElementMatchTextNotFound, elementName, searchString, found.Text);
+            var message = string.Format(
+                CultureInfo.CurrentCulture, 
+                CommonKeyIndexes.ElementMatchTextNotFound, elementName, searchString, found.Text);
             if (!found.Text.Equals(searchString, StringComparison.CurrentCulture))
             {
                 Console.WriteLine(message);
@@ -96,7 +106,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             var found = PageDriver.FindElement(selector, 10);
             var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
-            var message = string.Format(CommonKeyIndexes.ElementClassNotFound, elementName, className);
+            var message = string.Format(
+                CultureInfo.CurrentCulture, 
+                CommonKeyIndexes.ElementClassNotFound, elementName, className);
             var hasClass = allClasses.Any(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
             if (!hasClass)
             {
@@ -118,7 +130,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var found = PageDriver.FindElement(selector, 10);
             var actual = found.GetAttribute(attributeName) ?? string.Empty;
-            var message = string.Format(CommonKeyIndexes.ElementAttributeNotFound,
+            var message = string.Format(
+                CultureInfo.CurrentCulture, 
+                CommonKeyIndexes.ElementAttributeNotFound,
                 found.GetAttribute(CommonKeyIndexes.IdLowerCase),
                 attributeName,
                 attributeValue,
@@ -138,7 +152,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             var found = PageDriver.FindElement(selector, 10);
             var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
-            var message = string.Format(CommonKeyIndexes.ClassNameFound, elementName, className);
+            var message = string.Format(
+                CultureInfo.CurrentCulture, 
+                CommonKeyIndexes.ClassNameFound, elementName, className);
             var hasClass = allClasses.Any(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
             if (hasClass)
             {
@@ -168,7 +184,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 Console.WriteLine(CommonKeyIndexes.ClickingOnElement, controlId);
                 var jse = (IJavaScriptExecutor)PageDriver;
-                jse.ExecuteScript(string.Format(CommonKeyIndexes.ClickElementJs, controlId));
+                jse.ExecuteScript(string.Format(
+                CultureInfo.CurrentCulture, 
+                CommonKeyIndexes.ClickElementJs, controlId));
             }
             catch (Exception)
             {
@@ -195,7 +213,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                         StringComparison.CurrentCultureIgnoreCase) ? 
                         CommonKeyIndexes.PasswordMask : controlValue);
                 var jse = (IJavaScriptExecutor)PageDriver;
-                jse.ExecuteScript(string.Format(CommonKeyIndexes.ControlSetValue, controlId, controlValue));
+                jse.ExecuteScript(string.Format(
+                CultureInfo.CurrentCulture, 
+                CommonKeyIndexes.ControlSetValue, controlId, controlValue));
             }
             catch (Exception)
             {
@@ -211,12 +231,13 @@ namespace Thompson.RecordSearch.Utility.Classes
         internal IWebElement Process(WebInteractive data, bool isCriminalSearch = false)
         {
             var dteFmt = CommonKeyIndexes.DateTimeShort;
-            var startDate = data.StartDate.ToString(dteFmt);
-            var endDate = data.EndingDate.ToString(dteFmt);
+            var startDate = data.StartDate.ToString(dteFmt, CultureInfo.CurrentCulture.DateTimeFormat);
+            var endDate = data.EndingDate.ToString(dteFmt, CultureInfo.CurrentCulture.DateTimeFormat);
             var searchTypeIndex = data.Parameters.Keys
                 .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.SearchComboIndex, 
                 StringComparison.CurrentCultureIgnoreCase));
-            var searchTypeId = searchTypeIndex == null ? 0 : Convert.ToInt32(searchTypeIndex.Value);
+            var searchTypeId = searchTypeIndex == null ? 0 : Convert.ToInt32(searchTypeIndex.Value,
+                CultureInfo.CurrentCulture);
             var caseTypeIndex = data.Parameters.Keys
                 .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.CaseSearchType, 
                 StringComparison.CurrentCultureIgnoreCase));
@@ -239,7 +260,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             // substitute parameters
             itms.ForEach(x => x.Value = x.Value.Replace(CommonKeyIndexes.StartDateQuery, startDate));
             itms.ForEach(x => x.Value = x.Value.Replace(CommonKeyIndexes.EndingDateQuery, endDate));
-            itms.ForEach(x => x.Value = x.Value.Replace(CommonKeyIndexes.SetComboIndexQuery, searchTypeId.ToString()));
+            itms.ForEach(x => x.Value = x.Value.Replace(CommonKeyIndexes.SetComboIndexQuery, 
+                searchTypeId.ToString(CultureInfo.CurrentCulture)));
             if (!string.IsNullOrEmpty(caseType))
             {
                 var crimalLink = data.Parameters.Keys

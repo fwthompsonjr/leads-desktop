@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
@@ -15,11 +16,18 @@ namespace Thompson.RecordSearch.Utility.Dto
     public class CourtLocation
     {
         public string Id { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", 
+            "CA2227:Collection properties should be read only", 
+            Justification = "<Pending>")]
         public IList<Court> Courts { get; set; }
     }
 
     public class CourtLookup
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage",
+            "CA2227:Collection properties should be read only",
+            Justification = "<Pending>")]
         public IList<CourtLocation> CourtLocations { get; set; }
     }
 
@@ -95,12 +103,14 @@ namespace Thompson.RecordSearch.Utility.Dto
             const string fileSuffix = "denton-settings";
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
-            var dataFile = string.Format(dataFormat,
+            var dataFile = string.Format(
+                CultureInfo.CurrentCulture,
+                dataFormat,
                 appDirectory,
                 fileSuffix);
             if (!File.Exists(dataFile))
             {
-                throw new FileNotFoundException("Unable to find search setings access json");
+                throw new FileNotFoundException(SearchSettingFileNotFound);
             }
             return dataFile;
         }
@@ -111,12 +121,14 @@ namespace Thompson.RecordSearch.Utility.Dto
             const string fileSuffix = "dentonCaseCustomInstruction";
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
-            var dataFile = string.Format(dataFormat,
+            var dataFile = string.Format(
+                CultureInfo.CurrentCulture,
+                dataFormat,
                 appDirectory,
                 fileSuffix);
             if (!File.Exists(dataFile))
             {
-                throw new FileNotFoundException("Unable to find search setings access json");
+                throw new FileNotFoundException(SearchSettingFileNotFound);
             }
             return dataFile;
         }
@@ -127,12 +139,14 @@ namespace Thompson.RecordSearch.Utility.Dto
             const string fileSuffix = "dentonCaseCustomInstruction_1";
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
-            var dataFile = string.Format(dataFormat,
+            var dataFile = string.Format(
+                CultureInfo.CurrentCulture,
+                dataFormat,
                 appDirectory,
                 fileSuffix);
             if (!File.Exists(dataFile))
             {
-                throw new FileNotFoundException("Unable to find search setings access json");
+                throw new FileNotFoundException(SearchSettingFileNotFound);
             }
             return dataFile;
         }
@@ -143,14 +157,19 @@ namespace Thompson.RecordSearch.Utility.Dto
             const string fileSuffix = "courtAddress";
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
-            var dataFile = string.Format(dataFormat,
+            var dataFile = string.Format(
+                CultureInfo.CurrentCulture,
+                dataFormat,
                 appDirectory,
                 fileSuffix);
             if (!File.Exists(dataFile))
             {
-                throw new FileNotFoundException("Unable to find search setings access json");
+                throw new FileNotFoundException(SearchSettingFileNotFound);
             }
             return dataFile;
         }
+
+        private static readonly string SearchSettingFileNotFound 
+            = CommonKeyIndexes.SearchSettingFileNotFound;
     }
 }

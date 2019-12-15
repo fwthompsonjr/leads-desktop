@@ -112,7 +112,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 contents = RemoveElement(contents, CommonKeyIndexes.ImageOpenTag);
             }
-            var data = new List<CaseData>();
             var doc = XmlDocProvider.GetDoc(contents);
             var ndeCase = doc.DocumentElement.SelectSingleNode(CommonKeyIndexes.CaseDataXpath);
             if (ndeCase == null) return string.Empty;

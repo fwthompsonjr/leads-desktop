@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -92,6 +93,8 @@ namespace Thompson.RecordSearch.Utility.Tests
                 driver.Close();
                 driver.Quit();
 
+                KillProcess("chromedriver");
+
             }
         }
 
@@ -99,6 +102,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("tarrant.county.actions")]
         public void CanGetFromJsonInteractive()
         {
+            if (!ExecutionManagement.CanExecuteFetch()) return;
             var webParameter = BaseWebIneractive.GetWebNavigation(10,
                 DateTime.Now.Date.AddDays(-4),
                 DateTime.Now.Date.AddDays(-4));
@@ -115,6 +119,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanGetAndWriteFromJsonInteractive()
         {
+            if (!ExecutionManagement.CanExecuteFetch()) return;
             var webParameter = BaseWebIneractive.GetWebNavigation(10,
                 DateTime.Now.Date.AddDays(0),
                 DateTime.Now.Date.AddDays(0));
@@ -130,6 +135,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanGetFromCollinInteractive()
         {
+            if (!ExecutionManagement.CanExecuteFetch()) return;
             var webId = 20;
             var startDate = DateTime.Now.Date.AddDays(-4);
             var endDate = DateTime.Now.Date.AddDays(-4);
@@ -207,6 +213,13 @@ namespace Thompson.RecordSearch.Utility.Tests
 
         }
 
+        private void KillProcess(string processName)
+        {
+            foreach (var process in Process.GetProcessesByName(processName))
+            {
+                process.Kill();
+            }
+        }
         #endregion
     }
 }

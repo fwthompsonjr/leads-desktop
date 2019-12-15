@@ -106,11 +106,7 @@ namespace Thompson.RecordSearch.Utility.Tests
 
         private bool CanExecuteFetch()
         {
-            var settingCanExecute = ConfigurationManager.AppSettings["allow.web.integration"];
-            if (settingCanExecute == null) return true;
-            var canExec = false;
-            if (!bool.TryParse(settingCanExecute, out canExec)) return true;
-            return canExec;
+            return ExecutionManagement.CanExecuteFetch();
 
         }
     }

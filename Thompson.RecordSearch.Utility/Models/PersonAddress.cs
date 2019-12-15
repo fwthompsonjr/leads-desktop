@@ -337,9 +337,9 @@ namespace Thompson.RecordSearch.Utility.Models
             {
                 if (!string.IsNullOrEmpty(addr))
                 {
-                    addr = addr + ", ";
+                    addr += ", ";
                 }
-                addr = addr + middle[i];
+                addr += middle[i];
             }
             return addr;
         }

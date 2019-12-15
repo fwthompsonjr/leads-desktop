@@ -58,7 +58,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var caseTypeSelect = steps.First(x => 
                     x.ActionName.Equals(CommonKeyIndexes.SetSelectValue, // "set-select-value", 
                         StringComparison.CurrentCultureIgnoreCase));
-                caseTypeSelect.ExpectedValue = caseTypeId.ToString();
+                caseTypeSelect.ExpectedValue = caseTypeId.ToString(CultureInfo.CurrentCulture.NumberFormat);
                 var searchSelect = steps.First(x => 
                     x.DisplayName.Equals(CommonKeyIndexes.SearchTypeHyperlink, // "search-type-hyperlink", 
                         StringComparison.CurrentCultureIgnoreCase));

@@ -3,6 +3,7 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -20,10 +21,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             get { return _fileWriter ?? (_fileWriter = new ExcelFileWriter()); }
             set { _fileWriter = value; }
         }
-        private static SettingsManager GetSettingsManager()
-        {
-            return new SettingsManager();
-        }
+
         public ExcelWriter(IExcelFileWriter fileWriter = null)
         {
             FileWriter = fileWriter;
@@ -199,7 +197,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                         if (hyperlink == null) continue;
                         var txHref = hyperlink.Attributes.GetNamedItem("href");
                         if (txHref == null) continue;
-                        var hlink = string.Format(@"{0}{1}", hyperPrefix.Value, txHref.InnerText);
+                        var hlink = string.Format(
+                            CultureInfo.CurrentCulture,
+                            @"{0}{1}", hyperPrefix.Value, txHref.InnerText);
                         target.Hyperlink = new System.Uri(hlink);
                     }
                 }

@@ -91,6 +91,8 @@ namespace LegalLead.Resources
         NumberZero = 890,
         NonAddressZipCode = 900,
         NonAddressLine1 = 910,
-        NonAddressLine2 = 920
+        NonAddressLine2 = 920,
+        NavigationFileNotFound = 930,
+        SearchSettingFileNotFound = 940
     }
 }

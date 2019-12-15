@@ -26,7 +26,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                if (webElement == null) throw new NullReferenceException(nameof(webElement));
+                if (webElement == null) throw new ArgumentNullException(nameof(webElement));
                 return webElement.FindElement(by);
             }
             catch (Exception)
