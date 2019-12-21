@@ -65,6 +65,11 @@ namespace LegalLead.PublicData.Search
                     criminalToggle.Value = isDistrictSearch ? "0" : "1";
                 }
 
+                if(!isDentonCounty & criminalToggle != null)
+                {
+                    criminalToggle.Value = "1";
+                }
+
                 IWebInteractive webmgr =
                     WebFetchingProvider.
                     GetInteractive(siteData, startDate, endingDate);

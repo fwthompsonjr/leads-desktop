@@ -108,6 +108,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 DateTime.Now.Date.AddDays(-4));
             var interactive = new TarrantWebInteractive(webParameter);
             var result = interactive.Fetch();
+            Console.WriteLine("DataFile:= {0}", result.Result);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
 
@@ -128,24 +129,6 @@ namespace Thompson.RecordSearch.Utility.Tests
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
 
-        }
-
-        [TestMethod]
-        [TestCategory("collin.county.actions")]
-        [TestCategory("Web.Integration")]
-        public void CanGetFromCollinInteractive()
-        {
-            if (!ExecutionManagement.CanExecuteFetch()) return;
-            var webId = 20;
-            var startDate = DateTime.Now.Date.AddDays(-4);
-            var endDate = DateTime.Now.Date.AddDays(-4);
-            var webParameter = BaseWebIneractive.GetWebNavigation(webId,
-                startDate,
-                endDate);
-            var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
-            var result = interactive.Fetch();
-            Assert.IsNotNull(result);
-            ExcelWriter.WriteToExcel(result);
         }
 
         [TestMethod]

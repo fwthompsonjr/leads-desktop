@@ -82,10 +82,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
             public List<ITarrantWebFetch> GetFetches(int searchMode = 2)
             {
-                var provider = new VersionNameProvider();
-                var isFuture = provider.Name.Equals(
-                        VersionNameProvider.VersionNames.Last(),
-                        StringComparison.CurrentCultureIgnoreCase);
                 var fetchers = new List<ITarrantWebFetch>
                 {
                     new NonCriminalFetch(Web),
@@ -101,14 +97,6 @@ namespace Thompson.RecordSearch.Utility.Classes
                         break;
                     default:
                         break;
-                }
-                if (!isFuture)
-                {
-                    // reset list back to only have the NonCriminal
-                    fetchers = new List<ITarrantWebFetch>
-                    {
-                        new NonCriminalFetch(Web)
-                    };
                 }
 
 

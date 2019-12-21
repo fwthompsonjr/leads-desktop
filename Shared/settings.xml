@@ -23,7 +23,7 @@
       <key name="navigation.control.alternate.file"><![CDATA[tarrantCountyMapping_2]]></key>
       <key name="hlinkUri"><![CDATA[https://odyssey.tarrantcounty.com/PublicAccess/{0}]]></key>
       <key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
-      <key name="criminalCaseInclusion"><![CDATA[0]]></key>
+      <key name="criminalCaseInclusion"><![CDATA[1]]></key>
       <key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
     </keys>
     <keys id="20" name="Collin County">
@@ -39,6 +39,7 @@
       <key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
       <key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
       <key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+      <key name="criminalCaseInclusion"><![CDATA[1]]></key>
     </keys>
   </setting>
   <directions>

@@ -335,7 +335,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             linkData.Address = parent.Text;
             try
             {
-
+                // check or set IsCriminal attribute of linkData object
+                var criminalLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.CriminalLinkXpath));
+                if(criminalLink != null) { linkData.IsCriminal = true; }
                 // get row index of this element ... and then go one row beyond...
                 var ridx = parent.GetAttribute(CommonKeyIndexes.RowIndex);
                 var table = parent.FindElement(By.XPath(CommonKeyIndexes.ParentElement));

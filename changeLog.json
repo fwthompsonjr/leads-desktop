@@ -275,6 +275,37 @@
             "Start Date: 2019-12-08 22:31:48Z",
             "End Date: 2019-12-08 23:07:38Z"
           ]
+        },
+        {
+          "id": 5.4,
+          "name": "Tarrant County hard returns in the case style",
+          "isFixed": false,
+          "fixVersion": 11201,
+          "description": [
+            "Case Style is not mapping Plantiff data for Tarrant County.",
+            "Start Date: 2019-12-21 12:33:52Z"
+          ]
+        },
+        {
+          "id": 5.5,
+          "name": "Tarrant County no criminal cases",
+          "isFixed": false,
+          "fixVersion": 11201,
+          "description": [
+            "Criminal cases are not included in the data extract",
+            "Start Date: 2019-12-21 12:33:52Z"
+          ]
+        },
+        {
+          "id": 5.6,
+          "name": "Collin County no criminal cases",
+          "isFixed": false,
+          "fixVersion": 11201,
+          "description": [
+            "Criminal cases are not included in the data extract",
+            "when pulling a JP courts",
+            "Start Date: 2019-12-21 12:33:52Z"
+          ]
         }
       ]
     }
@@ -477,6 +508,32 @@
         {
           "id": 0.0,
           "description": "implementation of custom resource table",
+          "canPublish": true
+        }
+      ]
+    },
+    {
+      "id": 11201,
+      "number": "1.12.0.1",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "Infrastructure for testing.",
+          "canPublish": true
+        },
+        {
+          "id": 5.4,
+          "description": "Tarrant County hard returns in the case style",
+          "canPublish": false
+        },
+        {
+          "id": 5.5,
+          "description": "Tarrant County no criminal cases",
+          "canPublish": false
+        },
+        {
+          "id": 5.6,
+          "description": "Collin County no criminal cases",
           "canPublish": false
         }
       ]

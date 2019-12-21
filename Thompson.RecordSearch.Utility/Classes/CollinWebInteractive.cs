@@ -84,29 +84,13 @@ namespace Thompson.RecordSearch.Utility.Classes
                 ElementActions.ForEach(x => x.GetAssertion = assertion);
                 ElementActions.ForEach(x => x.GetWeb = driver);
                 var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
+                AssignStartAndEndDate(startingDate, endingDate, formatDate, steps);
                 foreach (var item in steps)
                 {
-                    // if item action-name = 'set-text'
                     var actionName = item.ActionName;
-                    if (item.ActionName.Equals(CommonKeyIndexes.SetText, 
-                        StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        if (item.DisplayName.Equals(CommonKeyIndexes.StartDate, 
-                            StringComparison.CurrentCultureIgnoreCase)) 
-                        { 
-                            item.ExpectedValue = 
-                                startingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate); 
-                        }
-                        if (item.DisplayName.Equals(CommonKeyIndexes.EndDate, 
-                            StringComparison.CurrentCultureIgnoreCase)) 
-                        { 
-                            item.ExpectedValue = 
-                                endingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate); 
-                        }
-                    }
                     var action = ElementActions
-                        .FirstOrDefault(x => 
-                            x.ActionName.Equals(item.ActionName, 
+                        .FirstOrDefault(x =>
+                            x.ActionName.Equals(item.ActionName,
                             StringComparison.CurrentCultureIgnoreCase));
                     if (action == null) continue;
                     action.Act(item);
@@ -270,6 +254,40 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
 
+
+        private static void AssignStartAndEndDate(DateTime startingDate, DateTime endingDate, DateTimeFormatInfo formatDate, List<NavigationStep> items)
+        {
+            if (items == null) return;
+            if (!items.Any()) return;
+            items.ForEach(item =>
+            {
+                AssignStartAndEndDate(
+                    startingDate,
+                    endingDate,
+                    formatDate,
+                    item);
+            });
+        }
+        private static void AssignStartAndEndDate(DateTime startingDate, DateTime endingDate, DateTimeFormatInfo formatDate, NavigationStep item)
+        {
+            if (!item.ActionName.Equals(CommonKeyIndexes.SetText,
+                                    StringComparison.CurrentCultureIgnoreCase))
+            {
+                return;
+            }
+            if (item.DisplayName.Equals(CommonKeyIndexes.StartDate,
+                StringComparison.CurrentCultureIgnoreCase))
+            {
+                item.ExpectedValue =
+                    startingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate);
+            }
+            if (item.DisplayName.Equals(CommonKeyIndexes.EndDate,
+                StringComparison.CurrentCultureIgnoreCase))
+            {
+                item.ExpectedValue =
+                    endingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate);
+            }
+        }
 
     }
 }

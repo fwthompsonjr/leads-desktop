@@ -1,0 +1,62 @@
+{
+  "Id": 20,
+  "Name": "Collin County",
+  "Keys": [
+    {
+      "Name": "baseUri",
+      "Value": "http://cijspub.co.collin.tx.us/secure/login.aspx"
+    },
+    {
+      "Name": "query",
+      "Value": "ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------"
+    },
+    {
+      "Name": "dateRangeMaxDays",
+      "Value": "5"
+    },
+    {
+      "Name": "startDate",
+      "Value": "12/17/2019"
+    },
+    {
+      "Name": "endDate",
+      "Value": "12/17/2019"
+    },
+    {
+      "Name": "navigation.control.file",
+      "Value": "collinCountyMapping_1"
+    },
+    {
+      "Name": "hlinkUri",
+      "Value": "http://cijspub.co.collin.tx.us/Secure/{0}"
+    },
+    {
+      "Name": "personNodeXpath",
+      "Value": "//*[@id='PIr11']"
+    },
+    {
+      "Name": "personParentXath",
+      "Value": "./.."
+    },
+    {
+      "Name": "childTdXath",
+      "Value": "/html/body/table[4]/tbody/tr[{0}]/td"
+    },
+    {
+      "Name": "caseTypeSelectedIndex",
+      "Value": "0"
+    },
+    {
+      "Name": "searchTypeSelectedIndex",
+      "Value": "0"
+    },
+    {
+      "Name": "criminalCaseInclusion",
+      "Value": "1"
+    }
+  ],
+  "Instructions": [
+  ],
+  "CaseInstructions": [
+  ]
+}
