@@ -161,7 +161,7 @@
     },
     {
       "changeId": "500",
-      "reportedDate": "2019-12-05T10:15:00",
+      "reportedDate": "2019-12-20T10:15:00",
       "issues": [
         {
           "changeId": "500",
@@ -279,32 +279,46 @@
         {
           "id": 5.4,
           "name": "Tarrant County hard returns in the case style",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 11201,
           "description": [
             "Case Style is not mapping Plantiff data for Tarrant County.",
-            "Start Date: 2019-12-21 12:33:52Z"
+            "Start Date: 2019-12-21 12:33:52Z",
+            "End Date: 2019-12-23 00:21:01Z"
           ]
         },
         {
           "id": 5.5,
           "name": "Tarrant County no criminal cases",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 11201,
           "description": [
             "Criminal cases are not included in the data extract",
-            "Start Date: 2019-12-21 12:33:52Z"
+            "Start Date: 2019-12-21 12:33:52Z",
+            "End Date: 2019-12-23 00:21:01Z"
           ]
         },
         {
           "id": 5.6,
           "name": "Collin County no criminal cases",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 11201,
           "description": [
             "Criminal cases are not included in the data extract",
             "when pulling a JP courts",
-            "Start Date: 2019-12-21 12:33:52Z"
+            "Start Date: 2019-12-21 12:33:52Z",
+            "End Date: 2019-12-23 00:21:01Z"
+          ]
+        },
+        {
+          "id": 5.601,
+          "name": "Collin County no criminal cases",
+          "isFixed": true,
+          "fixVersion": 11201,
+          "description": [
+            "Parsing error -  in the estate of",
+            "Start Date: 2019-12-23 00:21:01Z",
+            "End Date: 2019-12-23 00:21:01Z"
           ]
         }
       ]
@@ -522,19 +536,29 @@
           "canPublish": true
         },
         {
+          "id": 0.0,
+          "description": "Unit testing for person address testing.",
+          "canPublish": true
+        },
+        {
           "id": 5.4,
           "description": "Tarrant County hard returns in the case style",
-          "canPublish": false
+          "canPublish": true
         },
         {
           "id": 5.5,
           "description": "Tarrant County no criminal cases",
-          "canPublish": false
+          "canPublish": true
         },
         {
           "id": 5.6,
           "description": "Collin County no criminal cases",
-          "canPublish": false
+          "canPublish": true
+        },
+        {
+          "id": 5.601,
+          "description": "Parsing error -  in the estate of",
+          "canPublish": true
         }
       ]
     }
@@ -646,6 +670,30 @@
       "id": 5.306,
       "correctionDate": "2019-12-08T23:08:26.8355365-06:00",
       "description": "Case Style is not mapping Plantiff data for Tarrant County. Tarrant County - Probate Cases - 'in the estate of' Start Date: 2019-12-08 22:31:48Z End Date: 2019-12-08 23:07:38Z",
+      "isWritten": false
+    },
+    {
+      "id": 5.4,
+      "correctionDate": "2019-12-23T00:22:10.912336-06:00",
+      "description": "Case Style is not mapping Plantiff data for Tarrant County. Start Date: 2019-12-21 12:33:52Z End Date: 2019-12-23 00:21:01Z",
+      "isWritten": false
+    },
+    {
+      "id": 5.5,
+      "correctionDate": "2019-12-23T00:22:10.912336-06:00",
+      "description": "Criminal cases are not included in the data extract Start Date: 2019-12-21 12:33:52Z End Date: 2019-12-23 00:21:01Z",
+      "isWritten": false
+    },
+    {
+      "id": 5.6,
+      "correctionDate": "2019-12-23T00:22:10.912336-06:00",
+      "description": "Criminal cases are not included in the data extract when pulling a JP courts Start Date: 2019-12-21 12:33:52Z End Date: 2019-12-23 00:21:01Z",
+      "isWritten": false
+    },
+    {
+      "id": 5.601,
+      "correctionDate": "2019-12-23T00:22:10.912336-06:00",
+      "description": "Parsing error -  in the estate of Start Date: 2019-12-23 00:21:01Z End Date: 2019-12-23 00:21:01Z",
       "isWritten": false
     }
   ],

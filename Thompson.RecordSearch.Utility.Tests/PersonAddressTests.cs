@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
+using AutoMapper;
+using CsvHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
+using Thompson.RecordSearch.Utility.Tests.Data;
 
 namespace Thompson.RecordSearch.Utility.Tests
 {
@@ -109,6 +113,29 @@ namespace Thompson.RecordSearch.Utility.Tests
             var list = SearchSettingDto.GetCourtLookupList;
             Assert.IsNotNull(list);
         }
+
+        [TestMethod]
+        public void CanGetSampleDtoList()
+        {
+            var list = SamplePersonAddress();
+            Assert.IsNotNull(list);
+            Assert.AreEqual(6, list.Count);
+            var noPlantiffList = list.FindAll(x => string.IsNullOrEmpty(x.Plantiff));
+            Assert.AreEqual(0, noPlantiffList.Count);
+        }
+
+        [TestMethod]
+        public void CanFindASampleRecordWithoutPlantiff()
+        {
+            var list = SamplePersonAddress();
+            Assert.IsNotNull(list);
+            var noPlantiffList = list.FindAll(x => string.IsNullOrEmpty(x.Plantiff));
+            if (!noPlantiffList.Any()) return;
+            var failing = noPlantiffList.First();
+            var actual = failing.Plantiff;
+
+        }
+
 
         private XmlNode TryFindNode(XmlDocument doc, string xpath)
         {
@@ -231,6 +258,40 @@ namespace Thompson.RecordSearch.Utility.Tests
                 }
             }
             return caseInstructions.NavInstructions;
+        }
+
+
+
+        private List<PersonAddress> SamplePersonAddress()
+        {
+            const string jsFile = @"Json\collincounty_probate.csv";
+            var appFile = GetAppDirectoryName();
+            appFile = Path.Combine(appFile, jsFile); 
+            using (var reader = new StreamReader(appFile))
+            using (var csv = new CsvReader(reader))
+            {
+                var dto = csv.GetRecords<PersonAddressDto>().ToList();
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<PersonAddressDto, PersonAddress>());
+                var mapper = config.CreateMapper();
+                var people = new List<PersonAddress>();
+                dto.ForEach(x => people.Add(mapper.Map<PersonAddress>(x)));
+                return people;
+            }
+            // return null;
+        }
+
+
+        private static string GetAppDirectoryName()
+        {
+
+            var navigation = new SettingsManager();
+            var navFile = navigation.ExcelFormatFile;
+            var folder = Path.GetDirectoryName(navFile);
+            while (new DirectoryInfo(folder).Name != "bin")
+            {
+                folder = new DirectoryInfo(folder).Parent.FullName;
+            }
+            return new DirectoryInfo(folder).Parent.FullName;
         }
     }
 }

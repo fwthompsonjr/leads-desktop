@@ -44,24 +44,26 @@ namespace Thompson.RecordSearch.Utility.Models
         {
             var caseType = string.IsNullOrEmpty(CaseType) ?
                 string.Empty : CaseType.Trim();
+            var caseStyle = string.IsNullOrEmpty(CaseStyle) ?
+                string.Empty : CaseStyle.Trim();
             return new List<ICaseDataParser>
             {
-                new ParseCaseDataByVersusStrategy{ CaseData = CaseStyle },
-                new ParseCaseDataByVsStrategy{ CaseData = CaseStyle },
-                new ParseCaseDataByEstateStrategy{ CaseData = CaseStyle },
-                new ParseCaseDataByInTheEstateStrategy{ CaseData = CaseStyle },
-                new ParseCaseOrderForForeclosure { CaseData = CaseStyle },
-                new ParseCaseInTheMatterMarriage { CaseData = CaseStyle },
-                new ParseCaseByVDot { CaseData = CaseStyle },
-                new ParseCaseNameChange { CaseData = CaseStyle },
-                new ParseMatterOfNameChange { CaseData = CaseStyle },
-                new ParseCaseInInterestMatch { CaseData = CaseStyle },
-                new ParseCaseExParteMatch { CaseData = CaseStyle },
+                new ParseCaseDataByVersusStrategy{ CaseData = caseStyle },
+                new ParseCaseDataByVsStrategy{ CaseData = caseStyle },
+                new ParseCaseDataByEstateStrategy{ CaseData = caseStyle },
+                new ParseCaseDataByInTheEstateStrategy{ CaseData = caseStyle },
+                new ParseCaseOrderForForeclosure { CaseData = caseStyle },
+                new ParseCaseInTheMatterMarriage { CaseData = caseStyle },
+                new ParseCaseByVDot { CaseData = caseStyle },
+                new ParseCaseNameChange { CaseData = caseStyle },
+                new ParseMatterOfNameChange { CaseData = caseStyle },
+                new ParseCaseInInterestMatch { CaseData = caseStyle },
+                new ParseCaseExParteMatch { CaseData = caseStyle },
                 new ParseNameChangeByCaseType { CaseData =
-                string.Format(CultureInfo.CurrentCulture, "{0}| {1}", caseType, CaseStyle) },
+                string.Format(CultureInfo.CurrentCulture, "{0}| {1}", caseType, caseStyle) },
                 new ParseProtectiveOrderCaseType { CaseData =
-                string.Format(CultureInfo.CurrentCulture, "{0}| {1}", caseType, CaseStyle) },
-                new ParseCaseDataByInGuardianshipStrategy{ CaseData = CaseStyle}
+                string.Format(CultureInfo.CurrentCulture, "{0}| {1}", caseType, caseStyle) },
+                new ParseCaseDataByInGuardianshipStrategy{ CaseData = caseStyle}
             };
         }
 
@@ -148,6 +150,15 @@ namespace Thompson.RecordSearch.Utility.Models
             if (string.IsNullOrEmpty(CaseStyle)) return string.Empty;
             var providers = GetCaseDataParses().FindAll(x => x.CanParse());
             if (!providers.Any()) return string.Empty;
+            var response = string.Empty;
+            foreach (var parser in providers)
+            {
+                response = parser.Parse().Plantiff;
+                if (!string.IsNullOrEmpty(response))
+                {
+                    return response;
+                }
+            }
             return providers.First().Parse().Plantiff;
         }
         #endregion
