@@ -106,6 +106,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 cases.FindAll(c => c.IsCriminal && !string.IsNullOrEmpty(c.CriminalCaseStyle))
                     .ForEach(d => d.CaseStyle = d.CriminalCaseStyle);
 
+                cases.FindAll(c => c.IsJustice && !string.IsNullOrEmpty(c.CriminalCaseStyle))
+                    .ForEach(d => d.CaseStyle = d.CriminalCaseStyle);
+
                 people = ExtractPeople(cases);
 
 
@@ -138,7 +141,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
-                var styleInfo = item.IsCriminal ? item.CriminalCaseStyle : GetCaseStyle(item);
+                var styleInfo = item.IsCriminal | item.IsJustice ? item.CriminalCaseStyle : GetCaseStyle(item);
                 if (item.IsProbate) styleInfo = item.CaseStyle;
                 var person = new PersonAddress
                 {
@@ -149,6 +152,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                     CaseType = item.CaseType,
                     CaseStyle = styleInfo
                 };
+                if (string.IsNullOrEmpty(person.CaseStyle))
+                {
+                    throw new DataMisalignedException(person.CaseNumber);
+                }
                 item.Address = CleanUpAddress(item.Address);
                 person = ParseAddress(item.Address, person);
                 list.Add(person);
@@ -220,9 +227,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
 
             var criminalLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.CriminalLinkXpath));
+            var elementCaseName = TryFindElement(driver, By.XPath(CommonKeyIndexes.CaseStlyeBoldXpath));
             if (criminalLink != null)
             {
-                var elementCaseName = TryFindElement(driver, By.XPath(CommonKeyIndexes.CaseStlyeBoldXpath));
                 if (elementCaseName != null)
                 {
                     linkData.CriminalCaseStyle = elementCaseName.Text;
@@ -233,6 +240,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             if(probateLink != null)
             {
                 linkData.IsProbate = true;
+            }
+            if (linkData.IsJustice && elementCaseName != null)
+            {
+                linkData.CriminalCaseStyle = elementCaseName.Text;
             }
             var finders = new List<FindDefendantBase>
             {

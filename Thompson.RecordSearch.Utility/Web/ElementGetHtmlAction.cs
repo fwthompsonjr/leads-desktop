@@ -12,6 +12,8 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public bool IsProbateSearch { get; private set; }
 
+        public bool IsJusticeSearch { get; private set; }
+
         public override void Act(NavigationStep item)
         {
             var helper = new CollinWebInteractive();
@@ -24,11 +26,18 @@ namespace Thompson.RecordSearch.Utility.Web
             // remove the image tags now
             
             OuterHtml = outerHtml;
+            var probateLinkXpath = CommonKeyIndexes.ProbateLinkXpath;
+            var justiceLinkXpath = probateLinkXpath.Replace("'Probate'", "'Justice'");
             var probateLink =
                 GetWeb.TryFindElement(
-                    By.XPath("//a[@class = 'ssBlackNavBarHyperlink'][contains(text(),'Probate')]"));
-            
+                    By.XPath(probateLinkXpath));
+            var justiceLocation =
+                GetWeb.TryFindElement(
+                    By.XPath(justiceLinkXpath));
+            var isCollinCounty = GetWeb.Url.Contains("co.collin.tx.us");
+
             IsProbateSearch = probateLink != null;
+            IsJusticeSearch = isCollinCounty && justiceLocation != null;
         }
     }
 }

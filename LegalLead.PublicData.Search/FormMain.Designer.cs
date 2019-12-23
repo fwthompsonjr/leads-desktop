@@ -60,6 +60,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.ButtonDentonSetting, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.dteStart, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.dteEnding, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.button1, 1, 6);
@@ -75,7 +76,6 @@
             this.tableLayoutPanel1.Controls.Add(this.cboCaseType, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.label6, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.cboCourts, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.ButtonDentonSetting, 0, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";

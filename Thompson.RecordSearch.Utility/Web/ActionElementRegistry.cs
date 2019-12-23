@@ -21,6 +21,7 @@ namespace Thompson.RecordSearch.Utility.Web
             For<IElementActionBase>().Add<ElementGetHtmlAction>().Named("get-table-html");
             For<IElementActionBase>().Add<ElementSetPasswordAction>().Named("login");
             For<IElementActionBase>().Add<ElementSetDropDownValue>().Named("set-dropdown-value");
+            For<IElementActionBase>().Add<GetRecordCountAction>().Named("get-record-count");
         }
     }
 }

@@ -184,21 +184,168 @@ namespace Thompson.RecordSearch.Utility
             ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NavigationFileNotFound);
         public static readonly string SearchSettingFileNotFound =
             ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.SearchSettingFileNotFound);
+        public static readonly string SearchRecordCount =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.SearchRecordCount);
+        public static readonly string NameProperCase =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.NameProperCase);
+        public static readonly string StartingFetchRequest =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.StartingFetchRequest);
+        public static readonly string EndingFetchRequest =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.EndingFetchRequest);
+        public static readonly string DashedLine =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.DashedLine);
+        public static readonly string GeneralLongDate =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.GeneralLongDate);
+
+
+
+
+        public static readonly string StartDateLabel =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.StartDateLabel);
+        public static readonly string EndDateLabel =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.EndDateLabel);
+        public static readonly string WebsiteLabel =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.WebsiteLabel);
+        public static readonly string FileNotFoundError =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.FileNotFoundError);
+        public static readonly string DataSourceNotFoundError =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.DataSourceNotFoundError);
+        public static readonly string ExcelSourceNotFoundError =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.ExcelSourceNotFoundError);
+
+
+
+
+        public static readonly string SpaceDashSpaceElement =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.SpaceDashSpaceElement);
+        public static readonly string CriminalCivilAndFamily =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.CriminalCivilAndFamily);
+        public static readonly string JpCountyCourts =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.JpCountyCourts);
+        public static readonly string DistrictCourts =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.DistrictCourts);
+        public static readonly string SearchColonSpaceElement =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.SearchColonSpaceElement);
+        public static readonly string DentonDistrictCaseType =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.DentonDistrictCaseType);
+
+
+
+        public static readonly string DentonCountyCaseType =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.DentonCountyCaseType);
+        public static readonly string TarrantCountyCaseType =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.TarrantCountyCaseType);
+        public static readonly string CollinCountyUserMap =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.CollinCountyUserMap);
+        public static readonly string ElementPipeElement =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ElementPipeElement);
+        public static readonly string Error =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.Error);
+        public static readonly string FormContextId =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.FormContextId);
+        public static readonly string FormStartDate =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.FormStartDate);
+        public static readonly string FormEndDate =
+            ResourceTable.GetText(ResourceType.Xml, ResourceKeyIndex.FormEndDate);
+        public static readonly string EndTime =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.EndTime);
+        public static readonly string StartTime =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.StartTime);
+
+        public static readonly string PleaseChooseWebsite =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.PleaseChooseWebsite);
+        public static readonly string DataValidationError =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.DataValidationError);
+        public static readonly string PleaseCheckStartAndEndDates =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.PleaseCheckStartAndEndDates);
+        public static readonly string PleaseCheckStartEndRange =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.PleaseCheckStartEndRange);
+        public static readonly string StartDateToEndDateRange =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.StartDateToEndDateRange);
+        public static readonly string RangeExceedsMaximunDays =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.RangeExceedsMaximunDays);
+        public static readonly string DistrictKeyWord =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.DistrictKeyWord);
+        public static readonly string PleaseChooseValidCaseType =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.PleaseChooseValidCaseType);
+        public static readonly string PleaseChooseValidCaseSearchType =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.PleaseChooseValidCaseSearchType);
+        public static readonly string PleaseChooseValidCourt =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.PleaseChooseValidCourt);
+        public static readonly string DateRangeMaxDays =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.DateRangeMaxDays);
+
+        public static readonly string CustomSearchLabel =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.CustomSearchLabel);
+        public static readonly string SearchTypeLabel =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.SearchTypeLabel);
+        public static readonly string SettingsLabel =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.SettingsLabel);
+        public static readonly string PasswordLabel =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.PasswordLabel);
+
+        public static readonly string FormNameCredentials =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.FormNameCredentials);
+        public static readonly string FormNameMain =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.FormNameMain);
+        public static readonly string FutureKeyWord =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.FutureKeyWord);
+        public static readonly string TarrantCountyCustomType =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.TarrantCountyCustomType);
+        public static readonly string DefaultKeyWord =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.DefaultKeyWord);
+        public static readonly string FormNameDenton =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.FormNameDenton);
+        public static readonly string FormNameMdi =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.FormNameMdi);
+        public static readonly string JpKeyword =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.JpKeyword);
+
+        public static readonly string ChromeDriver =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ChromeDriver);
+        public static readonly string NoDataFoundFromCaseExtract =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.NoDataFoundFromCaseExtract);
+        public static readonly string CaseExtractCompleteWouldYouLikeToView =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.CaseExtractCompleteWouldYouLikeToView);
+
+
+        public static readonly string DataExtractSuccess =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.DataExtractSuccess);
+        public static readonly string UnexpectedErrorOccurred =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.UnexpectedErrorOccurred);
+
+        public static readonly string DataNotFound =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.DataNotFound);
+        public static readonly string PleaseCheckSourceDataNotFound =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.PleaseCheckSourceDataNotFound);
+
+
+        public static readonly string ElementSpaceDashSpaceElement =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ElementSpaceDashSpaceElement);
+        public static readonly string TextAndAllFilesFilter =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.TextAndAllFilesFilter);
+        public static readonly string FormStartup =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.FormStartup);
+        public static readonly string ExtensionXml =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ExtensionXml);
+
+        public static readonly string ExtensionXlsx =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ExtensionXlsx);
+
         /* 
          * 
 
-        public static readonly string NonAddressZipCode =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressZipCode);
-        public static readonly string NonAddressLine1 =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressLine1);
-        public static readonly string NonAddressLine2 =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NonAddressLine2);
-        public static readonly string QueryString =
-            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.QueryString);
-        public static readonly string NumberOne =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.NumberOne);
-        public static readonly string SearchSettingFileNotFound =
-            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.SearchSettingFileNotFound);
+
+        DateRangeMaxDays
+
+        
+        public static readonly string ExtensionXlsx =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ExtensionXlsx);
+        public static readonly string TextAndAllFilesFilter =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.TextAndAllFilesFilter);
+        public static readonly string CaseExtractCompleteWouldYouLikeToView =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.CaseExtractCompleteWouldYouLikeToView);
+         
          */
     }
 }

@@ -250,8 +250,9 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             if (!actionName.Equals("get-table-html", comparison)) return cases;
             if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
-
-            var isProbate = ((ElementGetHtmlAction)action).IsProbateSearch;
+            var htmlAction = (ElementGetHtmlAction)action;
+            var isProbate = htmlAction.IsProbateSearch;
+            var isJustice = htmlAction.IsJusticeSearch;
 
             // create a list of hlinkdatarows from table
             var caseData = RemoveElement(action.OuterHtml, "<img");
@@ -261,6 +262,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             var newcases = LoadFromHtml(caseData);
             newcases.FindAll(x => !x.IsProbate).ForEach(c => c.IsProbate = isProbate);
+            newcases.FindAll(x => !x.IsJustice).ForEach(c => c.IsJustice = isJustice);
             // map case information using file xpath
             newcases = AppendCourtInformation(newcases);
 
@@ -396,6 +398,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var doc = XmlDocProvider.GetDoc(contents);
             List<XmlNode> caseInspetor = GetCaseInspector(parameterId, doc);
             var probateInspector = GetCaseInspector(parameterId, doc, "probate");
+            var justiceInspector = GetCaseInspector(parameterId, doc, "justice");
             //var caseInfo = doc.DocumentElement.SelectSingleNode("");
             foreach (var item in caseList)
             {
@@ -403,9 +406,16 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var dcc = XmlDocProvider.GetDoc(data);
                 var trow = dcc.ChildNodes[0];
                 var inspector = item.IsProbate ? probateInspector : caseInspetor;
+                if (item.IsJustice) { inspector = justiceInspector; }
                 foreach (var search in inspector)
                 {
                     var node = trow.SelectSingleNode(search.InnerText);
+                    if(node == null)
+                    {
+                        Console.WriteLine("Unable to locate element {0} with selector - {1}",
+                            search.Attributes.GetNamedItem("name").InnerText,
+                            search.InnerText);
+                    }
                     var keyName = search.Attributes.GetNamedItem("name").InnerText;
                     item[keyName] = node.InnerText;
                 }

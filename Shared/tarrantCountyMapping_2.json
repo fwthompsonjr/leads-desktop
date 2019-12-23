@@ -102,6 +102,14 @@
       }
     },
     {
+      "actionName": "get-record-count",
+      "displayName": "record-count",
+      "locator": {
+        "find": "xpath",
+        "query": "/html/body/table[3]/tbody/tr[1]/td[2]/b"
+      }
+    },
+    {
       "actionName": "get-table-html",
       "displayName": "get-case-data-table",
       "locator": {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -15,26 +16,26 @@ namespace LegalLead.PublicData.Search
             // cbo case search
 
             var countyCaseTypes
-                = CaseTypeSelectionDto.GetDto("dentonCountyCaseType");
+                = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.DentonCountyCaseType); // "dentonCountyCaseType");
             var districtCaseTypes
-                = CaseTypeSelectionDto.GetDto("dentonDistrictCaseType");
+                = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.DentonDistrictCaseType); // "dentonDistrictCaseType");
 
 
             cboCaseSearchType.DataSource = countyCaseTypes.CaseSearchTypes;
-            cboCaseSearchType.DisplayMember = "Name";
-            cboCaseSearchType.ValueMember = "Id";
+            cboCaseSearchType.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboCaseSearchType.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboCourtListA.DataSource = countyCaseTypes.DropDowns.First().Options;
-            cboCourtListA.DisplayMember = "Name";
-            cboCourtListA.ValueMember = "Id";
+            cboCourtListA.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboCourtListA.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboCourtListB.DataSource = districtCaseTypes.DropDowns.First().Options;
-            cboCourtListB.DisplayMember = "Name";
-            cboCourtListB.ValueMember = "Id";
+            cboCourtListB.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboCourtListB.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboDistrictSearchType.DataSource = districtCaseTypes.CaseSearchTypes;
-            cboDistrictSearchType.DisplayMember = "Name";
-            cboDistrictSearchType.ValueMember = "Id";
+            cboDistrictSearchType.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboDistrictSearchType.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboCaseSearchType.SelectedIndex = 0;
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
@@ -43,20 +44,24 @@ namespace LegalLead.PublicData.Search
                 LoadFromSearchSettings();
                 cboCaseSearchType.SelectedIndex = cboCaseSearchType.SelectedIndex;
                 return; }
-            var searchIndex = keys.Find(k => k.Name.Equals("CaseSearchType", comparison));
+            var searchIndex = keys.Find(k => k.Name.Equals( 
+                CommonKeyIndexes.CaseSearchType, //"CaseSearchType"
+                comparison));
             var searchTarget = countyCaseTypes.CaseSearchTypes.Find(x => 
                 x.Query.Equals(searchIndex.Value, comparison));
 
             cboCaseSearchType.SelectedIndex = searchTarget.Id;
-            var courtIndex = keys.Find(k => k.Name.Equals("SearchComboIndex", comparison));
+            var courtIndex = keys.Find(k => k.Name.Equals(
+                CommonKeyIndexes.SearchComboIndex, // "SearchComboIndex" 
+                comparison));
             var countIndexId = Convert.ToInt32(courtIndex.Value);
             var showDistrict = ((CaseSearchType)cboCaseSearchType.SelectedItem)
-                .Name.Equals("District Courts", comparison);
+                .Name.Equals(CommonKeyIndexes.DistrictCourts, comparison);
             cboCourtListA.SelectedIndex = showDistrict ? 0 : countIndexId;
             cboCourtListB.SelectedIndex = showDistrict ? countIndexId : 0;
             cboDistrictSearchType.SelectedIndex = 0;
             if (!showDistrict) return;
-            var districtIndex = keys.Find(k => k.Name.Equals("DistrictSearchType", comparison));
+            var districtIndex = keys.Find(k => k.Name.Equals(CommonKeyIndexes.DistrictSearchType, comparison));
             var districtTarget = districtCaseTypes.CaseSearchTypes.Find(x =>
                 x.Query.Equals(districtIndex.Value, comparison));
             cboDistrictSearchType.SelectedIndex = districtTarget.Id;
@@ -77,13 +82,13 @@ namespace LegalLead.PublicData.Search
         {
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
             var showDistrict = ((CaseSearchType)cboCaseSearchType.SelectedItem)
-                .Name.Equals("District Courts", comparison);
+                .Name.Equals(CommonKeyIndexes.DistrictCourts, comparison);
             foreach (Control control in tableLayoutPanel1.Controls)
             {
                 if (control.Tag == null) continue;
                 control.Enabled = showDistrict ?
-                    control.Tag.ToString().Contains("District") :
-                    control.Tag.ToString().Contains("JP");
+                    control.Tag.ToString().Contains(CommonKeyIndexes.DistrictKeyWord) :
+                    control.Tag.ToString().Contains(CommonKeyIndexes.JpKeyword); 
             }
         }
 
@@ -96,21 +101,22 @@ namespace LegalLead.PublicData.Search
         private void Save(bool writeFile = true)
         {
             var showDistrict = ((CaseSearchType)cboCaseSearchType.SelectedItem)
-                .Name.Equals("District Courts", StringComparison.CurrentCultureIgnoreCase);
+                .Name.Equals(CommonKeyIndexes.DistrictCourts, // "District Courts", 
+                StringComparison.CurrentCultureIgnoreCase);
             var caseSearchItem = (CaseSearchType)cboCaseSearchType.SelectedItem;
             var jpCourtItem = (Option)cboCourtListA.SelectedItem;
             var districtCourtItem = (Option)cboCourtListB.SelectedItem;
             var districtSearchItem = (CaseSearchType)cboDistrictSearchType.SelectedItem;
             var keyZero = new WebNavigationKey
             {
-                Name = "SearchComboIndex",
+                Name = CommonKeyIndexes.SearchComboIndex, // "SearchComboIndex",
                 Value = showDistrict ?
                 (districtCourtItem.Id - 1).ToString() :
                 (jpCourtItem.Id - 1).ToString()
             };
             var caseSearch = new WebNavigationKey
             {
-                Name = "CaseSearchType",
+                Name = CommonKeyIndexes.CaseSearchType, // "CaseSearchType",
                 Value = caseSearchItem.Query
             };
             var keys = new List<WebNavigationKey>()
@@ -122,7 +128,7 @@ namespace LegalLead.PublicData.Search
             {
                 keys.Add(new WebNavigationKey
                 {
-                    Name = "DistrictSearchType",
+                    Name = CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType",
                     Value = districtSearchItem.Query
                 });
             }

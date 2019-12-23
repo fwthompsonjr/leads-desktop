@@ -1,10 +1,11 @@
 ﻿using System.Windows.Forms;
+using Thompson.RecordSearch.Utility;
 
 namespace LegalLead.PublicData.Search.Command
 {
     public class MdiCommand : CommandBase
     {
-        public override string Name => "mdi";
+        public override string Name => CommonKeyIndexes.FormNameMdi;
 
         public override void Execute(FormMain mainForm)
         {
@@ -12,7 +13,7 @@ namespace LegalLead.PublicData.Search.Command
             var mdi = new MDIParent();
             mainForm.MdiParent = mdi;
             mainForm.WindowState = FormWindowState.Maximized;
-            mainForm.Text = "Settings";
+            mainForm.Text = CommonKeyIndexes.SettingsLabel; // "Settings";
             mainForm.Show();
             Application.Run(mdi);
 

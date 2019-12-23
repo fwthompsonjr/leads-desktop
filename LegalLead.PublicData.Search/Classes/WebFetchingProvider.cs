@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -19,8 +20,12 @@ namespace LegalLead.PublicData.Search
                 case 20:
                     return new CollinWebInteractive(siteData, startDate, endingDate);
                 default:
-                    var districtKey = Program.DentonCustomKeys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", StringComparison.CurrentCulture));
-                    var siteDistrictKey = siteData.Keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", StringComparison.CurrentCulture));
+                    var districtKey = Program.DentonCustomKeys.FirstOrDefault(
+                        x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType", 
+                        StringComparison.CurrentCulture));
+                    var siteDistrictKey = siteData.Keys.FirstOrDefault(
+                        x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType, 
+                        StringComparison.CurrentCulture));
                     if(districtKey == null)
                     {
                         if(siteDistrictKey != null)

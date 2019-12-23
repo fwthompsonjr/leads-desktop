@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
@@ -13,8 +14,8 @@ namespace LegalLead.PublicData.Search
         {
             if (cboWebsite.SelectedIndex < 0)
             {
-                MessageBox.Show("Please choose a website",
-                    "Data Validation Error",
+                MessageBox.Show(CommonKeyIndexes.PleaseChooseWebsite,
+                    CommonKeyIndexes.DataValidationError,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return false;
@@ -22,14 +23,15 @@ namespace LegalLead.PublicData.Search
             if (dteStart.Value.Date > dteEnding.Value.Date)
             {
                 MessageBox.Show(
-                    "Please check start/end dates. Start date must be less than End Date.",
-                    "Data Validation Error",
+                    CommonKeyIndexes.PleaseCheckStartAndEndDates,
+                    CommonKeyIndexes.DataValidationError,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
             var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
-            var dateRange = siteData.Keys.FirstOrDefault(x => x.Name.Equals("dateRangeMaxDays", comparison));
+            var dateRange = siteData.Keys.FirstOrDefault(x => x.Name.Equals(
+                CommonKeyIndexes.DateRangeMaxDays, comparison));
             if (dateRange != null)
             {
                 int maxDayInterval = Convert.ToInt32(dateRange.Value, CultureInfo.CurrentCulture.NumberFormat);
@@ -37,12 +39,13 @@ namespace LegalLead.PublicData.Search
                     dteEnding.Value.Date).TotalDays));
                 if (dayInterval > maxDayInterval)
                 {
-                    MessageBox.Show("Please check start/end dates. " +
+                    MessageBox.Show(CommonKeyIndexes.PleaseCheckStartEndRange +
                         Environment.NewLine +
-                        "Start date - End Date Date Range " +
+                        CommonKeyIndexes.StartDateToEndDateRange +
                         Environment.NewLine +
-                        string.Format(CultureInfo.CurrentCulture, "exceeds maximum of ({0}) days.", maxDayInterval),
-                        "Data Validation Error",
+                        string.Format(CultureInfo.CurrentCulture, CommonKeyIndexes.RangeExceedsMaximunDays, 
+                        maxDayInterval),
+                        CommonKeyIndexes.DataValidationError,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return false;
@@ -72,11 +75,13 @@ namespace LegalLead.PublicData.Search
                     siteData.Keys.Add(customKey);
                 }
             }
-            var isDistrictSearch = tsStatusLabel.Text.Contains("District");
+            var isDistrictSearch = tsStatusLabel.Text.Contains(CommonKeyIndexes.DistrictKeyWord);
             if (!isDistrictSearch)
             {
                 // remove district item from keys collection
-                var districtItem = keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", comparison));
+                var districtItem = keys.FirstOrDefault(x => x.Name.Equals(
+                    CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType", 
+                    comparison));
                 if(districtItem != null)
                 {
                     keys.Remove(districtItem);
@@ -91,8 +96,8 @@ namespace LegalLead.PublicData.Search
             if (siteData.Id != 20) return true;
             if (cboCaseType.SelectedIndex < 0)
             {
-                MessageBox.Show("Please choose a valid case type",
-                    "Data Validation Error",
+                MessageBox.Show(CommonKeyIndexes.PleaseChooseValidCaseType,
+                    CommonKeyIndexes.DataValidationError,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return false;
@@ -101,15 +106,15 @@ namespace LegalLead.PublicData.Search
             {
                 // update site data with correct index
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
-                SetKeyValue(siteData, "caseTypeSelectedIndex",
+                SetKeyValue(siteData, CommonKeyIndexes.CaseTypeSelectedIndex,
                 Convert.ToInt32(cboCaseType.SelectedValue,
                     CultureInfo.CurrentCulture.NumberFormat)
                     .ToString("0", CultureInfo.CurrentCulture.NumberFormat));
             }
             if (cboSearchType.SelectedIndex < 0)
             {
-                MessageBox.Show("Please choose a valid case search type",
-                    "Data Validation Error",
+                MessageBox.Show(CommonKeyIndexes.PleaseChooseValidCaseSearchType,
+                    CommonKeyIndexes.DataValidationError,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return false;
@@ -118,7 +123,7 @@ namespace LegalLead.PublicData.Search
             {
                 // update site data with correct index
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
-                SetKeyValue(siteData, "searchTypeSelectedIndex",
+                SetKeyValue(siteData, CommonKeyIndexes.SearchTypeSelectedIndex, // "searchTypeSelectedIndex",
                 Convert.ToInt32(cboSearchType.SelectedValue, 
                     CultureInfo.CurrentCulture.NumberFormat)
                     .ToString("0", CultureInfo.CurrentCulture.NumberFormat));
@@ -131,19 +136,20 @@ namespace LegalLead.PublicData.Search
             if (siteData.Id != 10) return true;
             if (cboCourts.SelectedIndex < 0)
             {
-                MessageBox.Show("Please choose a valid court", "Data Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(CommonKeyIndexes.PleaseChooseValidCourt, 
+                    CommonKeyIndexes.DataValidationError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             else
             {
                 // update site data with correct index
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
-                SetKeyValue(siteData, "caseTypeSelectedIndex",
+                SetKeyValue(siteData, CommonKeyIndexes.CaseTypeSelectedIndex,
                 Convert.ToInt32(cboCourts.SelectedValue
                     ,CultureInfo.CurrentCulture.NumberFormat)
                     .ToString("0", CultureInfo.CurrentCulture.NumberFormat));
 
-                SetKeyValue(siteData, "criminalCaseInclusion", 
+                SetKeyValue(siteData, CommonKeyIndexes.CriminalCaseInclusion, 
                     cboCaseType.SelectedValue.ToString());
             }
             return true;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,6 +13,18 @@ namespace Thompson.RecordSearch.Utility.Tests
     [TestClass]
     public class CollinCountyNavigationTests
     {
+
+
+        [AssemblyCleanup]
+        public static void AssemblyCleanUp()
+        {
+            const string processName = "chromedriver";
+            foreach (var process in Process.GetProcessesByName(processName))
+            {
+                process.Kill();
+            }
+        }
+
         [TestMethod]
         public void CanGetCaseTypes()
         {
@@ -54,15 +67,16 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanGetCriminalCasesFromCollinInteractive()
         {
             if (!ExecutionManagement.CanExecuteFetch()) return;
-            // manipulate parameters to setup a criminal search
-            const string jsFile = @"D:\Alpha\LegalLead\Thompson.RecordSearch.Utility.Tests\Json\collin-criminal-case-parameter.json";
+            const string jsFile = @"Json\collin-criminal-case-parameter.json";
+            var appFile = GetAppDirectoryName();
+            appFile = Path.Combine(appFile, jsFile);
             var webId = 20;
             var startDate = DateTime.Now.Date.AddDays(-4);
             var endDate = DateTime.Now.Date.AddDays(-4);
             var webParameter = BaseWebIneractive.GetWebNavigation(webId,
                 startDate,
                 endDate);
-            webParameter = CreateOrLoadWebParameter(webParameter, jsFile);
+            webParameter = CreateOrLoadWebParameter(webParameter, appFile);
             var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
             var result = interactive.Fetch();
             Assert.IsNotNull(result);
@@ -76,20 +90,71 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanGetProbateCasesFromCollinInteractive()
         {
             if (!ExecutionManagement.CanExecuteFetch()) return;
-            // manipulate parameters to setup a criminal search
-            const string jsFile = @"D:\Alpha\LegalLead\Thompson.RecordSearch.Utility.Tests\Json\collin-probate-case-parameter.json";
+            const string jsFile = @"Json\collin-probate-case-parameter.json";
+            var appFile = GetAppDirectoryName();
+            appFile = Path.Combine(appFile, jsFile);
             var webId = 20;
             var startDate = DateTime.Now.Date.AddDays(-4);
             var endDate = DateTime.Now.Date.AddDays(-4);
             var webParameter = BaseWebIneractive.GetWebNavigation(webId,
                 startDate,
                 endDate);
-            webParameter = CreateOrLoadWebParameter(webParameter, jsFile);
+            webParameter = CreateOrLoadWebParameter(webParameter, appFile);
             var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
             var result = interactive.Fetch();
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
         }
+
+
+        [TestMethod]
+        [TestCategory("collin.county.actions")]
+        [TestCategory("Web.Integration")]
+        public void CanGetCivilAndFamilyCasesFromCollinInteractive()
+        {
+            if (!ExecutionManagement.CanExecuteFetch()) return;
+            const string jsFile = @"Json\collin-civil-and-family-case-parameter.json";
+            var appFile = GetAppDirectoryName();
+            appFile = Path.Combine(appFile, jsFile);
+            var webId = 20;
+            var startDate = DateTime.Now.Date.AddDays(-4);
+            var endDate = DateTime.Now.Date.AddDays(-4);
+            var webParameter = BaseWebIneractive.GetWebNavigation(webId,
+                startDate,
+                endDate);
+            webParameter = CreateOrLoadWebParameter(webParameter, appFile);
+            var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
+            var result = interactive.Fetch();
+            Assert.IsNotNull(result);
+            ExcelWriter.WriteToExcel(result);
+        }
+
+
+        [TestMethod]
+        [TestCategory("collin.county.actions")]
+        [TestCategory("Web.Integration")]
+        public void CanGetJusticeCasesFromCollinInteractive()
+        {
+            if (!ExecutionManagement.CanExecuteFetch()) return;
+            const string jsFile = @"Json\collin-justice-case-parameter.json";
+            var appFile = GetAppDirectoryName();
+            appFile = Path.Combine(appFile, jsFile);
+            var webId = 20;
+            var startDate = DateTime.Now.Date.AddDays(-4);
+            var endDate = DateTime.Now.Date.AddDays(-4);
+            var webParameter = BaseWebIneractive.GetWebNavigation(webId,
+                startDate,
+                endDate);
+            webParameter = CreateOrLoadWebParameter(webParameter, appFile);
+            var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
+            var result = interactive.Fetch();
+            Assert.IsNotNull(result);
+            ExcelWriter.WriteToExcel(result);
+        }
+
+
+
+        #region Static Helper Functions
 
         private static WebNavigationParameter CreateOrLoadWebParameter(WebNavigationParameter webParameter, string jsFile)
         {
@@ -124,5 +189,20 @@ namespace Thompson.RecordSearch.Utility.Tests
                 return webParameter;
             }
         }
+
+        private static string GetAppDirectoryName()
+        {
+
+            var navigation = new SettingsManager();
+            var navFile = navigation.ExcelFormatFile;
+            var folder = Path.GetDirectoryName(navFile);
+            while (new DirectoryInfo(folder).Name != "bin")
+            {
+                folder = new DirectoryInfo(folder).Parent.FullName;
+            }
+            return new DirectoryInfo(folder).Parent.FullName;
+        }
+
+        #endregion
     }
 }

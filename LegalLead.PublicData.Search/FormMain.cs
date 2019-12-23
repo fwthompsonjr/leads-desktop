@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -42,7 +43,7 @@ namespace LegalLead.PublicData.Search
             
             try
             {
-                KillProcess("chromedriver");
+                KillProcess(CommonKeyIndexes.ChromeDriver);
                 SetStatus(StatusType.Running);
                 if (!ValidateCustom())
                 {
@@ -58,16 +59,22 @@ namespace LegalLead.PublicData.Search
                 const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
                 var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
                 var keys = siteData.Keys;
-                var isDistrictSearch = keys.FirstOrDefault(x => x.Name.Equals("DistrictSearchType", ccic)) != null;
-                var criminalToggle = keys.FirstOrDefault(x => x.Name.Equals("criminalCaseInclusion", ccic));
+                var isDistrictSearch = keys.FirstOrDefault(x => 
+                    x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType"
+                    ccic)) != null;
+                var criminalToggle = keys.FirstOrDefault(x => 
+                    x.Name.Equals(CommonKeyIndexes.CriminalCaseInclusion, 
+                    ccic));
                 if (isDentonCounty && criminalToggle != null)
                 {
-                    criminalToggle.Value = isDistrictSearch ? "0" : "1";
+                    criminalToggle.Value = isDistrictSearch ?
+                        CommonKeyIndexes.NumberZero :
+                        CommonKeyIndexes.NumberOne; // "0" : "1";
                 }
 
                 if(!isDentonCounty & criminalToggle != null)
                 {
-                    criminalToggle.Value = "1";
+                    criminalToggle.Value = CommonKeyIndexes.NumberOne;
                 }
 
                 IWebInteractive webmgr =
@@ -78,24 +85,24 @@ namespace LegalLead.PublicData.Search
 
                 ProcessEndingMessage();
                 SetStatus(StatusType.Finished);
-                KillProcess("chromedriver");
+                KillProcess(CommonKeyIndexes.ChromeDriver);
                 if (CaseData == null)
                 {
-                    throw new ApplicationException("No data found from case extract.");
+                    throw new ApplicationException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
                 if (string.IsNullOrEmpty(CaseData.Result))
                 {
-                    throw new ApplicationException("No data found from case extract.");
+                    throw new ApplicationException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
                 CaseData.WebsiteId = siteData.Id;
                 ExcelWriter.WriteToExcel(CaseData);
 
                 var result = MessageBox.Show(
-                    "Your data extract has completed. Would you like to view in Excel?",
-                    "Data extract success",
+                    CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView,
+                    CommonKeyIndexes.DataExtractSuccess,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
-                if (result != System.Windows.Forms.DialogResult.Yes)
+                if (result != DialogResult.Yes)
                 {
                     SetStatus(StatusType.Ready);
                     return;
@@ -106,11 +113,16 @@ namespace LegalLead.PublicData.Search
             catch (Exception ex)
             {
                 SetStatus(StatusType.Error);
-                Console.WriteLine("An unexpected error occurred.");
+                Console.WriteLine(CommonKeyIndexes.UnexpectedErrorOccurred);
                 Console.WriteLine(ex.Message);
 
-                Console.WriteLine("- - - - - - - - - - - - - - - - -");
+                Console.WriteLine(CommonKeyIndexes.DashedLine); // "- - - - - - - - - - - - - - - - -");
                 Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+
+                KillProcess(CommonKeyIndexes.ChromeDriver);
             }
         }
 
@@ -132,8 +144,8 @@ namespace LegalLead.PublicData.Search
 
         private void ShowNoDataErrorBox()
         {
-            MessageBox.Show("Please check data extract. No source data has been found for export.",
-                "Data Not Found",
+            MessageBox.Show(CommonKeyIndexes.PleaseCheckSourceDataNotFound,
+                CommonKeyIndexes.DataNotFound,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }

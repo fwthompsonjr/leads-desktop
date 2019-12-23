@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -8,7 +9,7 @@ namespace LegalLead.PublicData.Search
 {
     public class WebsiteChanged : WebsiteChangeEvent
     {
-        public override string Name => @"Future";
+        public override string Name => CommonKeyIndexes.FutureKeyWord;
 
         protected TableLayoutPanel TableLayoutPanel1 => GetMain.tableLayoutPanel1;
 
@@ -20,6 +21,11 @@ namespace LegalLead.PublicData.Search
         protected Label LabelCboCaseType => GetMain.labelCboCaseType;
         public override void Change()
         {
+            const int FortyNine = 49;
+            const int Zero = 0;
+            const int Three = 3;
+            const int Four = 4;
+            const int Five = 5;
             base.Change();
             var source = (WebNavigationParameter)CboWebsite.SelectedItem;
             var customList = new List<int>
@@ -28,21 +34,22 @@ namespace LegalLead.PublicData.Search
                 (int)SourceType.TarrantCounty
             };
 
-            var showList = new List<int>
-            {
-                4,
-                5
-            };
+            var showList = new List<int> { Four, Five };
             CboCaseType.Visible = customList.Contains(source.Id);
-            LabelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty ? "Custom Search" : "Search Type";
+            LabelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty 
+                ? CommonKeyIndexes.CustomSearchLabel : CommonKeyIndexes.SearchTypeLabel;
 
-            for (int i = 3; i <= 5; i++)
+            for (int i = Three; i <= Five; i++)
             {
                 TableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
-                TableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.CollinCounty ? 49 : 0;
+                TableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.CollinCounty ? FortyNine : Zero;
                 if (showList.Contains(i))
                 {
-                    TableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.TarrantCounty ? 49 : 0;
+                    TableLayoutPanel1.RowStyles[i].Height = FortyNine;
+                    if(i == Five && source.Id == (int)SourceType.CollinCounty)
+                    {
+                        TableLayoutPanel1.RowStyles[i].Height = Zero;
+                    }
                 }
             }
 
@@ -50,15 +57,15 @@ namespace LegalLead.PublicData.Search
 
             GetMain.tsStatusLabel.Text = string.Empty;
             // custom combo mapping for case type
-            const string ccCaseName = "collinCountyCaseType";
+            var ccCaseName = CommonKeyIndexes.CollinCountyCaseType; // "collinCountyCaseType";
             var caseTypeName = source.Id == (int)SourceType.CollinCounty ?
                 ccCaseName :
-                "tarrantCountyCustomType";
+                CommonKeyIndexes.TarrantCountyCustomType; // "tarrantCountyCustomType";
             var caseTypes = CaseTypeSelectionDto.GetDto(caseTypeName);
             var dropDownOptions = caseTypes.DropDowns.First().Options;
             CboCaseType.DataSource = dropDownOptions;
-            CboCaseType.DisplayMember = "Name";
-            CboCaseType.ValueMember = "Id";
+            CboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase; // "Name";
+            CboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
 
             if (caseTypeName.Equals(ccCaseName, System.StringComparison.CurrentCultureIgnoreCase)) return;
             var selected = (Option)CboCaseType.SelectedItem;

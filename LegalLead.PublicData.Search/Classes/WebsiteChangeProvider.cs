@@ -19,7 +19,11 @@ namespace LegalLead.PublicData.Search.Classes
             var providers = ChangeProviders;
             if (providers == null) return null;
             var provider = new Thompson.RecordSearch.Utility.Classes.VersionNameProvider();
-            var matched = providers.FirstOrDefault(p => p.Name.Equals(provider.Name, StringComparison.CurrentCultureIgnoreCase));
+            var matched = providers
+                .FirstOrDefault(
+                p => p.Name.Equals(
+                    provider.Name, 
+                    StringComparison.CurrentCultureIgnoreCase));
             if (matched == null) return null;
             matched.GetMain = MainForm;
             return matched;

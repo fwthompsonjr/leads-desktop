@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -24,7 +26,8 @@ namespace LegalLead.PublicData.Search
         [STAThread]
         static void Main()
         {
-            var commandName = ConfigurationManager.AppSettings["form-startup"] ?? "main";
+            var commandName = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartup] ?? 
+                CommonKeyIndexes.FormNameMain.ToLower(CultureInfo.CurrentCulture);
             using (var consoleWriter = new ConsoleWriter())
             {
                 var command = Command.CommandStartUp.Commands

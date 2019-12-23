@@ -22,14 +22,18 @@ namespace Thompson.RecordSearch.Utility.Addressing
             // get criminal hyperlink
             // //a[contains(text(),'Criminal')]
             var criminalLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.CriminalLinkXpath)); 
+            var elementCaseName = TryFindElement(driver, By.XPath(CommonKeyIndexes.CaseStlyeBoldXpath)); 
             if (criminalLink != null)
             {
-                var elementCaseName = TryFindElement(driver, By.XPath(CommonKeyIndexes.CaseStlyeBoldXpath)); 
                 if (elementCaseName != null)
                 {
                     linkData.CriminalCaseStyle = elementCaseName.Text;
-                    linkData.IsCriminal = true;
-                } 
+                }
+                linkData.IsCriminal = true;
+            }
+            if(linkData.IsJustice && elementCaseName != null)
+            {
+                linkData.CriminalCaseStyle = elementCaseName.Text;
             }
             linkData.PageHtml = 
                 GetTable(driver, By.XPath(@"//div[contains(text(),'Party Information')]"));

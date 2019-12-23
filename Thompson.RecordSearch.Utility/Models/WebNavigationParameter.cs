@@ -72,6 +72,7 @@ namespace Thompson.RecordSearch.Utility.Models
         public string CriminalCaseStyle
         { get; set; }
         public bool IsProbate { get; internal set; }
+        public bool IsJustice { get; internal set; }
 
         public string this[string fieldName]
         {

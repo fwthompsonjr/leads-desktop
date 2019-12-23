@@ -1,10 +1,12 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using System;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
@@ -16,6 +18,7 @@ namespace LegalLead.PublicData.Search
 
         internal void SetDentonStatusLabelFromSetting()
         {
+            const int One = 1;
             var srcId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
             if(srcId != (int)SourceType.DentonCounty)
             {
@@ -23,33 +26,37 @@ namespace LegalLead.PublicData.Search
             }
             var sb = new StringBuilder();
             var searchDto = SearchSettingDto.GetDto();
-            var showDistrict = searchDto.CountySearchTypeId == 1;
+            var showDistrict = searchDto.CountySearchTypeId == (int)SourceType.DentonCounty;
             var courtNames = CaseTypeSelectionDto.GetDto(
-                showDistrict ? "dentonDistrictCaseType" : "dentonCountyCaseType");
+                showDistrict ?
+                CommonKeyIndexes.DentonDistrictCaseType :  
+                CommonKeyIndexes.DentonCountyCaseType); 
             sb.AppendFormat(
-                System.Globalization.CultureInfo.CurrentCulture,
-                "Search: {0}.", showDistrict ?
-                "District Courts" : "JP - County Courts");
+                CultureInfo.CurrentCulture,
+                CommonKeyIndexes.SearchColonSpaceElement, showDistrict ?
+                CommonKeyIndexes.DistrictCourts : 
+                CommonKeyIndexes.JpCountyCourts);
 
             var subItemId = showDistrict ?
                 searchDto.DistrictSearchTypeId :
                 searchDto.CountySearchTypeId;
 
             var courtItemId = showDistrict ? 
-                searchDto.DistrictCourtId + 1: 
-                searchDto.CountyCourtId + 1;
+                searchDto.DistrictCourtId + One : 
+                searchDto.CountyCourtId + One;
 
             var courtDropDown = courtNames.DropDowns.First();
             var nameDropDown = courtDropDown.Options.Find(x => x.Id == courtItemId);
 
             _ = sb.AppendFormat(
-                System.Globalization.CultureInfo.CurrentCulture,
-                " - {0}", nameDropDown.Name);
+                CultureInfo.CurrentCulture,
+                CommonKeyIndexes.SpaceDashSpaceElement, nameDropDown.Name);
             if (showDistrict)
             {
                 _ = sb.AppendFormat(
-                System.Globalization.CultureInfo.CurrentCulture,
-                " - {0}", "Criminal,Civil and Family".Split(',')[subItemId]);
+                CultureInfo.CurrentCulture,
+                CommonKeyIndexes.SpaceDashSpaceElement,
+                CommonKeyIndexes.CriminalCivilAndFamily.Split(',')[subItemId]);
             }
             tsStatusLabel.Text = sb.ToString();
         }
@@ -66,8 +73,8 @@ namespace LegalLead.PublicData.Search
         {
             var source = (DropDown)cboSearchType.SelectedItem;
             cboCaseType.DataSource = source.Options;
-            cboCaseType.DisplayMember = "Name";
-            cboCaseType.ValueMember = "Id";
+            cboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
             cboCaseType.SelectedIndex = 0;
         }
 
@@ -79,7 +86,7 @@ namespace LegalLead.PublicData.Search
             // Create a timer and set a two second interval.
             aTimer = new System.Timers.Timer
             {
-                Interval = 2000
+                Interval = 450
             };
 
             // Hook up the Elapsed event for the timer. 
@@ -96,54 +103,69 @@ namespace LegalLead.PublicData.Search
         {
 
             var websites = SettingsManager.GetNavigation();
-            var caseTypes = CaseTypeSelectionDto.GetDto("collinCountyCaseType");
-            var tarrantCourt = CaseTypeSelectionDto.GetDto("tarrantCountyCaseType");
-
+            var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
+            var tarrantCourt = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.TarrantCountyCaseType);
+            const int Zero = 0;
             cboWebsite.DataSource = websites;
-            cboWebsite.DisplayMember = "Name";
-            cboWebsite.ValueMember = "Id";
+            cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboSearchType.Visible = false;
             cboSearchType.DataSource = caseTypes.DropDowns;
-            cboSearchType.DisplayMember = "Name";
-            cboSearchType.ValueMember = "Id";
+            cboSearchType.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboSearchType.ValueMember = CommonKeyIndexes.IdProperCase;
 
 
 
             cboCourts.Visible = false;
             cboCourts.DataSource = tarrantCourt.DropDowns.First().Options;
-            cboCourts.DisplayMember = "Name";
-            cboCourts.ValueMember = "Id";
+            cboCourts.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboCourts.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboCaseType.Visible = false;
             cboCaseType.DataSource = caseTypes.DropDowns.First().Options;
-            cboCaseType.DisplayMember = "Name";
-            cboCaseType.ValueMember = "Id";
+            cboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
 
             for (int i = 3; i <= 5; i++)
             {
                 tableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
-                tableLayoutPanel1.RowStyles[i].Height = 0;
+                tableLayoutPanel1.RowStyles[i].Height = Zero;
             }
 
             cboSearchType.SelectedIndexChanged += CboSearchType_SelectedIndexChanged;
             cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
 
 
-            cboSearchType.SelectedIndex = 0;
-            cboCourts.SelectedIndex = 0;
-#if DEBUG 
+            cboSearchType.SelectedIndex = Zero;
+            cboCourts.SelectedIndex = Zero;
+#if DEBUG
+            DebugFormLoad();
+#endif
+            SetUpTimer();
+        }
+
+        private void DebugFormLoad()
+        {
 
             // change selected index based upon appSetting
-            var configIndex = ConfigurationManager.AppSettings["form-context-id"];
+            var configIndex = ConfigurationManager.AppSettings[CommonKeyIndexes.FormContextId];
+            var startDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartDate];
+            var endDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormEndDate];
             if (!string.IsNullOrEmpty(configIndex))
             {
                 cboWebsite.SelectedIndex = Convert.ToInt32(
                     configIndex,
-                    System.Globalization.CultureInfo.CurrentCulture);
-            } 
-#endif
-            SetUpTimer();
+                    CultureInfo.CurrentCulture);
+            }
+            if (!string.IsNullOrEmpty(startDate))
+            {
+                dteStart.Value = DateTime.Parse(startDate, CultureInfo.CurrentCulture.DateTimeFormat);
+            }
+            if (!string.IsNullOrEmpty(endDate))
+            {
+                dteEnding.Value = DateTime.Parse(endDate, CultureInfo.CurrentCulture.DateTimeFormat);
+            }
         }
 
         private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
@@ -154,18 +176,20 @@ namespace LegalLead.PublicData.Search
 
         private void ProcessStartingMessage()
         {
-            var message = "Starting fetch request: "
+            var source = (WebNavigationParameter)cboWebsite.SelectedItem;
+            var message = CommonKeyIndexes.StartingFetchRequest
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.WebsiteLabel + source.Name
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
                 + Environment.NewLine +
-                " Website: " + cboWebsite.SelectedText
+                CommonKeyIndexes.StartTime + DateTime.Now.ToString(
+                    CommonKeyIndexes.GeneralLongDate,
+                    CultureInfo.CurrentCulture)
                 + Environment.NewLine +
-                " Start Date: " + dteStart.Value.Date.ToShortDateString()
-                + Environment.NewLine +
-                " End Date: " + dteEnding.Value.Date.ToShortDateString()
-                + Environment.NewLine +
-                " Start time: " + DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss", 
-                    System.Globalization.CultureInfo.CurrentCulture)
-                + Environment.NewLine +
-                "- - - - - - - - - - - - - - - - - - - - - - - - - ";
+                CommonKeyIndexes.DashedLine;
 
             Console.WriteLine(message);
 
@@ -173,20 +197,22 @@ namespace LegalLead.PublicData.Search
 
         private void ProcessEndingMessage()
         {
-            var message = "Ending fetch request: "
+            var source = (WebNavigationParameter)cboWebsite.SelectedItem;
+            var message = CommonKeyIndexes.EndingFetchRequest
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.WebsiteLabel + source.Name
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
                 + Environment.NewLine +
-                " Website: " + cboWebsite.SelectedText
+                CommonKeyIndexes.EndTime + DateTime.Now.ToString(
+                    CommonKeyIndexes.GeneralLongDate,
+                    CultureInfo.CurrentCulture)
                 + Environment.NewLine +
-                " Start Date: " + dteStart.Value.Date.ToShortDateString()
+                CommonKeyIndexes.DashedLine
                 + Environment.NewLine +
-                " End Date: " + dteEnding.Value.Date.ToShortDateString()
-                + Environment.NewLine +
-                " End time: " + DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss", 
-                    System.Globalization.CultureInfo.CurrentCulture)
-                + Environment.NewLine +
-                "- - - - - - - - - - - - - - - - - - - - - - - - - "
-                + Environment.NewLine +
-                "- - - - - - - - - - - - - - - - - - - - - - - - - ";
+                CommonKeyIndexes.DashedLine;
 
             Console.WriteLine(message);
 
@@ -197,22 +223,28 @@ namespace LegalLead.PublicData.Search
             var xmlFile = CaseData == null ? string.Empty : CaseData.Result;
             if (string.IsNullOrEmpty(xmlFile))
             {
-                MessageBox.Show("File not found error.", "Error",
+                MessageBox.Show(
+                    CommonKeyIndexes.FileNotFoundError, // "File not found error.", 
+                    CommonKeyIndexes.Error,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Stop);
                 return;
             }
             if (!File.Exists(xmlFile))
             {
-                MessageBox.Show("Data source file not found error.", "Error",
+                MessageBox.Show(
+                    CommonKeyIndexes.DataSourceNotFoundError, // "Data source file not found error.", 
+                    CommonKeyIndexes.Error,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
                 return;
             }
-            xmlFile = xmlFile.Replace(".xml", ".xlsx");
+            xmlFile = xmlFile.Replace(CommonKeyIndexes.ExtensionXml, CommonKeyIndexes.ExtensionXlsx);
             if (!File.Exists(xmlFile))
             {
-                MessageBox.Show("Excel source file not found error.", "Error",
+                MessageBox.Show(
+                    CommonKeyIndexes.ExcelSourceNotFoundError, // "Excel source file not found error.", 
+                    CommonKeyIndexes.Error,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
                 return;

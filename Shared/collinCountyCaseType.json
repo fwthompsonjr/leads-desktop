@@ -22,8 +22,8 @@
         },
         {
           "id": 3,
-          "name": "justice of the peace  case records",
-          "query": "#divOption3 > a"
+          "name": "justice of the peace case records",
+          "query": "#divOption4 > a"
         }
       ]
     },
@@ -59,7 +59,7 @@
         {
           "id": 0,
           "name": "justice of the peace case records",
-          "query": "#divOption3 > a"
+          "query": "#divOption4 > a"
         }
       ]
     }
