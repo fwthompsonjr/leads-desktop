@@ -367,22 +367,36 @@
           "changeId": "600",
           "id": 6.4,
           "name": "Carriage returns in case style - tarrant county.",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 11410,
           "description": [
             "Carriage returns in case style - tarrant county",
-            "Start Date: 2020-01-14 15:25:13Z"
+            "Start Date: 2020-01-14 15:25:13Z",
+            "End Date: 2020-01-19 03:13:24Z"
           ]
         },
         {
           "changeId": "600",
           "id": 6.5,
           "name": "UI correction for website change event",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 11410,
           "description": [
             "UI correction for website change event",
-            "Start Date: 2020-01-14 15:53:56Z"
+            "Start Date: 2020-01-14 15:53:56Z",
+            "End Date: 2020-01-19 03:13:24Z"
+          ]
+        },
+        {
+          "changeId": "600",
+          "id": 6.6,
+          "name": "Program Installer",
+          "isFixed": true,
+          "fixVersion": 11410,
+          "description": [
+            "Creation of installer for program updates",
+            "Start Date: 2020-01-19 03:13:24Z",
+            "End Date: 2020-01-19 03:43:06Z"
           ]
         }
       ]
@@ -648,11 +662,21 @@
         {
           "id": 6.4,
           "description": "Carriage returns reported in case style for tarrant county",
-          "canPublish": false
+          "canPublish": true
         },
         {
           "id": 6.5,
           "description": "UI correction for website change event",
+          "canPublish": true
+        },
+        {
+          "id": 6.6,
+          "description": "Creation of installer for program updates",
+          "canPublish": true
+        },
+        {
+          "id": 0.0,
+          "description": "Pre build placeholder",
           "canPublish": false
         }
       ]
@@ -765,49 +789,67 @@
       "id": 5.306,
       "correctionDate": "2019-12-08T23:08:26.8355365-06:00",
       "description": "Case Style is not mapping Plantiff data for Tarrant County. Tarrant County - Probate Cases - 'in the estate of' Start Date: 2019-12-08 22:31:48Z End Date: 2019-12-08 23:07:38Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 5.4,
       "correctionDate": "2019-12-23T00:22:10.912336-06:00",
       "description": "Case Style is not mapping Plantiff data for Tarrant County. Start Date: 2019-12-21 12:33:52Z End Date: 2019-12-23 00:21:01Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 5.5,
       "correctionDate": "2019-12-23T00:22:10.912336-06:00",
       "description": "Criminal cases are not included in the data extract Start Date: 2019-12-21 12:33:52Z End Date: 2019-12-23 00:21:01Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 5.6,
       "correctionDate": "2019-12-23T00:22:10.912336-06:00",
       "description": "Criminal cases are not included in the data extract when pulling a JP courts Start Date: 2019-12-21 12:33:52Z End Date: 2019-12-23 00:21:01Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 5.601,
       "correctionDate": "2019-12-23T00:22:10.912336-06:00",
       "description": "Parsing error -  in the estate of Start Date: 2019-12-23 00:21:01Z End Date: 2019-12-23 00:21:01Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 6.1,
       "correctionDate": "2020-01-14T15:25:52.5298829-06:00",
       "description": "ComboBoxes that are displayed associated to specific change event Start Date: 2020-01-14 15:25:13Z End Date: 2020-01-14 15:25:13Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 6.2,
       "correctionDate": "2020-01-14T15:31:21.4287544-06:00",
       "description": "File read operations to settings files are not working for settings or caselayout. Start Date: 2020-01-14 15:25:13Z End Date: 2020-01-14 15:31:02Z",
-      "isWritten": false
+      "isWritten": true
     },
     {
       "id": 6.3,
       "correctionDate": "2020-01-14T15:31:54.7412867-06:00",
       "description": "Carriage returns in case style - collin county Start Date: 2020-01-14 15:25:13Z End Date: 2020-01-14 15:31:46Z",
-      "isWritten": false
+      "isWritten": true
+    },
+    {
+      "id": 6.4,
+      "correctionDate": "2020-01-19T03:14:14.4183895-06:00",
+      "description": "Carriage returns in case style - tarrant county Start Date: 2020-01-14 15:25:13Z End Date: 2020-01-19 03:13:24Z",
+      "isWritten": true
+    },
+    {
+      "id": 6.5,
+      "correctionDate": "2020-01-19T03:14:14.4183895-06:00",
+      "description": "UI correction for website change event Start Date: 2020-01-14 15:53:56Z End Date: 2020-01-19 03:13:24Z",
+      "isWritten": true
+    },
+    {
+      "id": 6.6,
+      "correctionDate": "2020-01-19T03:43:16.9713276-06:00",
+      "description": "Creation of installer for program updates Start Date: 2020-01-19 03:13:24Z End Date: 2020-01-19 03:43:06Z",
+      "isWritten": true
     }
   ],
   "template": [

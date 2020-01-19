@@ -39,19 +39,19 @@ namespace LegalLead.PublicData.Search
             LabelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty 
                 ? CommonKeyIndexes.CustomSearchLabel : CommonKeyIndexes.SearchTypeLabel;
 
-            for (int i = Three; i <= Five; i++)
-            {
-                TableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
-                TableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.CollinCounty ? FortyNine : Zero;
-                if (showList.Contains(i))
-                {
-                    TableLayoutPanel1.RowStyles[i].Height = FortyNine;
-                    if(i == Five && source.Id == (int)SourceType.CollinCounty)
-                    {
-                        TableLayoutPanel1.RowStyles[i].Height = Zero;
-                    }
-                }
-            }
+            //for (int i = Three; i <= Five; i++)
+            //{
+            //    TableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
+            //    TableLayoutPanel1.RowStyles[i].Height = source.Id == (int)SourceType.CollinCounty ? FortyNine : Zero;
+            //    if (showList.Contains(i))
+            //    {
+            //        TableLayoutPanel1.RowStyles[i].Height = FortyNine;
+            //        if(i == Five && source.Id == (int)SourceType.CollinCounty)
+            //        {
+            //            TableLayoutPanel1.RowStyles[i].Height = Zero;
+            //        }
+            //    }
+            //}
 
             if (!customList.Contains(source.Id)) return;
 

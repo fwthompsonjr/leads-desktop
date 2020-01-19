@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LegalLead.PublicData.Search.Classes;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Models;
@@ -40,14 +41,6 @@ namespace LegalLead.PublicData.Search
                         Zero;
                 }
             }
-            if(source.Id == fives[1])
-            {
-                TarrantRowStyles(styles);
-            }
-            if (source.Id == fives[0])
-            {
-                CollinRowStyles(styles);
-            }
             GetMain.tsStatusLabel.Text = string.Empty;
             // when in Denton County write Settings
             if (source.Id == (int)SourceType.DentonCounty)
@@ -59,19 +52,13 @@ namespace LegalLead.PublicData.Search
             {
                 GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.PasswordLabel; // "Password";
             }
+            ApplyRowStyles(styles, source.Id);
         }
 
-
-        protected static void TarrantRowStyles(TableLayoutRowStyleCollection styles)
+        protected static void ApplyRowStyles(TableLayoutRowStyleCollection styles, int websiteId)
         {
-            if (styles == null) return;
-            styles[3].Height = 0;
-            styles[4].Height = 0;
-        }
-        protected static void CollinRowStyles(TableLayoutRowStyleCollection styles)
-        {
-            if (styles == null) return;
-            styles[4].Height = 0;
+            var styleProviders = RowStyleChangeProvider.RowChangeProviders;
+            styleProviders.ForEach(p => p.ApplyStyles(styles, websiteId));
         }
     }
 }

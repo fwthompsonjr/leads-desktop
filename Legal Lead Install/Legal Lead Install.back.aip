@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="16.7" Modules="simple" RootPath="." Language="en" Id="{26235113-149D-4B21-9FC6-A74AAE480AF3}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="16.6.1" Modules="simple" RootPath="." Language="en" Id="{26235113-149D-4B21-9FC6-A74AAE480AF3}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;FixupComponent"/>
   </COMPONENT>
@@ -91,7 +91,7 @@
     <ROW Property="ARPCONTACT" Value="frank.thompson.jr@gmail.com"/>
     <ROW Property="ARPHELPTELEPHONE" Value="832-436-5051"/>
     <ROW Property="ARPPRODUCTICON" Value="lawicon.exe" Type="8"/>
-    <ROW Property="CTRLS" Value="3"/>
+    <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="Thompson Data Solutions"/>
     <ROW Property="MsiLogging" MultiBuildValue="DefaultBuild:vp"/>
     <ROW Property="ProductCode" Value="1033:{B575C2B9-D7D6-4E48-BEE9-840DD15F02B1} " Type="16"/>
@@ -112,7 +112,6 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
-    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="LegalLead.PublicData.Search_Dir" Directory_Parent="APPDIR" DefaultDir="LEGALL~1.SEA|LegalLead.PublicData.Search"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
@@ -121,7 +120,6 @@
     <ROW Directory="xml_Dir" Directory_Parent="LegalLead.PublicData.Search_Dir" DefaultDir="xml"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt" ComponentId="{140E7233-1509-4655-BC5B-3FEF63618E9C}" Directory_="xml_Dir" Attributes="0" KeyPath="ReadMe.txt"/>
     <ROW Component="APPDIR" ComponentId="{999DC9E6-1C88-4FB9-8528-BD0CA7BB4921}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="LegalLead.PublicData.Search_ContentOutput" ComponentId="{5DA27D37-0219-4777-B843-C730EA0D8474}" Directory_="LegalLead.PublicData.Search_Dir" Attributes="0" KeyPath="WebDriver.xml" Type="0"/>
     <ROW Component="LegalLead.PublicData.Search_ContentOutput_Utilities" ComponentId="{EA5FA675-D956-48D1-B84D-B70687E355B2}" Directory_="Utilities_Dir" Attributes="0" KeyPath="CourtRecordSearch.xlsm" Type="0"/>
@@ -176,7 +174,7 @@
     <ROW File="WebDriver.xml" Component_="LegalLead.PublicData.Search_ContentOutput" FileName="WEBDRI~2.XML|[|AI_PROPPATH_FILENAME_PERBUILD_WebDriver.xml]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_WebDriver.xml&gt;" SelfReg="false"/>
     <ROW File="chromedriver.exe" Component_="LegalLead.PublicData.Search_ContentOutput" FileName="CHROME~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_chromedriver.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_chromedriver.exe&gt;" SelfReg="false" DigSign="true"/>
     <ROW File="dentonsettings.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="DENTON~6.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_dentonsettings.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_dentonsettings.json&gt;" SelfReg="false"/>
-    <ROW File="ReadMe.txt" Component_="AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_ReadMe.txt&gt;" SelfReg="false"/>
+    <ROW File="ReadMe.txt" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_ReadMe.txt&gt;" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_CourtRecordSearch.xlsm" Path="[|AI_PROPPATH_DIR_PERBUILD_CourtRecordSearch.xlsm]\[|AI_PROPPATH_FILENAME_PERBUILD_CourtRecordSearch.xlsm]" Type="2" Content="0"/>
@@ -286,7 +284,6 @@
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
-    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="[#ReadMe.txt]"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[LegalLead.PublicData.Search_Dir]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
@@ -301,7 +298,6 @@
     <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput_Utilities"/>
     <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput_xml"/>
     <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput"/>
-    <ROW Feature_="MainFeature" Component_="AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="lawicon.exe" SourcePath="..\LegalLead.PublicData.Search\law-icon.ico" Index="0"/>
@@ -331,8 +327,6 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="AI_PROPPATH_FILENAME_PERBUILD_Rea_1" Directory_="DesktopFolder" Name="[|AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt]" Component_="AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt" Target="[#ReadMe.txt]" Description="Read Me" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="xml_Dir"/>
-    <ROW Shortcut="AI_PROPPATH_FILENAME_PERBUILD_ReadM" Directory_="SHORTCUTDIR" Name="[|AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt]" Component_="AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt" Target="[#ReadMe.txt]" Description="Read Me" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="xml_Dir"/>
     <ROW Shortcut="LegalLead.PublicData.Search" Directory_="SHORTCUTDIR" Name="LEGALL~1.SEA|LegalLead.PublicData.Search" Component_="LegalLead.PublicData.Search_PrimaryOutput" Target="[#LegalLead.PublicData.Search.exe]" Hotkey="0" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
