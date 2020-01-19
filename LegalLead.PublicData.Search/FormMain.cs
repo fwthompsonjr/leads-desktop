@@ -161,8 +161,9 @@ namespace LegalLead.PublicData.Search
             var sourceId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
             if(sourceId == (int)SourceType.DentonCounty)
             {
-                using (var credential = new FormCredential())
+                using (var credential = new FormDentonSetting())
                 {
+                    credential.Icon = Icon;
                     credential.ShowDialog(this);
                     SetDentonStatusLabelFromSetting();
                 }
@@ -171,6 +172,7 @@ namespace LegalLead.PublicData.Search
             {
                 using (var result = new FormCredential())
                 {
+                    result.Icon = Icon;
                     result.ShowDialog(this); 
                 }
             }

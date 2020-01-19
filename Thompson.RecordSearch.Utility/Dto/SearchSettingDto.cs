@@ -89,7 +89,7 @@ namespace Thompson.RecordSearch.Utility.Dto
             var dataFile = DataFile();
             var parent = new Example { SearchSetting = source };
             var data = Newtonsoft.Json.JsonConvert.SerializeObject(parent, Newtonsoft.Json.Formatting.Indented);
-            File.Delete(dataFile);
+            if (File.Exists(dataFile)) { File.Delete(dataFile); }
             using(StreamWriter sw = new StreamWriter(dataFile))
             {
                 sw.Write(data);

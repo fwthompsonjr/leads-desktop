@@ -67,6 +67,7 @@
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\ResourceMap.cs" />
     <Compile Include="ResourceTable.cs" />
+    <Compile Include="ResourceText.cs" />
     <Compile Include="ResourceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceKeyIndex.cs" />
@@ -76,6 +77,11 @@
     <None Include="text\resource-table.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="text\ResourceTextBuilder.txt" />
+    <Content Include="text\settings-xml-builder.txt" />
+    <Content Include="text\TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

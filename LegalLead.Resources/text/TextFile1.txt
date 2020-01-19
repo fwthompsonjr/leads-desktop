@@ -1,0 +1,52 @@
+﻿<?xml version=~1.0~ encoding=~utf-8~?>
+<search>
+<parameters>
+<parameter name=~Website~/>
+<parameter name=~StartDate~/>
+<parameter name=~EndDate~/>
+<parameter name=~SearchDate~/>
+<parameter name=~SearchComplete~>false</parameter>
+</parameters>
+<!-- Name	Zip	Address1	Address2	Address3 -->
+<results>
+<result name=~casedata~>
+<![CDATA[
+]]>
+</result>
+<result name=~peopledata~>
+<![CDATA[
+]]>
+</result>
+<result name=~person~>
+<people>
+<person>
+<name/>
+<address>
+<![CDATA[]]>
+
+<addressA/>
+<addressB/>
+<addressC/>
+<zip/>
+            
+</address>
+<case>
+<![CDATA[]]>
+</case>
+<dateFiled>
+<![CDATA[]]>
+</dateFiled>
+<court>
+<![CDATA[]]>
+</court>
+<caseType>
+<![CDATA[]]>
+</caseType>
+<caseStyle>
+<![CDATA[]]>
+</caseStyle>
+</person>
+</people>
+</result>
+</results>
+</search>

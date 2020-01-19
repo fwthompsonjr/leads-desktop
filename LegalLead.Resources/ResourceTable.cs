@@ -19,9 +19,24 @@ namespace LegalLead.Resources
         private static string _resourceFileName;
         private static ResourceMap _resourceMap;
 
-        public static string ResourceFileName => _resourceFileName ?? (_resourceFileName 
-            = Path.Combine(AppFolder, ResourceFolder, ResourceFile));
-
+        public static string ResourceFileName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_resourceFileName) | !File.Exists(_resourceFileName))
+                {
+                    _resourceFileName = Path.Combine(
+                        AppFolder, ResourceFolder, ResourceFile);
+                    var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+                    execName = Path.GetDirectoryName(execName);
+                    var targetFile = new Uri(string.Format(
+                        CultureInfo.CurrentCulture,
+                        @"{0}\text\{1}", execName, ResourceFile)).AbsolutePath;
+                    _resourceFileName = targetFile;
+                }
+                return _resourceFileName;
+            }
+        }
         public static string AppFolder => _appFolder ?? (_appFolder = GetAppFolderName());
 
         public static ResourceMap Map => _resourceMap ?? (_resourceMap = GetResourceMap());
@@ -75,11 +90,24 @@ namespace LegalLead.Resources
 
         private static ResourceMap GetResourceMap()
         {
+            var resourceFile = ResourceFileName;
 
-            if (!File.Exists(ResourceFileName))
+            if (!File.Exists(resourceFile))
             {
-                throw new FileNotFoundException();
+                return GetMapFromBuilder();
+                // throw new FileNotFoundException("Unable to locate resource table.", resourceFile);
             }
+            return GetMapFromFile();
+        }
+
+        private static ResourceMap GetMapFromBuilder()
+        {
+            var data = ResourceText.Text();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ResourceMap>(data);
+        }
+
+        private static ResourceMap GetMapFromFile()
+        {
             using (var reader = new StreamReader(ResourceFileName))
             {
                 var data = reader.ReadToEnd();

@@ -24,6 +24,7 @@ namespace LegalLead.Changed.UnitTests.Resources
         public void CanGetResourceFileName()
         {
             var fileName = ResourceTable.ResourceFileName;
+            Console.WriteLine("Resource File: {0}", fileName);
             Assert.IsFalse(string.IsNullOrEmpty(fileName));
             Assert.IsTrue(File.Exists(fileName));
         }

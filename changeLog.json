@@ -322,6 +322,70 @@
           ]
         }
       ]
+    },
+    {
+      "changeId": "600",
+      "reportedDate": "2020-01-14T10:15:00",
+      "issues": [
+        {
+          "changeId": "600",
+          "id": 6.1,
+          "name": "UI correction for website change event",
+          "isFixed": true,
+          "fixVersion": 11410,
+          "description": [
+            "ComboBoxes that are displayed associated to specific change event",
+            "Start Date: 2020-01-14 15:25:13Z",
+            "End Date: 2020-01-14 15:25:13Z"
+          ]
+        },
+        {
+          "changeId": "600",
+          "id": 6.2,
+          "name": "File i/o correction for settings and layouts.",
+          "isFixed": true,
+          "fixVersion": 11410,
+          "description": [
+            "File read operations to settings files are not working for settings or caselayout.",
+            "Start Date: 2020-01-14 15:25:13Z",
+            "End Date: 2020-01-14 15:31:02Z"
+          ]
+        },
+        {
+          "changeId": "600",
+          "id": 6.3,
+          "name": "Carriage returns in case style - collin county.",
+          "isFixed": true,
+          "fixVersion": 11410,
+          "description": [
+            "Carriage returns in case style - collin county",
+            "Start Date: 2020-01-14 15:25:13Z",
+            "End Date: 2020-01-14 15:31:46Z"
+          ]
+        },
+        {
+          "changeId": "600",
+          "id": 6.4,
+          "name": "Carriage returns in case style - tarrant county.",
+          "isFixed": false,
+          "fixVersion": 11410,
+          "description": [
+            "Carriage returns in case style - tarrant county",
+            "Start Date: 2020-01-14 15:25:13Z"
+          ]
+        },
+        {
+          "changeId": "600",
+          "id": 6.5,
+          "name": "UI correction for website change event",
+          "isFixed": false,
+          "fixVersion": 11410,
+          "description": [
+            "UI correction for website change event",
+            "Start Date: 2020-01-14 15:53:56Z"
+          ]
+        }
+      ]
     }
   ],
   "versions": [
@@ -561,6 +625,37 @@
           "canPublish": true
         }
       ]
+    },
+    {
+      "id": 11410,
+      "number": "1.14.1.0",
+      "fixes": [
+        {
+          "id": 6.1,
+          "description": "UI correction for website change event",
+          "canPublish": true
+        },
+        {
+          "id": 6.2,
+          "description": "File i/o correction for settings and layouts.",
+          "canPublish": true
+        },
+        {
+          "id": 6.3,
+          "description": "Carriage returns reported in case style for collin county",
+          "canPublish": true
+        },
+        {
+          "id": 6.4,
+          "description": "Carriage returns reported in case style for tarrant county",
+          "canPublish": false
+        },
+        {
+          "id": 6.5,
+          "description": "UI correction for website change event",
+          "canPublish": false
+        }
+      ]
     }
   ],
   "corrections": [
@@ -694,6 +789,24 @@
       "id": 5.601,
       "correctionDate": "2019-12-23T00:22:10.912336-06:00",
       "description": "Parsing error -  in the estate of Start Date: 2019-12-23 00:21:01Z End Date: 2019-12-23 00:21:01Z",
+      "isWritten": false
+    },
+    {
+      "id": 6.1,
+      "correctionDate": "2020-01-14T15:25:52.5298829-06:00",
+      "description": "ComboBoxes that are displayed associated to specific change event Start Date: 2020-01-14 15:25:13Z End Date: 2020-01-14 15:25:13Z",
+      "isWritten": false
+    },
+    {
+      "id": 6.2,
+      "correctionDate": "2020-01-14T15:31:21.4287544-06:00",
+      "description": "File read operations to settings files are not working for settings or caselayout. Start Date: 2020-01-14 15:25:13Z End Date: 2020-01-14 15:31:02Z",
+      "isWritten": false
+    },
+    {
+      "id": 6.3,
+      "correctionDate": "2020-01-14T15:31:54.7412867-06:00",
+      "description": "Carriage returns in case style - collin county Start Date: 2020-01-14 15:25:13Z End Date: 2020-01-14 15:31:46Z",
       "isWritten": false
     }
   ],

@@ -65,12 +65,18 @@ namespace LegalLead.PublicData.Search
         {
             var source = (WebNavigationParameter)cboWebsite.SelectedItem;
             var isCollinCounty = source.Id == 20;
-            var firstRw = 1;
-            var lastRw = 6;
+            var firstRw = 0;
+            var lastRw = tableLayoutPanel1.RowStyles.Count - 1;
+            var rows = tableLayoutPanel1.RowStyles;
             for (int i = firstRw; i <= lastRw; i++)
             {
-                tableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
-                tableLayoutPanel1.RowStyles[i].Height = isCollinCounty ? 50 : 0;
+                rows[i].SizeType = SizeType.Absolute;
+                rows[i].Height = isCollinCounty ? 50 : 0;
+                // alter collin collin style
+                if (isCollinCounty)
+                {
+                    rows[i].Height = rows[i].Height;
+                }
             }
             var tbx = new List<Control> { tbxPwd, tbxUser };
             tbx.ForEach(v => v.Visible = isCollinCounty);

@@ -27,16 +27,26 @@ namespace LegalLead.PublicData.Search
                 (int)SourceType.CollinCounty,
                 (int)SourceType.TarrantCounty
             };
+            var styles = GetMain.tableLayoutPanel1.RowStyles;
             for (int i = Three; i <= Five; i++)
             {
-                GetMain.tableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
-                GetMain.tableLayoutPanel1.RowStyles[i].Height = fives.Contains(source.Id) 
+                styles[i].SizeType = SizeType.Absolute;
+                styles[i].Height = fives.Contains(source.Id) 
                     ? FortyNine : Zero;
                 if (i == Five)
                 {
-                    GetMain.tableLayoutPanel1.RowStyles[i].Height = fives.Contains(source.Id) 
-                        ? FortyNine : Zero;
+                    styles[i].Height = fives.Contains(source.Id) 
+                        ? FortyNine : 
+                        Zero;
                 }
+            }
+            if(source.Id == fives[1])
+            {
+                TarrantRowStyles(styles);
+            }
+            if (source.Id == fives[0])
+            {
+                CollinRowStyles(styles);
             }
             GetMain.tsStatusLabel.Text = string.Empty;
             // when in Denton County write Settings
@@ -49,6 +59,19 @@ namespace LegalLead.PublicData.Search
             {
                 GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.PasswordLabel; // "Password";
             }
+        }
+
+
+        protected static void TarrantRowStyles(TableLayoutRowStyleCollection styles)
+        {
+            if (styles == null) return;
+            styles[3].Height = 0;
+            styles[4].Height = 0;
+        }
+        protected static void CollinRowStyles(TableLayoutRowStyleCollection styles)
+        {
+            if (styles == null) return;
+            styles[4].Height = 0;
         }
     }
 }

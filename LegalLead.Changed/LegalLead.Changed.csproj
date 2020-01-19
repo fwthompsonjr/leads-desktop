@@ -68,6 +68,7 @@
     <Compile Include="Classes\CommandLoadLog.cs" />
     <Compile Include="Classes\CommandMapChangeIndexes.cs" />
     <Compile Include="Classes\CommandMapFixes.cs" />
+    <Compile Include="Classes\CommandSetInstallVersion.cs" />
     <Compile Include="Classes\CommandSetVersion.cs" />
     <Compile Include="Classes\CommandTransferReadMe.cs" />
     <Compile Include="Classes\CommandUpdateReadMe.cs" />
@@ -94,6 +95,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\cs\Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll" />
