@@ -65,6 +65,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Install", "_Install", "{5B
 EndProject
 Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Legal Lead Install", "Legal Lead Install\Legal Lead Install.aiproj", "{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_ChangeLog", "_ChangeLog", "{6EB0A66F-8CF8-49D2-9932-67BFC016B733}"
+	ProjectSection(SolutionItems) = preProject
+		changeLog.json = changeLog.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -142,7 +147,7 @@ Global
 		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136} = {5B2D3423-3610-427E-ABEE-FCC309844A03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
+		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 	EndGlobalSection
 EndGlobal

@@ -400,6 +400,46 @@
           ]
         }
       ]
+    },
+    {
+      "changeId": "700",
+      "reportedDate": "2020-01-21T12:15:00",
+      "issues": [
+        {
+          "changeId": "700",
+          "id": 7.0,
+          "name": "Create an excel macro.",
+          "isFixed": true,
+          "fixVersion": 15121,
+          "description": [
+            "Create an excel macro to replace hard returns in workbook.",
+            "Start Date: 2020-01-21 12:49:17Z",
+            "End Date: 2020-01-21 12:49:17Z"
+          ]
+        },
+        {
+          "changeId": "700",
+          "id": 7.01,
+          "name": "Hard returns in case style.",
+          "isFixed": false,
+          "fixVersion": 15121,
+          "description": [
+            "Create an excel macro to replace hard returns in workbook.",
+            "Start Date: 2020-01-21 12:44:55Z"
+          ]
+        },
+        {
+          "changeId": "700",
+          "id": 7.1,
+          "name": "Collin county - unexpected error",
+          "isFixed": false,
+          "fixVersion": 15121,
+          "description": [
+            "Troubleshoot error extracting collin county civil and family records",
+            "Start Date: 2020-01-21 12:56:16Z"
+          ]
+        }
+      ]
     }
   ],
   "versions": [
@@ -680,6 +720,27 @@
           "canPublish": false
         }
       ]
+    },
+    {
+      "id": 15121,
+      "number": "1.15.2.1",
+      "fixes": [
+        {
+          "id": 7.0,
+          "description": "infrastructure to remove hard returns in workbook.",
+          "canPublish": true
+        },
+        {
+          "id": 7.01,
+          "description": "Create an excel macro to replace hard returns in workbook.",
+          "canPublish": false
+        },
+        {
+          "id": 7.1,
+          "description": "Troubleshoot error extracting collin county civil and family records",
+          "canPublish": false
+        }
+      ]
     }
   ],
   "corrections": [
@@ -850,6 +911,12 @@
       "correctionDate": "2020-01-19T03:43:16.9713276-06:00",
       "description": "Creation of installer for program updates Start Date: 2020-01-19 03:13:24Z End Date: 2020-01-19 03:43:06Z",
       "isWritten": true
+    },
+    {
+      "id": 7.0,
+      "correctionDate": "2020-01-21T12:56:02.9363287-06:00",
+      "description": "Create an excel macro to replace hard returns in workbook. Start Date: 2020-01-21 12:49:17Z End Date: 2020-01-21 12:49:17Z",
+      "isWritten": false
     }
   ],
   "template": [

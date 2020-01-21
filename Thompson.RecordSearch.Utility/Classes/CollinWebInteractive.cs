@@ -152,12 +152,13 @@ namespace Thompson.RecordSearch.Utility.Classes
                     CaseType = item.CaseType,
                     CaseStyle = styleInfo
                 };
-                if (string.IsNullOrEmpty(person.CaseStyle))
-                {
-                    throw new DataMisalignedException(person.CaseNumber);
-                }
                 item.Address = CleanUpAddress(item.Address);
                 person = ParseAddress(item.Address, person);
+                if (string.IsNullOrEmpty(person.CaseStyle))
+                {
+                    throw new DataMisalignedException(
+                        $"Case Stlye Data is empty for {person.CaseNumber}");
+                }
                 list.Add(person);
             }
             return list;

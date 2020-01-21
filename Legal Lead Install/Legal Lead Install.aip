@@ -97,7 +97,7 @@
     <ROW Property="ProductCode" Value="1033:{B575C2B9-D7D6-4E48-BEE9-840DD15F02B1} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Legal Lead"/>
-    <ROW Property="ProductVersion" Value="1.14.1.0" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.15.2.1" Type="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{9A7F7878-0FCE-4597-AA34-306B9FCBF173}"/>
