@@ -1038,8 +1038,8 @@
     },
     {
       ~type~: ~FormatString~,
-      ~name~: ~ExtensionXlsx~,
-      ~value~: ~.xlsx~,
+      ~name~: ~ExtensionXlsm~,
+      ~value~: ~.xlsm~,
       ~keyIndex~: 1570,
       ~id~: 40
     }

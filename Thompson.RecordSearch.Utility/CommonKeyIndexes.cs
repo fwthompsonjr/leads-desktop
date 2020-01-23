@@ -329,6 +329,9 @@ namespace Thompson.RecordSearch.Utility
         public static readonly string ExtensionXml =
             ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ExtensionXml);
 
+        public static readonly string ExtensionXlsm =
+            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ExtensionXlsm);
+
         public static readonly string ExtensionXlsx =
             ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ExtensionXlsx);
 
@@ -339,8 +342,6 @@ namespace Thompson.RecordSearch.Utility
         DateRangeMaxDays
 
         
-        public static readonly string ExtensionXlsx =
-            ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ExtensionXlsx);
         public static readonly string TextAndAllFilesFilter =
             ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.TextAndAllFilesFilter);
         public static readonly string CaseExtractCompleteWouldYouLikeToView =

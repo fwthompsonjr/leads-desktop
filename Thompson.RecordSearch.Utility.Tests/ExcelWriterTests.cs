@@ -77,9 +77,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanWriteTableToExcelLocal()
         {
             var writer = new ExcelWriter();
-            var tmpFileName = string.Format(@"{0}{1}.xlsx",
+            var extn = CommonKeyIndexes.ExtensionXlsx;
+            var tmpFileName = string.Format(@"{0}{1}{2}",
                 Path.GetTempPath(),
-                Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
+                Path.GetFileNameWithoutExtension(Path.GetRandomFileName()),
+                extn);
 
             writer.ConvertToDataTable(
                 htmlTable: SampleTable(), 
@@ -98,9 +100,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void CanWritePeopleToExcelLocal()
         {
             var writer = new ExcelWriter();
-            var tmpFileName = string.Format(@"{0}{1}.xlsx",
+            var extn = CommonKeyIndexes.ExtensionXlsx;
+            var tmpFileName = string.Format(@"{0}{1}{2}",
                 Path.GetTempPath(),
-                Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
+                Path.GetFileNameWithoutExtension(Path.GetRandomFileName()),
+                extn);
 
             writer.ConvertToPersonTable(
                 addressList: SamplePeople(),
@@ -119,9 +123,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
 
             var writer = new ExcelWriter();
-            var tmpFileName = string.Format(@"{0}{1}.xlsx",
+            var extn = CommonKeyIndexes.ExtensionXlsx;
+            var tmpFileName = string.Format(@"{0}{1}{2}",
                 Path.GetTempPath(),
-                Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
+                Path.GetFileNameWithoutExtension(Path.GetRandomFileName()),
+                extn);
 
             var workBook = writer.ConvertToPersonTable(
                 addressList: SamplePeople(),

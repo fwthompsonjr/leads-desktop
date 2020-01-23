@@ -170,6 +170,7 @@ namespace LegalLead.Resources
         TextAndAllFilesFilter = 1540,
         FormStartup = 1550,
         ExtensionXml = 1560,
-        ExtensionXlsx = 1570
+        ExtensionXlsm = 1570,
+        ExtensionXlsx = 1575
     }
 }

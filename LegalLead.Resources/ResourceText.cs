@@ -1053,9 +1053,16 @@ namespace LegalLead.Resources
             sb.AppendLine("    },".Replace(tilde, quote));
             sb.AppendLine("    {".Replace(tilde, quote));
             sb.AppendLine("      ~type~: ~FormatString~,".Replace(tilde, quote));
+            sb.AppendLine("      ~name~: ~ExtensionXlsm~,".Replace(tilde, quote));
+            sb.AppendLine("      ~value~: ~.xlsm~,".Replace(tilde, quote));
+            sb.AppendLine("      ~keyIndex~: 1570,".Replace(tilde, quote));
+            sb.AppendLine("      ~id~: 40".Replace(tilde, quote));
+            sb.AppendLine("    },".Replace(tilde, quote));
+            sb.AppendLine("    {".Replace(tilde, quote));
+            sb.AppendLine("      ~type~: ~FormatString~,".Replace(tilde, quote));
             sb.AppendLine("      ~name~: ~ExtensionXlsx~,".Replace(tilde, quote));
             sb.AppendLine("      ~value~: ~.xlsx~,".Replace(tilde, quote));
-            sb.AppendLine("      ~keyIndex~: 1570,".Replace(tilde, quote));
+            sb.AppendLine("      ~keyIndex~: 1575,".Replace(tilde, quote));
             sb.AppendLine("      ~id~: 40".Replace(tilde, quote));
             sb.AppendLine("    }".Replace(tilde, quote));
             sb.AppendLine("  ]".Replace(tilde, quote));

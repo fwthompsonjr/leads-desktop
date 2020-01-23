@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -20,7 +21,7 @@ namespace LegalLead.PublicData.Search
             // set application title
             var appName = Assembly.GetExecutingAssembly().GetName();
             string version = appName.Version.ToString();
-            Text = string.Format(@"{0} - {1}",
+            Text = string.Format(CultureInfo.CurrentCulture, @"{0} - {1}",
                 appName.Name, version);
 
             BindComboBoxes();
@@ -31,7 +32,7 @@ namespace LegalLead.PublicData.Search
         private void SetStatus(StatusType status)
         {
             var v = StatusHelper.GetStatus(status);
-            toolStripStatus.Text = string.Format("{0}", v.Name);
+            toolStripStatus.Text = string.Format(CultureInfo.CurrentCulture, "{0}", v.Name);
             toolStripStatus.ForeColor = v.Color;
             Refresh();
             Application.DoEvents();
@@ -128,7 +129,7 @@ namespace LegalLead.PublicData.Search
 
 
 
-        private void exportDataToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (CaseData == null)
             {

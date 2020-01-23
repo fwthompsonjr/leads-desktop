@@ -35,7 +35,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
             if (fetchResult.WebsiteId < 1) fetchResult.WebsiteId = 1;
             var writer = new ExcelWriter();
-            var tmpFileName = fetchResult.Result.Replace(".xml", ".xlsx");
+            var extXml = CommonKeyIndexes.ExtensionXml;
+            var extFile = CommonKeyIndexes.ExtensionXlsx;
+            var tmpFileName = fetchResult.Result.Replace(extXml, extFile);
             using (var workBook = writer.ConvertToPersonTable(
                 addressList: fetchResult.PeopleList,
                 worksheetName: "Addresses",
@@ -98,13 +100,17 @@ namespace Thompson.RecordSearch.Utility.Classes
                     wsDt.Cells[rowIndex, courtAddressIndex].Value = "CourtAddress";
                     rowIndex++;
                 }
+                var culture = CultureInfo.CurrentCulture;
                 for (int i = 0; i < item.FieldList.Count; i++)
                 {
                     var content = item[i];
-                    var cleaner = new StringBuilder(content)
-                        .Replace(System.Environment.NewLine, " ")
-                        .ToString();
-                    wsDt.Cells[rowIndex, i+1].Value = cleaner;
+                    var cleaner = new StringBuilder(content);
+                    cleaner.Replace(Environment.NewLine, " ");
+                    cleaner.Replace(((char)10).ToString(culture), " ");
+                    cleaner.Replace(((char)13).ToString(culture), " ");
+                    cleaner.Replace("  ", " "); 
+                    content = cleaner.ToString().Trim();
+                    wsDt.Cells[rowIndex, i+1].Value = content;
                 }
                 
                 wsDt.Cells[rowIndex, countyIndex].Value = countyName;

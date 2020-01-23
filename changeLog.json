@@ -432,11 +432,12 @@
           "changeId": "700",
           "id": 7.1,
           "name": "Collin county - unexpected error",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 15121,
           "description": [
             "Troubleshoot error extracting collin county civil and family records",
-            "Start Date: 2020-01-21 12:56:16Z"
+            "Start Date: 2020-01-21 12:56:16Z",
+            "End Date: 2020-01-22 23:59:45Z"
           ]
         }
       ]
@@ -738,7 +739,7 @@
         {
           "id": 7.1,
           "description": "Troubleshoot error extracting collin county civil and family records",
-          "canPublish": false
+          "canPublish": true
         }
       ]
     }
@@ -910,7 +911,7 @@
       "id": 6.6,
       "correctionDate": "2020-01-19T03:43:16.9713276-06:00",
       "description": "Creation of installer for program updates Start Date: 2020-01-19 03:13:24Z End Date: 2020-01-19 03:43:06Z",
-      "isWritten": true
+      "isWritten": false
     },
     {
       "id": 7.0,

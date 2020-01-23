@@ -79,6 +79,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="text\PostBuildMacro.txt" />
     <Content Include="text\ResourceTextBuilder.txt" />
     <Content Include="text\settings-xml-builder.txt" />
     <Content Include="text\TextFile1.txt" />

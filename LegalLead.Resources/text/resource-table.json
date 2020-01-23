@@ -1038,9 +1038,16 @@
     },
     {
       "type": "FormatString",
+      "name": "ExtensionXlsm",
+      "value": ".xlsm",
+      "keyIndex": 1570,
+      "id": 40
+    },
+    {
+      "type": "FormatString",
       "name": "ExtensionXlsx",
       "value": ".xlsx",
-      "keyIndex": 1570,
+      "keyIndex": 1575,
       "id": 40
     }
   ]
