@@ -407,20 +407,33 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var trow = dcc.ChildNodes[0];
                 var inspector = item.IsProbate ? probateInspector : caseInspetor;
                 if (item.IsJustice) { inspector = justiceInspector; }
-                foreach (var search in inspector)
+                if(!MapCourtAttributes(item, trow, inspector))
                 {
-                    var node = trow.SelectSingleNode(search.InnerText);
-                    if(node == null)
-                    {
-                        Console.WriteLine("Unable to locate element {0} with selector - {1}",
-                            search.Attributes.GetNamedItem("name").InnerText,
-                            search.InnerText);
-                    }
-                    var keyName = search.Attributes.GetNamedItem("name").InnerText;
-                    item[keyName] = node.InnerText;
+                    MapCourtAttributes(item, trow, probateInspector);
+                    item.IsProbate = true;
+                    item.CriminalCaseStyle = item.CaseStyle;
                 }
             }
             return caseList;
+        }
+
+        private static bool MapCourtAttributes(HLinkDataRow item, XmlNode trow, List<XmlNode> inspector)
+        {
+            foreach (var search in inspector)
+            {
+                var node = trow.SelectSingleNode(search.InnerText);
+                var keyName = search.Attributes.GetNamedItem("name").InnerText;
+                item[keyName] = string.Empty;
+                if (node == null)
+                {
+                    Console.WriteLine("Unable to locate element {0} with selector - {1}",
+                        search.Attributes.GetNamedItem("name").InnerText,
+                        search.InnerText);
+                    return false;
+                }
+                item[keyName] = node.InnerText;
+            }
+            return true;
         }
 
         private static List<XmlNode> GetCaseInspector(int parameterId, XmlDocument doc, string typeName = "normal")

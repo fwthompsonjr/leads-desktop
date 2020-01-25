@@ -156,8 +156,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 person = ParseAddress(item.Address, person);
                 if (string.IsNullOrEmpty(person.CaseStyle))
                 {
-                    throw new DataMisalignedException(
-                        $"Case Stlye Data is empty for {person.CaseNumber}");
+                    var mismatched = $"Case Style Data is empty for {person.CaseNumber}";
+                    Console.WriteLine(mismatched);
                 }
                 list.Add(person);
             }

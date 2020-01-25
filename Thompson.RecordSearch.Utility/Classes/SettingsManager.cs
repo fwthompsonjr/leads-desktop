@@ -372,6 +372,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     sb.AppendLine("<command type=~string~ name=~Case~ By=~XPath~ FriendlyName=~Case-Number-Selection~><![CDATA[td[1]/a]]></command>".Replace(tilde, quote));
                     sb.AppendLine("<command type=~string~ name=~Court~ By=~XPath~ FriendlyName=~Court-Name-Selection~><![CDATA[td[4]/div[2]]]></command>".Replace(tilde, quote));
                     sb.AppendLine("<command type=~string~ name=~CaseType~ By=~XPath~ FriendlyName=~Case-Type-Selection~><![CDATA[td[5]/div[1]]]></command>".Replace(tilde, quote));
+                    sb.AppendLine("<command type=~string~ name=~CaseStyle~ By=~XPath~ FriendlyName=~Case-Style-Selection~><![CDATA[td[3]/div[1]]]></command>".Replace(tilde, quote));
                     sb.AppendLine("</caseInspection>".Replace(tilde, quote));
                     sb.AppendLine("<caseInspection id=~10~ type=~probate~>".Replace(tilde, quote));
                     sb.AppendLine("<command type=~string~ name=~DateFiled~ By=~XPath~ FriendlyName=~Filing-Date-Selection~><![CDATA[td[3]/div[1]]]></command>".Replace(tilde, quote));
@@ -385,6 +386,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     sb.AppendLine("<command type=~string~ name=~Case~ By=~XPath~ FriendlyName=~Case-Number-Selection~><![CDATA[td[1]/a]]></command>".Replace(tilde, quote));
                     sb.AppendLine("<command type=~string~ name=~Court~ By=~XPath~ FriendlyName=~Court-Name-Selection~><![CDATA[td[4]/div[2]]]></command>".Replace(tilde, quote));
                     sb.AppendLine("<command type=~string~ name=~CaseType~ By=~XPath~ FriendlyName=~Case-Type-Selection~><![CDATA[td[5]/div[1]]]></command>".Replace(tilde, quote));
+                    sb.AppendLine("<command type=~string~ name=~CaseStyle~ By=~XPath~ FriendlyName=~Case-Style-Selection~><![CDATA[td[3]/div[1]]]></command>".Replace(tilde, quote));
                     sb.AppendLine("</caseInspection>".Replace(tilde, quote));
                     sb.AppendLine("<caseInspection id=~20~ type=~probate~>".Replace(tilde, quote));
                     sb.AppendLine("<command type=~string~ name=~DateFiled~ By=~XPath~ FriendlyName=~Filing-Date-Selection~><![CDATA[td[3]/div[1]]]></command>".Replace(tilde, quote));
