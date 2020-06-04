@@ -509,6 +509,32 @@
           ]
         }
       ]
+    },
+    {
+      "changeId": "950",
+      "reportedDate": "2020-01-25T16:15:00",
+      "issues": [
+        {
+          "changeId": "950",
+          "id": 0.0,
+          "name": "initialize new version",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "initialize new version"
+          ]
+        },
+        {
+          "changeId": "950",
+          "id": 9.5,
+          "name": "Research mapping issue in Denton County",
+          "isFixed": true,
+          "fixVersion": 116101,
+          "description": [
+            "Denton county screen mapping has been changed. Investigation is progress"
+          ]
+        }
+      ]
     }
   ],
   "versions": [
@@ -849,6 +875,22 @@
         {
           "id": 9.1,
           "description": "set MDI for main form",
+          "canPublish": true
+        }
+      ]
+    },
+    {
+      "id": 201002,
+      "number": "2.1.1.0",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "initialize new version",
+          "canPublish": true
+        },
+        {
+          "id": 9.5,
+          "description": "denton county screen mapping issue.",
           "canPublish": false
         }
       ]
@@ -1057,6 +1099,12 @@
       "id": 9.1,
       "correctionDate": "2020-01-25T16:41:30.7710737-06:00",
       "description": "Setup use of multi-document interface for presentation layer.",
+      "isWritten": false
+    },
+    {
+      "id": 9.5,
+      "correctionDate": "2020-06-04T13:57:22.2332022-05:00",
+      "description": "Denton county screen mapping has been changed. Investigation is progress",
       "isWritten": false
     }
   ],

@@ -1,7 +1,7 @@
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | LegalLead.PublicData.Search                                                       |
-| Version: 2.1.0.1                                                                  |
-| Release Date: 6/4/2020 1:43 PM                                                    |
+| Version: 2.1.1.0                                                                  |
+| Release Date: 6/4/2020 1:58 PM                                                    |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | IssueId   | Reported Date  | Corrected Date  | Comments                           |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
@@ -36,4 +36,8 @@
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
 | 9.1000    | 01-25-2020     | 01-25-2020      | Setup use of multi-document interf |
 |           |                |                 | ace for presentation layer.        |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+| 9.5000    | 01-25-2020     | 06-04-2020      | Denton county screen mapping has b |
+|           |                |                 | een changed. Investigation is prog |
+|           |                |                 | ress                               |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
