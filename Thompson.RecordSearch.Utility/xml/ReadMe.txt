@@ -1,7 +1,7 @@
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | LegalLead.PublicData.Search                                                       |
-| Version: 1.16.1.1                                                                 |
-| Release Date: 1/24/2020 11:10 AM                                                  |
+| Version: 2.1.0.1                                                                  |
+| Release Date: 6/4/2020 1:43 PM                                                    |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | IssueId   | Reported Date  | Corrected Date  | Comments                           |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
@@ -33,4 +33,7 @@
 |           |                |                 | tice records Start Date: 2020-01-2 |
 |           |                |                 | 4 08:06:13Z End Date: 2020-01-24 1 |
 |           |                |                 | 1:02:45Z                           |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+| 9.1000    | 01-25-2020     | 01-25-2020      | Setup use of multi-document interf |
+|           |                |                 | ace for presentation layer.        |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|

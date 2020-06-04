@@ -174,7 +174,7 @@ namespace LegalLead.PublicData.Search
         }
 
 
-        private void ProcessStartingMessage()
+        protected void ProcessStartingMessage()
         {
             var source = (WebNavigationParameter)cboWebsite.SelectedItem;
             var message = CommonKeyIndexes.StartingFetchRequest
@@ -195,7 +195,7 @@ namespace LegalLead.PublicData.Search
 
         }
 
-        private void ProcessEndingMessage()
+        protected void ProcessEndingMessage()
         {
             var source = (WebNavigationParameter)cboWebsite.SelectedItem;
             var message = CommonKeyIndexes.EndingFetchRequest

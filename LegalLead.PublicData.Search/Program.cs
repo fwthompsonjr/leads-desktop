@@ -38,8 +38,8 @@ namespace LegalLead.PublicData.Search
                 {
                     command = new Command.MainCommand();
                 }
-                consoleWriter.WriteEvent += consoleWriter_WriteEvent;
-                consoleWriter.WriteLineEvent += consoleWriter_WriteLineEvent;
+                consoleWriter.WriteEvent += ConsoleWriter_WriteEvent;
+                consoleWriter.WriteLineEvent += ConsoleWriter_WriteLineEvent;
 
                 Console.SetOut(consoleWriter);
                 Application.EnableVisualStyles();
@@ -54,7 +54,7 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        static void consoleWriter_WriteLineEvent(object sender, ConsoleWriterEventArgs e)
+        static void ConsoleWriter_WriteLineEvent(object sender, ConsoleWriterEventArgs e)
         {
             var current = new StringBuilder(mainForm.txConsole.Text);
             current.AppendLine(e.Value);
@@ -62,7 +62,7 @@ namespace LegalLead.PublicData.Search
             mainForm.txConsole.Refresh();
         }
 
-        static void consoleWriter_WriteEvent(object sender, ConsoleWriterEventArgs e)
+        static void ConsoleWriter_WriteEvent(object sender, ConsoleWriterEventArgs e)
         {
             var current = new StringBuilder(mainForm.txConsole.Text);
             current.Append(e.Value);

@@ -483,6 +483,32 @@
           ]
         }
       ]
+    },
+    {
+      "changeId": "900",
+      "reportedDate": "2020-01-25T16:15:00",
+      "issues": [
+        {
+          "changeId": "900",
+          "id": 0.0,
+          "name": "initialize new version",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "initialize new version"
+          ]
+        },
+        {
+          "changeId": "900",
+          "id": 9.1,
+          "name": "set MDI for main form",
+          "isFixed": true,
+          "fixVersion": 116101,
+          "description": [
+            "Setup use of multi-document interface for presentation layer."
+          ]
+        }
+      ]
     }
   ],
   "versions": [
@@ -810,6 +836,22 @@
           "canPublish": true
         }
       ]
+    },
+    {
+      "id": 201001,
+      "number": "2.1.0.1",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "initialize new version",
+          "canPublish": true
+        },
+        {
+          "id": 9.1,
+          "description": "set MDI for main form",
+          "canPublish": false
+        }
+      ]
     }
   ],
   "corrections": [
@@ -1009,6 +1051,12 @@
       "id": 8.1,
       "correctionDate": "2020-01-24T11:03:21.8530265-06:00",
       "description": "error extracting collin county justice records Start Date: 2020-01-24 08:06:13Z End Date: 2020-01-24 11:02:45Z",
+      "isWritten": false
+    },
+    {
+      "id": 9.1,
+      "correctionDate": "2020-01-25T16:41:30.7710737-06:00",
+      "description": "Setup use of multi-document interface for presentation layer.",
       "isWritten": false
     }
   ],
