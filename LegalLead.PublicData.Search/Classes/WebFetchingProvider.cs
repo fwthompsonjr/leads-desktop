@@ -19,6 +19,8 @@ namespace LegalLead.PublicData.Search
                     return new TarrantWebInteractive(siteData, startDate, endingDate);
                 case 20:
                     return new CollinWebInteractive(siteData, startDate, endingDate);
+                case 30:
+                    return new HarrisCivilInteractive(siteData, startDate, endingDate);
                 default:
                     var districtKey = Program.DentonCustomKeys.FirstOrDefault(
                         x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType", 

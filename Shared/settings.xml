@@ -48,7 +48,9 @@
       <key name="dateRangeMaxDays"><![CDATA[5]]></key>
       <key name="startDate"><![CDATA[]]></key>
       <key name="endDate"><![CDATA[]]></key>
-      <key name="navigation.control.file"><![CDATA[collinCountyMapping_1]]></key>
+      <key name="courtIndex"><![CDATA[]]></key>
+      <key name="caseStatusIndex"><![CDATA[]]></key>
+      <key name="navigation.control.file"><![CDATA[harrisCivilMapping]]></key>
       <key name="hlinkUri"><![CDATA[http://cijspub.co.collin.tx.us/Secure/{0}]]></key>
       <key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
       <key name="personParentXath"><![CDATA[./..]]></key>

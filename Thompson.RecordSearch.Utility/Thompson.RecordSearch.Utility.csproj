@@ -212,6 +212,7 @@
     <Compile Include="Classes\ExcAutomationServer.cs" />
     <Compile Include="Classes\ExcelFileWriter.cs" />
     <Compile Include="Classes\ExcelWriter.cs" />
+    <Compile Include="Classes\HarrisCivilInteractive.cs" />
     <Compile Include="Classes\IWebInteractive.cs" />
     <Compile Include="Classes\SafeWindowUtilites.cs" />
     <Compile Include="Classes\TarrantWebFetch.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Web\ElementSetValueAction.cs" />
     <Compile Include="Web\ElementTextConfirmAction.cs" />
     <Compile Include="Web\GetRecordCountAction.cs" />
+    <Compile Include="Web\JquerySetTextBox.cs" />
     <Compile Include="Web\WebNavAction.cs" />
     <Content Include="WebDriver.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -338,6 +340,10 @@
     </None>
     <None Include="..\Shared\harrisCivilCaseType.json">
       <Link>xml\harrisCivilCaseType.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\harrisCivilMapping.json">
+      <Link>xml\harrisCivilMapping.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Shared\tarrantCountyCaseType.json">

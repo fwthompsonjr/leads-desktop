@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -54,6 +55,7 @@ namespace LegalLead.PublicData.Search
             if (!ValidateCustomDenton(siteData)) return false;
             if (!ValidateCustomCollin(siteData)) return false;
             if (!ValidateCustomTarrant(siteData)) return false;
+            if (!ValidateCustomHarrisCivil(siteData)) return false;
             return true;
         }
 
@@ -155,6 +157,36 @@ namespace LegalLead.PublicData.Search
             return true;
         }
 
+
+        private bool ValidateCustomHarrisCivil(WebNavigationParameter siteData)
+        {
+            const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
+            if (siteData.Id != (int)SourceType.HarrisCivil) return true;
+            var court = ((Thompson.RecordSearch.Utility.Dto.Option)(cboCaseType.SelectedItem));
+            var caseStatus = ((Thompson.RecordSearch.Utility.Dto.DropDown)(cboSearchType.SelectedItem));
+            var keys = new List<WebNavigationKey>() {
+                new WebNavigationKey { 
+                    Name = "courtIndex", 
+                    Value = court.Id.ToString() },
+                new WebNavigationKey { 
+                    Name= "caseStatusIndex", 
+                    Value = caseStatus.Id.ToString()}
+            };
+            if (!keys.Any()) return true;
+            foreach (var customKey in keys)
+            {
+                var found = siteData.Keys.FirstOrDefault(k => k.Name.Equals(customKey.Name, comparison));
+                if (found != null)
+                {
+                    found.Value = customKey.Value;
+                }
+                else
+                {
+                    siteData.Keys.Add(customKey);
+                }
+            }
+            return true;
+        }
 
         private static void SetKeyValue(WebNavigationParameter siteData,
             string keyName,
