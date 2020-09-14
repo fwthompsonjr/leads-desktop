@@ -1,7 +1,7 @@
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | LegalLead.PublicData.Search                                                       |
-| Version: 2.1.1.0                                                                  |
-| Release Date: 7/16/2020 3:20 PM                                                   |
+| Version: 2.2.0.0                                                                  |
+| Release Date: 9/14/2020 9:22 AM                                                   |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | IssueId   | Reported Date  | Corrected Date  | Comments                           |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|

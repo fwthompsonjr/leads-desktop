@@ -535,6 +535,32 @@
           ]
         }
       ]
+    },
+    {
+      "changeId": "1000",
+      "reportedDate": "2020-09-04T09:00:00",
+      "issues": [
+        {
+          "changeId": "1000",
+          "id": 0.0,
+          "name": "initialize new version",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "initialize new version"
+          ]
+        },
+        {
+          "changeId": "1000",
+          "id": 10.1,
+          "name": "set up configuration",
+          "isFixed": false,
+          "fixVersion": 0,
+          "description": [
+            "setup configuration changes for harris county"
+          ]
+        }
+      ]
     }
   ],
   "versions": [
@@ -891,6 +917,22 @@
         {
           "id": 9.5,
           "description": "denton county screen mapping issue.",
+          "canPublish": false
+        }
+      ]
+    },
+    {
+      "id": 202000,
+      "number": "2.2.0.0",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "initialize new version",
+          "canPublish": true
+        },
+        {
+          "id": 10.0,
+          "description": "set up harris county configuration.",
           "canPublish": false
         }
       ]
