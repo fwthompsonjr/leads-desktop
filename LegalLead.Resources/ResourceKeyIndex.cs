@@ -171,6 +171,7 @@ namespace LegalLead.Resources
         FormStartup = 1550,
         ExtensionXml = 1560,
         ExtensionXlsm = 1570,
-        ExtensionXlsx = 1575
+        ExtensionXlsx = 1575,
+        HarrisCivilCaseType = 1580
     }
 }

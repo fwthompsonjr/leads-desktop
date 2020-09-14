@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ButtonDentonSetting = new System.Windows.Forms.Button();
             this.dteStart = new System.Windows.Forms.DateTimePicker();
             this.dteEnding = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
@@ -50,7 +51,6 @@
             this.cboCaseType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cboCourts = new System.Windows.Forms.ComboBox();
-            this.ButtonDentonSetting = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +92,17 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(437, 477);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // ButtonDentonSetting
+            // 
+            this.ButtonDentonSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ButtonDentonSetting.Location = new System.Drawing.Point(3, 243);
+            this.ButtonDentonSetting.Name = "ButtonDentonSetting";
+            this.ButtonDentonSetting.Size = new System.Drawing.Size(114, 34);
+            this.ButtonDentonSetting.TabIndex = 14;
+            this.ButtonDentonSetting.Text = "Settings";
+            this.ButtonDentonSetting.UseVisualStyleBackColor = true;
+            this.ButtonDentonSetting.Click += new System.EventHandler(this.ButtonDentonSetting_Click);
             // 
             // dteStart
             // 
@@ -281,17 +292,6 @@
             this.cboCourts.Name = "cboCourts";
             this.cboCourts.Size = new System.Drawing.Size(311, 21);
             this.cboCourts.TabIndex = 13;
-            // 
-            // ButtonDentonSetting
-            // 
-            this.ButtonDentonSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ButtonDentonSetting.Location = new System.Drawing.Point(3, 243);
-            this.ButtonDentonSetting.Name = "ButtonDentonSetting";
-            this.ButtonDentonSetting.Size = new System.Drawing.Size(114, 34);
-            this.ButtonDentonSetting.TabIndex = 14;
-            this.ButtonDentonSetting.Text = "Settings";
-            this.ButtonDentonSetting.UseVisualStyleBackColor = true;
-            this.ButtonDentonSetting.Click += new System.EventHandler(this.ButtonDentonSetting_Click);
             // 
             // FormMain
             // 

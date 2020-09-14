@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Dto
@@ -60,5 +61,19 @@ namespace Thompson.RecordSearch.Utility.Dto
         }
     }
 
+    public static class DropDownOptionExtensions
+    {
+        public static List<DropDown> ToDropDown(this List<Option> options)
+        {
+            if (options == null) return null;
+            var result = new List<DropDown>();
+            options.ForEach(o =>
+            {
+                result.Add(new DropDown { Id = o.Id, Name = o.Name, Query = o.Query });
+            });
+            return result;
+
+        }
+    }
 
 }

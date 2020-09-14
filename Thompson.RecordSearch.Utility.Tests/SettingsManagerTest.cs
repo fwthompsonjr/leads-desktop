@@ -192,6 +192,58 @@ namespace Thompson.RecordSearch.Utility.Tests
 
         [TestMethod]
         [TestCategory("Configuration.Mapping")]
+        public void CanGetHarrisCivilSettings()
+        {
+            const string name = "harris-civil-settings";
+            const int indexValue = 5;
+            var sourceDto = new GenericSettingDto(name)
+            {
+                CountyCourtId = indexValue,
+                CountySearchTypeId = indexValue,
+                DistrictCourtId = indexValue,
+                DistrictSearchTypeId = indexValue
+            };
+            sourceDto.Save(sourceDto);
+
+            var settingDto = sourceDto.GetDto();
+            Assert.IsNotNull(settingDto);
+
+            Assert.AreEqual(name, sourceDto.Name);
+            Assert.IsTrue(settingDto.CountySearchTypeId == indexValue);
+            Assert.IsTrue(settingDto.CountyCourtId == indexValue);
+            Assert.IsTrue(settingDto.DistrictCourtId == indexValue);
+            Assert.IsTrue(settingDto.DistrictSearchTypeId == indexValue);
+        }
+
+
+        [TestMethod]
+        [TestCategory("Configuration.Mapping")]
+        public void CanGetHarrisCivilGenericSetting()
+        {
+            const string name = "harris-civil-settings";
+            const int indexValue = 5;
+            var setting = new GenericSetting { Name = name };
+            var sourceDto = setting.GetDto();
+            Assert.AreEqual(name, setting.Name);
+            sourceDto.CountyCourtId = indexValue;
+            sourceDto.CountySearchTypeId = indexValue;
+            sourceDto.DistrictCourtId = indexValue;
+            sourceDto.DistrictSearchTypeId = indexValue;
+
+            setting.Save(sourceDto);
+
+            var settingDto = setting.GetDto();
+            Assert.IsNotNull(settingDto);
+            Assert.IsFalse(string.IsNullOrEmpty(setting.DataFile));
+            Assert.IsFalse(string.IsNullOrEmpty(setting.Content));
+            Assert.IsTrue(settingDto.CountySearchTypeId == indexValue);
+            Assert.IsTrue(settingDto.CountyCourtId == indexValue);
+            Assert.IsTrue(settingDto.DistrictCourtId == indexValue);
+            Assert.IsTrue(settingDto.DistrictSearchTypeId == indexValue);
+        }
+
+        [TestMethod]
+        [TestCategory("Configuration.Mapping")]
         public void CanGetCollinSettings()
         {
             var userDto = UserAccessDto.GetDto("collinCountyUserMap");

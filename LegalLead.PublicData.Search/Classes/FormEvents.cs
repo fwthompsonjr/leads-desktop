@@ -72,6 +72,21 @@ namespace LegalLead.PublicData.Search
         private void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var source = (DropDown)cboSearchType.SelectedItem;
+            
+            var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
+            if (selectedItem != null && selectedItem.Id == (int)SourceType.HarrisCivil)
+            {
+                // rebind ??
+                return;
+            }
+
+            var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
+
+            cboSearchType.DataSource = caseTypes.DropDowns;
+            cboSearchType.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboSearchType.ValueMember = CommonKeyIndexes.IdProperCase;
+            cboSearchType.SelectedItem = selectedItem;
+
             cboCaseType.DataSource = source.Options;
             cboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;

@@ -41,6 +41,22 @@
       <key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
       <key name="criminalCaseInclusion"><![CDATA[1]]></key>
     </keys>
+    <keys id="30" name="Harris County Civil">
+      <key name="baseUri">
+        <![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
+      <key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+      <key name="dateRangeMaxDays"><![CDATA[5]]></key>
+      <key name="startDate"><![CDATA[]]></key>
+      <key name="endDate"><![CDATA[]]></key>
+      <key name="navigation.control.file"><![CDATA[collinCountyMapping_1]]></key>
+      <key name="hlinkUri"><![CDATA[http://cijspub.co.collin.tx.us/Secure/{0}]]></key>
+      <key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+      <key name="personParentXath"><![CDATA[./..]]></key>
+      <key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+      <key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+      <key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+      <key name="criminalCaseInclusion"><![CDATA[1]]></key>
+    </keys>
   </setting>
   <directions>
     <instructions id="1">
@@ -100,6 +116,13 @@
       <command type="string" name="Court" By="XPath" FriendlyName="Court-Name-Selection"><![CDATA[td[3]/div[2]]]></command>
       <command type="string" name="CaseType" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[4]/div[1]]]></command>
       <command type="string" name="CaseStyle" By="XPath" FriendlyName="Case-Style-Selection"><![CDATA[td[2]]]></command>
+    </caseInspection>
+    <caseInspection id="30" type="normal">
+      <command type="string" name="DateFiled" By="XPath" FriendlyName="Filing-Date-Selection"><![CDATA[td[3]/div[1]]]></command>
+      <command type="string" name="Case" By="XPath" FriendlyName="Case-Number-Selection"><![CDATA[td[1]/a]]></command>
+      <command type="string" name="Court" By="XPath" FriendlyName="Court-Name-Selection"><![CDATA[td[3]/div[2]]]></command>
+      <command type="string" name="CaseType" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[4]/div[1]]]></command>
+      <command type="string" name="CaseStyle" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[2]]]></command>
     </caseInspection>
   </directions>
   <layouts>
@@ -166,6 +189,32 @@
       </columns>
     </layout>
     <layout id="20" name="people">
+      <columns>
+        <column name="Name" columnWidth="30"/>
+        <column name="FirstName" columnWidth="20"/>
+        <column name="LastName" columnWidth="20"/>
+        <column name="Zip" columnWidth="20"/>
+        <column name="Address1" columnWidth="30"/>
+        <column name="Address2" columnWidth="30"/>
+        <column name="Address3" columnWidth="30"/>
+        <column name="CaseNumber" columnWidth="30"/>
+        <column name="Date Filed" columnWidth="30"/>
+        <column name="Court" columnWidth="30"/>
+        <column name="Case Type" columnWidth="30"/>
+        <column name="Case Style" columnWidth="30"/>
+        <column name="Plantiff" columnWidth="30"/>
+      </columns>
+    </layout>
+    <layout id="30" name="caselayout">
+      <columns>
+        <column name="Case Number" columnWidth="30"/>
+        <column name="Case Name" columnWidth="80"/>
+        <column name="Filed/Location/Judical Officer" columnWidth="40"/>
+        <column name="Type/Status" columnWidth="40"/>
+        <column name="Style" columnWidth="80"/>
+      </columns>
+    </layout>
+    <layout id="30" name="people">
       <columns>
         <column name="Name" columnWidth="30"/>
         <column name="FirstName" columnWidth="20"/>

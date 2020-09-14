@@ -335,8 +335,17 @@ namespace Thompson.RecordSearch.Utility
         public static readonly string ExtensionXlsx =
             ResourceTable.GetText(ResourceType.FormatString, ResourceKeyIndex.ExtensionXlsx);
 
+
+        public static readonly string HarrisCivilCaseType =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.HarrisCivilCaseType);
+
         /* 
          * 
+
+        ResourceKeyIndex.HarrisCivilCaseType
+        
+        public static readonly string HarrisCivilCaseType =
+            ResourceTable.GetText(ResourceType.ParameterName, ResourceKeyIndex.CollinCountyCaseType);
 
 
         DateRangeMaxDays

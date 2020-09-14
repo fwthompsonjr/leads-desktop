@@ -227,6 +227,7 @@
     <Compile Include="CommonKeyIndexes.cs" />
     <Compile Include="Dto\CaseTypeSelectionDto.cs" />
     <Compile Include="Dto\DataPointLocatorDto.cs" />
+    <Compile Include="Dto\GenericSettingDto.cs" />
     <Compile Include="Dto\NavigationInstructionDto.cs" />
     <Compile Include="Dto\ParseCaseDataResponseDto.cs" />
     <Compile Include="Dto\UserAccessDto.cs" />
@@ -329,6 +330,14 @@
     </None>
     <None Include="..\Shared\dentonDistrictCaseType.json">
       <Link>xml\dentonDistrictCaseType.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\harris-civil-settings.json">
+      <Link>xml\harris-civil-settings.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Shared\harrisCivilCaseType.json">
+      <Link>xml\harrisCivilCaseType.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Shared\tarrantCountyCaseType.json">

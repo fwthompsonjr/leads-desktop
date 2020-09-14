@@ -5,6 +5,7 @@
     {
         DentonCounty = 1,
         CollinCounty = 20,
-        TarrantCounty = 10
+        TarrantCounty = 10,
+        HarrisCivil = 30
     }
 }

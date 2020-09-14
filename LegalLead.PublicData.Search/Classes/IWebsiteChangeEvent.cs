@@ -1,4 +1,6 @@
-﻿namespace LegalLead.PublicData.Search
+﻿using System.Windows.Forms;
+
+namespace LegalLead.PublicData.Search
 {
     public interface IWebsiteChangeEvent
     {
@@ -6,5 +8,8 @@
         string Name { get; }
 
         void Change();
+
+        void MapLabels(TableLayoutRowStyleCollection styles);
+
     }
 }

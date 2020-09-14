@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Models;
@@ -59,6 +60,15 @@ namespace LegalLead.PublicData.Search
         {
             var styleProviders = RowStyleChangeProvider.RowChangeProviders;
             styleProviders.ForEach(p => p.ApplyStyles(styles, websiteId));
+        }
+
+        public void MapLabels(TableLayoutRowStyleCollection styles)
+        {
+            var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
+            var mapper = RowStyleChangeProvider.RowChangeProviders
+                .FirstOrDefault(r => r.WebsiteIndex == source.Id);
+            if(mapper == null) { return; }
+            mapper.MapLabels(GetMain);
         }
     }
 }

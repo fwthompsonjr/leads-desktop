@@ -169,7 +169,7 @@ namespace Thompson.RecordSearch.Utility.Dto
             return dataFile;
         }
 
-        private static readonly string SearchSettingFileNotFound 
+        internal static readonly string SearchSettingFileNotFound 
             = CommonKeyIndexes.SearchSettingFileNotFound;
     }
 }
