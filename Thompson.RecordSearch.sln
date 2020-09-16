@@ -31,6 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C68AF7
 		Shared\dentonCountyCaseType.json = Shared\dentonCountyCaseType.json
 		Shared\dentonDistrictCaseType.json = Shared\dentonDistrictCaseType.json
 		Shared\ExpectedConditions.cs = Shared\ExpectedConditions.cs
+		Shared\harris-civil-reader.js = Shared\harris-civil-reader.js
 		Shared\harris-civil-settings.json = Shared\harris-civil-settings.json
 		Shared\harrisCivilCaseType.json = Shared\harrisCivilCaseType.json
 		Shared\harrisCivilMapping.json = Shared\harrisCivilMapping.json
@@ -150,7 +151,7 @@ Global
 		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136} = {5B2D3423-3610-427E-ABEE-FCC309844A03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
+		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 	EndGlobalSection
 EndGlobal

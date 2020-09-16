@@ -44,6 +44,22 @@
         "find": "css",
         "query": "#ctl00_ContentPlaceHolder1_txtTo"
       }
+    },
+    {
+      "actionName": "click",
+      "displayName": "login-submit",
+      "locator": {
+        "find": "css",
+        "query": "#ctl00_ContentPlaceHolder1_btnSearchCase"
+      }
+    },
+    {
+      "actionName": "jquery-read-table",
+      "displayName": "read-result",
+      "locator": {
+        "find": "css",
+        "query": "harris-civil-reader"
+      }
     }
   ]
 }

@@ -47,6 +47,8 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonDistrictCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonsettings.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_harrisCivilCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harrisCivilMapping.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harriscivilreader.js" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_harriscivilsettings.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_resourcetable.json" Value="..\LegalLead.PublicData.Search\bin\Debug\text"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_settings.xml" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
@@ -97,6 +99,8 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_dentonDistrictCaseType.json" Value="dentonDistrictCaseType.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_dentonsettings.json" Value="denton-settings.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_harrisCivilCaseType.json" Value="harrisCivilCaseType.json"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_harrisCivilMapping.json" Value="harrisCivilMapping.json"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_harriscivilreader.js" Value="harris-civil-reader.js"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_harriscivilsettings.json" Value="harris-civil-settings.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_resourcetable.json" Value="resource-table.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_settings.xml" Value="settings.xml"/>
@@ -208,6 +212,8 @@
     <ROW File="System.Threading.Tasks.Extensions.dll" Component_="LegalLead.PublicData.Search_References" FileName="SYSTE~12.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Threading.Tasks.Extensions.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Threading.Tasks.Extensions.dll&gt;" SelfReg="false"/>
     <ROW File="harriscivilsettings.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="HARRIS~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_harriscivilsettings.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_harriscivilsettings.json&gt;" SelfReg="false"/>
     <ROW File="harrisCivilCaseType.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="HARRIS~3.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilCaseType.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_harrisCivilCaseType.json&gt;" SelfReg="false"/>
+    <ROW File="harriscivilreader.js" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="HARRIS~2.JS|[|AI_PROPPATH_FILENAME_PERBUILD_harriscivilreader.js]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_harriscivilreader.js&gt;" SelfReg="false"/>
+    <ROW File="harrisCivilMapping.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="HARRIS~4.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilMapping.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_harrisCivilMapping.json&gt;" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_CourtRecordSearch.xlsm" Path="[|AI_PROPPATH_DIR_PERBUILD_CourtRecordSearch.xlsm]\[|AI_PROPPATH_FILENAME_PERBUILD_CourtRecordSearch.xlsm]" Type="2" Content="0"/>
@@ -252,6 +258,8 @@
     <ROW Name="AI_APPPATH_PERBUILD_dentonDistrictCaseType.json" Path="[|AI_PROPPATH_DIR_PERBUILD_dentonDistrictCaseType.json]\[|AI_PROPPATH_FILENAME_PERBUILD_dentonDistrictCaseType.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_dentonsettings.json" Path="[|AI_PROPPATH_DIR_PERBUILD_dentonsettings.json]\[|AI_PROPPATH_FILENAME_PERBUILD_dentonsettings.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_harrisCivilCaseType.json" Path="[|AI_PROPPATH_DIR_PERBUILD_harrisCivilCaseType.json]\[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilCaseType.json]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_harrisCivilMapping.json" Path="[|AI_PROPPATH_DIR_PERBUILD_harrisCivilMapping.json]\[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilMapping.json]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_harriscivilreader.js" Path="[|AI_PROPPATH_DIR_PERBUILD_harriscivilreader.js]\[|AI_PROPPATH_FILENAME_PERBUILD_harriscivilreader.js]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_harriscivilsettings.json" Path="[|AI_PROPPATH_DIR_PERBUILD_harriscivilsettings.json]\[|AI_PROPPATH_FILENAME_PERBUILD_harriscivilsettings.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_resourcetable.json" Path="[|AI_PROPPATH_DIR_PERBUILD_resourcetable.json]\[|AI_PROPPATH_FILENAME_PERBUILD_resourcetable.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_settings.xml" Path="[|AI_PROPPATH_DIR_PERBUILD_settings.xml]\[|AI_PROPPATH_FILENAME_PERBUILD_settings.xml]" Type="2" Content="0"/>
@@ -436,5 +444,7 @@
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.Threading.Tasks.Extensions.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harriscivilsettings.json"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harrisCivilCaseType.json"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harriscivilreader.js"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harrisCivilMapping.json"/>
   </COMPONENT>
 </DOCUMENT>

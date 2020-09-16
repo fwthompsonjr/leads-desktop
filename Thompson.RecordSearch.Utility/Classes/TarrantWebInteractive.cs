@@ -17,7 +17,7 @@ namespace Thompson.RecordSearch.Utility.Classes
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
     public partial class TarrantWebInteractive : WebInteractive
     {
-        const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
+        protected const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
         #region Constructors
         public TarrantWebInteractive() { }
 
@@ -239,7 +239,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="actionName">Name of the action.</param>
         /// <param name="action">The action.</param>
         /// <returns></returns>
-        protected List<HLinkDataRow> ExtractCaseData(XmlContentHolder results, 
+        protected virtual List<HLinkDataRow> ExtractCaseData(XmlContentHolder results, 
             List<HLinkDataRow> cases, 
             string actionName, IElementActionBase action)
         {

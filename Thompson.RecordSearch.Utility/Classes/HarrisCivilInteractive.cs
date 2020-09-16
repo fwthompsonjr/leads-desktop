@@ -6,7 +6,9 @@ using System.Globalization;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
+using Thompson.RecordSearch.Utility.Web;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -87,6 +89,37 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
             return webFetch;
         }
+
+
+
+        /// <summary>
+        /// Extracts the case data.
+        /// </summary>
+        /// <param name="results">The results.</param>
+        /// <param name="cases">The cases.</param>
+        /// <param name="actionName">Name of the action.</param>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
+        protected override List<HLinkDataRow> ExtractCaseData(XmlContentHolder results,
+            List<HLinkDataRow> cases,
+            string actionName, IElementActionBase action)
+        {
+            if (results == null) throw new ArgumentNullException(nameof(results));
+            if (cases == null) throw new ArgumentNullException(nameof(cases));
+            if (actionName == null) throw new ArgumentNullException(nameof(actionName));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            if (!actionName.Equals("jquery-read-table", comparison)) return cases;
+            if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
+            var htmlAction = (JqueryReadTable)action;
+            if (string.IsNullOrEmpty(htmlAction.OuterHtml))
+            {
+                return cases;
+            }
+
+            return cases;
+        }
+
 
         private WebFetchResult SearchWeb(XmlContentHolder results, List<NavigationStep> steps, DateTime startingDate, DateTime endingDate, ref List<HLinkDataRow> cases, out List<PersonAddress> people)
         {

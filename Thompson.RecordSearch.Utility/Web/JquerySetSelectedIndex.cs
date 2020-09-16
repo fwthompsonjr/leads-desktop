@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
+
     using Byy = OpenQA.Selenium.By;
     using Thompson.RecordSearch.Utility.Dto;
     using OpenQA.Selenium;
     using System.Threading;
 
-    public class JquerySetTextBox : ElementActionBase
+    public class JquerySetSelectedIndex : ElementActionBase
     {
-        const string actionName = "jquery-set-text";
+        const string actionName = "jquery-set-selected-index";
 
         public override string ActionName => actionName;
 
@@ -25,7 +26,7 @@ namespace Thompson.RecordSearch.Utility.Web
             var selector = item.Locator.Query;
             if (string.IsNullOrEmpty(selector)) return;
             var objText = item.ExpectedValue;
-            var command = $"$('{selector}').val('{objText}');";
+            var command = $"$('{selector}').prop('selectedIndex', {objText});";
 
             var jse = (IJavaScriptExecutor)driver;
             jse.ExecuteScript(command);
@@ -33,6 +34,4 @@ namespace Thompson.RecordSearch.Utility.Web
             if (item.Wait > 0) { Thread.Sleep(item.Wait); }
         }
     }
-
-
 }

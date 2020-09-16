@@ -235,6 +235,7 @@
     <Compile Include="Interfaces\IElementActionBase.cs" />
     <Compile Include="Interfaces\IExcelFileWriter.cs" />
     <Compile Include="Models\CaseData.cs" />
+    <Compile Include="Models\CaseRowData.cs" />
     <Compile Include="Models\ExcelColumnLayout.cs" />
     <Compile Include="Models\PersonAddress.cs" />
     <Compile Include="Dto\SearchSettingDto.cs" />
@@ -273,8 +274,14 @@
     <Compile Include="Web\ElementSetValueAction.cs" />
     <Compile Include="Web\ElementTextConfirmAction.cs" />
     <Compile Include="Web\GetRecordCountAction.cs" />
+    <Compile Include="Web\JqueryReadTable.cs" />
+    <Compile Include="Web\JquerySetSelectedIndex.cs" />
     <Compile Include="Web\JquerySetTextBox.cs" />
     <Compile Include="Web\WebNavAction.cs" />
+    <Content Include="..\Shared\harris-civil-reader.js">
+      <Link>xml\harris-civil-reader.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WebDriver.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
