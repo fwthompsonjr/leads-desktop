@@ -19,100 +19,90 @@ namespace Thompson.RecordSearch.Utility.Web
 
     public class JqueryReadTable : ElementActionBase
     {
-        private static Dictionary<string, string> _scripts;
-
-        protected static string GetDataScript(string suffix = "")
-        {
-            const string dataFormat = @"{0}\xml\{1}.js";
-            if(_scripts == null)
-            {
-                _scripts = new Dictionary<string, string>();
-            }
-            if (_scripts.ContainsKey(suffix))
-            {
-                return _scripts[suffix];
-            }
-            var appDirectory = ContextManagment.AppDirectory;
-            var dataFile = string.Format(
-                CultureInfo.CurrentCulture,
-                dataFormat,
-                appDirectory,
-                suffix);
-            if (!File.Exists(dataFile))
-            {
-                throw new FileNotFoundException(
-                    CommonKeyIndexes.NavigationFileNotFound);
-            }
-            var data = File.ReadAllText(dataFile);
-            _scripts.Add(suffix, data);
-            return data;
-        }
-
-
+        protected bool IsOverlaid { get; set; }
         const string actionName = "jquery-read-table";
         const string rowSelector = "#itemPlaceholderContainer tr.even";
+        const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
         public override string ActionName => actionName;
 
+        public List<HLinkDataRow> DataRows { get; private set; }
         public override void Act(NavigationStep item)
         {
-            const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
             if (item == null) throw new ArgumentNullException(nameof(item));
             var driver = GetWeb;
-            var selector = item.Locator.Query;
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
-            if (string.IsNullOrEmpty(selector)) return;
-            var command = GetDataScript(selector);
-            List<CaseRowData> rowData = new List<CaseRowData>();
-            var rows = driver.FindElements(Byy.CssSelector(rowSelector)).ToList();
-            rows.ForEach(row => 
-                {
-                    var caseData = new CaseRowData();
-                    var cells = row.FindElements(Byy.TagName("td")).ToList();
-                    for (var i = 1; i <= 8; i++)
-                    {
-                        var cell = cells[i];
-                        switch (i)
-                        {
-                            case 1:
-                                caseData.Case = cell.FindElement(Byy.CssSelector("a.doclinks")).Text;
-                                break;
-                            case 2:
-                                caseData.Court = cell.Text.Trim();
-                                break;
-                            case 3:
-                                caseData.FileDate = cell.Text.Trim();
-                                break;
-                            case 4:
-                                caseData.Status = cell.Text.Trim();
-                                break;
-                            case 5:
-                                caseData.TypeDesc = cell.Text.Trim();
-                                break;
-                            case 6:
-                                caseData.Subtype = cell.Text.Trim();
-                                break;
-                            case 7:
-                                caseData.Style = cell.Text.Trim();
-                                break;
-                            case 8:
-                                var hlink = cell.FindElement(Byy.TagName("a"));
-                                var link = hlink.GetAttribute("onclick");
-                                var n = link.IndexOf("x-", comparisonType: ccic) + 1;
-                                link = link.Substring(n);
-                                n = link.IndexOf(".", comparisonType: ccic);
-                                link = link.Substring(1, n - 1);
-                                executor.ExecuteScript("arguments[0].click();", hlink);
-                                caseData.CaseDataAddresses = GetAddresses(link);
-                                rowData.Add(caseData);
-                                executor.ExecuteScript("arguments[0].click();", hlink);
-                                break;
-                        }
-                    }
-                });
+            IsOverlaid = false;
+
+            DataRows = new List<HLinkDataRow>();
+
+            ReadPage(driver, executor);
 
             if (item.Wait > 0) { Thread.Sleep(item.Wait); }
         }
 
+        private void ReadPage(IWebDriver driver, IJavaScriptExecutor executor)
+        {
+            List<CaseRowData> rowData = new List<CaseRowData>();
+            var rows = driver.FindElements(Byy.CssSelector(rowSelector)).ToList();
+            var rcount = rows.Count;
+            var rr = 0;
+
+            rows.ForEach(row =>
+            {
+
+                var statement = ("Reading : [0] of [1]")
+                    .Replace("[0]", (rr++).ToString())
+                    .Replace("[1]", rcount.ToString());
+
+                Overlay(statement, executor);
+
+                var caseData = new CaseRowData();
+                var cells = row.FindElements(Byy.TagName("td")).ToList();
+                for (var i = 1; i <= 8; i++)
+                {
+                    var cell = cells[i];
+                    switch (i)
+                    {
+                        case 1:
+                            caseData.Case = cell.FindElement(Byy.CssSelector("a.doclinks")).Text;
+                            break;
+                        case 2:
+                            caseData.Court = cell.Text.Trim();
+                            break;
+                        case 3:
+                            caseData.FileDate = cell.Text.Trim();
+                            break;
+                        case 4:
+                            caseData.Status = cell.Text.Trim();
+                            break;
+                        case 5:
+                            caseData.TypeDesc = cell.Text.Trim();
+                            break;
+                        case 6:
+                            caseData.Subtype = cell.Text.Trim();
+                            break;
+                        case 7:
+                            caseData.Style = cell.Text.Trim();
+                            break;
+                        case 8:
+                            var hlink = cell.FindElement(Byy.TagName("a"));
+                            var link = hlink.GetAttribute("onclick");
+                            var n = link.IndexOf("x-", comparisonType: ccic) + 1;
+                            link = link.Substring(n);
+                            n = link.IndexOf(".", comparisonType: ccic);
+                            link = link.Substring(1, n - 1);
+                            executor.ExecuteScript("arguments[0].click();", hlink);
+                            caseData.CaseDataAddresses = GetAddresses(link);
+                            rowData.Add(caseData);
+                            executor.ExecuteScript("arguments[0].click();", hlink);
+                            break;
+                    }
+                }
+            });
+
+            rowData.ForEach(d => DataRows.AddRange(d.ConvertToDataRow()));
+            RemoveOverlay(executor);
+        }
 
         private List<CaseDataAddress> GetAddresses(string search)
         {
@@ -164,6 +154,53 @@ namespace Thompson.RecordSearch.Utility.Web
                 // element not found or something
                 return false;
             }
+        }
+
+
+        private void DisplayOverlay(string text, IJavaScriptExecutor executor)
+        {
+            var sb = new StringBuilder();
+            sb.Append("$(?<table id='overlay'><tbody><tr><td id='overlayText'>?" + text);
+            sb.Append("?</td></tr></tbody></table>?");
+            sb.AppendLine(".css({ ");
+            sb.AppendLine("	?position?: ?fixed?, ");
+            sb.AppendLine("	?top?: 0, ");
+            sb.AppendLine("	?left?: 0, ");
+            sb.AppendLine("	?width?: ?100%?, ");
+            sb.AppendLine("	?height?: ?100%?, ");
+            sb.AppendLine("	?background-color?: ?rgba(0,0,0,.5)?, ");
+            sb.AppendLine("	?z-index?: 10000, ");
+            sb.AppendLine("	?vertical-align?: ?middle?, ");
+            sb.AppendLine("	?text-align?: ?center?, ");
+            sb.AppendLine("	?color?: ?#fff?, ");
+            sb.AppendLine("	?font-size?: ?30px?, ");
+            sb.AppendLine("	?font-weight?: ?bold?, ");
+            sb.AppendLine("	?cursor?: ?wait? ");
+            sb.AppendLine("}).appendTo(?body?);");
+
+            _ = sb.Replace("?", '"'.ToString());
+
+            // executor.ExecuteScript(sb.ToString());
+            IsOverlaid = true;
+        }
+
+        private void Overlay(string text, IJavaScriptExecutor executor)
+        {
+            if (!IsOverlaid)
+            {
+                DisplayOverlay(text, executor);
+                return;
+            }
+            var sb = new StringBuilder("$(\"#overlayText\").text('" + text + "');\"");
+
+            // executor.ExecuteScript(sb.ToString());
+        }
+
+        private void RemoveOverlay(IJavaScriptExecutor executor)
+        {
+            var sb = new StringBuilder("$(\"#overlay\").remove();");
+            // executor.ExecuteScript(sb.ToString());
+            IsOverlaid = false;
         }
     }
 }

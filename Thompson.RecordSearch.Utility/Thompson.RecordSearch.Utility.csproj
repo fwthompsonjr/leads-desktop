@@ -237,6 +237,7 @@
     <Compile Include="Models\CaseData.cs" />
     <Compile Include="Models\CaseRowData.cs" />
     <Compile Include="Models\ExcelColumnLayout.cs" />
+    <Compile Include="Models\ModelExtensions.cs" />
     <Compile Include="Models\PersonAddress.cs" />
     <Compile Include="Dto\SearchSettingDto.cs" />
     <Compile Include="Models\WebFetchResult.cs" />

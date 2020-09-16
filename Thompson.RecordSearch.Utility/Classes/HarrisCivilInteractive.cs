@@ -110,11 +110,12 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (action == null) throw new ArgumentNullException(nameof(action));
 
             if (!actionName.Equals("jquery-read-table", comparison)) return cases;
-            if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
+            // if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
             var htmlAction = (JqueryReadTable)action;
-            if (string.IsNullOrEmpty(htmlAction.OuterHtml))
+            var data = htmlAction.DataRows;
+            if(data != null && data.Any())
             {
-                return cases;
+                cases.AddRange(data);
             }
 
             return cases;
