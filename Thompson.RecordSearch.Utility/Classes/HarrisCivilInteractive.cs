@@ -147,6 +147,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     cases = ExtractCaseData(results, cases, actionName, action);
                     if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
                     {
+                        // this value needs to be populated with table data
                         caseList = action.OuterHtml;
                     }
                 }
@@ -191,8 +192,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
-                var styleInfo = item.IsCriminal | item.IsJustice ? item.CriminalCaseStyle : GetCaseStyle(item);
-                if (item.IsProbate) styleInfo = item.CaseStyle;
+                var styleInfo = item.CaseStyle;
                 var person = new PersonAddress
                 {
                     Name = item.Defendant,

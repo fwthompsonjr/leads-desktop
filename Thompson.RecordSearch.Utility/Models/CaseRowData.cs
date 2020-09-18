@@ -16,6 +16,7 @@ namespace Thompson.RecordSearch.Utility.Models
 
     public class CaseRowData
     {
+        public int RowId { get; set; }
         public string Case { get; set; }
         public string Court { get; set; }
         public string FileDate { get; set; }

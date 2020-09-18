@@ -28,7 +28,8 @@ namespace Thompson.RecordSearch.Utility.Models
             {
                 var row = new HLinkDataRow
                 {
-                    Address = person.Party,
+                    WebsiteId = source.RowId,
+                    Address = GetAddress(person),
                     Case = person.Case,
                     CaseStyle = source.Style,
                     CaseType = source.TypeDesc,
@@ -61,22 +62,7 @@ namespace Thompson.RecordSearch.Utility.Models
             {
                 return person;
             }
-
-            // get the person part of this address
-            for (int i = 0; i < pieces.Count; i++)
-            {
-                if(i == 0)
-                {
-                    person = pieces[i].Trim();
-                    continue;
-                }
-                if (IsStreetAddress(pieces[i]))
-                {
-                    break;
-                }
-                person += ", " + pieces[i].Trim();
-            }
-            return person;
+            return pieces[0].Trim();
         }
 
         public static string GetAddress(this CaseDataAddress source)
@@ -101,34 +87,81 @@ namespace Thompson.RecordSearch.Utility.Models
             {
                 return noMatch;
             }
-            bool isAddressMatched = false;
+            pieces.ForEach(x => x = x.Trim());
+            address = string.Empty;
             // get the person part of this address
             for (int i = 0; i < pieces.Count; i++)
             {
-                if (!isAddressMatched)
+                if (i == 0) continue;
+                var piece = pieces[i].Trim();
+                if (string.IsNullOrEmpty(address))
                 {
-                    if (IsStreetAddress(pieces[i]))
-                    {
-                        isAddressMatched = true;
-                        address = pieces[i].Trim();
-                        continue;
-                    }
+                    address = piece;
                 }
-                address += pipeString + pieces[i].Trim();
+                else
+                {
+                    address = (address + pipeString + piece);
+                }
             }
             return address;
 
         }
-        public static bool IsStreetAddress(string input)
-        {
-            string pattern = @"\d+(\s|-)?\w*$";
-            RegexOptions options = RegexOptions.Singleline;
 
-            foreach (Match m in Regex.Matches(input, pattern, options))
+        public static string ToHtml(this List<CaseRowData> source)
+        {
+            var template = new StringBuilder();
+            // 
+            string header = "<table>";
+            template.Append(header);
+
+            template.AppendLine("<thead>");
+            template.AppendLine("<tr>");
+            template.AppendLine("<th> Case </th>");
+            template.AppendLine("<th> Style </th>");
+            template.AppendLine("<th> DateFiled </th>");
+            template.AppendLine("<th> Court </th>");
+            template.AppendLine("<th> CaseType </th>");
+            template.AppendLine("<th> Status </th>");
+            template.AppendLine("</tr>");
+
+            template.AppendLine("</thead>");
+
+            template.AppendLine("<tbody> ");
+
+            if (source != null)
             {
-                if (m.Index <= 1) return true;
+                source.ForEach(s => 
+                { 
+                    template.AppendLine(s.ToHtml()); 
+                });
             }
-            return false;
+
+            template.AppendLine("</tbody> ");
+            template.AppendLine("</table> ");
+            return template.ToString();
         }
+
+        public static string ToHtml(this CaseRowData source)
+        {
+            var template = new StringBuilder();
+            template.AppendLine("<tr>");
+            template.AppendLine("<td>[Case]</td>");
+            template.AppendLine("<td>[Style]</td>");
+            template.AppendLine("<td>[DateFiled]</td>");
+            template.AppendLine("<td>[Court]</td>");
+            template.AppendLine("<td>[CaseType]</td>");
+            template.AppendLine("<td>[Status]</td>");
+            template.AppendLine("</tr>");
+            if (source == null) return template.ToString();
+            template.Replace("[RowIndex]", source.RowId.ToString());
+            template.Replace("[Case]", System.Net.WebUtility.HtmlEncode(source.Case));
+            template.Replace("[Style]", System.Net.WebUtility.HtmlEncode(source.Style));
+            template.Replace("[DateFiled]", System.Net.WebUtility.HtmlEncode(source.FileDate));
+            template.Replace("[Court]", System.Net.WebUtility.HtmlEncode(source.Court));
+            template.Replace("[CaseType]", System.Net.WebUtility.HtmlEncode(source.TypeDesc));
+            template.Replace("[Status]", System.Net.WebUtility.HtmlEncode(source.Status));
+            return template.ToString();
+        }
+
     }
 }

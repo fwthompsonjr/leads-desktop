@@ -44,18 +44,9 @@ namespace Thompson.RecordSearch.Utility.Web
         {
             List<CaseRowData> rowData = new List<CaseRowData>();
             var rows = driver.FindElements(Byy.CssSelector(rowSelector)).ToList();
-            var rcount = rows.Count;
-            var rr = 0;
 
             rows.ForEach(row =>
             {
-
-                var statement = ("Reading : [0] of [1]")
-                    .Replace("[0]", (rr++).ToString())
-                    .Replace("[1]", rcount.ToString());
-
-                Overlay(statement, executor);
-
                 var caseData = new CaseRowData();
                 var cells = row.FindElements(Byy.TagName("td")).ToList();
                 for (var i = 1; i <= 8; i++)
@@ -100,8 +91,10 @@ namespace Thompson.RecordSearch.Utility.Web
                 }
             });
 
+            OuterHtml = rowData.ToHtml();
             rowData.ForEach(d => DataRows.AddRange(d.ConvertToDataRow()));
-            RemoveOverlay(executor);
+
+
         }
 
         private List<CaseDataAddress> GetAddresses(string search)
@@ -156,51 +149,5 @@ namespace Thompson.RecordSearch.Utility.Web
             }
         }
 
-
-        private void DisplayOverlay(string text, IJavaScriptExecutor executor)
-        {
-            var sb = new StringBuilder();
-            sb.Append("$(?<table id='overlay'><tbody><tr><td id='overlayText'>?" + text);
-            sb.Append("?</td></tr></tbody></table>?");
-            sb.AppendLine(".css({ ");
-            sb.AppendLine("	?position?: ?fixed?, ");
-            sb.AppendLine("	?top?: 0, ");
-            sb.AppendLine("	?left?: 0, ");
-            sb.AppendLine("	?width?: ?100%?, ");
-            sb.AppendLine("	?height?: ?100%?, ");
-            sb.AppendLine("	?background-color?: ?rgba(0,0,0,.5)?, ");
-            sb.AppendLine("	?z-index?: 10000, ");
-            sb.AppendLine("	?vertical-align?: ?middle?, ");
-            sb.AppendLine("	?text-align?: ?center?, ");
-            sb.AppendLine("	?color?: ?#fff?, ");
-            sb.AppendLine("	?font-size?: ?30px?, ");
-            sb.AppendLine("	?font-weight?: ?bold?, ");
-            sb.AppendLine("	?cursor?: ?wait? ");
-            sb.AppendLine("}).appendTo(?body?);");
-
-            _ = sb.Replace("?", '"'.ToString());
-
-            // executor.ExecuteScript(sb.ToString());
-            IsOverlaid = true;
-        }
-
-        private void Overlay(string text, IJavaScriptExecutor executor)
-        {
-            if (!IsOverlaid)
-            {
-                DisplayOverlay(text, executor);
-                return;
-            }
-            var sb = new StringBuilder("$(\"#overlayText\").text('" + text + "');\"");
-
-            // executor.ExecuteScript(sb.ToString());
-        }
-
-        private void RemoveOverlay(IJavaScriptExecutor executor)
-        {
-            var sb = new StringBuilder("$(\"#overlay\").remove();");
-            // executor.ExecuteScript(sb.ToString());
-            IsOverlaid = false;
-        }
     }
 }
