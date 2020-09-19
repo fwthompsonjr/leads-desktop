@@ -223,5 +223,39 @@ namespace Thompson.RecordSearch.Utility.Models
             template.Append("</table>");
             return template.ToString();
         }
+
+        public static PersonAddress ToCalculatedZip(this PersonAddress source)
+        {
+            if (source == null) return null;
+            if (string.IsNullOrEmpty(source.Zip)) return source;
+            string zipCode = source.Zip.Trim();
+            zipCode = zipCode.Replace(((char)160).ToString(), " ");
+            var pieces = zipCode.Split(' ').ToList();
+            if (!pieces.Any())
+            {
+                source.Zip = zipCode;
+                return source;
+            }
+            source.Zip = pieces.Last();
+            return source;
+        }
+
+        public static PersonAddress ToCalculatedNames(this PersonAddress source)
+        {
+            if (source == null) return null;
+            if (string.IsNullOrEmpty(source.Name)) return source;
+            string fullName = source.Name.Trim();
+            var pieces = fullName.Split(' ').ToList();
+            if (!pieces.Any())
+            {
+                source.CalcFirstName = source.Name;
+                source.CalcLastName = string.Empty;
+                return source;
+            }
+            source.CalcFirstName = pieces[0];
+            var lasts = pieces.GetRange(1, pieces.Count - 1).ToList();
+            source.CalcLastName = string.Join(" ", lasts);
+            return source;
+        }
     }
 }

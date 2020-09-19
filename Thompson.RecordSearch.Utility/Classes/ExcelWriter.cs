@@ -79,7 +79,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             int countyIndex = 0;
             int courtAddressIndex = 0;
             int courtNameId = 10;
-
+            var specialList = new Dictionary<string, string> 
+            {
+                { "firstname", "fname" },
+                { "lastname", "lname" }
+            };
             foreach (var item in addressList)
             {
                 if(rowIndex == 1)
@@ -88,7 +92,6 @@ namespace Thompson.RecordSearch.Utility.Classes
                     var headerIndex = 1;
                     foreach (var field in item.FieldList)
                     {
-
                         var heading = wsDt.Cells[rowIndex, headerIndex];
                         heading.Value = field;
                         headerIndex++;
@@ -103,7 +106,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var culture = CultureInfo.CurrentCulture;
                 for (int i = 0; i < item.FieldList.Count; i++)
                 {
-                    var content = item[i];
+                    var field = item.FieldList[i];
+                    var fieldName = specialList.ContainsKey(field) & websiteId == 30 ? specialList[field] : field;
+                    var content = item[fieldName];
                     var cleaner = new StringBuilder(content);
                     cleaner.Replace(Environment.NewLine, " ");
                     cleaner.Replace(((char)10).ToString(culture), " ");

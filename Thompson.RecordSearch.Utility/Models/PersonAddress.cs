@@ -14,7 +14,7 @@ namespace Thompson.RecordSearch.Utility.Models
         private const string FieldNames = @"Name,FirstName,LastName,Zip," +
             @"Address1,Address2,Address3," +
             @"Case Number,Date Filed,Court," +
-            @"Case Type,case style,plantiff";
+            @"Case Type,case style,plantiff,FName,LName";
         private string _fieldNames;
         private List<string> _fieldList;
 
@@ -114,6 +114,8 @@ namespace Thompson.RecordSearch.Utility.Models
         }
 
         public string Status { get; set; }
+        public string CalcFirstName { get; set; }
+        public string CalcLastName { get; set; }
         #endregion
 
         #region Methods
@@ -209,6 +211,10 @@ namespace Thompson.RecordSearch.Utility.Models
                         return LastName;
                     case "plantiff":
                         return Plantiff;
+                    case "fname":
+                        return CalcFirstName ?? "";
+                    case "lname":
+                        return CalcLastName ?? "";
                     default:
                         return string.Empty;
                 }

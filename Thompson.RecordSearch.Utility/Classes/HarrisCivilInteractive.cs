@@ -84,6 +84,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 webFetch = SearchWeb(results, steps, startingDate, startingDate,
                     ref cases, out people);
                 peopleList.AddRange(people);
+                peopleList.ForEach(p => {
+                    p = p.ToCalculatedNames();
+                    p = p.ToCalculatedZip();
+                    });
                 webFetch.PeopleList = peopleList;
                 webFetch.CaseList = peopleList.ToHtml();
                 startingDate = startingDate.AddDays(1);
