@@ -119,6 +119,15 @@ namespace Thompson.RecordSearch.Utility.Classes
                     "layouts/layout[@id='{0}' and @name='{1}']", 
                 id != 1 ? 1 : id,
                 sectionName));
+            if(id == 30)
+            {
+                parent = doc.DocumentElement.SelectSingleNode(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    "layouts/layout[@id='{0}' and @name='{1}']",
+                id,
+                sectionName));
+            }
             if (parent == null) return null;
             var columnNode = parent.FirstChild;
             if (columnNode == null) return null;

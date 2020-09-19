@@ -85,8 +85,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                     ref cases, out people);
                 peopleList.AddRange(people);
                 webFetch.PeopleList = peopleList;
+                webFetch.CaseList = peopleList.ToHtml();
                 startingDate = startingDate.AddDays(1);
             }
+            // webFetch.CaseList = CaseSearchType.
             return webFetch;
         }
 
@@ -109,9 +111,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (actionName == null) throw new ArgumentNullException(nameof(actionName));
             if (action == null) throw new ArgumentNullException(nameof(action));
 
-            if (!actionName.Equals("jquery-read-table", comparison)) return cases;
+            if (!actionName.Equals("harris-civil-read-table", comparison)) return cases;
             // if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
-            var htmlAction = (JqueryReadTable)action;
+            var htmlAction = (HarrisCivilReadTable)action;
             var data = htmlAction.DataRows;
             if(data != null && data.Any())
             {
@@ -154,14 +156,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 cases.FindAll(c => string.IsNullOrEmpty(c.Address))
                     .ForEach(c => GetAddressInformation(driver, this, c));
 
-                cases.FindAll(c => c.IsCriminal && !string.IsNullOrEmpty(c.CriminalCaseStyle))
-                    .ForEach(d => d.CaseStyle = d.CriminalCaseStyle);
-
-                cases.FindAll(c => c.IsJustice && !string.IsNullOrEmpty(c.CriminalCaseStyle))
-                    .ForEach(d => d.CaseStyle = d.CriminalCaseStyle);
+                
 
                 people = ExtractPeople(cases);
-
+                caseList = people.ToHtml();
 
                 return new WebFetchResult
                 {
@@ -200,7 +198,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                     DateFiled = item.DateFiled,
                     Court = item.Court,
                     CaseType = item.CaseType,
-                    CaseStyle = styleInfo
+                    CaseStyle = styleInfo,
+                    Status = item.Data
                 };
                 item.Address = CleanUpAddress(item.Address);
                 person = ParseAddress(item.Address, person);

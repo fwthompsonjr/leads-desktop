@@ -160,6 +160,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             int websiteId = 1)
         {
             var pck = excelPackage ?? new ExcelPackage();
+
             var namedStyle = pck.Workbook.Styles.CreateNamedStyle("HyperLink");
             namedStyle.Style.Font.UnderLine = true;
             namedStyle.Style.Font.Color.SetColor(Color.Blue);
@@ -180,6 +181,60 @@ namespace Thompson.RecordSearch.Utility.Classes
             var table = body.FirstChild;
             var rows = table.ChildNodes.Cast<XmlNode>().ToList();
             var rowIndex = 1;
+            rowIndex = GenerateExcelOutput(wsDt, hyperPrefix, rows, rowIndex, table, websiteId);
+            // format rows
+            ApplyGridFormatting(websiteId, "caselayout", wsDt, rows);
+
+            // save data
+            if (saveFile) { FileWriter.SaveAs(pck, outputFileName); }
+            return pck;
+        }
+        private static int GenerateExcelOutput(ExcelWorksheet wsDt,
+            XmlNode table
+            )
+        {
+            int rowIndex = 1;
+            const int Case = 1;
+            const int Style = 2; 
+            const int DateFiled = 3; 
+            const int Court = 4; 
+            const int CaseType = 5; 
+            const int Status = 6;
+
+            wsDt.Cells[rowIndex, Case].Value = "Case";
+            wsDt.Cells[rowIndex, Style].Value = "Style";
+            wsDt.Cells[rowIndex, DateFiled].Value = "DateFiled";
+            wsDt.Cells[rowIndex, Court].Value = "Court";
+            wsDt.Cells[rowIndex, CaseType].Value = "CaseType";
+            wsDt.Cells[rowIndex, Status].Value = "Status";
+
+            rowIndex++;
+
+            foreach (var item in table.ChildNodes.Cast<XmlNode>().ToList())
+            {
+                
+                wsDt.Cells[rowIndex, Case].Value = item.ChildNodes[Case - 1].InnerText;
+                wsDt.Cells[rowIndex, Style].Value = item.ChildNodes[Style - 1].InnerText;
+                wsDt.Cells[rowIndex, DateFiled].Value = item.ChildNodes[DateFiled - 1].InnerText;
+                wsDt.Cells[rowIndex, Court].Value = item.ChildNodes[Court - 1].InnerText;
+                wsDt.Cells[rowIndex, CaseType].Value = item.ChildNodes[CaseType - 1].InnerText;
+                wsDt.Cells[rowIndex, Status].Value = item.ChildNodes[Status - 1].InnerText;
+                rowIndex++;
+            }
+
+            return rowIndex;
+        }
+        private static int GenerateExcelOutput(ExcelWorksheet wsDt, 
+            WebNavigationKey hyperPrefix, 
+            List<XmlNode> rows, 
+            int rowIndex,
+            XmlNode table,
+            int websiteId)
+        {
+            if(websiteId == 30)
+            {
+                return GenerateExcelOutput(wsDt, table);
+            }
             foreach (var item in rows)
             {
                 var colIndex = 1;
@@ -211,12 +266,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
                 rowIndex++;
             }
-            // format rows
-            ApplyGridFormatting(websiteId, "caselayout", wsDt, rows);
 
-            // save data
-            if (saveFile) { FileWriter.SaveAs(pck, outputFileName); }
-            return pck;
+            return rowIndex;
         }
 
         private void ApplyGridFormatting<T>(int websiteId, 
@@ -242,7 +293,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
             }
             // apply borders
-            var rcount = rows.Count;
+            var rcount = websiteId == 30 & sectionName == "caselayout" ? rows.Count + 1 : rows.Count;
             var ccount = isCaseLayout ? columns.Count + 2 : columns.Count;
             var rngCells = wsDt.Cells[1, 1, rcount, ccount];
             var rngTopRow = wsDt.Cells[1, 1, 1, ccount];

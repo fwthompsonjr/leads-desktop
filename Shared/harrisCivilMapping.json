@@ -54,7 +54,7 @@
       }
     },
     {
-      "actionName": "jquery-read-table",
+      "actionName": "harris-civil-read-table",
       "displayName": "read-result",
       "locator": {
         "find": "css",

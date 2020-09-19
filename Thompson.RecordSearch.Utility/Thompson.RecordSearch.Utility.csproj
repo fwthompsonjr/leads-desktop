@@ -275,7 +275,7 @@
     <Compile Include="Web\ElementSetValueAction.cs" />
     <Compile Include="Web\ElementTextConfirmAction.cs" />
     <Compile Include="Web\GetRecordCountAction.cs" />
-    <Compile Include="Web\JqueryReadTable.cs" />
+    <Compile Include="Web\HarrisCivilReadTable.cs" />
     <Compile Include="Web\JquerySetSelectedIndex.cs" />
     <Compile Include="Web\JquerySetTextBox.cs" />
     <Compile Include="Web\WebNavAction.cs" />

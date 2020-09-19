@@ -10,6 +10,7 @@ using System.Windows;
 
 namespace Thompson.RecordSearch.Utility.Models
 {
+    using WebUtl = System.Net.WebUtility;
     public static class ModelExtensions
     {
         private static readonly string Defendant =
@@ -36,7 +37,7 @@ namespace Thompson.RecordSearch.Utility.Models
                     Court = source.Court,
                     DateFiled = source.FileDate,
                     Defendant = GetPerson(person),
-                    Data = person.Party
+                    Data = source.Status
                 };
                 dest.Add(row);
             }
@@ -110,24 +111,7 @@ namespace Thompson.RecordSearch.Utility.Models
         public static string ToHtml(this List<CaseRowData> source)
         {
             var template = new StringBuilder();
-            // 
-            string header = "<table>";
-            template.Append(header);
-
-            template.AppendLine("<thead>");
-            template.AppendLine("<tr>");
-            template.AppendLine("<th> Case </th>");
-            template.AppendLine("<th> Style </th>");
-            template.AppendLine("<th> DateFiled </th>");
-            template.AppendLine("<th> Court </th>");
-            template.AppendLine("<th> CaseType </th>");
-            template.AppendLine("<th> Status </th>");
-            template.AppendLine("</tr>");
-
-            template.AppendLine("</thead>");
-
-            template.AppendLine("<tbody> ");
-
+            template.Append("<table>");
             if (source != null)
             {
                 source.ForEach(s => 
@@ -135,9 +119,7 @@ namespace Thompson.RecordSearch.Utility.Models
                     template.AppendLine(s.ToHtml()); 
                 });
             }
-
-            template.AppendLine("</tbody> ");
-            template.AppendLine("</table> ");
+            template.Append("</table>");
             return template.ToString();
         }
 
@@ -153,15 +135,93 @@ namespace Thompson.RecordSearch.Utility.Models
             template.AppendLine("<td>[Status]</td>");
             template.AppendLine("</tr>");
             if (source == null) return template.ToString();
-            template.Replace("[RowIndex]", source.RowId.ToString());
-            template.Replace("[Case]", System.Net.WebUtility.HtmlEncode(source.Case));
-            template.Replace("[Style]", System.Net.WebUtility.HtmlEncode(source.Style));
-            template.Replace("[DateFiled]", System.Net.WebUtility.HtmlEncode(source.FileDate));
-            template.Replace("[Court]", System.Net.WebUtility.HtmlEncode(source.Court));
-            template.Replace("[CaseType]", System.Net.WebUtility.HtmlEncode(source.TypeDesc));
-            template.Replace("[Status]", System.Net.WebUtility.HtmlEncode(source.Status));
+            template.Replace("[RowIndex]", WebUtl.HtmlEncode(source.RowId.ToString()));
+            template.Replace("[Case]", WebUtl.HtmlEncode(source.Case));
+            template.Replace("[Style]", WebUtl.HtmlEncode(source.Style));
+            template.Replace("[DateFiled]", WebUtl.HtmlEncode(source.FileDate));
+            template.Replace("[Court]", WebUtl.HtmlEncode(source.Court));
+            template.Replace("[CaseType]", WebUtl.HtmlEncode(source.TypeDesc));
+            template.Replace("[Status]", WebUtl.HtmlEncode(source.Status));
             return template.ToString();
         }
 
+
+        public static string ToHtml(this HLinkDataRow source)
+        {
+            var template = new StringBuilder();
+            template.AppendLine("<tr>");
+            template.AppendLine("<td>[Case]</td>");
+            template.AppendLine("<td>[Style]</td>");
+            template.AppendLine("<td>[DateFiled]</td>");
+            template.AppendLine("<td>[Court]</td>");
+            template.AppendLine("<td>[CaseType]</td>");
+            template.AppendLine("<td>[Status]</td>");
+            template.AppendLine("</tr>");
+            if (source == null) return template.ToString();
+            template.Replace("[RowIndex]", WebUtl.HtmlEncode(source.WebsiteId.ToString()));
+            template.Replace("[Case]", WebUtl.HtmlEncode(source.Case));
+            template.Replace("[Style]", WebUtl.HtmlEncode(source.CaseStyle));
+            template.Replace("[DateFiled]", WebUtl.HtmlEncode(source.DateFiled));
+            template.Replace("[Court]", WebUtl.HtmlEncode(source.Court));
+            template.Replace("[CaseType]", WebUtl.HtmlEncode(source.CaseType));
+            template.Replace("[Status]", WebUtl.HtmlEncode(source.Data));
+            return template.ToString();
+
+        }
+
+
+        public static string ToHtml(this List<HLinkDataRow> source)
+        {
+            var template = new StringBuilder();
+            template.Append("<table>");
+            if (source != null)
+            {
+                source.ForEach(s =>
+                {
+                    template.AppendLine(s.ToHtml());
+                });
+            }
+            template.Append("</table>");
+            return template.ToString();
+        }
+
+
+        public static string ToHtml(this PersonAddress source)
+        {
+            var template = new StringBuilder();
+            template.AppendLine("<tr>");
+            template.AppendLine("<td>[Case]</td>");
+            template.AppendLine("<td>[Style]</td>");
+            template.AppendLine("<td>[DateFiled]</td>");
+            template.AppendLine("<td>[Court]</td>");
+            template.AppendLine("<td>[CaseType]</td>");
+            template.AppendLine("<td>[Status]</td>");
+            template.AppendLine("</tr>");
+            if (source == null) return template.ToString();
+            template.Replace("[Case]", WebUtl.HtmlEncode(source.CaseNumber));
+            template.Replace("[Style]", WebUtl.HtmlEncode(source.CaseStyle));
+            template.Replace("[DateFiled]", WebUtl.HtmlEncode(source.DateFiled));
+            template.Replace("[Court]", WebUtl.HtmlEncode(source.Court));
+            template.Replace("[CaseType]", WebUtl.HtmlEncode(source.CaseType));
+            template.Replace("[Status]", WebUtl.HtmlEncode(source.Status));
+            return template.ToString();
+
+        }
+
+
+        public static string ToHtml(this List<PersonAddress> source)
+        {
+            var template = new StringBuilder();
+            template.Append("<table>");
+            if (source != null)
+            {
+                source.ForEach(s =>
+                {
+                    template.AppendLine(s.ToHtml());
+                });
+            }
+            template.Append("</table>");
+            return template.ToString();
+        }
     }
 }

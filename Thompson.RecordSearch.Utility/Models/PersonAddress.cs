@@ -113,6 +113,7 @@ namespace Thompson.RecordSearch.Utility.Models
             }
         }
 
+        public string Status { get; set; }
         #endregion
 
         #region Methods

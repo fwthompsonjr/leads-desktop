@@ -555,9 +555,10 @@
           "id": 10.1,
           "name": "set up configuration",
           "isFixed": false,
-          "fixVersion": 0,
+          "fixVersion": 202000,
           "description": [
-            "setup configuration changes for harris county"
+            "setup configuration changes for harris county",
+            "Start Date: 2020-09-18 15:32:50Z"
           ]
         }
       ]
@@ -933,6 +934,11 @@
         {
           "id": 10.0,
           "description": "set up harris county configuration.",
+          "canPublish": true
+        },
+        {
+          "id": 10.1,
+          "description": "read from harris civil.",
           "canPublish": false
         }
       ]

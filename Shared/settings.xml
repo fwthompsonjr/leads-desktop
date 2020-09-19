@@ -51,7 +51,7 @@
       <key name="courtIndex"><![CDATA[]]></key>
       <key name="caseStatusIndex"><![CDATA[]]></key>
       <key name="navigation.control.file"><![CDATA[harrisCivilMapping]]></key>
-      <key name="hlinkUri"><![CDATA[http://cijspub.co.collin.tx.us/Secure/{0}]]></key>
+      <key name="hlinkUri"><![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
       <key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
       <key name="personParentXath"><![CDATA[./..]]></key>
       <key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
@@ -120,11 +120,11 @@
       <command type="string" name="CaseStyle" By="XPath" FriendlyName="Case-Style-Selection"><![CDATA[td[2]]]></command>
     </caseInspection>
     <caseInspection id="30" type="normal">
-      <command type="string" name="DateFiled" By="XPath" FriendlyName="Filing-Date-Selection"><![CDATA[td[3]/div[1]]]></command>
-      <command type="string" name="Case" By="XPath" FriendlyName="Case-Number-Selection"><![CDATA[td[1]/a]]></command>
-      <command type="string" name="Court" By="XPath" FriendlyName="Court-Name-Selection"><![CDATA[td[3]/div[2]]]></command>
-      <command type="string" name="CaseType" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[4]/div[1]]]></command>
-      <command type="string" name="CaseStyle" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[2]]]></command>
+      <command type="string" name="DateFiled" By="XPath" FriendlyName="Filing-Date-Selection"><![CDATA[td[2]]]></command>
+      <command type="string" name="Case" By="XPath" FriendlyName="Case-Number-Selection"><![CDATA[td[0]]]></command>
+      <command type="string" name="Court" By="XPath" FriendlyName="Court-Name-Selection"><![CDATA[td[3]]]></command>
+      <command type="string" name="CaseType" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[4]]]></command>
+      <command type="string" name="CaseStyle" By="XPath" FriendlyName="Case-Type-Selection"><![CDATA[td[1]]]></command>
     </caseInspection>
   </directions>
   <layouts>
@@ -210,10 +210,11 @@
     <layout id="30" name="caselayout">
       <columns>
         <column name="Case Number" columnWidth="30"/>
-        <column name="Case Name" columnWidth="80"/>
-        <column name="Filed/Location/Judical Officer" columnWidth="40"/>
-        <column name="Type/Status" columnWidth="40"/>
         <column name="Style" columnWidth="80"/>
+        <column name="Filed Date" columnWidth="40"/>
+        <column name="Court" columnWidth="15"/>
+        <column name="Case Type" columnWidth="80"/>
+        <column name="Status" columnWidth="20"/>
       </columns>
     </layout>
     <layout id="30" name="people">
