@@ -35,9 +35,6 @@
             this.dteEnding = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.resetFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.cboWebsite = new System.Windows.Forms.ComboBox();
@@ -51,6 +48,7 @@
             this.cboCaseType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cboCourts = new System.Windows.Forms.ComboBox();
+            this.tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -138,38 +136,14 @@
             this.tableLayoutPanel1.SetColumnSpan(this.statusStrip1, 2);
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripDropDownButton1,
             this.toolStripStatus,
-            this.tsStatusLabel});
+            this.tsStatusLabel,
+            this.tsDropFileList});
             this.statusStrip1.Location = new System.Drawing.Point(0, 439);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(437, 22);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.resetFormToolStripMenuItem,
-            this.exportDataToolStripMenuItem});
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(89, 20);
-            this.toolStripDropDownButton1.Text = "Data Options";
-            this.toolStripDropDownButton1.Visible = false;
-            // 
-            // resetFormToolStripMenuItem
-            // 
-            this.resetFormToolStripMenuItem.Name = "resetFormToolStripMenuItem";
-            this.resetFormToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.resetFormToolStripMenuItem.Text = "Reset Form";
-            // 
-            // exportDataToolStripMenuItem
-            // 
-            this.exportDataToolStripMenuItem.Name = "exportDataToolStripMenuItem";
-            this.exportDataToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.exportDataToolStripMenuItem.Text = "Export Data";
-            this.exportDataToolStripMenuItem.Click += new System.EventHandler(this.ExportDataToolStripMenuItem_Click);
             // 
             // toolStripStatus
             // 
@@ -293,6 +267,16 @@
             this.cboCourts.Size = new System.Drawing.Size(311, 21);
             this.cboCourts.TabIndex = 13;
             // 
+            // tsDropFileList
+            // 
+            this.tsDropFileList.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsDropFileList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsDropFileList.Image = ((System.Drawing.Image)(resources.GetObject("tsDropFileList.Image")));
+            this.tsDropFileList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsDropFileList.Name = "tsDropFileList";
+            this.tsDropFileList.Size = new System.Drawing.Size(126, 20);
+            this.tsDropFileList.Text = "Previous File Results";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -322,9 +306,6 @@
         internal System.Windows.Forms.StatusStrip statusStrip1;
         internal System.Windows.Forms.ComboBox cboWebsite;
         internal System.Windows.Forms.Label label3;
-        internal System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        internal System.Windows.Forms.ToolStripMenuItem resetFormToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem exportDataToolStripMenuItem;
         public System.Windows.Forms.TextBox txConsole;
         internal System.Windows.Forms.Label label4;
         internal System.Windows.Forms.ComboBox cboSearchType;
@@ -335,6 +316,7 @@
         internal System.Windows.Forms.Button ButtonDentonSetting;
         internal System.Windows.Forms.ToolStripStatusLabel tsStatusLabel;
         internal System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
+        private System.Windows.Forms.ToolStripDropDownButton tsDropFileList;
     }
 }
 

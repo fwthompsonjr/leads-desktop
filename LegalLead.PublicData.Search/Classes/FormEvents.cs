@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
@@ -121,6 +122,11 @@ namespace LegalLead.PublicData.Search
             var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
             var tarrantCourt = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.TarrantCountyCaseType);
             const int Zero = 0;
+            // previous files list
+            Tag = new List<SearchResult>();
+            tsDropFileList.Enabled = false;
+            tsDropFileList.Visible = false;
+
             cboWebsite.DataSource = websites;
             cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
@@ -158,6 +164,36 @@ namespace LegalLead.PublicData.Search
             DebugFormLoad();
 #endif
             SetUpTimer();
+        }
+
+        private void ComboBox_DataSourceChanged(object sender, EventArgs e)
+        {
+            // when data source is changed?
+            // remove all items from the tab strip
+            tsDropFileList.DropDownItems.Clear();
+            var list = GetObject<List<SearchResult>>(Tag);
+            list.ForEach(x => {
+                var button = new ToolStripMenuItem
+                {
+                    Visible = true,
+                    Tag = x,
+                    Text = x.Search,
+                    DisplayStyle = ToolStripItemDisplayStyle.Text                    
+                };
+                button.Click += Button_Click;
+                tsDropFileList.DropDownItems.Add(button);
+            });
+
+            tsDropFileList.Enabled = list.Count > 0;
+            tsDropFileList.Visible = tsDropFileList.Enabled;
+        }
+
+        private void Button_Click(object sender, EventArgs e)
+        {
+            if (sender == null) return;
+            var item = GetObject<SearchResult>(((ToolStripMenuItem)sender).Tag);
+            var fileName = item.ResultFileName;
+            OpenExcel(ref fileName);
         }
 
         private void DebugFormLoad()
@@ -236,6 +272,11 @@ namespace LegalLead.PublicData.Search
         private void TryOpenExcel()
         {
             var xmlFile = CaseData == null ? string.Empty : CaseData.Result;
+            OpenExcel(ref xmlFile);
+        }
+
+        private static void OpenExcel(ref string xmlFile)
+        {
             if (string.IsNullOrEmpty(xmlFile))
             {
                 MessageBox.Show(

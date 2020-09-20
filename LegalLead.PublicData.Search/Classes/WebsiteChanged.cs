@@ -44,7 +44,7 @@ namespace LegalLead.PublicData.Search
 
             if (!customList.Contains(source.Id)) return;
 
-            GetMain.tsStatusLabel.Text = string.Empty;
+            GetMain.tsStatusLabel.Text = new string(' ', 25);
             // custom combo mapping for case type
             var ccCaseName = CommonKeyIndexes.CollinCountyCaseType; // "collinCountyCaseType";
             var caseTypeName = source.Id == (int)SourceType.CollinCounty ?

@@ -115,6 +115,7 @@
     </Compile>
     <Compile Include="Classes\IRowStyleChanged.cs" />
     <Compile Include="Classes\IWebsiteChangeEvent.cs" />
+    <Compile Include="Classes\SearchResult.cs" />
     <Compile Include="Classes\SourceType.cs" />
     <Compile Include="Classes\StatusHelper.cs" />
     <Compile Include="Classes\WebsiteChanged.cs" />

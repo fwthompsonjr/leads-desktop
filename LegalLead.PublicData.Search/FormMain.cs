@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Classes;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -29,6 +31,10 @@ namespace LegalLead.PublicData.Search
             SetStatus(StatusType.Ready);
         }
 
+        protected static T GetObject<T>(object item)
+        {
+            return (T)item;
+        }
         private void SetStatus(StatusType status)
         {
             var v = StatusHelper.GetStatus(status);
@@ -44,6 +50,7 @@ namespace LegalLead.PublicData.Search
             
             try
             {
+
                 KillProcess(CommonKeyIndexes.ChromeDriver);
                 SetStatus(StatusType.Running);
                 if (!ValidateCustom())
@@ -56,7 +63,15 @@ namespace LegalLead.PublicData.Search
                 var startDate = dteStart.Value.Date;
                 var endingDate = dteEnding.Value.Date;
                 var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
-
+                var searchItem = new SearchResult
+                {
+                    Id = GetObject<List<SearchResult>>(Tag).Count + 1,
+                    Website = siteData.Name,
+                    EndDate = endingDate.ToShortDateString(),
+                    StartDate = startDate.ToShortDateString(),
+                    SearchDate = DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString(),                    
+                };
+                searchItem.Search = $"{searchItem.SearchDate} : {searchItem.Website} from {searchItem.StartDate} to {searchItem.EndDate}";
                 const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
                 var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
                 var keys = siteData.Keys;
@@ -97,6 +112,10 @@ namespace LegalLead.PublicData.Search
                 }
                 CaseData.WebsiteId = siteData.Id;
                 ExcelWriter.WriteToExcel(CaseData);
+                searchItem.ResultFileName = CaseData.Result;
+                searchItem.IsCompleted = true;
+                GetObject<List<SearchResult>>(Tag).Add(searchItem);
+                ComboBox_DataSourceChanged(null, null);
 
                 var result = MessageBox.Show(
                     CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView,

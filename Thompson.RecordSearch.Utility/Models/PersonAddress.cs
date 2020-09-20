@@ -419,6 +419,7 @@ namespace Thompson.RecordSearch.Utility.Models
                 }
                 var childNode = node.SelectSingleNode(childNodeName);
                 if (childNode == null) return string.Empty;
+                if(!childNode.HasChildNodes) return string.Empty;
                 return ((XmlCDataSection)(childNode.ChildNodes[0])).Data;
             }
 #pragma warning disable CA1031 // Do not catch general exception types
