@@ -37,6 +37,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
             this.cboWebsite = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,7 +49,6 @@
             this.cboCaseType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cboCourts = new System.Windows.Forms.ComboBox();
-            this.tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -88,7 +88,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(437, 477);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(652, 477);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // ButtonDentonSetting
@@ -108,7 +108,7 @@
             this.dteStart.Location = new System.Drawing.Point(123, 48);
             this.dteStart.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.dteStart.Name = "dteStart";
-            this.dteStart.Size = new System.Drawing.Size(311, 20);
+            this.dteStart.Size = new System.Drawing.Size(526, 20);
             this.dteStart.TabIndex = 2;
             // 
             // dteEnding
@@ -117,7 +117,7 @@
             this.dteEnding.Location = new System.Drawing.Point(123, 88);
             this.dteEnding.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.dteEnding.Name = "dteEnding";
-            this.dteEnding.Size = new System.Drawing.Size(311, 20);
+            this.dteEnding.Size = new System.Drawing.Size(526, 20);
             this.dteEnding.TabIndex = 3;
             // 
             // button1
@@ -125,7 +125,7 @@
             this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button1.Location = new System.Drawing.Point(123, 243);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(311, 34);
+            this.button1.Size = new System.Drawing.Size(526, 34);
             this.button1.TabIndex = 4;
             this.button1.Text = "Get Data";
             this.button1.UseVisualStyleBackColor = true;
@@ -136,12 +136,12 @@
             this.tableLayoutPanel1.SetColumnSpan(this.statusStrip1, 2);
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsDropFileList,
             this.toolStripStatus,
-            this.tsStatusLabel,
-            this.tsDropFileList});
+            this.tsStatusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 439);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(437, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(652, 22);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -156,6 +156,15 @@
             this.tsStatusLabel.Name = "tsStatusLabel";
             this.tsStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
+            // tsDropFileList
+            // 
+            this.tsDropFileList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsDropFileList.Image = ((System.Drawing.Image)(resources.GetObject("tsDropFileList.Image")));
+            this.tsDropFileList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsDropFileList.Name = "tsDropFileList";
+            this.tsDropFileList.Size = new System.Drawing.Size(126, 20);
+            this.tsDropFileList.Text = "Previous File Results";
+            // 
             // cboWebsite
             // 
             this.cboWebsite.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -163,7 +172,7 @@
             this.cboWebsite.Location = new System.Drawing.Point(123, 8);
             this.cboWebsite.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.cboWebsite.Name = "cboWebsite";
-            this.cboWebsite.Size = new System.Drawing.Size(311, 21);
+            this.cboWebsite.Size = new System.Drawing.Size(526, 21);
             this.cboWebsite.TabIndex = 6;
             // 
             // label1
@@ -204,7 +213,7 @@
             this.txConsole.Multiline = true;
             this.txConsole.Name = "txConsole";
             this.txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txConsole.Size = new System.Drawing.Size(431, 145);
+            this.txConsole.Size = new System.Drawing.Size(646, 145);
             this.txConsole.TabIndex = 8;
             // 
             // label4
@@ -224,7 +233,7 @@
             this.cboSearchType.Location = new System.Drawing.Point(123, 128);
             this.cboSearchType.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.cboSearchType.Name = "cboSearchType";
-            this.cboSearchType.Size = new System.Drawing.Size(311, 21);
+            this.cboSearchType.Size = new System.Drawing.Size(526, 21);
             this.cboSearchType.TabIndex = 10;
             // 
             // labelCboCaseType
@@ -244,7 +253,7 @@
             this.cboCaseType.Location = new System.Drawing.Point(123, 168);
             this.cboCaseType.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.cboCaseType.Name = "cboCaseType";
-            this.cboCaseType.Size = new System.Drawing.Size(311, 21);
+            this.cboCaseType.Size = new System.Drawing.Size(526, 21);
             this.cboCaseType.TabIndex = 12;
             // 
             // label6
@@ -264,24 +273,14 @@
             this.cboCourts.Location = new System.Drawing.Point(123, 208);
             this.cboCourts.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.cboCourts.Name = "cboCourts";
-            this.cboCourts.Size = new System.Drawing.Size(311, 21);
+            this.cboCourts.Size = new System.Drawing.Size(526, 21);
             this.cboCourts.TabIndex = 13;
-            // 
-            // tsDropFileList
-            // 
-            this.tsDropFileList.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsDropFileList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsDropFileList.Image = ((System.Drawing.Image)(resources.GetObject("tsDropFileList.Image")));
-            this.tsDropFileList.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsDropFileList.Name = "tsDropFileList";
-            this.tsDropFileList.Size = new System.Drawing.Size(126, 20);
-            this.tsDropFileList.Text = "Previous File Results";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(437, 477);
+            this.ClientSize = new System.Drawing.Size(652, 477);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
