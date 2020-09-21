@@ -1,7 +1,7 @@
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | LegalLead.PublicData.Search                                                       |
 | Version: 2.2.0.0                                                                  |
-| Release Date: 9/19/2020 8:39 PM                                                   |
+| Release Date: 9/21/2020 10:40 AM                                                  |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | IssueId   | Reported Date  | Corrected Date  | Comments                           |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
@@ -40,4 +40,9 @@
 | 9.5000    | 01-25-2020     | 06-04-2020      | Denton county screen mapping has b |
 |           |                |                 | een changed. Investigation is prog |
 |           |                |                 | ress                               |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+| 10.0000   | 09-21-2020     | 09-21-2020      | Set up harris county configuration |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+| 10.1000   | 09-04-2020     | 09-21-2020      | Read and write operations for Harr |
+|           |                |                 | is Civil Courts                    |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|

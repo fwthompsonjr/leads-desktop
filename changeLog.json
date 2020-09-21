@@ -554,11 +554,12 @@
           "changeId": "1000",
           "id": 10.1,
           "name": "set up configuration",
-          "isFixed": false,
+          "isFixed": true,
           "fixVersion": 202000,
           "description": [
             "setup configuration changes for harris county",
-            "Start Date: 2020-09-18 15:32:50Z"
+            "Start Date: 2020-09-18 15:32:50Z",
+            "End Date: 2020-09-21 10:14:17Z"
           ]
         }
       ]
@@ -939,7 +940,7 @@
         {
           "id": 10.1,
           "description": "read from harris civil.",
-          "canPublish": false
+          "canPublish": true
         }
       ]
     }
@@ -1153,6 +1154,18 @@
       "id": 9.5,
       "correctionDate": "2020-06-04T13:57:22.2332022-05:00",
       "description": "Denton county screen mapping has been changed. Investigation is progress",
+      "isWritten": false
+    },
+    {
+      "id": 10.0,
+      "correctionDate": "2020-09-21T09:30:22.2332022-05:00",
+      "description": "Set up harris county configuration",
+      "isWritten": false
+    },
+    {
+      "id": 10.1,
+      "correctionDate": "2020-09-21T09:30:22.2332022-05:00",
+      "description": "Read and write operations for Harris Civil Courts",
       "isWritten": false
     }
   ],

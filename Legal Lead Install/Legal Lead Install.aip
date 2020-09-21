@@ -5,10 +5,10 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_CourtRecordSearch.xlsm" Value="..\LegalLead.PublicData.Search\bin\Release\Utilities"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_CourtRecordSearch.xlsm" Value="..\LegalLead.PublicData.Search\bin\Debug\Utilities"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_EPPlus.dll" Value="..\packages\EPPlus.4.5.3.2\lib\net40"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_LegalLead.PublicData.Search.exe" Value="..\LegalLead.PublicData.Search\bin\Release"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_LegalLead.Resources.dll" Value="..\LegalLead.Resources\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_LegalLead.PublicData.Search.exe" Value="..\LegalLead.PublicData.Search\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_LegalLead.Resources.dll" Value="..\LegalLead.Resources\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll" Value="..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.CSharp.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.CodeCoverage.Shim.dll" Value="..\packages\Microsoft.CodeCoverage.16.4.0\lib\net45"/>
@@ -16,7 +16,7 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.Validation.dll" Value="..\packages\Microsoft.VisualStudio.Validation.15.5.31\lib\netstandard2.0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Win32.Registry.dll" Value="..\packages\Microsoft.Win32.Registry.4.6.0\lib\net461"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Newtonsoft.Json.dll" Value="..\packages\Newtonsoft.Json.12.0.3\lib\net45"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_ReadMe.txt" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_ReadMe.txt" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_SgmlReaderDll.dll" Value="..\packages\Microsoft.Xml.SgmlReader.1.8.14\lib\net45"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_StructureMap.dll" Value="..\packages\StructureMap.4.7.1\lib\net45"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Data.DataSetExtensions.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
@@ -31,32 +31,32 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Xml.Linq.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Xml.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Thompson.RecordSearch.Utility.dll" Value="..\Thompson.RecordSearch.Utility\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Thompson.RecordSearch.Utility.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_WebDriver.Support.dll" Value="..\packages\Selenium.Support.3.141.0\lib\net45"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_WebDriver.dll" Value="..\packages\Selenium.WebDriver.3.141.0\lib\net45"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_WebDriver.xml" Value="..\LegalLead.PublicData.Search\bin\Release"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_caselayout.xml" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_chromedriver.exe" Value="..\LegalLead.PublicData.Search\bin\Release"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyMapping_1.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyUserMap.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_courtAddress.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonCaseCustomInstruction.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonCaseCustomInstruction_1.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonDistrictCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonsettings.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harrisCivilCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harrisCivilMapping.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harriscivilreader.js" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harriscivilsettings.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_resourcetable.json" Value="..\LegalLead.PublicData.Search\bin\Release\text"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_settings.xml" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyCustomType.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyDataPoint.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_1.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_2.json" Value="..\LegalLead.PublicData.Search\bin\Release\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_WebDriver.xml" Value="..\LegalLead.PublicData.Search\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_caselayout.xml" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_chromedriver.exe" Value="..\LegalLead.PublicData.Search\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyMapping_1.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyUserMap.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_courtAddress.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonCaseCustomInstruction.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonCaseCustomInstruction_1.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonDistrictCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonsettings.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harrisCivilCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harrisCivilMapping.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harriscivilreader.js" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_harriscivilsettings.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_resourcetable.json" Value="..\LegalLead.PublicData.Search\bin\Debug\text"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_settings.xml" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyCustomType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyDataPoint.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_1.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_2.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_CourtRecordSearch.xlsm" Value="CourtRecordSearch.xlsm"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_EPPlus.dll" Value="EPPlus.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_LegalLead.PublicData.Search.exe" Value="LegalLead.PublicData.Search.exe"/>

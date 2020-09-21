@@ -35,9 +35,9 @@
             this.dteEnding = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
             this.cboWebsite = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -145,6 +145,15 @@
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // tsDropFileList
+            // 
+            this.tsDropFileList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsDropFileList.Image = ((System.Drawing.Image)(resources.GetObject("tsDropFileList.Image")));
+            this.tsDropFileList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsDropFileList.Name = "tsDropFileList";
+            this.tsDropFileList.Size = new System.Drawing.Size(126, 20);
+            this.tsDropFileList.Text = "Previous File Results";
+            // 
             // toolStripStatus
             // 
             this.toolStripStatus.Name = "toolStripStatus";
@@ -155,15 +164,6 @@
             // 
             this.tsStatusLabel.Name = "tsStatusLabel";
             this.tsStatusLabel.Size = new System.Drawing.Size(0, 17);
-            // 
-            // tsDropFileList
-            // 
-            this.tsDropFileList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsDropFileList.Image = ((System.Drawing.Image)(resources.GetObject("tsDropFileList.Image")));
-            this.tsDropFileList.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsDropFileList.Name = "tsDropFileList";
-            this.tsDropFileList.Size = new System.Drawing.Size(126, 20);
-            this.tsDropFileList.Text = "Previous File Results";
             // 
             // cboWebsite
             // 
