@@ -41,7 +41,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             var caseSearch = new WebNavigationKey
             {
                 Name = "CaseSearchType",
-                Value = "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[1]"
+                Value = "//a[@class='ssSearchHyperlink'][contains(text(),'District Court')]"
             };
             var districtSearch = new WebNavigationKey
             {

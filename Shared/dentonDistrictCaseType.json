@@ -64,12 +64,12 @@
     {
       "id": 0,
       "name": "District Clerk Criminal Case Records",
-      "query": "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[1]"
+      "query": "//a[@class='ssSearchHyperlink'][contains(text(),'District Court')]"
     },
     {
       "id": 1,
       "name": "District Clerk Civil & Family Case Records",
-      "query": "/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/a[2]"
+      "query": "//a[@class='ssSearchHyperlink'][contains(text(),'District Clerk Civil')]"
     }
   ]
 }

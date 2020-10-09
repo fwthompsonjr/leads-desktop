@@ -21,9 +21,6 @@ namespace LegalLead.PublicData.Search
         protected Label LabelCboCaseType => GetMain.labelCboCaseType;
         public override void Change()
         {
-            const int FortyNine = 49;
-            const int Zero = 0;
-            const int Three = 3;
             const int Four = 4;
             const int Five = 5;
             base.Change();

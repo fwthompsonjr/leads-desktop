@@ -16,6 +16,7 @@ namespace Thompson.RecordSearch.Utility.Web
             var driver = GetWeb;
             var selector = GetSelector(item);
             var elementToClick = driver.FindElement(selector);
+            System.Console.WriteLine("Element click action -- : " + selector);
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             executor.ExecuteScript("arguments[0].click();", elementToClick);
             if (item.Wait > 0) { Thread.Sleep(item.Wait); }

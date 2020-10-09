@@ -32,7 +32,7 @@
       "expectedValue": "Criminal Case Records",
       "locator": {
         "find": "xpath",
-        "query": "//a[text()='Criminal Case Records']"
+        "query": "//a[@class='ssSearchHyperlink'][contains(text(),'Misdemeanors')]"
       }
     },
     {

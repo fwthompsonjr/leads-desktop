@@ -179,7 +179,7 @@ namespace Thompson.RecordSearch.Utility.Web
             return data;
         }
 
-        private string HtmlDecode(string input)
+        private static string HtmlDecode(string input)
         {
             const string pipe = " | ";
             var cleaned = System.Net.WebUtility.HtmlDecode(input);
