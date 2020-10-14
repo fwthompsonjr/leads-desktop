@@ -82,11 +82,18 @@ namespace LegalLead.PublicData.Search
             }
 
             var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
+            var caseIndex = cboSearchType.SelectedIndex;
+
+            // remove event handler
+            cboSearchType.SelectedIndexChanged -= CboSearchType_SelectedIndexChanged;
 
             cboSearchType.DataSource = caseTypes.DropDowns;
             cboSearchType.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboSearchType.ValueMember = CommonKeyIndexes.IdProperCase;
-            cboSearchType.SelectedItem = selectedItem;
+            cboSearchType.SelectedIndex = caseIndex;
+
+            // restore event handler
+            cboSearchType.SelectedIndexChanged += CboSearchType_SelectedIndexChanged;
 
             cboCaseType.DataSource = source.Options;
             cboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
@@ -135,7 +142,6 @@ namespace LegalLead.PublicData.Search
             cboSearchType.DataSource = caseTypes.DropDowns;
             cboSearchType.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboSearchType.ValueMember = CommonKeyIndexes.IdProperCase;
-
 
 
             cboCourts.Visible = false;

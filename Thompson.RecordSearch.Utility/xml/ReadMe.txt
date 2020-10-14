@@ -1,10 +1,11 @@
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | LegalLead.PublicData.Search                                                       |
-| Version: 2.2.0.0                                                                  |
-| Release Date: 10/8/2020 10:34 PM                                                  |
+| Version: 2.2.1.0                                                                  |
+| Release Date: 10/14/2020 5:04 PM                                                  |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | IssueId   | Reported Date  | Corrected Date  | Comments                           |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
+LegalLead.Changed.Models.Correction|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
 | 0.1000    | 01-21-2020     | 01-24-2020      | initialize new version Start Date: |
 |           |                |                 |  2020-01-24 08:06:13Z End Date: 20 |
 |           |                |                 | 20-01-24 08:06:13Z                 |
@@ -41,8 +42,18 @@
 |           |                |                 | een changed. Investigation is prog |
 |           |                |                 | ress                               |
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
-| 10.0000   | 10-08-2020     | 09-21-2020      | Set up harris county configuration |
+| 10.0000   | 10-14-2020     | 09-21-2020      | Set up harris county configuration |
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
 | 10.1000   | 09-04-2020     | 09-21-2020      | Read and write operations for Harr |
 |           |                |                 | is Civil Courts                    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+| 11.1000   | 10-09-2020     | 10-14-2020      | correct case-type change Collin Co |
+|           |                |                 | unty. Start Date: 2020-10-14 17:00 |
+|           |                |                 | :58Z End Date: 2020-10-14 17:00:58 |
+|           |                |                 | Z                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+| 11.2000   | 10-09-2020     | 10-14-2020      | testing correct case-type change C |
+|           |                |                 | ollin County. Start Date: 2020-10- |
+|           |                |                 | 14 17:03:28Z End Date: 2020-10-14  |
+|           |                |                 | 17:03:28Z                          |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
