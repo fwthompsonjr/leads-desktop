@@ -200,6 +200,7 @@
     <Compile Include="Classes\ConsoleWriter.cs" />
     <Compile Include="Classes\ContextManagment.cs" />
     <Compile Include="Classes\CryptoEngine.cs" />
+    <Compile Include="Classes\DirectorySearch.cs" />
     <Compile Include="Classes\ElementAssertion.cs" />
     <Compile Include="Classes\ElementClick.cs" />
     <Compile Include="Classes\ElementClickElement.cs" />

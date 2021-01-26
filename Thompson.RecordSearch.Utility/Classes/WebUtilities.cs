@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -115,7 +116,18 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var driver = GetDefaultDriver();
             if (driver != null) return driver;
-            return new ChromeDriver(GetChromeFileName());
+            var options = new ChromeOptions();
+            var binaryName = ChromeBinaryFileName();
+            if (!string.IsNullOrEmpty(binaryName))
+            {
+                options.BinaryLocation = binaryName;
+            }
+            return new ChromeDriver(GetChromeFileName(), options);
+        }
+
+        public static string GetChromeBinary()
+        {
+            return ChromeBinaryFileName();
         }
 
         /// <summary>
@@ -187,6 +199,40 @@ namespace Thompson.RecordSearch.Utility.Classes
                     _ = SafeWindowUtilites.ShowWindow(hWnd, SW_HIDE);
                 }
             }
+        }
+
+        private static string _chromeBinaryName;
+        private static string ChromeBinaryFileName()
+        {
+            if (_chromeBinaryName != null) return _chromeBinaryName;
+            var settings = ConfigurationManager.AppSettings
+                .AllKeys.ToList().FindAll(x => x.StartsWith("chrome.exe.location", 
+                StringComparison.CurrentCultureIgnoreCase))
+                .Select(x => ConfigurationManager.AppSettings[x])
+                .ToList().FindAll(x => File.Exists(x));
+            if (settings.Any())
+            {
+                _chromeBinaryName = settings.First();
+                return _chromeBinaryName;
+            }
+
+            DirectoryInfo di = new DirectoryInfo(@"c:\");
+            var search = new DirectorySearch(di, "*chrome.exe", 2);
+            var found = search.FileList;
+            if (found.Any())
+            {
+                _chromeBinaryName = found.First();
+                return _chromeBinaryName;
+            }
+            search = new DirectorySearch(di, "*chrome.exe");
+            found = search.FileList;
+            if (found.Any())
+            {
+                _chromeBinaryName = found.First();
+                return _chromeBinaryName;
+            }
+            _chromeBinaryName = string.Empty;
+            return _chromeBinaryName;
         }
     }
 }

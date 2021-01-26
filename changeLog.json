@@ -1009,6 +1009,27 @@
           "canPublish": true
         }
       ]
+    },
+    {
+      "id": 203100,
+      "number": "2.3.1.0",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "initialize new version",
+          "canPublish": true
+        },
+        {
+          "id": 12.1,
+          "description": "correct chrome executable location.",
+          "canPublish": true
+        },
+        {
+          "id": 0.0,
+          "description": "release",
+          "canPublish": true
+        }
+      ]
     }
   ],
   "corrections": [

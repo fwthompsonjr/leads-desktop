@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Thompson.RecordSearch.Utility.Classes;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
 using System.Linq;
-using System.Configuration;
+using System.Threading.Tasks;
+using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Tests
@@ -29,10 +30,30 @@ namespace Thompson.RecordSearch.Utility.Tests
 
         [TestMethod]
         [TestCategory("Web.Integration")]
+        public void ValidateChromePathTest()
+        {
+            DirectoryInfo di = new DirectoryInfo(@"c:\");
+            var search = new DirectorySearch(di, "*chrome.exe", 2);
+            var found = search.FileList;
+            Assert.IsTrue(found.Any());
+            Console.WriteLine(found.First());
+        }
+
+
+        [TestMethod]
+        public async Task ValidatePathAsync()
+        {
+            var fileName = await Task.Run(() => WebUtilities.GetChromeBinary());
+            Assert.IsFalse(string.IsNullOrEmpty(fileName));
+        }
+
+
+        [TestMethod]
+        [TestCategory("Web.Integration")]
         public void CanFetchDentonCounty()
         {
             if (!CanExecuteFetch()) return;
-            
+
             var settings = SettingsManager.GetNavigation();
             var sttg = settings.First();
             var startDate = DateTime.Now.Date.AddDays(-4);
@@ -57,7 +78,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             // add key for combo-index
 
             var searchTypeIndex = sttg.Keys.FirstOrDefault(x => x.Name.Equals("SearchComboIndex"));
-            if(searchTypeIndex == null)
+            if (searchTypeIndex == null)
             {
                 sttg.Keys.Add(keyZero);
             }

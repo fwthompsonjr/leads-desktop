@@ -1,7 +1,7 @@
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | LegalLead.PublicData.Search                                                       |
-| Version: 2.2.1.0                                                                  |
-| Release Date: 10/14/2020 5:04 PM                                                  |
+| Version: 2.3.1.0                                                                  |
+| Release Date: 1/26/2021 5:04 PM                                                   |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | IssueId   | Reported Date  | Corrected Date  | Comments                           |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
@@ -42,7 +42,7 @@ LegalLead.Changed.Models.Correction|- - - - - - - - - - - - - - - - - - - - - - 
 |           |                |                 | een changed. Investigation is prog |
 |           |                |                 | ress                               |
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
-| 10.0000   | 10-14-2020     | 09-21-2020      | Set up harris county configuration |
+| 10.0000   | 01-26-2021     | 09-21-2020      | Set up harris county configuration |
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
 | 10.1000   | 09-04-2020     | 09-21-2020      | Read and write operations for Harr |
 |           |                |                 | is Civil Courts                    |

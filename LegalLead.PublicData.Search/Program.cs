@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
@@ -38,6 +39,13 @@ namespace LegalLead.PublicData.Search
                 {
                     command = new Command.MainCommand();
                 }
+
+                // get the chrome path in a separate thread
+                ThreadStart ts = new ThreadStart(() => {
+                    var settings = WebUtilities.GetChromeBinary();
+                });
+                ts.Invoke();
+
                 consoleWriter.WriteEvent += ConsoleWriter_WriteEvent;
                 consoleWriter.WriteLineEvent += ConsoleWriter_WriteLineEvent;
 
