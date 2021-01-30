@@ -1,0 +1,16 @@
+﻿
+using StructureMap;
+
+namespace Thompson.RecordSearch.Utility.DriverFactory
+{
+    public class WebDriverRegistry : Registry
+    {
+        public WebDriverRegistry()
+        {
+            For<IWebDriverProvider>().Use<ChromeProvider>();
+
+            For<IWebDriverProvider>().Add<ChromeProvider>().Named("Chrome");
+            For<IWebDriverProvider>().Add<FireFoxProvider>().Named("Firefox");
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "webDrivers": {
+        "selectedIndex": "0",
+        "drivers": [
+            {
+                "id": 0,
+                "name": "Chrome"
+            },
+            {
+                "id": 1,
+                "name": "Firefox"
+            }
+        ]
+    }
+}

@@ -200,6 +200,16 @@ namespace LegalLead.PublicData.Search
 
         private void KillProcess(string processName)
         {
+            var processes = new List<string> { processName };
+            if (processName.Contains(','))
+            {
+                processes = processName.Split(',').ToList();
+            }
+            processes.ForEach(Kill);
+        }
+
+        private static void Kill(string processName)
+        {
             foreach (var process in Process.GetProcessesByName(processName))
             {
                 process.Kill();

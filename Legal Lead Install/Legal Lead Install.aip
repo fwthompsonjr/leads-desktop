@@ -57,6 +57,7 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyDataPoint.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_1.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_2.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_webDrivers.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_CourtRecordSearch.xlsm" Value="CourtRecordSearch.xlsm"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_EPPlus.dll" Value="EPPlus.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_LegalLead.PublicData.Search.exe" Value="LegalLead.PublicData.Search.exe"/>
@@ -109,6 +110,7 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyDataPoint.json" Value="tarrantCountyDataPoint.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyMapping_1.json" Value="tarrantCountyMapping_1.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyMapping_2.json" Value="tarrantCountyMapping_2.json"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_webDrivers.json" Value="webDrivers.json"/>
     <ROW Property="AI_RUN_AS_ADMIN" Value="1"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
@@ -214,6 +216,7 @@
     <ROW File="harrisCivilCaseType.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="HARRIS~3.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilCaseType.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_harrisCivilCaseType.json&gt;" SelfReg="false"/>
     <ROW File="harriscivilreader.js" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="HARRIS~2.JS|[|AI_PROPPATH_FILENAME_PERBUILD_harriscivilreader.js]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_harriscivilreader.js&gt;" SelfReg="false"/>
     <ROW File="harrisCivilMapping.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="HARRIS~4.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilMapping.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_harrisCivilMapping.json&gt;" SelfReg="false"/>
+    <ROW File="webDrivers.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="WEBDRI~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_webDrivers.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_webDrivers.json&gt;" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_CourtRecordSearch.xlsm" Path="[|AI_PROPPATH_DIR_PERBUILD_CourtRecordSearch.xlsm]\[|AI_PROPPATH_FILENAME_PERBUILD_CourtRecordSearch.xlsm]" Type="2" Content="0"/>
@@ -268,6 +271,7 @@
     <ROW Name="AI_APPPATH_PERBUILD_tarrantCountyDataPoint.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCountyDataPoint.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyDataPoint.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_tarrantCountyMapping_1.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_1.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyMapping_1.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_tarrantCountyMapping_2.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_2.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyMapping_2.json]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_webDrivers.json" Path="[|AI_PROPPATH_DIR_PERBUILD_webDrivers.json]\[|AI_PROPPATH_FILENAME_PERBUILD_webDrivers.json]" Type="2" Content="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -443,5 +447,6 @@
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harrisCivilCaseType.json"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harriscivilreader.js"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harrisCivilMapping.json"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="webDrivers.json"/>
   </COMPONENT>
 </DOCUMENT>

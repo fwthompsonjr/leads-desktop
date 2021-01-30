@@ -46,6 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C68AF7
 		Shared\tarrantCountyDataPoint.json = Shared\tarrantCountyDataPoint.json
 		Shared\tarrantCountyMapping_2.json = Shared\tarrantCountyMapping_2.json
 		Version.cs = Version.cs
+		Shared\webDrivers.json = Shared\webDrivers.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalLead.PublicData.Search", "LegalLead.PublicData.Search\LegalLead.PublicData.Search.csproj", "{FDC972D5-85CC-418C-A08B-D2BD940D9A35}"
@@ -151,7 +152,7 @@ Global
 		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136} = {5B2D3423-3610-427E-ABEE-FCC309844A03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
+		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 	EndGlobalSection
 EndGlobal

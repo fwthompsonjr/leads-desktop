@@ -138,7 +138,13 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                return new ChromeDriver();
+                var options = new ChromeOptions();
+                var binaryName = ChromeBinaryFileName();
+                if (!string.IsNullOrEmpty(binaryName))
+                {
+                    options.BinaryLocation = binaryName;
+                }
+                return new ChromeDriver(options);
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch

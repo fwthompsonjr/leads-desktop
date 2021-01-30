@@ -227,12 +227,18 @@
     <Compile Include="Classes\WebUtilities_01.cs" />
     <Compile Include="Classes\XmlContentHolder.cs" />
     <Compile Include="CommonKeyIndexes.cs" />
+    <Compile Include="DriverFactory\ChromeProvider.cs" />
+    <Compile Include="DriverFactory\FireFoxProvider.cs" />
+    <Compile Include="DriverFactory\IWebDriverProvider.cs" />
+    <Compile Include="DriverFactory\WebDriverContainer.cs" />
+    <Compile Include="DriverFactory\WebDriverRegistry.cs" />
     <Compile Include="Dto\CaseTypeSelectionDto.cs" />
     <Compile Include="Dto\DataPointLocatorDto.cs" />
     <Compile Include="Dto\GenericSettingDto.cs" />
     <Compile Include="Dto\NavigationInstructionDto.cs" />
     <Compile Include="Dto\ParseCaseDataResponseDto.cs" />
     <Compile Include="Dto\UserAccessDto.cs" />
+    <Compile Include="Dto\WebDriverDto.cs" />
     <Compile Include="Interfaces\IElementActionBase.cs" />
     <Compile Include="Interfaces\IExcelFileWriter.cs" />
     <Compile Include="Models\CaseData.cs" />
@@ -280,6 +286,10 @@
     <Compile Include="Web\JquerySetSelectedIndex.cs" />
     <Compile Include="Web\JquerySetTextBox.cs" />
     <Compile Include="Web\WebNavAction.cs" />
+    <Content Include="..\Shared\geckodriver.exe">
+      <Link>geckodriver.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Shared\harris-civil-reader.js">
       <Link>xml\harris-civil-reader.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -375,6 +385,10 @@
       <Link>xml\tarrantCountyMapping_2.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Shared\webDrivers.json">
+      <Link>xml\webDrivers.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -442,12 +456,10 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Selenium.Chrome.WebDriver.2.38\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.2.38\build\Selenium.Chrome.WebDriver.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.2.38\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.2.38\build\Selenium.Chrome.WebDriver.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props'))" />
@@ -456,10 +468,14 @@
     <Error Condition="!Exists('..\packages\Microsoft.CodeCoverage.16.4.0\build\netstandard1.0\Microsoft.CodeCoverage.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeCoverage.16.4.0\build\netstandard1.0\Microsoft.CodeCoverage.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeCoverage.16.4.0\build\netstandard1.0\Microsoft.CodeCoverage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeCoverage.16.4.0\build\netstandard1.0\Microsoft.CodeCoverage.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.85.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.85.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Firefox.WebDriver.0.27.0\build\Selenium.Firefox.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Firefox.WebDriver.0.27.0\build\Selenium.Firefox.WebDriver.targets'))" />
   </Target>
   <Import Project="..\packages\SlowCheetah.2.5.48\build\SlowCheetah.targets" Condition="Exists('..\packages\SlowCheetah.2.5.48\build\SlowCheetah.targets')" />
   <Import Project="..\packages\Microsoft.CodeCoverage.16.4.0\build\netstandard1.0\Microsoft.CodeCoverage.targets" Condition="Exists('..\packages\Microsoft.CodeCoverage.16.4.0\build\netstandard1.0\Microsoft.CodeCoverage.targets')" />
   <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.85.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.85.0.0\build\Selenium.Chrome.WebDriver.targets')" />
+  <Import Project="..\packages\Selenium.Firefox.WebDriver.0.27.0\build\Selenium.Firefox.WebDriver.targets" Condition="Exists('..\packages\Selenium.Firefox.WebDriver.0.27.0\build\Selenium.Firefox.WebDriver.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -18,6 +18,11 @@ namespace LegalLead.PublicData.Search.Classes
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
+            if (e == null)
+            {
+                base.OnDrawItem(e);
+                return;
+            }
             e.DrawBackground();
             if (e.State == DrawItemState.Focus)
                 e.DrawFocusRectangle();

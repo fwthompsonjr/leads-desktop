@@ -962,7 +962,7 @@
     {
       ~type~: ~FormatString~,
       ~name~: ~ChromeDriver~,
-      ~value~: ~chromedriver~,
+      ~value~: ~chromedriver,geckodriver~,
       ~keyIndex~: 1460,
       ~id~: 40
     },
