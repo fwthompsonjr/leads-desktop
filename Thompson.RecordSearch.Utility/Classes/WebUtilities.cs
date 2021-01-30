@@ -9,6 +9,8 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Thompson.RecordSearch.Utility.Addressing;
+using Thompson.RecordSearch.Utility.DriverFactory;
+using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -103,6 +105,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             ChromeOptions option = new ChromeOptions();
             option.AddArgument("--headless");
+            option.BinaryLocation = ChromeBinaryFileName();
             var driver = new ChromeDriver(GetChromeFileName(), option);
             HideWindow("chromedriver");
             return driver;
@@ -114,15 +117,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         public static IWebDriver GetWebDriver()
         {
-            var driver = GetDefaultDriver();
-            if (driver != null) return driver;
-            var options = new ChromeOptions();
-            var binaryName = ChromeBinaryFileName();
-            if (!string.IsNullOrEmpty(binaryName))
-            {
-                options.BinaryLocation = binaryName;
-            }
-            return new ChromeDriver(GetChromeFileName(), options);
+            var wdriver = (new WebDriverDto().Get()).WebDrivers;
+            var driver = wdriver.Drivers.Where(d => d.Id == wdriver.SelectedIndex).FirstOrDefault();
+            var container = WebDriverContainer.GetContainer;
+            var provider = container.GetInstance<IWebDriverProvider>(driver.Name);
+            return provider.GetWebDriver();
         }
 
         public static string GetChromeBinary()
@@ -130,29 +129,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             return ChromeBinaryFileName();
         }
 
-        /// <summary>
-        /// Gets the default driver.
-        /// </summary>
-        /// <returns></returns>
-        private static IWebDriver GetDefaultDriver()
-        {
-            try
-            {
-                var options = new ChromeOptions();
-                var binaryName = ChromeBinaryFileName();
-                if (!string.IsNullOrEmpty(binaryName))
-                {
-                    options.BinaryLocation = binaryName;
-                }
-                return new ChromeDriver(options);
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch
-#pragma warning restore CA1031 // Do not catch general exception types
-            {
-                return null;
-            }
-        }
 
         /// <summary>
         /// Gets the name of the chrome driver file.

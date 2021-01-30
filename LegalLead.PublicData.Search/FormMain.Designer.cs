@@ -49,6 +49,7 @@
             this.cboCaseType = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
             this.label6 = new System.Windows.Forms.Label();
             this.cboCourts = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
+            this.tsWebDriver = new System.Windows.Forms.ToolStripDropDownButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -136,6 +137,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.statusStrip1, 2);
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsWebDriver,
             this.tsDropFileList,
             this.toolStripStatus,
             this.tsStatusLabel});
@@ -168,6 +170,8 @@
             // cboWebsite
             // 
             this.cboWebsite.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboWebsite.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboWebsite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboWebsite.FormattingEnabled = true;
             this.cboWebsite.Location = new System.Drawing.Point(123, 8);
             this.cboWebsite.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
@@ -229,6 +233,8 @@
             // cboSearchType
             // 
             this.cboSearchType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboSearchType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSearchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSearchType.FormattingEnabled = true;
             this.cboSearchType.Location = new System.Drawing.Point(123, 128);
             this.cboSearchType.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
@@ -249,6 +255,8 @@
             // cboCaseType
             // 
             this.cboCaseType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboCaseType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboCaseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCaseType.FormattingEnabled = true;
             this.cboCaseType.Location = new System.Drawing.Point(123, 168);
             this.cboCaseType.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
@@ -269,12 +277,22 @@
             // cboCourts
             // 
             this.cboCourts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboCourts.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboCourts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCourts.FormattingEnabled = true;
             this.cboCourts.Location = new System.Drawing.Point(123, 208);
             this.cboCourts.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.cboCourts.Name = "cboCourts";
             this.cboCourts.Size = new System.Drawing.Size(526, 21);
             this.cboCourts.TabIndex = 13;
+            // 
+            // tsWebDriver
+            // 
+            this.tsWebDriver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsWebDriver.Name = "tsWebDriver";
+            this.tsWebDriver.Size = new System.Drawing.Size(44, 20);
+            this.tsWebDriver.Text = "Web";
+            this.tsWebDriver.ToolTipText = "Select Browser";
             // 
             // FormMain
             // 
@@ -316,6 +334,7 @@
         internal System.Windows.Forms.ToolStripStatusLabel tsStatusLabel;
         internal System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
         private System.Windows.Forms.ToolStripDropDownButton tsDropFileList;
+        private System.Windows.Forms.ToolStripDropDownButton tsWebDriver;
     }
 }
 

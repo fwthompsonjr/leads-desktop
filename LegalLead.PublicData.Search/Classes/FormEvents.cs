@@ -133,6 +133,8 @@ namespace LegalLead.PublicData.Search
             Tag = new List<SearchResult>();
             tsDropFileList.Enabled = false;
             tsDropFileList.Visible = false;
+            
+            tsWebDriver_Initialize();
 
             cboWebsite.DataSource = websites;
             cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
@@ -202,6 +204,51 @@ namespace LegalLead.PublicData.Search
             OpenExcel(ref fileName);
         }
 
+        private void tsWebDriver_Initialize()
+        {
+            // when data source is changed?
+            // remove all items from the tab strip
+            tsWebDriver.DropDownItems.Clear();
+            var dto = new WebDriverDto().Get();
+            var drivers = dto.WebDrivers.Drivers;
+            tsWebDriver.Tag = dto;
+            drivers.ToList().ForEach(x => {
+                var button = new ToolStripMenuItem
+                {
+                    Visible = true,
+                    Tag = x,
+                    Text = x.Name,
+                    DisplayStyle = ToolStripItemDisplayStyle.Text,
+                    Checked = x.Id == dto.WebDrivers.SelectedIndex
+                };
+                button.Click += WebDriver_Click;
+                tsWebDriver.DropDownItems.Add(button);
+            });
+
+            tsWebDriver.Enabled = true;
+            tsWebDriver.Visible = true;
+        }
+
+
+
+        private void WebDriver_Click(object sender, EventArgs e)
+        {
+            if (sender == null) return;
+            var tsItem = (ToolStripMenuItem)sender;
+            if (tsItem.Checked) return;
+            
+            var item = GetObject<Driver>(tsItem.Tag);
+            var webItem = GetObject<WebDriverDto>(tsWebDriver.Tag);
+            webItem.WebDrivers.SelectedIndex = item.Id;
+            webItem.Save();
+            // uncheck all
+            for (int i = 0; i < tsWebDriver.DropDownItems.Count; i++)
+            {
+                var menuItem = (ToolStripMenuItem)tsWebDriver.DropDownItems[i];
+                var id = GetObject<Driver>(menuItem.Tag).Id;
+                menuItem.Checked = id == item.Id;
+            }
+        }
         private void DebugFormLoad()
         {
 
