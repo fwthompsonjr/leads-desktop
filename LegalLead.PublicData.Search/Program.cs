@@ -43,6 +43,7 @@ namespace LegalLead.PublicData.Search
                 // get the chrome path in a separate thread
                 ThreadStart ts = new ThreadStart(() => {
                     var settings = WebUtilities.GetChromeBinary();
+                    Console.WriteLine("Using {0} as Chrome file location.", settings);
                 });
                 ts.Invoke();
 

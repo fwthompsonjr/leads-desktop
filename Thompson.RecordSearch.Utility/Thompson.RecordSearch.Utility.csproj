@@ -104,6 +104,9 @@
     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Edge.SeleniumTools, Version=3.141.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Edge.SeleniumTools.3.141.2\lib\net45\Microsoft.Edge.SeleniumTools.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeCoverage.16.4.0\lib\net45\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
     </Reference>
@@ -228,6 +231,7 @@
     <Compile Include="Classes\XmlContentHolder.cs" />
     <Compile Include="CommonKeyIndexes.cs" />
     <Compile Include="DriverFactory\ChromeProvider.cs" />
+    <Compile Include="DriverFactory\EdgeProvider.cs" />
     <Compile Include="DriverFactory\FireFoxProvider.cs" />
     <Compile Include="DriverFactory\IWebDriverProvider.cs" />
     <Compile Include="DriverFactory\WebDriverContainer.cs" />
@@ -286,12 +290,20 @@
     <Compile Include="Web\JquerySetSelectedIndex.cs" />
     <Compile Include="Web\JquerySetTextBox.cs" />
     <Compile Include="Web\WebNavAction.cs" />
+    <Content Include="..\packages\Selenium.Microsoft.Webdriver2.2.0.10586.1\driver\MicrosoftWebDriver.exe">
+      <Link>MicrosoftWebDriver.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Shared\geckodriver.exe">
       <Link>geckodriver.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Shared\harris-civil-reader.js">
       <Link>xml\harris-civil-reader.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="C:\Users\frank\source\repos\LoginTestApp\packages\Selenium.Chrome.WebDriver.2.38\driver\chromedriver.exe">
+      <Link>Legacy\chromedriver.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WebDriver.xml">
@@ -312,7 +324,7 @@
     </Compile>
     <Content Include="..\Shared\chromedriver.exe">
       <Link>chromedriver.exe</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Shared\CourtRecordSearch.xlsm">
       <Link>Utilities\CourtRecordSearch.xlsm</Link>
@@ -455,6 +467,7 @@
       <Name>LegalLead.Resources</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

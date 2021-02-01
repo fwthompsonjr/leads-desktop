@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Dto
@@ -16,6 +13,7 @@ namespace Thompson.RecordSearch.Utility.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsVerified { get; set; }
     }
 
     public class WebDrivers
@@ -51,9 +49,9 @@ namespace Thompson.RecordSearch.Utility.Dto
             if (dto == null) return dto;
             if (dto.WebDrivers == null) return dto;
             if (dto.WebDrivers.Drivers == null) throw new ArgumentOutOfRangeException(nameof(dto));
-            if(dto.WebDrivers.Drivers.Count == 0) throw new ArgumentOutOfRangeException(nameof(dto));
+            if (dto.WebDrivers.Drivers.Count == 0) throw new ArgumentOutOfRangeException(nameof(dto));
             if (dto.WebDrivers.SelectedIndex < 0) throw new ArgumentOutOfRangeException(nameof(dto));
-            if (dto.WebDrivers.SelectedIndex > dto.WebDrivers.Drivers.Count - 1) 
+            if (dto.WebDrivers.SelectedIndex > dto.WebDrivers.Drivers.Count - 1)
                 throw new ArgumentOutOfRangeException(nameof(dto));
             var dataFile = DataFile();
             if (File.Exists(dataFile)) File.Delete(dataFile);

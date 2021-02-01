@@ -1,11 +1,22 @@
 {
     "webDrivers": {
         "selectedIndex": 0,
-        "drivers": [
-            {
-                "id": 0,
-                "name": "Chrome"
-            }
-        ]
+      "drivers": [
+        {
+          "id": 0,
+          "name": "Chrome",
+          "isVerified": true
+        },
+        {
+          "id": 1,
+          "name": "Firefox",
+          "isVerified": false
+        },
+        {
+          "id": 2,
+          "name": "Edge",
+          "isVerified": false
+        }
+      ]
     }
 }

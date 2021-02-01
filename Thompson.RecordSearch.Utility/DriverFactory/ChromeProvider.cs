@@ -19,76 +19,34 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         public IWebDriver GetWebDriver()
         {
-            var driver = GetDefaultDriver();
-            if (driver != null) return driver;
             var options = new ChromeOptions();
             var binaryName = BinaryFileName();
             if (!string.IsNullOrEmpty(binaryName))
             {
                 options.BinaryLocation = binaryName;
             }
-            return new ChromeDriver(GetDriverFileName(), options);
+            try
+            {
+                var driver = new ChromeDriver(GetDriverFileName(), options);
+                Console.WriteLine("Chrome executable location:\n {0}", binaryName);
+                return driver;
+            }
+            catch (Exception)
+            {
+                return new ChromeDriver(GetDriverFileName());
+                throw;
+            }
         }
 
         private static string _binaryName;
         private static string _driverFileName;
-
-        /// <summary>
-        /// Gets the default driver.
-        /// </summary>
-        /// <returns></returns>
-        private static IWebDriver GetDefaultDriver()
-        {
-            try
-            {
-                var options = new ChromeOptions();
-                var binaryName = BinaryFileName();
-                if (!string.IsNullOrEmpty(binaryName))
-                {
-                    options.BinaryLocation = binaryName;
-                }
-                return new ChromeDriver(options);
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch
-#pragma warning restore CA1031 // Do not catch general exception types
-            {
-                return null;
-            }
-        }
 
 
 
         private static string BinaryFileName()
         {
             if (_binaryName != null) return _binaryName;
-            var settings = ConfigurationManager.AppSettings
-                .AllKeys.ToList().FindAll(x => x.StartsWith("chrome.exe.location",
-                StringComparison.CurrentCultureIgnoreCase))
-                .Select(x => ConfigurationManager.AppSettings[x])
-                .ToList().FindAll(x => File.Exists(x));
-            if (settings.Any())
-            {
-                _binaryName = settings.First();
-                return _binaryName;
-            }
-
-            DirectoryInfo di = new DirectoryInfo(@"c:\");
-            var search = new DirectorySearch(di, "*chrome.exe", 2);
-            var found = search.FileList;
-            if (found.Any())
-            {
-                _binaryName = found.First();
-                return _binaryName;
-            }
-            search = new DirectorySearch(di, "*chrome.exe");
-            found = search.FileList;
-            if (found.Any())
-            {
-                _binaryName = found.First();
-                return _binaryName;
-            }
-            _binaryName = string.Empty;
+            _binaryName = WebUtilities.GetChromeBinary();
             return _binaryName;
         }
 

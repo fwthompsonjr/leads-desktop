@@ -962,7 +962,7 @@
     {
       "type": "FormatString",
       "name": "ChromeDriver",
-      "value": "chromedriver,geckodriver",
+      "value": "chromedriver,geckodriver,microsoftwebdriver",
       "keyIndex": 1460,
       "id": 40
     },

@@ -101,16 +101,6 @@ namespace Thompson.RecordSearch.Utility.Classes
 
 
 
-        public static IWebDriver GetHiddenWebDriver()
-        {
-            ChromeOptions option = new ChromeOptions();
-            option.AddArgument("--headless");
-            option.BinaryLocation = ChromeBinaryFileName();
-            var driver = new ChromeDriver(GetChromeFileName(), option);
-            HideWindow("chromedriver");
-            return driver;
-        }
-
         /// <summary>
         /// Gets the web driver.
         /// </summary>
@@ -129,18 +119,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             return ChromeBinaryFileName();
         }
 
-
-        /// <summary>
-        /// Gets the name of the chrome driver file.
-        /// </summary>
-        /// <returns></returns>
-        private static string GetChromeFileName()
-        {
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
-            execName = Path.GetDirectoryName(execName);
-            if (!Directory.Exists(execName)) return string.Empty;
-            return execName;
-        }
 
         /// <summary>
         /// Tries the find a child element using the By condition supplied.
@@ -163,25 +141,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
 
-        private const int SW_HIDE = 0;
+        // private const int SW_HIDE = 0;
         // private const int SW_SHOW = 5;
 
-        private static void HideWindow(string windowTitle)
-        {
-
-            var processlist = Process.GetProcesses().ToList()
-                .FindAll(x => !string.IsNullOrEmpty(x.MainWindowTitle))
-                .FindAll(x => x.ProcessName.Contains(windowTitle));
-
-            foreach (Process process in processlist)
-            {
-                if (!string.IsNullOrEmpty(process.MainWindowTitle))
-                {
-                    var hWnd = process.MainWindowHandle.ToInt32();
-                    _ = SafeWindowUtilites.ShowWindow(hWnd, SW_HIDE);
-                }
-            }
-        }
 
         private static string _chromeBinaryName;
         private static string ChromeBinaryFileName()

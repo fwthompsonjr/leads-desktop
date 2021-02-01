@@ -210,9 +210,9 @@ namespace LegalLead.PublicData.Search
             // remove all items from the tab strip
             tsWebDriver.DropDownItems.Clear();
             var dto = new WebDriverDto().Get();
-            var drivers = dto.WebDrivers.Drivers;
+            var drivers = dto.WebDrivers.Drivers.ToList().FindAll(f => f.IsVerified);
             tsWebDriver.Tag = dto;
-            drivers.ToList().ForEach(x => {
+            drivers.ForEach(x => {
                 var button = new ToolStripMenuItem
                 {
                     Visible = true,
@@ -226,7 +226,7 @@ namespace LegalLead.PublicData.Search
             });
 
             tsWebDriver.Enabled = true;
-            tsWebDriver.Visible = true;
+            tsWebDriver.Visible = drivers.Count > 1;
         }
 
 
