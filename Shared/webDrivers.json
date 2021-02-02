@@ -16,6 +16,11 @@
           "id": 2,
           "name": "Edge",
           "isVerified": false
+        },
+        {
+          "id": 3,
+          "name": "Chrome Legacy",
+          "isVerified": true
         }
       ]
     }

@@ -11,7 +11,7 @@ namespace LegalLead.Changed.Classes
 {
     public class CommandZipFileCreate : CommandZipVersionFolderCreate
     {
-        public override int Index => 700;
+        public override int Index => -700;
 
         public override bool Execute()
         {
