@@ -601,6 +601,17 @@
             "Start Date: 2020-10-14 17:03:28Z",
             "End Date: 2020-10-14 17:03:28Z"
           ]
+        },
+        {
+          "changeId": "1410",
+          "id": 14.1,
+          "name": "testing correct case-type change Tarrant County.",
+          "isFixed": false,
+          "fixVersion": 204100,
+          "description": [
+            "testing correct case-type change Tarrant County.",
+            "Start Date: 2021-02-04 16:10:45Z"
+          ]
         }
       ]
     }
@@ -1047,6 +1058,27 @@
         },
         {
           "id": 13.2,
+          "description": "release",
+          "canPublish": false
+        }
+      ]
+    },
+    {
+      "id": 204100,
+      "number": "2.4.0.0",
+      "fixes": [
+        {
+          "id": 0.0,
+          "description": "initialize new version",
+          "canPublish": true
+        },
+        {
+          "id": 14.1,
+          "description": "Tarrant county load all court types",
+          "canPublish": false
+        },
+        {
+          "id": 14.2,
           "description": "release",
           "canPublish": false
         }
