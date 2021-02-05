@@ -221,6 +221,7 @@
     <ROW File="webDrivers.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="WEBDRI~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_webDrivers.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_webDrivers.json&gt;" SelfReg="false"/>
     <ROW File="LegalLead.PublicData.Search.exe.config" Component_="LegalLead.PublicData.Search_ContentOutput" FileName="LEGALL~1.CON|LegalLead.PublicData.Search.exe.config" Attributes="0" SourcePath="..\LegalLead.PublicData.Search\bin\Debug\LegalLead.PublicData.Search.exe.config" SelfReg="false"/>
     <ROW File="chromedriver.exe_1" Component_="chromedriver.exe" FileName="CHROME~1.EXE|chromedriver.exe" Attributes="0" SourcePath="..\LegalLead.PublicData.Search\bin\Debug\Legacy\chromedriver.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="tarrantCourtSearchDropDown.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="TARRAN~1.JSO|tarrantCourtSearchDropDown.json" Attributes="0" SourcePath="..\LegalLead.PublicData.Search\bin\Debug\xml\tarrantCourtSearchDropDown.json" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_CourtRecordSearch.xlsm" Path="[|AI_PROPPATH_DIR_PERBUILD_CourtRecordSearch.xlsm]\[|AI_PROPPATH_FILENAME_PERBUILD_CourtRecordSearch.xlsm]" Type="2" Content="0"/>

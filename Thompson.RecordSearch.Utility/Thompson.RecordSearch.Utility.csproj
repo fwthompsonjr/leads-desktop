@@ -398,6 +398,10 @@
       <Link>xml\tarrantCountyMapping_2.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Shared\tarrantCourtSearchDropDown.json">
+      <Link>xml\tarrantCourtSearchDropDown.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Shared\webDrivers.json">
       <Link>xml\webDrivers.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -527,6 +527,28 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         }
 
+        private static TarrantCourtDropDownDto _tarrantComboBxValue;
+
+        protected static TarrantCourtDropDownDto TarrantComboBxValue => _tarrantComboBxValue ?? (_tarrantComboBxValue = GetComboBoxValues());
+        public static TarrantCourtDropDownDto GetComboBoxValues()
+        {
+            const string dataFormat = @"{0}\xml\{1}.json";
+            const string suffix = "tarrantCourtSearchDropDown";
+            var appDirectory = ContextManagment.AppDirectory;
+            var dataFile = string.Format(
+                CultureInfo.CurrentCulture,
+                dataFormat,
+                appDirectory,
+                suffix);
+            if (!File.Exists(dataFile))
+            {
+                throw new FileNotFoundException(
+                    CommonKeyIndexes.NavigationFileNotFound);
+            }
+            var data = File.ReadAllText(dataFile);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<TarrantCourtDropDownDto>(data);
+
+        }
         #endregion
     }
 }

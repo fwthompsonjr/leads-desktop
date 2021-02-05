@@ -4,6 +4,7 @@
     using Thompson.RecordSearch.Utility.Dto;
     using OpenQA.Selenium;
     using System.Threading;
+    using System;
 
     public class ElementSetComboBoxValue : ElementActionBase
     {
@@ -18,17 +19,20 @@
             var selector = Byy.CssSelector(item.Locator.Query);
             var elementToClick = driver.FindElement(selector);
             var id = elementToClick.GetAttribute("id");
+            var getElement = string.Format("document.getElementById('{0}')", id);
+            var jv = new
+            {
+                setIndex = $"{getElement}.selectedIndex={item.ExpectedValue};",
+                change = $"{getElement}.onchange();",
+                optionText = $"var sel = {getElement};\nreturn sel.options[sel.selectedIndex].text;"
+            };
             if (string.IsNullOrEmpty(item.DisplayName)) return;
-            var objText = item.ExpectedValue;
-            var command = string.Format("document.getElementById('{0}').selectedIndex={1};", 
-                id, item.ExpectedValue);
-            var changecommand = string.Format("document.getElementById('{0}').onchange();",
-                id);
             //document.getElementById('personlist').value=Person_ID;
             var jse = (IJavaScriptExecutor)driver;
-            jse.ExecuteScript(command);
-            jse.ExecuteScript(changecommand);
-
+            jse.ExecuteScript(jv.setIndex);
+            jse.ExecuteScript(jv.change);
+            var objText = Convert.ToString(jse.ExecuteScript(jv.optionText));
+            Console.WriteLine($"Object {id} option value set to: {objText}");
             if (item.Wait > 0) { Thread.Sleep(item.Wait); }
         }
     }

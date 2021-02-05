@@ -1,0 +1,26 @@
+{
+	"name": "court type selections",
+	"step": {
+		"actionName": "set-select-value",
+		"displayName": "case-type-selector",
+		"expectedValue": "1",
+		"locator": {
+			"find": "css",
+			"query": "#sbxControlID2"
+		}
+	},
+	"courtMap": [
+		{
+			"id": 1,
+			"name": "Justice of Peace"
+		},
+		{
+			"id": 2,
+			"name": "Court Court at Law"
+		},
+		{
+			"id": 0,
+			"name": "Probate"
+		}
+	]
+}

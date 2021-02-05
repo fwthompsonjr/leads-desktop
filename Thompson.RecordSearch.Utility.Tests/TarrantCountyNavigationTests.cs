@@ -164,6 +164,14 @@ namespace Thompson.RecordSearch.Utility.Tests
             Assert.IsFalse(string.IsNullOrEmpty(VersionNameProvider.FileVersion));
             Assert.IsNotNull(VersionNameProvider.VersionNames);
         }
+
+        [TestMethod]
+        [TestCategory("tarrant.county.actions")]
+        public void CanGetDropDownCourts()
+        {
+            var filex = TarrantWebInteractive.GetComboBoxValues();
+            Assert.IsNotNull(filex);
+        }
         #endregion
 
 
