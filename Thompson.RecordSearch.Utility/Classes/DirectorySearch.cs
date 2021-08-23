@@ -43,6 +43,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public string Search { get; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         private void SearchDirectory(DirectoryInfo dir_info, List<string> file_list)
         {
             try
@@ -71,7 +72,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
-        private List<string> ProgramLocations
+        private static List<string> ProgramLocations
         {
             get
             {
@@ -85,6 +86,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         private void SearchProgram(DirectoryInfo dir_info, List<string> file_list)
         {
             try

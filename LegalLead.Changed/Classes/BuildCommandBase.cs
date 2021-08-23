@@ -48,8 +48,7 @@ namespace LegalLead.Changed.Classes
         {
             try
             {
-                var sourceData = GetFileContent(sourceFileName);
-                var changeLog = Newtonsoft.Json.JsonConvert.DeserializeObject<ChangeLog>(sourceData);
+                var changeLog = JsReader.Read<ChangeLog>(sourceFileName);
                 var lastChange = changeLog.Versions.LastOrDefault(v => v.Fixes.Any(f => f.CanPublish));
                 _sourceFileName = sourceFileName;
                 Log = changeLog;
@@ -66,29 +65,10 @@ namespace LegalLead.Changed.Classes
             }
         }
 
-        private static string GetFileContent(string sourceFileName)
-        {
-            using (var reader = new StreamReader(sourceFileName))
-            {
-                return reader.ReadToEnd();
-            }
-        }
 
         protected void ReSerialize()
         {
-
-            var content = Newtonsoft.Json.JsonConvert.SerializeObject(Log, new Newtonsoft.Json.JsonSerializerSettings
-            {
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            });
-            using (var sw = new StreamWriter(SourceFile, false))
-            {
-                sw.Write(content);
-                sw.Close();
-            }
+            JsReader.Write(Log, SourceFile);
         }
 
         protected bool CanExecute()

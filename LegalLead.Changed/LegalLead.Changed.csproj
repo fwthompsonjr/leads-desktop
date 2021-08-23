@@ -76,6 +76,10 @@
     <Compile Include="Classes\CommandZipFileCreate.cs" />
     <Compile Include="Classes\CommandZipVersionFolderCreate.cs" />
     <Compile Include="Classes\IBuildCommand.cs" />
+    <Compile Include="Commands\BaseUserCommand.cs" />
+    <Compile Include="Commands\CreateNewIssue.cs" />
+    <Compile Include="Commands\IUserCommand.cs" />
+    <Compile Include="JsReader.cs" />
     <Compile Include="Models\ChangeLog.cs" />
     <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Program.cs" />
@@ -142,7 +146,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <!-- 
     <PostBuildEvent>$(TargetPath) $(SolutionDir)changeLog.json</PostBuildEvent>
+    -->
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
