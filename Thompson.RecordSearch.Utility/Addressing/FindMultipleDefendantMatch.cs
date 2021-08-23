@@ -1,8 +1,8 @@
 ﻿// FindMultipleDefendantMatch
+using OpenQA.Selenium;
 using System;
 using System.Globalization;
 using System.Linq;
-using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Addressing
@@ -44,7 +44,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
                     var trCol = table.FindElements(By.TagName(IndexKeyNames.TrElement)).ToList();
                     if (!int.TryParse(ridx, out int r)) return;
                     var nextTh = table.FindElements(By.TagName(IndexKeyNames.ThElement)).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
-                    var mxRowIndex = nextTh == null ? r : 
+                    var mxRowIndex = nextTh == null ? r :
                         Convert.ToInt32(
                             nextTh.FindElement(By.XPath(IndexKeyNames.ParentElement)).GetAttribute(IndexKeyNames.RowIndex),
                             CultureInfo.CurrentCulture.NumberFormat);
@@ -62,7 +62,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 catch (Exception)
                 {
 
-                } 
+                }
             }
             linkData.Address = NoFoundMatch.GetNoMatch(linkData.Address);
         }

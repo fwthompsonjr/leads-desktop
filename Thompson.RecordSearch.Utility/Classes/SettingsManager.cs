@@ -53,7 +53,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             get { return _excelFileName ?? (_excelFileName = GetExcelFileName()); }
         }
 
-        
+
         /// <summary>
         /// Gets the content of the xml source file.
         /// </summary>
@@ -116,10 +116,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             var parent = doc.DocumentElement.SelectSingleNode(
                 string.Format(
                     CultureInfo.CurrentCulture,
-                    "layouts/layout[@id='{0}' and @name='{1}']", 
+                    "layouts/layout[@id='{0}' and @name='{1}']",
                 id != 1 ? 1 : id,
                 sectionName));
-            if(id == 30)
+            if (id == 30)
             {
                 parent = doc.DocumentElement.SelectSingleNode(
                 string.Format(
@@ -204,17 +204,19 @@ namespace Thompson.RecordSearch.Utility.Classes
                         break;
                 }
             }
-            
-            
-            
-            
+
+
+
+
             doc.Save(fileName);
-            
+
             // check for null
-            return new XmlContentHolder {
+            return new XmlContentHolder
+            {
                 Id = settingFile.Parameters.Id,
                 FileName = fileName,
-                Document = doc};
+                Document = doc
+            };
         }
 
         private static WebNavigationParameter MapFrom(XmlNode node)
@@ -241,7 +243,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var qpath = string.Format(
                 CultureInfo.CurrentCulture,
                 "directions/instructions[@id={0}]", parameter.Id);
-            
+
             var instructions = node.OwnerDocument
                 .DocumentElement.SelectSingleNode(qpath);
             if (instructions == null) return parameter;
@@ -293,8 +295,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             var targetFile = new Uri(string.Format(
                 CultureInfo.CurrentCulture,
                 @"{0}\xml\{1}", execName, fileName)).AbsolutePath;
-            return !File.Exists(targetFile) ? 
-                GetXmlContent(fileName) : 
+            return !File.Exists(targetFile) ?
+                GetXmlContent(fileName) :
                 File.ReadAllText(targetFile);
         }
 
@@ -587,7 +589,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 "data_rqst_{2}_{0}_{1}.xml",
                 dteStart,
                 dteEnding,
-                settingFile.Parameters.Name.Replace(" ","").ToLower(CultureInfo.CurrentCulture));
+                settingFile.Parameters.Name.Replace(" ", "").ToLower(CultureInfo.CurrentCulture));
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             var targetPath = new Uri(string.Format(
@@ -600,7 +602,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (!Directory.Exists(targetPath)) Directory.CreateDirectory(targetPath);
 
             var targetFile = new Uri(string.Format(
-                CultureInfo.CurrentCulture, 
+                CultureInfo.CurrentCulture,
                 @"{0}\xml\data\{1}", execName, fileName)).AbsolutePath;
             return targetFile;
         }
@@ -616,7 +618,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             var targetFile = new Uri(string.Format(
-                CultureInfo.CurrentCulture, 
+                CultureInfo.CurrentCulture,
                 @"{0}\Utilities\CourtRecordSearch.xlsm", execName)).AbsolutePath;
             if (!File.Exists(targetFile)) return string.Empty;
             return targetFile;
@@ -640,7 +642,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var doc = XmlDocProvider.GetDoc(content);
 
             var qpath = string.Format(
-                CultureInfo.CurrentCulture, 
+                CultureInfo.CurrentCulture,
                 "directions/instructions[@id={0}]", siteId);
             var data = doc.DocumentElement.SelectSingleNode(qpath);
             if (data == null) return instructions;

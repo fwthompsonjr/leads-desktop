@@ -18,8 +18,11 @@ namespace Thompson.RecordSearch.Utility.Web
         /// </value>
         public static Container GetContainer
         {
-            get { return _container ?? (_container = 
-                    new Container(new ActionElementRegistry())); }
+            get
+            {
+                return _container ?? (_container =
+                  new Container(new ActionElementRegistry()));
+            }
         }
     }
 }

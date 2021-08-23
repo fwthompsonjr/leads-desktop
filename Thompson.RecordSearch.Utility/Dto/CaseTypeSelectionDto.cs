@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Runtime.CompilerServices;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Dto

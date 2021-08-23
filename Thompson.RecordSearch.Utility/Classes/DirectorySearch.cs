@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -19,12 +17,12 @@ namespace Thompson.RecordSearch.Utility.Classes
             FileList = new List<string>();
             ProgramList = new List<string>();
             Search = search;
-            if(searchType == 0)
+            if (searchType == 0)
             {
                 SearchDirectory(Info, FileList);
                 return;
             }
-            
+
             foreach (var item in ProgramLocations)
             {
                 SearchProgram(new DirectoryInfo(item), ProgramList);

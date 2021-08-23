@@ -154,7 +154,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (!IncludeCriminalRecords())
                     return new List<HLinkDataRow>();
                 var parameter = GetParameter(Data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
-                if(parameter != null)
+                if (parameter != null)
                 {
                     parameter.Value = CommonKeyIndexes.NumberOne; // "1";
                 }

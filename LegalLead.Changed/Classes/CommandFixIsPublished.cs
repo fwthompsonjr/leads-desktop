@@ -1,7 +1,7 @@
 ﻿// CommandFixIsPublished
+using LegalLead.Changed.Models;
 using System;
 using System.Linq;
-using LegalLead.Changed.Models;
 
 namespace LegalLead.Changed.Classes
 {

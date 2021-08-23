@@ -1,7 +1,7 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Globalization;
 using System.Linq;
-using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Addressing
@@ -21,7 +21,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
             if (linkData == null) throw new System.ArgumentNullException(nameof(linkData));
             CanFind = false;
             var defendant = IndexKeyNames.Defendant;
-            var defendantXpath = string.Format(CultureInfo.CurrentCulture, 
+            var defendantXpath = string.Format(CultureInfo.CurrentCulture,
                 IndexKeyNames.ThContainsText, defendant);
             var tdName = TryFindElement(driver, By.XPath(defendantXpath));
             // this instance can find
@@ -42,8 +42,8 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 if (!int.TryParse(ridx, out int r)) return;
 
                 var nextTh = table.FindElements(By.TagName(IndexKeyNames.ThElement)).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
-                var mxRowIndex = nextTh == null ? r + 1: 
-                    Convert.ToInt32(nextTh.FindElement(By.XPath(IndexKeyNames.ParentElement)).GetAttribute(IndexKeyNames.RowIndex), 
+                var mxRowIndex = nextTh == null ? r + 1 :
+                    Convert.ToInt32(nextTh.FindElement(By.XPath(IndexKeyNames.ParentElement)).GetAttribute(IndexKeyNames.RowIndex),
                     CultureInfo.CurrentCulture.NumberFormat);
                 while (r <= mxRowIndex)
                 {

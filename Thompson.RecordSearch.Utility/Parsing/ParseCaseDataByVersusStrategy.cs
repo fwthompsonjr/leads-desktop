@@ -30,7 +30,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
             if (findItIndex < 0) return response;
             response.Defendant = CaseData.Substring(findItIndex).Trim();
             response.Plantiff = CaseData.Substring(0, findItIndex).Trim();
-            return response;            
+            return response;
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿// FindPrincipalByWordMatch
+using OpenQA.Selenium;
 using System;
 using System.Globalization;
 using System.Linq;
-using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Addressing

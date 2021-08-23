@@ -1,8 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using LegalLead.Changed.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LegalLead.Changed.Classes;
+using System;
 using System.Linq;
 
 namespace LegalLead.Changed.UnitTests

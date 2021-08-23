@@ -82,7 +82,8 @@ namespace Thompson.RecordSearch.Utility.Models
         public string CaseStyle { get; set; }
         public string FirstName
         {
-            get {
+            get
+            {
                 return ParseFromFullName(0);
             }
         }
@@ -134,7 +135,7 @@ namespace Thompson.RecordSearch.Utility.Models
             var lastName = nameParts[0];
             var findIt = string.Format(CultureInfo.CurrentCulture, "{0}{1}", lastName, ',');
             var firstName = fullName.Remove(0, findIt.Length).Trim();
-            if(firstName.Contains(' '))
+            if (firstName.Contains(' '))
             {
                 nameParts = firstName.Split(' ');
                 firstName = nameParts[0];
@@ -299,7 +300,7 @@ namespace Thompson.RecordSearch.Utility.Models
             if (personNode.ChildNodes.Count < 2) return string.Empty;
             var lowerNodeName = nodeName.ToLower(CultureInfo.CurrentCulture);
             var addressNode = personNode.ChildNodes[1].InnerText.Trim();
-            var addressFields = "address1,address2,address3,zip".Split(',').ToList(); 
+            var addressFields = "address1,address2,address3,zip".Split(',').ToList();
             if (addressFields.Contains(lowerNodeName) && string.IsNullOrEmpty(addressNode)) return string.Empty;
             switch (lowerNodeName)
             {
@@ -310,7 +311,7 @@ namespace Thompson.RecordSearch.Utility.Models
                     var middle = GetAddressList(addressNode);
                     return GetMiddleAddress(middle);
                 case "address3":
-                    var second = GetAddressList(addressNode); 
+                    var second = GetAddressList(addressNode);
                     if (second.Count < 2) return string.Empty;
                     return second.Last();
                 case "zip":
@@ -419,7 +420,7 @@ namespace Thompson.RecordSearch.Utility.Models
                 }
                 var childNode = node.SelectSingleNode(childNodeName);
                 if (childNode == null) return string.Empty;
-                if(!childNode.HasChildNodes) return string.Empty;
+                if (!childNode.HasChildNodes) return string.Empty;
                 return ((XmlCDataSection)(childNode.ChildNodes[0])).Data;
             }
 #pragma warning disable CA1031 // Do not catch general exception types

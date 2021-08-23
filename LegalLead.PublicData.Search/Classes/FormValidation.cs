@@ -44,7 +44,7 @@ namespace LegalLead.PublicData.Search
                         Environment.NewLine +
                         CommonKeyIndexes.StartDateToEndDateRange +
                         Environment.NewLine +
-                        string.Format(CultureInfo.CurrentCulture, CommonKeyIndexes.RangeExceedsMaximunDays, 
+                        string.Format(CultureInfo.CurrentCulture, CommonKeyIndexes.RangeExceedsMaximunDays,
                         maxDayInterval),
                         CommonKeyIndexes.DataValidationError,
                         MessageBoxButtons.OK,
@@ -68,7 +68,7 @@ namespace LegalLead.PublicData.Search
             foreach (var customKey in keys)
             {
                 var found = siteData.Keys.FirstOrDefault(k => k.Name.Equals(customKey.Name, comparison));
-                if(found != null)
+                if (found != null)
                 {
                     found.Value = customKey.Value;
                 }
@@ -84,7 +84,7 @@ namespace LegalLead.PublicData.Search
                 var districtItem = keys.FirstOrDefault(x => x.Name.Equals(
                     CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType", 
                     comparison));
-                if(districtItem != null)
+                if (districtItem != null)
                 {
                     keys.Remove(districtItem);
                 }
@@ -126,7 +126,7 @@ namespace LegalLead.PublicData.Search
                 // update site data with correct index
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
                 SetKeyValue(siteData, CommonKeyIndexes.SearchTypeSelectedIndex, // "searchTypeSelectedIndex",
-                Convert.ToInt32(cboSearchType.SelectedValue, 
+                Convert.ToInt32(cboSearchType.SelectedValue,
                     CultureInfo.CurrentCulture.NumberFormat)
                     .ToString("0", CultureInfo.CurrentCulture.NumberFormat));
             }
@@ -138,7 +138,7 @@ namespace LegalLead.PublicData.Search
             if (siteData.Id != 10) return true;
             if (cboCourts.SelectedIndex < 0)
             {
-                MessageBox.Show(CommonKeyIndexes.PleaseChooseValidCourt, 
+                MessageBox.Show(CommonKeyIndexes.PleaseChooseValidCourt,
                     CommonKeyIndexes.DataValidationError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
@@ -148,10 +148,10 @@ namespace LegalLead.PublicData.Search
                 // SetKeyValue("startDate", startDate.ToString("MM/dd/yyyy"));
                 SetKeyValue(siteData, CommonKeyIndexes.CaseTypeSelectedIndex,
                 Convert.ToInt32(cboCourts.SelectedValue
-                    ,CultureInfo.CurrentCulture.NumberFormat)
+                    , CultureInfo.CurrentCulture.NumberFormat)
                     .ToString("0", CultureInfo.CurrentCulture.NumberFormat));
 
-                SetKeyValue(siteData, CommonKeyIndexes.CriminalCaseInclusion, 
+                SetKeyValue(siteData, CommonKeyIndexes.CriminalCaseInclusion,
                     cboCaseType.SelectedValue.ToString());
             }
             return true;
@@ -165,11 +165,11 @@ namespace LegalLead.PublicData.Search
             var court = ((Thompson.RecordSearch.Utility.Dto.Option)(cboCaseType.SelectedItem));
             var caseStatus = ((Thompson.RecordSearch.Utility.Dto.DropDown)(cboSearchType.SelectedItem));
             var keys = new List<WebNavigationKey>() {
-                new WebNavigationKey { 
-                    Name = "courtIndex", 
+                new WebNavigationKey {
+                    Name = "courtIndex",
                     Value = court.Id.ToString() },
-                new WebNavigationKey { 
-                    Name= "caseStatusIndex", 
+                new WebNavigationKey {
+                    Name= "caseStatusIndex",
                     Value = caseStatus.Id.ToString()}
             };
             if (!keys.Any()) return true;

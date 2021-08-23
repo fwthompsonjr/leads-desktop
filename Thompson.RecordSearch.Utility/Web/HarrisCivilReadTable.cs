@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
 
 
-    using Byy = OpenQA.Selenium.By;
-    using Thompson.RecordSearch.Utility.Dto;
     using OpenQA.Selenium;
     using System.Threading;
+    using Thompson.RecordSearch.Utility.Dto;
     using Thompson.RecordSearch.Utility.Models;
+    using Byy = OpenQA.Selenium.By;
 
     public class HarrisCivilReadTable : ElementActionBase
     {
@@ -149,7 +147,8 @@ namespace Thompson.RecordSearch.Utility.Web
             {
                 return dateMin;
             }
-            if(DateTime.TryParse(found.Text, out DateTime dtFrom)){
+            if (DateTime.TryParse(found.Text, out DateTime dtFrom))
+            {
                 return dtFrom.ToString(dte, CultureInfo.CurrentCulture);
             }
             return dateMin;
@@ -201,7 +200,7 @@ namespace Thompson.RecordSearch.Utility.Web
             return found.Displayed;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design",
             "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         protected bool HasNextPage()
         {

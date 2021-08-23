@@ -1,0 +1,28 @@
+{
+	"name": "HCC.Tables.cst",
+	"data": [ 
+		{"code": "A", "literal": "HAS OPEN SETTINGS" },
+		{"code": "B", "literal": "INACTIVE DUE TO BOND FORFEITURE" },
+		{"code": "C", "literal": "FINAL DISPOSITION, NO ACTIVITY EXPECTED" },
+		{"code": "D", "literal": "DISMISSED" },
+		{"code": "E", "literal": "NGRI COMMITTED" },
+		{"code": "F", "literal": "INACTIVE-PENDING FELONY DISPOSITION EXPECTED" },
+		{"code": "G", "literal": "PENDING GRAND JURY" },
+		{"code": "I", "literal": "HAS NO OPEN SETTINGS" },
+		{"code": "J", "literal": "INACTIVE - DEF. SENT TO TDCJ ON OTHER CASE" },
+		{"code": "K", "literal": "PTS OOC SUPERVISION" },
+		{"code": "L", "literal": "TRIAL DOCKET" },
+		{"code": "M", "literal": "PENDING REFILE" },
+		{"code": "N", "literal": "INACTIVE - BOND FORFEITURE ON OTHER CASE" },
+		{"code": "O", "literal": "OTHER CASE ON APPEAL" },
+		{"code": "P", "literal": "PENDING APPEAL" },
+		{"code": "Q", "literal": "PENDING COMPLETION COMMUNITY SERVICE" },
+		{"code": "R", "literal": "PENDING COMPLETION OF PROBATION" },
+		{"code": "S", "literal": "PENDING RESTORATION OF SANITY" },
+		{"code": "T", "literal": "TEMPORARY" },
+		{"code": "V", "literal": "EXECUTION RETURNED" },
+		{"code": "W", "literal": "WAITING EXECUTION" },
+		{"code": "X", "literal": "PENDING DUE COURSE" },
+		{"code": "Z", "literal": "INACTIVE-BOND FORFEITURE" }
+	]
+}

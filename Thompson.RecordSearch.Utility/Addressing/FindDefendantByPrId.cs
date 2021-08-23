@@ -1,6 +1,6 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Text;
-using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Addressing
@@ -23,7 +23,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
             linkData.Defendant = tdName.GetAttribute("innerText");
             var parent = tdName.FindElement(By.XPath(IndexKeyNames.ParentElement));
             var rowLabel = parent.FindElements(By.TagName(IndexKeyNames.ThElement))[0];
-            if(rowLabel.Text.Trim()
+            if (rowLabel.Text.Trim()
                 .ToLower(System.Globalization.CultureInfo.CurrentCulture) != "defendant")
             {
                 return;

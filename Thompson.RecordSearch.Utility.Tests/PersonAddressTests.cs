@@ -1,11 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using CsvHelper;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using AutoMapper;
-using CsvHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
@@ -266,7 +266,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             const string jsFile = @"Json\collincounty_probate.csv";
             var appFile = GetAppDirectoryName();
-            appFile = Path.Combine(appFile, jsFile); 
+            appFile = Path.Combine(appFile, jsFile);
             using (var reader = new StreamReader(appFile))
             using (var csv = new CsvReader(reader))
             {

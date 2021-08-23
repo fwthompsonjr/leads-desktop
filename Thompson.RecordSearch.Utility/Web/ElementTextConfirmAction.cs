@@ -1,7 +1,7 @@
 ﻿namespace Thompson.RecordSearch.Utility.Web
 {
-    using Byy = OpenQA.Selenium.By;
     using Thompson.RecordSearch.Utility.Dto;
+    using Byy = OpenQA.Selenium.By;
 
     public class ElementTextConfirmAction : ElementActionBase
     {

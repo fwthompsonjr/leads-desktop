@@ -22,7 +22,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         // Exceptions:
         //   T:OpenQA.Selenium.NoSuchElementException:
         //     If no element matches the criteria.
-        public static IWebElement TryFindElement(this IWebElement webElement, By by )
+        public static IWebElement TryFindElement(this IWebElement webElement, By by)
         {
             try
             {

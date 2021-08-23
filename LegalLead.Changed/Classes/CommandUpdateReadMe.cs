@@ -1,11 +1,9 @@
 ﻿using LegalLead.Changed.Models;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LegalLead.Changed.Classes
 {
@@ -30,14 +28,14 @@ namespace LegalLead.Changed.Classes
             {
                 writer.Write(header);
                 var lastId = corrections.Last().Id;
-                corrections.ForEach(c => 
+                corrections.ForEach(c =>
                 {
-                    var change = FindChange(c.Id) 
+                    var change = FindChange(c.Id)
                         ?? new Change { ReportedDate = DateTime.Now };
                     writer.Write(c.ToLogEntry(change));
                     if (c.Id != lastId)
                     {
-                        writer.WriteLine(lineSep); 
+                        writer.WriteLine(lineSep);
                     }
                 });
                 writer.Write(GetFooter());
@@ -60,14 +58,14 @@ namespace LegalLead.Changed.Classes
                 var entry = ConfigurationManager.AppSettings[x]
                 .Replace(versionStamp, LatestVersion.Number)
                 .Replace(releaseStamp, DateTime.Now.ToString("g"));
-                if(!entry.EndsWith("|", StringComparison.CurrentCultureIgnoreCase))
+                if (!entry.EndsWith("|", StringComparison.CurrentCultureIgnoreCase))
                 {
                     var len = 84 - entry.Length;
                     entry += string.Empty.ToFixedWidth(len);
                     entry += "|";
                 }
                 builder.AppendLine(entry);
-             });
+            });
             return builder.ToString();
         }
 

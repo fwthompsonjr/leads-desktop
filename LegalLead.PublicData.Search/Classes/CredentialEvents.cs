@@ -91,7 +91,7 @@ namespace LegalLead.PublicData.Search
         protected void ChangePassword()
         {
             var dto = UserAccessDto.GetDto(CommonKeyIndexes.CollinCountyUserMap);
-            var cleared = string.Format(CultureInfo.CurrentCulture, 
+            var cleared = string.Format(CultureInfo.CurrentCulture,
                 CommonKeyIndexes.ElementPipeElement, tbxUser.Text, tbxPwd.Text);
             UserAccessDto.CreateCredential(cleared, dto.UserKey, CommonKeyIndexes.CollinCountyUserMap);
             BindPasswords();

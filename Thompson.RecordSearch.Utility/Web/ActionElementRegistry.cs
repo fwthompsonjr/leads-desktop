@@ -21,7 +21,7 @@ namespace Thompson.RecordSearch.Utility.Web
             For<IElementActionBase>().Add<ElementGetHtmlAction>().Named("get-table-html");
             For<IElementActionBase>().Add<ElementSetPasswordAction>().Named("login");
             For<IElementActionBase>().Add<ElementSetDropDownValue>().Named("set-dropdown-value");
-            For<IElementActionBase>().Add<GetRecordCountAction>().Named("get-record-count"); 
+            For<IElementActionBase>().Add<GetRecordCountAction>().Named("get-record-count");
             For<IElementActionBase>().Add<JquerySetTextBox>().Named("jquery-set-text");
             For<IElementActionBase>().Add<JquerySetSelectedIndex>().Named("jquery-set-selected-index");
             For<IElementActionBase>().Add<HarrisCivilReadTable>().Named("harris-civil-read-table");

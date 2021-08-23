@@ -28,9 +28,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         public TarrantWebInteractive(WebNavigationParameter parameters, DateTime startDate, DateTime endingDate) : base(parameters, startDate, endingDate)
         {
             var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
-            SetParameterValue(CommonKeyIndexes.StartDate, 
+            SetParameterValue(CommonKeyIndexes.StartDate,
                 startDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
-            SetParameterValue(CommonKeyIndexes.EndDate, 
+            SetParameterValue(CommonKeyIndexes.EndDate,
                 endingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
         }
 
@@ -55,9 +55,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             while (startingDate.CompareTo(endingDate) <= 0)
             {
 
-                SetParameterValue(CommonKeyIndexes.StartDate, 
+                SetParameterValue(CommonKeyIndexes.StartDate,
                     startingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
-                SetParameterValue(CommonKeyIndexes.EndDate, 
+                SetParameterValue(CommonKeyIndexes.EndDate,
                     startingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
                 foreach (var obj in fetchers)
                 {
@@ -116,15 +116,15 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (customSearchType != 2) return fetched;
                 var caseList = cases.ToList();
                 people = fetched.PeopleList;
-                people.ForEach(p => 
-                { 
+                people.ForEach(p =>
+                {
                     var source = caseList.FirstOrDefault(c => c.Case.Equals(p.CaseNumber, StringComparison.CurrentCultureIgnoreCase));
                     if (source == null) return;
                     if (string.IsNullOrEmpty(source.PageHtml)) return;
                     var dto = DataPointLocatorDto.Load(source.PageHtml);
                     p.CaseStyle = dto.DataPoints
-                        .First(f => 
-                            f.Name.Equals(CommonKeyIndexes.CaseStyle, 
+                        .First(f =>
+                            f.Name.Equals(CommonKeyIndexes.CaseStyle,
                             StringComparison.CurrentCultureIgnoreCase)).Result;
                 });
                 // people = ExtractPeople(cases);
@@ -152,11 +152,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
-        private WebFetchResult Search(XmlContentHolder results, 
-            List<NavigationStep> steps, DateTime startingDate, 
-            DateTime endingDate, 
-            ref List<HLinkDataRow> cases, 
-            out List<PersonAddress> people, 
+        private WebFetchResult Search(XmlContentHolder results,
+            List<NavigationStep> steps, DateTime startingDate,
+            DateTime endingDate,
+            ref List<HLinkDataRow> cases,
+            out List<PersonAddress> people,
             IWebDriver driver)
         {
             var assertion = new ElementAssertion(driver);
@@ -169,21 +169,21 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 // if item action-name = 'set-text'
                 var actionName = item.ActionName;
-                if (item.ActionName.Equals(CommonKeyIndexes.SetText, 
+                if (item.ActionName.Equals(CommonKeyIndexes.SetText,
                     StringComparison.CurrentCultureIgnoreCase))
                 {
                     if (item.DisplayName.Equals(CommonKeyIndexes.StartDate, //"startDate", 
-                        StringComparison.CurrentCultureIgnoreCase)) 
-                        item.ExpectedValue = 
+                        StringComparison.CurrentCultureIgnoreCase))
+                        item.ExpectedValue =
                             startingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate);
-                    if (item.DisplayName.Equals(CommonKeyIndexes.EndDate, 
-                        StringComparison.CurrentCultureIgnoreCase)) 
-                        item.ExpectedValue = 
+                    if (item.DisplayName.Equals(CommonKeyIndexes.EndDate,
+                        StringComparison.CurrentCultureIgnoreCase))
+                        item.ExpectedValue =
                             endingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate);
                 }
                 var action = ElementActions
-                    .FirstOrDefault(x => 
-                    x.ActionName.Equals(item.ActionName, 
+                    .FirstOrDefault(x =>
+                    x.ActionName.Equals(item.ActionName,
                     StringComparison.CurrentCultureIgnoreCase));
                 if (action == null) continue;
                 action.Act(item);
@@ -239,8 +239,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="actionName">Name of the action.</param>
         /// <param name="action">The action.</param>
         /// <returns></returns>
-        protected virtual List<HLinkDataRow> ExtractCaseData(XmlContentHolder results, 
-            List<HLinkDataRow> cases, 
+        protected virtual List<HLinkDataRow> ExtractCaseData(XmlContentHolder results,
+            List<HLinkDataRow> cases,
             string actionName, IElementActionBase action)
         {
             if (results == null) throw new ArgumentNullException(nameof(results));
@@ -339,7 +339,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 // check or set IsCriminal attribute of linkData object
                 var criminalLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.CriminalLinkXpath));
-                if(criminalLink != null) { linkData.IsCriminal = true; }
+                if (criminalLink != null) { linkData.IsCriminal = true; }
                 // get row index of this element ... and then go one row beyond...
                 var ridx = parent.GetAttribute(CommonKeyIndexes.RowIndex);
                 var table = parent.FindElement(By.XPath(CommonKeyIndexes.ParentElement));
@@ -407,7 +407,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var trow = dcc.ChildNodes[0];
                 var inspector = item.IsProbate ? probateInspector : caseInspetor;
                 if (item.IsJustice) { inspector = justiceInspector; }
-                if(!MapCourtAttributes(item, trow, inspector))
+                if (!MapCourtAttributes(item, trow, inspector))
                 {
                     MapCourtAttributes(item, trow, probateInspector);
                     item.IsProbate = true;
@@ -461,7 +461,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="parent">The parent.</param>
         /// <param name="trCol">The tr col.</param>
         /// <returns></returns>
-        private static IWebElement GetAddressRow(IWebElement parent, 
+        private static IWebElement GetAddressRow(IWebElement parent,
             System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> trCol)
         {
             if (parent == null) throw new ArgumentNullException(nameof(parent));
@@ -477,8 +477,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="parent">The parent web browser instance.</param>
         /// <param name="by">The by condition used to locate the element</param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", 
-            "CA1031:Do not catch general exception types", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design",
+            "CA1031:Do not catch general exception types",
             Justification = "Returning a NULL allows the caller to handle")]
         internal static IWebElement TryFindElement(IWebDriver parent, By by)
         {

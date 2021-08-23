@@ -27,7 +27,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
             if (string.IsNullOrEmpty(CaseData)) return response;
             var fullName = CaseData.ToLower(CultureInfo.CurrentCulture);
             if (!fullName.StartsWith(SearchFor, System.StringComparison.CurrentCultureIgnoreCase)) return response;
-            
+
             var findItIndex = fullName.IndexOf(SearchFor, System.StringComparison.CurrentCultureIgnoreCase);
             if (findItIndex < 0) return response;
             response.Defendant = CaseData.Substring(findItIndex).Trim();

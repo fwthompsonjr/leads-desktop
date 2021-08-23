@@ -29,7 +29,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public static void WriteToExcel(WebFetchResult fetchResult)
         {
-            if(fetchResult == null)
+            if (fetchResult == null)
             {
                 throw new ArgumentNullException(nameof(fetchResult));
             }
@@ -52,9 +52,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 saveFile: true,
                 outputFileName: tmpFileName,
                 websiteId: fetchResult.WebsiteId);
-            }         
+            }
 
-            
+
         }
 
         public ExcelPackage ConvertToPersonTable(
@@ -79,14 +79,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             int countyIndex = 0;
             int courtAddressIndex = 0;
             int courtNameId = 10;
-            var specialList = new Dictionary<string, string> 
+            var specialList = new Dictionary<string, string>
             {
                 { "firstname", "fname" },
                 { "lastname", "lname" }
             };
             foreach (var item in addressList)
             {
-                if(rowIndex == 1)
+                if (rowIndex == 1)
                 {
                     // write header
                     var headerIndex = 1;
@@ -113,14 +113,14 @@ namespace Thompson.RecordSearch.Utility.Classes
                     cleaner.Replace(Environment.NewLine, " ");
                     cleaner.Replace(((char)10).ToString(culture), " ");
                     cleaner.Replace(((char)13).ToString(culture), " ");
-                    cleaner.Replace("  ", " "); 
+                    cleaner.Replace("  ", " ");
                     content = cleaner.ToString().Trim();
-                    wsDt.Cells[rowIndex, i+1].Value = content;
+                    wsDt.Cells[rowIndex, i + 1].Value = content;
                 }
-                
+
                 wsDt.Cells[rowIndex, countyIndex].Value = countyName;
                 wsDt.Cells[rowIndex, courtAddressIndex].Value =
-                    LookupCountyAddress(websiteId, 
+                    LookupCountyAddress(websiteId,
                     wsDt.Cells[rowIndex, courtNameId].Value.ToString());
                 rowIndex++;
             }
@@ -146,8 +146,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 .ToList()
                 .ForEach(b => b.Name = string.Empty);
             var courtLocation = court.Courts
-                .FirstOrDefault(a => 
-                    a.Name.Equals(value, ccic) 
+                .FirstOrDefault(a =>
+                    a.Name.Equals(value, ccic)
                     | a.FullName.Equals(value, ccic));
             if (courtLocation != null) return courtLocation.Address;
             var blankLocation = court.Courts
@@ -157,7 +157,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
         public ExcelPackage ConvertToDataTable(
-            string htmlTable, 
+            string htmlTable,
             string worksheetName,
             ExcelPackage excelPackage = null,
             bool saveFile = false,
@@ -200,10 +200,10 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             int rowIndex = 1;
             const int Case = 1;
-            const int Style = 2; 
-            const int DateFiled = 3; 
-            const int Court = 4; 
-            const int CaseType = 5; 
+            const int Style = 2;
+            const int DateFiled = 3;
+            const int Court = 4;
+            const int CaseType = 5;
             const int Status = 6;
 
             wsDt.Cells[rowIndex, Case].Value = "Case";
@@ -217,7 +217,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             foreach (var item in table.ChildNodes.Cast<XmlNode>().ToList())
             {
-                
+
                 wsDt.Cells[rowIndex, Case].Value = item.ChildNodes[Case - 1].InnerText;
                 wsDt.Cells[rowIndex, Style].Value = item.ChildNodes[Style - 1].InnerText;
                 wsDt.Cells[rowIndex, DateFiled].Value = item.ChildNodes[DateFiled - 1].InnerText;
@@ -229,14 +229,14 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             return rowIndex;
         }
-        private static int GenerateExcelOutput(ExcelWorksheet wsDt, 
-            WebNavigationKey hyperPrefix, 
-            List<XmlNode> rows, 
+        private static int GenerateExcelOutput(ExcelWorksheet wsDt,
+            WebNavigationKey hyperPrefix,
+            List<XmlNode> rows,
             int rowIndex,
             XmlNode table,
             int websiteId)
         {
-            if(websiteId == 30)
+            if (websiteId == 30)
             {
                 return GenerateExcelOutput(wsDt, table);
             }
@@ -275,14 +275,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             return rowIndex;
         }
 
-        private void ApplyGridFormatting<T>(int websiteId, 
+        private void ApplyGridFormatting<T>(int websiteId,
             string sectionName,
-            ExcelWorksheet wsDt, 
+            ExcelWorksheet wsDt,
             System.Collections.Generic.List<T> rows)
         {
             const int rowIndex = 1;
             var isCaseLayout = "people" == sectionName;
-                var columns = SettingsManager.GetColumnLayouts(websiteId, sectionName);
+            var columns = SettingsManager.GetColumnLayouts(websiteId, sectionName);
             if (columns != null)
             {
                 // format first row
@@ -294,7 +294,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (isCaseLayout)
                 {
                     wsDt.Column(columns.Count + 2).Width = columns[10].ColumnWidth;
-                    wsDt.Column(columns.Count + 1).Width = columns[10].ColumnWidth; 
+                    wsDt.Column(columns.Count + 1).Width = columns[10].ColumnWidth;
                 }
             }
             // apply borders

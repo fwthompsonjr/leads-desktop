@@ -33,7 +33,7 @@ namespace LegalLead.PublicData.Search
 
             var showList = new List<int> { Four, Five };
             CboCaseType.Visible = customList.Contains(source.Id);
-            LabelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty 
+            LabelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty
                 ? CommonKeyIndexes.CustomSearchLabel : CommonKeyIndexes.SearchTypeLabel;
 
             // get we do the custom labels here??

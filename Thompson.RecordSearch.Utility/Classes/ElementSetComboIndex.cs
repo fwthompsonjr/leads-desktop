@@ -1,9 +1,5 @@
 ﻿using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -13,7 +9,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public override IWebElement Execute(WebNavInstruction item)
         {
             if (Assertion == null) return null;
-            if(item == null)
+            if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }

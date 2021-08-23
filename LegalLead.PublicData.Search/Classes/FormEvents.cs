@@ -21,7 +21,7 @@ namespace LegalLead.PublicData.Search
         {
             const int One = 1;
             var srcId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
-            if(srcId != (int)SourceType.DentonCounty)
+            if (srcId != (int)SourceType.DentonCounty)
             {
                 return;
             }
@@ -30,20 +30,20 @@ namespace LegalLead.PublicData.Search
             var showDistrict = searchDto.CountySearchTypeId == (int)SourceType.DentonCounty;
             var courtNames = CaseTypeSelectionDto.GetDto(
                 showDistrict ?
-                CommonKeyIndexes.DentonDistrictCaseType :  
-                CommonKeyIndexes.DentonCountyCaseType); 
+                CommonKeyIndexes.DentonDistrictCaseType :
+                CommonKeyIndexes.DentonCountyCaseType);
             sb.AppendFormat(
                 CultureInfo.CurrentCulture,
                 CommonKeyIndexes.SearchColonSpaceElement, showDistrict ?
-                CommonKeyIndexes.DistrictCourts : 
+                CommonKeyIndexes.DistrictCourts :
                 CommonKeyIndexes.JpCountyCourts);
 
             var subItemId = showDistrict ?
                 searchDto.DistrictSearchTypeId :
                 searchDto.CountySearchTypeId;
 
-            var courtItemId = showDistrict ? 
-                searchDto.DistrictCourtId + One : 
+            var courtItemId = showDistrict ?
+                searchDto.DistrictCourtId + One :
                 searchDto.CountyCourtId + One;
 
             var courtDropDown = courtNames.DropDowns.First();
@@ -73,7 +73,7 @@ namespace LegalLead.PublicData.Search
         private void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var source = (DropDown)cboSearchType.SelectedItem;
-            
+
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && selectedItem.Id == (int)SourceType.HarrisCivil)
             {
@@ -133,7 +133,7 @@ namespace LegalLead.PublicData.Search
             Tag = new List<SearchResult>();
             tsDropFileList.Enabled = false;
             tsDropFileList.Visible = false;
-            
+
             tsWebDriver_Initialize();
 
             cboWebsite.DataSource = websites;
@@ -180,13 +180,14 @@ namespace LegalLead.PublicData.Search
             // remove all items from the tab strip
             tsDropFileList.DropDownItems.Clear();
             var list = GetObject<List<SearchResult>>(Tag);
-            list.ForEach(x => {
+            list.ForEach(x =>
+            {
                 var button = new ToolStripMenuItem
                 {
                     Visible = true,
                     Tag = x,
                     Text = x.Search,
-                    DisplayStyle = ToolStripItemDisplayStyle.Text                    
+                    DisplayStyle = ToolStripItemDisplayStyle.Text
                 };
                 button.Click += Button_Click;
                 tsDropFileList.DropDownItems.Add(button);
@@ -212,7 +213,8 @@ namespace LegalLead.PublicData.Search
             var dto = new WebDriverDto().Get();
             var drivers = dto.WebDrivers.Drivers.ToList().FindAll(f => f.IsVerified);
             tsWebDriver.Tag = dto;
-            drivers.ForEach(x => {
+            drivers.ForEach(x =>
+            {
                 var button = new ToolStripMenuItem
                 {
                     Visible = true,
@@ -236,7 +238,7 @@ namespace LegalLead.PublicData.Search
             if (sender == null) return;
             var tsItem = (ToolStripMenuItem)sender;
             if (tsItem.Checked) return;
-            
+
             var item = GetObject<Driver>(tsItem.Tag);
             var webItem = GetObject<WebDriverDto>(tsWebDriver.Tag);
             webItem.WebDrivers.SelectedIndex = item.Id;

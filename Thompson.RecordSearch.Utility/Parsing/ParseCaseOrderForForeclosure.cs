@@ -42,11 +42,11 @@ namespace Thompson.RecordSearch.Utility.Parsing
             fullName = fullName.Substring(0, splitIndex + petitioner.Length);
             fullName = CaseData.Substring(SearchFor.Length).Substring(fullName.Length).Trim();
             splitIndex = fullName.LastIndexOf(':');
-            if(splitIndex > 0)
+            if (splitIndex > 0)
             {
                 fullName = fullName.Substring(0, splitIndex).Trim();
                 splitIndex = fullName.LastIndexOf(' ');
-                if(splitIndex > 0)
+                if (splitIndex > 0)
                 {
                     fullName = fullName.Substring(0, splitIndex).Trim();
                 }
@@ -54,7 +54,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
             response.Plantiff = fullName;
             fullName = CaseData.Substring(findItIndex).Trim();
             splitIndex = fullName.LastIndexOf(':');
-            response.Defendant = fullName.Substring(splitIndex).Replace(":","").Trim();
+            response.Defendant = fullName.Substring(splitIndex).Replace(":", "").Trim();
             return response;
         }
     }

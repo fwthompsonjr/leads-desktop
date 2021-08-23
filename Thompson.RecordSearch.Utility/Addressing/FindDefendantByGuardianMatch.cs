@@ -1,9 +1,9 @@
 ﻿// FindDefendantByGuardianMatch
 // FindDefendantByCondemneeMatch
+using OpenQA.Selenium;
 using System;
 using System.Globalization;
 using System.Linq;
-using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Addressing
@@ -12,7 +12,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
     {
         public override bool CanFind { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types",
             Justification = "Exception thrown from this method will stop automation.")]
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
@@ -41,7 +41,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 var table = parent.FindElement(By.XPath(IndexKeyNames.ParentElement));
                 var trCol = table.FindElements(By.TagName(IndexKeyNames.TrElement)).ToList();
                 if (!int.TryParse(ridx, out int r)) return;
-                MapElementAddress(linkData, rowLabel, table, trCol, r, 
+                MapElementAddress(linkData, rowLabel, table, trCol, r,
                     searchType.ToLower(System.Globalization.CultureInfo.CurrentCulture));
             }
             catch (Exception)

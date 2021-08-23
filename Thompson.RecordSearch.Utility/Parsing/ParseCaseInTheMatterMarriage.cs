@@ -42,7 +42,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
             CaseData = CaseData.Replace(" And ", and);
             fullName = CaseData.Substring(SearchFor.Length);
             var splitIndex = fullName.IndexOf(and, comparison);
-            if(splitIndex < 0)
+            if (splitIndex < 0)
             {
                 response.Defendant = fullName.Trim();
                 response.Plantiff = string.Empty;

@@ -20,7 +20,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
         }
 
-        public CollinWebInteractive(WebNavigationParameter parameters, 
+        public CollinWebInteractive(WebNavigationParameter parameters,
             DateTime startDate, DateTime endingDate) : base(parameters, startDate, endingDate)
         {
 
@@ -55,11 +55,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var searchTypeId = GetParameterValue<int>(CommonKeyIndexes.SearchTypeSelectedIndex); // "searchTypeSelectedIndex");
                 var selectedCase = caseTypes.DropDowns[caseTypeId];
                 // set special item values
-                var caseTypeSelect = steps.First(x => 
+                var caseTypeSelect = steps.First(x =>
                     x.ActionName.Equals(CommonKeyIndexes.SetSelectValue, // "set-select-value", 
                         StringComparison.CurrentCultureIgnoreCase));
                 caseTypeSelect.ExpectedValue = caseTypeId.ToString(CultureInfo.CurrentCulture.NumberFormat);
-                var searchSelect = steps.First(x => 
+                var searchSelect = steps.First(x =>
                     x.DisplayName.Equals(CommonKeyIndexes.SearchTypeHyperlink, // "search-type-hyperlink", 
                         StringComparison.CurrentCultureIgnoreCase));
                 searchSelect.Locator.Query = selectedCase.Options[searchTypeId].Query;
@@ -171,10 +171,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             const string driverLicense = @"DL: ";
             const string secondLicense = @"SID: ";
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
-            if (string.IsNullOrEmpty(uncleanAddress)) {
+            if (string.IsNullOrEmpty(uncleanAddress))
+            {
                 return uncleanAddress;
             }
-            if(uncleanAddress.Contains(driverLicense))
+            if (uncleanAddress.Contains(driverLicense))
             {
                 var dlstart = uncleanAddress.IndexOf(driverLicense, comparison);
                 uncleanAddress = uncleanAddress.Substring(0, dlstart).Replace(driverLicense, "");
@@ -184,7 +185,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var dlstart = uncleanAddress.IndexOf(secondLicense, comparison);
                 uncleanAddress = uncleanAddress.Substring(0, dlstart).Replace(secondLicense, "");
             }
-            if(uncleanAddress.IndexOf("DOB: ", comparison) > 0)
+            if (uncleanAddress.IndexOf("DOB: ", comparison) > 0)
             {
                 uncleanAddress = string.Empty;
             }
@@ -192,7 +193,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 uncleanAddress = string.Empty;
             }
-            if(uncleanAddress.Equals("Pro Se", comparison))
+            if (uncleanAddress.Equals("Pro Se", comparison))
             {
                 uncleanAddress = string.Empty;
             }
@@ -218,7 +219,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             // heres where we will get the case style for criminal cases
 
             FindDefendant(driver, ref linkData);
-            
+
             // can we get the case-style data here
 
             driver.Navigate().Back();
@@ -238,7 +239,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
             }
             var probateLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.ProbateLinkXpath));
-            if(probateLink != null)
+            if (probateLink != null)
             {
                 linkData.IsProbate = true;
             }

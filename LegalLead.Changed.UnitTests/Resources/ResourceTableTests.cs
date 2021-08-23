@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LegalLead.Changed.UnitTests.Resources
 {
     using LegalLead.Resources;
-    using System.Collections.Generic;
     using System.IO;
 
     [TestClass]
@@ -86,9 +85,9 @@ namespace LegalLead.Changed.UnitTests.Resources
             var keys = Enum.GetNames(keyType);
             var random = new Random(DateTime.Now.Millisecond);
             var id = random.Next(0, names.Length - 1);
-            
+
             var resourceType = (ResourceType)Enum.Parse(type, names[id]);
-            
+
             var resources = ResourceTable.GetResources(resourceType).ToList();
             Assert.IsNotNull(resources);
             var keyIndex = random.Next(0, resources.Count - 1);

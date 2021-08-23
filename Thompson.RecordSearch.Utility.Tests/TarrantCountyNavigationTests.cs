@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
@@ -57,10 +57,10 @@ namespace Thompson.RecordSearch.Utility.Tests
 
                 var steps = new List<NavigationStep>();
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
-                
+
                 var startingDate = DateTime.Now.AddDays(-2);
                 var endingDate = DateTime.Now.AddDays(-2);
-                
+
                 // driver = GetAuthenicatedDriver(driver);
                 ElementActions.ForEach(x => x.GetAssertion = assertion);
                 ElementActions.ForEach(x => x.GetWeb = driver);
@@ -77,7 +77,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                     var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName));
                     if (action == null) continue;
                     action.Act(item);
-                    if(actionName.Equals("get-table-html") && !string.IsNullOrEmpty(action.OuterHtml))
+                    if (actionName.Equals("get-table-html") && !string.IsNullOrEmpty(action.OuterHtml))
                     {
                         // create a list of hlinkdatarows from table
                     }

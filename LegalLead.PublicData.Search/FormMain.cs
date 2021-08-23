@@ -47,7 +47,7 @@ namespace LegalLead.PublicData.Search
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         private void Button1_Click(object sender, EventArgs e)
         {
-            
+
             try
             {
 
@@ -69,17 +69,17 @@ namespace LegalLead.PublicData.Search
                     Website = siteData.Name,
                     EndDate = endingDate.ToShortDateString(),
                     StartDate = startDate.ToShortDateString(),
-                    SearchDate = DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString(),                    
+                    SearchDate = DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString(),
                 };
                 searchItem.Search = $"{searchItem.SearchDate} : {searchItem.Website} from {searchItem.StartDate} to {searchItem.EndDate}";
                 const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
                 var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
                 var keys = siteData.Keys;
-                var isDistrictSearch = keys.FirstOrDefault(x => 
+                var isDistrictSearch = keys.FirstOrDefault(x =>
                     x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType"
                     ccic)) != null;
-                var criminalToggle = keys.FirstOrDefault(x => 
-                    x.Name.Equals(CommonKeyIndexes.CriminalCaseInclusion, 
+                var criminalToggle = keys.FirstOrDefault(x =>
+                    x.Name.Equals(CommonKeyIndexes.CriminalCaseInclusion,
                     ccic));
                 if (isDentonCounty && criminalToggle != null)
                 {
@@ -88,7 +88,7 @@ namespace LegalLead.PublicData.Search
                         CommonKeyIndexes.NumberOne; // "0" : "1";
                 }
 
-                if(!isDentonCounty & criminalToggle != null)
+                if (!isDentonCounty & criminalToggle != null)
                 {
                     criminalToggle.Value = CommonKeyIndexes.NumberOne;
                 }
@@ -179,7 +179,7 @@ namespace LegalLead.PublicData.Search
         {
 
             var sourceId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
-            if(sourceId == (int)SourceType.DentonCounty)
+            if (sourceId == (int)SourceType.DentonCounty)
             {
                 using (var credential = new FormDentonSetting())
                 {
@@ -193,7 +193,7 @@ namespace LegalLead.PublicData.Search
                 using (var result = new FormCredential())
                 {
                     result.Icon = Icon;
-                    result.ShowDialog(this); 
+                    result.ShowDialog(this);
                 }
             }
         }

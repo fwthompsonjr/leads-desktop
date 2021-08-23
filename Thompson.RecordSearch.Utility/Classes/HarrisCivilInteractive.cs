@@ -84,10 +84,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 webFetch = SearchWeb(results, steps, startingDate, startingDate,
                     ref cases, out people);
                 peopleList.AddRange(people);
-                peopleList.ForEach(p => {
+                peopleList.ForEach(p =>
+                {
                     p = p.ToCalculatedNames();
                     p = p.ToCalculatedZip();
-                    });
+                });
                 webFetch.PeopleList = peopleList;
                 webFetch.CaseList = peopleList.ToHtml();
                 startingDate = startingDate.AddDays(1);
@@ -119,7 +120,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             // if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
             var htmlAction = (HarrisCivilReadTable)action;
             var data = htmlAction.DataRows;
-            if(data != null && data.Any())
+            if (data != null && data.Any())
             {
                 cases.AddRange(data);
             }
@@ -160,7 +161,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 cases.FindAll(c => string.IsNullOrEmpty(c.Address))
                     .ForEach(c => GetAddressInformation(driver, this, c));
 
-                
+
 
                 people = ExtractPeople(cases);
                 caseList = people.ToHtml();

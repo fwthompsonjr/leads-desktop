@@ -91,12 +91,14 @@ namespace Thompson.RecordSearch.Utility.Addressing
                     .Replace(Environment.NewLine, CommonKeyIndexes.BrElementTag).Trim();
                 rowIndex += 1;
                 var headings = currentRow.FindElements(By.TagName(IndexKeyNames.ThElement));
-                
+
                 if (headings != null && headings.Count > 1)
                 {
-                    if (!address.ToLower(cultureInfo).StartsWith(findKey, currentCase)) {
+                    if (!address.ToLower(cultureInfo).StartsWith(findKey, currentCase))
+                    {
                         address = string.Empty;
-                        break; }
+                        break;
+                    }
                 }
                 if (firstTd != null &&
                     string.IsNullOrEmpty(firstTd.GetAttribute("headers")))

@@ -27,7 +27,7 @@ namespace LegalLead.PublicData.Search
         [STAThread]
         static void Main()
         {
-            var commandName = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartup] ?? 
+            var commandName = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartup] ??
                 CommonKeyIndexes.FormNameMain.ToLower(CultureInfo.CurrentCulture);
             using (var consoleWriter = new ConsoleWriter())
             {
@@ -41,7 +41,8 @@ namespace LegalLead.PublicData.Search
                 }
 
                 // get the chrome path in a separate thread
-                ThreadStart ts = new ThreadStart(() => {
+                ThreadStart ts = new ThreadStart(() =>
+                {
                     var settings = WebUtilities.GetChromeBinary();
                     Console.WriteLine("Using {0} as Chrome file location.", settings);
                 });
@@ -53,11 +54,11 @@ namespace LegalLead.PublicData.Search
                 Console.SetOut(consoleWriter);
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                using(var frm = new FormDentonSetting())
+                using (var frm = new FormDentonSetting())
                 {
                     frm.Save();
                 }
-                
+
                 mainForm = new FormMain();
                 command.Execute(mainForm);
             }

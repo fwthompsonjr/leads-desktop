@@ -9,8 +9,8 @@ namespace Thompson.RecordSearch.Utility.Dto
 {
     public class UserAccessDtoCollection
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", 
-            "CA2227:Collection properties should be read only", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage",
+            "CA2227:Collection properties should be read only",
             Justification = "<Pending>")]
         public List<UserAccessDto> AccessDtos { get; set; }
 
@@ -22,7 +22,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         public string CreateDate { get; set; }
         public string UserGuid { get; set; }
         public string UserKey { get; set; }
-        
+
 
         public DateTime? CreatedDate
         {

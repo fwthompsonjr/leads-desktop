@@ -34,7 +34,7 @@ namespace LegalLead.Changed.Models
     {
         const string reportedDate = "{ReportingDate}";
         public double Id { get; set; }
-        
+
         public DateTime CorrectionDate { get; set; }
 
         public string Description { get; set; }
@@ -61,12 +61,12 @@ namespace LegalLead.Changed.Models
                 Id.ToString("F4", CultureInfo.CurrentCulture.NumberFormat)
                 .ToFixedWidth(CorrectionColumnLength.IssueId));
             builder.AppendFormat(
-                CultureInfo.CurrentCulture, 
+                CultureInfo.CurrentCulture,
                 "{0} {1}",
                 separator,
                 reportedDate);
             builder.AppendFormat(
-                CultureInfo.CurrentCulture, 
+                CultureInfo.CurrentCulture,
                 "{0} {1}",
                 separator,
                 CorrectionDate.ToString("MM-dd-yyyy",
@@ -79,9 +79,9 @@ namespace LegalLead.Changed.Models
                 description.Add(string.Empty.ToFixedWidth(commentLength));
             }
             builder.AppendFormat(
-                CultureInfo.CurrentCulture, 
-                "{0} {1} {0}{2}", 
-                separator, 
+                CultureInfo.CurrentCulture,
+                "{0} {1} {0}{2}",
+                separator,
                 description[0], Environment.NewLine);
             if (description.Count > 1)
             {
@@ -105,7 +105,7 @@ namespace LegalLead.Changed.Models
             return logEntry;
         }
     }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only",
         Justification = "This field needs to be read/write to allow proper serialization.")]
     public class Change
     {
@@ -137,7 +137,7 @@ namespace LegalLead.Changed.Models
     public class ChangeLog
     {
         public IList<Change> Changes { get; set; }
-        
+
         public IList<Version> Versions { get; set; }
 
 

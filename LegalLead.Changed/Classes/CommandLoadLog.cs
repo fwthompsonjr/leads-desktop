@@ -11,7 +11,7 @@ namespace LegalLead.Changed.Classes
             if (string.IsNullOrEmpty(SourceFile))
                 throw new InvalidOperationException();
 
-            if(Log == null)
+            if (Log == null)
             {
                 SetSource(SourceFile);
             }

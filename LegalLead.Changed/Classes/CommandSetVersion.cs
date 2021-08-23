@@ -18,7 +18,7 @@ namespace LegalLead.Changed.Classes
             if (Log == null)
                 throw new InvalidOperationException();
 
-            if(LatestVersion == null)
+            if (LatestVersion == null)
             {
                 return true;
             }
@@ -50,7 +50,7 @@ namespace LegalLead.Changed.Classes
 
         private bool UpdateVersion(string versionCsFile, string content)
         {
-            if(!File.Exists(versionCsFile))
+            if (!File.Exists(versionCsFile))
             {
                 throw new ArgumentNullException(nameof(versionCsFile));
             }

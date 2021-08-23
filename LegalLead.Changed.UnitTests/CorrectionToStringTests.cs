@@ -1,7 +1,7 @@
-﻿using System;
-using LegalLead.Changed.Models;
+﻿using LegalLead.Changed.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NLipsum.Core;
+using System;
 
 namespace LegalLead.Changed.UnitTests
 {

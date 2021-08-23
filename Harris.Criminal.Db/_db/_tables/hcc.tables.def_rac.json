@@ -1,0 +1,11 @@
+{
+	"name": "HCC.Tables.def_rac",
+	"data": [ 
+		{"code": "A", "literal": "ASIAN OR PACIFIC ISLANDER" },
+		{"code": "B", "literal": "BLACK" },
+		{"code": "I", "literal": "NATIVE AMERICAN" },
+		{"code": "M", "literal": "MULTIRACIAL" },
+		{"code": "U", "literal": "UNKNOWN" },
+		{"code": "W", "literal": "WHITE" }
+	]
+}

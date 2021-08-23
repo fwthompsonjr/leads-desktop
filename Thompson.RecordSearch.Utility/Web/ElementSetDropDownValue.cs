@@ -1,10 +1,10 @@
 ﻿// ElementSetDropDownValue
 namespace Thompson.RecordSearch.Utility.Web
 {
+    using System.Threading;
+    using Thompson.RecordSearch.Utility.Dto;
     using Byy = OpenQA.Selenium.By;
     using DrpDwn = OpenQA.Selenium.Support.UI.SelectElement;
-    using Thompson.RecordSearch.Utility.Dto;
-    using System.Threading;
 
     public class ElementSetDropDownValue : ElementActionBase
     {

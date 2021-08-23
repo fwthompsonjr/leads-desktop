@@ -45,6 +45,6 @@ namespace Thompson.RecordSearch.Utility.Addressing
             }
         }
 
-        
+
     }
 }

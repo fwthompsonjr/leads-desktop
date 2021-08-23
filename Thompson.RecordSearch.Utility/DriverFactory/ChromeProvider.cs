@@ -1,9 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
-using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using Thompson.RecordSearch.Utility.Classes;
 

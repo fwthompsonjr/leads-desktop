@@ -1,9 +1,8 @@
-﻿using System;
+﻿using LegalLead.Changed.Models;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using LegalLead.Changed.Models;
-using Newtonsoft.Json.Serialization;
 
 namespace LegalLead.Changed.Classes
 {
@@ -98,7 +97,7 @@ namespace LegalLead.Changed.Classes
             var appFolder =
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var dir = new DirectoryInfo(appFolder);
-            while (!dir.Parent.Name.Equals(solutionName, 
+            while (!dir.Parent.Name.Equals(solutionName,
                 StringComparison.CurrentCultureIgnoreCase))
             {
                 dir = new DirectoryInfo(dir.Parent.FullName);

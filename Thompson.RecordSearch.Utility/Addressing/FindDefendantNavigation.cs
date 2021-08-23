@@ -21,8 +21,8 @@ namespace Thompson.RecordSearch.Utility.Addressing
             driver.WaitForNavigation();
             // get criminal hyperlink
             // //a[contains(text(),'Criminal')]
-            var criminalLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.CriminalLinkXpath)); 
-            var elementCaseName = TryFindElement(driver, By.XPath(CommonKeyIndexes.CaseStlyeBoldXpath)); 
+            var criminalLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.CriminalLinkXpath));
+            var elementCaseName = TryFindElement(driver, By.XPath(CommonKeyIndexes.CaseStlyeBoldXpath));
             if (criminalLink != null)
             {
                 if (elementCaseName != null)
@@ -31,13 +31,13 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 }
                 linkData.IsCriminal = true;
             }
-            if(linkData.IsJustice && elementCaseName != null)
+            if (linkData.IsJustice && elementCaseName != null)
             {
                 linkData.CriminalCaseStyle = elementCaseName.Text;
             }
-            linkData.PageHtml = 
+            linkData.PageHtml =
                 GetTable(driver, By.XPath(@"//div[contains(text(),'Party Information')]"));
-            
+
         }
 
         private string GetTable(IWebDriver driver, By by)
@@ -46,7 +46,7 @@ namespace Thompson.RecordSearch.Utility.Addressing
             {
                 var dv = driver.FindElement(by);
                 var parent = dv.FindElement(By.XPath(IndexKeyNames.ParentElement));
-                while(parent.TagName != "table")
+                while (parent.TagName != "table")
                 {
                     parent = parent.FindElement(By.XPath(IndexKeyNames.ParentElement));
                 }

@@ -1,10 +1,10 @@
 ﻿namespace Thompson.RecordSearch.Utility.Web
 {
-    using Byy = OpenQA.Selenium.By;
-    using Thompson.RecordSearch.Utility.Dto;
     using OpenQA.Selenium;
-    using System.Threading;
     using System;
+    using System.Threading;
+    using Thompson.RecordSearch.Utility.Dto;
+    using Byy = OpenQA.Selenium.By;
 
     public class ElementSetComboBoxValue : ElementActionBase
     {

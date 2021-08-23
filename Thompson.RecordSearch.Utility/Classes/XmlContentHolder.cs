@@ -58,7 +58,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     // string caseSytle = addressPerson["CaseStyle"];
                     addressList.Add(addressPerson);
                 }
-                else if(!string.IsNullOrEmpty(personNode.ChildNodes[0].InnerText))
+                else if (!string.IsNullOrEmpty(personNode.ChildNodes[0].InnerText))
                 {
                     addressPerson = new PersonAddress
                     {
@@ -111,12 +111,12 @@ namespace Thompson.RecordSearch.Utility.Classes
             var cnode = (XmlCDataSection)Data.FirstChild;
             cnode.Data = string.Format(
                 CultureInfo.CurrentCulture,
-                fmttbl, 
+                fmttbl,
                 openTable,
                 CharacterData.ToString(),
                 closeTable);
             var person = People.FirstChild.CloneNode(true);
-            if(dta.IsCriminal & dta.IsMapped)
+            if (dta.IsCriminal & dta.IsMapped)
             {
                 // System.Diagnostics.Debugger.Break();
             }
@@ -139,7 +139,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     opnTable,
                     CharacterPeople.ToString(),
                     closeTable);
-                
+
             }
             Document.Save(FileName);
         }
@@ -160,7 +160,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var addressB = addressNode.SelectSingleNode("addressB");
             var addressC = addressNode.SelectSingleNode("addressC");
             // append a cdata section
-            var ndes = new List<XmlNode>{ zipNode , addressA , addressB , addressC };
+            var ndes = new List<XmlNode> { zipNode, addressA, addressB, addressC };
             foreach (var item in ndes)
             {
                 var cdta = item.OwnerDocument.CreateCDataSection(string.Empty);
@@ -192,7 +192,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 var targetNode = person.SelectSingleNode(fieldName);
                 if (targetNode == null) continue;
-                ((XmlCDataSection)targetNode.FirstChild).Data = dta[fieldName]; 
+                ((XmlCDataSection)targetNode.FirstChild).Data = dta[fieldName];
             }
             return person;
         }

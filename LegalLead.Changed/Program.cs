@@ -18,7 +18,7 @@ namespace LegalLead.Changed
             if (args != null && args.Length > 0)
             {
                 Console.WriteLine("Executing post build actions.");
-                if(args.Length > 1)
+                if (args.Length > 1)
                 {
                     Evaluate(args[0], args[1]);
                 }
@@ -28,9 +28,10 @@ namespace LegalLead.Changed
                     Console.WriteLine("Evaluating command line file: {0}", srcFile);
                     if (!File.Exists(srcFile)) return;
                     var commands = GetClasses(srcFile);
-                    commands.ForEach(c => {
+                    commands.ForEach(c =>
+                    {
                         Console.WriteLine("Executing {0}", c.Name);
-                        c.Execute(); 
+                        c.Execute();
                     });
                 }
 
@@ -51,7 +52,7 @@ namespace LegalLead.Changed
             types.ForEach(f =>
             {
                 var command = (IUserCommand)Activator.CreateInstance(f);
-                if(command.Name.Equals(argument, StringComparison.OrdinalIgnoreCase))
+                if (command.Name.Equals(argument, StringComparison.OrdinalIgnoreCase))
                 {
                     commands.Add(command);
                 }
@@ -64,7 +65,7 @@ namespace LegalLead.Changed
             commands.ForEach(c => c.Execute());
         }
 
-        private static List<IBuildCommand> GetClasses(string sourceFileName) 
+        private static List<IBuildCommand> GetClasses(string sourceFileName)
         {
             var type = typeof(IBuildCommand);
             var types = AppDomain.CurrentDomain.GetAssemblies()
@@ -75,7 +76,7 @@ namespace LegalLead.Changed
             types.ForEach(f => commands.Add((IBuildCommand)Activator.CreateInstance(f)));
             commands.ForEach(c => c.SetSource(sourceFileName));
             commands = commands.FindAll(c => c.Index > 0);
-            commands.Sort((a,b) => a.Index.CompareTo(b.Index));
+            commands.Sort((a, b) => a.Index.CompareTo(b.Index));
             return commands;
         }
     }

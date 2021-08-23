@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegalLead.Changed.Classes
 {
@@ -46,7 +42,7 @@ namespace LegalLead.Changed.Classes
             {
                 targetContent = targetReader.ReadToEnd() ?? string.Empty;
             }
-            
+
             if (sourceContent.Equals(targetContent,
                 StringComparison.CurrentCultureIgnoreCase)) return true;
 

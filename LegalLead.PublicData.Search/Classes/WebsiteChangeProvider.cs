@@ -22,7 +22,7 @@ namespace LegalLead.PublicData.Search.Classes
             var matched = providers
                 .FirstOrDefault(
                 p => p.Name.Equals(
-                    provider.Name, 
+                    provider.Name,
                     StringComparison.CurrentCultureIgnoreCase));
             if (matched == null) return null;
             matched.GetMain = MainForm;

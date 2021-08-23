@@ -1,8 +1,8 @@
-﻿using System;
+﻿using LegalLead.Changed.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using LegalLead.Changed.Models;
 
 namespace LegalLead.Changed.Classes
 {
@@ -42,7 +42,7 @@ namespace LegalLead.Changed.Classes
 
         protected virtual void UpdateChange(Fix objChange)
         {
-            if(objChange == null)
+            if (objChange == null)
             {
                 throw new ArgumentNullException(nameof(objChange));
             }
@@ -55,7 +55,7 @@ namespace LegalLead.Changed.Classes
                 var targets = item.Issues
                     .Where(x => x.Id == objChange.Id && x.FixVersion == 0)
                     .ToList();
-                targets.ForEach(x => 
+                targets.ForEach(x =>
                 {
                     x.FixVersion = LatestVersion.Id;
                     Console.WriteLine("Associating issue {0} -- [ {1} ] to Version {2}",
@@ -63,7 +63,7 @@ namespace LegalLead.Changed.Classes
                         x.Name,
                         LatestVersion.Number
                         );
-                }); 
+                });
             }
         }
 
@@ -71,7 +71,7 @@ namespace LegalLead.Changed.Classes
 
         protected static void MarkAsStarted(Issue issue)
         {
-            if(issue == null)
+            if (issue == null)
             {
                 throw new ArgumentNullException(nameof(issue));
             }
@@ -87,7 +87,7 @@ namespace LegalLead.Changed.Classes
             issue.Description.Add($@"{startDate}{timeStamp}");
         }
 
-        
+
         const string startDate = @"Start Date: ";
     }
 }

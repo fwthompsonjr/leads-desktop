@@ -1,6 +1,6 @@
 ﻿// EdgeProvider
-using OpenQA.Selenium;
 using Microsoft.Edge.SeleniumTools;
+using OpenQA.Selenium;
 using System;
 using System.IO;
 using System.Reflection;

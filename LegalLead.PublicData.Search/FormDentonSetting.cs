@@ -40,14 +40,16 @@ namespace LegalLead.PublicData.Search
             cboCaseSearchType.SelectedIndex = 0;
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
             var keys = Program.DentonCustomKeys;
-            if (!keys.Any()) {
+            if (!keys.Any())
+            {
                 LoadFromSearchSettings();
                 cboCaseSearchType.SelectedIndex = cboCaseSearchType.SelectedIndex;
-                return; }
-            var searchIndex = keys.Find(k => k.Name.Equals( 
+                return;
+            }
+            var searchIndex = keys.Find(k => k.Name.Equals(
                 CommonKeyIndexes.CaseSearchType, //"CaseSearchType"
                 comparison));
-            var searchTarget = countyCaseTypes.CaseSearchTypes.Find(x => 
+            var searchTarget = countyCaseTypes.CaseSearchTypes.Find(x =>
                 x.Query.Equals(searchIndex.Value, comparison));
 
             cboCaseSearchType.SelectedIndex = searchTarget.Id;
@@ -88,7 +90,7 @@ namespace LegalLead.PublicData.Search
                 if (control.Tag == null) continue;
                 control.Enabled = showDistrict ?
                     control.Tag.ToString().Contains(CommonKeyIndexes.DistrictKeyWord) :
-                    control.Tag.ToString().Contains(CommonKeyIndexes.JpKeyword); 
+                    control.Tag.ToString().Contains(CommonKeyIndexes.JpKeyword);
             }
         }
 

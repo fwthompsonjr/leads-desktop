@@ -6,7 +6,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
     using CCulture = System.Globalization.CultureInfo;
     public class ParseNameChangeByCaseType : ICaseDataParser
     {
-        const System.StringComparison comparison = 
+        const System.StringComparison comparison =
             System.StringComparison.CurrentCultureIgnoreCase;
         // Name Change of:
         private const string _searchKeyWord = @"name change| ";

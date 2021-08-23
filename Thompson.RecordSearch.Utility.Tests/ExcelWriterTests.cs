@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -84,9 +84,9 @@ namespace Thompson.RecordSearch.Utility.Tests
                 extn);
 
             writer.ConvertToDataTable(
-                htmlTable: SampleTable(), 
-                worksheetName: "CaseData", 
-                saveFile: true, 
+                htmlTable: SampleTable(),
+                worksheetName: "CaseData",
+                saveFile: true,
                 outputFileName: tmpFileName);
 
             Assert.IsTrue(File.Exists(tmpFileName), "Expected Excel file was not found");

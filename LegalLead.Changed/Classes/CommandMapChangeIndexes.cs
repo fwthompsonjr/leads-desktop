@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegalLead.Changed.Classes
 {
-    public class CommandMapChangeIndexes :  BuildCommandBase
+    public class CommandMapChangeIndexes : BuildCommandBase
     {
         public override int Index => 1100;
 
@@ -17,9 +14,9 @@ namespace LegalLead.Changed.Classes
             const string allowIt = "true";
             var allMapCorrection = ConfigurationManager
                 .AppSettings["Allow.Map.Corrections"] ?? allowIt;
-            var allowExec = allMapCorrection.Equals(allowIt, 
+            var allowExec = allMapCorrection.Equals(allowIt,
                 StringComparison.CurrentCulture);
-            
+
             if (!CanExecute()) return false;
             if (!allowExec) return false;
 
@@ -30,7 +27,7 @@ namespace LegalLead.Changed.Classes
                 .Select(c => Convert.ToInt32(c.ChangeId))
                 .ToList();
 
-            if(changeList.Count > 0)
+            if (changeList.Count > 0)
             {
                 changeList.Sort();
                 indexId += changeList.Last();
@@ -38,7 +35,7 @@ namespace LegalLead.Changed.Classes
             var changes = Log.Changes.ToList().FindAll(c => string.IsNullOrEmpty(c.ChangeId));
             if (!changes.Any()) return true;
 
-            changes.ForEach(c => 
+            changes.ForEach(c =>
             {
                 c.ChangeId = indexId.ToString("0", CultureInfo.CurrentCulture.NumberFormat);
                 c.Issues.ToList().ForEach(d => d.ChangeId = c.ChangeId);

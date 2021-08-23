@@ -22,7 +22,7 @@ namespace Thompson.RecordSearch.Utility.Web
             {
                 throw new ArgumentOutOfRangeException(item.DisplayName,
                     string.Format(
-                    "Expected element collection {0} not found", 
+                    "Expected element collection {0} not found",
                     item.DisplayName));
             }
             if (matches.Count != number)

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.IO;
 using System.Text;
-using OfficeOpenXml;
 using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -12,7 +12,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public void SaveAs(ExcelPackage pck, string outputFileName)
         {
             if (pck == null) throw new System.ArgumentNullException(nameof(pck));
-            if(string.IsNullOrEmpty(outputFileName)) throw new System.ArgumentNullException(nameof(outputFileName));
+            if (string.IsNullOrEmpty(outputFileName)) throw new System.ArgumentNullException(nameof(outputFileName));
             FileInfo fileInfo = new FileInfo(outputFileName);
             var macro = new ExcelMacroBase { FileName = outputFileName, Package = pck };
             macro.AppendModule();

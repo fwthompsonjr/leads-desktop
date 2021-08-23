@@ -26,11 +26,11 @@ namespace LegalLead.PublicData.Search
                         x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType", 
                         StringComparison.CurrentCulture));
                     var siteDistrictKey = siteData.Keys.FirstOrDefault(
-                        x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType, 
+                        x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType,
                         StringComparison.CurrentCulture));
-                    if(districtKey == null)
+                    if (districtKey == null)
                     {
-                        if(siteDistrictKey != null)
+                        if (siteDistrictKey != null)
                         {
                             siteData.Keys.Remove(siteDistrictKey);
                         }

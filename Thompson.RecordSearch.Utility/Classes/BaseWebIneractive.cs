@@ -127,7 +127,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public abstract WebFetchResult Fetch();
 
         #endregion
-        
+
         #region Protected Methods
 
         /// <summary>

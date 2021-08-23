@@ -1,8 +1,8 @@
-﻿using System;
+﻿using LegalLead.Changed.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 using System.Text;
-using LegalLead.Changed.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LegalLead.Changed.UnitTests
 {
@@ -25,7 +25,7 @@ namespace LegalLead.Changed.UnitTests
             var test = "abcdefg";
             var length = new Random(DateTime.Now.Millisecond)
                 .Next(7, 700);
-            
+
             var actual = test.ToFixedWidth(length);
             Assert.AreEqual(length, actual.Length);
             Assert.IsTrue(actual.StartsWith(test, StringComparison.CurrentCulture));

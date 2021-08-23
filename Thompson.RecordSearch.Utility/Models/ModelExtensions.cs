@@ -2,11 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Thompson.RecordSearch.Utility.Models
 {
@@ -16,8 +12,8 @@ namespace Thompson.RecordSearch.Utility.Models
         private static readonly string Defendant =
             ResourceTable.GetText(ResourceType.FindDefendant, ResourceKeyIndex.Defendant);
         const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
-        
-        
+
+
         public static List<HLinkDataRow> ConvertToDataRow(this CaseRowData source)
         {
             if (source == null) return null;
@@ -74,8 +70,9 @@ namespace Thompson.RecordSearch.Utility.Models
             var pipeString = "|";
             const string noMatch = "No Match Found|Not Matched 00000";
             var address = source.Party;
-            if (string.IsNullOrEmpty(address)) { 
-                return noMatch; 
+            if (string.IsNullOrEmpty(address))
+            {
+                return noMatch;
             }
             address = address.Trim();
             if (address.EndsWith(pipeString, ccic))
@@ -114,9 +111,9 @@ namespace Thompson.RecordSearch.Utility.Models
             template.Append("<table>");
             if (source != null)
             {
-                source.ForEach(s => 
-                { 
-                    template.AppendLine(s.ToHtml()); 
+                source.ForEach(s =>
+                {
+                    template.AppendLine(s.ToHtml());
                 });
             }
             template.Append("</table>");
