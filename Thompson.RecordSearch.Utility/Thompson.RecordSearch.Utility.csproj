@@ -230,6 +230,7 @@
     <Compile Include="Classes\WebUtilities_01.cs" />
     <Compile Include="Classes\XmlContentHolder.cs" />
     <Compile Include="CommonKeyIndexes.cs" />
+    <Compile Include="DriverFactory\BaseChromeProvider.cs" />
     <Compile Include="DriverFactory\ChromeOlderProvider.cs" />
     <Compile Include="DriverFactory\ChromeProvider.cs" />
     <Compile Include="DriverFactory\EdgeProvider.cs" />

@@ -7,9 +7,11 @@ using System;
 namespace Harris.Criminal.Db.Tests.Downloads
 {
     [TestClass]
-    public class HarrisCriminalDtoTests
+    public class HarrisCriminalBoTests
     {
-        private Faker<HarrisCriminalDto> DtoFaker;
+
+        private Faker<HarrisCriminalBo> DtoFaker;
+
 
         [TestInitialize]
         public void Setup()
@@ -19,7 +21,7 @@ namespace Harris.Criminal.Db.Tests.Downloads
                 var startTime = DateTime.Now.AddYears(-5);
                 var endTime = DateTime.Now.AddYears(5);
                 var fmt = "yyyyMMdd";
-                DtoFaker = new Faker<HarrisCriminalDto>()
+                DtoFaker = new Faker<HarrisCriminalBo>()
                     .RuleFor(f => f.Index, r => r.IndexFaker)
                     .RuleFor(f => f.DateDatasetProduced, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.CourtDivisionIndicator, r => r.Random.AlphaNumeric(15))
@@ -57,24 +59,12 @@ namespace Harris.Criminal.Db.Tests.Downloads
         }
 
         [TestMethod]
-        public void CanInit()
+        public void DateFiled_Check()
         {
-            var obj = DtoFaker.Generate();
-            Assert.IsNotNull(obj);
-        }
-
-        [TestMethod]
-        public void HasFields()
-        {
-            var fields = HarrisCriminalDto.FieldNames;
-            Assert.AreEqual(33, fields.Count);
-        }
-
-        [TestMethod]
-        public void HasAliasFields()
-        {
-            var fields = HarrisCriminalDto.AliasNames;
-            Assert.AreEqual(33, fields.Count);
+            var startTime = DateTime.Now.AddYears(-5).AddHours(-1);
+            var endTime = DateTime.Now.AddYears(5);
+            var dataset = DtoFaker.Generate(15);
+            dataset.ForEach(d => d.DateFiled.ShouldBeGreaterThan(startTime));
         }
 
         [TestMethod]
@@ -176,6 +166,5 @@ namespace Harris.Criminal.Db.Tests.Downloads
                 obj[i] = src[i - 30];
             }
         }
-
     }
 }

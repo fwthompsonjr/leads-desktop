@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.DriverFactory;
 
 namespace Thompson.RecordSearch.Utility.Tests
 {
@@ -18,12 +17,8 @@ namespace Thompson.RecordSearch.Utility.Tests
 
         protected IWebDriver GetDriver()
         {
-
-            var directoryName = ContextManagment.AppDirectory;
-            var options = new ChromeOptions();
-            // options.AddArgument("--window-size=1440,945");
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(directoryName, options);
+            var provider = new ChromeOlderProvider();
+            IWebDriver driver = provider.GetWebDriver();
             Assert.IsNotNull(driver);
             Assert.IsInstanceOfType(driver, typeof(IWebDriver));
             return driver;

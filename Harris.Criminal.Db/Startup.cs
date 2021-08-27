@@ -2,7 +2,6 @@
 using Harris.Criminal.Db.Tables;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -31,6 +30,13 @@ namespace Harris.Criminal.Db
             Downloads.Read();
         }
 
+
+        public static void Reset()
+        {
+            References.Read(true);
+            Downloads.Read();
+        }
+
         public static class Downloads
         {
             private enum FileDateType
@@ -55,8 +61,12 @@ namespace Harris.Criminal.Db
 
             public static List<HarrisCountyListDto> DataList { get; private set; }
 
-            public static void Read()
+            public static void Read(bool reset = false)
             {
+                if (reset == false && FileNames != null && DataList != null)
+                {
+                    return;
+                }
                 const string extn = "*CrimFilingsWithFutureSettings*.txt";
                 var directory = new DirectoryInfo(DataFolder);
                 var files = directory.GetFiles(extn).ToList();
@@ -65,6 +75,14 @@ namespace Harris.Criminal.Db
                 foreach (var item in files)
                 {
                     var data = HarrisCriminalDto.Map(item.FullName);
+                    var business = HarrisCriminalBo.Map(data);
+                    business.Sort((a, b) =>
+                    {
+                        int aa = a.DateFiled.CompareTo(b.DateFiled);
+                        if (aa != 0) return aa;
+                        int bb = a.NextAppearanceDate.CompareTo(b.NextAppearanceDate);
+                        return bb;
+                    });
                     records.Add(new HarrisCountyListDto
                     {
                         CreateDate = item.CreationTime,
@@ -72,7 +90,8 @@ namespace Harris.Criminal.Db
                         MaxFilingDate = GetMinOrMax(DateTime.MinValue, data, FileDateType.Max),
                         MinFilingDate = GetMinOrMax(DateTime.MinValue, data, FileDateType.Min),
                         Name = Path.GetFileNameWithoutExtension(item.Name),
-                        Data = data
+                        Data = data,
+                        BusinessData = business
                     });
                 }
                 DataList = records;
@@ -89,35 +108,11 @@ namespace Harris.Criminal.Db
                 {
                     case FileDateType.Max:
                         lookupDate = data.Max(m =>
-                        {
-                            var filingDate = m.FilingDate;
-                            if (DateTime.TryParseExact(
-                                filingDate,
-                                "yyyyMMdd",
-                                CultureInfo.InvariantCulture,
-                                DateTimeStyles.AssumeLocal,
-                                out DateTime mxDate))
-                            {
-                                return mxDate;
-                            }
-                            return minValue;
-                        });
+                        m.FilingDate.ToExactDate("yyyyMMdd", minValue));
                         break;
                     case FileDateType.Min:
                         lookupDate = data.Min(m =>
-                        {
-                            var fileDate = m.FilingDate;
-                            if (DateTime.TryParseExact(
-                                fileDate,
-                                "yyyyMMdd",
-                                CultureInfo.InvariantCulture,
-                                DateTimeStyles.AssumeLocal,
-                                out DateTime mnDate))
-                            {
-                                return mnDate;
-                            }
-                            return DateTime.MaxValue;
-                        });
+                        m.FilingDate.ToExactDate("yyyyMMdd", DateTime.MaxValue));
                         if (lookupDate.Equals(DateTime.MaxValue))
                         {
                             lookupDate = minValue;
@@ -160,13 +155,26 @@ namespace Harris.Criminal.Db
                 var parentName = AppFolder;
                 return Path.Combine(parentName, "_db", "_tables");
             }
-
+            /// <summary>
+            /// List of full filenames found 
+            /// </summary>
             public static List<string> FileNames { get; private set; }
 
+            /// <summary>
+            /// List of Reference Data
+            /// </summary>
             public static List<ReferenceTable> DataList { get; private set; }
 
-            public static void Read()
+            /// <summary>
+            /// Reads Reference Data and Stores in Memory
+            /// </summary>
+            /// <param name="reset"></param>
+            public static void Read(bool reset = false)
             {
+                if (reset == false && FileNames != null && DataList != null)
+                {
+                    return;
+                }
                 const string extn = "*hcc.tables.*.json";
                 var directory = new DirectoryInfo(DataFolder);
                 var files = directory.GetFiles(extn).ToList();

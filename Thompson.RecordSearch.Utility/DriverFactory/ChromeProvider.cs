@@ -1,13 +1,10 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
-using System.IO;
-using System.Reflection;
-using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.DriverFactory
 {
-    public class ChromeProvider : IWebDriverProvider
+    public class ChromeProvider : BaseChromeProvider, IWebDriverProvider
     {
         public string Name => "Chrome";
 
@@ -25,6 +22,9 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             }
             try
             {
+                options.AddUserProfilePreference("download.prompt_for_download", false);
+                options.AddUserProfilePreference("download.directory_upgrade", true);
+                options.AddUserProfilePreference("download.default_directory", GetDownloadPath());
                 var driver = new ChromeDriver(GetDriverFileName(), options);
                 Console.WriteLine("Chrome executable location:\n {0}", binaryName);
                 return driver;
@@ -36,36 +36,5 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             }
         }
 
-        private static string _binaryName;
-        private static string _driverFileName;
-
-
-
-        private static string BinaryFileName()
-        {
-            if (_binaryName != null) return _binaryName;
-            _binaryName = WebUtilities.GetChromeBinary();
-            return _binaryName;
-        }
-
-
-
-        /// <summary>
-        /// Gets the name of the chrome driver file.
-        /// </summary>
-        /// <returns></returns>
-        private static string GetDriverFileName()
-        {
-            if (_driverFileName != null) return _driverFileName;
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
-            execName = Path.GetDirectoryName(execName);
-            if (!Directory.Exists(execName))
-            {
-                _driverFileName = string.Empty;
-                return string.Empty;
-            }
-            _driverFileName = execName;
-            return execName;
-        }
     }
 }

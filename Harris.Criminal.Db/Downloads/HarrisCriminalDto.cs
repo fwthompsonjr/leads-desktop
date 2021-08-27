@@ -156,6 +156,31 @@ namespace Harris.Criminal.Db.Downloads
             }
         }
 
+        public string this[string fieldName]
+        {
+            get
+            {
+                var index =
+                    FieldNames
+                    .FindIndex(x => x.Equals(fieldName, StringComparison.OrdinalIgnoreCase));
+                if (index < 0 || index > FieldNames.Count - 1)
+                {
+                    return null;
+                }
+                return this[index];
+            }
+            set
+            {
+                var index =
+                    FieldNames
+                    .FindIndex(x => x.Equals(fieldName, StringComparison.OrdinalIgnoreCase));
+                if (index < 0 || index > FieldNames.Count)
+                {
+                    return;
+                }
+                this[index] = value;
+            }
+        }
         public static List<HarrisCriminalDto> Map(string fileName)
         {
             if (string.IsNullOrEmpty(fileName)) return default;
@@ -193,10 +218,23 @@ namespace Harris.Criminal.Db.Downloads
             var fields = line.Split(delimiter.ToCharArray());
             for (int i = 0; i < fields.Length; i++)
             {
-                var data = fields[i];
+                var data = Clean(fields[i]);
                 record[i + 1] = data;
             }
             return record;
+        }
+
+        private static string Clean(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return string.Empty;
+            }
+            return text.Trim();
         }
     }
 }

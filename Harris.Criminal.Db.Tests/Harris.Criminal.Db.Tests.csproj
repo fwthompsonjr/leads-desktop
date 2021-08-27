@@ -84,9 +84,11 @@
   <ItemGroup>
     <Compile Include="Downloads\HarrisCriminalDtoTests.cs" />
     <Compile Include="Downloads\HarrisCountyListDtoTests.cs" />
+    <Compile Include="Downloads\HarrisCriminalBoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tables\ReferenceDatumTests.cs" />
     <Compile Include="Tables\ReferenceTableTests.cs" />
+    <Compile Include="DateTimeExtensionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

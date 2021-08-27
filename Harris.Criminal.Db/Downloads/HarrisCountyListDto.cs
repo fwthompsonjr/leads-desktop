@@ -11,5 +11,6 @@ namespace Harris.Criminal.Db.Downloads
         public DateTime MaxFilingDate { get; set; }
         public DateTime MinFilingDate { get; set; }
         public List<HarrisCriminalDto> Data { get; set; }
+        public List<HarrisCriminalBo> BusinessData { get; set; }
     }
 }

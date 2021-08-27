@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Downloads\HarrisCountyListDto.cs" />
+    <Compile Include="Downloads\HarrisCriminalBo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Downloads\HarrisCriminalDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

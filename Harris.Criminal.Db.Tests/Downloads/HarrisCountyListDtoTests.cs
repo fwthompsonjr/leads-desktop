@@ -22,12 +22,15 @@ namespace Harris.Criminal.Db.Tests.Downloads
             }
             if (DtoFaker == null)
             {
+                var startTime = DateTime.Now.AddYears(-5);
+                var endTime = DateTime.Now.AddYears(5);
+                var fmt = "yyyyMMdd";
                 DtoFaker = new Faker<HarrisCriminalDto>()
                     .RuleFor(f => f.Index, r => r.IndexFaker)
                     .RuleFor(f => f.DateDatasetProduced, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.CourtDivisionIndicator, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.CaseNumber, r => r.Random.AlphaNumeric(15))
-                    .RuleFor(f => f.FilingDate, r => r.Random.AlphaNumeric(15))
+                    .RuleFor(f => f.FilingDate, r => r.Date.Between(startTime, endTime).ToString(fmt))
                     .RuleFor(f => f.InstrumentType, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.CaseDisposition, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.Court, r => r.Random.AlphaNumeric(15))
@@ -121,5 +124,6 @@ namespace Harris.Criminal.Db.Tests.Downloads
             var minDate = data.Select(x => x.MinFilingDate).ToList();
             minDate.ForEach(mn => mn.ShouldBeLessThan(reasonableDate));
         }
+
     }
 }
