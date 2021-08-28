@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using System.Diagnostics;
 using Thompson.RecordSearch.Utility.DriverFactory;
 
 namespace Thompson.RecordSearch.Utility.Tests
@@ -15,14 +16,22 @@ namespace Thompson.RecordSearch.Utility.Tests
         }
 
 
-        protected IWebDriver GetDriver()
+        protected IWebDriver GetDriver(bool headless = false)
         {
             var provider = new ChromeOlderProvider();
-            IWebDriver driver = provider.GetWebDriver();
+            IWebDriver driver = provider.GetWebDriver(headless);
             Assert.IsNotNull(driver);
             Assert.IsInstanceOfType(driver, typeof(IWebDriver));
             return driver;
         }
 
+
+        protected void KillProcess(string processName)
+        {
+            foreach (var process in Process.GetProcessesByName(processName))
+            {
+                process.Kill();
+            }
+        }
     }
 }

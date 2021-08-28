@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -202,14 +201,6 @@ namespace Thompson.RecordSearch.Utility.Tests
             var data = File.ReadAllText(dataFile);
             return Newtonsoft.Json.JsonConvert.DeserializeObject<NavigationInstructionDto>(data);
 
-        }
-
-        private void KillProcess(string processName)
-        {
-            foreach (var process in Process.GetProcessesByName(processName))
-            {
-                process.Kill();
-            }
         }
         #endregion
     }

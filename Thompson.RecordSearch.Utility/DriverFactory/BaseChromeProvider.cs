@@ -14,6 +14,14 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         private static string _downloadPath;
 
         /// <summary>
+        /// Gets the download path.
+        /// </summary>
+        /// <value>
+        /// The download path.
+        /// </value>
+        public string DownloadPath => GetDownloadPath();
+
+        /// <summary>
         /// Gets the chrome options.
         /// </summary>
         /// <returns></returns>

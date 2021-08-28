@@ -241,6 +241,7 @@
     <Compile Include="Dto\CaseTypeSelectionDto.cs" />
     <Compile Include="Dto\DataPointLocatorDto.cs" />
     <Compile Include="Dto\GenericSettingDto.cs" />
+    <Compile Include="Dto\HarrisCriminalStyleDto.cs" />
     <Compile Include="Dto\NavigationInstructionDto.cs" />
     <Compile Include="Dto\ParseCaseDataResponseDto.cs" />
     <Compile Include="Dto\UserAccessDto.cs" />
@@ -289,6 +290,8 @@
     <Compile Include="Web\ElementTextConfirmAction.cs" />
     <Compile Include="Web\GetRecordCountAction.cs" />
     <Compile Include="Web\HarrisCivilReadTable.cs" />
+    <Compile Include="Web\HarrisCriminalCaseStyle.cs" />
+    <Compile Include="Web\HarrisCriminalData.cs" />
     <Compile Include="Web\JquerySetSelectedIndex.cs" />
     <Compile Include="Web\JquerySetTextBox.cs" />
     <Compile Include="Web\WebNavAction.cs" />

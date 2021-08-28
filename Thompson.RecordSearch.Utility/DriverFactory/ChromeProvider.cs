@@ -12,7 +12,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
-        public IWebDriver GetWebDriver()
+        public IWebDriver GetWebDriver(bool headless = false)
         {
             var options = new ChromeOptions();
             var binaryName = BinaryFileName();
@@ -22,6 +22,10 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             }
             try
             {
+                if (headless)
+                {
+                    options.AddArgument("headless");
+                }
                 options.AddUserProfilePreference("download.prompt_for_download", false);
                 options.AddUserProfilePreference("download.directory_upgrade", true);
                 options.AddUserProfilePreference("download.default_directory", GetDownloadPath());

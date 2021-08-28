@@ -14,7 +14,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
-        public IWebDriver GetWebDriver()
+        public IWebDriver GetWebDriver(bool headless = false)
         {
             return new EdgeDriver(GetDriverFileName());
         }

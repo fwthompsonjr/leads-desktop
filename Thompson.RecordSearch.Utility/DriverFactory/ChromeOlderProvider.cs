@@ -13,9 +13,13 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
-        public IWebDriver GetWebDriver()
+        public IWebDriver GetWebDriver(bool headless = false)
         {
             var options = GetChromeOptions();
+            if (headless)
+            {
+                options.AddArgument("headless");
+            }
             try
             {
                 var legacy = $"{GetDriverFileName()}\\Legacy";
