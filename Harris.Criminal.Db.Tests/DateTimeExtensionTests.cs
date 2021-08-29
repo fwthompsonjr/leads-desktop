@@ -67,5 +67,35 @@ namespace Harris.Criminal.Db.Tests
             var actual = input.ToExactDate(string.Empty, expected);
             actual.ShouldBe(expected);
         }
+
+        [TestMethod]
+        public void CanParseString_EmptyFormat()
+        {
+            const string fmt = "yyyyMMdd";
+            var input = "20201225";
+            var expected = new DateTime(2015, 1, 15).ToString(fmt);
+            var actual = input.ToExactDateString(string.Empty, expected);
+            actual.ShouldBe(expected);
+        }
+
+        [TestMethod]
+        public void CanParseString_EmptyInput()
+        {
+            const string fmt = "yyyyMMdd";
+            var input = string.Empty;
+            var expected = new DateTime(2015, 1, 15).ToString(fmt);
+            var actual = input.ToExactDateString(fmt, expected);
+            actual.ShouldBe(expected);
+        }
+
+        [TestMethod]
+        public void CanParseString_ValidDate()
+        {
+            const string fmt = "yyyyMMdd";
+            var input = "20201225";
+            var expected = new DateTime(2020, 12, 25).ToString(fmt);
+            var actual = input.ToExactDateString(fmt, expected);
+            actual.ShouldBe(expected);
+        }
     }
 }

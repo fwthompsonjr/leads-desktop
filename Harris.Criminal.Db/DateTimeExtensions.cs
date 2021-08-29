@@ -23,5 +23,44 @@ namespace Harris.Criminal.Db
             }
             return dateDefault;
         }
+
+        public static string ToExactDateString(
+            this string input,
+            string dateFormat,
+            string dateDefault)
+        {
+            if (string.IsNullOrEmpty(input) | string.IsNullOrEmpty(dateFormat))
+            {
+                return dateDefault;
+            }
+            var culture = CultureInfo.InvariantCulture;
+            var style = DateTimeStyles.AssumeLocal;
+            if (DateTime.TryParseExact(input, dateFormat, culture, style, out DateTime dte))
+            {
+                return dte.ToString(dateFormat);
+            }
+            return dateDefault;
+        }
+
+        public static string FromDateString(
+            this string input,
+            string currentFormat,
+            string dateFormat,
+            string dateDefault)
+        {
+            if (string.IsNullOrEmpty(input) |
+                string.IsNullOrEmpty(currentFormat) |
+                string.IsNullOrEmpty(dateFormat))
+            {
+                return dateDefault;
+            }
+            var culture = CultureInfo.InvariantCulture;
+            var style = DateTimeStyles.AssumeLocal;
+            if (DateTime.TryParseExact(input, currentFormat, culture, style, out DateTime dte))
+            {
+                return dte.ToString(dateFormat);
+            }
+            return dateDefault;
+        }
     }
 }

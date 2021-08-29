@@ -14,7 +14,7 @@ namespace Thompson.RecordSearch.Utility.Tests
     public class HarrisCriminalCaseStyleTests : TestingBase
     {
         private int MxCaseNumbers = 10;
-        private List<string> CaseNumbers;
+        private List<HarrisCaseSearchDto> CaseNumbers;
 
         [TestInitialize]
         public void Setup()
@@ -23,7 +23,15 @@ namespace Thompson.RecordSearch.Utility.Tests
             {
                 Startup.Downloads.Read();
                 var datalist = Startup.Downloads.DataList.FirstOrDefault();
-                CaseNumbers = datalist.Data.Select(x => x.CaseNumber).Distinct().ToList().Take(MxCaseNumbers).ToList();
+                var dtos = datalist.Data.Select(x =>
+                    new HarrisCaseSearchDto
+                    {
+                        CaseNumber = x.CaseNumber,
+                        Court = x.Court,
+                        DateFiled = x.FilingDate.ToExactDateString("yyyyMMdd", string.Empty)
+                    });
+                var list = dtos.GroupBy(x => x.UniqueIndex).Select(x => x.FirstOrDefault());
+                CaseNumbers = list.Take(MxCaseNumbers).ToList();
             }
         }
 
@@ -39,12 +47,13 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestMethod]
         public void CaseStyle_CanGetSingleRecord()
         {
-            string caseNumber = CaseNumbers.Last();
+            var caseNumber = CaseNumbers.Last();
+            var dto = new HarrisCaseSearchDto { CaseNumber = caseNumber.CaseNumber };
             var obj = new HarrisCriminalCaseStyle();
             IWebDriver driver = GetDriver();
             try
             {
-                var result = obj.GetData(driver, caseNumber);
+                var result = obj.GetData(driver, dto);
                 result.ShouldNotBeNull();
                 result.Count.ShouldBeGreaterThan(0);
             }

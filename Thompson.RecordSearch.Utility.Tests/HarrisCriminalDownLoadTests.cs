@@ -22,7 +22,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         public void Download_CanGetAFile()
         {
             var obj = new HarrisCriminalData();
-            IWebDriver driver = GetDriver(true);
+            IWebDriver driver = GetDriver(false);
             try
             {
                 var result = obj.GetData(driver);

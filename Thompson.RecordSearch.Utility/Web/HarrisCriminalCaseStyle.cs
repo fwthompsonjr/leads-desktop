@@ -1,13 +1,14 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2234:Pass system uri objects instead of strings", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2234:Pass system uri objects instead of strings",
         Justification = "<Pending>")]
     public class HarrisCriminalCaseStyle : HarrisCriminalData
     {
@@ -25,6 +26,8 @@ namespace Thompson.RecordSearch.Utility.Web
             public const string Text_UserName = "txtUserName";
             public const string Text_Password = "txtPassword";
             public const string Text_CaseNo = ContentPlaceHolder + "_tabSearch_tabCriminal_txtCrimCaseNumber";
+            public const string Text_StartDate = ContentPlaceHolder + "_tabSearch_tabCriminal_txtCrimStartDate";
+            public const string Text_EndDate = ContentPlaceHolder + "_tabSearch_tabCriminal_txtCrimEndDate";
             public static string Table_Search = @"//*[@id='" + Div_SearchResult + "']/table[1]/tbody/tr[4]/td/table/tbody";
             public static string Table_Rows = Table_Search + "/tr";
         }
@@ -35,6 +38,8 @@ namespace Thompson.RecordSearch.Utility.Web
             public static By Password => By.CssSelector("#txtPassword");
             public static By Login => By.Id(Controls.Btn_Login);
             public static By CaseNumber => By.Id(Controls.Text_CaseNo);
+            public static By StartDate => By.Id(Controls.Text_StartDate);
+            public static By EndDate => By.Id(Controls.Text_EndDate);
             public static By Search => By.Id(Controls.Btn_Search);
             public static By Table => By.XPath(Controls.Table_Search);
             public static By TableRows => By.XPath(Controls.Table_Rows);
@@ -42,28 +47,41 @@ namespace Thompson.RecordSearch.Utility.Web
             public static By IFrame => By.Id("ctl00_ctl00_ctl00_TopLoginIFrame1_iFrameContent2");
         }
 
-        public List<HarrisCriminalStyleDto> GetData(IWebDriver driver, IEnumerable<string> caseNumbers)
+        public List<HarrisCriminalStyleDto> GetData(IWebDriver driver, IEnumerable<HarrisCaseSearchDto> caseNumbers)
         {
             var result = new List<HarrisCriminalStyleDto>();
             if (caseNumbers == null) return result;
-            var list = caseNumbers.Distinct().ToList();
+            var list = caseNumbers
+                .GroupBy(x => x.UniqueIndex)
+                .Select(x => x.FirstOrDefault())
+                .ToList();
             foreach (var caseNumber in list)
             {
-                if (list.IndexOf(caseNumber) == 1)
+                var index = list.IndexOf(caseNumber);
+                result.Append(GetData(driver, caseNumber));
+                if (index == 1)
                 {
                     System.Diagnostics.Debugger.Break();
                 }
-                result.Append(GetData(driver, caseNumber));
             }
             return result;
         }
 
-        public List<HarrisCriminalStyleDto> GetData(IWebDriver driver, string caseNumber)
+        public List<HarrisCriminalStyleDto> GetData(IWebDriver driver, HarrisCaseSearchDto searchDto)
         {
             var result = new List<HarrisCriminalStyleDto>();
+            var caseNumber = searchDto?.CaseNumber ?? string.Empty;
             if (driver == null)
             {
-                driver = GetDriver();
+                if (TheDriver == null)
+                {
+                    TheDriver = GetDriver();
+                }
+                driver = TheDriver;
+            }
+            else
+            {
+                TheDriver = driver;
             }
             driver.Navigate().GoToUrl(url);
             driver.WaitForNavigation();
@@ -82,6 +100,8 @@ namespace Thompson.RecordSearch.Utility.Web
             }
             var btnSearch = driver.FindElement(Selectors.Search);
             driver.ClickAndOrSetText(btnSearch);
+            PopulateWhenPresent(Selectors.StartDate, searchDto?.DateFiled, 0);
+            PopulateWhenPresent(Selectors.EndDate, searchDto?.DateFiled, 1);
             if (!driver.IsElementPresent(Selectors.Table))
             {
                 return result;
@@ -102,13 +122,30 @@ namespace Thompson.RecordSearch.Utility.Web
                     Status = cells[4].Text,
                     TypeOfActionOrOffense = cells[5].Text
                 };
-                if (index == 1)
-                {
-                    // System.Diagnostics.Debugger.Break();
-                }
                 result.Add(dto);
             }
             return result;
+        }
+
+        private void PopulateWhenPresent(By selector, string dateFiled, int incrementDays)
+        {
+            if (string.IsNullOrEmpty(dateFiled))
+            {
+                return;
+            }
+            var culture = CultureInfo.InvariantCulture;
+            var style = DateTimeStyles.AssumeLocal;
+            if (!DateTime.TryParseExact(dateFiled, "yyyyMMdd", culture, style, out DateTime date))
+            {
+                return;
+            }
+            var control = TheDriver.FindElement(selector, 1);
+            if (control == null)
+            {
+                return;
+            }
+            var dateFmt = date.AddDays(incrementDays).ToString("M/d/yyyy");
+            TheDriver.ClickAndOrSetText(control, dateFmt);
         }
 
         private static string ParseText(string text, string separator)

@@ -16,7 +16,7 @@ namespace Thompson.RecordSearch.Utility.Dto
             return bo;
         }
 
-        private DateTime? GetDate(string fileDate)
+        private static DateTime? GetDate(string fileDate)
         {
             if (string.IsNullOrEmpty(fileDate))
             {
@@ -28,7 +28,7 @@ namespace Thompson.RecordSearch.Utility.Dto
             }
             return default;
         }
-        private string GetString(string status, string search)
+        private static string GetString(string status, string search)
         {
             if (string.IsNullOrEmpty(status) | string.IsNullOrEmpty(search))
             {

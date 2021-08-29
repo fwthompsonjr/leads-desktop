@@ -1,15 +1,18 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
-    public class HarrisCriminalData
+    public class HarrisCriminalData : IDisposable
     {
         private static string div = "ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_blah";
         private static Dictionary<string, string> Keys = new Dictionary<string, string>
@@ -63,6 +66,12 @@ namespace Thompson.RecordSearch.Utility.Web
                 var link = Keys["download"];
 
                 driver.Navigate().GoToUrl(address);
+                if (!driver.IsElementPresent(By.XPath(search)))
+                {
+                    // get the latest file, if any
+                    var latestFile = GetFiles().FirstOrDefault();
+                    return latestFile?.FullName;
+                }
                 var trElement = driver.FindElement(By.XPath(search));
                 var tdLast = trElement.FindElements(By.TagName("td")).ToList().Last();
                 var anchor = tdLast.FindElement(By.TagName("a"));
@@ -90,7 +99,14 @@ namespace Thompson.RecordSearch.Utility.Web
         }
         private static string GetDownloadName()
         {
-            var computed = string.Concat(DateTime.Now.ToString("yyyy-MM-dd"), " CrimFilingsWithFutureSettings_withHeadings.txt");
+            var currentDate = DateTime.Now;
+            if (currentDate.Hour < 8)
+            {
+                // datasets are not expected until 5AM
+                // adding code to only pull new data after 8AM
+                currentDate = currentDate.AddDays(-1);
+            }
+            var computed = string.Concat(currentDate.ToString("yyyy-MM-dd"), " CrimFilingsWithFutureSettings_withHeadings.txt");
             return Path.Combine(DownloadTo, computed);
         }
 
@@ -120,7 +136,9 @@ namespace Thompson.RecordSearch.Utility.Web
         {
             var files = new DirectoryInfo(DownloadTo).GetFiles("*.txt");
             if (!files.Any()) return new List<FileInfo>(); // keep looking nothing found
-            return files.ToList()
+            var list = files.ToList();
+            list.Sort((a, b) => b.CreationTime.CompareTo(a.CreationTime));
+            return list
                 .FindAll(a => a.Name.Contains("CrimFilingsWithFutureSettings"))
                 .FindAll(a => Path.GetExtension(a.Name).Equals(".txt", StringComparison.OrdinalIgnoreCase));
         }
@@ -131,7 +149,51 @@ namespace Thompson.RecordSearch.Utility.Web
             var driver = wdriver.Drivers.Where(d => d.Id == wdriver.SelectedIndex).FirstOrDefault();
             var container = WebDriverContainer.GetContainer;
             var provider = container.GetInstance<IWebDriverProvider>(driver.Name);
-            return provider.GetWebDriver(true);
+            var showBrowser =
+                Convert.ToBoolean(
+                ConfigurationManager.AppSettings["harris.criminal.show.browser"] ?? "true");
+            return provider.GetWebDriver(showBrowser);
+        }
+
+        protected IWebDriver TheDriver { get; set; }
+
+        private bool _disposed = false;
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).            
+                TheDriver?.Close();
+                TheDriver?.Quit();
+                TheDriver.Dispose();
+                KillProcess("chromedriver");
+            }
+
+            _disposed = true;
+        }
+
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+
+        protected static void KillProcess(string processName)
+        {
+            foreach (var process in Process.GetProcessesByName(processName))
+            {
+                process.Kill();
+            }
         }
     }
 }

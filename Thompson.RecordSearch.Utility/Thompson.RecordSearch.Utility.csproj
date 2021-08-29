@@ -241,6 +241,7 @@
     <Compile Include="Dto\CaseTypeSelectionDto.cs" />
     <Compile Include="Dto\DataPointLocatorDto.cs" />
     <Compile Include="Dto\GenericSettingDto.cs" />
+    <Compile Include="Dto\HarrisCaseSearchDto.cs" />
     <Compile Include="Dto\HarrisCriminalExtensions.cs" />
     <Compile Include="Dto\HarrisCriminalStyleBo.cs" />
     <Compile Include="Dto\HarrisCriminalStyleDto.cs" />
