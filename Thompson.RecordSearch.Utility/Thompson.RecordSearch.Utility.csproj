@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Thompson.RecordSearch.Utility</RootNamespace>
     <AssemblyName>Thompson.RecordSearch.Utility</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -241,6 +241,8 @@
     <Compile Include="Dto\CaseTypeSelectionDto.cs" />
     <Compile Include="Dto\DataPointLocatorDto.cs" />
     <Compile Include="Dto\GenericSettingDto.cs" />
+    <Compile Include="Dto\HarrisCriminalExtensions.cs" />
+    <Compile Include="Dto\HarrisCriminalStyleBo.cs" />
     <Compile Include="Dto\HarrisCriminalStyleDto.cs" />
     <Compile Include="Dto\NavigationInstructionDto.cs" />
     <Compile Include="Dto\ParseCaseDataResponseDto.cs" />
@@ -471,6 +473,10 @@
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Harris.Criminal.Db\Harris.Criminal.Db.csproj">
+      <Project>{0616cc1f-324f-43dc-be7a-8db9479bfd37}</Project>
+      <Name>Harris.Criminal.Db</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LegalLead.Resources\LegalLead.Resources.csproj">
       <Project>{ab526db3-e334-4c6b-a634-1a890f63aadf}</Project>
       <Name>LegalLead.Resources</Name>

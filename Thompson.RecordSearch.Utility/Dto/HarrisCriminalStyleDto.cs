@@ -84,5 +84,6 @@ namespace Thompson.RecordSearch.Utility.Dto
                 this[index] = value;
             }
         }
+
     }
 }

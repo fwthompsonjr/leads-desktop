@@ -1,14 +1,14 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Classes;
-using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2234:Pass system uri objects instead of strings", 
+        Justification = "<Pending>")]
     public class HarrisCriminalCaseStyle : HarrisCriminalData
     {
         private static string uid = "frank.thompson.jr@gmail.com";
@@ -31,16 +31,33 @@ namespace Thompson.RecordSearch.Utility.Web
 
         private static class Selectors
         {
-            public static By UserName => By.Id(Controls.Text_UserName);
-            public static By Password => By.Id(Controls.Text_Password);
+            public static By UserName => By.CssSelector("#txtUserName");
+            public static By Password => By.CssSelector("#txtPassword");
             public static By Login => By.Id(Controls.Btn_Login);
             public static By CaseNumber => By.Id(Controls.Text_CaseNo);
             public static By Search => By.Id(Controls.Btn_Search);
             public static By Table => By.XPath(Controls.Table_Search);
             public static By TableRows => By.XPath(Controls.Table_Rows);
+
+            public static By IFrame => By.Id("ctl00_ctl00_ctl00_TopLoginIFrame1_iFrameContent2");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2234:Pass system uri objects instead of strings", Justification = "<Pending>")]
+        public List<HarrisCriminalStyleDto> GetData(IWebDriver driver, IEnumerable<string> caseNumbers)
+        {
+            var result = new List<HarrisCriminalStyleDto>();
+            if (caseNumbers == null) return result;
+            var list = caseNumbers.Distinct().ToList();
+            foreach (var caseNumber in list)
+            {
+                if (list.IndexOf(caseNumber) == 1)
+                {
+                    System.Diagnostics.Debugger.Break();
+                }
+                result.Append(GetData(driver, caseNumber));
+            }
+            return result;
+        }
+
         public List<HarrisCriminalStyleDto> GetData(IWebDriver driver, string caseNumber)
         {
             var result = new List<HarrisCriminalStyleDto>();
@@ -49,78 +66,87 @@ namespace Thompson.RecordSearch.Utility.Web
                 driver = GetDriver();
             }
             driver.Navigate().GoToUrl(url);
-            WaitForLoad(driver);
+            driver.WaitForNavigation();
+
             Login(driver);
 
-            if (!IsElementPresent(driver, Selectors.CaseNumber))
+            if (!driver.IsElementPresent(Selectors.CaseNumber))
             {
                 return result;
             }
             var txCaseNumber = driver.FindElement(Selectors.CaseNumber);
-            ClickAndOrSetText(driver, txCaseNumber, caseNumber);
-            if (!IsElementPresent(driver, Selectors.Search))
+            driver.ClickAndOrSetText(txCaseNumber, caseNumber);
+            if (!driver.IsElementPresent(Selectors.Search))
             {
                 return result;
             }
             var btnSearch = driver.FindElement(Selectors.Search);
-            ClickAndOrSetText(driver, btnSearch);
-            if (!IsElementPresent(driver, Selectors.Table))
+            driver.ClickAndOrSetText(btnSearch);
+            if (!driver.IsElementPresent(Selectors.Table))
             {
                 return result;
             }
-            var rows = driver.FindElements(Selectors.Table).ToList();
+            var rows = driver.FindElements(Selectors.TableRows).ToList();
             foreach (var item in rows)
             {
                 var index = rows.IndexOf(item);
-                if(index == 0) { continue; }
+                if (index == 0) { continue; }
                 var cells = item.FindElements(By.TagName("td"));
                 var dto = new HarrisCriminalStyleDto
                 {
                     Index = index,
-                    CaseNumber = cells[0].Text,
-                    Style = cells[0].Text,
-                    FileDate = cells[0].Text,
-                    Court = cells[0].Text,
-                    Status = cells[0].Text,
-                    TypeOfActionOrOffense = cells[0].Text
+                    CaseNumber = ParseText(cells[0].Text, Environment.NewLine),
+                    Style = cells[1].Text,
+                    FileDate = cells[2].Text,
+                    Court = cells[3].Text,
+                    Status = cells[4].Text,
+                    TypeOfActionOrOffense = cells[5].Text
                 };
+                if (index == 1)
+                {
+                    // System.Diagnostics.Debugger.Break();
+                }
                 result.Add(dto);
             }
             return result;
         }
 
-        [Obsolete]
-        private static void WaitForLoad(IWebDriver driver)
+        private static string ParseText(string text, string separator)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-            wait.Until(ExpectedConditions.ElementToBeClickable(Selectors.Login));
+            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(separator))
+            {
+                return text;
+            }
+            return text.Split(separator.ToCharArray())[0];
         }
 
         private static void Login(IWebDriver driver)
         {
-            if (!IsElementPresent(driver, Selectors.UserName, true) ||
-                !IsElementPresent(driver, Selectors.Password, true) ||
-                !IsElementPresent(driver, Selectors.Login, true))
+            try
             {
-                return;
+                const int timeout = 5;
+                var bxSearch = IsElementPresent(driver, Selectors.CaseNumber);
+                if (bxSearch)
+                {
+                    return;
+                }
+                var frame = driver.FindElement(Selectors.IFrame);
+                driver.SwitchTo().Frame(frame);
+                var txUserName = driver.FindElement(Selectors.UserName);
+                var txPassword = driver.FindElement(Selectors.Password);
+                var btnLogin = driver.FindElement(Selectors.Login, timeout);
+
+                driver.ClickAndOrSetText(txUserName, uid);
+                driver.ClickAndOrSetText(txPassword, pwd);
+                driver.ClickAndOrSetText(btnLogin);
+
             }
-
-            var txUserName = driver.FindElement(Selectors.UserName);
-            var txPassword = driver.FindElement(Selectors.Password);
-            var btnLogin = driver.FindElement(Selectors.Login);
-
-            ClickAndOrSetText(driver, txUserName, uid);
-            ClickAndOrSetText(driver, txPassword, pwd);
-            ClickAndOrSetText(driver, btnLogin);
-        }
-
-        private static void ClickAndOrSetText(IWebDriver driver, IWebElement elementToClick, string objText = "")
-        {
-            IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
-            executor.ExecuteScript("arguments[0].click();", elementToClick);
-            if (!string.IsNullOrEmpty(objText))
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
-                executor.ExecuteScript(string.Format("arguments[0].value = '{0}';", objText), elementToClick);
+                // hide these exceptions
+                return;
             }
         }
 
@@ -139,24 +165,6 @@ namespace Thompson.RecordSearch.Utility.Web
                 return false;
             }
         }
-
-        private static bool IsElementPresent(IWebDriver driver, By by, bool noWait)
-        {
-            try
-            {
-                if (!noWait)
-                {
-                    return IsElementPresent(driver, by);
-                }
-                driver.FindElement(by);
-                return true;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
 
     }
 }

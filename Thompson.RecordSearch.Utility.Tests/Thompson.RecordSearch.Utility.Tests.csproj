@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Thompson.RecordSearch.Utility.Tests</RootNamespace>
     <AssemblyName>Thompson.RecordSearch.Utility.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -197,6 +197,10 @@
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Harris.Criminal.Db\Harris.Criminal.Db.csproj">
+      <Project>{0616cc1f-324f-43dc-be7a-8db9479bfd37}</Project>
+      <Name>Harris.Criminal.Db</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thompson.RecordSearch.Utility\Thompson.RecordSearch.Utility.csproj">
       <Project>{b33e0015-dc54-4c71-bb13-038d46748ee9}</Project>
       <Name>Thompson.RecordSearch.Utility</Name>

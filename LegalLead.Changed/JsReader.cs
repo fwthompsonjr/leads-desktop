@@ -11,10 +11,10 @@ namespace LegalLead.Changed
             return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content);
         }
 
-        public static void Write(object obj, string sourceFileName)
+        public static void Write(object target, string sourceFileName)
         {
 
-            var content = Newtonsoft.Json.JsonConvert.SerializeObject(obj, new Newtonsoft.Json.JsonSerializerSettings
+            var content = Newtonsoft.Json.JsonConvert.SerializeObject(target, new Newtonsoft.Json.JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
