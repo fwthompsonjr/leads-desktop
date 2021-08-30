@@ -1,9 +1,11 @@
-﻿using OpenQA.Selenium;
+﻿using HtmlAgilityPack;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
@@ -100,7 +102,7 @@ namespace Thompson.RecordSearch.Utility.Web
             /// <summary>
             /// The table print rows
             /// </summary>
-            public static string Table_PrintRows = Table_Print + "/tr";
+            public static string Table_PrintRows = Table_Print + "/tr[@style]";
         }
 
         private static class Selectors
@@ -245,7 +247,7 @@ namespace Thompson.RecordSearch.Utility.Web
         public List<HarrisCriminalStyleDto> GetCases(IWebDriver driver, DateTime startDate, int totalDays = 180)
         {
             var result = new List<HarrisCriminalStyleDto>();
-            var interval = new TimeSpan(-7, 0, 0, 0);
+            var interval = new TimeSpan(-5, 0, 0, 0);
             var list = HarrisCaseDateDto.BuildList(startDate, interval, totalDays);
             driver = GetOrSetInternalDriver(driver);
             driver.Navigate().GoToUrl(url);
@@ -260,11 +262,13 @@ namespace Thompson.RecordSearch.Utility.Web
 
             foreach (var dto in list)
             {
+                /*
                 var index = list.IndexOf(dto);
                 if (index == 0)
                 {
                     System.Diagnostics.Debugger.Break();
                 }
+                */
                 result.Append(PopulateDates(dto));
             }
             return result;
@@ -333,7 +337,7 @@ namespace Thompson.RecordSearch.Utility.Web
             }
             var culture = CultureInfo.InvariantCulture;
             var style = DateTimeStyles.AssumeLocal;
-            if (!DateTime.TryParseExact(dateFiled, "yyyyMMdd", culture, style, out DateTime date))
+            if (!DateTime.TryParseExact(dateFiled, "MM/dd/yyyy", culture, style, out DateTime date))
             {
                 return;
             }
@@ -343,7 +347,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 return;
             }
             var dateFmt = date.AddDays(incrementDays).ToString("MM/dd/yyyy", culture);
-            TheDriver.ClickAndOrSetText(control, dateFmt);
+            TheDriver.SetText(control, dateFmt);
         }
 
 
@@ -352,6 +356,7 @@ namespace Thompson.RecordSearch.Utility.Web
             var index = rows.IndexOf(item);
             if (index == 0) { return default; }
             var cells = item.FindElements(By.TagName("td"));
+            if (cells.Count < 6) { return default; } // in the print layout there are separator rows
             return new HarrisCriminalStyleDto
             {
                 Index = index,
@@ -412,12 +417,16 @@ namespace Thompson.RecordSearch.Utility.Web
             string[] controlNames = new string[] { "Case Status", "Print Button", "Print Results Table" };
 
             var driver = TheDriver;
+            var executor = (IJavaScriptExecutor)driver;
             var currentWindow = driver.CurrentWindowHandle;
             var culture = CultureInfo.InvariantCulture;
             var dates = new List<DateTime> { dateDto.StartDate, dateDto.EndDate };
             var startDate = dates.Min().ToString(format, culture);
             var endingDate = dates.Max().ToString(format, culture);
             var result = new List<HarrisCriminalStyleDto>();
+            var threeMinutes = TimeSpan.FromSeconds(180);
+
+            driver.Manage().Timeouts().PageLoad = threeMinutes;
 
             // populate form
             PopulateWhenPresent(Selectors.StartDate, startDate);
@@ -430,9 +439,13 @@ namespace Thompson.RecordSearch.Utility.Web
             var cboCaseStatus = new SelectElement(driver.FindElement(Selectors.CaseStatus));
             cboCaseStatus.SelectByText(status);
 
-            // submit form
-            driver.ClickAndOrSetText(btnSearch);
-
+            // submit form ... this occassionally can take longer than 30 seconds
+            // so we need to click element through wed-driver and not javascript
+            executor.ExecuteScript("arguments[0].scrollIntoView(true);", btnSearch);
+            btnSearch.Click();
+            driver.WaitForNavigation();
+            const string searchRecordCount = "//*[@id=\"ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_recCountCas\"]";
+            var recordCount = GetRecordCount(driver.FindElement(By.XPath(searchRecordCount)).Text);
             // print results to new window
             if (!IsElementPresent(driver, Selectors.Print, controlNames[1]))
             {
@@ -448,32 +461,94 @@ namespace Thompson.RecordSearch.Utility.Web
             {
                 throw new ElementNotInteractableException($"{controlNames[2]} Element is not found.");
             }
-            var rows = driver.FindElements(Selectors.PrintRows).ToList();
-            foreach (var item in rows)
+
+            var tableHtml =
+                recordCount < 0 ?
+                driver.FindElement(Selectors.PrintTable).GetAttribute("outerHTML") :
+                string.Empty;
+
+            var waitFor = TimeSpan.FromSeconds(30);
+            var stopDateTime = DateTime.Now.Add(waitFor);
+            while (string.IsNullOrEmpty(tableHtml))
             {
-                var dto = ReadTable(rows, item);
+                tableHtml = TryGetCompleteHtml(recordCount, stopDateTime);
+            }
+            var doc = new HtmlDocument();
+            doc.LoadHtml(tableHtml);
+            var parentNode = doc.DocumentNode.FirstChild;
+            var nodes = parentNode.SelectNodes("tr[@style]").Cast<HtmlNode>().ToList();
+            var rowdata = nodes.Select(x => x.ChildNodes.Cast<HtmlNode>().ToList())
+                .ToList();
+            var rowinfo = new List<IEnumerable<string>>();
+            rowdata.ForEach(r =>
+            {
+                var txts = r.Select(c => c.InnerText);
+                rowinfo.Add(txts);
+
+            });
+
+            foreach (var item in rowinfo)
+            {
+                var dto = ReadTable(rowinfo, item);
                 if (dto != null) { result.Add(dto); }
             }
-            driver.Close(); // close the pop-up window
 
+
+            driver.Close(); // close the pop-up window
             // return to main window
             driver.SwitchTo().Window(currentWindow);
+
             if (!IsElementPresent(driver, Selectors.SearchAgain))
             {
                 throw new ElementNotInteractableException($"Expected Element 'Search Again' is not found.");
             }
             driver.ClickAndOrSetText(driver.FindElement(Selectors.SearchAgain));
 
-            if (IsElementPresent(driver, Selectors.PublicImageNbr))
-            {
-                driver.ClearText(driver.FindElement(Selectors.PublicImageNbr));
-            }
-            if (IsElementPresent(driver, Selectors.PinNbr))
-            {
-                driver.ClearText(driver.FindElement(Selectors.PinNbr));
-                driver.ClickAndOrSetText(driver.FindElement(Selectors.PinNbr), pin);
-            }
             return result;
+        }
+
+        private string TryGetCompleteHtml(int recordCount, DateTime stopDateTime)
+        {
+            var html = TheDriver.FindElement(Selectors.PrintTable).GetAttribute("outerHTML");
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            var parentNode = doc.DocumentNode.FirstChild;
+            var nodes = parentNode.SelectNodes("tr[@style]").Cast<HtmlNode>().ToList();
+            if (nodes.Count == recordCount | stopDateTime < DateTime.Now)
+            {
+                return html;
+            }
+            Thread.Sleep(250);
+            return string.Empty;
+        }
+
+        private int GetRecordCount(string text)
+        {
+            const int notfound = -1;
+            if (string.IsNullOrEmpty(text)) return notfound;
+            if (!text.Contains(" ")) return notfound;
+            var count = text.Split(' ').ToList().Last().Replace(".", "");
+            if (int.TryParse(count, out int rcount))
+            {
+                return rcount;
+            }
+            return notfound;
+        }
+
+        private static HarrisCriminalStyleDto ReadTable(List<IEnumerable<string>> rows, IEnumerable<string> item)
+        {
+            var index = rows.IndexOf(item);
+            var data = item.ToList();
+            return new HarrisCriminalStyleDto
+            {
+                Index = index,
+                CaseNumber = ParseText(data[0], Environment.NewLine),
+                Style = data[1],
+                FileDate = data[2],
+                Court = data[3],
+                Status = data[4],
+                TypeOfActionOrOffense = data[5]
+            };
         }
 
         private static string FindWindow(IWebDriver driver, string topWindowHandle)

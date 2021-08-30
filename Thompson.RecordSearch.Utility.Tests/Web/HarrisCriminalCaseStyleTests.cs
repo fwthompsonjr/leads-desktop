@@ -74,7 +74,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             const string fmt = "yyyyMMdd";
             DateTime dateBase = DateTime.MaxValue;
-            var dtmin = MinimumFileDate.ToExactDate(fmt, dateBase);
+            var dtmin = MaximumFileDate.ToExactDate(fmt, dateBase).AddDays(-10);
             var dtmax = MaximumFileDate.ToExactDate(fmt, dateBase);
             dtmin.ShouldNotBe(dateBase);
             var dateRange = Convert.ToInt32(dtmax.Subtract(dtmin).TotalDays) + 1;

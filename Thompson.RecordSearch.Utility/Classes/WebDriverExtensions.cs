@@ -45,6 +45,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             executor.ExecuteScript("arguments[0].value = '';", elementToClick);
         }
+        public static void SetText(this IWebDriver driver, IWebElement elementToClick, string objText)
+        {
+            if (driver == null) throw new ArgumentNullException(nameof(driver));
+            if (elementToClick == null) throw new ArgumentNullException(nameof(elementToClick));
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
+            var script = string.Format(CultureInfo.InvariantCulture, "arguments[0].value = '{0}';", objText);
+            executor.ExecuteScript(script, elementToClick);
+        }
 
 
         public static bool IsElementPresent(this IWebDriver driver, By by)

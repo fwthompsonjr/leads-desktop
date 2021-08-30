@@ -7,6 +7,8 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
 {
     public class ChromeOlderProvider : BaseChromeProvider, IWebDriverProvider
     {
+        private const string ChromeLocationMessage = "Chrome executable location:\n {0}";
+
         public string Name => "Chrome Legacy";
 
         /// <summary>
@@ -24,7 +26,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             {
                 var legacy = $"{GetDriverFileName()}\\Legacy";
                 var driver = new ChromeDriver(legacy, options);
-                Console.WriteLine("Chrome executable location:\n {0}", BinaryFileName());
+                Console.WriteLine(ChromeLocationMessage, BinaryFileName());
                 return driver;
             }
             catch (Exception)

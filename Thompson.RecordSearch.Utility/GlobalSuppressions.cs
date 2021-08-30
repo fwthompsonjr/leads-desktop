@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:Thompson.RecordSearch.Utility.Web.HarrisCriminalCaseStyle.PopulateDates(Thompson.RecordSearch.Utility.Dto.HarrisCaseDateDto)~System.Collections.Generic.List{Thompson.RecordSearch.Utility.Dto.HarrisCriminalStyleDto}")]
+[assembly: SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:Thompson.RecordSearch.Utility.DriverFactory.ChromeOlderProvider.GetWebDriver(System.Boolean)~OpenQA.Selenium.IWebDriver")]
