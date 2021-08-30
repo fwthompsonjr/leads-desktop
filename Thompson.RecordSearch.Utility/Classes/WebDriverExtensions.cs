@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Globalization;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -31,8 +32,18 @@ namespace Thompson.RecordSearch.Utility.Classes
             executor.ExecuteScript("arguments[0].click();", elementToClick);
             if (!string.IsNullOrEmpty(objText))
             {
-                executor.ExecuteScript(string.Format("arguments[0].value = '{0}';", objText), elementToClick);
+                var script = string.Format(CultureInfo.InvariantCulture, "arguments[0].value = '{0}';", objText);
+                executor.ExecuteScript(script, elementToClick);
             }
+        }
+
+
+        public static void ClearText(this IWebDriver driver, IWebElement elementToClick)
+        {
+            if (driver == null) throw new ArgumentNullException(nameof(driver));
+            if (elementToClick == null) throw new ArgumentNullException(nameof(elementToClick));
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
+            executor.ExecuteScript("arguments[0].value = '';", elementToClick);
         }
 
 

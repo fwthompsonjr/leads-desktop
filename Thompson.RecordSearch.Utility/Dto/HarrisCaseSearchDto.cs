@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Harris.Criminal.Db;
+using System;
 
 namespace Thompson.RecordSearch.Utility.Dto
 {
@@ -8,15 +9,14 @@ namespace Thompson.RecordSearch.Utility.Dto
         public string CaseNumber { get; set; }
         public string DateFiled { get; set; }
         public string Court { get; set; }
-        public string UniqueIndex => GetUniqueIndex();
+
+        public string DateFormat { get; set; }
+
+        public string UniqueIndex() => GetUniqueIndex();
 
         private string GetUniqueIndex()
         {
-            if (_uniqueIndex != null)
-            {
-                return _uniqueIndex;
-            }
-            string dateFiled = GetDate(DateFiled);
+            string dateFiled = GetDate(DateFiled, DateFormat);
             string caseNumber = GetText(CaseNumber, "0000");
             string court = GetText(Court, "0000");
 
@@ -33,14 +33,15 @@ namespace Thompson.RecordSearch.Utility.Dto
             return text;
         }
 
-        private static string GetDate(string dateFiled)
+        private static string GetDate(string dateFiled, string dateFormat)
         {
             var currentDate = DateTime.Now.ToString("s");
-            if (string.IsNullOrEmpty(dateFiled))
+            if (string.IsNullOrEmpty(dateFiled) | string.IsNullOrEmpty(dateFormat))
             {
                 dateFiled = currentDate;
             }
-            if (DateTime.TryParse(dateFiled, out DateTime date))
+            var date = dateFiled.ToExactDate(dateFormat, DateTime.MaxValue);
+            if (date != DateTime.MaxValue)
             {
                 return date.ToString("s");
             }

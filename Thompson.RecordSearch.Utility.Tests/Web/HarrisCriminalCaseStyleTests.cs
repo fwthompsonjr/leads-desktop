@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using Shouldly;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,9 +14,10 @@ namespace Thompson.RecordSearch.Utility.Tests
     [TestClass]
     public class HarrisCriminalCaseStyleTests : TestingBase
     {
-        private int MxCaseNumbers = 10;
+        private readonly int MxCaseNumbers = 10;
         private List<HarrisCaseSearchDto> CaseNumbers;
-
+        private string MaximumFileDate;
+        private string MinimumFileDate;
         [TestInitialize]
         public void Setup()
         {
@@ -30,16 +32,17 @@ namespace Thompson.RecordSearch.Utility.Tests
                         Court = x.Court,
                         DateFiled = x.FilingDate.ToExactDateString("yyyyMMdd", string.Empty)
                     });
-                var list = dtos.GroupBy(x => x.UniqueIndex).Select(x => x.FirstOrDefault());
+                var list = dtos.GroupBy(x => x.UniqueIndex()).Select(x => x.FirstOrDefault());
                 CaseNumbers = list.Take(MxCaseNumbers).ToList();
+                MaximumFileDate = list.Max(x => x.DateFiled);
+                MinimumFileDate = list.Min(x => x.DateFiled);
             }
         }
 
         [TestMethod]
         public void Download_HasACorrectTarget()
         {
-            var obj = new HarrisCriminalCaseStyle();
-            var folder = obj.DownloadFolder;
+            var folder = HarrisCriminalCaseStyle.DownloadFolder;
             folder.ShouldNotBeNullOrEmpty();
             Directory.Exists(folder).ShouldBeTrue();
         }
@@ -69,12 +72,19 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestMethod]
         public void CaseStyle_CanGet_Bulk()
         {
+            const string fmt = "yyyyMMdd";
+            DateTime dateBase = DateTime.MaxValue;
+            var dtmin = MinimumFileDate.ToExactDate(fmt, dateBase);
+            var dtmax = MaximumFileDate.ToExactDate(fmt, dateBase);
+            dtmin.ShouldNotBe(dateBase);
+            var dateRange = Convert.ToInt32(dtmax.Subtract(dtmin).TotalDays) + 1;
+
             var obj = new HarrisCriminalCaseStyle();
             IWebDriver driver = GetDriver();
             var result = new List<HarrisCriminalStyleDto>();
             try
             {
-                result.Append(obj.GetData(driver, CaseNumbers));
+                result.Append(obj.GetCases(driver, dtmax, dateRange));
                 result.ShouldNotBeNull();
                 result.Count.ShouldBeGreaterThan(0);
             }
@@ -85,5 +95,18 @@ namespace Thompson.RecordSearch.Utility.Tests
                 KillProcess("chromedriver");
             }
         }
+
+        [TestMethod]
+        public void CanParse_Min_Max()
+        {
+            const string fmt = "yyyyMMdd";
+            DateTime dateBase = DateTime.MaxValue;
+            var dtmin = MinimumFileDate.ToExactDate(fmt, dateBase);
+            var dtmax = MaximumFileDate.ToExactDate(fmt, dateBase);
+            dtmin.ShouldNotBe(dateBase);
+            dtmax.ShouldNotBe(dateBase);
+            dtmin.ShouldBeLessThanOrEqualTo(dtmax);
+        }
+
     }
 }

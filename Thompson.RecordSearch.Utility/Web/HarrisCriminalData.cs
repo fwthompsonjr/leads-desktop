@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -14,8 +15,8 @@ namespace Thompson.RecordSearch.Utility.Web
 {
     public class HarrisCriminalData : IDisposable
     {
-        private static string div = "ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_blah";
-        private static Dictionary<string, string> Keys = new Dictionary<string, string>
+        private const string div = "ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_blah";
+        private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>
         {
             { "address", "https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx" },
             { "tr.monthly", "//tr[contains(string(), \"CrimFilingsWithFutureSettings\")]" },
@@ -25,7 +26,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         private static string _downloadFolder;
 
-        private static string DownloadTo => _downloadFolder ?? (_downloadFolder = new BaseChromeProvider().DownloadPath);
+        private static string DownloadTo => _downloadFolder ?? (_downloadFolder = BaseChromeProvider.DownloadPath);
 
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace Thompson.RecordSearch.Utility.Web
         /// <value>
         /// The download folder.
         /// </value>
-        public string DownloadFolder => DownloadTo;
+        public static string DownloadFolder => DownloadTo;
 
         /// <summary>
         /// Gets data for Criminal Filings With Future Settings Download.
@@ -106,7 +107,8 @@ namespace Thompson.RecordSearch.Utility.Web
                 // adding code to only pull new data after 8AM
                 currentDate = currentDate.AddDays(-1);
             }
-            var computed = string.Concat(currentDate.ToString("yyyy-MM-dd"), " CrimFilingsWithFutureSettings_withHeadings.txt");
+            var culture = CultureInfo.InvariantCulture;
+            var computed = string.Concat(currentDate.ToString("yyyy-MM-dd", culture), " CrimFilingsWithFutureSettings_withHeadings.txt");
             return Path.Combine(DownloadTo, computed);
         }
 
@@ -151,7 +153,8 @@ namespace Thompson.RecordSearch.Utility.Web
             var provider = container.GetInstance<IWebDriverProvider>(driver.Name);
             var showBrowser =
                 Convert.ToBoolean(
-                ConfigurationManager.AppSettings["harris.criminal.show.browser"] ?? "true");
+                ConfigurationManager.AppSettings["harris.criminal.show.browser"] ?? "true",
+                CultureInfo.InvariantCulture);
             return provider.GetWebDriver(showBrowser);
         }
 

@@ -79,6 +79,7 @@
     <Compile Include="Commands\BaseUserCommand.cs" />
     <Compile Include="Commands\CreateNewIssue.cs" />
     <Compile Include="Commands\IUserCommand.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="JsReader.cs" />
     <Compile Include="Models\ChangeLog.cs" />
     <Compile Include="Models\StringExtensions.cs" />

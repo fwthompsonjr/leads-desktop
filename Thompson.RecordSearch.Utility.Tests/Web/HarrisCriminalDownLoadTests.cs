@@ -12,8 +12,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestMethod]
         public void Download_HasACorrectTarget()
         {
-            var obj = new HarrisCriminalData();
-            var folder = obj.DownloadFolder;
+            var folder = HarrisCriminalData.DownloadFolder;
             folder.ShouldNotBeNullOrEmpty();
             Directory.Exists(folder).ShouldBeTrue();
         }

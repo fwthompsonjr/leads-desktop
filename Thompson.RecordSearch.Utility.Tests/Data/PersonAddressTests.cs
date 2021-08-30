@@ -9,9 +9,8 @@ using System.Xml;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
-using Thompson.RecordSearch.Utility.Tests.Data;
 
-namespace Thompson.RecordSearch.Utility.Tests
+namespace Thompson.RecordSearch.Utility.Tests.Data
 {
     [TestClass]
     public class PersonAddressTests
@@ -144,10 +143,12 @@ namespace Thompson.RecordSearch.Utility.Tests
                 var node = doc.FirstChild.SelectSingleNode(xpath);
                 return node;
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
             {
                 return null;
             }
+#pragma warning restore CA1031 // Do not catch general exception types
         }
 
         private string CriminalRow()

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Classes;
@@ -64,6 +65,8 @@ namespace Thompson.RecordSearch.Utility.Tests
             }
             return data;
         }
+
+        private const string ExcelFileCreatedMessage = "Excel file created at: {0}";
         private static readonly Random random = new Random(DateTime.Now.Millisecond);
         public static string RandomString(int length)
         {
@@ -78,7 +81,9 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             var writer = new ExcelWriter();
             var extn = CommonKeyIndexes.ExtensionXlsx;
-            var tmpFileName = string.Format(@"{0}{1}{2}",
+            var tmpFileName = string.Format(
+                CultureInfo.CurrentCulture,
+                @"{0}{1}{2}",
                 Path.GetTempPath(),
                 Path.GetFileNameWithoutExtension(Path.GetRandomFileName()),
                 extn);
@@ -90,7 +95,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 outputFileName: tmpFileName);
 
             Assert.IsTrue(File.Exists(tmpFileName), "Expected Excel file was not found");
-            Console.WriteLine("Excel file created at: {0}", tmpFileName);
+            Console.WriteLine(ExcelFileCreatedMessage, tmpFileName);
 
         }
 
@@ -101,7 +106,9 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             var writer = new ExcelWriter();
             var extn = CommonKeyIndexes.ExtensionXlsx;
-            var tmpFileName = string.Format(@"{0}{1}{2}",
+            var tmpFileName = string.Format(
+                CultureInfo.CurrentCulture,
+                @"{0}{1}{2}",
                 Path.GetTempPath(),
                 Path.GetFileNameWithoutExtension(Path.GetRandomFileName()),
                 extn);
@@ -113,7 +120,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 outputFileName: tmpFileName);
 
             Assert.IsTrue(File.Exists(tmpFileName), "Expected Excel file was not found");
-            Console.WriteLine("Excel file created at: {0}", tmpFileName);
+            Console.WriteLine(ExcelFileCreatedMessage, tmpFileName);
 
         }
 
@@ -124,7 +131,9 @@ namespace Thompson.RecordSearch.Utility.Tests
 
             var writer = new ExcelWriter();
             var extn = CommonKeyIndexes.ExtensionXlsx;
-            var tmpFileName = string.Format(@"{0}{1}{2}",
+            var tmpFileName = string.Format(
+                CultureInfo.CurrentCulture,
+                @"{0}{1}{2}",
                 Path.GetTempPath(),
                 Path.GetFileNameWithoutExtension(Path.GetRandomFileName()),
                 extn);
@@ -143,7 +152,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 outputFileName: tmpFileName);
 
             Assert.IsTrue(File.Exists(tmpFileName), "Expected Excel file was not found");
-            Console.WriteLine("Excel file created at: {0}", tmpFileName);
+            Console.WriteLine(ExcelFileCreatedMessage, tmpFileName);
         }
 
         [TestMethod]

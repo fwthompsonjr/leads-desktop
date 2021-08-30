@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -36,8 +37,8 @@ namespace Thompson.RecordSearch.Utility.Tests
                 .GetNavigation().Find(x => x.Id == 10);
             var datelist = new List<string> { "startDate", "endDate" };
             var keys = settings.Keys.FindAll(s => datelist.Contains(s.Name));
-            keys.First().Value = startingDate.ToString("MM/dd/yyyy");
-            keys.Last().Value = endingDate.ToString("MM/dd/yyyy");
+            keys.First().Value = startingDate.ToString("MM/dd/yyyy", CultureInfo.CurrentCulture);
+            keys.Last().Value = endingDate.ToString("MM/dd/yyyy", CultureInfo.CurrentCulture);
             Assert.IsNotNull(settings);
 
         }
@@ -70,8 +71,8 @@ namespace Thompson.RecordSearch.Utility.Tests
                     var actionName = item.ActionName;
                     if (item.ActionName.Equals("set-text"))
                     {
-                        if (item.DisplayName.Equals("startDate")) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy");
-                        if (item.DisplayName.Equals("endDate")) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy");
+                        if (item.DisplayName.Equals("startDate")) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy", CultureInfo.CurrentCulture);
+                        if (item.DisplayName.Equals("endDate")) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy", CultureInfo.CurrentCulture);
                     }
                     var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName));
                     if (action == null) continue;
@@ -97,6 +98,8 @@ namespace Thompson.RecordSearch.Utility.Tests
             }
         }
 
+        private const string DataFileFoundMessage = "DataFile:= {0}";
+
         [TestMethod]
         [TestCategory("tarrant.county.actions")]
         public void CanGetFromJsonInteractive()
@@ -107,7 +110,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 DateTime.Now.Date.AddDays(-4));
             var interactive = new TarrantWebInteractive(webParameter);
             var result = interactive.Fetch();
-            Console.WriteLine("DataFile:= {0}", result.Result);
+            Console.WriteLine(DataFileFoundMessage, result.Result);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
 
@@ -194,7 +197,9 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             const string dataFormat = @"{0}\xml\{1}.json";
             var appDirectory = ContextManagment.AppDirectory;
-            var dataFile = string.Format(dataFormat,
+            var dataFile = string.Format(
+                CultureInfo.InvariantCulture,
+                dataFormat,
                 appDirectory,
                 suffix);
             Assert.IsTrue(File.Exists(dataFile));

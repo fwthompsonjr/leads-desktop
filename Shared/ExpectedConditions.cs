@@ -34,7 +34,6 @@ namespace OpenQA.Selenium.Support.UI
     /// </example>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "<Pending>")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
     [Obsolete("The ExpectedConditions implementation in the .NET bindings is deprecated and will be removed in a future release. This portion of the code has been migrated to the DotNetSeleniumExtras repository on GitHub (https://github.com/DotNetSeleniumTools/DotNetSeleniumExtras)")]
     public sealed class ExpectedConditions
     {
@@ -75,9 +74,7 @@ namespace OpenQA.Selenium.Support.UI
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings", Justification = "<Pending>")]
         public static Func<IWebDriver, bool> UrlToBe(string url)
         {
-#pragma warning disable CA1308 // Normalize strings to uppercase
             return (driver) => { return driver.Url.ToLowerInvariant().Equals(url.ToLowerInvariant()); };
-#pragma warning restore CA1308 // Normalize strings to uppercase
         }
 
 

@@ -6,7 +6,7 @@ using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.DriverFactory
 {
-    public class BaseChromeProvider
+    public abstract class BaseChromeProvider
     {
 
         private static string _binaryName;
@@ -19,7 +19,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <value>
         /// The download path.
         /// </value>
-        public string DownloadPath => GetDownloadPath();
+        public static string DownloadPath => CalculateDownloadPath();
 
         /// <summary>
         /// Gets the chrome options.
@@ -36,7 +36,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             }
             options.AddUserProfilePreference("download.prompt_for_download", false);
             options.AddUserProfilePreference("download.directory_upgrade", true);
-            options.AddUserProfilePreference("download.default_directory", GetDownloadPath());
+            options.AddUserProfilePreference("download.default_directory", CalculateDownloadPath());
             return options;
         }
 
@@ -73,7 +73,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the name of the chrome download directory.
         /// </summary>
         /// <returns></returns>
-        protected static string GetDownloadPath()
+        protected static string CalculateDownloadPath()
         {
             if (_downloadPath != null) return _downloadPath;
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;

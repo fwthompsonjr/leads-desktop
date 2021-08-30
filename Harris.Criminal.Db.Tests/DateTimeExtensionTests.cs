@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
+using System.Globalization;
 
 namespace Harris.Criminal.Db.Tests
 {
@@ -33,7 +34,7 @@ namespace Harris.Criminal.Db.Tests
             if (Faker == null)
             {
                 Faker = new Faker<SampleData>()
-                    .RuleFor(f => f.Data, r => r.Date.Recent(-15).ToString("yyyyMMdd"));
+                    .RuleFor(f => f.Data, r => r.Date.Recent(-15).ToString("yyyyMMdd", CultureInfo.InvariantCulture));
             }
         }
 
@@ -44,7 +45,7 @@ namespace Harris.Criminal.Db.Tests
             items.ForEach(f =>
             {
                 f.Parsed.ShouldNotBeNullOrEmpty();
-                var expected = DateTime.Parse(f.Parsed);
+                var expected = DateTime.Parse(f.Parsed, CultureInfo.InvariantCulture);
                 var actual = f.Data.ToExactDate("yyyyMMdd", DateTime.MinValue);
                 actual.ShouldNotBe(DateTime.MinValue);
                 actual.ShouldBe(expected);
@@ -73,7 +74,7 @@ namespace Harris.Criminal.Db.Tests
         {
             const string fmt = "yyyyMMdd";
             var input = "20201225";
-            var expected = new DateTime(2015, 1, 15).ToString(fmt);
+            var expected = new DateTime(2015, 1, 15).ToString(fmt, CultureInfo.InvariantCulture);
             var actual = input.ToExactDateString(string.Empty, expected);
             actual.ShouldBe(expected);
         }
@@ -83,7 +84,7 @@ namespace Harris.Criminal.Db.Tests
         {
             const string fmt = "yyyyMMdd";
             var input = string.Empty;
-            var expected = new DateTime(2015, 1, 15).ToString(fmt);
+            var expected = new DateTime(2015, 1, 15).ToString(fmt, CultureInfo.InvariantCulture);
             var actual = input.ToExactDateString(fmt, expected);
             actual.ShouldBe(expected);
         }
@@ -93,7 +94,7 @@ namespace Harris.Criminal.Db.Tests
         {
             const string fmt = "yyyyMMdd";
             var input = "20201225";
-            var expected = new DateTime(2020, 12, 25).ToString(fmt);
+            var expected = new DateTime(2020, 12, 25).ToString(fmt, CultureInfo.InvariantCulture);
             var actual = input.ToExactDateString(fmt, expected);
             actual.ShouldBe(expected);
         }

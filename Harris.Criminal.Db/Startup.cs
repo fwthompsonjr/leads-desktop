@@ -37,6 +37,7 @@ namespace Harris.Criminal.Db
             Downloads.Read();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>")]
         public static class Downloads
         {
             private enum FileDateType
@@ -141,6 +142,7 @@ namespace Harris.Criminal.Db
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>")]
         public static class References
         {
             private static string _dataFolder;

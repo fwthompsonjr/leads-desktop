@@ -2,9 +2,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
+using System.Globalization;
 using Thompson.RecordSearch.Utility.Dto;
 
-namespace Thompson.RecordSearch.Utility.Tests
+namespace Thompson.RecordSearch.Utility.Tests.Data
 {
     [TestClass]
     public class HarrisCriminalStyleDtoTests
@@ -23,7 +24,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                     .RuleFor(f => f.Index, r => r.IndexFaker)
                     .RuleFor(f => f.CaseNumber, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.Style, r => r.Random.AlphaNumeric(15))
-                    .RuleFor(f => f.FileDate, r => r.Date.Between(startTime, endTime).ToString(fmt))
+                    .RuleFor(f => f.FileDate, r => r.Date.Between(startTime, endTime).ToString(fmt, CultureInfo.CurrentCulture))
                     .RuleFor(f => f.Court, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.Status, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.TypeOfActionOrOffense, r => r.Random.AlphaNumeric(15));
@@ -55,7 +56,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             var obj = DtoFaker.Generate();
 
-            obj.Index.ToString().ShouldBe(obj[0]);
+            obj.Index.ToString(CultureInfo.CurrentCulture).ShouldBe(obj[0]);
             obj.CaseNumber.ShouldBe(obj[1]);
             obj.Style.ShouldBe(obj[2]);
             obj.FileDate.ShouldBe(obj[3]);
@@ -82,7 +83,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             }
 
 
-            obj.Index.ToString().ShouldBe(src[0]);
+            obj.Index.ToString(CultureInfo.CurrentCulture).ShouldBe(src[0]);
             obj.CaseNumber.ShouldBe(src[1]);
             obj.Style.ShouldBe(src[2]);
             obj.FileDate.ShouldBe(src[3]);

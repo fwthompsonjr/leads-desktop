@@ -245,10 +245,12 @@
     <Compile Include="Dto\HarrisCriminalExtensions.cs" />
     <Compile Include="Dto\HarrisCriminalStyleBo.cs" />
     <Compile Include="Dto\HarrisCriminalStyleDto.cs" />
+    <Compile Include="Dto\HarrisCaseDateDto.cs" />
     <Compile Include="Dto\NavigationInstructionDto.cs" />
     <Compile Include="Dto\ParseCaseDataResponseDto.cs" />
     <Compile Include="Dto\UserAccessDto.cs" />
     <Compile Include="Dto\WebDriverDto.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\IElementActionBase.cs" />
     <Compile Include="Interfaces\IExcelFileWriter.cs" />
     <Compile Include="Models\CaseData.cs" />

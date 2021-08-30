@@ -165,21 +165,24 @@
     <Compile Include="..\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
-    <Compile Include="CollinCountyNavigationTests.cs" />
+    <Compile Include="Data\HarrisCaseSearchDtoTest.cs" />
+    <Compile Include="Data\HarrisCaseDateDtoTests.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Web\CollinCountyNavigationTests.cs" />
     <Compile Include="ExecutionManagement.cs" />
     <Compile Include="Data\PersonAddressDto.cs" />
     <Compile Include="SettingsManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExcAutomationServerTest.cs" />
     <Compile Include="CryptoEngineTests.cs" />
-    <Compile Include="PersonAddressTests.cs" />
+    <Compile Include="Data\PersonAddressTests.cs" />
     <Compile Include="ExcelWriterTests.cs" />
-    <Compile Include="TarrantCountyNavigationTests.cs" />
+    <Compile Include="Web\TarrantCountyNavigationTests.cs" />
     <Compile Include="TestingBase.cs" />
-    <Compile Include="HarrisCriminalDownLoadTests.cs" />
-    <Compile Include="HarrisCriminalStyleDtoTests.cs" />
-    <Compile Include="HarrisCriminalCaseStyleTests.cs" />
-    <Compile Include="WebInteractiveTest.cs" />
+    <Compile Include="Web\HarrisCriminalDownLoadTests.cs" />
+    <Compile Include="Data\HarrisCriminalStyleDtoTests.cs" />
+    <Compile Include="Web\HarrisCriminalCaseStyleTests.cs" />
+    <Compile Include="Web\WebInteractiveTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\packages\Selenium.Microsoft.Webdriver2.2.0.10586.1\driver\MicrosoftWebDriver.exe">

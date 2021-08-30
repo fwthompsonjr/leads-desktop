@@ -37,7 +37,7 @@ namespace Harris.Criminal.Db
             var style = DateTimeStyles.AssumeLocal;
             if (DateTime.TryParseExact(input, dateFormat, culture, style, out DateTime dte))
             {
-                return dte.ToString(dateFormat);
+                return dte.ToString(dateFormat, culture);
             }
             return dateDefault;
         }
@@ -58,7 +58,7 @@ namespace Harris.Criminal.Db
             var style = DateTimeStyles.AssumeLocal;
             if (DateTime.TryParseExact(input, currentFormat, culture, style, out DateTime dte))
             {
-                return dte.ToString(dateFormat);
+                return dte.ToString(dateFormat, culture);
             }
             return dateDefault;
         }

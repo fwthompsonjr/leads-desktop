@@ -16,7 +16,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         }
 
 
-        protected IWebDriver GetDriver(bool headless = false)
+        protected static IWebDriver GetDriver(bool headless = false)
         {
             var provider = new ChromeOlderProvider();
             IWebDriver driver = provider.GetWebDriver(headless);
@@ -26,7 +26,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         }
 
 
-        protected void KillProcess(string processName)
+        protected static void KillProcess(string processName)
         {
             foreach (var process in Process.GetProcessesByName(processName))
             {
