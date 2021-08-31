@@ -50,6 +50,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Downloads\HarrisCriminalDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\CaseStyleDb.cs" />
     <Compile Include="Tables\ReferenceDatum.cs" />
     <Compile Include="Tables\ReferenceTable.cs" />
   </ItemGroup>

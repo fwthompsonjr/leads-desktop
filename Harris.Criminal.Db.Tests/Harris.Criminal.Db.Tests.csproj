@@ -89,6 +89,7 @@
     <Compile Include="Tables\ReferenceDatumTests.cs" />
     <Compile Include="Tables\ReferenceTableTests.cs" />
     <Compile Include="DateTimeExtensionTests.cs" />
+    <Compile Include="Tables\CaseStyleDbTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

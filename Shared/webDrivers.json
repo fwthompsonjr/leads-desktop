@@ -1,11 +1,11 @@
 {
     "webDrivers": {
-        "selectedIndex": 0,
+        "selectedIndex": 3,
       "drivers": [
         {
           "id": 0,
           "name": "Chrome",
-          "isVerified": true
+          "isVerified": false
         },
         {
           "id": 1,

@@ -3,14 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Thompson.RecordSearch.Utility.Dto
+namespace Harris.Criminal.Db.Tables
 {
-    public class HarrisCriminalStyleDto
+    public class CaseStyleDb
     {
+        public static readonly List<string> FieldNames = ("CaseNumber,Style,FileDate,Court,Status,TypeOfActionOrOffense").Split(',').ToList();
 
-        public static readonly List<string> FieldNames = ("Index," +
-            "CaseNumber,Style,FileDate,Court,Status,TypeOfActionOrOffense").Split(',').ToList();
-        public int Index { get; set; }
         [JsonProperty("cnbr")]
         public string CaseNumber { get; set; }
         [JsonProperty("style")]
@@ -24,6 +22,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("toa")]
         public string TypeOfActionOrOffense { get; set; }
 
+
         public string this[int index]
         {
             get
@@ -34,13 +33,12 @@ namespace Thompson.RecordSearch.Utility.Dto
                 }
                 switch (index)
                 {
-                    case 0: return Index.ToString("D");
-                    case 1: return CaseNumber;
-                    case 2: return Style;
-                    case 3: return FileDate;
-                    case 4: return Court;
-                    case 5: return Status;
-                    case 6: return TypeOfActionOrOffense;
+                    case 0: return CaseNumber;
+                    case 1: return Style;
+                    case 2: return FileDate;
+                    case 3: return Court;
+                    case 4: return Status;
+                    case 5: return TypeOfActionOrOffense;
                     default:
                         return null;
                 }
@@ -53,13 +51,12 @@ namespace Thompson.RecordSearch.Utility.Dto
                 }
                 switch (index)
                 {
-                    case 0: Index = Convert.ToInt32(value); return;
-                    case 1: CaseNumber = value; return;
-                    case 2: Style = value; return;
-                    case 3: FileDate = value; return;
-                    case 4: Court = value; return;
-                    case 5: Status = value; return;
-                    case 6: TypeOfActionOrOffense = value; return;
+                    case 0: CaseNumber = value; return;
+                    case 1: Style = value; return;
+                    case 2: FileDate = value; return;
+                    case 3: Court = value; return;
+                    case 4: Status = value; return;
+                    case 5: TypeOfActionOrOffense = value; return;
 
                     default: return;
                 }
@@ -91,6 +88,5 @@ namespace Thompson.RecordSearch.Utility.Dto
                 this[index] = value;
             }
         }
-
     }
 }
