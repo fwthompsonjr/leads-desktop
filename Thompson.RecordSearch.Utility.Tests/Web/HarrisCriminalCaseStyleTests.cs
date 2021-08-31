@@ -48,8 +48,13 @@ namespace Thompson.RecordSearch.Utility.Tests
         }
 
         [TestMethod]
+        [TestCategory("Integration Only")]
         public void CaseStyle_CanGetSingleRecord()
         {
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
             var caseNumber = CaseNumbers.Last();
             var dto = new HarrisCaseSearchDto { CaseNumber = caseNumber.CaseNumber };
             var obj = new HarrisCriminalCaseStyle();
@@ -70,8 +75,13 @@ namespace Thompson.RecordSearch.Utility.Tests
 
 
         [TestMethod]
+        [TestCategory("Integration Only")]
         public void CaseStyle_CanGet_Bulk()
         {
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
             const string fmt = "yyyyMMdd";
             DateTime dateBase = DateTime.MaxValue;
             var dtmin = MaximumFileDate.ToExactDate(fmt, dateBase).AddDays(-10);

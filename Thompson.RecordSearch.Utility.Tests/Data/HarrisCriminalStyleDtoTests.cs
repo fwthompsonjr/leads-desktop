@@ -27,7 +27,9 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
                     .RuleFor(f => f.FileDate, r => r.Date.Between(startTime, endTime).ToString(fmt, CultureInfo.CurrentCulture))
                     .RuleFor(f => f.Court, r => r.Random.AlphaNumeric(15))
                     .RuleFor(f => f.Status, r => r.Random.AlphaNumeric(15))
-                    .RuleFor(f => f.TypeOfActionOrOffense, r => r.Random.AlphaNumeric(15));
+                    .RuleFor(f => f.TypeOfActionOrOffense, r => r.Random.AlphaNumeric(15))
+                    .RuleFor(f => f.Defendant, r => r.Random.AlphaNumeric(15))
+                    .RuleFor(f => f.Plantiff, r => r.Random.AlphaNumeric(15));
             }
         }
 
@@ -48,7 +50,7 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
         public void HasFields()
         {
             var fields = HarrisCriminalStyleDto.FieldNames;
-            Assert.AreEqual(7, fields.Count);
+            Assert.AreEqual(9, fields.Count);
         }
 
         [TestMethod]
@@ -63,6 +65,8 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
             obj.Court.ShouldBe(obj[4]);
             obj.Status.ShouldBe(obj[5]);
             obj.TypeOfActionOrOffense.ShouldBe(obj[6]);
+            obj.Defendant.ShouldBe(obj[7]);
+            obj.Plantiff.ShouldBe(obj[8]);
 
             for (int i = 33; i < 50; i++)
             {
@@ -90,6 +94,8 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
             obj.Court.ShouldBe(src[4]);
             obj.Status.ShouldBe(src[5]);
             obj.TypeOfActionOrOffense.ShouldBe(src[6]);
+            obj.Defendant.ShouldBe(src[7]);
+            obj.Plantiff.ShouldBe(src[8]);
 
             // attempt to set out of range field indexes
             for (int i = 33; i < 50; i++)

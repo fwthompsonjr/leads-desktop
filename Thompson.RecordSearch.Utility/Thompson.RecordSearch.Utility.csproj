@@ -251,6 +251,7 @@
     <Compile Include="Dto\HarrisCaseDateDto.cs" />
     <Compile Include="Dto\NavigationInstructionDto.cs" />
     <Compile Include="Dto\ParseCaseDataResponseDto.cs" />
+    <Compile Include="Dto\ParseCaseStyleDbDto.cs" />
     <Compile Include="Dto\UserAccessDto.cs" />
     <Compile Include="Dto\WebDriverDto.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Dto\SearchSettingDto.cs" />
     <Compile Include="Models\WebFetchResult.cs" />
     <Compile Include="Models\WebNavigationParameter.cs" />
+    <Compile Include="Parsing\CaseStyleDbParser.cs" />
     <Compile Include="Parsing\ICaseDataParser.cs" />
     <Compile Include="Parsing\ParseCaseByVDot.cs" />
     <Compile Include="Parsing\ParseCaseDataByEstateStrategy.cs" />

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Parsing;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
@@ -23,10 +24,6 @@ namespace Thompson.RecordSearch.Utility.Web
         /// The user credential
         /// </summary>
         private const string pwd = "123William890";
-        /// <summary>
-        /// The user PIN Number
-        /// </summary>
-        private const string pin = "123William";
         /// <summary>
         /// The web address for criminal records search
         /// </summary>
@@ -244,6 +241,13 @@ namespace Thompson.RecordSearch.Utility.Web
         }
 
 
+        /// <summary>
+        /// Gets case style details from remote source for a specific range of dates.
+        /// </summary>
+        /// <param name="driver">The driver.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="totalDays">The total days from the start date to search</param>
+        /// <returns></returns>
         public List<HarrisCriminalStyleDto> GetCases(IWebDriver driver, DateTime startDate, int totalDays = 180)
         {
             var result = new List<HarrisCriminalStyleDto>();
@@ -274,6 +278,12 @@ namespace Thompson.RecordSearch.Utility.Web
             return result;
         }
 
+        /// <summary>
+        /// Gets case style details from remote source for a specific case number.
+        /// </summary>
+        /// <param name="driver">The driver.</param>
+        /// <param name="searchDto">The search parameters containing case number and date filed.</param>
+        /// <returns></returns>
         public List<HarrisCriminalStyleDto> GetData(IWebDriver driver, HarrisCaseSearchDto searchDto)
         {
             var result = new List<HarrisCriminalStyleDto>();
@@ -351,63 +361,32 @@ namespace Thompson.RecordSearch.Utility.Web
         }
 
 
-        private static HarrisCriminalStyleDto ReadTable(List<IWebElement> rows, IWebElement item)
+        private string TryGetCompleteHtml(int recordCount, DateTime stopDateTime)
         {
-            var index = rows.IndexOf(item);
-            if (index == 0) { return default; }
-            var cells = item.FindElements(By.TagName("td"));
-            if (cells.Count < 6) { return default; } // in the print layout there are separator rows
-            return new HarrisCriminalStyleDto
+            var html = TheDriver.FindElement(Selectors.PrintTable).GetAttribute("outerHTML");
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            var parentNode = doc.DocumentNode.FirstChild;
+            var nodes = parentNode.SelectNodes("tr[@style]").Cast<HtmlNode>().ToList();
+            if (nodes.Count == recordCount | stopDateTime < DateTime.Now)
             {
-                Index = index,
-                CaseNumber = ParseText(cells[0].Text, Environment.NewLine),
-                Style = cells[1].Text,
-                FileDate = cells[2].Text,
-                Court = cells[3].Text,
-                Status = cells[4].Text,
-                TypeOfActionOrOffense = cells[5].Text
-            };
+                return html;
+            }
+            Thread.Sleep(250);
+            return string.Empty;
         }
 
-        private static string ParseText(string text, string separator)
+        private int GetRecordCount(string text)
         {
-            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(separator))
+            const int notfound = -1;
+            if (string.IsNullOrEmpty(text)) return notfound;
+            if (!text.Contains(" ")) return notfound;
+            var count = text.Split(' ').ToList().Last().Replace(".", "");
+            if (int.TryParse(count, out int rcount))
             {
-                return text;
+                return rcount;
             }
-            return text.Split(separator.ToCharArray())[0];
-        }
-
-        private static void Login(IWebDriver driver)
-        {
-            try
-            {
-                const int timeout = 5;
-                var bxSearch = IsElementPresent(driver, Selectors.CaseNumber, "Case Number");
-                if (bxSearch)
-                {
-                    return;
-                }
-                string currentWindow = driver.CurrentWindowHandle;
-                var frame = driver.FindElement(Selectors.IFrame);
-                driver.SwitchTo().Frame(frame);
-                var txUserName = driver.FindElement(Selectors.UserName);
-                var txPassword = driver.FindElement(Selectors.Password);
-                var btnLogin = driver.FindElement(Selectors.Login, timeout);
-
-                driver.ClickAndOrSetText(txUserName, uid);
-                driver.ClickAndOrSetText(txPassword, pwd);
-                driver.ClickAndOrSetText(btnLogin);
-                driver.SwitchTo().Window(currentWindow);
-                driver.WaitForNavigation();
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch (Exception)
-#pragma warning restore CA1031 // Do not catch general exception types
-            {
-                // hide these exceptions
-                return;
-            }
+            return notfound;
         }
 
         private List<HarrisCriminalStyleDto> PopulateDates(HarrisCaseDateDto dateDto)
@@ -504,42 +483,86 @@ namespace Thompson.RecordSearch.Utility.Web
             }
             driver.ClickAndOrSetText(driver.FindElement(Selectors.SearchAgain));
 
+            // write result to file here
+
             return result;
         }
 
-        private string TryGetCompleteHtml(int recordCount, DateTime stopDateTime)
+        private static HarrisCriminalStyleDto Parse(HarrisCriminalStyleDto dto)
         {
-            var html = TheDriver.FindElement(Selectors.PrintTable).GetAttribute("outerHTML");
-            var doc = new HtmlDocument();
-            doc.LoadHtml(html);
-            var parentNode = doc.DocumentNode.FirstChild;
-            var nodes = parentNode.SelectNodes("tr[@style]").Cast<HtmlNode>().ToList();
-            if (nodes.Count == recordCount | stopDateTime < DateTime.Now)
-            {
-                return html;
-            }
-            Thread.Sleep(250);
-            return string.Empty;
+            if (dto == null) return null;
+            var parser = new CaseStyleDbParser { Data = dto.Style };
+            if (!parser.CanParse()) return dto;
+            var parseResult = parser.Parse();
+            dto.Style = parseResult.CaseData;
+            dto.Plantiff = parseResult.Plantiff;
+            dto.Defendant = parseResult.Defendant;
+            return dto;
         }
 
-        private int GetRecordCount(string text)
+        private static string ParseText(string text, string separator)
         {
-            const int notfound = -1;
-            if (string.IsNullOrEmpty(text)) return notfound;
-            if (!text.Contains(" ")) return notfound;
-            var count = text.Split(' ').ToList().Last().Replace(".", "");
-            if (int.TryParse(count, out int rcount))
+            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(separator))
             {
-                return rcount;
+                return text;
             }
-            return notfound;
+            return text.Split(separator.ToCharArray())[0];
         }
 
+        private static void Login(IWebDriver driver)
+        {
+            try
+            {
+                const int timeout = 5;
+                var bxSearch = IsElementPresent(driver, Selectors.CaseNumber, "Case Number");
+                if (bxSearch)
+                {
+                    return;
+                }
+                string currentWindow = driver.CurrentWindowHandle;
+                var frame = driver.FindElement(Selectors.IFrame);
+                driver.SwitchTo().Frame(frame);
+                var txUserName = driver.FindElement(Selectors.UserName);
+                var txPassword = driver.FindElement(Selectors.Password);
+                var btnLogin = driver.FindElement(Selectors.Login, timeout);
+
+                driver.ClickAndOrSetText(txUserName, uid);
+                driver.ClickAndOrSetText(txPassword, pwd);
+                driver.ClickAndOrSetText(btnLogin);
+                driver.SwitchTo().Window(currentWindow);
+                driver.WaitForNavigation();
+            }
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
+            {
+                // hide these exceptions
+                return;
+            }
+        }
+
+        private static HarrisCriminalStyleDto ReadTable(List<IWebElement> rows, IWebElement item)
+        {
+            var index = rows.IndexOf(item);
+            if (index == 0) { return default; }
+            var cells = item.FindElements(By.TagName("td"));
+            if (cells.Count < 6) { return default; } // in the print layout there are separator rows
+            return Parse(new HarrisCriminalStyleDto
+            {
+                Index = index,
+                CaseNumber = ParseText(cells[0].Text, Environment.NewLine),
+                Style = cells[1].Text,
+                FileDate = cells[2].Text,
+                Court = cells[3].Text,
+                Status = cells[4].Text,
+                TypeOfActionOrOffense = cells[5].Text
+            });
+        }
         private static HarrisCriminalStyleDto ReadTable(List<IEnumerable<string>> rows, IEnumerable<string> item)
         {
             var index = rows.IndexOf(item);
             var data = item.ToList();
-            return new HarrisCriminalStyleDto
+            return Parse(new HarrisCriminalStyleDto
             {
                 Index = index,
                 CaseNumber = ParseText(data[0], Environment.NewLine),
@@ -548,7 +571,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 Court = data[3],
                 Status = data[4],
                 TypeOfActionOrOffense = data[5]
-            };
+            });
         }
 
         private static string FindWindow(IWebDriver driver, string topWindowHandle)

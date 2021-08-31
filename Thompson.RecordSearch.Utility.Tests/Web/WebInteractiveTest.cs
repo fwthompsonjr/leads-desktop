@@ -32,6 +32,10 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void ValidateChromePathTest()
         {
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
             DirectoryInfo di = new DirectoryInfo(@"c:\");
             var search = new DirectorySearch(di, "*chrome.exe", 2);
             var found = search.FileList;

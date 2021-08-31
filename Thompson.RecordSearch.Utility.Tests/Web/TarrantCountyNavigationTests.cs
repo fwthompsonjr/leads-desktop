@@ -47,6 +47,10 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("tarrant.county.actions")]
         public void CanGetTarrtantCountInstructions()
         {
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
             var fileName = "tarrantCountyMapping_1";
 
             IWebDriver driver = GetDriver();

@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C68AF7
 		Shared\harris-civil-settings.json = Shared\harris-civil-settings.json
 		Shared\harrisCivilCaseType.json = Shared\harrisCivilCaseType.json
 		Shared\harrisCivilMapping.json = Shared\harrisCivilMapping.json
+		IntegrationTestMethod.cs = IntegrationTestMethod.cs
 		mail_settings.json = mail_settings.json
 		mail_settings.xml = mail_settings.xml
 		MailRepository.cs = MailRepository.cs
@@ -166,7 +167,7 @@ Global
 		{A856A6B1-2862-485F-956A-69F065E20863} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
+		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 	EndGlobalSection
 EndGlobal

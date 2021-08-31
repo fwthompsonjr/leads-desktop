@@ -18,8 +18,13 @@ namespace Thompson.RecordSearch.Utility.Tests
         }
 
         [TestMethod]
+        [TestCategory("Integration Only")]
         public void Download_CanGetAFile()
         {
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
             var obj = new HarrisCriminalData();
             IWebDriver driver = GetDriver(false);
             try
@@ -38,8 +43,13 @@ namespace Thompson.RecordSearch.Utility.Tests
         }
 
         [TestMethod]
+        [TestCategory("Integration Only")]
         public void Download_CanGetAFile_WithoutADriver()
         {
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
             var obj = new HarrisCriminalData();
             try
             {
