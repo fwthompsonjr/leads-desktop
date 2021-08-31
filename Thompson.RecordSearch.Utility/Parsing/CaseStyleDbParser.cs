@@ -32,6 +32,12 @@ namespace Thompson.RecordSearch.Utility.Parsing
         public string Data { get; set; }
 
 
+        /// <summary>
+        /// Determines whether this instance can parse.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance can parse; otherwise, <c>false</c>.
+        /// </returns>
         public virtual bool CanParse()
         {
             if (string.IsNullOrEmpty(Data)) return false;
@@ -39,15 +45,20 @@ namespace Thompson.RecordSearch.Utility.Parsing
             return true;
         }
 
+        /// <summary>
+        /// Parses this instance.
+        /// </summary>
+        /// <returns></returns>
         public virtual ParseCaseStyleDbDto Parse()
         {
             var response = new ParseCaseStyleDbDto { Data = Data };
             if (!CanParse()) return response;
 
             if (string.IsNullOrEmpty(Data)) return response;
-            response.CaseData = ExtractField(DataExtractType.CaseData, Data);
-            response.Defendant = ExtractField(DataExtractType.Defendant, response.CaseData);
-            response.Plantiff = ExtractField(DataExtractType.Plantiff, response.CaseData);
+            var caseData = ExtractField(DataExtractType.CaseData, Data);
+            response.CaseData = caseData;
+            response.Defendant = ExtractField(DataExtractType.Defendant, caseData);
+            response.Plantiff = ExtractField(DataExtractType.Plantiff, caseData);
             return response;
         }
 
@@ -66,9 +77,11 @@ namespace Thompson.RecordSearch.Utility.Parsing
                 case DataExtractType.Plantiff:
                     var b = data.IndexOf(_searchKeyWord, Oic);
                     if (b < 0) return data;
-                    var info = data.Split(_searchKeyWord.ToCharArray());
-                    var index = extractType == DataExtractType.Plantiff ? 0 : 1;
-                    response = info[index].Trim();
+                    if(extractType == DataExtractType.Plantiff)
+                    {
+                        return data.Substring(0, b).Trim();
+                    }
+                    response = data.Substring(b + _searchKeyWord.Length).Trim();
                     return response;
                 default:
                     return response;
