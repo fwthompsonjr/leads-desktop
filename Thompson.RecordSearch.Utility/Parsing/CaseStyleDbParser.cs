@@ -77,7 +77,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
                 case DataExtractType.Plantiff:
                     var b = data.IndexOf(_searchKeyWord, Oic);
                     if (b < 0) return data;
-                    if(extractType == DataExtractType.Plantiff)
+                    if (extractType == DataExtractType.Plantiff)
                     {
                         return data.Substring(0, b).Trim();
                     }

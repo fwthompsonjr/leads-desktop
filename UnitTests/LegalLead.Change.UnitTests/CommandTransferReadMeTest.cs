@@ -6,7 +6,8 @@ namespace LegalLead.Changed.UnitTests
     [TestClass]
     public class CommandTransferReadMeTest
     {
-        const string srcFile = @"D:\Alpha\LegalLead\LegalLead.Changed.UnitTests\data\temp-log.json";
+        protected const string projectFolder = @"D:\Alpha\LegalLead\UnitTests\LegalLead.Change.UnitTests\bin\debug\net472";
+        static readonly string srcFile = $"{projectFolder}\\data\\temp-log.json";
 
         [TestMethod]
         public void CanLoadTestLog()

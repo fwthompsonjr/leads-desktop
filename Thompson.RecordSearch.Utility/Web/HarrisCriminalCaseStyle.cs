@@ -376,7 +376,7 @@ namespace Thompson.RecordSearch.Utility.Web
             return string.Empty;
         }
 
-        private int GetRecordCount(string text)
+        private static int GetRecordCount(string text)
         {
             const int notfound = -1;
             if (string.IsNullOrEmpty(text)) return notfound;

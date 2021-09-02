@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
@@ -285,14 +286,8 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
         private static string GetAppDirectoryName()
         {
 
-            var navigation = new SettingsManager();
-            var navFile = navigation.ExcelFormatFile;
-            var folder = Path.GetDirectoryName(navFile);
-            while (new DirectoryInfo(folder).Name != "bin")
-            {
-                folder = new DirectoryInfo(folder).Parent.FullName;
-            }
-            return new DirectoryInfo(folder).Parent.FullName;
+            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            return Path.GetDirectoryName(execName);
         }
     }
 }
