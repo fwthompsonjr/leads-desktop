@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Thompson.RecordSearch.Utility.Db
 {
@@ -34,10 +31,12 @@ namespace Thompson.RecordSearch.Utility.Db
         /// The data folder.
         /// </value>
         public static string DataFolder => _dataFolder ?? (_dataFolder = GetDataFolderName());
+
         /// <summary>
         /// Gets the name of the application data directory.
         /// </summary>
         /// <returns></returns>
+        [ExcludeFromCodeCoverage]
         private static string GetDataFolderName()
         {
             var parentName = AppFolder;
@@ -69,11 +68,11 @@ namespace Thompson.RecordSearch.Utility.Db
                 throw new ArgumentNullException(nameof(fileName));
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
-            
+
             var targetFile = Path.Combine(DataFolder, fileName);
             if (File.Exists(targetFile))
                 throw new ArgumentOutOfRangeException(nameof(fileName));
-            
+
             var content = JsonConvert.SerializeObject(data);
             using (var writer = new StreamWriter(targetFile))
             {

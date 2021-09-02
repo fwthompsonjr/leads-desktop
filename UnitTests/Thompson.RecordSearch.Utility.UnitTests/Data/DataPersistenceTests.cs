@@ -2,11 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Db;
 
 namespace Thompson.RecordSearch.Utility.UnitTests.Data
@@ -47,7 +44,7 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Data
                 if (!Directory.Exists(path)) return;
                 var files = new DirectoryInfo(path).GetFiles("*.temp").ToList();
                 if (!files.Any()) return;
-                // files.ForEach(f => File.Delete(f.FullName));
+                files.ForEach(f => File.Delete(f.FullName));
             }
             catch (Exception)
             {
@@ -133,6 +130,13 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Data
             actual.Name.ShouldBe(obj.Name);
             actual.CreateDate.ShouldBe(obj.CreateDate);
             actual.FileName.ShouldBe(obj.FileName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FileExists_Expects_FileName()
+        {
+            _ = DataPersistence.FileExists(string.Empty);
         }
     }
 }

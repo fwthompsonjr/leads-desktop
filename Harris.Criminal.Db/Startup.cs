@@ -32,7 +32,8 @@ namespace Harris.Criminal.Db
         }
         public static Task ReadAsync(IProgress<bool> progress)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 References.Read();
                 Downloads.Read();
                 progress.Report(true);
