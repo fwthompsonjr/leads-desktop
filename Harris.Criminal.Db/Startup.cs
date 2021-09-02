@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Harris.Criminal.Db
 {
@@ -28,6 +29,14 @@ namespace Harris.Criminal.Db
         {
             References.Read();
             Downloads.Read();
+        }
+        public static Task ReadAsync(IProgress<bool> progress)
+        {
+            return Task.Run(() => {
+                References.Read();
+                Downloads.Read();
+                progress.Report(true);
+            });
         }
 
 

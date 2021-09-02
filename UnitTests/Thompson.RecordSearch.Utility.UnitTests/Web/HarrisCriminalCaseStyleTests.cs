@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Web;
 
@@ -76,7 +77,7 @@ namespace Thompson.RecordSearch.Utility.Tests
 
         [TestMethod]
         [TestCategory("Integration Only")]
-        public void CaseStyle_CanGet_Bulk()
+        public async Task CaseStyle_CanGet_Bulk()
         {
             if (!System.Diagnostics.Debugger.IsAttached)
             {
@@ -94,7 +95,8 @@ namespace Thompson.RecordSearch.Utility.Tests
             var result = new List<HarrisCriminalStyleDto>();
             try
             {
-                result.Append(obj.GetCases(driver, dtmax, dateRange));
+                var records = await Task.Run(() => { return obj.GetCases(driver, dtmax, dateRange); });
+                result.Append(records);
                 result.ShouldNotBeNull();
                 result.Count.ShouldBeGreaterThan(0);
             }

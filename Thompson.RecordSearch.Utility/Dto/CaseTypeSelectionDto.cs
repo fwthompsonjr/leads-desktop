@@ -71,7 +71,6 @@ namespace Thompson.RecordSearch.Utility.Dto
                 result.Add(new DropDown { Id = o.Id, Name = o.Name, Query = o.Query });
             });
             return result;
-
         }
     }
 

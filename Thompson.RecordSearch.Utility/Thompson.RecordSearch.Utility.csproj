@@ -233,6 +233,7 @@
     <Compile Include="Classes\WebUtilities_01.cs" />
     <Compile Include="Classes\XmlContentHolder.cs" />
     <Compile Include="CommonKeyIndexes.cs" />
+    <Compile Include="Db\DataPersistence.cs" />
     <Compile Include="DriverFactory\BaseChromeProvider.cs" />
     <Compile Include="DriverFactory\ChromeOlderProvider.cs" />
     <Compile Include="DriverFactory\ChromeProvider.cs" />
@@ -257,7 +258,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\IElementActionBase.cs" />
     <Compile Include="Interfaces\IExcelFileWriter.cs" />
-    <Compile Include="Models\CaseData.cs" />
     <Compile Include="Models\CaseRowData.cs" />
     <Compile Include="Models\ExcelColumnLayout.cs" />
     <Compile Include="Models\ModelExtensions.cs" />

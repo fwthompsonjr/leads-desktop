@@ -43,6 +43,7 @@ namespace Harris.Criminal.Db.Tests.Tables
             var obj = DtoFaker.Generate();
             Assert.IsNotNull(obj);
         }
+
         [TestMethod]
         public void HasFields()
         {
@@ -69,6 +70,30 @@ namespace Harris.Criminal.Db.Tests.Tables
         }
 
         [TestMethod]
+        public void Indexer_Get_With_FieldNames()
+        {
+            var obj = DtoFaker.Generate();
+            var names = CaseStyleDb.FieldNames;
+
+            obj.CaseNumber.ShouldBe(obj[names[0]]);
+            obj.Style.ShouldBe(obj[names[1]]);
+            obj.FileDate.ShouldBe(obj[names[2]]);
+            obj.Court.ShouldBe(obj[names[3]]);
+            obj.Status.ShouldBe(obj[names[4]]);
+            obj.TypeOfActionOrOffense.ShouldBe(obj[names[5]]);
+
+            obj[""].ShouldBeNull();
+            obj["abcdefg"].ShouldBeNull();
+        }
+
+        [TestMethod]
+        public void Indexer_Get_Negative()
+        {
+            var obj = DtoFaker.Generate();
+            obj[-1].ShouldBeNull();
+        }
+
+        [TestMethod]
         public void Indexer_Set()
         {
             var list = DtoFaker.Generate(2);
@@ -92,6 +117,31 @@ namespace Harris.Criminal.Db.Tests.Tables
             {
                 obj[i] = src[i - 30];
             }
+        }
+
+        [TestMethod]
+        public void Indexer_Set_With_FieldNames()
+        {
+            var list = DtoFaker.Generate(2);
+            var names = CaseStyleDb.FieldNames;
+            var obj = list[0];
+            var src = list[1];
+            for (int i = 0; i < names.Count; i++)
+            {
+                obj[names[i]].ShouldNotBe(src[names[i]]);
+                obj[names[i]] = src[names[i]];
+            }
+
+            obj.CaseNumber.ShouldBe(src[names[0]]);
+            obj.Style.ShouldBe(src[names[1]]);
+            obj.FileDate.ShouldBe(src[names[2]]);
+            obj.Court.ShouldBe(src[names[3]]);
+            obj.Status.ShouldBe(src[names[4]]);
+            obj.TypeOfActionOrOffense.ShouldBe(src[names[5]]);
+
+            // attempt to set out of range field indexes
+            obj[""] = src[""];
+            obj["abcdefg"] = src["abcdefg"];
         }
     }
 }

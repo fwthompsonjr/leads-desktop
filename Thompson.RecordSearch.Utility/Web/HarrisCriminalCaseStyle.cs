@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Db;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Parsing;
 
@@ -266,13 +267,6 @@ namespace Thompson.RecordSearch.Utility.Web
 
             foreach (var dto in list)
             {
-                /*
-                var index = list.IndexOf(dto);
-                if (index == 0)
-                {
-                    System.Diagnostics.Debugger.Break();
-                }
-                */
                 result.Append(PopulateDates(dto));
             }
             return result;
@@ -392,6 +386,7 @@ namespace Thompson.RecordSearch.Utility.Web
         private List<HarrisCriminalStyleDto> PopulateDates(HarrisCaseDateDto dateDto)
         {
             const string format = "MM/dd/yyyy";
+            const string fileFormat = "yyyy-MM-dd";
             const string status = "Active - CRIMINAL";
             string[] controlNames = new string[] { "Case Status", "Print Button", "Print Results Table" };
 
@@ -402,9 +397,15 @@ namespace Thompson.RecordSearch.Utility.Web
             var dates = new List<DateTime> { dateDto.StartDate, dateDto.EndDate };
             var startDate = dates.Min().ToString(format, culture);
             var endingDate = dates.Max().ToString(format, culture);
+            var fsStartDate = dates.Min().ToString(fileFormat, culture);
+            var fsEndingDate = dates.Max().ToString(fileFormat, culture);
             var result = new List<HarrisCriminalStyleDto>();
             var threeMinutes = TimeSpan.FromSeconds(180);
-
+            string strFileName = $"{fsStartDate}_{fsEndingDate}_HarrisCriminalStyleDto.json";
+            if (DataPersistence.FileExists(strFileName))
+            {
+                return DataPersistence.GetContent<List<HarrisCriminalStyleDto>>(strFileName);
+            }
             driver.Manage().Timeouts().PageLoad = threeMinutes;
 
             // populate form
@@ -484,7 +485,10 @@ namespace Thompson.RecordSearch.Utility.Web
             driver.ClickAndOrSetText(driver.FindElement(Selectors.SearchAgain));
 
             // write result to file here
+            if (DataPersistence.FileExists(strFileName))
+                return result;
 
+            DataPersistence.Save(strFileName, result);
             return result;
         }
 
