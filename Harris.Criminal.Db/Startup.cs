@@ -15,6 +15,8 @@ namespace Harris.Criminal.Db
         internal static string _appFolder;
         internal static string AppFolder => _appFolder ?? (_appFolder = GetAppFolderName());
 
+        public static string DataFolder => Downloads.DataFolder;
+
         /// <summary>
         /// Gets the name of the application directory.
         /// </summary>
@@ -57,7 +59,7 @@ namespace Harris.Criminal.Db
             }
             private static string _dataFolder;
 
-            private static string DataFolder => _dataFolder ?? (_dataFolder = GetDataFolderName());
+            internal static string DataFolder => _dataFolder ?? (_dataFolder = GetDataFolderName());
             /// <summary>
             /// Gets the name of the application data directory.
             /// </summary>
@@ -193,6 +195,67 @@ namespace Harris.Criminal.Db
                 FileNames = files.Select(f => f.FullName).ToList();
                 var tables = new List<ReferenceTable>();
                 FileNames.ForEach(f => { tables.Add(Read<ReferenceTable>(f)); });
+                DataList = tables;
+            }
+
+            private static T Read<T>(string sourceFileName) where T : class
+            {
+                var content = GetFileContent(sourceFileName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content);
+            }
+
+            private static string GetFileContent(string sourceFileName)
+            {
+                using (var reader = new StreamReader(sourceFileName))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>")]
+        public static class CaseStyles
+        {
+
+            private static string _dataFolder;
+
+            private static string DataFolder => _dataFolder ?? (_dataFolder = GetDataFolderName());
+            /// <summary>
+            /// Gets the name of the application data directory.
+            /// </summary>
+            /// <returns></returns>
+            private static string GetDataFolderName()
+            {
+                var parentName = AppFolder;
+                return Path.Combine(parentName, "_db", "_downloads");
+            }
+            /// <summary>
+            /// List of full filenames found 
+            /// </summary>
+            public static List<string> FileNames { get; private set; }
+
+            /// <summary>
+            /// List of Reference Data
+            /// </summary>
+            public static List<CaseStyleDb> DataList { get; private set; }
+
+            /// <summary>
+            /// Reads Reference Data and Stores in Memory
+            /// </summary>
+            /// <param name="reset"></param>
+            public static void Read(bool reset = false)
+            {
+                if (reset == false && FileNames != null && DataList != null)
+                {
+                    return;
+                }
+
+                const string extn = "*HarrisCriminalStyleDto.json";
+                var directory = new DirectoryInfo(DataFolder);
+                var files = directory.GetFiles(extn).ToList();
+                FileNames = files.Select(f => f.FullName).ToList();
+                var tables = new List<CaseStyleDb>();
+                FileNames.ForEach(f => { tables.Add(Read<CaseStyleDb>(f)); });
                 DataList = tables;
             }
 

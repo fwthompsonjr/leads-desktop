@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -72,7 +73,7 @@ namespace Harris.Criminal.Db.Downloads
                 }
                 switch (index)
                 {
-                    case 0: return Index.ToString("D");
+                    case 0: return Index.ToString("D", CultureInfo.InvariantCulture);
                     case 1: return DateDatasetProduced;
                     case 2: return CourtDivisionIndicator;
                     case 3: return CaseNumber;
@@ -117,7 +118,7 @@ namespace Harris.Criminal.Db.Downloads
                 }
                 switch (index)
                 {
-                    case 0: Index = Convert.ToInt32(value); return;
+                    case 0: Index = Convert.ToInt32(value, CultureInfo.InvariantCulture); return;
                     case 1: DateDatasetProduced = value; return;
                     case 2: CourtDivisionIndicator = value; return;
                     case 3: CaseNumber = value; return;

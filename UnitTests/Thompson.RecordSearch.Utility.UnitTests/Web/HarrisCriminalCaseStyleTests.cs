@@ -109,6 +109,34 @@ namespace Thompson.RecordSearch.Utility.Tests
         }
 
         [TestMethod]
+        [TestCategory("Integration Only")]
+        public async Task CaseStyle_CanGet_RealTime()
+        {
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
+            DateTime MxDate = DateTime.Now.AddDays(-1).Date;
+            DateTime MnDate = MxDate.AddDays(-3);
+
+            var obj = new HarrisCriminalCaseStyle();
+            IWebDriver driver = GetDriver();
+            var result = new List<HarrisCriminalStyleDto>();
+            try
+            {
+                var records = await Task.Run(() => { return obj.GetCases(driver, MnDate, MxDate); });
+                result.Append(records);
+                result.ShouldNotBeNull();
+                result.Count.ShouldBeGreaterThan(0);
+            }
+            finally
+            {
+                driver?.Close();
+                driver?.Quit();
+                KillProcess("chromedriver");
+            }
+        }
+        [TestMethod]
         public void CanParse_Min_Max()
         {
             const string fmt = "yyyyMMdd";

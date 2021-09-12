@@ -98,5 +98,14 @@ namespace Harris.Criminal.Db.Tests
             var actual = input.ToExactDateString(fmt, expected);
             actual.ShouldBe(expected);
         }
+
+        [TestMethod]
+        public void CanDerive_NextMonday()
+        {
+            var test = DateTimeExtensions.NextMonday();
+            test.DayOfWeek.ShouldBe(DayOfWeek.Monday);
+            test.ShouldBeGreaterThan(DateTime.Now);
+            Math.Abs(test.Subtract(DateTime.Now).TotalDays).ShouldBeLessThan(8);
+        }
     }
 }

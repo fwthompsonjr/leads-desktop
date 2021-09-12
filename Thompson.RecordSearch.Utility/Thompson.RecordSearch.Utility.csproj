@@ -247,6 +247,7 @@
     <Compile Include="Dto\GenericSettingDto.cs" />
     <Compile Include="Dto\HarrisCaseSearchDto.cs" />
     <Compile Include="Dto\HarrisCriminalExtensions.cs" />
+    <Compile Include="Web\HarrisCriminalRealTime.cs" />
     <Compile Include="Dto\HarrisCriminalStyleBo.cs" />
     <Compile Include="Dto\HarrisCriminalStyleDto.cs" />
     <Compile Include="Dto\HarrisCaseDateDto.cs" />
@@ -327,6 +328,8 @@
     <Content Include="xml\ReadMe.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="_html\sample-harris-criminal-record.html" />
+    <Content Include="_html\sample-harris-criminal-search-result.html" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

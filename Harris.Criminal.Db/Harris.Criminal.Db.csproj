@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CaseStyleDbInspector.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Downloads\HarrisCountyListDto.cs" />
     <Compile Include="Downloads\HarrisCriminalBo.cs" />
@@ -56,6 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="_db\_downloads\2021-08-08_2021-08-15_HarrisCriminalStyleDto.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_db\_downloads\2021-08-15_2021-08-22_HarrisCriminalStyleDto.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="_db\_tables\hcc.tables.cad.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -92,6 +99,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="_db\_downloads\2021-09-06 CrimFilingsWithFutureSettings_withHeadings.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_db\_downloads\2021-09-11 CrimFilingsWithFutureSettings_withHeadings.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

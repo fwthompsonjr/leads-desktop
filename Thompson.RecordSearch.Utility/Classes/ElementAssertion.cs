@@ -69,6 +69,24 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
+
+        public void WaitForElementsToExist(By selector, string elementName, int secondsWait = 10)
+        {
+            Console.WriteLine(CommonKeyIndexes.WaitingForElement, elementName);
+            try
+            {
+                var wait = new WebDriverWait(PageDriver, TimeSpan.FromSeconds(secondsWait));
+#pragma warning disable 618
+#pragma warning disable 436
+                wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(selector));
+#pragma warning restore 436
+#pragma warning restore 618
+            }
+            catch (Exception)
+            {
+                // not gonna fire errors
+            }
+        }
         public bool ContainsText(By selector, string elementName, string searchString)
         {
             if (!DoesElementExist(selector, elementName)) return false;

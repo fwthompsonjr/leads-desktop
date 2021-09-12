@@ -3,8 +3,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Db;
@@ -15,16 +17,19 @@ namespace Thompson.RecordSearch.Utility.Web
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2234:Pass system uri objects instead of strings",
         Justification = "<Pending>")]
+    [ExcludeFromCodeCoverage]
     public class HarrisCriminalCaseStyle : HarrisCriminalData
     {
         /// <summary>
         /// The user identity
         /// </summary>
         private const string uid = "frank.thompson.jr@gmail.com";
+
         /// <summary>
         /// The user credential
         /// </summary>
         private const string pwd = "123William890";
+
         /// <summary>
         /// The web address for criminal records search
         /// </summary>
@@ -241,6 +246,38 @@ namespace Thompson.RecordSearch.Utility.Web
             public static By IFrame => By.Id("ctl00_ctl00_ctl00_TopLoginIFrame1_iFrameContent2");
         }
 
+        /// <summary>
+        /// Gets case style details from remote source for a specific range of dates.
+        /// </summary>
+        /// <param name="driver">The driver.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        public List<HarrisCriminalStyleDto> GetCases(IWebDriver driver, DateTime startDate, DateTime endDate)
+        {
+            var result = new List<HarrisCriminalStyleDto>();
+            var interval = startDate.Subtract(endDate);
+            var list = HarrisCaseDateDto.BuildList(
+                startDate, 
+                interval, 
+                Convert.ToInt32(Math.Abs(interval.TotalDays)));
+            driver = GetOrSetInternalDriver(driver);
+            driver.Navigate().GoToUrl(url);
+            driver.WaitForNavigation();
+
+            Login(driver);
+
+            if (!driver.IsElementPresent(Selectors.CaseNumber))
+            {
+                return result;
+            }
+
+            foreach (var dto in list)
+            {
+                result.Append(PopulateDates(dto));
+            }
+            return result;
+        }
 
         /// <summary>
         /// Gets case style details from remote source for a specific range of dates.
@@ -252,7 +289,7 @@ namespace Thompson.RecordSearch.Utility.Web
         public List<HarrisCriminalStyleDto> GetCases(IWebDriver driver, DateTime startDate, int totalDays = 180)
         {
             var result = new List<HarrisCriminalStyleDto>();
-            var interval = new TimeSpan(-5, 0, 0, 0);
+            var interval = new TimeSpan(-7, 0, 0, 0);
             var list = HarrisCaseDateDto.BuildList(startDate, interval, totalDays);
             driver = GetOrSetInternalDriver(driver);
             driver.Navigate().GoToUrl(url);
@@ -370,6 +407,7 @@ namespace Thompson.RecordSearch.Utility.Web
             return string.Empty;
         }
 
+        [ExcludeFromCodeCoverage]
         private static int GetRecordCount(string text)
         {
             const int notfound = -1;
@@ -383,6 +421,7 @@ namespace Thompson.RecordSearch.Utility.Web
             return notfound;
         }
 
+        [ExcludeFromCodeCoverage]
         private List<HarrisCriminalStyleDto> PopulateDates(HarrisCaseDateDto dateDto)
         {
             const string format = "MM/dd/yyyy";
@@ -492,9 +531,12 @@ namespace Thompson.RecordSearch.Utility.Web
             return result;
         }
 
+        [ExcludeFromCodeCoverage]
         private static HarrisCriminalStyleDto Parse(HarrisCriminalStyleDto dto)
         {
             if (dto == null) return null;
+            dto.Style = Regex.Replace(dto.Style, @"\u00A0", " ");
+            dto.Style = Regex.Replace(dto.Style, @"&nbsp;", " ");
             var parser = new CaseStyleDbParser { Data = dto.Style };
             if (!parser.CanParse()) return dto;
             var parseResult = parser.Parse();
@@ -504,15 +546,22 @@ namespace Thompson.RecordSearch.Utility.Web
             return dto;
         }
 
+        [ExcludeFromCodeCoverage]
         private static string ParseText(string text, string separator)
         {
             if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(separator))
             {
                 return text;
             }
-            return text.Split(separator.ToCharArray())[0];
+            text = Regex.Replace(text, @"\u00A0", " ");
+            if (text.Contains(separator))
+            {
+                return text.Split(separator.ToCharArray())[0];
+            }
+            return new string(text.TakeWhile(c => !Char.IsLetter(c)).ToArray());
         }
 
+        [ExcludeFromCodeCoverage]
         private static void Login(IWebDriver driver)
         {
             try
@@ -545,6 +594,7 @@ namespace Thompson.RecordSearch.Utility.Web
             }
         }
 
+        [ExcludeFromCodeCoverage]
         private static HarrisCriminalStyleDto ReadTable(List<IWebElement> rows, IWebElement item)
         {
             var index = rows.IndexOf(item);
@@ -562,6 +612,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 TypeOfActionOrOffense = cells[5].Text
             });
         }
+        [ExcludeFromCodeCoverage]
         private static HarrisCriminalStyleDto ReadTable(List<IEnumerable<string>> rows, IEnumerable<string> item)
         {
             var index = rows.IndexOf(item);
@@ -569,15 +620,15 @@ namespace Thompson.RecordSearch.Utility.Web
             return Parse(new HarrisCriminalStyleDto
             {
                 Index = index,
-                CaseNumber = ParseText(data[0], Environment.NewLine),
-                Style = data[1],
-                FileDate = data[2],
-                Court = data[3],
-                Status = data[4],
-                TypeOfActionOrOffense = data[5]
+                CaseNumber = ParseText(data[1], Environment.NewLine).Trim(),
+                Style = data[3].Trim(),
+                FileDate = data[5].Trim(),
+                Court = data[7].Trim(),
+                Status = data[9].Trim(),
+                TypeOfActionOrOffense = data[11].Trim()
             });
         }
-
+        [ExcludeFromCodeCoverage]
         private static string FindWindow(IWebDriver driver, string topWindowHandle)
         {
             const StringComparison oic = StringComparison.OrdinalIgnoreCase;
@@ -585,6 +636,7 @@ namespace Thompson.RecordSearch.Utility.Web
             return handles.FirstOrDefault(a => !a.Equals(topWindowHandle, oic));
 
         }
+        [ExcludeFromCodeCoverage]
         private static bool IsElementPresent(IWebDriver driver, By by, string friendlyName = "Element")
         {
             try

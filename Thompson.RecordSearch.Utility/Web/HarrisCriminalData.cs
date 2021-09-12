@@ -1,12 +1,15 @@
-﻿using OpenQA.Selenium;
+﻿using Harris.Criminal.Db;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
@@ -84,7 +87,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 jse.ExecuteScript("arguments[0].click();", anchor);
                 var trackingStart = DateTime.Now;
                 var timeout = 5 * 60; // allow five minutes
-                while (FileCreateComplete(trackingStart, timeout) == false) { Thread.Sleep(2000); }
+                while (FileCreateComplete(trackingStart, timeout) == false) { Thread.Sleep(500); }
                 var list = GetFiles();
                 if (!list.Any()) return null;
                 list.Sort((a, b) => b.CreationTime.CompareTo(a.CreationTime));
@@ -98,6 +101,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 return null;
             }
         }
+        [ExcludeFromCodeCoverage]
         private static string GetDownloadName()
         {
             var currentDate = DateTime.Now;
@@ -111,7 +115,7 @@ namespace Thompson.RecordSearch.Utility.Web
             var computed = string.Concat(currentDate.ToString("yyyy-MM-dd", culture), " CrimFilingsWithFutureSettings_withHeadings.txt");
             return Path.Combine(DownloadTo, computed);
         }
-
+        [ExcludeFromCodeCoverage]
         private static string GetDownloadName(IWebElement anchor)
         {
             var onclick = anchor.GetAttribute("onclick");
@@ -120,7 +124,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 .Replace("');", ""));
             return Path.Combine(DownloadTo, fileName);
         }
-
+        [ExcludeFromCodeCoverage]
         private static bool FileCreateComplete(DateTime startTime, int timeoutInSeconds)
         {
             var trackingEnd = startTime.AddSeconds(timeoutInSeconds);
@@ -131,9 +135,34 @@ namespace Thompson.RecordSearch.Utility.Web
             if (!files.Any()) return false | isTrackingTimeout; // keep looking nothing found
             var list = files.ToList()
                 .FindAll(a => Path.GetExtension(a.Name).Equals(".txt", StringComparison.OrdinalIgnoreCase));
-            return GetFiles().Any(a => a.CreationTime > startTime) | isTrackingTimeout;
-        }
+            var downloaded = GetFiles();
+            var hasFile = downloaded.Any(a => a.CreationTime > startTime);
+            if (hasFile)
+            {
+                UpdateDownloadDatabase(downloaded);
 
+            }
+            return hasFile | isTrackingTimeout;
+        }
+        [ExcludeFromCodeCoverage]
+        private static void UpdateDownloadDatabase(List<FileInfo> downloaded)
+        {
+
+            // transfer this file to db/download folder
+            string targetFolder = Startup.DataFolder;
+            var data = downloaded.Select(x => x.FullName).Distinct().ToList();
+            foreach (var target in data)
+            {
+                var targetName = Path.Combine(targetFolder, Path.GetFileName(target));
+                if (File.Exists(targetName)) continue;
+                File.Copy(target, targetName, true);
+            }
+            _ = Task.Run(() =>
+            {
+                Startup.Reset();
+            });
+        }
+        [ExcludeFromCodeCoverage]
         private static List<FileInfo> GetFiles()
         {
             var files = new DirectoryInfo(DownloadTo).GetFiles("*.txt");

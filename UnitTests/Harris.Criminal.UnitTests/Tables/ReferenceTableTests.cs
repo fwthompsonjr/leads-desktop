@@ -18,6 +18,7 @@ namespace Harris.Criminal.Db.Tests.Tables
             if (!isInitialized)
             {
                 Startup.Read();
+                isInitialized = true;
             }
             if (DatumFaker == null)
             {

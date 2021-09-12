@@ -70,5 +70,24 @@ namespace Thompson.RecordSearch.Utility.Classes
                 return false;
             }
         }
+
+        public static bool AreElementsPresent(this IWebDriver driver, By by)
+        {
+            if (driver == null) throw new ArgumentNullException(nameof(driver));
+            try
+            {
+                var assertion = new ElementAssertion(driver);
+                assertion.WaitForElementsToExist(by, "ElementCollection", 5);
+                driver.FindElements(by);
+                return true;
+            }
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
+            {
+                // intentional to catch all exceptions
+                return false;
+            }
+        }
     }
 }

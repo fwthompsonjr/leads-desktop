@@ -42,25 +42,15 @@ namespace Harris.Criminal.Db
             return dateDefault;
         }
 
-        public static string FromDateString(
-            this string input,
-            string currentFormat,
-            string dateFormat,
-            string dateDefault)
+        public static DateTime NextMonday()
         {
-            if (string.IsNullOrEmpty(input) |
-                string.IsNullOrEmpty(currentFormat) |
-                string.IsNullOrEmpty(dateFormat))
-            {
-                return dateDefault;
-            }
-            var culture = CultureInfo.InvariantCulture;
-            var style = DateTimeStyles.AssumeLocal;
-            if (DateTime.TryParseExact(input, currentFormat, culture, style, out DateTime dte))
-            {
-                return dte.ToString(dateFormat, culture);
-            }
-            return dateDefault;
+            DateTime today = DateTime.Today.Date;
+            int daysUntilMonday = ((int)DayOfWeek.Monday - (int)today.DayOfWeek + 7) % 7;
+            //if today is monday, add seven days
+            if (daysUntilMonday == 0)
+                daysUntilMonday = 7;
+
+            return today.AddDays(daysUntilMonday);
         }
     }
 }
