@@ -2,10 +2,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Web;
 
 namespace Thompson.RecordSearch.Utility.UnitTests.Web
@@ -44,10 +40,14 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
         [TestMethod]
         public void Criminal_CanIterate()
         {
+            const int expected = 4331;
             var obj = new HarrisCriminalRealTime();
             try
             {
-                obj.IteratePages(GetDriver);
+                var result = obj.IteratePages(GetDriver);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+                Assert.AreEqual(expected, result.Count);
             }
             catch (Exception ex)
             {

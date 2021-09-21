@@ -258,8 +258,8 @@ namespace Thompson.RecordSearch.Utility.Web
             var result = new List<HarrisCriminalStyleDto>();
             var interval = startDate.Subtract(endDate);
             var list = HarrisCaseDateDto.BuildList(
-                startDate, 
-                interval, 
+                startDate,
+                interval,
                 Convert.ToInt32(Math.Abs(interval.TotalDays)));
             driver = GetOrSetInternalDriver(driver);
             driver.Navigate().GoToUrl(url);

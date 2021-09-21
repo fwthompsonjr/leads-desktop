@@ -5,10 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Parsing;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
@@ -21,10 +20,11 @@ namespace Thompson.RecordSearch.Utility.Web
         private const string recordCount = "td.PagerInfoCell";
         private const string dataTable = divResults + " table.resultHeader.contentwidth";
         private const string searchResult = "//*[@id=\"ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_pnlSearchResult\"]";
-        private const string searchLinks = searchResult + "/table[1]/tbody/tr[4]/td/table/tbody/tr/td[2]/a";
-        private const string resultGrid = "//table[@class='cd_resultgrid'][@width='100%']";
+        private const string totalRecordCount = "ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_recCountCas";
+        protected const string searchLinks = searchResult + "/table[1]/tbody/tr[4]/td/table/tbody/tr/td[2]/a";
+        protected const string resultGrid = "//table[@class='cd_resultgrid'][@width='100%']";
 
-        public void IteratePages(IWebDriver driver)
+        public List<HarrisCriminalStyleDto> IteratePages(IWebDriver driver)
         {
 
             if (driver == null)
@@ -34,13 +34,12 @@ namespace Thompson.RecordSearch.Utility.Web
             TheDriver = driver;
             var pager = GetElementsOrFail(By.CssSelector(tbPager)).FirstOrDefault();
             // get the expected record count
-            int count = GetRecordCount(pager, By.CssSelector(recordCount));
+            int count = GetPageCount(pager, By.CssSelector(recordCount));
+            int totalCount = GetRecordCount(By.Id(totalRecordCount));
             var cases = new List<HarrisCriminalStyleDto>();
-            var details = new List<HarrisCriminalDto>();
             var runDate = DateTime.Now;
             for (int r = 1; r <= count; r++)
             {
-                var currentWindow = driver.CurrentWindowHandle;
                 if (r != 1)
                 {
                     // find the pager element
@@ -53,88 +52,37 @@ namespace Thompson.RecordSearch.Utility.Web
                 var parentNode = doc.DocumentNode.FirstChild;
                 var nodes = parentNode.SelectNodes("//tr").Cast<HtmlNode>().ToList();
                 // read case header
-                nodes.ForEach(n => 
+                nodes.ForEach(n =>
                 {
                     if (nodes.IndexOf(n) != 0)
                     {
                         var cells = n.SelectNodes("td").Cast<HtmlNode>().ToList();
-                        AppendCases(cases, cells);
+                        AppendCases(cases, cells, totalCount);
                     }
                 });
-
-                // read case detail
-                var searchable = GetElementsOrFail(By.XPath(searchLinks));
-                // read case details
-                searchable.ForEach(s =>
+            }
+            var parser = new CaseStyleDbParser();
+            cases.ForEach(c =>
+            {
+                parser.Data = c.Style;
+                if (parser.CanParse())
                 {
-                    if (searchable.IndexOf(s) != 0)
-                    {
-                        driver.ClickAndOrSetText(s);
-                        var newWindow = driver.WindowHandles.ToList()
-                            .FirstOrDefault(h => !h.Equals(currentWindow, StringComparison.OrdinalIgnoreCase));
-                        driver.SwitchTo().Window(newWindow);
-                        var cdResults = GetElementsOrFail(By.XPath(resultGrid))
-                            .Select(x => ToHtmlDocument(x.GetAttribute("outerHTML")))
-                            .ToList()
-                            .FindAll(f => f != null);
-                        AppendDetail(details, cdResults, runDate);
-                        driver.Close();
-                        driver.SwitchTo().Window(currentWindow);
-                    }
-                });
-
-            }
+                    var parseResult = parser.Parse();
+                    c.Style = parseResult.CaseData;
+                    c.Plantiff = parseResult.Plantiff;
+                    c.Defendant = parseResult.Defendant;
+                }
+            });
+            return cases;
         }
 
-        private static void AppendDetail(List<HarrisCriminalDto> details, List<HtmlDocument> cdResults, DateTime runDate)
+        private static void AppendCases(List<HarrisCriminalStyleDto> cases, List<HtmlNode> cells, int maxRecords = 0)
         {
-            if (details == null | cdResults == null)
-            {
-                return;
-            }
-            if (cdResults.Count < 3)
-            {
-                return;
-            }
-            const string tbl = "//table";
-            const string tr = "//tr";
-            var rows = new PopUpTable
-            {
-                Index = details.Count + 1,
-                RunDate = runDate,
-                CauseSummary = cdResults[0].DocumentNode?.FirstChild?.SelectNodes(tr)?.ToList(),
-                DefendantAddress = cdResults[1]?.DocumentNode?.FirstChild?.SelectNodes(tr)?.ToList(),
-                DefendantBio = cdResults[1]?.DocumentNode?.FirstChild?.SelectNodes(tbl)[0]?.SelectNodes(tr)?.ToList(),
-                DefendantMetrics = cdResults[1]?.DocumentNode?.FirstChild?.SelectNodes(tbl)[1]?.SelectNodes(tr)?.ToList(),
-                Court = cdResults[2]?.DocumentNode?.FirstChild?.SelectNodes(tr)?.ToList()
-            };
-            var dto = rows.CriminalDto();
-            if (dto == null) return;
-            details.Add(dto);
-        }
-
-        private static HtmlDocument ToHtmlDocument(string table)
-        {
-            try
-            {
-                var doc = new HtmlDocument();
-                doc.LoadHtml(table);
-                return doc;
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch (Exception)
-#pragma warning restore CA1031 // Do not catch general exception types
-            {
-                return null;
-            }
-        }
-
-        private static void AppendCases(List<HarrisCriminalStyleDto> cases, List<HtmlNode> cells)
-        {
+            if (maxRecords > 0 && cases.Count >= maxRecords) return;
             var dto = new HarrisCriminalStyleDto
             {
                 Index = cases.Count + 1,
-                CaseNumber = GetNumeric(cells[0].InnerText.Trim()),
+                CaseNumber = GetCaseNumber(GetNumeric(cells[0].InnerText.Trim())),
                 Style = GetStyle(cells[1]),
                 FileDate = cells[2].InnerText.Trim(),
                 Court = cells[3].InnerText.Trim(),
@@ -144,6 +92,19 @@ namespace Thompson.RecordSearch.Utility.Web
             cases.Add(dto);
         }
 
+
+        private static string GetCaseNumber(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+            const string separator = "-";
+            if (!text.Contains(separator)) return text;
+            var pieces = text.Split(separator.ToCharArray());
+            return $"{pieces.First()}-{pieces.Last()}";
+
+        }
         private static string GetNumeric(string text)
         {
             if (string.IsNullOrEmpty(text))
@@ -175,7 +136,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 }
             }
         }
-        private static int GetRecordCount(IWebElement pager, By by)
+        private static int GetPageCount(IWebElement pager, By by)
         {
             var element = pager.FindElement(by);
             var item = element.Text.Split(' ').ToList().Last();
@@ -185,7 +146,16 @@ namespace Thompson.RecordSearch.Utility.Web
             }
             return 1;
         }
-
+        private int GetRecordCount(By by)
+        {
+            var element = TheDriver.FindElement(by);
+            var item = element.Text.Split(' ').ToList().Last().Replace(".", "");
+            if (int.TryParse(item, out int rc))
+            {
+                return rc;
+            }
+            return 1;
+        }
         private IWebElement GetElementOrFail(By by)
         {
             var isFound = TheDriver.IsElementPresent(by);
@@ -195,7 +165,7 @@ namespace Thompson.RecordSearch.Utility.Web
             }
             throw new NoSuchElementException();
         }
-        private List<IWebElement> GetElementsOrFail(By by)
+        protected List<IWebElement> GetElementsOrFail(By by)
         {
             var isFound = TheDriver.AreElementsPresent(by);
             if (isFound)
@@ -205,7 +175,7 @@ namespace Thompson.RecordSearch.Utility.Web
             throw new NoSuchElementException();
         }
 
-        private class PopUpTable
+        protected class PopUpTable
         {
             public int Index { get; set; }
             public DateTime RunDate { get; set; }
@@ -261,7 +231,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
             private string TryFindRow(List<HtmlNode> table, string heading)
             {
-                var found = table.FirstOrDefault(f => 
+                var found = table.FirstOrDefault(f =>
                 {
                     var cell = f.SelectNodes("td[@style='font-weight: bold']")?.ToList();
                     if (cell == null) return false;
