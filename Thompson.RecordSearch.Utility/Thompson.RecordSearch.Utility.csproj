@@ -220,6 +220,7 @@
     <Compile Include="Classes\ExcelFileWriter.cs" />
     <Compile Include="Classes\ExcelWriter.cs" />
     <Compile Include="Classes\HarrisCivilInteractive.cs" />
+    <Compile Include="Classes\HarrisCriminalInteractive.cs" />
     <Compile Include="Classes\IWebInteractive.cs" />
     <Compile Include="Classes\SafeWindowUtilites.cs" />
     <Compile Include="Classes\TarrantWebFetch.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Dto\GenericSettingDto.cs" />
     <Compile Include="Dto\HarrisCaseSearchDto.cs" />
     <Compile Include="Dto\HarrisCriminalExtensions.cs" />
+    <Compile Include="Parsing\CaseStyleExtensions.cs" />
     <Compile Include="Web\HarriCriminalsRealTimeDetail.cs" />
     <Compile Include="Web\HarrisCriminalRealTime.cs" />
     <Compile Include="Dto\HarrisCriminalStyleBo.cs" />

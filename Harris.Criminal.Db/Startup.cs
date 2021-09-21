@@ -31,13 +31,13 @@ namespace Harris.Criminal.Db
         {
             References.Read();
             Downloads.Read();
+            CaseStyles.Read();
         }
         public static Task ReadAsync(IProgress<bool> progress)
         {
             return Task.Run(() =>
             {
-                References.Read();
-                Downloads.Read();
+                Read();
                 progress.Report(true);
             });
         }
@@ -84,6 +84,7 @@ namespace Harris.Criminal.Db
                 var directory = new DirectoryInfo(DataFolder);
                 var files = directory.GetFiles(extn).ToList();
                 FileNames = files.Select(f => f.FullName).ToList();
+                FileNames.Sort((a, b) => b.CompareTo(a));
                 var records = new List<HarrisCountyListDto>();
                 foreach (var item in files)
                 {
@@ -254,8 +255,9 @@ namespace Harris.Criminal.Db
                 var directory = new DirectoryInfo(DataFolder);
                 var files = directory.GetFiles(extn).ToList();
                 FileNames = files.Select(f => f.FullName).ToList();
+                FileNames.Sort((a, b) => b.CompareTo(a));
                 var tables = new List<CaseStyleDb>();
-                FileNames.ForEach(f => { tables.Add(Read<CaseStyleDb>(f)); });
+                FileNames.ForEach(f => { tables.AddRange(Read<List<CaseStyleDb>>(f)); });
                 DataList = tables;
             }
 

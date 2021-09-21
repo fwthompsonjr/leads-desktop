@@ -101,7 +101,7 @@ namespace Thompson.RecordSearch.Utility.Models
             {
                 return ParseFromCaseStyle(0);
             }
-
+            set { }
         }
         public bool IsValid
         {

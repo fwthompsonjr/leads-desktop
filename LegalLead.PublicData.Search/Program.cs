@@ -58,7 +58,7 @@ namespace LegalLead.PublicData.Search
                 {
                     frm.Save();
                 }
-
+                Harris.Criminal.Db.Startup.Read();
                 mainForm = new FormMain();
                 command.Execute(mainForm);
             }

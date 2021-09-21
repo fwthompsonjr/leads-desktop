@@ -15,10 +15,28 @@ namespace Harris.Criminal.Db
             var fileDate = filingDate.ToString("M/d/yyyy", GetCulture);
             return db.Any(f => f.FileDate.Equals(fileDate, Oic));
         }
+        public static bool HasDetail(DateTime filingDate)
+        {
+            if (!HasHeader(filingDate))
+            {
+                return false;
+            }
+            var db = Startup.Downloads.DataList;
+            var fileDate = filingDate.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+            foreach (var dataset in db)
+            {
+                var found = dataset.Data.Any(a => a.FilingDate.Equals(fileDate, Oic));
+                if (!found) continue;
+                found = dataset.Data.Any(a =>
+                    a.FilingDate.Equals(fileDate, Oic));
+                if (found) return true;
+            }
+            return false;
+        }
 
         public static bool HasDetail(DateTime filingDate, string caseNumber)
         {
-            if (!HasHeader(filingDate))
+            if (!HasDetail(filingDate))
             {
                 return false;
             }
