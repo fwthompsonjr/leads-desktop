@@ -72,7 +72,9 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             var countyName = SettingsManager
                 .GetNavigation().Find(x => x.Id == websiteId)
-                .Name.Replace("County", "").Trim();
+                .Name.Replace("County", "")
+                .Replace("Criminal", "")
+                .Trim();
             var pck = excelPackage ?? new ExcelPackage();
             var wsDt = pck.Workbook.Worksheets.Add(worksheetName);
             var rowIndex = 1;
@@ -84,13 +86,23 @@ namespace Thompson.RecordSearch.Utility.Classes
                 { "firstname", "fname" },
                 { "lastname", "lname" }
             };
+            List<string> localFieldList = default;
             foreach (var item in addressList)
             {
+                if(addressList.IndexOf(item) == 0)
+                {
+                    localFieldList = item.FieldList;
+                    if (websiteId == 40)
+                    {
+                        localFieldList.RemoveAt(localFieldList.Count - 1);
+                        localFieldList.RemoveAt(localFieldList.Count - 1);
+                    }
+                }
                 if (rowIndex == 1)
                 {
                     // write header
                     var headerIndex = 1;
-                    foreach (var field in item.FieldList)
+                    foreach (var field in localFieldList)
                     {
                         var heading = wsDt.Cells[rowIndex, headerIndex];
                         heading.Value = field;
@@ -104,9 +116,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                     rowIndex++;
                 }
                 var culture = CultureInfo.CurrentCulture;
-                for (int i = 0; i < item.FieldList.Count; i++)
+                for (int i = 0; i < localFieldList.Count; i++)
                 {
-                    var field = item.FieldList[i];
+                    var field = localFieldList[i];
                     var fieldName = specialList.ContainsKey(field) & websiteId == 30 ? specialList[field] : field;
                     var content = item[fieldName];
                     var cleaner = new StringBuilder(content);

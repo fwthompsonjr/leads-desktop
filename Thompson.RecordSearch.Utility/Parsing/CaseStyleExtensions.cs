@@ -67,6 +67,14 @@ namespace Thompson.RecordSearch.Utility.Parsing
                     Plantiff = parsed.Plantiff,
                     Zip = item.DefendantZip
                 };
+                if(dto.Address2.Equals(", ", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    dto.Address2 = string.Empty;
+                }
+                if (string.IsNullOrEmpty(dto.Zip))
+                {
+                    dto.Zip = "00000";
+                }
                 records.Add(dto);
             }
             return records;
