@@ -306,6 +306,7 @@
     <Compile Include="Web\HarrisCivilReadTable.cs" />
     <Compile Include="Web\HarrisCriminalCaseStyle.cs" />
     <Compile Include="Web\HarrisCriminalData.cs" />
+    <Compile Include="Web\HarrisCriminalStarting.cs" />
     <Compile Include="Web\JquerySetSelectedIndex.cs" />
     <Compile Include="Web\JquerySetTextBox.cs" />
     <Compile Include="Web\WebNavAction.cs" />

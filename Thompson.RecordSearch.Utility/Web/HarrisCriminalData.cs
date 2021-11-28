@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
@@ -205,14 +206,29 @@ namespace Thompson.RecordSearch.Utility.Web
 
             if (disposing)
             {
-                // Dispose managed state (managed objects).            
-                TheDriver?.Close();
-                TheDriver?.Quit();
-                TheDriver.Dispose();
+                SlienceDisposal();
                 KillProcess("chromedriver");
             }
 
             _disposed = true;
+        }
+
+        private void SlienceDisposal()
+        {
+            try
+            {
+                // Dispose managed state (managed objects).            
+                TheDriver?.Close();
+                TheDriver?.Quit();
+                TheDriver.Dispose();
+            }
+            catch (Exception ex)
+            {
+                StringBuilder builder = new StringBuilder("Error in silent disposal Harris-Criminal-Data.");
+                builder.AppendLine($" Message: {ex.Message}");
+                builder.AppendLine($" Stack Trace: {ex.StackTrace}");
+                Console.WriteLine(builder.ToString());
+            }
         }
 
 

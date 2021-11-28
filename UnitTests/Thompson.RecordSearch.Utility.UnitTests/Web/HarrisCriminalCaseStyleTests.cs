@@ -108,6 +108,27 @@ namespace Thompson.RecordSearch.Utility.Tests
             }
         }
 
+
+
+        [TestMethod]
+        [TestCategory("Integration Only")]
+        public async Task CaseStyle_Can_StartAsync()
+        {
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
+            try
+            {
+                await HarrisCriminalStarting.StartAsync();
+            }
+            catch(Exception exception)
+            {
+                Console.WriteLine(exception.Message + Environment.NewLine + exception.StackTrace);
+                throw;
+            }
+        }
+
         [TestMethod]
         [TestCategory("Integration Only")]
         public async Task CaseStyle_CanGet_RealTime()
