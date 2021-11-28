@@ -3,8 +3,6 @@ using Harris.Criminal.Db.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Parsing
@@ -67,7 +65,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
                     Plantiff = parsed.Plantiff,
                     Zip = item.DefendantZip
                 };
-                if(dto.Address2.Equals(", ", StringComparison.CurrentCultureIgnoreCase))
+                if (dto.Address2.Equals(", ", StringComparison.CurrentCultureIgnoreCase))
                 {
                     dto.Address2 = string.Empty;
                 }
@@ -103,7 +101,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
                 CaseType = dataRow.CaseType,
                 Court = dataRow.Court,
                 DateFiled = dataRow.DateFiled,
-                Plantiff = parsed.Plantiff, 
+                Plantiff = parsed.Plantiff,
                 Zip = "00000"
             };
         }

@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Harris.Criminal.Db\Harris.Criminal.Db.csproj" />
+    <ProjectReference Include="..\..\LegalLead.PublicData.Search\LegalLead.PublicData.Search.csproj" />
   </ItemGroup>
 
 </Project>

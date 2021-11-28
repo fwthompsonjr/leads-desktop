@@ -89,7 +89,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             List<string> localFieldList = default;
             foreach (var item in addressList)
             {
-                if(addressList.IndexOf(item) == 0)
+                if (addressList.IndexOf(item) == 0)
                 {
                     localFieldList = item.FieldList;
                     if (websiteId == 40)
