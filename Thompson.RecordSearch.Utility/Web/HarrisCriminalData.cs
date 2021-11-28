@@ -87,7 +87,11 @@ namespace Thompson.RecordSearch.Utility.Web
                 jse.ExecuteScript("arguments[0].click();", anchor);
                 var trackingStart = DateTime.Now;
                 var timeout = 5 * 60; // allow five minutes
-                while (FileCreateComplete(trackingStart, timeout) == false) { Thread.Sleep(500); }
+                while (FileCreateComplete(trackingStart, timeout) == false) 
+                { 
+                    Thread.Sleep(500);
+                    if (File.Exists(expectedFileName)) break;
+                }
                 var list = GetFiles();
                 if (!list.Any()) return null;
                 list.Sort((a, b) => b.CreationTime.CompareTo(a.CreationTime));

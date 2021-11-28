@@ -51,14 +51,21 @@ namespace Thompson.RecordSearch.Utility.Dto
             var list = new List<HarrisCaseDateDto> { obj };
             var top = obj.StartDate;
             TimeSpan compared;
-            do
+            try
             {
-                var item = list.Last();
-                var dto = new HarrisCaseDateDto { Interval = obj.Interval, StartDate = item.EndDate };
-                list.Add(dto);
-                var bottom = list.Last().EndDate;
-                compared = top.Subtract(bottom);
-            } while (Math.Abs(compared.TotalDays) < rangeInDays);
+                do
+                {
+                    var item = list.Last();
+                    var dto = new HarrisCaseDateDto { Interval = obj.Interval, StartDate = item.EndDate };
+                    list.Add(dto);
+                    var bottom = list.Last().EndDate;
+                    compared = top.Subtract(bottom);
+                } while (Math.Abs(compared.TotalDays) < rangeInDays);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
             return list;
         }
     }
