@@ -19,7 +19,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             get
             {
-                if (Document == null) return null;
+                if (Document == null)
+                {
+                    return null;
+                }
+
                 return Document.DocumentElement.SelectSingleNode(@"//results/result[@name='casedata']");
             }
         }
@@ -28,7 +32,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             get
             {
-                if (Document == null) return null;
+                if (Document == null)
+                {
+                    return null;
+                }
+
                 return Document.DocumentElement.SelectSingleNode(@"//results/result[@name='peopledata']");
             }
         }
@@ -38,7 +46,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             get
             {
-                if (Document == null) return null;
+                if (Document == null)
+                {
+                    return null;
+                }
+
                 return Document.DocumentElement.SelectSingleNode(@"//results/result[@name='person']/people");
             }
         }
@@ -46,13 +58,25 @@ namespace Thompson.RecordSearch.Utility.Classes
         public List<PersonAddress> GetPersonAddresses()
         {
             var people = People;
-            if (people == null) return null;
-            if (!people.HasChildNodes) return new List<PersonAddress>();
+            if (people == null)
+            {
+                return null;
+            }
+
+            if (!people.HasChildNodes)
+            {
+                return new List<PersonAddress>();
+            }
+
             var addressList = new List<PersonAddress>();
             foreach (var personNode in people.ChildNodes.Cast<XmlNode>())
             {
                 var addressPerson = PersonAddress.ConvertFrom(personNode);
-                if (addressPerson == null) continue;
+                if (addressPerson == null)
+                {
+                    continue;
+                }
+
                 if (addressPerson.IsValid)
                 {
                     // string caseSytle = addressPerson["CaseStyle"];
@@ -96,9 +120,21 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public void Append(Models.HLinkDataRow dta)
         {
-            if (dta == null) throw new ArgumentNullException(nameof(dta));
-            if (CharacterData == null) CharacterData = new StringBuilder("");
-            if (CharacterPeople == null) CharacterPeople = new StringBuilder("");
+            if (dta == null)
+            {
+                throw new ArgumentNullException(nameof(dta));
+            }
+
+            if (CharacterData == null)
+            {
+                CharacterData = new StringBuilder("");
+            }
+
+            if (CharacterPeople == null)
+            {
+                CharacterPeople = new StringBuilder("");
+            }
+
             var openTable = @"<table style='border-collapse: collapse; border: 1px solid black;'>";
             var opnTable = openTable + @"<tr style='border: 1px solid black;'>";
             opnTable += Environment.NewLine;
@@ -147,13 +183,27 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static XmlNode ParseAddressInformation(string address, XmlNode addressNode)
         {
             const string lineBreak = @"<br/>";
-            if (addressNode == null) return addressNode;
-            if (string.IsNullOrEmpty(address)) return addressNode;
+            if (addressNode == null)
+            {
+                return addressNode;
+            }
+
+            if (string.IsNullOrEmpty(address))
+            {
+                return addressNode;
+            }
+
             address = address.Trim();
-            if (string.IsNullOrEmpty(address)) return addressNode;
+            if (string.IsNullOrEmpty(address))
+            {
+                return addressNode;
+            }
 
             var addresses = address.Split(new string[] { lineBreak }, StringSplitOptions.None).ToList();
-            if (addresses.Count <= 1 || addresses.Count > 4) return addressNode;
+            if (addresses.Count <= 1 || addresses.Count > 4)
+            {
+                return addressNode;
+            }
 
             var zipNode = addressNode.SelectSingleNode("zip");
             var addressA = addressNode.SelectSingleNode("addressA");
@@ -186,27 +236,45 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static XmlNode MapExtraData(HLinkDataRow dta, XmlNode person)
         {
-            if (!dta.IsMapped) return person;
+            if (!dta.IsMapped)
+            {
+                return person;
+            }
+
             var fields = "case,dateFiled,court,caseType,caseStyle".Split(',').ToList();
             foreach (var fieldName in fields)
             {
                 var targetNode = person.SelectSingleNode(fieldName);
-                if (targetNode == null) continue;
-                ((XmlCDataSection)targetNode.FirstChild).Data = dta[fieldName];
+                if (targetNode == null)
+                {
+                    continue;
+                } ((XmlCDataSection)targetNode.FirstChild).Data = dta[fieldName];
             }
             return person;
         }
 
         private static string CleanHtml(string rawHtml)
         {
-            if (string.IsNullOrEmpty(rawHtml)) return rawHtml;
-            if (!rawHtml.ToLower(CultureInfo.CurrentCulture).Contains("href=")) return rawHtml;
+            if (string.IsNullOrEmpty(rawHtml))
+            {
+                return rawHtml;
+            }
+
+            if (!rawHtml.ToLower(CultureInfo.CurrentCulture).Contains("href="))
+            {
+                return rawHtml;
+            }
+
             try
             {
                 var doc = XmlDocProvider.GetDoc(rawHtml);
                 var firstChild = doc.DocumentElement.FirstChild;
                 var hlink = firstChild.SelectSingleNode("a");
-                if (hlink == null) return rawHtml;
+                if (hlink == null)
+                {
+                    return rawHtml;
+                }
+
                 firstChild.InnerXml = string.Format(
                     CultureInfo.CurrentCulture,
                     "<span>{0}</span>", hlink.InnerText);
@@ -220,8 +288,16 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static string PersonHtml(Models.HLinkDataRow dta)
         {
-            if (string.IsNullOrEmpty(dta.Defendant)) return string.Empty;
-            if (string.IsNullOrEmpty(dta.Address)) return string.Empty;
+            if (string.IsNullOrEmpty(dta.Defendant))
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(dta.Address))
+            {
+                return string.Empty;
+            }
+
             const string rfmt = @"<tr><td caseNumber='{2}'>{0}</td><td>{1}</tr>";
             return string.Format(
                 CultureInfo.CurrentCulture,
@@ -234,8 +310,16 @@ namespace Thompson.RecordSearch.Utility.Classes
             var result = new List<string>();
             foreach (var addr in data)
             {
-                if (string.IsNullOrEmpty(addr)) continue;
-                if (string.IsNullOrEmpty(addr.Trim())) continue;
+                if (string.IsNullOrEmpty(addr))
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(addr.Trim()))
+                {
+                    continue;
+                }
+
                 result.Add(addr.Trim());
             }
             return result;
@@ -244,7 +328,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static string GetMiddleAddress(List<string> middle)
         {
-            if (middle.Count < 3) return string.Empty;
+            if (middle.Count < 3)
+            {
+                return string.Empty;
+            }
+
             var addr = string.Empty;
             for (int i = 1; i < middle.Count - 1; i++)
             {

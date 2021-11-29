@@ -28,8 +28,16 @@ namespace Thompson.RecordSearch.Utility.Dto
         {
             get
             {
-                if (string.IsNullOrEmpty(CreateDate)) return null;
-                if (!DateTime.TryParse(CreateDate, out DateTime createdDate)) return null;
+                if (string.IsNullOrEmpty(CreateDate))
+                {
+                    return null;
+                }
+
+                if (!DateTime.TryParse(CreateDate, out DateTime createdDate))
+                {
+                    return null;
+                }
+
                 return createdDate;
             }
         }
@@ -51,7 +59,11 @@ namespace Thompson.RecordSearch.Utility.Dto
             }
             var data = File.ReadAllText(dataFile);
             var colUsers = JConn.DeserializeObject<List<UserAccessDto>>(data);
-            if (colUsers == null) return null;
+            if (colUsers == null)
+            {
+                return null;
+            }
+
             return colUsers;
         }
 
@@ -71,8 +83,16 @@ namespace Thompson.RecordSearch.Utility.Dto
             }
             var data = File.ReadAllText(dataFile);
             var colUsers = JConn.DeserializeObject<List<UserAccessDto>>(data);
-            if (colUsers == null) return null;
-            if (!colUsers.Any()) return new UserAccessDto();
+            if (colUsers == null)
+            {
+                return null;
+            }
+
+            if (!colUsers.Any())
+            {
+                return new UserAccessDto();
+            }
+
             return colUsers.Last();
         }
 
@@ -96,7 +116,10 @@ namespace Thompson.RecordSearch.Utility.Dto
                 dataFormat,
                 appDirectory,
                 targetFile);
-            if (File.Exists(dataFile)) File.Delete(dataFile);
+            if (File.Exists(dataFile))
+            {
+                File.Delete(dataFile);
+            }
 
             using (StreamWriter sw = new StreamWriter(dataFile))
             {
@@ -107,9 +130,21 @@ namespace Thompson.RecordSearch.Utility.Dto
 
         public static List<string> GetCredential(UserAccessDto dto)
         {
-            if (dto == null) return null;
-            if (string.IsNullOrEmpty(dto.UserGuid)) return null;
-            if (string.IsNullOrEmpty(dto.UserKey)) return null;
+            if (dto == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrEmpty(dto.UserGuid))
+            {
+                return null;
+            }
+
+            if (string.IsNullOrEmpty(dto.UserKey))
+            {
+                return null;
+            }
+
             var decoded = CryptoEngine.Decrypt(dto.UserGuid, dto.UserKey);
             return decoded.Split('|').ToList();
         }

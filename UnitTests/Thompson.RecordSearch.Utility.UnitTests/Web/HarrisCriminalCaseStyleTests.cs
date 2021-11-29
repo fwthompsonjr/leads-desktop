@@ -120,9 +120,10 @@ namespace Thompson.RecordSearch.Utility.Tests
             }
             try
             {
-                await HarrisCriminalStarting.StartAsync();
+                var starting = new List<CriminalStartType> { CriminalStartType.CaseTypes };
+                await HarrisCriminalStarting.StartAsync(starting);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 Console.WriteLine(exception.Message + Environment.NewLine + exception.StackTrace);
                 throw;

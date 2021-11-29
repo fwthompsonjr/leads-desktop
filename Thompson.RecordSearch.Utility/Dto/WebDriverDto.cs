@@ -40,21 +40,51 @@ namespace Thompson.RecordSearch.Utility.Dto
 
         public static WebDriverDto Get(this WebDriverDto dto)
         {
-            if (dto == null) return dto;
+            if (dto == null)
+            {
+                return dto;
+            }
+
             var content = DtoContent;
             return JConn.DeserializeObject<WebDriverDto>(content);
         }
         public static WebDriverDto Save(this WebDriverDto dto)
         {
-            if (dto == null) return dto;
-            if (dto.WebDrivers == null) return dto;
-            if (dto.WebDrivers.Drivers == null) throw new ArgumentOutOfRangeException(nameof(dto));
-            if (dto.WebDrivers.Drivers.Count == 0) throw new ArgumentOutOfRangeException(nameof(dto));
-            if (dto.WebDrivers.SelectedIndex < 0) throw new ArgumentOutOfRangeException(nameof(dto));
-            if (dto.WebDrivers.SelectedIndex > dto.WebDrivers.Drivers.Count - 1)
+            if (dto == null)
+            {
+                return dto;
+            }
+
+            if (dto.WebDrivers == null)
+            {
+                return dto;
+            }
+
+            if (dto.WebDrivers.Drivers == null)
+            {
                 throw new ArgumentOutOfRangeException(nameof(dto));
+            }
+
+            if (dto.WebDrivers.Drivers.Count == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(dto));
+            }
+
+            if (dto.WebDrivers.SelectedIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(dto));
+            }
+
+            if (dto.WebDrivers.SelectedIndex > dto.WebDrivers.Drivers.Count - 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(dto));
+            }
+
             var dataFile = DataFile();
-            if (File.Exists(dataFile)) File.Delete(dataFile);
+            if (File.Exists(dataFile))
+            {
+                File.Delete(dataFile);
+            }
 
             using (StreamWriter sw = new StreamWriter(dataFile))
             {

@@ -101,7 +101,11 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
                 var node = TryFindNode(doc, item.Value);
                 Assert.IsNotNull(node, $"{item.FriendlyName} is null");
                 Assert.IsFalse(string.IsNullOrEmpty(node.InnerText), $"{item.FriendlyName} is blank or empty");
-                if (item.Name.Equals("CaseStyle")) continue;
+                if (item.Name.Equals("CaseStyle"))
+                {
+                    continue;
+                }
+
                 Assert.AreEqual(expectedList[indx++].CommandType, node.InnerText,
                     $"{item.FriendlyName} not matched. ");
             }
@@ -130,7 +134,11 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
             var list = SamplePersonAddress();
             Assert.IsNotNull(list);
             var noPlantiffList = list.FindAll(x => string.IsNullOrEmpty(x.Plantiff));
-            if (!noPlantiffList.Any()) return;
+            if (!noPlantiffList.Any())
+            {
+                return;
+            }
+
             var failing = noPlantiffList.First();
             var actual = failing.Plantiff;
 

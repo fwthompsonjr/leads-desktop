@@ -92,7 +92,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var finder in finders)
             {
                 finder.Find(driver, linkData);
-                if (finder.CanFind) break;
+                if (finder.CanFind)
+                {
+                    break;
+                }
             }
         }
 
@@ -145,7 +148,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static string _chromeBinaryName;
         private static string ChromeBinaryFileName()
         {
-            if (_chromeBinaryName != null) return _chromeBinaryName;
+            if (_chromeBinaryName != null)
+            {
+                return _chromeBinaryName;
+            }
+
             var settings = ConfigurationManager.AppSettings
                 .AllKeys.ToList().FindAll(x => x.StartsWith("chrome.exe.location",
                 StringComparison.CurrentCultureIgnoreCase))

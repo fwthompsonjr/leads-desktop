@@ -33,10 +33,26 @@ namespace LegalLead.PublicData.Search.Classes
 
         public void ApplyStyles(TableLayoutRowStyleCollection styles, int websiteId)
         {
-            if (websiteId != WebsiteIndex) return;
-            if (styles == null) return;
-            if (HiddenRows == null) return;
-            if (!HiddenRows.Any()) return;
+            if (websiteId != WebsiteIndex)
+            {
+                return;
+            }
+
+            if (styles == null)
+            {
+                return;
+            }
+
+            if (HiddenRows == null)
+            {
+                return;
+            }
+
+            if (!HiddenRows.Any())
+            {
+                return;
+            }
+
             HiddenRows.ForEach(r => styles[r].Height = 0);
         }
 

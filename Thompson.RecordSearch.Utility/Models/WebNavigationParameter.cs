@@ -77,7 +77,11 @@ namespace Thompson.RecordSearch.Utility.Models
         {
             get
             {
-                if (string.IsNullOrEmpty(fieldName)) return string.Empty;
+                if (string.IsNullOrEmpty(fieldName))
+                {
+                    return string.Empty;
+                }
+
                 if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("case", comparison))
                 {
                     return Case;
@@ -103,7 +107,11 @@ namespace Thompson.RecordSearch.Utility.Models
             set
             {
 
-                if (string.IsNullOrEmpty(fieldName)) return;
+                if (string.IsNullOrEmpty(fieldName))
+                {
+                    return;
+                }
+
                 if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("case", comparison))
                 {
                     Case = value;
@@ -135,7 +143,11 @@ namespace Thompson.RecordSearch.Utility.Models
 
         private string GetFromData()
         {
-            if (string.IsNullOrEmpty(Data)) return null;
+            if (string.IsNullOrEmpty(Data))
+            {
+                return null;
+            }
+
             var webHelper = new WebInteractive();
             var data = new StringBuilder(Data).ToString();
             if (data.Contains("<img"))
@@ -145,7 +157,11 @@ namespace Thompson.RecordSearch.Utility.Models
             }
             var doc = XmlDocProvider.GetDoc(data);
             var node = doc.FirstChild.ChildNodes[1];
-            if (node == null) return string.Empty;
+            if (node == null)
+            {
+                return string.Empty;
+            }
+
             return node.InnerText;
         }
     }

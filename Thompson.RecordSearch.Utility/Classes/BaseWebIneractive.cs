@@ -59,13 +59,25 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         public string RemoveTag(string tableHtml, string tagName)
         {
-            if (string.IsNullOrEmpty(tableHtml)) return string.Empty;
-            if (string.IsNullOrEmpty(tagName)) return string.Empty;
+            if (string.IsNullOrEmpty(tableHtml))
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(tagName))
+            {
+                return string.Empty;
+            }
+
             var provider = CultureInfo.CurrentCulture;
             var openTg = string.Format(provider, CommonKeyIndexes.OpenHtmlTag, tagName);
             var closeTg = string.Format(provider, CommonKeyIndexes.CloseHtmlTag, tagName);
             var idx = tableHtml.IndexOf(openTg, comparisonIngore);
-            if (idx < 0) return tableHtml;
+            if (idx < 0)
+            {
+                return tableHtml;
+            }
+
             var eidx = tableHtml.IndexOf(closeTg, comparisonIngore);
             var firstHalf = tableHtml.Substring(0, idx);
             var secHalf = tableHtml.Substring(eidx + closeTg.Length);
@@ -83,9 +95,21 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         public string RemoveElement(string tableHtml, string tagName)
         {
-            if (string.IsNullOrEmpty(tableHtml)) return tableHtml;
-            if (string.IsNullOrEmpty(tagName)) return tableHtml;
-            if (!tableHtml.Contains(tagName)) return tableHtml;
+            if (string.IsNullOrEmpty(tableHtml))
+            {
+                return tableHtml;
+            }
+
+            if (string.IsNullOrEmpty(tagName))
+            {
+                return tableHtml;
+            }
+
+            if (!tableHtml.Contains(tagName))
+            {
+                return tableHtml;
+            }
+
             var idx = tableHtml.IndexOf(tagName, comparisonIngore);
             while (idx > 0)
             {
@@ -106,7 +130,10 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns>An HTML table containing case data results</returns>
         public string ReadFromFile(string result)
         {
-            if (!File.Exists(result)) return string.Empty; ;
+            if (!File.Exists(result))
+            {
+                return string.Empty;
+            };
             var contents = File.ReadAllText(result);
             if (contents.Contains(CommonKeyIndexes.ImageOpenTag))
             {
@@ -114,8 +141,16 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
             var doc = XmlDocProvider.GetDoc(contents);
             var ndeCase = doc.DocumentElement.SelectSingleNode(CommonKeyIndexes.CaseDataXpath);
-            if (ndeCase == null) return string.Empty;
-            if (!ndeCase.HasChildNodes) return string.Empty;
+            if (ndeCase == null)
+            {
+                return string.Empty;
+            }
+
+            if (!ndeCase.HasChildNodes)
+            {
+                return string.Empty;
+            }
+
             return ((XmlCDataSection)ndeCase.ChildNodes[0]).Data;
         }
 
@@ -138,11 +173,22 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         internal T GetParameterValue<T>(string keyName)
         {
-            if (Parameters == null) return default;
-            if (Parameters.Keys == null) return default;
+            if (Parameters == null)
+            {
+                return default;
+            }
+
+            if (Parameters.Keys == null)
+            {
+                return default;
+            }
 
             var item = Parameters.Keys.First(k => k.Name.Equals(keyName, comparisonIngore));
-            if (item == null) return default;
+            if (item == null)
+            {
+                return default;
+            }
+
             var obj = Convert.ChangeType(item.Value, typeof(T), CultureInfo.CurrentCulture);
             return (T)obj;
         }
@@ -155,11 +201,22 @@ namespace Thompson.RecordSearch.Utility.Classes
         protected void SetParameterValue(string keyName, string keyValue)
         {
 
-            if (Parameters == null) return;
-            if (Parameters.Keys == null) return;
+            if (Parameters == null)
+            {
+                return;
+            }
+
+            if (Parameters.Keys == null)
+            {
+                return;
+            }
 
             var item = Parameters.Keys.First(k => k.Name.Equals(keyName, comparisonIngore));
-            if (item == null) return;
+            if (item == null)
+            {
+                return;
+            }
+
             item.Value = keyValue;
         }
 

@@ -13,10 +13,14 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (Log == null)
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {
@@ -27,7 +31,11 @@ namespace LegalLead.Changed.Classes
                 .Where(x => x.Id > 0)
                 .ToList();
 
-            if (!fixes.Any()) return true;
+            if (!fixes.Any())
+            {
+                return true;
+            }
+
             MapChange(fixes);
             ReSerialize();
             return true;
@@ -35,8 +43,16 @@ namespace LegalLead.Changed.Classes
 
         protected void MapChange(List<Fix> fixes)
         {
-            if (fixes == null) return;
-            if (!fixes.Any()) return;
+            if (fixes == null)
+            {
+                return;
+            }
+
+            if (!fixes.Any())
+            {
+                return;
+            }
+
             fixes.ForEach(UpdateChange);
         }
 
@@ -49,7 +65,11 @@ namespace LegalLead.Changed.Classes
             var issueList = Log.Changes
                 .Where(c => c.Issues.Any(x => x.Id == objChange.Id))
                 .ToList();
-            if (!issueList.Any()) return;
+            if (!issueList.Any())
+            {
+                return;
+            }
+
             foreach (var item in issueList)
             {
                 var targets = item.Issues
@@ -77,7 +97,11 @@ namespace LegalLead.Changed.Classes
             }
             var startTime = issue.Description.FirstOrDefault(a => a.StartsWith(startDate, StringComparison.InvariantCultureIgnoreCase));
 
-            if (startTime != null) return;
+            if (startTime != null)
+            {
+                return;
+            }
+
             var timeStamp = DateTime.Now.ToString("u");
             Console.WriteLine("Starting issue {0} -- [ {1} ] at {2}",
                 issue.Id.ToString("F3"),

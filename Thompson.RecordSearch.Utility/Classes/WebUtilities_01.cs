@@ -45,7 +45,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     try
                     {
-                        if (cases == null) cases = new List<HLinkDataRow>();
+                        if (cases == null)
+                        {
+                            cases = new List<HLinkDataRow>();
+                        }
+
                         var data = Data;
                         IWebElement tbResult = null;
                         var helper = new ElementAssertion(driver);
@@ -71,9 +75,21 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             protected virtual void GetPersonData(List<HLinkDataRow> cases, IWebDriver driver, WebInteractive data)
             {
-                if (cases == null) throw new ArgumentNullException(nameof(cases));
-                if (driver == null) throw new ArgumentNullException(nameof(driver));
-                if (data == null) throw new ArgumentNullException(nameof(data));
+                if (cases == null)
+                {
+                    throw new ArgumentNullException(nameof(cases));
+                }
+
+                if (driver == null)
+                {
+                    throw new ArgumentNullException(nameof(driver));
+                }
+
+                if (data == null)
+                {
+                    throw new ArgumentNullException(nameof(data));
+                }
+
                 var people = cases.FindAll(x => !string.IsNullOrEmpty(x.WebAddress));
                 people.ForEach(d => Find(driver, d));
                 var found = people.Count(p => !string.IsNullOrEmpty(p.Defendant));
@@ -83,9 +99,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 get
                 {
-                    if (_dataRows != null) return _dataRows;
+                    if (_dataRows != null)
+                    {
+                        return _dataRows;
+                    }
+
                     var navTo = GetNavigationAddress();
-                    if (string.IsNullOrEmpty(navTo)) return _dataRows;
+                    if (string.IsNullOrEmpty(navTo))
+                    {
+                        return _dataRows;
+                    }
+
                     _dataRows = new List<HLinkDataRow>();
                     return _dataRows;
                 }
@@ -94,8 +118,16 @@ namespace Thompson.RecordSearch.Utility.Classes
             protected bool IncludeCriminalRecords()
             {
                 var criminalCase = GetParameter(Data, CommonKeyIndexes.CriminalCaseInclusion);
-                if (criminalCase == null) return false;
-                if (!int.TryParse(criminalCase.Value, out int index)) return false;
+                if (criminalCase == null)
+                {
+                    return false;
+                }
+
+                if (!int.TryParse(criminalCase.Value, out int index))
+                {
+                    return false;
+                }
+
                 return (index == 1);
             }
 
@@ -104,7 +136,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var searchLink = CommonKeyIndexes.SearchHyperlink;
                 const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
                 var key = GetParameter(Data, keyName);
-                if (key == null) return;
+                if (key == null)
+                {
+                    return;
+                }
+
                 var searchLinks =
                     Data.Parameters.Instructions
                     .FindAll(a => a.FriendlyName.Equals(searchLink, ccic));
@@ -152,7 +188,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                     return new List<HLinkDataRow>();
                 }
                 if (!IncludeCriminalRecords())
+                {
                     return new List<HLinkDataRow>();
+                }
+
                 var parameter = GetParameter(Data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
                 if (parameter != null)
                 {
@@ -172,10 +211,26 @@ namespace Thompson.RecordSearch.Utility.Classes
             WebInteractive data,
             string parameterName)
         {
-            if (data == null) return null;
-            if (data.Parameters == null) return null;
-            if (data.Parameters.Keys == null) return null;
-            if (!data.Parameters.Keys.Any()) return null;
+            if (data == null)
+            {
+                return null;
+            }
+
+            if (data.Parameters == null)
+            {
+                return null;
+            }
+
+            if (data.Parameters.Keys == null)
+            {
+                return null;
+            }
+
+            if (!data.Parameters.Keys.Any())
+            {
+                return null;
+            }
+
             const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
             var keys = data.Parameters.Keys;
             return keys.FirstOrDefault(k => k.Name.Equals(parameterName, ccic));

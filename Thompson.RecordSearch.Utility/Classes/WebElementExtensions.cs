@@ -26,7 +26,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                if (webElement == null) throw new ArgumentNullException(nameof(webElement));
+                if (webElement == null)
+                {
+                    throw new ArgumentNullException(nameof(webElement));
+                }
+
                 return webElement.FindElement(by);
             }
             catch (Exception)
@@ -52,7 +56,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                if (driver == null) throw new ArgumentNullException(nameof(driver));
+                if (driver == null)
+                {
+                    throw new ArgumentNullException(nameof(driver));
+                }
+
                 return driver.FindElement(by);
             }
             catch (Exception)
@@ -78,7 +86,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                if (driver == null) throw new ArgumentNullException(nameof(driver));
+                if (driver == null)
+                {
+                    throw new ArgumentNullException(nameof(driver));
+                }
+
                 return driver.FindElements(by);
             }
             catch (Exception)

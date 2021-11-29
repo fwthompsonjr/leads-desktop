@@ -10,7 +10,7 @@ namespace LegalLead.Changed.UnitTests
     [TestClass]
     public class CommandBuildCorrectionsTest
     {
-        private static string _srcDirectory; 
+        private static string _srcDirectory;
         private static string SrcDirectoryName => _srcDirectory ?? (_srcDirectory = SrcDir());
         protected static string sourceFile = $"{SrcDirectoryName}\\data\\temp-log.json";
 

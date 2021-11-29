@@ -46,7 +46,11 @@ namespace LegalLead.Changed.Models
         public override string ToString()
         {
             // IssueId
-            if (Id == 0) return base.ToString();
+            if (Id == 0)
+            {
+                return base.ToString();
+            }
+
             return ReadMe;
         }
 
@@ -96,7 +100,11 @@ namespace LegalLead.Changed.Models
 
         public string ToLogEntry(Change change)
         {
-            if (change == null) return null;
+            if (change == null)
+            {
+                return null;
+            }
+
             var dateReported = change.ReportedDate
                 .ToString("MM-dd-yyyy",
                 CultureInfo.CurrentCulture.DateTimeFormat)

@@ -20,9 +20,16 @@ namespace LegalLead.PublicData.Search.Classes
             }
             e.DrawBackground();
             if (e.State == DrawItemState.Focus)
+            {
                 e.DrawFocusRectangle();
+            }
+
             var index = e.Index;
-            if (index < 0 || index >= Items.Count) return;
+            if (index < 0 || index >= Items.Count)
+            {
+                return;
+            }
+
             var item = Items[index];
             string displayValue = GetItemText(item);
             using (var brush = new SolidBrush(e.ForeColor))

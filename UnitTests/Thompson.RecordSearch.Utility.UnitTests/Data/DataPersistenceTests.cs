@@ -41,9 +41,17 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Data
             var path = DataPersistence.DataFolder;
             try
             {
-                if (!Directory.Exists(path)) return;
+                if (!Directory.Exists(path))
+                {
+                    return;
+                }
+
                 var files = new DirectoryInfo(path).GetFiles("*.temp").ToList();
-                if (!files.Any()) return;
+                if (!files.Any())
+                {
+                    return;
+                }
+
                 files.ForEach(f => File.Delete(f.FullName));
             }
             catch (Exception)

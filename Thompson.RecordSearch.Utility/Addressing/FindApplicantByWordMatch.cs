@@ -15,15 +15,26 @@ namespace Thompson.RecordSearch.Utility.Addressing
             Justification = "Exception thrown from this method will stop automation.")]
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (linkData == null) throw new ArgumentNullException(nameof(linkData));
+            if (driver == null)
+            {
+                throw new ArgumentNullException(nameof(driver));
+            }
+
+            if (linkData == null)
+            {
+                throw new ArgumentNullException(nameof(linkData));
+            }
+
             var searchType = IndexKeyNames.Applicant;
             CanFind = false;
             // IndexKeyNames.ThContainsText
             var tdName = TryFindElement(driver, By.XPath(
                 string.Format(CultureInfo.CurrentCulture, IndexKeyNames.ThContainsText, searchType)));
             // this instance can find
-            if (tdName == null) return;
+            if (tdName == null)
+            {
+                return;
+            }
 
             var parent = tdName.FindElement(By.XPath(IndexKeyNames.ParentElement));
             var rowLabel = parent.FindElements(By.TagName(IndexKeyNames.ThElement))[1];
@@ -37,7 +48,11 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 var ridx = parent.GetAttribute(IndexKeyNames.RowIndex);
                 var table = parent.FindElement(By.XPath(IndexKeyNames.ParentElement));
                 var trCol = table.FindElements(By.TagName(IndexKeyNames.TrElement)).ToList();
-                if (!int.TryParse(ridx, out int r)) return;
+                if (!int.TryParse(ridx, out int r))
+                {
+                    return;
+                }
+
                 MapElementAddress(linkData, rowLabel, table, trCol, r,
                     searchType.ToLower(CultureInfo.CurrentCulture));
             }

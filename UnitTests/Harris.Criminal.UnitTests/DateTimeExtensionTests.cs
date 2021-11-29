@@ -17,8 +17,16 @@ namespace Harris.Criminal.Db.Tests
 
             private string Parse(string data)
             {
-                if (string.IsNullOrEmpty(data)) return string.Empty;
-                if (data.Length != 8) return string.Empty;
+                if (string.IsNullOrEmpty(data))
+                {
+                    return string.Empty;
+                }
+
+                if (data.Length != 8)
+                {
+                    return string.Empty;
+                }
+
                 var yy = data.Substring(0, 4);
                 var mm = data.Substring(4, 2);
                 var dd = data.Substring(6, 2);

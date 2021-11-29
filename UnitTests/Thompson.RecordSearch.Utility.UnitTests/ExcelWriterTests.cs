@@ -165,7 +165,10 @@ namespace Thompson.RecordSearch.Utility.Tests
             dir = new DirectoryInfo(dir).Parent.FullName;
             dir = new DirectoryInfo(dir).Parent.FullName;
             dir = Path.Combine(dir, fileName);
-            if (File.Exists(dir)) return;
+            if (File.Exists(dir))
+            {
+                return;
+            }
 
             var people = SamplePeople().Take(2);
             using (var writer = new StreamWriter(dir))

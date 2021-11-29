@@ -91,7 +91,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             var data = Content;
 
             var doc = XmlDocProvider.GetDoc(data);
-            if (doc.DocumentElement == null) return null;
+            if (doc.DocumentElement == null)
+            {
+                return null;
+            }
+
             var parent = doc.DocumentElement.SelectSingleNode("setting[@name='Websites']");
             var response = new List<WebNavigationParameter>();
             foreach (var node in parent.ChildNodes)
@@ -112,7 +116,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var data = Content;
             var doc = XmlDocProvider.GetDoc(data);
-            if (doc.DocumentElement == null) return null;
+            if (doc.DocumentElement == null)
+            {
+                return null;
+            }
+
             var parent = doc.DocumentElement.SelectSingleNode(
                 string.Format(
                     CultureInfo.CurrentCulture,
@@ -128,10 +136,22 @@ namespace Thompson.RecordSearch.Utility.Classes
                 id,
                 sectionName));
             }
-            if (parent == null) return null;
+            if (parent == null)
+            {
+                return null;
+            }
+
             var columnNode = parent.FirstChild;
-            if (columnNode == null) return null;
-            if (!columnNode.HasChildNodes) return null;
+            if (columnNode == null)
+            {
+                return null;
+            }
+
+            if (!columnNode.HasChildNodes)
+            {
+                return null;
+            }
+
             var layoutList = new List<ExcelColumnLayout>();
             var columnList = columnNode.ChildNodes.Cast<XmlNode>().ToList();
             foreach (var column in columnList)
@@ -155,7 +175,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         public XmlContentHolder GetOutput(WebInteractive settingFile)
         {
-            if (settingFile == null) throw new ArgumentNullException(nameof(settingFile));
+            if (settingFile == null)
+            {
+                throw new ArgumentNullException(nameof(settingFile));
+            }
+
             const string dfmt = "MMddyyyy";
             var fileName = GetFileName(settingFile);
             var targetFile = fileName;
@@ -246,7 +270,10 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             var instructions = node.OwnerDocument
                 .DocumentElement.SelectSingleNode(qpath);
-            if (instructions == null) return parameter;
+            if (instructions == null)
+            {
+                return parameter;
+            }
 
             foreach (var item in instructions.ChildNodes)
             {
@@ -266,7 +293,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 "directions/caseInspection[@id={0}]", parameter.Id);
             instructions = node.OwnerDocument
                 .DocumentElement.SelectSingleNode(qpath);
-            if (instructions == null) return parameter;
+            if (instructions == null)
+            {
+                return parameter;
+            }
 
             foreach (var item in instructions.ChildNodes)
             {
@@ -595,11 +625,18 @@ namespace Thompson.RecordSearch.Utility.Classes
             var targetPath = new Uri(string.Format(
                 CultureInfo.CurrentCulture,
                 @"{0}\xml\", execName)).AbsolutePath;
-            if (!Directory.Exists(targetPath)) Directory.CreateDirectory(targetPath);
+            if (!Directory.Exists(targetPath))
+            {
+                Directory.CreateDirectory(targetPath);
+            }
+
             targetPath = string.Format(
                 CultureInfo.CurrentCulture,
                 @"{0}\data\", targetPath);
-            if (!Directory.Exists(targetPath)) Directory.CreateDirectory(targetPath);
+            if (!Directory.Exists(targetPath))
+            {
+                Directory.CreateDirectory(targetPath);
+            }
 
             var targetFile = new Uri(string.Format(
                 CultureInfo.CurrentCulture,
@@ -620,7 +657,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             var targetFile = new Uri(string.Format(
                 CultureInfo.CurrentCulture,
                 @"{0}\Utilities\CourtRecordSearch.xlsm", execName)).AbsolutePath;
-            if (!File.Exists(targetFile)) return string.Empty;
+            if (!File.Exists(targetFile))
+            {
+                return string.Empty;
+            }
+
             return targetFile;
         }
 
@@ -645,7 +686,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 CultureInfo.CurrentCulture,
                 "directions/instructions[@id={0}]", siteId);
             var data = doc.DocumentElement.SelectSingleNode(qpath);
-            if (data == null) return instructions;
+            if (data == null)
+            {
+                return instructions;
+            }
 
             foreach (var item in data.ChildNodes)
             {

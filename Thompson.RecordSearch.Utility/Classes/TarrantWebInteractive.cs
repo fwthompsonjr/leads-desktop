@@ -113,14 +113,26 @@ namespace Thompson.RecordSearch.Utility.Classes
             try
             {
                 var fetched = Search(results, steps, startingDate, endingDate, ref cases, out people, driver);
-                if (customSearchType != 2) return fetched;
+                if (customSearchType != 2)
+                {
+                    return fetched;
+                }
+
                 var caseList = cases.ToList();
                 people = fetched.PeopleList;
                 people.ForEach(p =>
                 {
                     var source = caseList.FirstOrDefault(c => c.Case.Equals(p.CaseNumber, StringComparison.CurrentCultureIgnoreCase));
-                    if (source == null) return;
-                    if (string.IsNullOrEmpty(source.PageHtml)) return;
+                    if (source == null)
+                    {
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(source.PageHtml))
+                    {
+                        return;
+                    }
+
                     var dto = DataPointLocatorDto.Load(source.PageHtml);
                     p.CaseStyle = dto.DataPoints
                         .First(f =>
@@ -174,18 +186,27 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     if (item.DisplayName.Equals(CommonKeyIndexes.StartDate, //"startDate", 
                         StringComparison.CurrentCultureIgnoreCase))
+                    {
                         item.ExpectedValue =
                             startingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate);
+                    }
+
                     if (item.DisplayName.Equals(CommonKeyIndexes.EndDate,
                         StringComparison.CurrentCultureIgnoreCase))
+                    {
                         item.ExpectedValue =
                             endingDate.Date.ToString(CommonKeyIndexes.DateTimeShort, formatDate);
+                    }
                 }
                 var action = ElementActions
                     .FirstOrDefault(x =>
                     x.ActionName.Equals(item.ActionName,
                     StringComparison.CurrentCultureIgnoreCase));
-                if (action == null) continue;
+                if (action == null)
+                {
+                    continue;
+                }
+
                 action.Act(item);
                 cases = ExtractCaseData(results, cases, actionName, action);
                 if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
@@ -209,8 +230,16 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         protected virtual List<PersonAddress> ExtractPeople(List<HLinkDataRow> cases)
         {
-            if (cases == null) return null;
-            if (!cases.Any()) return new List<PersonAddress>();
+            if (cases == null)
+            {
+                return null;
+            }
+
+            if (!cases.Any())
+            {
+                return new List<PersonAddress>();
+            }
+
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
@@ -243,13 +272,36 @@ namespace Thompson.RecordSearch.Utility.Classes
             List<HLinkDataRow> cases,
             string actionName, IElementActionBase action)
         {
-            if (results == null) throw new ArgumentNullException(nameof(results));
-            if (cases == null) throw new ArgumentNullException(nameof(cases));
-            if (actionName == null) throw new ArgumentNullException(nameof(actionName));
-            if (action == null) throw new ArgumentNullException(nameof(action));
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
 
-            if (!actionName.Equals("get-table-html", comparison)) return cases;
-            if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
+            if (cases == null)
+            {
+                throw new ArgumentNullException(nameof(cases));
+            }
+
+            if (actionName == null)
+            {
+                throw new ArgumentNullException(nameof(actionName));
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            if (!actionName.Equals("get-table-html", comparison))
+            {
+                return cases;
+            }
+
+            if (string.IsNullOrEmpty(action.OuterHtml))
+            {
+                return cases;
+            }
+
             var htmlAction = (ElementGetHtmlAction)action;
             var isProbate = htmlAction.IsProbateSearch;
             var isJustice = htmlAction.IsJusticeSearch;
@@ -273,13 +325,29 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
         protected string GetCaseStyle(HLinkDataRow item)
         {
-            if (item == null) return string.Empty;
+            if (item == null)
+            {
+                return string.Empty;
+            }
+
             var doc = XmlDocProvider.GetDoc(item.Data);
-            if (!doc.FirstChild.HasChildNodes) return string.Empty;
-            if (doc.FirstChild.ChildNodes.Count < 6) return string.Empty;
+            if (!doc.FirstChild.HasChildNodes)
+            {
+                return string.Empty;
+            }
+
+            if (doc.FirstChild.ChildNodes.Count < 6)
+            {
+                return string.Empty;
+            }
+
             var colIndex = Parameters.Id == 10 ? 2 : 2;
             var node = doc.FirstChild.ChildNodes[colIndex];
-            if (node == null) return string.Empty;
+            if (node == null)
+            {
+                return string.Empty;
+            }
+
             return node.InnerText;
         }
         protected static PersonAddress ParseAddress(string address, PersonAddress person)
@@ -288,7 +356,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             var pipe = '|';
             var pipeString = "|";
             const string noMatch = "No Match Found|Not Matched 00000";
-            if (person == null) throw new ArgumentNullException(nameof(person));
+            if (person == null)
+            {
+                throw new ArgumentNullException(nameof(person));
+            }
+
             if (string.IsNullOrEmpty(address)) { address = noMatch; }
             address = new StringBuilder(address.Trim()).Replace(separator, pipeString).ToString();
             if (address.EndsWith(pipeString, StringComparison.CurrentCultureIgnoreCase))
@@ -330,7 +402,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 fmt, linkData.WebAddress));
             driver.WaitForNavigation();
             var tdName = TryFindElement(driver, By.XPath(xpath));
-            if (tdName == null) return;
+            if (tdName == null)
+            {
+                return;
+            }
 
             linkData.Defendant = tdName.GetAttribute(CommonKeyIndexes.InnerText);
             var parent = tdName.FindElement(By.XPath(CommonKeyIndexes.ParentElement));
@@ -344,7 +419,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var ridx = parent.GetAttribute(CommonKeyIndexes.RowIndex);
                 var table = parent.FindElement(By.XPath(CommonKeyIndexes.ParentElement));
                 var trCol = table.FindElements(By.TagName(CommonKeyIndexes.TrElement));
-                if (!int.TryParse(ridx, out int r)) return;
+                if (!int.TryParse(ridx, out int r))
+                {
+                    return;
+                }
+
                 parent = GetAddressRow(parent, trCol); // put this row-index into config... it can change
                 linkData.Address = new StringBuilder(parent.Text)
                     .Replace(Environment.NewLine, "<br/>").ToString();
@@ -363,9 +442,15 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             var doc = XmlDocProvider.Load(fileName);
             var ndeCase = doc.DocumentElement.SelectSingleNode(xpath);
-            if (ndeCase == null) return;
-            if (!ndeCase.HasChildNodes) return;
-            ((XmlCDataSection)ndeCase.ChildNodes[0]).Data = caseData;
+            if (ndeCase == null)
+            {
+                return;
+            }
+
+            if (!ndeCase.HasChildNodes)
+            {
+                return;
+            } ((XmlCDataSection)ndeCase.ChildNodes[0]).Data = caseData;
             doc.Save(fileName);
         }
 
@@ -377,9 +462,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var trow in trElements)
             {
                 var link = trow.SelectSingleNode("td/a");
-                if (link == null) continue;
+                if (link == null)
+                {
+                    continue;
+                }
+
                 var href = link.Attributes.GetNamedItem("href");
-                if (href == null) continue;
+                if (href == null)
+                {
+                    continue;
+                }
+
                 caseList.Add(new HLinkDataRow
                 {
                     WebAddress = href.InnerText,
@@ -464,11 +557,19 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static IWebElement GetAddressRow(IWebElement parent,
             System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> trCol)
         {
-            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (parent == null)
+            {
+                throw new ArgumentNullException(nameof(parent));
+            }
+
             int colIndex = 3;
             parent = trCol[colIndex];
             var txt = string.IsNullOrEmpty(parent.Text) ? "" : parent.Text.Trim();
-            if (string.IsNullOrEmpty(txt)) parent = trCol[colIndex - 1];
+            if (string.IsNullOrEmpty(txt))
+            {
+                parent = trCol[colIndex - 1];
+            }
+
             return parent;
         }
 

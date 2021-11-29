@@ -33,8 +33,16 @@ namespace LegalLead.Changed.Commands
 
         public void SetSource(string sourceFileName)
         {
-            if (!string.IsNullOrEmpty(_sourceFileName)) return;
-            if (!File.Exists(sourceFileName)) return;
+            if (!string.IsNullOrEmpty(_sourceFileName))
+            {
+                return;
+            }
+
+            if (!File.Exists(sourceFileName))
+            {
+                return;
+            }
+
             ResetFileSource(sourceFileName);
         }
 

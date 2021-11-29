@@ -38,8 +38,16 @@ namespace LegalLead.Changed.Classes
 
         public void SetSource(string sourceFileName)
         {
-            if (!string.IsNullOrEmpty(_sourceFileName)) return;
-            if (!File.Exists(sourceFileName)) return;
+            if (!string.IsNullOrEmpty(_sourceFileName))
+            {
+                return;
+            }
+
+            if (!File.Exists(sourceFileName))
+            {
+                return;
+            }
+
             ResetFileSource(sourceFileName);
         }
 
@@ -74,10 +82,14 @@ namespace LegalLead.Changed.Classes
         {
 
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (Log == null)
+            {
                 throw new InvalidOperationException();
+            }
 
             return true;
         }

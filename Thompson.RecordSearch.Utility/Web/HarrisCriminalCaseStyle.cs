@@ -411,8 +411,16 @@ namespace Thompson.RecordSearch.Utility.Web
         private static int GetRecordCount(string text)
         {
             const int notfound = -1;
-            if (string.IsNullOrEmpty(text)) return notfound;
-            if (!text.Contains(" ")) return notfound;
+            if (string.IsNullOrEmpty(text))
+            {
+                return notfound;
+            }
+
+            if (!text.Contains(" "))
+            {
+                return notfound;
+            }
+
             var count = text.Split(' ').ToList().Last().Replace(".", "");
             if (int.TryParse(count, out int rcount))
             {
@@ -525,7 +533,9 @@ namespace Thompson.RecordSearch.Utility.Web
 
             // write result to file here
             if (DataPersistence.FileExists(strFileName))
+            {
                 return result;
+            }
 
             DataPersistence.Save(strFileName, result);
             return result;
@@ -534,11 +544,19 @@ namespace Thompson.RecordSearch.Utility.Web
         [ExcludeFromCodeCoverage]
         private static HarrisCriminalStyleDto Parse(HarrisCriminalStyleDto dto)
         {
-            if (dto == null) return null;
+            if (dto == null)
+            {
+                return null;
+            }
+
             dto.Style = Regex.Replace(dto.Style, @"\u00A0", " ");
             dto.Style = Regex.Replace(dto.Style, @"&nbsp;", " ");
             var parser = new CaseStyleDbParser { Data = dto.Style };
-            if (!parser.CanParse()) return dto;
+            if (!parser.CanParse())
+            {
+                return dto;
+            }
+
             var parseResult = parser.Parse();
             dto.Style = parseResult.CaseData;
             dto.Plantiff = parseResult.Plantiff;

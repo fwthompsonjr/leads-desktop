@@ -71,8 +71,16 @@ namespace LegalLead.Resources
         public static string GetText(ResourceType resourceType, ResourceKeyIndex indexType)
         {
             var item = GetResources(resourceType, indexType);
-            if (item == null) return string.Empty;
-            if (item.Count() == 0) return string.Empty;
+            if (item == null)
+            {
+                return string.Empty;
+            }
+
+            if (item.Count() == 0)
+            {
+                return string.Empty;
+            }
+
             return item.First().Value ?? string.Empty;
         }
 

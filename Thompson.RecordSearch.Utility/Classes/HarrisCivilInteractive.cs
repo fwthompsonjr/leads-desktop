@@ -111,12 +111,30 @@ namespace Thompson.RecordSearch.Utility.Classes
             List<HLinkDataRow> cases,
             string actionName, IElementActionBase action)
         {
-            if (results == null) throw new ArgumentNullException(nameof(results));
-            if (cases == null) throw new ArgumentNullException(nameof(cases));
-            if (actionName == null) throw new ArgumentNullException(nameof(actionName));
-            if (action == null) throw new ArgumentNullException(nameof(action));
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
 
-            if (!actionName.Equals("harris-civil-read-table", comparison)) return cases;
+            if (cases == null)
+            {
+                throw new ArgumentNullException(nameof(cases));
+            }
+
+            if (actionName == null)
+            {
+                throw new ArgumentNullException(nameof(actionName));
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            if (!actionName.Equals("harris-civil-read-table", comparison))
+            {
+                return cases;
+            }
             // if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
             var htmlAction = (HarrisCivilReadTable)action;
             var data = htmlAction.DataRows;
@@ -149,7 +167,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                         .FirstOrDefault(x =>
                             x.ActionName.Equals(item.ActionName,
                             StringComparison.CurrentCultureIgnoreCase));
-                    if (action == null) continue;
+                    if (action == null)
+                    {
+                        continue;
+                    }
+
                     action.Act(item);
                     cases = ExtractCaseData(results, cases, actionName, action);
                     if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
@@ -190,8 +212,16 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         protected override List<PersonAddress> ExtractPeople(List<HLinkDataRow> cases)
         {
-            if (cases == null) return null;
-            if (!cases.Any()) return new List<PersonAddress>();
+            if (cases == null)
+            {
+                return null;
+            }
+
+            if (!cases.Any())
+            {
+                return new List<PersonAddress>();
+            }
+
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
@@ -264,7 +294,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private void GetAddressInformation(IWebDriver driver, TarrantWebInteractive jsonWebInteractive, HLinkDataRow linkData)
         {
-            if (jsonWebInteractive == null) return;
+            if (jsonWebInteractive == null)
+            {
+                return;
+            }
+
             var fmt = GetParameterValue<string>(CommonKeyIndexes.HlinkUri);
             var helper = new ElementAssertion(driver);
             helper.Navigate(string.Format(CultureInfo.CurrentCulture, fmt, linkData.WebAddress));
@@ -316,7 +350,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var finder in finders)
             {
                 finder.Find(driver, linkData);
-                if (finder.CanFind) break;
+                if (finder.CanFind)
+                {
+                    break;
+                }
             }
         }
 
@@ -324,8 +361,16 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static void AssignStartAndEndDate(DateTime startingDate, DateTime endingDate, DateTimeFormatInfo formatDate, List<NavigationStep> items)
         {
-            if (items == null) return;
-            if (!items.Any()) return;
+            if (items == null)
+            {
+                return;
+            }
+
+            if (!items.Any())
+            {
+                return;
+            }
+
             items.ForEach(item =>
             {
                 AssignStartAndEndDate(

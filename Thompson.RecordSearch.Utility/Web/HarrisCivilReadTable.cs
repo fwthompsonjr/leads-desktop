@@ -26,7 +26,11 @@ namespace Thompson.RecordSearch.Utility.Web
         public List<HLinkDataRow> DataRows { get; private set; }
         public override void Act(NavigationStep item)
         {
-            if (item == null) throw new ArgumentNullException(nameof(item));
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             var driver = GetWeb;
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             IsOverlaid = false;
@@ -105,7 +109,11 @@ namespace Thompson.RecordSearch.Utility.Web
                         }
                     }
                 });
-                if (!HasNextPage()) break;
+                if (!HasNextPage())
+                {
+                    break;
+                }
+
                 if (!NavigateNextPage())
                 {
                     break;
@@ -123,10 +131,18 @@ namespace Thompson.RecordSearch.Utility.Web
             var driver = GetWeb;
             // if there are paging hyperlinks then their might be a next page
             var paging = driver.FindElements(Byy.CssSelector(cssPagerLink));
-            if (paging == null) return false;
+            if (paging == null)
+            {
+                return false;
+            }
+
             var list = paging.Cast<IWebElement>().ToList();
             var next = list.FirstOrDefault(a => a.Text.Contains("Next"));
-            if (next == null) return false;
+            if (next == null)
+            {
+                return false;
+            }
+
             if (!(next.GetAttribute("disabled") ?? "false").Equals("true", ccic))
             {
                 // click element (executor)
@@ -196,7 +212,11 @@ namespace Thompson.RecordSearch.Utility.Web
             var cssNoData = "ctl00_ContentPlaceHolder1_lblListViewCasesEmptyMsg";
             var driver = GetWeb;
             var found = driver.TryFindElement(Byy.Id(cssNoData));
-            if (found == null) return false;
+            if (found == null)
+            {
+                return false;
+            }
+
             return found.Displayed;
         }
 
@@ -210,10 +230,18 @@ namespace Thompson.RecordSearch.Utility.Web
                 var driver = GetWeb;
                 // if there are paging hyperlinks then their might be a next page
                 var paging = driver.FindElements(Byy.CssSelector(cssPagerLink));
-                if (paging == null) return false;
+                if (paging == null)
+                {
+                    return false;
+                }
+
                 var list = paging.Cast<IWebElement>().ToList();
                 var next = list.FirstOrDefault(a => a.Text.Contains("Next"));
-                if (next == null) return false;
+                if (next == null)
+                {
+                    return false;
+                }
+
                 return (next.GetAttribute("disabled") ?? "false").Equals("true", ccic);
             }
             catch (Exception)

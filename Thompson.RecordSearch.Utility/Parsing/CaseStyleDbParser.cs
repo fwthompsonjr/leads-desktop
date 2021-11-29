@@ -40,8 +40,16 @@ namespace Thompson.RecordSearch.Utility.Parsing
         /// </returns>
         public virtual bool CanParse()
         {
-            if (string.IsNullOrEmpty(Data)) return false;
-            if (!Data.ToLower(CultureInfo.CurrentCulture).Contains(SearchFor)) return false;
+            if (string.IsNullOrEmpty(Data))
+            {
+                return false;
+            }
+
+            if (!Data.ToLower(CultureInfo.CurrentCulture).Contains(SearchFor))
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -52,9 +60,16 @@ namespace Thompson.RecordSearch.Utility.Parsing
         public virtual ParseCaseStyleDbDto Parse()
         {
             var response = new ParseCaseStyleDbDto { Data = Data };
-            if (!CanParse()) return response;
+            if (!CanParse())
+            {
+                return response;
+            }
 
-            if (string.IsNullOrEmpty(Data)) return response;
+            if (string.IsNullOrEmpty(Data))
+            {
+                return response;
+            }
+
             var caseData = ExtractField(DataExtractType.CaseData, Data);
             response.CaseData = caseData;
             response.Defendant = ExtractField(DataExtractType.Defendant, caseData);
@@ -65,18 +80,30 @@ namespace Thompson.RecordSearch.Utility.Parsing
         private static string ExtractField(DataExtractType extractType, string data)
         {
             var response = string.Empty;
-            if (string.IsNullOrEmpty(data)) return response;
+            if (string.IsNullOrEmpty(data))
+            {
+                return response;
+            }
+
             switch (extractType)
             {
                 case DataExtractType.CaseData:
                     var a = data.IndexOf("(", Oic);
-                    if (a < 0) return data.Trim();
+                    if (a < 0)
+                    {
+                        return data.Trim();
+                    }
+
                     response = data.Substring(0, a).Trim();
                     return response;
                 case DataExtractType.Defendant:
                 case DataExtractType.Plantiff:
                     var b = data.IndexOf(_searchKeyWord, Oic);
-                    if (b < 0) return data;
+                    if (b < 0)
+                    {
+                        return data;
+                    }
+
                     if (extractType == DataExtractType.Plantiff)
                     {
                         return data.Substring(0, b).Trim();

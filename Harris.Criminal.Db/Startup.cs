@@ -93,7 +93,11 @@ namespace Harris.Criminal.Db
                     business.Sort((a, b) =>
                     {
                         int aa = a.DateFiled.CompareTo(b.DateFiled);
-                        if (aa != 0) return aa;
+                        if (aa != 0)
+                        {
+                            return aa;
+                        }
+
                         int bb = a.NextAppearanceDate.CompareTo(b.NextAppearanceDate);
                         return bb;
                     });

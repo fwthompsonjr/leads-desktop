@@ -3,8 +3,6 @@ using Harris.Criminal.Db.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Parsing
@@ -14,7 +12,11 @@ namespace Thompson.RecordSearch.Utility.Parsing
         private static readonly CaseStyleDbParser DbParser = new CaseStyleDbParser();
         public static IEnumerable<HLinkDataRow> ToHLinkData(this List<CaseStyleDb> cases)
         {
-            if (cases == null || cases.Count == 0) return Array.Empty<HLinkDataRow>();
+            if (cases == null || cases.Count == 0)
+            {
+                return Array.Empty<HLinkDataRow>();
+            }
+
             var data = new List<HLinkDataRow>();
             var parser = DbParser;
             foreach (var item in cases)
@@ -43,10 +45,18 @@ namespace Thompson.RecordSearch.Utility.Parsing
 
         public static IEnumerable<PersonAddress> ToPersonAddress(this HLinkDataRow dataRow, List<HarrisCriminalDto> dtos)
         {
-            if (dataRow == null) return Array.Empty<PersonAddress>();
+            if (dataRow == null)
+            {
+                return Array.Empty<PersonAddress>();
+            }
+
             var matched = dtos;
             var drow = FromCase(dataRow);
-            if (matched == null || !matched.Any()) return new PersonAddress[] { drow };
+            if (matched == null || !matched.Any())
+            {
+                return new PersonAddress[] { drow };
+            }
+
             var records = new List<PersonAddress>();
             var parser = DbParser;
             parser.Data = dataRow.CaseStyle;
@@ -67,7 +77,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
                     Plantiff = parsed.Plantiff,
                     Zip = item.DefendantZip
                 };
-                if(dto.Address2.Equals(", ", StringComparison.CurrentCultureIgnoreCase))
+                if (dto.Address2.Equals(", ", StringComparison.CurrentCultureIgnoreCase))
                 {
                     dto.Address2 = string.Empty;
                 }
@@ -83,7 +93,11 @@ namespace Thompson.RecordSearch.Utility.Parsing
         private static PersonAddress FromCase(HLinkDataRow dataRow)
         {
             const string notFoundName = "Found, Not";
-            if (dataRow == null) return new PersonAddress();
+            if (dataRow == null)
+            {
+                return new PersonAddress();
+            }
+
             var parser = DbParser;
             parser.Data = dataRow.CaseStyle;
             var parsed = parser.Parse();
@@ -103,7 +117,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
                 CaseType = dataRow.CaseType,
                 Court = dataRow.Court,
                 DateFiled = dataRow.DateFiled,
-                Plantiff = parsed.Plantiff, 
+                Plantiff = parsed.Plantiff,
                 Zip = "00000"
             };
         }

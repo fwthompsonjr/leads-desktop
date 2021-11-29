@@ -52,19 +52,43 @@ namespace LegalLead.PublicData.Search
                     return false;
                 }
             }
-            if (!ValidateCustomDenton(siteData)) return false;
-            if (!ValidateCustomCollin(siteData)) return false;
-            if (!ValidateCustomTarrant(siteData)) return false;
-            if (!ValidateCustomHarrisCivil(siteData)) return false;
+            if (!ValidateCustomDenton(siteData))
+            {
+                return false;
+            }
+
+            if (!ValidateCustomCollin(siteData))
+            {
+                return false;
+            }
+
+            if (!ValidateCustomTarrant(siteData))
+            {
+                return false;
+            }
+
+            if (!ValidateCustomHarrisCivil(siteData))
+            {
+                return false;
+            }
+
             return true;
         }
 
         private bool ValidateCustomDenton(WebNavigationParameter siteData)
         {
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
-            if (siteData.Id != 1) return true;
+            if (siteData.Id != 1)
+            {
+                return true;
+            }
+
             var keys = Program.DentonCustomKeys;
-            if (!keys.Any()) return true;
+            if (!keys.Any())
+            {
+                return true;
+            }
+
             foreach (var customKey in keys)
             {
                 var found = siteData.Keys.FirstOrDefault(k => k.Name.Equals(customKey.Name, comparison));
@@ -95,7 +119,11 @@ namespace LegalLead.PublicData.Search
         private bool ValidateCustomCollin(WebNavigationParameter siteData)
         {
 
-            if (siteData.Id != 20) return true;
+            if (siteData.Id != 20)
+            {
+                return true;
+            }
+
             if (cboCaseType.SelectedIndex < 0)
             {
                 MessageBox.Show(CommonKeyIndexes.PleaseChooseValidCaseType,
@@ -135,7 +163,11 @@ namespace LegalLead.PublicData.Search
 
         private bool ValidateCustomTarrant(WebNavigationParameter siteData)
         {
-            if (siteData.Id != 10) return true;
+            if (siteData.Id != 10)
+            {
+                return true;
+            }
+
             if (cboCourts.SelectedIndex < 0)
             {
                 MessageBox.Show(CommonKeyIndexes.PleaseChooseValidCourt,
@@ -161,7 +193,11 @@ namespace LegalLead.PublicData.Search
         private bool ValidateCustomHarrisCivil(WebNavigationParameter siteData)
         {
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
-            if (siteData.Id != (int)SourceType.HarrisCivil) return true;
+            if (siteData.Id != (int)SourceType.HarrisCivil)
+            {
+                return true;
+            }
+
             var court = ((Thompson.RecordSearch.Utility.Dto.Option)(cboCaseType.SelectedItem));
             var caseStatus = ((Thompson.RecordSearch.Utility.Dto.DropDown)(cboSearchType.SelectedItem));
             var keys = new List<WebNavigationKey>() {
@@ -172,7 +208,11 @@ namespace LegalLead.PublicData.Search
                     Name= "caseStatusIndex",
                     Value = caseStatus.Id.ToString()}
             };
-            if (!keys.Any()) return true;
+            if (!keys.Any())
+            {
+                return true;
+            }
+
             foreach (var customKey in keys)
             {
                 var found = siteData.Keys.FirstOrDefault(k => k.Name.Equals(customKey.Name, comparison));
@@ -194,7 +234,11 @@ namespace LegalLead.PublicData.Search
         {
             var keys = siteData.Keys;
             var item = keys.First(k => k.Name.Equals(keyName, StringComparison.CurrentCultureIgnoreCase));
-            if (item == null) return;
+            if (item == null)
+            {
+                return;
+            }
+
             item.Value = keyValue;
 
         }

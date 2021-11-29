@@ -14,8 +14,16 @@ namespace Thompson.RecordSearch.Utility.Tests
             }
             var settingCanExecute =
                 ConfigurationManager.AppSettings["allow.web.integration"];
-            if (settingCanExecute == null) return true;
-            if (!bool.TryParse(settingCanExecute, out bool canExec)) return true;
+            if (settingCanExecute == null)
+            {
+                return true;
+            }
+
+            if (!bool.TryParse(settingCanExecute, out bool canExec))
+            {
+                return true;
+            }
+
             return canExec;
 
         }

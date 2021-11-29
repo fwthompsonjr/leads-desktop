@@ -55,9 +55,21 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
         {
             get
             {
-                if (string.IsNullOrEmpty(Name)) return false;
-                if (string.IsNullOrEmpty(Zip)) return false;
-                if (string.IsNullOrEmpty(Address1)) return false;
+                if (string.IsNullOrEmpty(Name))
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(Zip))
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(Address1))
+                {
+                    return false;
+                }
+
                 return true;
             }
         }

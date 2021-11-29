@@ -33,7 +33,11 @@ namespace Harris.Criminal.Db.Tests.Tables
                     .RuleFor(f => f.Data, r =>
                     {
                         var nbr = r.Random.Int(-2, 20);
-                        if (nbr < 0) return null;
+                        if (nbr < 0)
+                        {
+                            return null;
+                        }
+
                         return DatumFaker.Generate(nbr);
                     });
             }

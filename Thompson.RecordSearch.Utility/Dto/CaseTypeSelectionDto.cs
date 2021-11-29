@@ -64,7 +64,11 @@ namespace Thompson.RecordSearch.Utility.Dto
     {
         public static List<DropDown> ToDropDown(this List<Option> options)
         {
-            if (options == null) return null;
+            if (options == null)
+            {
+                return null;
+            }
+
             var result = new List<DropDown>();
             options.ForEach(o =>
             {

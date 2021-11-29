@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thompson.RecordSearch.Utili
 		{0A9E83C4-AA86-4F7D-8BAF-FCB8F174D190} = {0A9E83C4-AA86-4F7D-8BAF-FCB8F174D190}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C68AF7EF-946E-412F-895D-97D403F84ED9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shared", "_Shared", "{C68AF7EF-946E-412F-895D-97D403F84ED9}"
 	ProjectSection(SolutionItems) = preProject
 		app.config = app.config
 		Shared\basAddress.bas.txt = Shared\basAddress.bas.txt
@@ -74,11 +74,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harris.Criminal.Db", "Harri
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{9F89D6F5-4D55-4CD2-A9A4-A83ED8F922B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harris.Criminal.UnitTests", "UnitTests\Harris.Criminal.UnitTests\Harris.Criminal.UnitTests.csproj", "{B4866D63-37FD-4143-8566-4439C421BEA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Harris.Criminal.UnitTests", "UnitTests\Harris.Criminal.UnitTests\Harris.Criminal.UnitTests.csproj", "{B4866D63-37FD-4143-8566-4439C421BEA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalLead.Changed.UnitTests", "UnitTests\LegalLead.Change.UnitTests\LegalLead.Changed.UnitTests.csproj", "{BEEF0DAE-102E-4744-ABD4-B3B8464A2C0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LegalLead.Changed.UnitTests", "UnitTests\LegalLead.Change.UnitTests\LegalLead.Changed.UnitTests.csproj", "{BEEF0DAE-102E-4744-ABD4-B3B8464A2C0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thompson.RecordSearch.Utility.UnitTests", "UnitTests\Thompson.RecordSearch.Utility.UnitTests\Thompson.RecordSearch.Utility.UnitTests.csproj", "{294E53B4-32E8-430A-B215-4FBEDF191DAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thompson.RecordSearch.Utility.UnitTests", "UnitTests\Thompson.RecordSearch.Utility.UnitTests\Thompson.RecordSearch.Utility.UnitTests.csproj", "{294E53B4-32E8-430A-B215-4FBEDF191DAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -167,7 +167,7 @@ Global
 		{294E53B4-32E8-430A-B215-4FBEDF191DAE} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
+		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 	EndGlobalSection
 EndGlobal

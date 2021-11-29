@@ -88,13 +88,20 @@ namespace Thompson.RecordSearch.Utility.Web
                 jse.ExecuteScript("arguments[0].click();", anchor);
                 var trackingStart = DateTime.Now;
                 var timeout = 5 * 60; // allow five minutes
-                while (FileCreateComplete(trackingStart, timeout) == false) 
-                { 
+                while (FileCreateComplete(trackingStart, timeout) == false)
+                {
                     Thread.Sleep(500);
-                    if (File.Exists(expectedFileName)) break;
+                    if (File.Exists(expectedFileName))
+                    {
+                        break;
+                    }
                 }
                 var list = GetFiles();
-                if (!list.Any()) return null;
+                if (!list.Any())
+                {
+                    return null;
+                }
+
                 list.Sort((a, b) => b.CreationTime.CompareTo(a.CreationTime));
                 return list[0].FullName;
             }
@@ -137,7 +144,11 @@ namespace Thompson.RecordSearch.Utility.Web
             if (trackingEnd < DateTime.Now) { isTrackingTimeout = true; };
 
             var files = new DirectoryInfo(DownloadTo).GetFiles("*.txt");
-            if (!files.Any()) return false | isTrackingTimeout; // keep looking nothing found
+            if (!files.Any())
+            {
+                return false | isTrackingTimeout; // keep looking nothing found
+            }
+
             var list = files.ToList()
                 .FindAll(a => Path.GetExtension(a.Name).Equals(".txt", StringComparison.OrdinalIgnoreCase));
             var downloaded = GetFiles();
@@ -159,7 +170,11 @@ namespace Thompson.RecordSearch.Utility.Web
             foreach (var target in data)
             {
                 var targetName = Path.Combine(targetFolder, Path.GetFileName(target));
-                if (File.Exists(targetName)) continue;
+                if (File.Exists(targetName))
+                {
+                    continue;
+                }
+
                 File.Copy(target, targetName, true);
             }
             _ = Task.Run(() =>
@@ -171,7 +186,11 @@ namespace Thompson.RecordSearch.Utility.Web
         private static List<FileInfo> GetFiles()
         {
             var files = new DirectoryInfo(DownloadTo).GetFiles("*.txt");
-            if (!files.Any()) return new List<FileInfo>(); // keep looking nothing found
+            if (!files.Any())
+            {
+                return new List<FileInfo>(); // keep looking nothing found
+            }
+
             var list = files.ToList();
             list.Sort((a, b) => b.CreationTime.CompareTo(a.CreationTime));
             return list
@@ -220,7 +239,6 @@ namespace Thompson.RecordSearch.Utility.Web
                 // Dispose managed state (managed objects).            
                 TheDriver?.Close();
                 TheDriver?.Quit();
-                TheDriver.Dispose();
             }
             catch (Exception ex)
             {

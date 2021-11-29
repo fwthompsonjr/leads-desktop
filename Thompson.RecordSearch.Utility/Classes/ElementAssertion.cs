@@ -89,7 +89,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
         public bool ContainsText(By selector, string elementName, string searchString)
         {
-            if (!DoesElementExist(selector, elementName)) return false;
+            if (!DoesElementExist(selector, elementName))
+            {
+                return false;
+            }
+
             var found = PageDriver.FindElement(selector, 10);
             var message = string.Format(
                 CultureInfo.CurrentCulture,
@@ -105,7 +109,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public bool MatchText(By selector, string elementName, string searchString)
         {
-            if (!DoesElementExist(selector, elementName)) return false;
+            if (!DoesElementExist(selector, elementName))
+            {
+                return false;
+            }
+
             var found = PageDriver.FindElement(selector, 10);
             var message = string.Format(
                 CultureInfo.CurrentCulture,
@@ -120,7 +128,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public bool ContainsClass(By selector, string elementName, string className)
         {
-            if (!DoesElementExist(selector, elementName)) return false;
+            if (!DoesElementExist(selector, elementName))
+            {
+                return false;
+            }
+
             var found = PageDriver.FindElement(selector, 10);
             var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
@@ -137,7 +149,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public bool QueryByClass(By selector, string elementName, string className)
         {
-            if (!DoesElementExist(selector, elementName)) return false;
+            if (!DoesElementExist(selector, elementName))
+            {
+                return false;
+            }
+
             var found = PageDriver.FindElement(selector, 10);
             var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
@@ -155,7 +171,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 attributeName,
                 attributeValue,
                 actual);
-            if (string.IsNullOrEmpty(attributeValue) && string.IsNullOrEmpty(actual)) return true;
+            if (string.IsNullOrEmpty(attributeValue) && string.IsNullOrEmpty(actual))
+            {
+                return true;
+            }
+
             var hasAttribute = actual.Equals(attributeValue, StringComparison.CurrentCultureIgnoreCase);
             if (!hasAttribute)
             {
@@ -166,7 +186,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public bool DoesNotContainsClass(By selector, string elementName, string className)
         {
-            if (!DoesElementExist(selector, elementName)) return false;
+            if (!DoesElementExist(selector, elementName))
+            {
+                return false;
+            }
+
             var found = PageDriver.FindElement(selector, 10);
             var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
@@ -224,8 +248,16 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                if (controlId == null) controlId = string.Empty;
-                if (controlValue == null) controlValue = string.Empty;
+                if (controlId == null)
+                {
+                    controlId = string.Empty;
+                }
+
+                if (controlValue == null)
+                {
+                    controlValue = string.Empty;
+                }
+
                 Console.WriteLine(CommonKeyIndexes.SettingControlValue, controlId,
                     controlId.Equals(CommonKeyIndexes.Password,
                         StringComparison.CurrentCultureIgnoreCase) ?
@@ -313,9 +345,16 @@ namespace Thompson.RecordSearch.Utility.Classes
                     item.Value);
                 var navigator = navigations.FirstOrDefault(f =>
                     f.Name.Equals(item.Name, StringComparison.CurrentCultureIgnoreCase));
-                if (navigator == null) continue;
+                if (navigator == null)
+                {
+                    continue;
+                }
+
                 var webElement = navigator.Execute(item);
-                if (webElement != null) return webElement;
+                if (webElement != null)
+                {
+                    return webElement;
+                }
             }
             return null;
         }

@@ -33,7 +33,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 throw new ArgumentNullException(nameof(fetchResult));
             }
-            if (fetchResult.WebsiteId < 1) fetchResult.WebsiteId = 1;
+            if (fetchResult.WebsiteId < 1)
+            {
+                fetchResult.WebsiteId = 1;
+            }
+
             var writer = new ExcelWriter();
             var extXml = CommonKeyIndexes.ExtensionXml;
             var extFile = CommonKeyIndexes.ExtensionXlsx;
@@ -66,9 +70,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             int websiteId = 1)
         {
             if (addressList == null)
+            {
                 throw new ArgumentNullException(nameof(addressList));
+            }
+
             if (string.IsNullOrEmpty(worksheetName))
+            {
                 throw new ArgumentNullException(nameof(worksheetName));
+            }
 
             var countyName = SettingsManager
                 .GetNavigation().Find(x => x.Id == websiteId)
@@ -89,7 +98,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             List<string> localFieldList = default;
             foreach (var item in addressList)
             {
-                if(addressList.IndexOf(item) == 0)
+                if (addressList.IndexOf(item) == 0)
                 {
                     localFieldList = item.FieldList;
                     if (websiteId == 40)
@@ -148,7 +157,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             var list = SearchSettingDto.GetCourtLookupList.CourtLocations;
             var court = list.FirstOrDefault(
                 c => c.Id.Equals(websiteId.ToString("0", new System.Globalization.NumberFormatInfo()), ccic));
-            if (court == null) return string.Empty;
+            if (court == null)
+            {
+                return string.Empty;
+            }
+
             court.Courts
                 .Where(a => string.IsNullOrEmpty(a.FullName))
                 .ToList()
@@ -161,7 +174,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 .FirstOrDefault(a =>
                     a.Name.Equals(value, ccic)
                     | a.FullName.Equals(value, ccic));
-            if (courtLocation != null) return courtLocation.Address;
+            if (courtLocation != null)
+            {
+                return courtLocation.Address;
+            }
+
             var blankLocation = court.Courts
                 .FirstOrDefault(a => a.Name.Equals("default", ccic));
 
@@ -269,12 +286,23 @@ namespace Thompson.RecordSearch.Utility.Classes
                             .ForEach(n => sbb.Append(n.InnerText.Trim() + " "));
                         target.Value = sbb.ToString().Trim();
                         colIndex++;
-                        if (hyperPrefix == null) continue;
+                        if (hyperPrefix == null)
+                        {
+                            continue;
+                        }
                         // does this node contain a hyperlink?
                         var hyperlink = nodeList.FirstOrDefault(x => x.Name.Equals("a", StringComparison.CurrentCultureIgnoreCase));
-                        if (hyperlink == null) continue;
+                        if (hyperlink == null)
+                        {
+                            continue;
+                        }
+
                         var txHref = hyperlink.Attributes.GetNamedItem("href");
-                        if (txHref == null) continue;
+                        if (txHref == null)
+                        {
+                            continue;
+                        }
+
                         var hlink = string.Format(
                             CultureInfo.CurrentCulture,
                             @"{0}{1}", hyperPrefix.Value, txHref.InnerText);

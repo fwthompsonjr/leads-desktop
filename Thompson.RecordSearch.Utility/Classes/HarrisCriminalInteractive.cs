@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Models;
 using Thompson.RecordSearch.Utility.Parsing;
 
@@ -64,7 +62,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                     foreach (var dataset in db)
                     {
                         var found = dataset.Data.Where(a => a.FilingDate.Equals(fileDate, Oic));
-                        if (found == null) continue;
+                        if (found == null)
+                        {
+                            continue;
+                        }
+
                         details.AddRange(found);
                     }
                     var group = details.GroupBy(x => x.CaseNumber).Select(y => y.First()).ToList();

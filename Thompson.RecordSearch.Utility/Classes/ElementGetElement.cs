@@ -8,8 +8,16 @@ namespace Thompson.RecordSearch.Utility.Classes
     {
         public override IWebElement Execute(WebNavInstruction item)
         {
-            if (Assertion == null) return null;
-            if (PageDriver == null) return null;
+            if (Assertion == null)
+            {
+                return null;
+            }
+
+            if (PageDriver == null)
+            {
+                return null;
+            }
+
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
