@@ -110,6 +110,10 @@ namespace LegalLead.PublicData.Search
                 {
                     throw new ApplicationException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
+                if (IsEmpty(CaseData))
+                {
+                    throw new ApplicationException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
+                }
                 CaseData.WebsiteId = siteData.Id;
                 ExcelWriter.WriteToExcel(CaseData);
                 searchItem.ResultFileName = CaseData.Result;
@@ -146,8 +150,6 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-
-
         private void ExportDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (CaseData == null)
@@ -179,22 +181,30 @@ namespace LegalLead.PublicData.Search
         {
 
             var sourceId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
-            if (sourceId == (int)SourceType.DentonCounty)
+            switch (sourceId)
             {
-                using (var credential = new FormDentonSetting())
-                {
-                    credential.Icon = Icon;
-                    credential.ShowDialog(this);
-                    SetDentonStatusLabelFromSetting();
-                }
-            }
-            else
-            {
-                using (var result = new FormCredential())
-                {
-                    result.Icon = Icon;
-                    result.ShowDialog(this);
-                }
+                case (int)SourceType.DentonCounty:
+                    using (var credential = new FormDentonSetting())
+                    {
+                        credential.Icon = Icon;
+                        credential.ShowDialog(this);
+                        SetDentonStatusLabelFromSetting();
+                    }
+                    break;
+                case (int)SourceType.HarrisCriminal:
+                    using (var hcc = new FormHcc())
+                    {
+                        hcc.Icon = Icon;
+                        hcc.ShowDialog(this);
+                    }
+                    break;
+                default:
+                    using (var result = new FormCredential())
+                    {
+                        result.Icon = Icon;
+                        result.ShowDialog(this);
+                    }
+                    break;
             }
         }
 
@@ -214,6 +224,14 @@ namespace LegalLead.PublicData.Search
             {
                 process.Kill();
             }
+        }
+
+
+        private static bool IsEmpty(WebFetchResult caseData)
+        {
+            if (caseData == null) return true;
+            const string emptyCases = "<table></table>";
+            return caseData.CaseList.Equals(emptyCases, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

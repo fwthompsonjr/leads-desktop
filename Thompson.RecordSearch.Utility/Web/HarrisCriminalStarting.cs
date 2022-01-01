@@ -81,16 +81,7 @@ namespace Thompson.RecordSearch.Utility.Web
             const int cycleId = 10;
             DateTime MxDate = DateTime.Now.AddDays(-1).Date;
             DateTime MnDate = MxDate.AddDays(interval);
-
-            var dtes = new List<KeyValuePair<DateTime, DateTime>>
-            {
-                new KeyValuePair<DateTime, DateTime>(MnDate, MxDate)
-            };
-            while (dtes.Count < cycleId)
-            {
-                var item = dtes.Last();
-                dtes.Add(new KeyValuePair<DateTime, DateTime>(item.Key.AddDays(interval), item.Key));
-            }
+            List<KeyValuePair<DateTime, DateTime>> dtes = GetDateRange(interval, cycleId, MxDate, MnDate);
             using (var obj = new HarrisCriminalCaseStyle())
             {
                 var result = new List<HarrisCriminalStyleDto>();
@@ -103,6 +94,21 @@ namespace Thompson.RecordSearch.Utility.Web
                     result.Append(records);
                 }
             }
+        }
+
+        private static List<KeyValuePair<DateTime, DateTime>> GetDateRange(int interval, int cycleId, DateTime MxDate, DateTime MnDate)
+        {
+            var dtes = new List<KeyValuePair<DateTime, DateTime>>
+            {
+                new KeyValuePair<DateTime, DateTime>(MnDate, MxDate)
+            };
+            while (dtes.Count < cycleId)
+            {
+                var item = dtes.Last();
+                dtes.Add(new KeyValuePair<DateTime, DateTime>(item.Key.AddDays(interval), item.Key));
+            }
+
+            return dtes;
         }
 
         private static IWebDriver GetDriver(bool headless = false)

@@ -20,7 +20,8 @@ namespace LegalLead.PublicData.Search
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             GetMain.ButtonDentonSetting.Visible = (
                 source.Id == (int)SourceType.DentonCounty |
-                source.Id == (int)SourceType.CollinCounty);
+                source.Id == (int)SourceType.CollinCounty |
+                source.Id == (int)SourceType.HarrisCriminal);
             GetMain.cboSearchType.Visible = source.Id == (int)SourceType.CollinCounty;
             GetMain.cboCaseType.Visible = source.Id == (int)SourceType.CollinCounty;
             GetMain.cboCourts.Visible = source.Id == (int)SourceType.TarrantCounty;
@@ -48,6 +49,10 @@ namespace LegalLead.PublicData.Search
             {
                 GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.SettingsLabel; // "Settings";
                 GetMain.SetDentonStatusLabelFromSetting();
+            }
+            else if(source.Id == (int)SourceType.HarrisCriminal)
+            {
+                GetMain.ButtonDentonSetting.Text = "Options";
             }
             else
             {

@@ -2,6 +2,7 @@
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -42,6 +43,13 @@ namespace Thompson.RecordSearch.Utility.Classes
             var extXml = CommonKeyIndexes.ExtensionXml;
             var extFile = CommonKeyIndexes.ExtensionXlsx;
             var tmpFileName = fetchResult.Result.Replace(extXml, extFile);
+            if (true)
+            {
+                // Debug.Assert(fetchResult.PeopleList.Count > 0);
+                var htmlCaseList = fetchResult.CaseList;
+                Debug.Assert(string.IsNullOrEmpty(htmlCaseList) == false);
+            }
+
             using (var workBook = writer.ConvertToPersonTable(
                 addressList: fetchResult.PeopleList,
                 worksheetName: "Addresses",
