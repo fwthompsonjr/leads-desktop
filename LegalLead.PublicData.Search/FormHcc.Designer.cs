@@ -74,7 +74,7 @@ namespace LegalLead.PublicData.Search
             this.tsbtnClose});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(800, 31);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -83,7 +83,7 @@ namespace LegalLead.PublicData.Search
             this.tsbtnEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnEdit.Image")));
             this.tsbtnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnEdit.Name = "tsbtnEdit";
-            this.tsbtnEdit.Size = new System.Drawing.Size(59, 24);
+            this.tsbtnEdit.Size = new System.Drawing.Size(59, 28);
             this.tsbtnEdit.Text = "Edit";
             // 
             // tsbtnSave
@@ -91,20 +91,20 @@ namespace LegalLead.PublicData.Search
             this.tsbtnSave.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSave.Image")));
             this.tsbtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSave.Name = "tsbtnSave";
-            this.tsbtnSave.Size = new System.Drawing.Size(64, 24);
+            this.tsbtnSave.Size = new System.Drawing.Size(64, 28);
             this.tsbtnSave.Text = "Save";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
             // tsbtnClose
             // 
             this.tsbtnClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnClose.Image")));
             this.tsbtnClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnClose.Name = "tsbtnClose";
-            this.tsbtnClose.Size = new System.Drawing.Size(57, 24);
+            this.tsbtnClose.Size = new System.Drawing.Size(57, 28);
             this.tsbtnClose.Text = "Exit";
             // 
             // grid
@@ -131,6 +131,7 @@ namespace LegalLead.PublicData.Search
             this.tabStrip.SelectedIndex = 0;
             this.tabStrip.Size = new System.Drawing.Size(794, 29);
             this.tabStrip.TabIndex = 2;
+            this.tabStrip.SelectedIndexChanged += new System.EventHandler(this.TabStrip_SelectedIndexChanged);
             // 
             // tabPage1
             // 

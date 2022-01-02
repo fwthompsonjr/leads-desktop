@@ -6,8 +6,6 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
@@ -42,12 +40,12 @@ namespace LegalLead.PublicData.Search
         private BindingSource GetBindingSource(string bindingName)
         {
             var data = GetTag<HccOption>();
+            var datasource = data.FindAll(x => x.Type.Equals(bindingName, StringComparison.OrdinalIgnoreCase));
             switch (bindingName)
             {
                 case "general":
-                    var general = data.FindAll(x => x.Type.Equals(bindingName, StringComparison.OrdinalIgnoreCase));
                     // get a list of string for the general desciption
-                    var lista = general.Select(s =>
+                    var lista = datasource.Select(s =>
                     {
                         var heading = s.Name;
                         var labels = s.Labels;
@@ -56,7 +54,7 @@ namespace LegalLead.PublicData.Search
                     }).SelectMany(i => i)
                     .Select(itm => new HccItem { Id = 0, Data = itm })
                     .ToList();
-                    
+
                     foreach (var item in lista)
                     {
                         item.Id = lista.IndexOf(item);
@@ -64,24 +62,45 @@ namespace LegalLead.PublicData.Search
 
                     var aList = new BindingList<HccItem>(lista);
                     return new BindingSource(aList, null);
+                case "details":
+                    var listb = datasource.Select(s =>
+                        new HccDetailItem { 
+                            Id = s.Index.GetValueOrDefault(),
+                            Key = s.Name,
+                            Value = HccDetailItem.GetValue(s.Index.GetValueOrDefault())
+                        }).ToList();
 
+                    var bList = new BindingList<HccDetailItem>(listb);
+                    return new BindingSource(bList, null);
                 default:
                     return null;
             }
         }
-        
+
         private void GetSettings(string bindingName)
         {
             var defaultCellFont = new DataGridViewCellStyle
             {
                 Font = new Font("Tahoma", 11)
             };
+            var enumerator = grid.Columns.GetEnumerator();
             switch (bindingName)
             {
                 case "general":
                     grid.Columns[0].Width = 20;
                     grid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-                    var enumerator = grid.Columns.GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        var column = enumerator.Current as DataGridViewColumn;
+                        column.DefaultCellStyle = defaultCellFont;
+                        column.HeaderCell.Style = defaultCellFont;
+                        column.Visible = column.Index != 0;
+                    }
+                    break;
+                case "details":
+                    grid.Columns[0].Width = 30;
+                    grid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                    grid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
                     while (enumerator.MoveNext())
                     {
                         var column = enumerator.Current as DataGridViewColumn;
@@ -96,8 +115,18 @@ namespace LegalLead.PublicData.Search
         }
         private List<T> GetTag<T>()
         {
-            if (Tag == null) return null;
+            if (Tag == null)
+            {
+                return null;
+            }
+
             return Tag as List<T>;
+        }
+
+
+        private void TabStrip_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGrid();
         }
     }
 }

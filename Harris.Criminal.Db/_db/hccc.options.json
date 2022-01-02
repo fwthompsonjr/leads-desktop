@@ -26,17 +26,17 @@
   },
   {
     "name": "HCC Database - Latest Header",
-    "type": "detail",
+    "type": "details",
     "index": 100
   },
   {
     "name": "HCC Database - Latest Detail",
-    "type": "detail",
+    "type": "details",
     "index": 200
   },
   {
     "name": "HCC Database - Detail Date Range",
-    "type": "detail",
+    "type": "details",
     "index": 300
   },
   {
