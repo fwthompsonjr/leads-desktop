@@ -41,6 +41,7 @@ namespace LegalLead.PublicData.Search
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tableLayout.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
@@ -61,7 +62,7 @@ namespace LegalLead.PublicData.Search
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayout.Size = new System.Drawing.Size(800, 450);
+            this.tableLayout.Size = new System.Drawing.Size(1143, 603);
             this.tableLayout.TabIndex = 0;
             // 
             // toolStrip1
@@ -74,7 +75,7 @@ namespace LegalLead.PublicData.Search
             this.tsbtnClose});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(1143, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -83,7 +84,7 @@ namespace LegalLead.PublicData.Search
             this.tsbtnEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnEdit.Image")));
             this.tsbtnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnEdit.Name = "tsbtnEdit";
-            this.tsbtnEdit.Size = new System.Drawing.Size(59, 28);
+            this.tsbtnEdit.Size = new System.Drawing.Size(59, 24);
             this.tsbtnEdit.Text = "Edit";
             // 
             // tsbtnSave
@@ -91,20 +92,20 @@ namespace LegalLead.PublicData.Search
             this.tsbtnSave.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSave.Image")));
             this.tsbtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSave.Name = "tsbtnSave";
-            this.tsbtnSave.Size = new System.Drawing.Size(64, 28);
+            this.tsbtnSave.Size = new System.Drawing.Size(64, 24);
             this.tsbtnSave.Text = "Save";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // tsbtnClose
             // 
             this.tsbtnClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnClose.Image")));
             this.tsbtnClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnClose.Name = "tsbtnClose";
-            this.tsbtnClose.Size = new System.Drawing.Size(57, 28);
+            this.tsbtnClose.Size = new System.Drawing.Size(57, 24);
             this.tsbtnClose.Text = "Exit";
             // 
             // grid
@@ -117,19 +118,22 @@ namespace LegalLead.PublicData.Search
             this.grid.Name = "grid";
             this.grid.RowHeadersWidth = 51;
             this.grid.RowTemplate.Height = 24;
-            this.grid.Size = new System.Drawing.Size(794, 374);
+            this.grid.Size = new System.Drawing.Size(1137, 527);
             this.grid.TabIndex = 1;
+            this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_CellContentClick);
+            this.grid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_CellEndEdit);
             // 
             // tabStrip
             // 
             this.tabStrip.Controls.Add(this.tabPage1);
             this.tabStrip.Controls.Add(this.tabPage2);
             this.tabStrip.Controls.Add(this.tabPage3);
+            this.tabStrip.Controls.Add(this.tabPage4);
             this.tabStrip.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabStrip.Location = new System.Drawing.Point(3, 38);
             this.tabStrip.Name = "tabStrip";
             this.tabStrip.SelectedIndex = 0;
-            this.tabStrip.Size = new System.Drawing.Size(794, 29);
+            this.tabStrip.Size = new System.Drawing.Size(1137, 29);
             this.tabStrip.TabIndex = 2;
             this.tabStrip.SelectedIndexChanged += new System.EventHandler(this.TabStrip_SelectedIndexChanged);
             // 
@@ -138,7 +142,7 @@ namespace LegalLead.PublicData.Search
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(786, 0);
+            this.tabPage1.Size = new System.Drawing.Size(1129, 0);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -148,7 +152,7 @@ namespace LegalLead.PublicData.Search
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(786, 0);
+            this.tabPage2.Size = new System.Drawing.Size(1129, 0);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Details";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -158,16 +162,26 @@ namespace LegalLead.PublicData.Search
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(786, 0);
+            this.tabPage3.Size = new System.Drawing.Size(1129, 0);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Settings";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1129, 0);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Background";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // FormHcc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1143, 603);
             this.Controls.Add(this.tableLayout);
             this.Name = "FormHcc";
             this.Text = "HCC Database Manager";
@@ -195,5 +209,6 @@ namespace LegalLead.PublicData.Search
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
     }
 }

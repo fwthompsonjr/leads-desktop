@@ -13,7 +13,7 @@
   {
     "name": "Data Selection Mode",
     "index": 0,
-    "type": "setting",
+    "type": "settings",
     "description": "Sets the data retrieval method",
     "values": [
       "database",
@@ -25,37 +25,52 @@
     ]
   },
   {
+    "name": "HCC Database - Earliest Header",
+    "type": "details",
+    "index": 125
+  },
+  {
     "name": "HCC Database - Latest Header",
     "type": "details",
     "index": 100
   },
   {
-    "name": "HCC Database - Latest Detail",
+    "name": "HCC Database - Earliest Detail",
     "type": "details",
     "index": 200
   },
   {
-    "name": "HCC Database - Detail Date Range",
+    "name": "HCC Database - Latest Detail",
     "type": "details",
     "index": 300
   },
   {
+    "name": "HCC Database - Headers",
+    "type": "details",
+    "index": 400
+  },
+  {
+    "name": "HCC Database - Case Details",
+    "type": "details",
+    "index": 500
+  },
+  {
     "name": "HCC Database - Preload - Header",
-    "type": "setting",
+    "type": "settings",
     "description": "Controls the data load of header data, off or on. Default value is on.",
     "index": 0,
     "values": [ "true", "false" ]
   },
   {
     "name": "HCC Database - Preload - Detail",
-    "type": "setting",
+    "type": "settings",
     "description": "Controls the data load of detail data, off or on. Default value is on.",
     "index": 0,
     "values": [ "true", "false" ]
   },
   {
     "name": "HCC Database - Preload - Detail Days",
-    "type": "setting",
+    "type": "settings",
     "description": "Controls the data load of detail data, setting the number of business days to preload.",
     "index": 0,
     "values": [ "5", "15", "30", "45", "60", "90" ]

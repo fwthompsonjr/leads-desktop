@@ -123,6 +123,7 @@
     <Compile Include="Classes\HccDetailItem.cs" />
     <Compile Include="Classes\HccItem.cs" />
     <Compile Include="Classes\HccOption.cs" />
+    <Compile Include="Classes\HccSettingItem.cs" />
     <Compile Include="Classes\IRowStyleChanged.cs" />
     <Compile Include="Classes\IWebsiteChangeEvent.cs" />
     <Compile Include="Classes\SearchResult.cs" />
