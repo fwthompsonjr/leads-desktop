@@ -201,6 +201,7 @@
     <Compile Include="Addressing\FindPrincipalByWordMatch.cs" />
     <Compile Include="Addressing\FindRespondentByWordMatch.cs" />
     <Compile Include="Addressing\NoFoundMatch.cs" />
+    <Compile Include="Attributes\DataActionAttribute.cs" />
     <Compile Include="Classes\BaseWebIneractive.cs" />
     <Compile Include="Classes\CollinWebInteractive.cs" />
     <Compile Include="Classes\ConsoleWriter.cs" />
@@ -234,7 +235,12 @@
     <Compile Include="Classes\WebUtilities_01.cs" />
     <Compile Include="Classes\XmlContentHolder.cs" />
     <Compile Include="CommonKeyIndexes.cs" />
+    <Compile Include="Db\BaseAction.cs" />
+    <Compile Include="Db\BaseDataProcess.cs" />
     <Compile Include="Db\DataPersistence.cs" />
+    <Compile Include="Db\DownloadDataProcess.cs" />
+    <Compile Include="Db\GetBrowserAction.cs" />
+    <Compile Include="Db\GetDownloadAction.cs" />
     <Compile Include="DriverFactory\BaseChromeProvider.cs" />
     <Compile Include="DriverFactory\ChromeOlderProvider.cs" />
     <Compile Include="DriverFactory\ChromeProvider.cs" />
