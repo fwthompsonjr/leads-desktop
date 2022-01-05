@@ -60,7 +60,7 @@ namespace Harris.Criminal.Db.Entities
         public static List<HccProcess> Read()
         {
             var data = DataProcess.Read();
-            if (string.IsNullOrEmpty(data)) return null;
+            if (string.IsNullOrEmpty(data)) return new List<HccProcess>();
             return JsonConvert.DeserializeObject<List<HccProcess>>(data);
         }
 
@@ -68,14 +68,22 @@ namespace Harris.Criminal.Db.Entities
         {
             var data = JsonConvert.SerializeObject(options);
             if (string.IsNullOrEmpty(data)) return null;
-            DataOptions.Write(data);
+            DataProcess.Write(data);
             return Read();
         }
         public static List<HccProcess> Update(HccProcess process)
         {
             var data = Read();
-            var index = data.First(a => a.Id == process.Id);
-            index = process;
+            var index = data.FindIndex(a => a.Id == process.Id);
+            if (index < 0)
+            {
+                data.Add(process);
+            }
+            else
+            {
+                data[index] = process;
+            }
+            
             return Update(data);
         }
 

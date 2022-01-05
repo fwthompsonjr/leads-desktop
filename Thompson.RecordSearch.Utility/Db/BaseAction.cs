@@ -3,7 +3,6 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Thompson.RecordSearch.Utility.Db
@@ -31,20 +30,37 @@ namespace Thompson.RecordSearch.Utility.Db
 
         public TimeSpan Elapsed => DateTime.Now.Subtract(StartTime.GetValueOrDefault(DateTime.Now));
 
-        public abstract Task ExecuteAsync(IProgress<HccProcess> progress, HccProcess process);
+        public async Task ExecuteAsync(IProgress<HccProcess> progress)
+        {
+            await Task.Run(() => Execute(progress)).ConfigureAwait(true);
+        }
+
+        public abstract void Execute(IProgress<HccProcess> progress);
 
         protected string Name => _name ?? (_name = GetType().Name.Replace("Action", ""));
 
         protected void Start()
         {
-            if (!StartTime.HasValue) StartTime = DateTime.Now;
-            if (Current == null) return;
-            if (Current.Messages == null) Current.Messages = new List<HccMessage>();
+            if (!StartTime.HasValue)
+            {
+                StartTime = DateTime.Now;
+            }
+
+            if (Current == null)
+            {
+                return;
+            }
+
+            if (Current.Messages == null)
+            {
+                Current.Messages = new List<HccMessage>();
+            }
+
             Current.Messages.Add(new HccMessage
             {
                 Date = DateTime.Now,
                 Comment = $"{Name} sub-process starting.",
-                Progress = new HccProgress { Count = 0, Total = 1},
+                Progress = new HccProgress { Count = 0, Total = 1 },
                 StatusId = HccStatus.Information
             });
             Update();
@@ -52,9 +68,21 @@ namespace Thompson.RecordSearch.Utility.Db
 
         protected void End()
         {
-            if (!EndTime.HasValue) EndTime = DateTime.Now;
-            if (Current == null) return;
-            if (Current.Messages == null) Current.Messages = new List<HccMessage>();
+            if (!EndTime.HasValue)
+            {
+                EndTime = DateTime.Now;
+            }
+
+            if (Current == null)
+            {
+                return;
+            }
+
+            if (Current.Messages == null)
+            {
+                Current.Messages = new List<HccMessage>();
+            }
+
             Current.Messages.Add(new HccMessage
             {
                 Date = DateTime.Now,
@@ -68,7 +96,11 @@ namespace Thompson.RecordSearch.Utility.Db
         protected void Update()
         {
             HccProcess.Update(Current);
-            if (ReportProgress == null) return;
+            if (ReportProgress == null)
+            {
+                return;
+            }
+
             ReportProgress.Report(Current);
         }
 
@@ -94,8 +126,16 @@ namespace Thompson.RecordSearch.Utility.Db
 
         private void WriteLog(int statusId, string message)
         {
-            if (Current == null) return;
-            if (Current.Messages == null) Current.Messages = new List<HccMessage>();
+            if (Current == null)
+            {
+                return;
+            }
+
+            if (Current.Messages == null)
+            {
+                Current.Messages = new List<HccMessage>();
+            }
+
             var nextMessage = Current.Messages.LastOrDefault() ?? new HccMessage();
             Current.Messages.Add(new HccMessage
             {

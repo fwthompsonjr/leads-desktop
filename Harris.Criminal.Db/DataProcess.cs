@@ -12,7 +12,17 @@ namespace Harris.Criminal.Db
 
         private static string _text;
         private static string _dataFile;
-        private static string Text => _text ?? (_text = GetText());
+        private static string Text
+        {
+            get
+            {
+                if (_text == null)
+                {
+                    _text = GetText();
+                }
+                return _text;
+            }
+        }
         private static string DataFile => _dataFile ?? (_dataFile = GetFileName());
 
         private static string GetText()

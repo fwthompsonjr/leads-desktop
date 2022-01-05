@@ -64,7 +64,9 @@
     <Compile Include="Tables\ReferenceTable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="_db\hccc.background.prc.json" />
+    <None Include="_db\hccc.background.prc.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="_db\hccc.options.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

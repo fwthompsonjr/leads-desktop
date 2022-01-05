@@ -17,26 +17,22 @@ namespace Thompson.RecordSearch.Utility.Db
         }
         public override TimeSpan EstimatedDuration => TimeSpan.FromMinutes(3);
 
-        public override async Task ExecuteAsync(IProgress<HccProcess> progress, HccProcess process)
+        public override void Execute(IProgress<HccProcess> progress)
         {
             ReportProgress = progress;
             Start();
-            var fileName = await GetDownloadAsync().ConfigureAwait(false);
+            var fileName = GetDownload();
             Information($"File {fileName}. Downloaded");
             End();
-            throw new NotImplementedException();
         }
 
-
-        private async Task<string> GetDownloadAsync()
+        private string GetDownload()
         {
-            var downloaded = await Task.Run(() =>
+            using (var obj = new HarrisCriminalData())
             {
-                var obj = new HarrisCriminalData();
-                var result = obj.GetData(null);
+                var result = obj.GetData(WebDriver);
                 return result;
-            }).ConfigureAwait(false);
-            return downloaded;
+            }
         }
     }
 }
