@@ -1,16 +1,13 @@
 ﻿using Harris.Criminal.Db.Entities;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Db
 {
-    [DataAction(Name = "header", ProcessId = 1)]
+    [DataAction(Name = "header", ProcessId = 0, IsShared = true)]
     public class GetBrowserAction : BaseAction
     {
         public GetBrowserAction(HccProcess process) : base(process)

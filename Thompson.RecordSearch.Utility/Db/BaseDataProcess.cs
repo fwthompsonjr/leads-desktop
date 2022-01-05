@@ -44,7 +44,7 @@ namespace Thompson.RecordSearch.Utility.Db
                 .Select(y => new { 
                     DataType = y, 
                     CustomInfo = y.GetCustomAttributes(actionable).First() as DataActionAttribute })
-                .Where(z => z.CustomInfo.Name.Equals(processName, StringComparison.OrdinalIgnoreCase))
+                .Where(z => z.CustomInfo.IsShared || z.CustomInfo.Name.Equals(processName, StringComparison.OrdinalIgnoreCase))
                 .ToList();
             collection.Sort((a, b) => a.CustomInfo.ProcessId.CompareTo(b.CustomInfo.ProcessId));
             foreach (var type in collection)

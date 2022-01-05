@@ -11,5 +11,7 @@ namespace Thompson.RecordSearch.Utility
     {
         public int ProcessId { get; set; }
         public string Name { get; set; }
+
+        public bool IsShared { get; set; }
     }
 }

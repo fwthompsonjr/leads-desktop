@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Thompson.RecordSearch.Utility.Db
 {
-    [DataAction(Name = "header", ProcessId = 1000)]
-    public class CleanUpAction : BaseAction
+    [DataAction(Name = "header", ProcessId = 1000, IsShared = true)]
+    public class WebCleanUpAction : BaseAction
     {
 
-        public CleanUpAction(HccProcess process) : base(process)
+        public WebCleanUpAction(HccProcess process) : base(process)
         {
         }
 

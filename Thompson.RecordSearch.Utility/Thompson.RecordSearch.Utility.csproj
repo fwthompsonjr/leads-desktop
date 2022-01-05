@@ -237,7 +237,7 @@
     <Compile Include="CommonKeyIndexes.cs" />
     <Compile Include="Db\BaseAction.cs" />
     <Compile Include="Db\BaseDataProcess.cs" />
-    <Compile Include="Db\DownloadCleanUpAction.cs" />
+    <Compile Include="Db\WebCleanUpAction.cs" />
     <Compile Include="Db\DataPersistence.cs" />
     <Compile Include="Db\DownloadDataProcess.cs" />
     <Compile Include="Db\GetBrowserAction.cs" />
