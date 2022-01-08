@@ -237,6 +237,8 @@
     <Compile Include="CommonKeyIndexes.cs" />
     <Compile Include="Db\BaseAction.cs" />
     <Compile Include="Db\BaseDataProcess.cs" />
+    <Compile Include="Db\DownloadCaseProcess.cs" />
+    <Compile Include="Db\GetCaseDetailAction.cs" />
     <Compile Include="Db\WebCleanUpAction.cs" />
     <Compile Include="Db\DataPersistence.cs" />
     <Compile Include="Db\DownloadDataProcess.cs" />
@@ -255,6 +257,7 @@
     <Compile Include="Dto\GenericSettingDto.cs" />
     <Compile Include="Dto\HarrisCaseSearchDto.cs" />
     <Compile Include="Dto\HarrisCriminalExtensions.cs" />
+    <Compile Include="Dto\HccOptionDto.cs" />
     <Compile Include="Parsing\CaseStyleExtensions.cs" />
     <Compile Include="Tools\EnumerateWindows.cs" />
     <Compile Include="Web\HarriCriminalsRealTimeDetail.cs" />

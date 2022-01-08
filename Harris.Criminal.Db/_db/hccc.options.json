@@ -1,5 +1,6 @@
 ﻿[
   {
+    "id": 10,
     "name": "Harris County Criminal Court Data Options",
     "type": "general",
     "labels": [
@@ -11,6 +12,7 @@
     ]
   },
   {
+    "id": 20,
     "name": "Data Selection Mode",
     "index": 0,
     "type": "settings",
@@ -25,36 +27,43 @@
     ]
   },
   {
+    "id": 30,
     "name": "HCC Database - Earliest Header",
     "type": "details",
     "index": 125
   },
   {
+    "id": 40,
     "name": "HCC Database - Latest Header",
     "type": "details",
     "index": 100
   },
   {
+    "id": 50,
     "name": "HCC Database - Earliest Detail",
     "type": "details",
     "index": 200
   },
   {
+    "id": 60,
     "name": "HCC Database - Latest Detail",
     "type": "details",
     "index": 300
   },
   {
+    "id": 70,
     "name": "HCC Database - Headers",
     "type": "details",
     "index": 400
   },
   {
+    "id": 80,
     "name": "HCC Database - Case Details",
     "type": "details",
     "index": 500
   },
   {
+    "id": 90,
     "name": "HCC Database - Preload - Header",
     "type": "settings",
     "description": "Controls the data load of header data, off or on. Default value is on.",
@@ -62,6 +71,7 @@
     "values": [ "true", "false" ]
   },
   {
+    "id": 100,
     "name": "HCC Database - Preload - Detail",
     "type": "settings",
     "description": "Controls the data load of detail data, off or on. Default value is on.",
@@ -69,6 +79,7 @@
     "values": [ "true", "false" ]
   },
   {
+    "id": 110,
     "name": "HCC Database - Preload - Detail Days",
     "type": "settings",
     "description": "Controls the data load of detail data, setting the number of business days to preload.",
