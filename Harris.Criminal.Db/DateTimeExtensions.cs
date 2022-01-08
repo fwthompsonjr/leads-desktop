@@ -48,7 +48,9 @@ namespace Harris.Criminal.Db
             int daysUntilMonday = ((int)DayOfWeek.Monday - (int)today.DayOfWeek + 7) % 7;
             //if today is monday, add seven days
             if (daysUntilMonday == 0)
+            {
                 daysUntilMonday = 7;
+            }
 
             return today.AddDays(daysUntilMonday);
         }

@@ -56,7 +56,10 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanFetchDentonCounty()
         {
-            if (!CanExecuteFetch()) return;
+            if (!CanExecuteFetch())
+            {
+                return;
+            }
 
             var settings = SettingsManager.GetNavigation();
             var sttg = settings.First();
@@ -112,7 +115,10 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanFetchDentonCountyNormal()
         {
-            if (!CanExecuteFetch()) return;
+            if (!CanExecuteFetch())
+            {
+                return;
+            }
 
             var settings = SettingsManager.GetNavigation();
             var sttg = settings.First();

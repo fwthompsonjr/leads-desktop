@@ -48,7 +48,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanGetFromCollinInteractive()
         {
-            if (!ExecutionManagement.CanExecuteFetch()) return;
+            if (!ExecutionManagement.CanExecuteFetch())
+            {
+                return;
+            }
+
             var webId = 20;
             var startDate = DateTime.Now.Date.AddDays(-4);
             var endDate = DateTime.Now.Date.AddDays(-4);
@@ -66,7 +70,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanGetCriminalCasesFromCollinInteractive()
         {
-            if (!ExecutionManagement.CanExecuteFetch()) return;
+            if (!ExecutionManagement.CanExecuteFetch())
+            {
+                return;
+            }
+
             const string jsFile = @"Json\collin-criminal-case-parameter.json";
             var appFile = GetAppDirectoryName();
             appFile = Path.Combine(appFile, jsFile);
@@ -89,7 +97,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanGetProbateCasesFromCollinInteractive()
         {
-            if (!ExecutionManagement.CanExecuteFetch()) return;
+            if (!ExecutionManagement.CanExecuteFetch())
+            {
+                return;
+            }
+
             const string jsFile = @"Json\collin-probate-case-parameter.json";
             var appFile = GetAppDirectoryName();
             appFile = Path.Combine(appFile, jsFile);
@@ -112,7 +124,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanGetCivilAndFamilyCasesFromCollinInteractive()
         {
-            if (!ExecutionManagement.CanExecuteFetch()) return;
+            if (!ExecutionManagement.CanExecuteFetch())
+            {
+                return;
+            }
+
             const string jsFile = @"Json\collin-civil-and-family-case-parameter.json";
             var appFile = GetAppDirectoryName();
             appFile = Path.Combine(appFile, jsFile);
@@ -135,7 +151,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanGetJusticeCasesFromCollinInteractive()
         {
-            if (!ExecutionManagement.CanExecuteFetch()) return;
+            if (!ExecutionManagement.CanExecuteFetch())
+            {
+                return;
+            }
+
             const string jsFile = @"Json\collin-justice-case-parameter.json";
             var appFile = GetAppDirectoryName();
             appFile = Path.Combine(appFile, jsFile);
@@ -160,7 +180,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             // get key name 
             // var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
-            if (!File.Exists(jsFile)) return webParameter;
+            if (!File.Exists(jsFile))
+            {
+                return webParameter;
+            }
+
             var keyName = string.Concat(Path.GetFileName(jsFile), ".overwrite");
             var key = ConfigurationManager.AppSettings[keyName] ?? string.Empty;
             var createNewFile = key.Equals("true", StringComparison.CurrentCultureIgnoreCase);

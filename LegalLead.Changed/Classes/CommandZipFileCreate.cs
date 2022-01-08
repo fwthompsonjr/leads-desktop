@@ -16,7 +16,9 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {

@@ -26,7 +26,11 @@ namespace LegalLead.Changed
                 {
                     var srcFile = args[0];
                     Console.WriteLine("Evaluating command line file: {0}", srcFile);
-                    if (!File.Exists(srcFile)) return;
+                    if (!File.Exists(srcFile))
+                    {
+                        return;
+                    }
+
                     var commands = GetClasses(srcFile);
                     commands.ForEach(c =>
                     {
@@ -41,7 +45,9 @@ namespace LegalLead.Changed
         private static void Evaluate(string sourceFileName, string argument)
         {
             if (string.IsNullOrEmpty(argument))
+            {
                 return;
+            }
 
             var type = typeof(IUserCommand);
             var types = AppDomain.CurrentDomain.GetAssemblies()

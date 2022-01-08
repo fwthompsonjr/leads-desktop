@@ -16,7 +16,10 @@ namespace LegalLead.Changed.Classes
                 .AppSettings["Allow.ReadMe.Corrections"] ?? allowIt;
             var allowExec = allMapCorrection.Equals(allowIt,
                 StringComparison.CurrentCulture);
-            if (!allowExec) return false;
+            if (!allowExec)
+            {
+                return false;
+            }
 
 #if DEBUG
             isDebug = true;
@@ -27,10 +30,14 @@ namespace LegalLead.Changed.Classes
             var targetFileName = SolutionReadMe();
 
             if (!File.Exists(sourceFileName))
+            {
                 throw new FileNotFoundException(sourceFileName);
+            }
 
             if (!File.Exists(targetFileName))
+            {
                 throw new FileNotFoundException(targetFileName);
+            }
 
             var sourceContent = string.Empty;
             var targetContent = string.Empty;
@@ -44,9 +51,15 @@ namespace LegalLead.Changed.Classes
             }
 
             if (sourceContent.Equals(targetContent,
-                StringComparison.CurrentCultureIgnoreCase)) return true;
+                StringComparison.CurrentCultureIgnoreCase))
+            {
+                return true;
+            }
 
-            if (!isDebug) return false;
+            if (!isDebug)
+            {
+                return false;
+            }
 
             using (var writer = new StreamWriter(targetFileName))
             {

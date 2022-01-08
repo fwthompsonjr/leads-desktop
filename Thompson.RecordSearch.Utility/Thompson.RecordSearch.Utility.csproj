@@ -201,6 +201,7 @@
     <Compile Include="Addressing\FindPrincipalByWordMatch.cs" />
     <Compile Include="Addressing\FindRespondentByWordMatch.cs" />
     <Compile Include="Addressing\NoFoundMatch.cs" />
+    <Compile Include="Attributes\DataActionAttribute.cs" />
     <Compile Include="Classes\BaseWebIneractive.cs" />
     <Compile Include="Classes\CollinWebInteractive.cs" />
     <Compile Include="Classes\ConsoleWriter.cs" />
@@ -234,7 +235,13 @@
     <Compile Include="Classes\WebUtilities_01.cs" />
     <Compile Include="Classes\XmlContentHolder.cs" />
     <Compile Include="CommonKeyIndexes.cs" />
+    <Compile Include="Db\BaseAction.cs" />
+    <Compile Include="Db\BaseDataProcess.cs" />
+    <Compile Include="Db\WebCleanUpAction.cs" />
     <Compile Include="Db\DataPersistence.cs" />
+    <Compile Include="Db\DownloadDataProcess.cs" />
+    <Compile Include="Db\GetBrowserAction.cs" />
+    <Compile Include="Db\GetDownloadAction.cs" />
     <Compile Include="DriverFactory\BaseChromeProvider.cs" />
     <Compile Include="DriverFactory\ChromeOlderProvider.cs" />
     <Compile Include="DriverFactory\ChromeProvider.cs" />
@@ -249,6 +256,7 @@
     <Compile Include="Dto\HarrisCaseSearchDto.cs" />
     <Compile Include="Dto\HarrisCriminalExtensions.cs" />
     <Compile Include="Parsing\CaseStyleExtensions.cs" />
+    <Compile Include="Tools\EnumerateWindows.cs" />
     <Compile Include="Web\HarriCriminalsRealTimeDetail.cs" />
     <Compile Include="Web\HarrisCriminalRealTime.cs" />
     <Compile Include="Dto\HarrisCriminalStyleBo.cs" />
@@ -306,6 +314,7 @@
     <Compile Include="Web\HarrisCivilReadTable.cs" />
     <Compile Include="Web\HarrisCriminalCaseStyle.cs" />
     <Compile Include="Web\HarrisCriminalData.cs" />
+    <Compile Include="Web\HarrisCriminalStarting.cs" />
     <Compile Include="Web\JquerySetSelectedIndex.cs" />
     <Compile Include="Web\JquerySetTextBox.cs" />
     <Compile Include="Web\WebNavAction.cs" />
@@ -321,7 +330,7 @@
       <Link>xml\harris-civil-reader.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="C:\Users\frank\source\repos\LoginTestApp\packages\Selenium.Chrome.WebDriver.2.38\driver\chromedriver.exe">
+    <Content Include="..\_bin\chromedriver.exe">
       <Link>Legacy\chromedriver.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -332,7 +341,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="_html\sample-harris-criminal-record.html" />
-    <Content Include="_html\sample-harris-criminal-search-result.html" />
+    <Content Include="_html\sample-harris-criminal-search-result.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -343,7 +354,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Content Include="..\Shared\chromedriver.exe">
+    <Content Include="..\_bin\chromedriver.exe">
       <Link>chromedriver.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

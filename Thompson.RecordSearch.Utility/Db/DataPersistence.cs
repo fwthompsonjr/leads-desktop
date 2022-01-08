@@ -42,7 +42,9 @@ namespace Thompson.RecordSearch.Utility.Db
             var parentName = AppFolder;
             var dataFolder = Path.Combine(parentName, "_db", "_downloads");
             if (Directory.Exists(dataFolder))
+            {
                 return dataFolder;
+            }
 
             Directory.CreateDirectory(dataFolder);
             return dataFolder;
@@ -65,13 +67,20 @@ namespace Thompson.RecordSearch.Utility.Db
         public static void Save(string fileName, object data)
         {
             if (string.IsNullOrEmpty(fileName))
+            {
                 throw new ArgumentNullException(nameof(fileName));
+            }
+
             if (data == null)
+            {
                 throw new ArgumentNullException(nameof(data));
+            }
 
             var targetFile = Path.Combine(DataFolder, fileName);
             if (File.Exists(targetFile))
+            {
                 throw new ArgumentOutOfRangeException(nameof(fileName));
+            }
 
             var content = JsonConvert.SerializeObject(data);
             using (var writer = new StreamWriter(targetFile))
@@ -84,8 +93,9 @@ namespace Thompson.RecordSearch.Utility.Db
         public static bool FileExists(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
+            {
                 throw new ArgumentNullException(nameof(fileName));
-
+            }
 
             var targetFile = Path.Combine(DataFolder, fileName);
             return File.Exists(targetFile);

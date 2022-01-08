@@ -12,7 +12,11 @@ namespace Thompson.RecordSearch.Utility.Parsing
         private static readonly CaseStyleDbParser DbParser = new CaseStyleDbParser();
         public static IEnumerable<HLinkDataRow> ToHLinkData(this List<CaseStyleDb> cases)
         {
-            if (cases == null || cases.Count == 0) return Array.Empty<HLinkDataRow>();
+            if (cases == null || cases.Count == 0)
+            {
+                return Array.Empty<HLinkDataRow>();
+            }
+
             var data = new List<HLinkDataRow>();
             var parser = DbParser;
             foreach (var item in cases)
@@ -41,10 +45,18 @@ namespace Thompson.RecordSearch.Utility.Parsing
 
         public static IEnumerable<PersonAddress> ToPersonAddress(this HLinkDataRow dataRow, List<HarrisCriminalDto> dtos)
         {
-            if (dataRow == null) return Array.Empty<PersonAddress>();
+            if (dataRow == null)
+            {
+                return Array.Empty<PersonAddress>();
+            }
+
             var matched = dtos;
             var drow = FromCase(dataRow);
-            if (matched == null || !matched.Any()) return new PersonAddress[] { drow };
+            if (matched == null || !matched.Any())
+            {
+                return new PersonAddress[] { drow };
+            }
+
             var records = new List<PersonAddress>();
             var parser = DbParser;
             parser.Data = dataRow.CaseStyle;
@@ -81,7 +93,11 @@ namespace Thompson.RecordSearch.Utility.Parsing
         private static PersonAddress FromCase(HLinkDataRow dataRow)
         {
             const string notFoundName = "Found, Not";
-            if (dataRow == null) return new PersonAddress();
+            if (dataRow == null)
+            {
+                return new PersonAddress();
+            }
+
             var parser = DbParser;
             parser.Data = dataRow.CaseStyle;
             var parsed = parser.Parse();

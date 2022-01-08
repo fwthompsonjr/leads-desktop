@@ -62,7 +62,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                     foreach (var dataset in db)
                     {
                         var found = dataset.Data.Where(a => a.FilingDate.Equals(fileDate, Oic));
-                        if (found == null) continue;
+                        if (found == null)
+                        {
+                            continue;
+                        }
+
                         details.AddRange(found);
                     }
                     var group = details.GroupBy(x => x.CaseNumber).Select(y => y.First()).ToList();

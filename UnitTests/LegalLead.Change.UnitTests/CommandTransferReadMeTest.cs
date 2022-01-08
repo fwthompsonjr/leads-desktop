@@ -1,13 +1,16 @@
 ﻿using LegalLead.Changed.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System.Reflection;
 
 namespace LegalLead.Changed.UnitTests
 {
     [TestClass]
     public class CommandTransferReadMeTest
     {
-        protected const string projectFolder = @"D:\Alpha\LegalLead\UnitTests\LegalLead.Change.UnitTests\bin\debug\net472";
-        static readonly string srcFile = $"{projectFolder}\\data\\temp-log.json";
+        private static string _srcDirectory;
+        private static string SrcDirectoryName => _srcDirectory ?? (_srcDirectory = SrcDir());
+        static readonly string srcFile = $"{SrcDirectoryName}\\data\\temp-log.json";
 
         [TestMethod]
         public void CanLoadTestLog()
@@ -26,6 +29,11 @@ namespace LegalLead.Changed.UnitTests
             command.Execute();
         }
 
+        private static string SrcDir()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            return Path.GetDirectoryName(assembly.Location);
+        }
 
     }
 }

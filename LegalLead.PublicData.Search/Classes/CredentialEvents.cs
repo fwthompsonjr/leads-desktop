@@ -81,7 +81,11 @@ namespace LegalLead.PublicData.Search
             var tbx = new List<Control> { tbxPwd, tbxUser };
             tbx.ForEach(v => v.Visible = isCollinCounty);
             tbx.ForEach(v => v.Text = string.Empty);
-            if (!isCollinCounty) return;
+            if (!isCollinCounty)
+            {
+                return;
+            }
+
             var dto = UserAccessDto.GetDto(CommonKeyIndexes.CollinCountyUserMap);
             var parts = UserAccessDto.GetCredential(dto);
             tbx[0].Text = parts[0];

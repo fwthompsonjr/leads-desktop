@@ -6,6 +6,7 @@
         DentonCounty = 1,
         CollinCounty = 20,
         TarrantCounty = 10,
-        HarrisCivil = 30
+        HarrisCivil = 30,
+        HarrisCriminal = 40
     }
 }

@@ -1,15 +1,18 @@
 ﻿using LegalLead.Changed.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace LegalLead.Changed.UnitTests
 {
     [TestClass]
     public class CommandBuildCorrectionsTest
     {
-        protected const string projectFolder = @"D:\Alpha\LegalLead\UnitTests\LegalLead.Change.UnitTests\bin\debug\net472";
-        protected static string sourceFile = $"{projectFolder}\\data\\temp-log.json";
+        private static string _srcDirectory;
+        private static string SrcDirectoryName => _srcDirectory ?? (_srcDirectory = SrcDir());
+        protected static string sourceFile = $"{SrcDirectoryName}\\data\\temp-log.json";
 
         [TestMethod]
         public void CanInit()
@@ -45,6 +48,11 @@ namespace LegalLead.Changed.UnitTests
             var actual = command.Log.Changes.ToList()
                 .Count(a => !string.IsNullOrEmpty(a.ChangeId));
             Assert.AreEqual(expected, actual);
+        }
+        private static string SrcDir()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            return Path.GetDirectoryName(assembly.Location);
         }
     }
 }

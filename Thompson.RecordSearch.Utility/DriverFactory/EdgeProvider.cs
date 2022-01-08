@@ -28,7 +28,11 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         private static string GetDriverFileName()
         {
-            if (_driverFileName != null) return _driverFileName;
+            if (_driverFileName != null)
+            {
+                return _driverFileName;
+            }
+
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             if (!Directory.Exists(execName))

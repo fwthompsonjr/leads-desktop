@@ -9,8 +9,16 @@ namespace Thompson.RecordSearch.Utility.Classes
     {
         public static IWebElement FindElement(this IWebDriver driver, By by, int timeoutInSeconds)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (timeoutInSeconds <= 0) return driver.FindElement(by);
+            if (driver == null)
+            {
+                throw new ArgumentNullException(nameof(driver));
+            }
+
+            if (timeoutInSeconds <= 0)
+            {
+                return driver.FindElement(by);
+            }
+
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
             wait.Until(drv => drv.FindElement(by).Displayed);
             return driver.FindElement(by);
@@ -26,8 +34,16 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public static void ClickAndOrSetText(this IWebDriver driver, IWebElement elementToClick, string objText = "")
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (elementToClick == null) throw new ArgumentNullException(nameof(elementToClick));
+            if (driver == null)
+            {
+                throw new ArgumentNullException(nameof(driver));
+            }
+
+            if (elementToClick == null)
+            {
+                throw new ArgumentNullException(nameof(elementToClick));
+            }
+
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             executor.ExecuteScript("arguments[0].click();", elementToClick);
             if (!string.IsNullOrEmpty(objText))
@@ -40,15 +56,31 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public static void ClearText(this IWebDriver driver, IWebElement elementToClick)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (elementToClick == null) throw new ArgumentNullException(nameof(elementToClick));
+            if (driver == null)
+            {
+                throw new ArgumentNullException(nameof(driver));
+            }
+
+            if (elementToClick == null)
+            {
+                throw new ArgumentNullException(nameof(elementToClick));
+            }
+
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             executor.ExecuteScript("arguments[0].value = '';", elementToClick);
         }
         public static void SetText(this IWebDriver driver, IWebElement elementToClick, string objText)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (elementToClick == null) throw new ArgumentNullException(nameof(elementToClick));
+            if (driver == null)
+            {
+                throw new ArgumentNullException(nameof(driver));
+            }
+
+            if (elementToClick == null)
+            {
+                throw new ArgumentNullException(nameof(elementToClick));
+            }
+
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             var script = string.Format(CultureInfo.InvariantCulture, "arguments[0].value = '{0}';", objText);
             executor.ExecuteScript(script, elementToClick);
@@ -57,7 +89,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public static bool IsElementPresent(this IWebDriver driver, By by)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
+            if (driver == null)
+            {
+                throw new ArgumentNullException(nameof(driver));
+            }
+
             try
             {
                 var assertion = new ElementAssertion(driver);
@@ -73,7 +109,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public static bool AreElementsPresent(this IWebDriver driver, By by)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
+            if (driver == null)
+            {
+                throw new ArgumentNullException(nameof(driver));
+            }
+
             try
             {
                 var assertion = new ElementAssertion(driver);

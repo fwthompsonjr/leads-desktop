@@ -29,7 +29,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
             foreach (var item in ProgramList)
             {
-                if (FileList.Contains(item)) continue;
+                if (FileList.Contains(item))
+                {
+                    continue;
+                }
+
                 FileList.Add(item);
             }
         }

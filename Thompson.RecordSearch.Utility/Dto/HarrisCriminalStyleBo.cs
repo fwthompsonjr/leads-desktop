@@ -10,7 +10,11 @@ namespace Thompson.RecordSearch.Utility.Dto
 
         public static HarrisCriminalStyleBo MapFrom(HarrisCriminalStyleDto dto)
         {
-            if (dto == null) return null;
+            if (dto == null)
+            {
+                return null;
+            }
+
             var bo = new HarrisCriminalStyleBo();
             FieldNames.ForEach(f => { bo[f] = dto[f]; });
             return bo;

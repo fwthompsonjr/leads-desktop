@@ -26,10 +26,17 @@ namespace Harris.Criminal.Db
             foreach (var dataset in db)
             {
                 var found = dataset.Data.Any(a => a.FilingDate.Equals(fileDate, Oic));
-                if (!found) continue;
+                if (!found)
+                {
+                    continue;
+                }
+
                 found = dataset.Data.Any(a =>
                     a.FilingDate.Equals(fileDate, Oic));
-                if (found) return true;
+                if (found)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -45,11 +52,18 @@ namespace Harris.Criminal.Db
             foreach (var dataset in db)
             {
                 var found = dataset.Data.Any(a => a.FilingDate.Equals(fileDate, Oic));
-                if (!found) continue;
+                if (!found)
+                {
+                    continue;
+                }
+
                 found = dataset.Data.Any(a =>
                     a.FilingDate.Equals(fileDate, Oic) &&
                     a.CaseNumber.Equals(caseNumber, Oic));
-                if (found) return true;
+                if (found)
+                {
+                    return true;
+                }
             }
             return false;
         }

@@ -1,7 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using Shouldly;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Web;
 
 namespace Thompson.RecordSearch.Utility.Tests
@@ -60,6 +63,27 @@ namespace Thompson.RecordSearch.Utility.Tests
             finally
             {
                 KillProcess("chromedriver");
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("Integration Only")]
+        public async Task Download_CanGet_Async()
+        {
+
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Assert.Inconclusive("This method to be executed in debug mode only.");
+            }
+            try
+            {
+                var starting = new List<CriminalStartType> { CriminalStartType.Download };
+                await HarrisCriminalStarting.StartAsync(starting);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message + Environment.NewLine + exception.StackTrace);
+                throw;
             }
         }
     }

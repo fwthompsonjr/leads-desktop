@@ -78,7 +78,11 @@ namespace Thompson.RecordSearch.Utility.Web
 
         private static void AppendCases(List<HarrisCriminalStyleDto> cases, List<HtmlNode> cells, int maxRecords = 0)
         {
-            if (maxRecords > 0 && cases.Count >= maxRecords) return;
+            if (maxRecords > 0 && cases.Count >= maxRecords)
+            {
+                return;
+            }
+
             var dto = new HarrisCriminalStyleDto
             {
                 Index = cases.Count + 1,
@@ -100,7 +104,11 @@ namespace Thompson.RecordSearch.Utility.Web
                 return text;
             }
             const string separator = "-";
-            if (!text.Contains(separator)) return text;
+            if (!text.Contains(separator))
+            {
+                return text;
+            }
+
             var pieces = text.Split(separator.ToCharArray());
             return $"{pieces.First()}-{pieces.Last()}";
 
@@ -234,13 +242,25 @@ namespace Thompson.RecordSearch.Utility.Web
                 var found = table.FirstOrDefault(f =>
                 {
                     var cell = f.SelectNodes("td[@style='font-weight: bold']")?.ToList();
-                    if (cell == null) return false;
+                    if (cell == null)
+                    {
+                        return false;
+                    }
+
                     var target = cell.FirstOrDefault(c => c.InnerText.Trim().Equals(heading, StringComparison.OrdinalIgnoreCase));
                     return target != null;
                 });
-                if (found == null) return string.Empty;
+                if (found == null)
+                {
+                    return string.Empty;
+                }
+
                 var data = found.ParentNode.SelectNodes("//td")?.ToList().Last();
-                if (data == null) return string.Empty;
+                if (data == null)
+                {
+                    return string.Empty;
+                }
+
                 return data.InnerText.Trim();
             }
         }

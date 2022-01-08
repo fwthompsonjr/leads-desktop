@@ -12,7 +12,9 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {
@@ -36,7 +38,10 @@ namespace LegalLead.Changed.Classes
                 .Where(c => c.Issues.Any(x => x.Id == obj.Id & !x.IsFixed))
                 .ToList();
 
-            if (!issueList.Any()) return;
+            if (!issueList.Any())
+            {
+                return;
+            }
 
             foreach (var item in issueList)
             {
@@ -47,7 +52,11 @@ namespace LegalLead.Changed.Classes
                 {
                     MarkAsStarted(x);
                     var startTime = x.Description.FirstOrDefault(a => a.StartsWith(changing, StringComparison.CurrentCultureIgnoreCase));
-                    if (startTime != null) return;
+                    if (startTime != null)
+                    {
+                        return;
+                    }
+
                     var timeStamp = DateTime.Now.ToString("u");
                     Console.WriteLine("Completing issue {0} -- [ {1} ] at {2}",
                         x.Id.ToString("F3", new System.Globalization.NumberFormatInfo()),

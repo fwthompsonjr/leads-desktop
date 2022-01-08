@@ -92,7 +92,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                         .FirstOrDefault(x =>
                             x.ActionName.Equals(item.ActionName,
                             StringComparison.CurrentCultureIgnoreCase));
-                    if (action == null) continue;
+                    if (action == null)
+                    {
+                        continue;
+                    }
+
                     action.Act(item);
                     cases = ExtractCaseData(results, cases, actionName, action);
                     if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
@@ -136,13 +140,25 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         protected override List<PersonAddress> ExtractPeople(List<HLinkDataRow> cases)
         {
-            if (cases == null) return null;
-            if (!cases.Any()) return new List<PersonAddress>();
+            if (cases == null)
+            {
+                return null;
+            }
+
+            if (!cases.Any())
+            {
+                return new List<PersonAddress>();
+            }
+
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
                 var styleInfo = item.IsCriminal | item.IsJustice ? item.CriminalCaseStyle : GetCaseStyle(item);
-                if (item.IsProbate) styleInfo = item.CaseStyle;
+                if (item.IsProbate)
+                {
+                    styleInfo = item.CaseStyle;
+                }
+
                 var person = new PersonAddress
                 {
                     Name = item.Defendant,
@@ -210,7 +226,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private void GetAddressInformation(IWebDriver driver, TarrantWebInteractive jsonWebInteractive, HLinkDataRow linkData)
         {
-            if (jsonWebInteractive == null) return;
+            if (jsonWebInteractive == null)
+            {
+                return;
+            }
+
             var fmt = GetParameterValue<string>(CommonKeyIndexes.HlinkUri);
             var helper = new ElementAssertion(driver);
             helper.Navigate(string.Format(CultureInfo.CurrentCulture, fmt, linkData.WebAddress));
@@ -262,7 +282,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var finder in finders)
             {
                 finder.Find(driver, linkData);
-                if (finder.CanFind) break;
+                if (finder.CanFind)
+                {
+                    break;
+                }
             }
         }
 
@@ -270,8 +293,16 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static void AssignStartAndEndDate(DateTime startingDate, DateTime endingDate, DateTimeFormatInfo formatDate, List<NavigationStep> items)
         {
-            if (items == null) return;
-            if (!items.Any()) return;
+            if (items == null)
+            {
+                return;
+            }
+
+            if (!items.Any())
+            {
+                return;
+            }
+
             items.ForEach(item =>
             {
                 AssignStartAndEndDate(

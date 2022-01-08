@@ -71,7 +71,11 @@ namespace Harris.Criminal.Db.Tests.Downloads
                     .RuleFor(f => f.Data, r =>
                     {
                         var nbr = r.Random.Int(1, 10);
-                        if (nbr == 1) return null;
+                        if (nbr == 1)
+                        {
+                            return null;
+                        }
+
                         return DtoFaker.Generate(nbr);
                     });
             }

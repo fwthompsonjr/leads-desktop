@@ -60,7 +60,11 @@ namespace Thompson.RecordSearch.Utility.Web
                 Court = cdResults[2]?.DocumentNode?.FirstChild?.SelectNodes(tr)?.ToList()
             };
             var dto = rows.CriminalDto();
-            if (dto == null) return;
+            if (dto == null)
+            {
+                return;
+            }
+
             details.Add(dto);
         }
 

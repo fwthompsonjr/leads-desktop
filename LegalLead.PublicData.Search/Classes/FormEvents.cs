@@ -66,7 +66,11 @@ namespace LegalLead.PublicData.Search
         {
             var changeProvider = new WebsiteChangeProvider(this);
             var changeHandler = changeProvider.GetProvider();
-            if (changeHandler == null) return;
+            if (changeHandler == null)
+            {
+                return;
+            }
+
             changeHandler.Change();
         }
 
@@ -199,7 +203,11 @@ namespace LegalLead.PublicData.Search
 
         private void Button_Click(object sender, EventArgs e)
         {
-            if (sender == null) return;
+            if (sender == null)
+            {
+                return;
+            }
+
             var item = GetObject<SearchResult>(((ToolStripMenuItem)sender).Tag);
             var fileName = item.ResultFileName;
             OpenExcel(ref fileName);
@@ -235,9 +243,16 @@ namespace LegalLead.PublicData.Search
 
         private void WebDriver_Click(object sender, EventArgs e)
         {
-            if (sender == null) return;
+            if (sender == null)
+            {
+                return;
+            }
+
             var tsItem = (ToolStripMenuItem)sender;
-            if (tsItem.Checked) return;
+            if (tsItem.Checked)
+            {
+                return;
+            }
 
             var item = GetObject<Driver>(tsItem.Tag);
             var webItem = GetObject<WebDriverDto>(tsWebDriver.Tag);

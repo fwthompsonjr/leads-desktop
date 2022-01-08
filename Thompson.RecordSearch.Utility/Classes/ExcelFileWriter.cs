@@ -11,8 +11,16 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public void SaveAs(ExcelPackage pck, string outputFileName)
         {
-            if (pck == null) throw new System.ArgumentNullException(nameof(pck));
-            if (string.IsNullOrEmpty(outputFileName)) throw new System.ArgumentNullException(nameof(outputFileName));
+            if (pck == null)
+            {
+                throw new System.ArgumentNullException(nameof(pck));
+            }
+
+            if (string.IsNullOrEmpty(outputFileName))
+            {
+                throw new System.ArgumentNullException(nameof(outputFileName));
+            }
+
             FileInfo fileInfo = new FileInfo(outputFileName);
             var macro = new ExcelMacroBase { FileName = outputFileName, Package = pck };
             macro.AppendModule();
@@ -94,11 +102,23 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             public void AppendModule()
             {
-                if (string.IsNullOrEmpty(FileName)) return;
-                if (Package == null) return;
+                if (string.IsNullOrEmpty(FileName))
+                {
+                    return;
+                }
+
+                if (Package == null)
+                {
+                    return;
+                }
+
                 var ccic = StringComparison.CurrentCultureIgnoreCase;
                 var extension = Path.GetExtension(FileName);
-                if (!extension.Equals(CommonKeyIndexes.ExtensionXlsm, ccic)) return;
+                if (!extension.Equals(CommonKeyIndexes.ExtensionXlsm, ccic))
+                {
+                    return;
+                }
+
                 var pck = Package;
                 // Add VBA Code
                 pck.Workbook.CreateVBAProject();         // Can not append VBA Projects.Multiple "Code" can be added. See "https://github.com/pruiz/EPPlus/blob/master/SampleApp/Sample15.cs".

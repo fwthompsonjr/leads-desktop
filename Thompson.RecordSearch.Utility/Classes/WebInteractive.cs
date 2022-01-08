@@ -122,16 +122,32 @@ namespace Thompson.RecordSearch.Utility.Classes
         private List<PersonAddress> MapCaseStyle(List<HLinkDataRow> data,
             List<PersonAddress> personAddresses)
         {
-            if (personAddresses == null) return personAddresses;
-            if (data == null) return personAddresses;
+            if (personAddresses == null)
+            {
+                return personAddresses;
+            }
+
+            if (data == null)
+            {
+                return personAddresses;
+            }
+
             data = data.FindAll(x => !string.IsNullOrEmpty(x.Case));
             foreach (var person in personAddresses)
             {
                 var caseNumber = person.CaseNumber;
-                if (string.IsNullOrEmpty(caseNumber)) continue;
+                if (string.IsNullOrEmpty(caseNumber))
+                {
+                    continue;
+                }
+
                 var dataRow = data.Find(x => x.Case.Equals(caseNumber,
                     StringComparison.CurrentCultureIgnoreCase));
-                if (dataRow == null) continue;
+                if (dataRow == null)
+                {
+                    continue;
+                }
+
                 person.CaseStyle = dataRow.CaseStyle;
             }
 
@@ -169,9 +185,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             var caseStyle = CommonKeyIndexes.CaseStyle.ToLower(CultureInfo.CurrentCulture);
             foreach (var item in instructions)
             {
-                if (dta.IsCriminal & item.Value.Equals(caseStyle, StringComparison.CurrentCultureIgnoreCase)) continue;
+                if (dta.IsCriminal & item.Value.Equals(caseStyle, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    continue;
+                }
+
                 var node = TryFindNode(doc, item.Value);
-                if (node == null) continue;
+                if (node == null)
+                {
+                    continue;
+                }
+
                 dta[item.Name] = node.InnerText;
                 dta.IsMapped = true;
             }

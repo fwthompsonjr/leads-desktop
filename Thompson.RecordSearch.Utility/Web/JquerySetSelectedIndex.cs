@@ -13,10 +13,18 @@
 
         public override void Act(NavigationStep item)
         {
-            if (item == null) throw new System.ArgumentNullException(nameof(item));
+            if (item == null)
+            {
+                throw new System.ArgumentNullException(nameof(item));
+            }
+
             var driver = GetWeb;
             var selector = item.Locator.Query;
-            if (string.IsNullOrEmpty(selector)) return;
+            if (string.IsNullOrEmpty(selector))
+            {
+                return;
+            }
+
             var objText = item.ExpectedValue;
             var command = $"$('{selector}').prop('selectedIndex', {objText});";
 

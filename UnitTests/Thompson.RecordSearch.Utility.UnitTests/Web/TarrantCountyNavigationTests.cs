@@ -75,11 +75,22 @@ namespace Thompson.RecordSearch.Utility.Tests
                     var actionName = item.ActionName;
                     if (item.ActionName.Equals("set-text"))
                     {
-                        if (item.DisplayName.Equals("startDate")) item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy", CultureInfo.CurrentCulture);
-                        if (item.DisplayName.Equals("endDate")) item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy", CultureInfo.CurrentCulture);
+                        if (item.DisplayName.Equals("startDate"))
+                        {
+                            item.ExpectedValue = startingDate.Date.ToString("MM/dd/yyyy", CultureInfo.CurrentCulture);
+                        }
+
+                        if (item.DisplayName.Equals("endDate"))
+                        {
+                            item.ExpectedValue = endingDate.Date.ToString("MM/dd/yyyy", CultureInfo.CurrentCulture);
+                        }
                     }
                     var action = ElementActions.FirstOrDefault(x => x.ActionName.Equals(item.ActionName));
-                    if (action == null) continue;
+                    if (action == null)
+                    {
+                        continue;
+                    }
+
                     action.Act(item);
                     if (actionName.Equals("get-table-html") && !string.IsNullOrEmpty(action.OuterHtml))
                     {
@@ -108,7 +119,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("tarrant.county.actions")]
         public void CanGetFromJsonInteractive()
         {
-            if (!ExecutionManagement.CanExecuteFetch()) return;
+            if (!ExecutionManagement.CanExecuteFetch())
+            {
+                return;
+            }
+
             var webParameter = BaseWebIneractive.GetWebNavigation(10,
                 DateTime.Now.Date.AddDays(-4),
                 DateTime.Now.Date.AddDays(-4));
@@ -126,7 +141,11 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestCategory("Web.Integration")]
         public void CanGetAndWriteFromJsonInteractive()
         {
-            if (!ExecutionManagement.CanExecuteFetch()) return;
+            if (!ExecutionManagement.CanExecuteFetch())
+            {
+                return;
+            }
+
             var webParameter = BaseWebIneractive.GetWebNavigation(10,
                 DateTime.Now.Date.AddDays(0),
                 DateTime.Now.Date.AddDays(0));

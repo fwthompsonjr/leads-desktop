@@ -11,7 +11,9 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {
@@ -34,7 +36,10 @@ namespace LegalLead.Changed.Classes
                 .Where(c => c.Issues.Any(x => x.Id == obj.Id & !x.IsFixed))
                 .ToList();
 
-            if (!issueList.Any()) return;
+            if (!issueList.Any())
+            {
+                return;
+            }
 
             foreach (var item in issueList)
             {

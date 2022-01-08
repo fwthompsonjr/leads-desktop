@@ -17,8 +17,15 @@ namespace LegalLead.Changed.Classes
             var allowExec = allMapCorrection.Equals(allowIt,
                 StringComparison.CurrentCulture);
 
-            if (!CanExecute()) return false;
-            if (!allowExec) return false;
+            if (!CanExecute())
+            {
+                return false;
+            }
+
+            if (!allowExec)
+            {
+                return false;
+            }
 
             const int indexInterval = 100;
             var indexId = indexInterval;
@@ -33,7 +40,10 @@ namespace LegalLead.Changed.Classes
                 indexId += changeList.Last();
             }
             var changes = Log.Changes.ToList().FindAll(c => string.IsNullOrEmpty(c.ChangeId));
-            if (!changes.Any()) return true;
+            if (!changes.Any())
+            {
+                return true;
+            }
 
             changes.ForEach(c =>
             {

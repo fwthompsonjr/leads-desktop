@@ -24,7 +24,11 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
             public override string ToString()
             {
                 var resp = $"{Header} {Separator} {Person} (SPN: {Spn}) (DOB: {Dob})";
-                if (string.IsNullOrEmpty(resp)) return base.ToString();
+                if (string.IsNullOrEmpty(resp))
+                {
+                    return base.ToString();
+                }
+
                 return resp;
             }
         }

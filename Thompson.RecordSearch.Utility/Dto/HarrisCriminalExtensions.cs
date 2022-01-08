@@ -8,8 +8,16 @@ namespace Thompson.RecordSearch.Utility.Dto
     {
         public static void Append(this List<HarrisCriminalStyleDto> list, IEnumerable<HarrisCriminalStyleDto> source)
         {
-            if (list == null) return;
-            if (source == null) return;
+            if (list == null)
+            {
+                return;
+            }
+
+            if (source == null)
+            {
+                return;
+            }
+
             const StringComparison oic = StringComparison.OrdinalIgnoreCase;
             foreach (var item in source)
             {

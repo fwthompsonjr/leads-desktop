@@ -13,10 +13,14 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (Log == null)
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {
@@ -33,7 +37,10 @@ namespace LegalLead.Changed.Classes
                 var children = x.ToList();
                 children.ForEach(c =>
                 {
-                    if (!issues.Contains(c) && c.IsFixed && !corrections.Any(d => d.Id == c.Id)) issues.Add(c);
+                    if (!issues.Contains(c) && c.IsFixed && !corrections.Any(d => d.Id == c.Id))
+                    {
+                        issues.Add(c);
+                    }
                 });
             });
             issues.ForEach(a =>
@@ -45,7 +52,11 @@ namespace LegalLead.Changed.Classes
                     Description = string.Join(" ", a.Description)
                 });
             });
-            if (!issues.Any()) return true;
+            if (!issues.Any())
+            {
+                return true;
+            }
+
             corrections.Sort((a, b) => a.Id.CompareTo(b.Id));
             Log.Corrections = corrections;
             ReSerialize();

@@ -2,6 +2,8 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
+using System.IO;
+using System.Reflection;
 using Thompson.RecordSearch.Utility.Web;
 
 namespace Thompson.RecordSearch.Utility.UnitTests.Web
@@ -9,7 +11,10 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
     [TestClass]
     public class HarrisCriminalRealTimeTests
     {
-        private const string SrcFile = @"D:\Alpha\LegalLead\Thompson.RecordSearch.Utility\_html\sample-harris-criminal-search-result.html";
+        private static string _srcDirectory;
+        private static string _srcFile;
+        private static string SrcDirectoryName => _srcDirectory ?? (_srcDirectory = SrcDir());
+        private static string SrcFile => _srcFile ?? (_srcFile = Path.Combine(SrcDirectoryName, "_html\\sample-harris-criminal-search-result.html"));
         private IWebDriver GetDriver;
 
         [TestInitialize]
@@ -54,6 +59,12 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
                 Assert.Fail(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
+        }
+
+        private static string SrcDir()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            return Path.GetDirectoryName(assembly.Location);
         }
     }
 }

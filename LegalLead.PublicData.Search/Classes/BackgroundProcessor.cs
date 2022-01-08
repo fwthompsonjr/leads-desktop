@@ -41,7 +41,11 @@ namespace LegalLead.PublicData.Search
 
             try
             {
-                if (e == null) return;
+                if (e == null)
+                {
+                    return;
+                }
+
                 if (e.Error != null)
                 {
                     throw e.Error;

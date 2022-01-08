@@ -15,11 +15,19 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override void Act(NavigationStep item)
         {
-            if (item == null) throw new System.ArgumentNullException(nameof(item));
+            if (item == null)
+            {
+                throw new System.ArgumentNullException(nameof(item));
+            }
+
             var driver = GetWeb;
             var selector = Byy.CssSelector(item.Locator.Query);
             var elementToClick = driver.FindElement(selector);
-            if (string.IsNullOrEmpty(item.DisplayName)) return;
+            if (string.IsNullOrEmpty(item.DisplayName))
+            {
+                return;
+            }
+
             var objText = item.ExpectedValue;
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             executor.ExecuteScript("arguments[0].click();", elementToClick);

@@ -38,8 +38,16 @@ namespace Harris.Criminal.Db.Downloads
 
         public static List<HarrisCriminalBo> Map(List<HarrisCriminalDto> data)
         {
-            if (data == null) return default;
-            if (!data.Any()) return default;
+            if (data == null)
+            {
+                return default;
+            }
+
+            if (!data.Any())
+            {
+                return default;
+            }
+
             var result = new List<HarrisCriminalBo>();
             var fields = FieldNames;
             foreach (var item in data)

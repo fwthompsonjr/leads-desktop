@@ -46,7 +46,11 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         protected static string BinaryFileName()
         {
-            if (_binaryName != null) return _binaryName;
+            if (_binaryName != null)
+            {
+                return _binaryName;
+            }
+
             _binaryName = WebUtilities.GetChromeBinary();
             return _binaryName;
         }
@@ -57,7 +61,11 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         protected static string GetDriverFileName()
         {
-            if (_driverFileName != null) return _driverFileName;
+            if (_driverFileName != null)
+            {
+                return _driverFileName;
+            }
+
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             if (!Directory.Exists(execName))
@@ -75,10 +83,18 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         protected static string CalculateDownloadPath()
         {
-            if (_downloadPath != null) return _downloadPath;
+            if (_downloadPath != null)
+            {
+                return _downloadPath;
+            }
+
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
-            if (!Directory.Exists(execName)) return string.Empty;
+            if (!Directory.Exists(execName))
+            {
+                return string.Empty;
+            }
+
             execName = Path.Combine(execName, "_downloads");
             if (Directory.Exists(execName))
             {

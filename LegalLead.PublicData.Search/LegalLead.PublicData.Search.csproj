@@ -73,6 +73,9 @@
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.6.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -120,6 +123,10 @@
     <Compile Include="Classes\FormValidation.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Classes\HccDetailItem.cs" />
+    <Compile Include="Classes\HccItem.cs" />
+    <Compile Include="Classes\HccOption.cs" />
+    <Compile Include="Classes\HccSettingItem.cs" />
     <Compile Include="Classes\IRowStyleChanged.cs" />
     <Compile Include="Classes\IWebsiteChangeEvent.cs" />
     <Compile Include="Classes\SearchResult.cs" />
@@ -147,6 +154,12 @@
     <Compile Include="FormDentonSetting.Designer.cs">
       <DependentUpon>FormDentonSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormHcc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHcc.Designer.cs">
+      <DependentUpon>FormHcc.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormDentonSetting.resx">
       <DependentUpon>FormDentonSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormHcc.resx">
+      <DependentUpon>FormHcc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

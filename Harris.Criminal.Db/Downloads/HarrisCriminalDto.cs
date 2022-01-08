@@ -184,8 +184,16 @@ namespace Harris.Criminal.Db.Downloads
         }
         public static List<HarrisCriminalDto> Map(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName)) return default;
-            if (!File.Exists(fileName)) return default;
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return default;
+            }
+
+            if (!File.Exists(fileName))
+            {
+                return default;
+            }
+
             var result = new List<HarrisCriminalDto>();
             using (var sreader = new StreamReader(fileName))
             {
