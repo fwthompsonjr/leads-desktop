@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Command;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -58,8 +59,8 @@ namespace LegalLead.PublicData.Search
                 {
                     frm.Save();
                 }
-                Harris.Criminal.Db.Startup.Read();
                 mainForm = new FormMain();
+                HarrisCriminalUpdate.Update();
                 command.Execute(mainForm);
             }
         }
