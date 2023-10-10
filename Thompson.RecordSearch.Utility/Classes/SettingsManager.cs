@@ -336,13 +336,13 @@ namespace Thompson.RecordSearch.Utility.Classes
                     sb.AppendLine("<key name=~personNodeXpath~><![CDATA[//*[@id='PIr11']]]></key>".Replace(tilde, quote));
                     sb.AppendLine("</keys>".Replace(tilde, quote));
                     sb.AppendLine("<keys id=~20~ name=~Collin County~>".Replace(tilde, quote));
-                    sb.AppendLine("<key name=~baseUri~><![CDATA[http://cijspub.co.collin.tx.us/secure/login.aspx]]></key>".Replace(tilde, quote));
+                    sb.AppendLine("<key name=~baseUri~><![CDATA[http://cijspub.co.collin.tx.us/SecurePA/login.aspx]]></key>".Replace(tilde, quote));
                     sb.AppendLine("<key name=~query~><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>".Replace(tilde, quote));
                     sb.AppendLine("<key name=~dateRangeMaxDays~><![CDATA[5]]></key>".Replace(tilde, quote));
                     sb.AppendLine("<key name=~startDate~><![CDATA[]]></key>".Replace(tilde, quote));
                     sb.AppendLine("<key name=~endDate~><![CDATA[]]></key>".Replace(tilde, quote));
                     sb.AppendLine("<key name=~navigation.control.file~><![CDATA[collinCountyMapping_1]]></key>".Replace(tilde, quote));
-                    sb.AppendLine("<key name=~hlinkUri~><![CDATA[http://cijspub.co.collin.tx.us/Secure/{0}]]></key>".Replace(tilde, quote));
+                    sb.AppendLine("<key name=~hlinkUri~><![CDATA[http://cijspub.co.collin.tx.us/SecurePA/{0}]]></key>".Replace(tilde, quote));
                     sb.AppendLine("<key name=~personNodeXpath~><![CDATA[//*[@id='PIr11']]]></key>".Replace(tilde, quote));
                     sb.AppendLine("<key name=~personParentXath~><![CDATA[./..]]></key>".Replace(tilde, quote));
                     sb.AppendLine("<key name=~childTdXath~><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>".Replace(tilde, quote));

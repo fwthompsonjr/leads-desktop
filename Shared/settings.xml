@@ -27,13 +27,13 @@
       <key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
     </keys>
     <keys id="20" name="Collin County">
-      <key name="baseUri"><![CDATA[http://cijspub.co.collin.tx.us/secure/login.aspx]]></key>
+      <key name="baseUri"><![CDATA[http://cijspub.co.collin.tx.us/SecurePA/login.aspx]]></key>
       <key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
       <key name="dateRangeMaxDays"><![CDATA[5]]></key>
       <key name="startDate"><![CDATA[]]></key>
       <key name="endDate"><![CDATA[]]></key>
       <key name="navigation.control.file"><![CDATA[collinCountyMapping_1]]></key>
-      <key name="hlinkUri"><![CDATA[http://cijspub.co.collin.tx.us/Secure/{0}]]></key>
+      <key name="hlinkUri"><![CDATA[http://cijspub.co.collin.tx.us/SecurePA/{0}]]></key>
       <key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
       <key name="personParentXath"><![CDATA[./..]]></key>
       <key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
