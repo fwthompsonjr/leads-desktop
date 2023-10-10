@@ -13,12 +13,13 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>LegalLead.Changed</RootNamespace>
     <AssemblyName>LegalLead.Changed</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -61,6 +62,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Classes\BuildCommandBase.cs" />
     <Compile Include="Classes\CommandBuildCorrections.cs" />
     <Compile Include="Classes\CommandFixCanPublish.cs" />
@@ -141,9 +146,9 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+  <!-- <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <PostBuildEvent>$(TargetPath) $(SolutionDir)changeLog.json</PostBuildEvent>
-  </PropertyGroup>
+  </PropertyGroup> -->
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
