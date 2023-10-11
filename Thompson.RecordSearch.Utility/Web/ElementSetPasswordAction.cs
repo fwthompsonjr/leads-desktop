@@ -26,12 +26,13 @@ namespace Thompson.RecordSearch.Utility.Web
                 var selector = Byy.CssSelector(itm.Trim());
                 var elementToClick = driver.FindElement(selector);
                 IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
-                executor.ExecuteScript("arguments[0].click();", elementToClick);
-                Thread.Sleep(350);
-                elementToClick.SendKeys(userId[idx]);
+                var command = $"arguments[0].value = '{userId[idx]}'";
+                executor.ExecuteScript("arguments[0].focus();", elementToClick);
+                executor.ExecuteScript(command, elementToClick);
+                executor.ExecuteScript("arguments[0].blur();", elementToClick);
                 idx++;
             }
-            if (item.Wait > 0) { Thread.Sleep(item.Wait); }
+            driver.WaitForNavigation();
         }
     }
 }
