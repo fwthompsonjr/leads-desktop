@@ -6,7 +6,7 @@
       "wait": 1200,
       "locator": {
         "find": "page",
-        "query": "http://cijspub.co.collin.tx.us/secure/login.aspx"
+        "query": "http://cijspub.co.collin.tx.us/SecurePA/login.aspx"
       }
     },
     {

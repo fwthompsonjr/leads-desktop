@@ -4,7 +4,7 @@
   "Keys": [
     {
       "Name": "baseUri",
-      "Value": "http://cijspub.co.collin.tx.us/secure/login.aspx"
+      "Value": "http://cijspub.co.collin.tx.us/SecurePA/login.aspx"
     },
     {
       "Name": "query",
@@ -28,7 +28,7 @@
     },
     {
       "Name": "hlinkUri",
-      "Value": "http://cijspub.co.collin.tx.us/Secure/{0}"
+      "Value": "http://cijspub.co.collin.tx.us/SecurePA/{0}"
     },
     {
       "Name": "personNodeXpath",

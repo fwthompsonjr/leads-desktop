@@ -1065,7 +1065,7 @@
     },
     {
       "id": 204100,
-      "number": "2.4.0.0",
+      "number": "2.5.0.0",
       "fixes": [
         {
           "id": 0.0,
@@ -1081,6 +1081,11 @@
           "id": 14.2,
           "description": "release",
           "canPublish": false
+        },
+        {
+          "id": 15.1,
+          "description": "update target framework to net48",
+          "canPublish": true
         }
       ]
     }
