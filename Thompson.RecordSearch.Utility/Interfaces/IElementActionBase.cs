@@ -33,7 +33,7 @@ namespace Thompson.RecordSearch.Utility.Interfaces
         /// Acts the specified step.
         /// </summary>
         /// <param name="navigationStep">The navigation step.</param>
-        void Act(NavigationStep navigationStep);
+        void Act(NavigationStep item);
 
         /// <summary>
         /// Gets or sets the outer HTML.

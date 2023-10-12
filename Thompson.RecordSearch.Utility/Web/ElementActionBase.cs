@@ -19,7 +19,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public virtual string ActionName { get; }
 
-        public abstract void Act(NavigationStep stepObject);
+        public abstract void Act(NavigationStep item);
 
         public WebNavigationParameter GetSettings(int index)
         {
