@@ -20,6 +20,7 @@ namespace Thompson.RecordSearch.Utility.Web
             For<IElementActionBase>().Add<ElementSendKeyAction>().Named("send-key");
             For<IElementActionBase>().Add<ElementGetHtmlAction>().Named("get-table-html");
             For<IElementActionBase>().Add<ElementSetPasswordAction>().Named("login");
+            For<IElementActionBase>().Add<ElementCollinLoginAction>().Named("login-collin-county");
             For<IElementActionBase>().Add<ElementSetDropDownValue>().Named("set-dropdown-value");
             For<IElementActionBase>().Add<GetRecordCountAction>().Named("get-record-count");
             For<IElementActionBase>().Add<JquerySetTextBox>().Named("jquery-set-text");

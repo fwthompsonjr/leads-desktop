@@ -33,7 +33,7 @@ namespace LegalLead.PublicData.Search
             using (var consoleWriter = new ConsoleWriter())
             {
                 var command = Command.CommandStartUp.Commands
-                    .ToList().FirstOrDefault(x =>
+                    .FirstOrDefault(x =>
                     x.Name.Equals(commandName,
                     StringComparison.CurrentCultureIgnoreCase));
                 if (command == null)
@@ -69,15 +69,32 @@ namespace LegalLead.PublicData.Search
         {
             var current = new StringBuilder(mainForm.txConsole.Text);
             current.AppendLine(e.Value);
-            mainForm.txConsole.Text = current.ToString();
-            mainForm.txConsole.Refresh();
+            AppendText(current);
         }
 
         static void ConsoleWriter_WriteEvent(object sender, ConsoleWriterEventArgs e)
         {
             var current = new StringBuilder(mainForm.txConsole.Text);
             current.Append(e.Value);
-            mainForm.txConsole.Text = current.ToString();
+            AppendText(current);
+        }
+
+        private static void AppendText(StringBuilder sb)
+        {
+            try
+            {
+                mainForm.txConsole.Text = sb.ToString();
+                mainForm.txConsole.Refresh();
+            }
+            catch (Exception)
+            {
+
+                mainForm.txConsole.Invoke((MethodInvoker)delegate
+                {
+                    mainForm.txConsole.Text = sb.ToString();
+                    mainForm.txConsole.Refresh();
+                });
+            }
         }
     }
 }

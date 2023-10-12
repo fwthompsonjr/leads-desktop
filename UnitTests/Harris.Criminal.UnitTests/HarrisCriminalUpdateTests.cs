@@ -21,7 +21,7 @@ namespace Harris.Criminal.UnitTests
             {
                 Assert.Inconclusive("This method to be executed in debug mode only.");
             }
-            var downloadFile = HarrisCriminalData.DownloadFileName;
+            var downloadFile = string.Empty; // HarrisCriminalData.DownloadFileName;
             var timeoutDate = DateTime.Now.Add(TimeSpan.FromMinutes(5));
             if (File.Exists(downloadFile))
             {

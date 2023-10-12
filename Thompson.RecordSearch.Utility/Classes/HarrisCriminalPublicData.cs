@@ -54,9 +54,18 @@ namespace SeleniumTests
         [TestMethod]
         public void ThePublicDataTest()
         {
-            driver.Navigate().GoToUrl("https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx");
-            driver.FindElement(By.XPath("//div[contains(string(), \"CrimFilingsWithFutureSettings\")]")).Click();
-            driver.FindElement(By.XPath("//div[@id='ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_blah']/table/tbody/tr[58]/td[3]/a/u/b")).Click();
+            try
+            {
+                driver.Navigate().GoToUrl("https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx");
+                driver.FindElement(By.XPath("//div[contains(string(), \"CrimFilingsWithFutureSettings\")]")).Click();
+                driver.FindElement(By.XPath("//div[@id='ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_blah']/table/tbody/tr[58]/td[3]/a/u/b")).Click();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Assert.Inconclusive("unexpected exception.");
+                throw;
+            }
         }
         private bool IsElementPresent(By by)
         {

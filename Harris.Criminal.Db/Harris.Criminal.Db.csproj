@@ -54,7 +54,12 @@
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Downloads\HarrisCountyListDto.cs" />
     <Compile Include="Downloads\HarrisCriminalBo.cs" />
+    <Compile Include="Entities\BaseDataLoad.cs" />
+    <Compile Include="Entities\DataLoadDownloads.cs" />
+    <Compile Include="Entities\DataLoadDto.cs" />
+    <Compile Include="Entities\DataLoadReferences.cs" />
     <Compile Include="Entities\HccProcess.cs" />
+    <Compile Include="Interfaces\IDataLoad.cs" />
     <Compile Include="Prc\IDataProcess.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Downloads\HarrisCriminalDto.cs" />

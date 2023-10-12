@@ -10,7 +10,7 @@
         {
           "id": 1,
           "name": "Firefox",
-          "isVerified": false
+          "isVerified": true
         },
         {
           "id": 2,
@@ -20,7 +20,7 @@
         {
           "id": 3,
           "name": "Chrome Legacy",
-          "isVerified": true
+          "isVerified": false
         }
       ]
     }
