@@ -35,11 +35,7 @@ namespace LegalLead.PublicData.Search
                 var command = Command.CommandStartUp.Commands
                     .FirstOrDefault(x =>
                     x.Name.Equals(commandName,
-                    StringComparison.CurrentCultureIgnoreCase));
-                if (command == null)
-                {
-                    command = new Command.MainCommand();
-                }
+                    StringComparison.CurrentCultureIgnoreCase)) ?? new Command.MainCommand();
 
                 // get the chrome path in a separate thread
                 ThreadStart ts = new ThreadStart(() =>

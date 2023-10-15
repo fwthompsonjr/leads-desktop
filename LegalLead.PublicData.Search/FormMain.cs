@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
@@ -38,9 +39,16 @@ namespace LegalLead.PublicData.Search
         private void SetStatus(StatusType status)
         {
             var v = StatusHelper.GetStatus(status);
-            toolStripStatus.Text = string.Format(CultureInfo.CurrentCulture, "{0}", v.Name);
-            toolStripStatus.ForeColor = v.Color;
-            Refresh();
+            try
+            {
+                toolStripStatus.Text = string.Format(CultureInfo.CurrentCulture, "{0}", v.Name);
+                toolStripStatus.ForeColor = v.Color;
+                Refresh();
+            }
+            catch (Exception)
+            {
+                SetStatusFromOffThread(v);
+            }
             Application.DoEvents();
         }
 
@@ -75,20 +83,20 @@ namespace LegalLead.PublicData.Search
                 const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
                 var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
                 var keys = siteData.Keys;
-                var isDistrictSearch = keys.FirstOrDefault(x =>
+                var isDistrictSearch = keys.Find(x =>
                     x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType"
                     ccic)) != null;
-                var criminalToggle = keys.FirstOrDefault(x =>
+                var criminalToggle = keys.Find(x =>
                     x.Name.Equals(CommonKeyIndexes.CriminalCaseInclusion,
                     ccic));
                 if (isDentonCounty && criminalToggle != null)
                 {
                     criminalToggle.Value = isDistrictSearch ?
                         CommonKeyIndexes.NumberZero :
-                        CommonKeyIndexes.NumberOne; // "0" : "1";
+                        CommonKeyIndexes.NumberOne;
                 }
 
-                if (!isDentonCounty & criminalToggle != null)
+                if (!isDentonCounty && criminalToggle != null)
                 {
                     criminalToggle.Value = CommonKeyIndexes.NumberOne;
                 }
@@ -96,43 +104,11 @@ namespace LegalLead.PublicData.Search
                 IWebInteractive webmgr =
                     WebFetchingProvider.
                     GetInteractive(siteData, startDate, endingDate);
-
-                CaseData = webmgr.Fetch();
-
-                ProcessEndingMessage();
-                SetStatus(StatusType.Finished);
-                KillProcess(CommonKeyIndexes.ChromeDriver);
-                if (CaseData == null)
+                Task.Run(async () =>
                 {
-                    throw new ApplicationException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
-                }
-                if (string.IsNullOrEmpty(CaseData.Result))
-                {
-                    throw new ApplicationException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
-                }
-                if (IsEmpty(CaseData))
-                {
-                    throw new ApplicationException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
-                }
-                CaseData.WebsiteId = siteData.Id;
-                ExcelWriter.WriteToExcel(CaseData);
-                searchItem.ResultFileName = CaseData.Result;
-                searchItem.IsCompleted = true;
-                GetObject<List<SearchResult>>(Tag).Add(searchItem);
-                ComboBox_DataSourceChanged(null, null);
-
-                var result = MessageBox.Show(
-                    CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView,
-                    CommonKeyIndexes.DataExtractSuccess,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                if (result != DialogResult.Yes)
-                {
-                    SetStatus(StatusType.Ready);
-                    return;
-                }
-                TryOpenExcel();
-                SetStatus(StatusType.Ready);
+                    await ProcessAsync(webmgr, siteData, searchItem);
+                }).ConfigureAwait(true);
+                
             }
             catch (Exception ex)
             {
@@ -140,7 +116,7 @@ namespace LegalLead.PublicData.Search
                 Console.WriteLine(CommonKeyIndexes.UnexpectedErrorOccurred);
                 Console.WriteLine(ex.Message);
 
-                Console.WriteLine(CommonKeyIndexes.DashedLine); // "- - - - - - - - - - - - - - - - -");
+                Console.WriteLine(CommonKeyIndexes.DashedLine);
                 Console.WriteLine(ex.StackTrace);
             }
             finally
@@ -160,7 +136,6 @@ namespace LegalLead.PublicData.Search
             if (string.IsNullOrEmpty(CaseData.Result))
             {
                 ShowNoDataErrorBox();
-                return;
             }
         }
 
@@ -174,7 +149,7 @@ namespace LegalLead.PublicData.Search
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-
+            // method is intentionally left blank
         }
 
         private void ButtonDentonSetting_Click(object sender, EventArgs e)
@@ -232,6 +207,80 @@ namespace LegalLead.PublicData.Search
             if (caseData == null) return true;
             const string emptyCases = "<table></table>";
             return caseData.CaseList.Equals(emptyCases, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private async Task ProcessAsync(
+            IWebInteractive webmgr,
+            WebNavigationParameter siteData,
+            SearchResult searchItem)
+        {
+            try
+            {
+                CaseData = await Task.Run(() =>
+                {
+                    return webmgr.Fetch();
+                }).ConfigureAwait(true);
+
+
+                ProcessEndingMessage();
+                SetStatus(StatusType.Finished);
+                KillProcess(CommonKeyIndexes.ChromeDriver);
+                if (CaseData == null)
+                {
+                    throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
+                }
+                if (string.IsNullOrEmpty(CaseData.Result))
+                {
+                    throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
+                }
+                if (IsEmpty(CaseData))
+                {
+                    throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
+                }
+                CaseData.WebsiteId = siteData.Id;
+                ExcelWriter.WriteToExcel(CaseData);
+                searchItem.ResultFileName = CaseData.Result;
+                searchItem.IsCompleted = true;
+                GetObject<List<SearchResult>>(Tag).Add(searchItem);
+                ComboBox_DataSourceChanged(null, null);
+
+                var result = MessageBox.Show(
+                    CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView,
+                    CommonKeyIndexes.DataExtractSuccess,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                if (result != DialogResult.Yes)
+                {
+                    SetStatus(StatusType.Ready);
+                    return;
+                }
+                TryOpenExcel();
+                SetStatus(StatusType.Ready);
+            }
+            catch (Exception ex)
+            {
+                SetStatus(StatusType.Error);
+                Console.WriteLine(CommonKeyIndexes.UnexpectedErrorOccurred);
+                Console.WriteLine(ex.Message);
+
+                Console.WriteLine(CommonKeyIndexes.DashedLine);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+
+                KillProcess(CommonKeyIndexes.ChromeDriver);
+            }
+        }
+
+        private void SetStatusFromOffThread(StatusState v)
+        {
+            this.Invoke(new Action(() =>
+            {
+                toolStripStatus.Text = string.Format(CultureInfo.CurrentCulture, "{0}", v.Name);
+                toolStripStatus.ForeColor = v.Color;
+                Refresh();
+            }));
         }
     }
 }

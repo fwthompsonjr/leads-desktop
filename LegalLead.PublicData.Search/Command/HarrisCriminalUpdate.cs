@@ -37,8 +37,8 @@ namespace LegalLead.PublicData.Search.Command
                 try
                 {
                     var result = obj.GetData(driver);
-                    Debug.Assert(result != null);
-                    Debug.Assert(File.Exists(result));
+                    // Debug.Assert(result != null);
+                    // Debug.Assert(File.Exists(result));
                 }
                 finally
                 {

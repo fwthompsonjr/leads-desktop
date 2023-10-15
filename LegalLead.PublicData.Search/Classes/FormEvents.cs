@@ -46,7 +46,7 @@ namespace LegalLead.PublicData.Search
                 searchDto.DistrictCourtId + One :
                 searchDto.CountyCourtId + One;
 
-            var courtDropDown = courtNames.DropDowns.First();
+            var courtDropDown = courtNames.DropDowns[0];
             var nameDropDown = courtDropDown.Options.Find(x => x.Id == courtItemId);
 
             _ = sb.AppendFormat(
@@ -151,12 +151,12 @@ namespace LegalLead.PublicData.Search
 
 
             cboCourts.Visible = false;
-            cboCourts.DataSource = tarrantCourt.DropDowns.First().Options;
+            cboCourts.DataSource = tarrantCourt.DropDowns[0].Options;
             cboCourts.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboCourts.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboCaseType.Visible = false;
-            cboCaseType.DataSource = caseTypes.DropDowns.First().Options;
+            cboCaseType.DataSource = caseTypes.DropDowns[0].Options;
             cboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
 
@@ -182,23 +182,30 @@ namespace LegalLead.PublicData.Search
         {
             // when data source is changed?
             // remove all items from the tab strip
-            tsDropFileList.DropDownItems.Clear();
-            var list = GetObject<List<SearchResult>>(Tag);
-            list.ForEach(x =>
+            try
             {
-                var button = new ToolStripMenuItem
+                tsDropFileList.DropDownItems.Clear();
+                var list = GetObject<List<SearchResult>>(Tag);
+                list.ForEach(x =>
                 {
-                    Visible = true,
-                    Tag = x,
-                    Text = x.Search,
-                    DisplayStyle = ToolStripItemDisplayStyle.Text
-                };
-                button.Click += Button_Click;
-                tsDropFileList.DropDownItems.Add(button);
-            });
+                    var button = new ToolStripMenuItem
+                    {
+                        Visible = true,
+                        Tag = x,
+                        Text = x.Search,
+                        DisplayStyle = ToolStripItemDisplayStyle.Text
+                    };
+                    button.Click += Button_Click;
+                    tsDropFileList.DropDownItems.Add(button);
+                });
 
-            tsDropFileList.Enabled = list.Count > 0;
-            tsDropFileList.Visible = tsDropFileList.Enabled;
+                tsDropFileList.Enabled = list.Count > 0;
+                tsDropFileList.Visible = tsDropFileList.Enabled;
+            }
+            catch (Exception)
+            {
+                ComboBox_DataSourceChanged_Background();
+            }
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -318,22 +325,8 @@ namespace LegalLead.PublicData.Search
 
         protected void ProcessEndingMessage()
         {
-            var source = (WebNavigationParameter)cboWebsite.SelectedItem;
-            var message = CommonKeyIndexes.EndingFetchRequest
-                + Environment.NewLine + " " +
-                CommonKeyIndexes.WebsiteLabel + source.Name
-                + Environment.NewLine + " " +
-                CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
-                + Environment.NewLine + " " +
-                CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
-                + Environment.NewLine +
-                CommonKeyIndexes.EndTime + DateTime.Now.ToString(
-                    CommonKeyIndexes.GeneralLongDate,
-                    CultureInfo.CurrentCulture)
-                + Environment.NewLine +
-                CommonKeyIndexes.DashedLine
-                + Environment.NewLine +
-                CommonKeyIndexes.DashedLine;
+            var source = GetParameter();
+            var message = GetMessage(source);
 
             Console.WriteLine(message);
 
@@ -377,6 +370,89 @@ namespace LegalLead.PublicData.Search
             }
 
             System.Diagnostics.Process.Start(xmlFile);
+        }
+
+        private WebNavigationParameter GetParameter()
+        {
+            try {
+                return (WebNavigationParameter)cboWebsite.SelectedItem;
+            }
+            catch 
+            {
+                return Invoke(new Func<WebNavigationParameter>(() => 
+                    { return (WebNavigationParameter)cboWebsite.SelectedItem;  })) 
+                    as WebNavigationParameter;
+            }
+        }
+
+        private string GetMessage(WebNavigationParameter source)
+        {
+            try
+            {
+                return CommonKeyIndexes.EndingFetchRequest
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.WebsiteLabel + source.Name
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
+                + Environment.NewLine +
+                CommonKeyIndexes.EndTime + DateTime.Now.ToString(
+                    CommonKeyIndexes.GeneralLongDate,
+                    CultureInfo.CurrentCulture)
+                + Environment.NewLine +
+                CommonKeyIndexes.DashedLine
+                + Environment.NewLine +
+                CommonKeyIndexes.DashedLine;
+            }
+            catch
+            {
+                return Invoke(new Func<string>(() =>
+                {
+                    return CommonKeyIndexes.EndingFetchRequest
+                    + Environment.NewLine + " " +
+                    CommonKeyIndexes.WebsiteLabel + source.Name
+                    + Environment.NewLine + " " +
+                    CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
+                    + Environment.NewLine + " " +
+                    CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
+                    + Environment.NewLine +
+                    CommonKeyIndexes.EndTime + DateTime.Now.ToString(
+                        CommonKeyIndexes.GeneralLongDate,
+                        CultureInfo.CurrentCulture)
+                    + Environment.NewLine +
+                    CommonKeyIndexes.DashedLine
+                    + Environment.NewLine +
+                    CommonKeyIndexes.DashedLine;
+                }))
+                    as string;
+            }
+        }
+
+        private void ComboBox_DataSourceChanged_Background()
+        {
+            this.Invoke(new Action(() =>
+            {
+                // when data source is changed?
+                // remove all items from the tab strip
+                tsDropFileList.DropDownItems.Clear();
+                var list = GetObject<List<SearchResult>>(Tag);
+                list.ForEach(x =>
+                {
+                    var button = new ToolStripMenuItem
+                    {
+                        Visible = true,
+                        Tag = x,
+                        Text = x.Search,
+                        DisplayStyle = ToolStripItemDisplayStyle.Text
+                    };
+                    button.Click += Button_Click;
+                    tsDropFileList.DropDownItems.Add(button);
+                });
+
+                tsDropFileList.Enabled = list.Count > 0;
+                tsDropFileList.Visible = tsDropFileList.Enabled;
+            }));
         }
     }
 }
