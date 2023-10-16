@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="21.1" Modules="simple" RootPath="." Language="en" Id="{26235113-149D-4B21-9FC6-A74AAE480AF3}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="16.7" Modules="simple" RootPath="." Language="en" Id="{26235113-149D-4B21-9FC6-A74AAE480AF3}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;FixupComponent"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
-    <ROW Property="AI_APP_FILE" Value="[#LegalLead.PublicData.Search.exe]"/>
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_CourtRecordSearch.xlsm" Value="..\LegalLead.PublicData.Search\bin\Debug\Utilities"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_CrimFilingsWithFutureSettings.txt" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_downloads"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_downloads"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt_1" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_downloads"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_EPPlus.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Harris.Criminal.Db.dll" Value="..\Harris.Criminal.Db\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_HtmlAgilityPack.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_EPPlus.dll" Value="..\packages\EPPlus.4.5.3.2\lib\net40"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_LegalLead.PublicData.Search.exe" Value="..\LegalLead.PublicData.Search\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_LegalLead.Resources.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_LegalLead.Resources.dll" Value="..\LegalLead.Resources\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll" Value="..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Edge.SeleniumTools.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.CSharp.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.CodeCoverage.Shim.dll" Value="..\packages\Microsoft.CodeCoverage.16.4.0\lib\net45"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.Threading.dll" Value="..\packages\Microsoft.VisualStudio.Threading.16.6.13\lib\netstandard2.0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.Validation.dll" Value="..\packages\Microsoft.VisualStudio.Validation.15.5.31\lib\netstandard2.0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Win32.Registry.dll" Value="..\packages\Microsoft.Win32.Registry.4.6.0\lib\net461"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_MicrosoftWebDriver.exe" Value="..\LegalLead.PublicData.Search\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Newtonsoft.Json.dll" Value="..\packages\Newtonsoft.Json.13.0.1\lib\net45"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Newtonsoft.Json.dll" Value="..\packages\Newtonsoft.Json.12.0.3\lib\net45"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_ReadMe.txt" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_StructureMap.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Runtime.CompilerServices.Unsafe.dll" Value="..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_SgmlReaderDll.dll" Value="..\packages\Microsoft.Xml.SgmlReader.1.8.14\lib\net45"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_StructureMap.dll" Value="..\packages\StructureMap.4.7.1\lib\net45"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Data.DataSetExtensions.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Data.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Deployment.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Drawing.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Runtime.CompilerServices.Unsafe.dll" Value="..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Security.AccessControl.dll" Value="..\packages\System.Security.AccessControl.4.6.0\lib\net461"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Security.Principal.Windows.dll" Value="..\packages\System.Security.Principal.Windows.4.6.0\lib\net461"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Threading.Tasks.Extensions.dll" Value="..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Windows.Forms.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Xml.Linq.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Xml.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.dll" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Thompson.RecordSearch.Utility.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_WebDriver.Support.dll" Value="..\Thompson.RecordSearch.Utility\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_WebDriver.Support.dll" Value="..\packages\Selenium.Support.3.141.0\lib\net45"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_WebDriver.dll" Value="..\packages\Selenium.WebDriver.3.141.0\lib\net45"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_WebDriver.xml" Value="..\LegalLead.PublicData.Search\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD__20210815_HarrisCriminalStyleDto.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_downloads"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD__20210822_HarrisCriminalStyleDto.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_downloads"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_caselayout.xml" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_chromedriver.exe" Value="..\LegalLead.PublicData.Search\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_chromedriver.exe_1" Value="..\LegalLead.PublicData.Search\bin\Debug\Legacy"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyMapping_1.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_collinCountyUserMap.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
@@ -46,67 +46,50 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonDistrictCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_dentonsettings.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_geckodriver.exe" Value="..\LegalLead.PublicData.Search\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_harrisCivilCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_harrisCivilMapping.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_harriscivilreader.js" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_harriscivilsettings.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.cad.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.cdi.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.cnc.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.cst.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.curr_l_d.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.def_birthplace.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.def_rac.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.dst.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.ins.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hcc.tables.rea.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db\_tables"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hccc.background.prc.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_hccc.options.json" Value="..\LegalLead.PublicData.Search\bin\Debug\_db"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_resourcetable.json" Value="..\LegalLead.PublicData.Search\bin\Debug\text"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_sampleharriscriminalsearchresult.html" Value="..\LegalLead.PublicData.Search\bin\Debug\_html"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_settings.xml" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyCaseType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyCustomType.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyDataPoint.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_1.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_2.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_tarrantCourtSearchDropDown.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_webDrivers.json" Value="..\LegalLead.PublicData.Search\bin\Debug\xml"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_CourtRecordSearch.xlsm" Value="CourtRecordSearch.xlsm"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings.txt" Value="2021-08-22--CrimFilingsWithFutureSettings.txt"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt" Value="2021-09-06 CrimFilingsWithFutureSettings_withHeadings.txt"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt_1" Value="2021-09-11 CrimFilingsWithFutureSettings_withHeadings.txt"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_EPPlus.dll" Value="EPPlus.dll"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Harris.Criminal.Db.dll" Value="Harris.Criminal.Db.dll"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_HtmlAgilityPack.dll" Value="HtmlAgilityPack.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_LegalLead.PublicData.Search.exe" Value="LegalLead.PublicData.Search.exe"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_LegalLead.Resources.dll" Value="LegalLead.Resources.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll" Value="Microsoft.Bcl.AsyncInterfaces.dll"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Edge.SeleniumTools.dll" Value="Microsoft.Edge.SeleniumTools.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.CSharp.dll" Value="Microsoft.CSharp.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.CodeCoverage.Shim.dll" Value="Microsoft.VisualStudio.CodeCoverage.Shim.dll"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll" Value="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.dll" Value="Microsoft.VisualStudio.TestPlatform.TestFramework.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.Threading.dll" Value="Microsoft.VisualStudio.Threading.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.Validation.dll" Value="Microsoft.VisualStudio.Validation.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Win32.Registry.dll" Value="Microsoft.Win32.Registry.dll"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_MicrosoftWebDriver.exe" Value="MicrosoftWebDriver.exe"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Newtonsoft.Json.dll" Value="Newtonsoft.Json.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt" Value="ReadMe.txt"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_SgmlReaderDll.dll" Value="SgmlReaderDll.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_StructureMap.dll" Value="StructureMap.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Data.DataSetExtensions.dll" Value="System.Data.DataSetExtensions.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Data.dll" Value="System.Data.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Deployment.dll" Value="System.Deployment.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Drawing.dll" Value="System.Drawing.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Runtime.CompilerServices.Unsafe.dll" Value="System.Runtime.CompilerServices.Unsafe.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Security.AccessControl.dll" Value="System.Security.AccessControl.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Security.Principal.Windows.dll" Value="System.Security.Principal.Windows.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Threading.Tasks.Extensions.dll" Value="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Windows.Forms.dll" Value="System.Windows.Forms.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Xml.Linq.dll" Value="System.Xml.Linq.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Xml.dll" Value="System.Xml.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.dll" Value="System.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Thompson.RecordSearch.Utility.dll" Value="Thompson.RecordSearch.Utility.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_WebDriver.Support.dll" Value="WebDriver.Support.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_WebDriver.dll" Value="WebDriver.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_WebDriver.xml" Value="WebDriver.xml"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD__20210815_HarrisCriminalStyleDto.json" Value="2021-08-08_2021-08-15_HarrisCriminalStyleDto.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD__20210822_HarrisCriminalStyleDto.json" Value="2021-08-15_2021-08-22_HarrisCriminalStyleDto.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_caselayout.xml" Value="caselayout.xml"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_chromedriver.exe" Value="chromedriver.exe"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_chromedriver.exe_1" Value="chromedriver.exe"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_collinCountyCaseType.json" Value="collinCountyCaseType.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_collinCountyMapping_1.json" Value="collinCountyMapping_1.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_collinCountyUserMap.json" Value="collinCountyUserMap.json"/>
@@ -116,34 +99,18 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_dentonCountyCaseType.json" Value="dentonCountyCaseType.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_dentonDistrictCaseType.json" Value="dentonDistrictCaseType.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_dentonsettings.json" Value="denton-settings.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_geckodriver.exe" Value="geckodriver.exe"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_harrisCivilCaseType.json" Value="harrisCivilCaseType.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_harrisCivilMapping.json" Value="harrisCivilMapping.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_harriscivilreader.js" Value="harris-civil-reader.js"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_harriscivilsettings.json" Value="harris-civil-settings.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cad.json" Value="hcc.tables.cad.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cdi.json" Value="hcc.tables.cdi.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cnc.json" Value="hcc.tables.cnc.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cst.json" Value="hcc.tables.cst.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.curr_l_d.json" Value="hcc.tables.curr_l_d.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.def_birthplace.json" Value="hcc.tables.def_birthplace.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.def_rac.json" Value="hcc.tables.def_rac.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.dst.json" Value="hcc.tables.dst.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.ins.json" Value="hcc.tables.ins.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.rea.json" Value="hcc.tables.rea.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hccc.background.prc.json" Value="hccc.background.prc.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_hccc.options.json" Value="hccc.options.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_resourcetable.json" Value="resource-table.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_sampleharriscriminalsearchresult.html" Value="sample-harris-criminal-search-result.html"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_settings.xml" Value="settings.xml"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyCaseType.json" Value="tarrantCountyCaseType.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyCustomType.json" Value="tarrantCountyCustomType.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyDataPoint.json" Value="tarrantCountyDataPoint.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyMapping_1.json" Value="tarrantCountyMapping_1.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyMapping_2.json" Value="tarrantCountyMapping_2.json"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_tarrantCourtSearchDropDown.json" Value="tarrantCourtSearchDropDown.json"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_webDrivers.json" Value="webDrivers.json"/>
-    <ROW Property="AI_README_FILE" Value="[#ReadMe.txt]"/>
     <ROW Property="AI_RUN_AS_ADMIN" Value="1"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
@@ -153,10 +120,10 @@
     <ROW Property="CTRLS" Value="3"/>
     <ROW Property="Manufacturer" Value="Thompson Data Solutions"/>
     <ROW Property="MsiLogging" MultiBuildValue="DefaultBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{40BE220F-18C3-426E-95C8-AAE6FD0E11B5} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{B575C2B9-D7D6-4E48-BEE9-840DD15F02B1} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Legal Lead"/>
-    <ROW Property="ProductVersion" Value="2.5.0.0" Options="32"/>
+    <ROW Property="ProductVersion" Value="2.4.0.0" Type="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{9A7F7878-0FCE-4597-AA34-306B9FCBF173}"/>
@@ -178,10 +145,6 @@
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
     <ROW Directory="Utilities_Dir" Directory_Parent="LegalLead.PublicData.Search_Dir" DefaultDir="UTILIT~1|Utilities"/>
-    <ROW Directory="_db_Dir" Directory_Parent="LegalLead.PublicData.Search_Dir" DefaultDir="_db"/>
-    <ROW Directory="_downloads_Dir" Directory_Parent="_db_Dir" DefaultDir="_DOWNL~1|_downloads"/>
-    <ROW Directory="_html_Dir" Directory_Parent="LegalLead.PublicData.Search_Dir" DefaultDir="_html"/>
-    <ROW Directory="_tables_Dir" Directory_Parent="_db_Dir" DefaultDir="_tables"/>
     <ROW Directory="text_Dir" Directory_Parent="LegalLead.PublicData.Search_Dir" DefaultDir="text"/>
     <ROW Directory="xml_Dir" Directory_Parent="LegalLead.PublicData.Search_Dir" DefaultDir="xml"/>
   </COMPONENT>
@@ -189,19 +152,14 @@
     <ROW Component="AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt" ComponentId="{140E7233-1509-4655-BC5B-3FEF63618E9C}" Directory_="xml_Dir" Attributes="0" KeyPath="ReadMe.txt"/>
     <ROW Component="APPDIR" ComponentId="{999DC9E6-1C88-4FB9-8528-BD0CA7BB4921}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="LegalLead.PublicData.Search_ContentOutput" ComponentId="{5DA27D37-0219-4777-B843-C730EA0D8474}" Directory_="LegalLead.PublicData.Search_Dir" Attributes="0" KeyPath="WebDriver.xml" Type="0"/>
-    <ROW Component="LegalLead.PublicData.Search_ContentOutput_Legacy" ComponentId="{3C09275B-4BE8-489A-88AA-91A750B562E6}" Directory_="Legacy_Dir" Attributes="0" KeyPath="chromedriver.exe_1"/>
     <ROW Component="LegalLead.PublicData.Search_ContentOutput_Utilities" ComponentId="{EA5FA675-D956-48D1-B84D-B70687E355B2}" Directory_="Utilities_Dir" Attributes="0" KeyPath="CourtRecordSearch.xlsm" Type="0"/>
-    <ROW Component="LegalLead.PublicData.Search_ContentOutput__db" ComponentId="{8DF8F402-BE2F-4B3A-A060-A241DB5C2EF0}" Directory_="_db_Dir" Attributes="0" KeyPath="hccc.background.prc.json" Type="0"/>
-    <ROW Component="LegalLead.PublicData.Search_ContentOutput__db__downloads" ComponentId="{B98F3B13-A980-459D-A317-59CB70865DB8}" Directory_="_downloads_Dir" Attributes="0" KeyPath="_20210815_HarrisCriminalStyleDto.json" Type="0"/>
-    <ROW Component="LegalLead.PublicData.Search_ContentOutput__db__tables" ComponentId="{B619F266-32B7-47D2-ADE1-6BB96745EFD3}" Directory_="_tables_Dir" Attributes="0" KeyPath="hcc.tables.cad.json" Type="0"/>
-    <ROW Component="LegalLead.PublicData.Search_ContentOutput__html" ComponentId="{0DCAD1F0-8C85-473F-B9E3-AD3122A51998}" Directory_="_html_Dir" Attributes="0" KeyPath="sampleharriscriminalsearchresult.html" Type="0"/>
     <ROW Component="LegalLead.PublicData.Search_ContentOutput_text" ComponentId="{DA585EE8-5F26-4217-8773-6C7DCF80DEA7}" Directory_="text_Dir" Attributes="0" KeyPath="resourcetable.json" Type="0"/>
     <ROW Component="LegalLead.PublicData.Search_ContentOutput_xml" ComponentId="{FCE4FC0D-A8A7-4620-810A-472E171788E9}" Directory_="xml_Dir" Attributes="0" KeyPath="caselayout.xml" Type="0"/>
     <ROW Component="LegalLead.PublicData.Search_PrimaryOutput" ComponentId="{D362E2EE-B947-42A9-80F9-E28BC8C57F61}" Directory_="LegalLead.PublicData.Search_Dir" Attributes="0" KeyPath="LegalLead.PublicData.Search.exe"/>
-    <ROW Component="LegalLead.PublicData.Search_References" ComponentId="{002C4E54-9A79-49E8-8DB8-0571113E2BBA}" Directory_="LegalLead.PublicData.Search_Dir" Attributes="0" KeyPath="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll"/>
+    <ROW Component="LegalLead.PublicData.Search_References" ComponentId="{002C4E54-9A79-49E8-8DB8-0571113E2BBA}" Directory_="LegalLead.PublicData.Search_Dir" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
     <ROW Component="ProductInformation" ComponentId="{3C3D87F5-A0D7-4318-B569-93302C05EF7A}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{5AC6EB41-20E1-45CD-85CB-0EF247D49688}" Directory_="SHORTCUTDIR" Attributes="0"/>
-    <ROW Component="geckodriver.exe" ComponentId="{02D39468-E2CC-4118-A251-A576F746CEE9}" Directory_="LegalLead.PublicData.Search_Dir" Attributes="256" KeyPath="geckodriver.exe"/>
+    <ROW Component="chromedriver.exe" ComponentId="{3C09275B-4BE8-489A-88AA-91A750B562E6}" Directory_="Legacy_Dir" Attributes="0" KeyPath="chromedriver.exe_1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
@@ -212,9 +170,19 @@
     <ROW File="LegalLead.Resources.dll" Component_="LegalLead.PublicData.Search_References" FileName="LEGALL~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_LegalLead.Resources.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_LegalLead.Resources.dll&gt;" SelfReg="false"/>
     <ROW File="Thompson.RecordSearch.Utility.dll" Component_="LegalLead.PublicData.Search_References" FileName="THOMPS~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Thompson.RecordSearch.Utility.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Thompson.RecordSearch.Utility.dll&gt;" SelfReg="false"/>
     <ROW File="EPPlus.dll" Component_="LegalLead.PublicData.Search_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_EPPlus.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_EPPlus.dll&gt;" SelfReg="false"/>
+    <ROW File="Microsoft.CSharp.dll" Component_="LegalLead.PublicData.Search_References" FileName="MICROS~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.CSharp.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Microsoft.CSharp.dll&gt;" SelfReg="false"/>
     <ROW File="Microsoft.VisualStudio.CodeCoverage.Shim.dll" Component_="LegalLead.PublicData.Search_References" FileName="MICROS~3.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.CodeCoverage.Shim.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Microsoft.VisualStudio.CodeCoverage.Shim.dll&gt;" SelfReg="false"/>
     <ROW File="Newtonsoft.Json.dll" Component_="LegalLead.PublicData.Search_References" FileName="NEWTON~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Newtonsoft.Json.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Newtonsoft.Json.dll&gt;" SelfReg="false"/>
+    <ROW File="SgmlReaderDll.dll" Component_="LegalLead.PublicData.Search_References" FileName="SGMLRE~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_SgmlReaderDll.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_SgmlReaderDll.dll&gt;" SelfReg="false"/>
     <ROW File="StructureMap.dll" Component_="LegalLead.PublicData.Search_References" FileName="STRUCT~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_StructureMap.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_StructureMap.dll&gt;" SelfReg="false"/>
+    <ROW File="System.Data.DataSetExtensions.dll" Component_="LegalLead.PublicData.Search_References" FileName="SYSTEM~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Data.DataSetExtensions.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Data.DataSetExtensions.dll&gt;" SelfReg="false"/>
+    <ROW File="System.Data.dll" Component_="LegalLead.PublicData.Search_References" FileName="SYSTEM~3.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Data.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Data.dll&gt;" SelfReg="false"/>
+    <ROW File="System.Deployment.dll" Component_="LegalLead.PublicData.Search_References" FileName="SYSTEM~4.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Deployment.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Deployment.dll&gt;" SelfReg="false"/>
+    <ROW File="System.dll" Component_="LegalLead.PublicData.Search_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_System.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.dll&gt;" SelfReg="false"/>
+    <ROW File="System.Drawing.dll" Component_="LegalLead.PublicData.Search_References" FileName="SYSTEM~5.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Drawing.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Drawing.dll&gt;" SelfReg="false"/>
+    <ROW File="System.Windows.Forms.dll" Component_="LegalLead.PublicData.Search_References" FileName="SYSTEM~6.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Windows.Forms.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Windows.Forms.dll&gt;" SelfReg="false"/>
+    <ROW File="System.Xml.dll" Component_="LegalLead.PublicData.Search_References" FileName="SYSTEM~7.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Xml.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Xml.dll&gt;" SelfReg="false"/>
+    <ROW File="System.Xml.Linq.dll" Component_="LegalLead.PublicData.Search_References" FileName="SYSTEM~8.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.Xml.Linq.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.Xml.Linq.dll&gt;" SelfReg="false"/>
     <ROW File="WebDriver.dll" Component_="LegalLead.PublicData.Search_References" FileName="WEBDRI~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_WebDriver.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_WebDriver.dll&gt;" SelfReg="false"/>
     <ROW File="WebDriver.Support.dll" Component_="LegalLead.PublicData.Search_References" FileName="WEBDRI~3.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_WebDriver.Support.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_WebDriver.Support.dll&gt;" SelfReg="false"/>
     <ROW File="resourcetable.json" Component_="LegalLead.PublicData.Search_ContentOutput_text" FileName="RESOUR~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_resourcetable.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_resourcetable.json&gt;" SelfReg="false"/>
@@ -252,69 +220,42 @@
     <ROW File="harrisCivilMapping.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="HARRIS~4.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilMapping.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_harrisCivilMapping.json&gt;" SelfReg="false"/>
     <ROW File="webDrivers.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="WEBDRI~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_webDrivers.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_webDrivers.json&gt;" SelfReg="false"/>
     <ROW File="LegalLead.PublicData.Search.exe.config" Component_="LegalLead.PublicData.Search_ContentOutput" FileName="LEGALL~1.CON|LegalLead.PublicData.Search.exe.config" Attributes="0" SourcePath="..\LegalLead.PublicData.Search\bin\Debug\LegalLead.PublicData.Search.exe.config" SelfReg="false"/>
-    <ROW File="chromedriver.exe_1" Component_="LegalLead.PublicData.Search_ContentOutput_Legacy" FileName="CHROME~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_chromedriver.exe_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_chromedriver.exe_1&gt;" SelfReg="false" DigSign="true"/>
-    <ROW File="tarrantCourtSearchDropDown.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="TARRAN~7.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCourtSearchDropDown.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_tarrantCourtSearchDropDown.json&gt;" SelfReg="false"/>
-    <ROW File="Harris.Criminal.Db.dll" Component_="LegalLead.PublicData.Search_References" FileName="HARRIS~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Harris.Criminal.Db.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Harris.Criminal.Db.dll&gt;" SelfReg="false"/>
-    <ROW File="HtmlAgilityPack.dll" Component_="LegalLead.PublicData.Search_References" FileName="HTMLAG~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_HtmlAgilityPack.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_HtmlAgilityPack.dll&gt;" SelfReg="false"/>
-    <ROW File="Microsoft.Edge.SeleniumTools.dll" Component_="LegalLead.PublicData.Search_References" FileName="MICROS~9.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Edge.SeleniumTools.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Microsoft.Edge.SeleniumTools.dll&gt;" SelfReg="false"/>
-    <ROW File="hccc.background.prc.json" Component_="LegalLead.PublicData.Search_ContentOutput__db" FileName="HCCCBA~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hccc.background.prc.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hccc.background.prc.json&gt;" SelfReg="false"/>
-    <ROW File="hccc.options.json" Component_="LegalLead.PublicData.Search_ContentOutput__db" FileName="HCCCOP~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hccc.options.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hccc.options.json&gt;" SelfReg="false"/>
-    <ROW File="_20210815_HarrisCriminalStyleDto.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__downloads" FileName="2021-0~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD__20210815_HarrisCriminalStyleDto.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD__20210815_HarrisCriminalStyleDto.json&gt;" SelfReg="false"/>
-    <ROW File="_20210822_HarrisCriminalStyleDto.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__downloads" FileName="2021-0~3.JSO|[|AI_PROPPATH_FILENAME_PERBUILD__20210822_HarrisCriminalStyleDto.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD__20210822_HarrisCriminalStyleDto.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.cad.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTAB~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cad.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.cad.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.cdi.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTAB~3.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cdi.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.cdi.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.cnc.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTAB~4.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cnc.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.cnc.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.cst.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTAB~5.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cst.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.cst.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.curr_l_d.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTAB~6.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.curr_l_d.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.curr_l_d.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.def_birthplace.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTAB~7.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.def_birthplace.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.def_birthplace.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.def_rac.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTAB~8.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.def_rac.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.def_rac.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.dst.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTAB~9.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.dst.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.dst.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.ins.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTA~10.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.ins.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.ins.json&gt;" SelfReg="false"/>
-    <ROW File="hcc.tables.rea.json" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables" FileName="HCCTA~11.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.rea.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_hcc.tables.rea.json&gt;" SelfReg="false"/>
-    <ROW File="CrimFilingsWithFutureSettings.txt" Component_="LegalLead.PublicData.Search_ContentOutput__db__downloads" FileName="2021-0~2.TXT|[|AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings.txt]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_CrimFilingsWithFutureSettings.txt&gt;" SelfReg="false"/>
-    <ROW File="CrimFilingsWithFutureSettings_withHeadings.txt" Component_="LegalLead.PublicData.Search_ContentOutput__db__downloads" FileName="2021-0~3.TXT|[|AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt&gt;" SelfReg="false"/>
-    <ROW File="CrimFilingsWithFutureSettings_withHeadings.txt_1" Component_="LegalLead.PublicData.Search_ContentOutput__db__downloads" FileName="2021-0~4.TXT|[|AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt_1&gt;" SelfReg="false"/>
-    <ROW File="MicrosoftWebDriver.exe" Component_="LegalLead.PublicData.Search_ContentOutput" FileName="MICROS~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_MicrosoftWebDriver.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_MicrosoftWebDriver.exe&gt;" SelfReg="false"/>
-    <ROW File="geckodriver.exe" Component_="geckodriver.exe" FileName="GECKOD~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_geckodriver.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_geckodriver.exe&gt;" SelfReg="false"/>
-    <ROW File="sampleharriscriminalsearchresult.html" Component_="LegalLead.PublicData.Search_ContentOutput__html" FileName="SAMPLE~2.HTM|[|AI_PROPPATH_FILENAME_PERBUILD_sampleharriscriminalsearchresult.html]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_sampleharriscriminalsearchresult.html&gt;" SelfReg="false"/>
-    <ROW File="Microsoft.VisualStudio.TestPlatform.TestFramework.dll" Component_="LegalLead.PublicData.Search_References" FileName="MICROS~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.dll&gt;" SelfReg="false"/>
-    <ROW File="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll" Component_="LegalLead.PublicData.Search_References" FileName="MICROS~8.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll&gt;" SelfReg="false"/>
+    <ROW File="chromedriver.exe_1" Component_="chromedriver.exe" FileName="CHROME~1.EXE|chromedriver.exe" Attributes="0" SourcePath="..\LegalLead.PublicData.Search\bin\Debug\Legacy\chromedriver.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="tarrantCourtSearchDropDown.json" Component_="LegalLead.PublicData.Search_ContentOutput_xml" FileName="TARRAN~1.JSO|tarrantCourtSearchDropDown.json" Attributes="0" SourcePath="..\LegalLead.PublicData.Search\bin\Debug\xml\tarrantCourtSearchDropDown.json" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_CourtRecordSearch.xlsm" Path="[|AI_PROPPATH_DIR_PERBUILD_CourtRecordSearch.xlsm]\[|AI_PROPPATH_FILENAME_PERBUILD_CourtRecordSearch.xlsm]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_CrimFilingsWithFutureSettings.txt" Path="[|AI_PROPPATH_DIR_PERBUILD_CrimFilingsWithFutureSettings.txt]\[|AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings.txt]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt" Path="[|AI_PROPPATH_DIR_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt]\[|AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt_1" Path="[|AI_PROPPATH_DIR_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt_1]\[|AI_PROPPATH_FILENAME_PERBUILD_CrimFilingsWithFutureSettings_withHeadings.txt_1]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_EPPlus.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_EPPlus.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_EPPlus.dll]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_Harris.Criminal.Db.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Harris.Criminal.Db.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Harris.Criminal.Db.dll]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_HtmlAgilityPack.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_HtmlAgilityPack.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_HtmlAgilityPack.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_LegalLead.PublicData.Search.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_LegalLead.PublicData.Search.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_LegalLead.PublicData.Search.exe]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_LegalLead.Resources.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_LegalLead.Resources.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_LegalLead.Resources.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_Microsoft.Edge.SeleniumTools.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.Edge.SeleniumTools.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Edge.SeleniumTools.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_Microsoft.CSharp.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.CSharp.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.CSharp.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Microsoft.VisualStudio.CodeCoverage.Shim.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.CodeCoverage.Shim.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.CodeCoverage.Shim.dll]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.TestPlatform.TestFramework.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Microsoft.VisualStudio.Threading.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.Threading.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.Threading.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Microsoft.VisualStudio.Validation.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.VisualStudio.Validation.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.VisualStudio.Validation.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Microsoft.Win32.Registry.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.Win32.Registry.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Win32.Registry.dll]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_MicrosoftWebDriver.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_MicrosoftWebDriver.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_MicrosoftWebDriver.exe]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Newtonsoft.Json.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Newtonsoft.Json.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Newtonsoft.Json.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_ReadMe.txt" Path="[|AI_PROPPATH_DIR_PERBUILD_ReadMe.txt]\[|AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_SgmlReaderDll.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_SgmlReaderDll.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_SgmlReaderDll.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_StructureMap.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_StructureMap.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_StructureMap.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_System.Data.DataSetExtensions.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Data.DataSetExtensions.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Data.DataSetExtensions.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_System.Data.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Data.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Data.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_System.Deployment.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Deployment.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Deployment.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_System.Drawing.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Drawing.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Drawing.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_System.Runtime.CompilerServices.Unsafe.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Runtime.CompilerServices.Unsafe.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Runtime.CompilerServices.Unsafe.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_System.Security.AccessControl.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Security.AccessControl.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Security.AccessControl.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_System.Security.Principal.Windows.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Security.Principal.Windows.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Security.Principal.Windows.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_System.Threading.Tasks.Extensions.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Threading.Tasks.Extensions.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Threading.Tasks.Extensions.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_System.Windows.Forms.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Windows.Forms.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Windows.Forms.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_System.Xml.Linq.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Xml.Linq.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Xml.Linq.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_System.Xml.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Xml.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Xml.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_System.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Thompson.RecordSearch.Utility.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Thompson.RecordSearch.Utility.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Thompson.RecordSearch.Utility.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_WebDriver.Support.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_WebDriver.Support.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_WebDriver.Support.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_WebDriver.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_WebDriver.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_WebDriver.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_WebDriver.xml" Path="[|AI_PROPPATH_DIR_PERBUILD_WebDriver.xml]\[|AI_PROPPATH_FILENAME_PERBUILD_WebDriver.xml]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD__20210815_HarrisCriminalStyleDto.json" Path="[|AI_PROPPATH_DIR_PERBUILD__20210815_HarrisCriminalStyleDto.json]\[|AI_PROPPATH_FILENAME_PERBUILD__20210815_HarrisCriminalStyleDto.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD__20210822_HarrisCriminalStyleDto.json" Path="[|AI_PROPPATH_DIR_PERBUILD__20210822_HarrisCriminalStyleDto.json]\[|AI_PROPPATH_FILENAME_PERBUILD__20210822_HarrisCriminalStyleDto.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_caselayout.xml" Path="[|AI_PROPPATH_DIR_PERBUILD_caselayout.xml]\[|AI_PROPPATH_FILENAME_PERBUILD_caselayout.xml]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_chromedriver.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_chromedriver.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_chromedriver.exe]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_chromedriver.exe_1" Path="[|AI_PROPPATH_DIR_PERBUILD_chromedriver.exe_1]\[|AI_PROPPATH_FILENAME_PERBUILD_chromedriver.exe_1]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_collinCountyCaseType.json" Path="[|AI_PROPPATH_DIR_PERBUILD_collinCountyCaseType.json]\[|AI_PROPPATH_FILENAME_PERBUILD_collinCountyCaseType.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_collinCountyMapping_1.json" Path="[|AI_PROPPATH_DIR_PERBUILD_collinCountyMapping_1.json]\[|AI_PROPPATH_FILENAME_PERBUILD_collinCountyMapping_1.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_collinCountyUserMap.json" Path="[|AI_PROPPATH_DIR_PERBUILD_collinCountyUserMap.json]\[|AI_PROPPATH_FILENAME_PERBUILD_collinCountyUserMap.json]" Type="2" Content="0"/>
@@ -324,32 +265,17 @@
     <ROW Name="AI_APPPATH_PERBUILD_dentonCountyCaseType.json" Path="[|AI_PROPPATH_DIR_PERBUILD_dentonCountyCaseType.json]\[|AI_PROPPATH_FILENAME_PERBUILD_dentonCountyCaseType.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_dentonDistrictCaseType.json" Path="[|AI_PROPPATH_DIR_PERBUILD_dentonDistrictCaseType.json]\[|AI_PROPPATH_FILENAME_PERBUILD_dentonDistrictCaseType.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_dentonsettings.json" Path="[|AI_PROPPATH_DIR_PERBUILD_dentonsettings.json]\[|AI_PROPPATH_FILENAME_PERBUILD_dentonsettings.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_geckodriver.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_geckodriver.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_geckodriver.exe]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_harrisCivilCaseType.json" Path="[|AI_PROPPATH_DIR_PERBUILD_harrisCivilCaseType.json]\[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilCaseType.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_harrisCivilMapping.json" Path="[|AI_PROPPATH_DIR_PERBUILD_harrisCivilMapping.json]\[|AI_PROPPATH_FILENAME_PERBUILD_harrisCivilMapping.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_harriscivilreader.js" Path="[|AI_PROPPATH_DIR_PERBUILD_harriscivilreader.js]\[|AI_PROPPATH_FILENAME_PERBUILD_harriscivilreader.js]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_harriscivilsettings.json" Path="[|AI_PROPPATH_DIR_PERBUILD_harriscivilsettings.json]\[|AI_PROPPATH_FILENAME_PERBUILD_harriscivilsettings.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.cad.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.cad.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cad.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.cdi.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.cdi.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cdi.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.cnc.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.cnc.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cnc.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.cst.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.cst.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.cst.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.curr_l_d.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.curr_l_d.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.curr_l_d.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.def_birthplace.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.def_birthplace.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.def_birthplace.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.def_rac.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.def_rac.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.def_rac.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.dst.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.dst.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.dst.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.ins.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.ins.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.ins.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hcc.tables.rea.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hcc.tables.rea.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hcc.tables.rea.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hccc.background.prc.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hccc.background.prc.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hccc.background.prc.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_hccc.options.json" Path="[|AI_PROPPATH_DIR_PERBUILD_hccc.options.json]\[|AI_PROPPATH_FILENAME_PERBUILD_hccc.options.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_resourcetable.json" Path="[|AI_PROPPATH_DIR_PERBUILD_resourcetable.json]\[|AI_PROPPATH_FILENAME_PERBUILD_resourcetable.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_sampleharriscriminalsearchresult.html" Path="[|AI_PROPPATH_DIR_PERBUILD_sampleharriscriminalsearchresult.html]\[|AI_PROPPATH_FILENAME_PERBUILD_sampleharriscriminalsearchresult.html]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_settings.xml" Path="[|AI_PROPPATH_DIR_PERBUILD_settings.xml]\[|AI_PROPPATH_FILENAME_PERBUILD_settings.xml]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_tarrantCountyCaseType.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCountyCaseType.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyCaseType.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_tarrantCountyCustomType.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCountyCustomType.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyCustomType.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_tarrantCountyDataPoint.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCountyDataPoint.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyDataPoint.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_tarrantCountyMapping_1.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_1.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyMapping_1.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_tarrantCountyMapping_2.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCountyMapping_2.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCountyMapping_2.json]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_tarrantCourtSearchDropDown.json" Path="[|AI_PROPPATH_DIR_PERBUILD_tarrantCourtSearchDropDown.json]\[|AI_PROPPATH_FILENAME_PERBUILD_tarrantCourtSearchDropDown.json]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_webDrivers.json" Path="[|AI_PROPPATH_DIR_PERBUILD_webDrivers.json]\[|AI_PROPPATH_FILENAME_PERBUILD_webDrivers.json]" Type="2" Content="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
@@ -370,7 +296,6 @@
     <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
-    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
     <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
     <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
     <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
@@ -413,14 +338,13 @@
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
     <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
-    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="LaunchApp"/>
+    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#LegalLead.PublicData.Search.exe]"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
-    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Type="65" Source="aicustact.dll" Target="PreserveInstallType"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_SetArpReadmeFile" Type="51" Source="ARPREADME" Target="[#ReadMe.txt]"/>
-    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="ViewReadMe"/>
+    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="[#ReadMe.txt]"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[LegalLead.PublicData.Search_Dir]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
@@ -436,12 +360,7 @@
     <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput_xml"/>
     <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput"/>
     <ROW Feature_="MainFeature" Component_="AI_PROPPATH_FILENAME_PERBUILD_ReadMe.txt"/>
-    <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput_Legacy"/>
-    <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput__db"/>
-    <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput__db__downloads"/>
-    <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput__db__tables"/>
-    <ROW Feature_="MainFeature" Component_="geckodriver.exe"/>
-    <ROW Feature_="MainFeature" Component_="LegalLead.PublicData.Search_ContentOutput__html"/>
+    <ROW Feature_="MainFeature" Component_="chromedriver.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="lawicon.exe" SourcePath="..\LegalLead.PublicData.Search\law-icon.ico" Index="0"/>
@@ -458,7 +377,6 @@
     <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
-    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Sequence="199"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="((VersionNT &lt;&gt; 501) AND (VersionNT &lt;&gt; 502))" Description="[ProductName] cannot be installed on [WindowsTypeNT5XDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild"/>
@@ -467,10 +385,7 @@
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
-    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
     <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
-    <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
-    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
@@ -490,9 +405,19 @@
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="LegalLead.Resources.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="Thompson.RecordSearch.Utility.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="EPPlus.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="Microsoft.CSharp.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="Microsoft.VisualStudio.CodeCoverage.Shim.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="Newtonsoft.Json.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="SgmlReaderDll.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="StructureMap.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.Data.DataSetExtensions.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.Data.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.Deployment.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.Drawing.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.Windows.Forms.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.Xml.dll"/>
+    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="System.Xml.Linq.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="WebDriver.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="WebDriver.Support.dll"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="resourcetable.json"/>
@@ -529,32 +454,5 @@
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harriscivilreader.js"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="harrisCivilMapping.json"/>
     <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="webDrivers.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="Harris.Criminal.Db.dll"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="HtmlAgilityPack.dll"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="Microsoft.Edge.SeleniumTools.dll"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hccc.background.prc.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hccc.options.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="_20210815_HarrisCriminalStyleDto.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="_20210822_HarrisCriminalStyleDto.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.cad.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.cdi.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.cnc.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.cst.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.curr_l_d.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.def_birthplace.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.def_rac.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.dst.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.ins.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="hcc.tables.rea.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="CrimFilingsWithFutureSettings.txt"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="CrimFilingsWithFutureSettings_withHeadings.txt"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="CrimFilingsWithFutureSettings_withHeadings.txt_1"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="chromedriver.exe_1"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="tarrantCourtSearchDropDown.json"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="MicrosoftWebDriver.exe"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="geckodriver.exe"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="ContentOutput" OutputFile="sampleharriscriminalsearchresult.html"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="Microsoft.VisualStudio.TestPlatform.TestFramework.dll"/>
-    <ROW ProjectId="{fdc972d5-85cc-418c-a08b-d2bd940d9a35}" ProjectName="LegalLead.PublicData.Search" OutputGroup="References" OutputFile="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll"/>
   </COMPONENT>
 </DOCUMENT>
