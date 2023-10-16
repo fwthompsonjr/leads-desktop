@@ -17,7 +17,7 @@ jobs:
         dotnet-version: [ '6.0.x' ]
     env:
         SOLUTION_NAME: Thompson.RecordSearch.Framework.sln
-        TEST_FILE_NAME: "test-results-${{ matrix.dotnet-version }}"
+        TEST_FILE_NAME: "test-results-${{ matrix.dotnet-version }}.trx"
         REPORT_FILE_NAME: "test-report-${{ matrix.dotnet-version }}.md"
 
 
@@ -48,7 +48,7 @@ jobs:
     - name: Publish Test Results
       shell: pwsh
       run: |
-        $input = "File=$($env:TEST_FILE_NAME).trx;Format=Trx"
+        $input = "File=$($env:TEST_FILE_NAME);Format=Trx"
         liquid --inputs $input --output-file $env:REPORT_FILE_NAME
         $content = [system.io.file]::ReadAllText( $Env:TEST_FILE_NAME )
         $content | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
