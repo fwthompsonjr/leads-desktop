@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-
-namespace LegalLead.Changed.Classes
+﻿namespace LegalLead.Changed.Classes
 {
     public class CommandSetInstallVersion : BuildCommandBase
     {
@@ -30,7 +22,7 @@ namespace LegalLead.Changed.Classes
             //var sourceDir = Path.GetDirectoryName(SourceFile);
             //var installDir = Path.Combine(sourceDir, "Legal Lead Install");
             //var installFile = Path.Combine(installDir, "Legal Lead Install.aip");
-            
+
             //return SetInstallVersion(installFile);
         }
 

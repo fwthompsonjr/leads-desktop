@@ -16,19 +16,19 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public static string FileVersion
         {
-            get 
+            get
             {
                 return _fileVersion ?? (_fileVersion = GetFileVersion());
-            } 
+            }
         }
 
         public VersionNameProvider()
         {
             // when the assembly-file-version contains pre-release
-            var isPreRelease = FileVersion.EndsWith($"~{VersionNames.Last()}", 
+            var isPreRelease = FileVersion.EndsWith($"~{VersionNames.Last()}",
                 System.StringComparison.CurrentCultureIgnoreCase);
-            Name = isPreRelease ? 
-                CommonKeyIndexes.FutureKeyWord : 
+            Name = isPreRelease ?
+                CommonKeyIndexes.FutureKeyWord :
                 CommonKeyIndexes.DefaultKeyWord;
         }
         public string Name { get; private set; }
@@ -43,7 +43,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static List<string> GetNames()
         {
-            return new List<string> { 
+            return new List<string> {
                 CommonKeyIndexes.DefaultKeyWord,
                 CommonKeyIndexes.FutureKeyWord };
         }

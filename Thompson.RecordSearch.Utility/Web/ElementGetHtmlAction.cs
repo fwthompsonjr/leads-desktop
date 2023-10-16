@@ -24,7 +24,7 @@ namespace Thompson.RecordSearch.Utility.Web
             // remove colspan? <colgroup>
             outerHtml = helper.RemoveTag(outerHtml, "colgroup");
             // remove the image tags now
-            
+
             OuterHtml = outerHtml;
             var probateLinkXpath = CommonKeyIndexes.ProbateLinkXpath;
             var justiceLinkXpath = probateLinkXpath.Replace("'Probate'", "'Justice'");

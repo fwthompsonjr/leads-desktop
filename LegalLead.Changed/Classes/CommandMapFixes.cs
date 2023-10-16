@@ -1,8 +1,8 @@
-﻿using System;
+﻿using LegalLead.Changed.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using LegalLead.Changed.Models;
 
 namespace LegalLead.Changed.Classes
 {
@@ -13,10 +13,14 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (Log == null)
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {
@@ -27,7 +31,11 @@ namespace LegalLead.Changed.Classes
                 .Where(x => x.Id > 0)
                 .ToList();
 
-            if (!fixes.Any()) return true;
+            if (!fixes.Any())
+            {
+                return true;
+            }
+
             MapChange(fixes);
             ReSerialize();
             return true;
@@ -35,27 +43,39 @@ namespace LegalLead.Changed.Classes
 
         protected void MapChange(List<Fix> fixes)
         {
-            if (fixes == null) return;
-            if (!fixes.Any()) return;
+            if (fixes == null)
+            {
+                return;
+            }
+
+            if (!fixes.Any())
+            {
+                return;
+            }
+
             fixes.ForEach(UpdateChange);
         }
 
         protected virtual void UpdateChange(Fix objChange)
         {
-            if(objChange == null)
+            if (objChange == null)
             {
                 throw new ArgumentNullException(nameof(objChange));
             }
             var issueList = Log.Changes
                 .Where(c => c.Issues.Any(x => x.Id == objChange.Id))
                 .ToList();
-            if (!issueList.Any()) return;
+            if (!issueList.Any())
+            {
+                return;
+            }
+
             foreach (var item in issueList)
             {
                 var targets = item.Issues
                     .Where(x => x.Id == objChange.Id && x.FixVersion == 0)
                     .ToList();
-                targets.ForEach(x => 
+                targets.ForEach(x =>
                 {
                     x.FixVersion = LatestVersion.Id;
                     Console.WriteLine("Associating issue {0} -- [ {1} ] to Version {2}",
@@ -63,7 +83,7 @@ namespace LegalLead.Changed.Classes
                         x.Name,
                         LatestVersion.Number
                         );
-                }); 
+                });
             }
         }
 
@@ -71,13 +91,17 @@ namespace LegalLead.Changed.Classes
 
         protected static void MarkAsStarted(Issue issue)
         {
-            if(issue == null)
+            if (issue == null)
             {
                 throw new ArgumentNullException(nameof(issue));
             }
             var startTime = issue.Description.FirstOrDefault(a => a.StartsWith(startDate, StringComparison.InvariantCultureIgnoreCase));
 
-            if (startTime != null) return;
+            if (startTime != null)
+            {
+                return;
+            }
+
             var timeStamp = DateTime.Now.ToString("u");
             Console.WriteLine("Starting issue {0} -- [ {1} ] at {2}",
                 issue.Id.ToString("F3"),
@@ -87,7 +111,7 @@ namespace LegalLead.Changed.Classes
             issue.Description.Add($@"{startDate}{timeStamp}");
         }
 
-        
+
         const string startDate = @"Start Date: ";
     }
 }

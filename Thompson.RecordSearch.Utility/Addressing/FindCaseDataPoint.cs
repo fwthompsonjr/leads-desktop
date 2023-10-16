@@ -15,11 +15,19 @@ namespace Thompson.RecordSearch.Utility.Addressing
             Justification = "Exception thrown from this method will stop automation.")]
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
-            if (driver == null) throw new System.ArgumentNullException(nameof(driver));
-            if (linkData == null) throw new System.ArgumentNullException(nameof(linkData));
+            if (driver == null)
+            {
+                throw new System.ArgumentNullException(nameof(driver));
+            }
+
+            if (linkData == null)
+            {
+                throw new System.ArgumentNullException(nameof(linkData));
+            }
+
             CanFind = false;
             var dto = DataPointLocatorDto.GetDto("tarrantCountyDataPoint");
-            var search = dto.DataPoints.First(x => 
+            var search = dto.DataPoints.First(x =>
                 x.Name.Equals(CommonKeyIndexes.CaseStyle, System.StringComparison.CurrentCultureIgnoreCase));
             var element = driver.FindElement(By.XPath(search.Xpath));
             search.Result = element.Text;

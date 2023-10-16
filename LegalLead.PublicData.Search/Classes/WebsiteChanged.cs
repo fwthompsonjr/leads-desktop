@@ -33,13 +33,16 @@ namespace LegalLead.PublicData.Search
 
             var showList = new List<int> { Four, Five };
             CboCaseType.Visible = customList.Contains(source.Id);
-            LabelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty 
+            LabelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty
                 ? CommonKeyIndexes.CustomSearchLabel : CommonKeyIndexes.SearchTypeLabel;
 
             // get we do the custom labels here??
             MapLabels(TableLayoutPanel1.RowStyles);
 
-            if (!customList.Contains(source.Id)) return;
+            if (!customList.Contains(source.Id))
+            {
+                return;
+            }
 
             GetMain.tsStatusLabel.Text = new string(' ', 25);
             // custom combo mapping for case type
@@ -53,10 +56,17 @@ namespace LegalLead.PublicData.Search
             CboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase; // "Name";
             CboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
 
-            if (caseTypeName.Equals(ccCaseName, System.StringComparison.CurrentCultureIgnoreCase)) return;
+            if (caseTypeName.Equals(ccCaseName, System.StringComparison.CurrentCultureIgnoreCase))
+            {
+                return;
+            }
+
             var selected = (Option)CboCaseType.SelectedItem;
             var expected = dropDownOptions.FirstOrDefault(o => o.IsDefault) ?? selected;
-            if (selected.Id.Equals(expected.Id)) return;
+            if (selected.Id.Equals(expected.Id))
+            {
+                return;
+            }
 
             CboCaseType.SelectedItem = expected;
 

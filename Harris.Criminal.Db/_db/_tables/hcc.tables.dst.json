@@ -1,0 +1,31 @@
+{
+	"name": "HCC.Tables.dst",
+	"data": [ 
+		{"code": "A", "literal": "DEFERRED ADJUDICATION OF GUILT" },
+		{"code": "B", "literal": "BOND MADE" },
+		{"code": "C", "literal": "CITY JAIL (FOR HOUSTON JAIL ONLY)" },
+		{"code": "D", "literal": "DISPOSED" },
+		{"code": "E", "literal": "EXECUTION SERVED" },
+		{"code": "F", "literal": "CITATION SERVED" },
+		{"code": "G", "literal": "BOND REINSTATED" },
+		{"code": "H", "literal": "OLD CASE NEEDS RESOLUTION" },
+		{"code": "I", "literal": "INSUFFICIENT BOND" },
+		{"code": "J", "literal": "DEFENDANT WAS PLACED IN A HARRIS COUNTY JAIL" },
+		{"code": "K", "literal": "JUSTICE COURT CASE, PRE-WARRANT" },
+		{"code": "L", "literal": "JUSTICE COURT CASE, COMMUNITY SERVICE" },
+		{"code": "M", "literal": "JUSTICE COURT CASE, POST-WARRANT" },
+		{"code": "N", "literal": "WARRANT/ CITATION ISSUED" },
+		{"code": "O", "literal": "SUMMONS OUTSTANDING" },
+		{"code": "P", "literal": "PROBATION" },
+		{"code": "Q", "literal": "EXPUNCTION REQUESTED" },
+		{"code": "R", "literal": "WARRANT RETURNED IN WARRANT SUBSYSTEM, UNEXECUTED" },
+		{"code": "S", "literal": "SUMMONS RETURNED" },
+		{"code": "T", "literal": "TEMPORARY" },
+		{"code": "U", "literal": "UNEXECUTED" },
+		{"code": "V", "literal": "OOC PRETRIAL INTERVENTION" },
+		{"code": "W", "literal": "PTS OOC SUPERVISION" },
+		{"code": "X", "literal": "DEFENDANT DISCHARGE" },
+		{"code": "Y", "literal": "NGRI COMMITTED" },
+		{"code": "Z", "literal": "DISPOSITION INTERVENTION" }
+	]
+}

@@ -8,7 +8,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
-        IWebDriver GetWebDriver();
+        IWebDriver GetWebDriver(bool headless = false);
 
         /// <summary>
         /// Gets the name.

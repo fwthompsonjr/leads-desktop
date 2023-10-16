@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -19,19 +17,23 @@ namespace Thompson.RecordSearch.Utility.Classes
             FileList = new List<string>();
             ProgramList = new List<string>();
             Search = search;
-            if(searchType == 0)
+            if (searchType == 0)
             {
                 SearchDirectory(Info, FileList);
                 return;
             }
-            
+
             foreach (var item in ProgramLocations)
             {
                 SearchProgram(new DirectoryInfo(item), ProgramList);
             }
             foreach (var item in ProgramList)
             {
-                if (FileList.Contains(item)) continue;
+                if (FileList.Contains(item))
+                {
+                    continue;
+                }
+
                 FileList.Add(item);
             }
         }
@@ -43,6 +45,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public string Search { get; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         private void SearchDirectory(DirectoryInfo dir_info, List<string> file_list)
         {
             try
@@ -71,7 +74,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
-        private List<string> ProgramLocations
+        private static List<string> ProgramLocations
         {
             get
             {
@@ -85,6 +88,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         private void SearchProgram(DirectoryInfo dir_info, List<string> file_list)
         {
             try

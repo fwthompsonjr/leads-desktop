@@ -16,7 +16,9 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {
@@ -41,7 +43,7 @@ namespace LegalLead.Changed.Classes
                     var dataDir = Path.Combine(SourceDirectory,
                                 ConfigurationManager.AppSettings["LatestVersion.Data"]);
                     var dataInfo = new DirectoryInfo(dataDir).GetFiles().ToList();
-                    dataInfo.ForEach(f => f.Delete());  
+                    dataInfo.ForEach(f => f.Delete());
                 }
                 ZipFile.CreateFromDirectory(SourceDirectory, zipFile);
             }

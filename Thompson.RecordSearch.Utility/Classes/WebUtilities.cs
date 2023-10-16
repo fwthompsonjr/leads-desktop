@@ -1,13 +1,9 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
@@ -27,8 +23,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns>A list of case information including person information associated to each case</returns>
         public static List<HLinkDataRow> GetCases(WebInteractive data)
         {
-            var fetchers = new List<ICaseFetch> 
-            { 
+            var fetchers = new List<ICaseFetch>
+            {
                 new NonCriminalCaseFetch(data),
                 new CriminalCaseFetch(data)
             };
@@ -37,8 +33,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             return cases;
         }
 
-        private static IWebElement GetCaseData(WebInteractive data, 
-            ref List<HLinkDataRow> cases, 
+        private static IWebElement GetCaseData(WebInteractive data,
+            ref List<HLinkDataRow> cases,
             string navTo, ElementAssertion helper)
         {
             IWebElement tbResult;
@@ -46,7 +42,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             // this is where denton county does it's data fetching..... i think
             // todo: allow criminal hyperlink click modification...
             var parameter = GetParameter(data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
-            var isCriminalSearch = parameter != null && 
+            var isCriminalSearch = parameter != null &&
                 parameter.Value.Equals(CommonKeyIndexes.NumberOne, StringComparison.CurrentCultureIgnoreCase);
             tbResult = helper.Process(data, isCriminalSearch);
             var rows = tbResult.FindElements(By.TagName("tr"));
@@ -58,7 +54,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var caseStyle = tdCaseStyle == null ? string.Empty : tdCaseStyle.Text;
                 var address = link == null ? string.Empty : link.GetAttribute("href");
                 var dataRow = new HLinkDataRow { Data = html, WebAddress = address, IsCriminal = isCriminalSearch };
-                if (link != null) {
+                if (link != null)
+                {
                     dataRow.Case = link.Text.Trim();
                     dataRow.CriminalCaseStyle = caseStyle;
                 }
@@ -95,7 +92,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var finder in finders)
             {
                 finder.Find(driver, linkData);
-                if (finder.CanFind) break;
+                if (finder.CanFind)
+                {
+                    break;
+                }
             }
         }
 
@@ -148,9 +148,13 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static string _chromeBinaryName;
         private static string ChromeBinaryFileName()
         {
-            if (_chromeBinaryName != null) return _chromeBinaryName;
+            if (_chromeBinaryName != null)
+            {
+                return _chromeBinaryName;
+            }
+
             var settings = ConfigurationManager.AppSettings
-                .AllKeys.ToList().FindAll(x => x.StartsWith("chrome.exe.location", 
+                .AllKeys.ToList().FindAll(x => x.StartsWith("chrome.exe.location",
                 StringComparison.CurrentCultureIgnoreCase))
                 .Select(x => ConfigurationManager.AppSettings[x])
                 .ToList().FindAll(x => File.Exists(x));

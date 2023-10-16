@@ -1,7 +1,7 @@
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | LegalLead.PublicData.Search                                                       |
 | Version: 2.4.0.0                                                                  |
-| Release Date: 4/19/2021 8:08 AM                                                   |
+| Release Date: 8/22/2021 8:26 PM                                                   |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | IssueId   | Reported Date  | Corrected Date  | Comments                           |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
@@ -42,7 +42,7 @@
 |           |                |                 | een changed. Investigation is prog |
 |           |                |                 | ress                               |
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
-| 10.0000   | 04-19-2021     | 09-21-2020      | Set up harris county configuration |
+| 10.0000   | 08-22-2021     | 09-21-2020      | Set up harris county configuration |
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
 | 10.1000   | 09-04-2020     | 09-21-2020      | Read and write operations for Harr |
 |           |                |                 | is Civil Courts                    |
@@ -59,13 +59,17 @@
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | LegalLead.PublicData.Search                                                       |
 | Version: 2.5.0.0                                                                  |
-| Release Date: 10/10/2023 8:00 AM                                                  |
+| Release Date: 10/15/2023 2:00 PM                                                  |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 | IssueId   | Reported Date  | Corrected Date  | Comments                           |
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
-| 15.200    | 10-10-2023     | 10-10-2023      | upgrate net version to net48       |
+| 15.200    | 10-10-2023     | 10-10-2023      | upgrade net version to net48       |
 |           |                |                 |  10-10-2023 08:00:00Z              |
 |           |                |                 |                                    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+| 15.400    | 10-10-2023     | 10-15-2023      | correct collin county fetch        |
+|           |                |                 |  to use HTTPS protocol             |
+|           |                |                 |  10-15-2023 14:00:00Z              |
 |- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
 |= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =|

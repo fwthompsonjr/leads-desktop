@@ -1,0 +1,15 @@
+{
+	"name": "HCC.Tables.curr_l_d",
+	"data": [ 
+		{"code": "F", "literal": "FELONY" },
+		{"code": "F1", "literal": "FELONY FIRST DEGREE" },
+		{"code": "F2", "literal": "FELONY SECOND DEGREE" },
+		{"code": "F3", "literal": "FELONY THIRD DEGREE" },
+		{"code": "FC", "literal": "FELONY CAPITAL" },
+		{"code": "FS", "literal": "FELONY STATE JAIL" },
+		{"code": "M", "literal": "MISDEMEANOR" },
+		{"code": "MA", "literal": "MISDEMEANOR CLASS A" },
+		{"code": "MB", "literal": "MISDEMEANOR CLASS B" },
+		{"code": "MC", "literal": "MISDEMEANOR CLASS C" }
+	]
+}

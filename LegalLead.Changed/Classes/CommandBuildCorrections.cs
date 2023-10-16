@@ -1,9 +1,8 @@
 ﻿// CommandBuildCorrections
+using LegalLead.Changed.Models;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using LegalLead.Changed.Models;
 
 namespace LegalLead.Changed.Classes
 {
@@ -14,10 +13,14 @@ namespace LegalLead.Changed.Classes
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (Log == null)
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {
@@ -29,24 +32,31 @@ namespace LegalLead.Changed.Classes
                 = Log.Changes
                 .Select(c => c.Issues)
                 .ToList();
-            issueList.ForEach(x => 
+            issueList.ForEach(x =>
             {
                 var children = x.ToList();
-                children.ForEach(c => 
-                { 
-                    if (!issues.Contains(c) && c.IsFixed && !corrections.Any(d => d.Id == c.Id)) issues.Add(c); 
+                children.ForEach(c =>
+                {
+                    if (!issues.Contains(c) && c.IsFixed && !corrections.Any(d => d.Id == c.Id))
+                    {
+                        issues.Add(c);
+                    }
                 });
             });
             issues.ForEach(a =>
             {
-            corrections.Add(new Correction 
+                corrections.Add(new Correction
+                {
+                    Id = a.Id,
+                    CorrectionDate = DateTime.Now,
+                    Description = string.Join(" ", a.Description)
+                });
+            });
+            if (!issues.Any())
             {
-                Id = a.Id,
-                CorrectionDate = DateTime.Now,
-                Description = string.Join(" ", a.Description)
-            });
-            });
-            if (!issues.Any()) return true;
+                return true;
+            }
+
             corrections.Sort((a, b) => a.Id.CompareTo(b.Id));
             Log.Corrections = corrections;
             ReSerialize();

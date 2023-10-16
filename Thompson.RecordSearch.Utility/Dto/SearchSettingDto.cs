@@ -17,8 +17,8 @@ namespace Thompson.RecordSearch.Utility.Dto
     {
         public string Id { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", 
-            "CA2227:Collection properties should be read only", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage",
+            "CA2227:Collection properties should be read only",
             Justification = "<Pending>")]
         public IList<Court> Courts { get; set; }
     }
@@ -90,7 +90,7 @@ namespace Thompson.RecordSearch.Utility.Dto
             var parent = new Example { SearchSetting = source };
             var data = Newtonsoft.Json.JsonConvert.SerializeObject(parent, Newtonsoft.Json.Formatting.Indented);
             if (File.Exists(dataFile)) { File.Delete(dataFile); }
-            using(StreamWriter sw = new StreamWriter(dataFile))
+            using (StreamWriter sw = new StreamWriter(dataFile))
             {
                 sw.Write(data);
             }
@@ -169,7 +169,7 @@ namespace Thompson.RecordSearch.Utility.Dto
             return dataFile;
         }
 
-        internal static readonly string SearchSettingFileNotFound 
+        internal static readonly string SearchSettingFileNotFound
             = CommonKeyIndexes.SearchSettingFileNotFound;
     }
 }

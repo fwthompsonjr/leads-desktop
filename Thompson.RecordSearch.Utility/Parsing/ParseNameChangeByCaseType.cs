@@ -6,7 +6,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
     using CCulture = System.Globalization.CultureInfo;
     public class ParseNameChangeByCaseType : ICaseDataParser
     {
-        const System.StringComparison comparison = 
+        const System.StringComparison comparison =
             System.StringComparison.CurrentCultureIgnoreCase;
         // Name Change of:
         private const string _searchKeyWord = @"name change| ";
@@ -17,22 +17,43 @@ namespace Thompson.RecordSearch.Utility.Parsing
 
         public virtual bool CanParse()
         {
-            if (string.IsNullOrEmpty(CaseData)) return false;
+            if (string.IsNullOrEmpty(CaseData))
+            {
+                return false;
+            }
+
             if (!CaseData.ToLower(CCulture.CurrentCulture)
-                .StartsWith(SearchFor, comparison)) return false;
+                .StartsWith(SearchFor, comparison))
+            {
+                return false;
+            }
+
             return true;
         }
         public virtual ParseCaseDataResponseDto Parse()
         {
             var response = new ParseCaseDataResponseDto { CaseData = CaseData };
-            if (!CanParse()) return response;
+            if (!CanParse())
+            {
+                return response;
+            }
 
-            if (string.IsNullOrEmpty(CaseData)) return response;
+            if (string.IsNullOrEmpty(CaseData))
+            {
+                return response;
+            }
+
             var fullName = CaseData.ToLower(CCulture.CurrentCulture);
-            if (!fullName.StartsWith(SearchFor, comparison)) return response;
+            if (!fullName.StartsWith(SearchFor, comparison))
+            {
+                return response;
+            }
 
             var findItIndex = fullName.IndexOf(SearchFor, comparison);
-            if (findItIndex < 0) return response;
+            if (findItIndex < 0)
+            {
+                return response;
+            }
             //response.Defendant = CaseData.Substring(findItIndex).Trim();
             response.Plantiff =
                 CaseData.Substring(SearchFor.Length).Trim();

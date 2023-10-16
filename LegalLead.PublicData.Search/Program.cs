@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Command;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -27,21 +28,18 @@ namespace LegalLead.PublicData.Search
         [STAThread]
         static void Main()
         {
-            var commandName = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartup] ?? 
+            var commandName = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartup] ??
                 CommonKeyIndexes.FormNameMain.ToLower(CultureInfo.CurrentCulture);
             using (var consoleWriter = new ConsoleWriter())
             {
                 var command = Command.CommandStartUp.Commands
-                    .ToList().FirstOrDefault(x =>
+                    .FirstOrDefault(x =>
                     x.Name.Equals(commandName,
-                    StringComparison.CurrentCultureIgnoreCase));
-                if (command == null)
-                {
-                    command = new Command.MainCommand();
-                }
+                    StringComparison.CurrentCultureIgnoreCase)) ?? new Command.MainCommand();
 
                 // get the chrome path in a separate thread
-                ThreadStart ts = new ThreadStart(() => {
+                ThreadStart ts = new ThreadStart(() =>
+                {
                     var settings = WebUtilities.GetChromeBinary();
                     Console.WriteLine("Using {0} as Chrome file location.", settings);
                 });
@@ -53,12 +51,12 @@ namespace LegalLead.PublicData.Search
                 Console.SetOut(consoleWriter);
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                using(var frm = new FormDentonSetting())
+                using (var frm = new FormDentonSetting())
                 {
                     frm.Save();
                 }
-                
                 mainForm = new FormMain();
+                HarrisCriminalUpdate.Update();
                 command.Execute(mainForm);
             }
         }
@@ -67,15 +65,32 @@ namespace LegalLead.PublicData.Search
         {
             var current = new StringBuilder(mainForm.txConsole.Text);
             current.AppendLine(e.Value);
-            mainForm.txConsole.Text = current.ToString();
-            mainForm.txConsole.Refresh();
+            AppendText(current);
         }
 
         static void ConsoleWriter_WriteEvent(object sender, ConsoleWriterEventArgs e)
         {
             var current = new StringBuilder(mainForm.txConsole.Text);
             current.Append(e.Value);
-            mainForm.txConsole.Text = current.ToString();
+            AppendText(current);
+        }
+
+        private static void AppendText(StringBuilder sb)
+        {
+            try
+            {
+                mainForm.txConsole.Text = sb.ToString();
+                mainForm.txConsole.Refresh();
+            }
+            catch (Exception)
+            {
+
+                mainForm.txConsole.Invoke((MethodInvoker)delegate
+                {
+                    mainForm.txConsole.Text = sb.ToString();
+                    mainForm.txConsole.Refresh();
+                });
+            }
         }
     }
 }

@@ -35,6 +35,7 @@
             this.dteEnding = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsWebDriver = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -49,7 +50,6 @@
             this.cboCaseType = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
             this.label6 = new System.Windows.Forms.Label();
             this.cboCourts = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
-            this.tsWebDriver = new System.Windows.Forms.ToolStripDropDownButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -146,6 +146,14 @@
             this.statusStrip1.Size = new System.Drawing.Size(652, 22);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsWebDriver
+            // 
+            this.tsWebDriver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsWebDriver.Name = "tsWebDriver";
+            this.tsWebDriver.Size = new System.Drawing.Size(44, 20);
+            this.tsWebDriver.Text = "Web";
+            this.tsWebDriver.ToolTipText = "Select Browser";
             // 
             // tsDropFileList
             // 
@@ -285,14 +293,6 @@
             this.cboCourts.Name = "cboCourts";
             this.cboCourts.Size = new System.Drawing.Size(526, 21);
             this.cboCourts.TabIndex = 13;
-            // 
-            // tsWebDriver
-            // 
-            this.tsWebDriver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsWebDriver.Name = "tsWebDriver";
-            this.tsWebDriver.Size = new System.Drawing.Size(44, 20);
-            this.tsWebDriver.Text = "Web";
-            this.tsWebDriver.ToolTipText = "Select Browser";
             // 
             // FormMain
             // 

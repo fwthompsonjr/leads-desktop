@@ -19,7 +19,7 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public virtual string ActionName { get; }
 
-        public abstract void Act(NavigationStep stepObject);
+        public abstract void Act(NavigationStep item);
 
         public WebNavigationParameter GetSettings(int index)
         {
@@ -32,12 +32,22 @@ namespace Thompson.RecordSearch.Utility.Web
 
         protected static By GetSelector(NavigationStep item)
         {
-            if (item == null) throw new System.ArgumentNullException(nameof(item));
+            if (item == null)
+            {
+                throw new System.ArgumentNullException(nameof(item));
+            }
+
             const System.StringComparison comparison = System.StringComparison.CurrentCultureIgnoreCase;
             if (item.Locator.Find.Equals("css", comparison))
+            {
                 return By.CssSelector(item.Locator.Query);
+            }
+
             if (item.Locator.Find.Equals("xpath", comparison))
+            {
                 return By.XPath(item.Locator.Query);
+            }
+
             return null;
         }
     }

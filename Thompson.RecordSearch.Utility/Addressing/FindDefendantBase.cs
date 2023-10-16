@@ -38,12 +38,24 @@ namespace Thompson.RecordSearch.Utility.Addressing
         /// <returns></returns>
         protected static IWebElement GetAddressRow(IWebElement parent, System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> trCol)
         {
-            if (parent == null) throw new ArgumentNullException(nameof(parent));
-            if (trCol == null) throw new ArgumentNullException(nameof(trCol));
+            if (parent == null)
+            {
+                throw new ArgumentNullException(nameof(parent));
+            }
+
+            if (trCol == null)
+            {
+                throw new ArgumentNullException(nameof(trCol));
+            }
+
             int colIndex = 3;
             parent = trCol[colIndex];
             var parentTxt = string.IsNullOrEmpty(parent.Text) ? string.Empty : parent.Text;
-            if (string.IsNullOrEmpty(parentTxt)) parent = trCol[colIndex - 1];
+            if (string.IsNullOrEmpty(parentTxt))
+            {
+                parent = trCol[colIndex - 1];
+            }
+
             return parent;
         }
 
@@ -60,7 +72,11 @@ namespace Thompson.RecordSearch.Utility.Addressing
         {
             try
             {
-                if (parent == null) return null;
+                if (parent == null)
+                {
+                    return null;
+                }
+
                 return parent.FindElement(by);
             }
             catch (Exception)
@@ -71,18 +87,30 @@ namespace Thompson.RecordSearch.Utility.Addressing
 
         protected static string GetAddress(List<IWebElement> elements, string keyword = "defendant")
         {
-            if (elements == null) throw new ArgumentNullException(nameof(elements));
+            if (elements == null)
+            {
+                throw new ArgumentNullException(nameof(elements));
+            }
+
             if (string.IsNullOrEmpty(keyword)) { keyword = "defendant"; }
             const StringComparison currentCase = StringComparison.CurrentCultureIgnoreCase;
             var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
             var address = string.Empty;
             var addressHtml = string.Empty;
             var findKey = keyword.ToLower(cultureInfo);
-            if (!elements.Any()) return string.Empty;
+            if (!elements.Any())
+            {
+                return string.Empty;
+            }
+
             var rowIndex = 0;
             while (address.ToLower(cultureInfo).StartsWith(findKey, currentCase) | string.IsNullOrEmpty(address))
             {
-                if (rowIndex > elements.Count - 1) break;
+                if (rowIndex > elements.Count - 1)
+                {
+                    break;
+                }
+
                 var currentRow = elements[rowIndex];
                 var cells = currentRow.FindElements(By.TagName(IndexKeyNames.TdElement)).ToList();
                 var firstTd = cells.Any() ? cells[0] : null;
@@ -91,12 +119,14 @@ namespace Thompson.RecordSearch.Utility.Addressing
                     .Replace(Environment.NewLine, CommonKeyIndexes.BrElementTag).Trim();
                 rowIndex += 1;
                 var headings = currentRow.FindElements(By.TagName(IndexKeyNames.ThElement));
-                
+
                 if (headings != null && headings.Count > 1)
                 {
-                    if (!address.ToLower(cultureInfo).StartsWith(findKey, currentCase)) {
+                    if (!address.ToLower(cultureInfo).StartsWith(findKey, currentCase))
+                    {
                         address = string.Empty;
-                        break; }
+                        break;
+                    }
                 }
                 if (firstTd != null &&
                     string.IsNullOrEmpty(firstTd.GetAttribute("headers")))
@@ -104,7 +134,10 @@ namespace Thompson.RecordSearch.Utility.Addressing
                     address = string.Empty;
                 }
             }
-            if (string.IsNullOrEmpty(addressHtml)) return address;
+            if (string.IsNullOrEmpty(addressHtml))
+            {
+                return address;
+            }
             // custom clean ups for collin-county
             const string noBr = @"<nobr>";
             var br = CommonKeyIndexes.BrElementTag;
@@ -129,10 +162,26 @@ namespace Thompson.RecordSearch.Utility.Addressing
             int r,
             string searchTitle)
         {
-            if (linkData == null) throw new ArgumentNullException(nameof(linkData));
-            if (rowLabel == null) throw new ArgumentNullException(nameof(rowLabel));
-            if (table == null) throw new ArgumentNullException(nameof(table));
-            if (trCol == null) throw new ArgumentNullException(nameof(trCol));
+            if (linkData == null)
+            {
+                throw new ArgumentNullException(nameof(linkData));
+            }
+
+            if (rowLabel == null)
+            {
+                throw new ArgumentNullException(nameof(rowLabel));
+            }
+
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+
+            if (trCol == null)
+            {
+                throw new ArgumentNullException(nameof(trCol));
+            }
+
             var nextTh = table.FindElements(By.TagName(IndexKeyNames.ThElement)).ToList().FirstOrDefault(x => x.Location.Y > rowLabel.Location.Y);
             var mxRowIndex = nextTh == null ? r : Convert.ToInt32(nextTh.FindElement(By.XPath(IndexKeyNames.ParentElement)).GetAttribute(IndexKeyNames.RowIndex),
                 CultureInfo.CurrentCulture.NumberFormat);
@@ -142,7 +191,11 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 var tdElements = currentRow.FindElements(By.TagName(IndexKeyNames.TdElement)).ToList();
                 tdElements = tdElements.FindAll(x => x.Location.X >= rowLabel.Location.X & x.Location.X < (rowLabel.Location.X + rowLabel.Size.Width));
                 linkData.Address = GetAddress(tdElements, searchTitle);
-                if (!string.IsNullOrEmpty(linkData.Address)) break;
+                if (!string.IsNullOrEmpty(linkData.Address))
+                {
+                    break;
+                }
+
                 r += 1;
             }
             linkData.Address = NoFoundMatch.GetNoMatch(linkData.Address);

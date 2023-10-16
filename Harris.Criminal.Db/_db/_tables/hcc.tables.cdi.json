@@ -1,0 +1,7 @@
+{
+	"name": "HCC.Tables.cdi",
+	"data": [ 
+		{"code": "2", "literal": "misdemeanor" },
+		{"code": "3", "literal": "felony" }
+	]
+}

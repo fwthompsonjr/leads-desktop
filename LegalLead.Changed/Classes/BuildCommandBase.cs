@@ -1,9 +1,8 @@
-﻿using System;
+﻿using LegalLead.Changed.Models;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using LegalLead.Changed.Models;
-using Newtonsoft.Json.Serialization;
 
 namespace LegalLead.Changed.Classes
 {
@@ -39,8 +38,16 @@ namespace LegalLead.Changed.Classes
 
         public void SetSource(string sourceFileName)
         {
-            if (!string.IsNullOrEmpty(_sourceFileName)) return;
-            if (!File.Exists(sourceFileName)) return;
+            if (!string.IsNullOrEmpty(_sourceFileName))
+            {
+                return;
+            }
+
+            if (!File.Exists(sourceFileName))
+            {
+                return;
+            }
+
             ResetFileSource(sourceFileName);
         }
 
@@ -48,8 +55,7 @@ namespace LegalLead.Changed.Classes
         {
             try
             {
-                var sourceData = GetFileContent(sourceFileName);
-                var changeLog = Newtonsoft.Json.JsonConvert.DeserializeObject<ChangeLog>(sourceData);
+                var changeLog = JsReader.Read<ChangeLog>(sourceFileName);
                 var lastChange = changeLog.Versions.LastOrDefault(v => v.Fixes.Any(f => f.CanPublish));
                 _sourceFileName = sourceFileName;
                 Log = changeLog;
@@ -66,39 +72,24 @@ namespace LegalLead.Changed.Classes
             }
         }
 
-        private static string GetFileContent(string sourceFileName)
-        {
-            using (var reader = new StreamReader(sourceFileName))
-            {
-                return reader.ReadToEnd();
-            }
-        }
 
         protected void ReSerialize()
         {
-
-            var content = Newtonsoft.Json.JsonConvert.SerializeObject(Log, new Newtonsoft.Json.JsonSerializerSettings
-            {
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            });
-            using (var sw = new StreamWriter(SourceFile, false))
-            {
-                sw.Write(content);
-                sw.Close();
-            }
+            JsReader.Write(Log, SourceFile);
         }
 
         protected bool CanExecute()
         {
 
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (Log == null)
+            {
                 throw new InvalidOperationException();
+            }
 
             return true;
         }
@@ -118,7 +109,7 @@ namespace LegalLead.Changed.Classes
             var appFolder =
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var dir = new DirectoryInfo(appFolder);
-            while (!dir.Parent.Name.Equals(solutionName, 
+            while (!dir.Parent.Name.Equals(solutionName,
                 StringComparison.CurrentCultureIgnoreCase))
             {
                 dir = new DirectoryInfo(dir.Parent.FullName);

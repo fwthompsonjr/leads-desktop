@@ -5,14 +5,16 @@ using System.IO;
 
 namespace LegalLead.Changed.Classes
 {
-    public class CommandZipVersionFolderCreate : CommandZipDirectoryCreate 
+    public class CommandZipVersionFolderCreate : CommandZipDirectoryCreate
     {
         public override int Index => 600;
 
         public override bool Execute()
         {
             if (string.IsNullOrEmpty(SourceFile))
+            {
                 throw new InvalidOperationException();
+            }
 
             if (LatestVersion == null)
             {

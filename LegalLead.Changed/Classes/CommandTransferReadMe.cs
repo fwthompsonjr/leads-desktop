@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegalLead.Changed.Classes
 {
@@ -20,7 +16,10 @@ namespace LegalLead.Changed.Classes
                 .AppSettings["Allow.ReadMe.Corrections"] ?? allowIt;
             var allowExec = allMapCorrection.Equals(allowIt,
                 StringComparison.CurrentCulture);
-            if (!allowExec) return false;
+            if (!allowExec)
+            {
+                return false;
+            }
 
 #if DEBUG
             isDebug = true;
@@ -31,10 +30,14 @@ namespace LegalLead.Changed.Classes
             var targetFileName = SolutionReadMe();
 
             if (!File.Exists(sourceFileName))
+            {
                 throw new FileNotFoundException(sourceFileName);
+            }
 
             if (!File.Exists(targetFileName))
+            {
                 throw new FileNotFoundException(targetFileName);
+            }
 
             var sourceContent = string.Empty;
             var targetContent = string.Empty;
@@ -46,11 +49,17 @@ namespace LegalLead.Changed.Classes
             {
                 targetContent = targetReader.ReadToEnd() ?? string.Empty;
             }
-            
-            if (sourceContent.Equals(targetContent,
-                StringComparison.CurrentCultureIgnoreCase)) return true;
 
-            if (!isDebug) return false;
+            if (sourceContent.Equals(targetContent,
+                StringComparison.CurrentCultureIgnoreCase))
+            {
+                return true;
+            }
+
+            if (!isDebug)
+            {
+                return false;
+            }
 
             using (var writer = new StreamWriter(targetFileName))
             {

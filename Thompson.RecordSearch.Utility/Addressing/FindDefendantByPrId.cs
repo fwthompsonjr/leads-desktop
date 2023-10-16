@@ -1,6 +1,6 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Text;
-using OpenQA.Selenium;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Addressing
@@ -13,17 +13,28 @@ namespace Thompson.RecordSearch.Utility.Addressing
 
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
-            if (driver == null) throw new System.ArgumentNullException(nameof(driver));
-            if (linkData == null) throw new System.ArgumentNullException(nameof(linkData));
+            if (driver == null)
+            {
+                throw new System.ArgumentNullException(nameof(driver));
+            }
+
+            if (linkData == null)
+            {
+                throw new System.ArgumentNullException(nameof(linkData));
+            }
+
             CanFind = false;
             var tdName = TryFindElement(driver, By.XPath(@"//*[@id='PIr11']"));
             // this instance can find
-            if (tdName == null) return;
+            if (tdName == null)
+            {
+                return;
+            }
 
             linkData.Defendant = tdName.GetAttribute("innerText");
             var parent = tdName.FindElement(By.XPath(IndexKeyNames.ParentElement));
             var rowLabel = parent.FindElements(By.TagName(IndexKeyNames.ThElement))[0];
-            if(rowLabel.Text.Trim()
+            if (rowLabel.Text.Trim()
                 .ToLower(System.Globalization.CultureInfo.CurrentCulture) != "defendant")
             {
                 return;
@@ -37,7 +48,11 @@ namespace Thompson.RecordSearch.Utility.Addressing
                 var ridx = parent.GetAttribute(IndexKeyNames.RowIndex);
                 var table = parent.FindElement(By.XPath(IndexKeyNames.ParentElement));
                 var trCol = table.FindElements(By.TagName(IndexKeyNames.TrElement));
-                if (!int.TryParse(ridx, out int r)) return;
+                if (!int.TryParse(ridx, out int r))
+                {
+                    return;
+                }
+
                 parent = GetAddressRow(parent, trCol); // put this row-index into config... it can change
                 linkData.Address = new StringBuilder(parent.Text).Replace(Environment.NewLine, "<br/>").ToString();
             }

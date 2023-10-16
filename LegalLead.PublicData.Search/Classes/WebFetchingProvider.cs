@@ -21,16 +21,18 @@ namespace LegalLead.PublicData.Search
                     return new CollinWebInteractive(siteData, startDate, endingDate);
                 case 30:
                     return new HarrisCivilInteractive(siteData, startDate, endingDate);
+                case 40:
+                    return new HarrisCriminalInteractive(siteData, startDate, endingDate);
                 default:
                     var districtKey = Program.DentonCustomKeys.FirstOrDefault(
                         x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType", 
                         StringComparison.CurrentCulture));
                     var siteDistrictKey = siteData.Keys.FirstOrDefault(
-                        x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType, 
+                        x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType,
                         StringComparison.CurrentCulture));
-                    if(districtKey == null)
+                    if (districtKey == null)
                     {
-                        if(siteDistrictKey != null)
+                        if (siteDistrictKey != null)
                         {
                             siteData.Keys.Remove(siteDistrictKey);
                         }

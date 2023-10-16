@@ -5,8 +5,8 @@ using System.Text;
 namespace Thompson.RecordSearch.Utility.Classes
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "Security", 
-        "CA5350:Do Not Use Weak Cryptographic Algorithms", 
+        "Security",
+        "CA5350:Do Not Use Weak Cryptographic Algorithms",
         Justification = "TripleDES is used for simplicity and lack of sensitivity of the data.")]
     public static class CryptoEngine
     {
@@ -20,11 +20,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 Padding = PaddingMode.PKCS7
             })
             {
-                
+
                 ICryptoTransform cTransform = tripleDES.CreateEncryptor();
                 byte[] resultArray = cTransform.TransformFinalBlock(inputArray, 0, inputArray.Length);
                 tripleDES.Clear();
-                return Convert.ToBase64String(resultArray, 0, resultArray.Length); 
+                return Convert.ToBase64String(resultArray, 0, resultArray.Length);
             }
         }
 
@@ -41,7 +41,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 ICryptoTransform cTransform = tripleDES.CreateDecryptor();
                 byte[] resultArray = cTransform.TransformFinalBlock(inputArray, 0, inputArray.Length);
                 tripleDES.Clear();
-                return UTF8Encoding.UTF8.GetString(resultArray); 
+                return UTF8Encoding.UTF8.GetString(resultArray);
             }
         }
     }

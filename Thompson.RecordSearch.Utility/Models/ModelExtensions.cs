@@ -2,11 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Thompson.RecordSearch.Utility.Models
 {
@@ -16,11 +12,15 @@ namespace Thompson.RecordSearch.Utility.Models
         private static readonly string Defendant =
             ResourceTable.GetText(ResourceType.FindDefendant, ResourceKeyIndex.Defendant);
         const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
-        
-        
+
+
         public static List<HLinkDataRow> ConvertToDataRow(this CaseRowData source)
         {
-            if (source == null) return null;
+            if (source == null)
+            {
+                return null;
+            }
+
             var dest = new List<HLinkDataRow>();
             var defentdants = source.CaseDataAddresses
                 .Where(x => x.Role.Equals(Defendant, ccic))
@@ -46,7 +46,10 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public static string GetPerson(this CaseDataAddress source)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
             var pipe = '|';
             var pipeString = "|";
@@ -68,14 +71,18 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public static string GetAddress(this CaseDataAddress source)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
             var pipe = '|';
             var pipeString = "|";
             const string noMatch = "No Match Found|Not Matched 00000";
             var address = source.Party;
-            if (string.IsNullOrEmpty(address)) { 
-                return noMatch; 
+            if (string.IsNullOrEmpty(address))
+            {
+                return noMatch;
             }
             address = address.Trim();
             if (address.EndsWith(pipeString, ccic))
@@ -93,7 +100,11 @@ namespace Thompson.RecordSearch.Utility.Models
             // get the person part of this address
             for (int i = 0; i < pieces.Count; i++)
             {
-                if (i == 0) continue;
+                if (i == 0)
+                {
+                    continue;
+                }
+
                 var piece = pieces[i].Trim();
                 if (string.IsNullOrEmpty(address))
                 {
@@ -114,9 +125,9 @@ namespace Thompson.RecordSearch.Utility.Models
             template.Append("<table>");
             if (source != null)
             {
-                source.ForEach(s => 
-                { 
-                    template.AppendLine(s.ToHtml()); 
+                source.ForEach(s =>
+                {
+                    template.AppendLine(s.ToHtml());
                 });
             }
             template.Append("</table>");
@@ -134,7 +145,11 @@ namespace Thompson.RecordSearch.Utility.Models
             template.AppendLine("<td>[CaseType]</td>");
             template.AppendLine("<td>[Status]</td>");
             template.AppendLine("</tr>");
-            if (source == null) return template.ToString();
+            if (source == null)
+            {
+                return template.ToString();
+            }
+
             template.Replace("[RowIndex]", WebUtl.HtmlEncode(source.RowId.ToString()));
             template.Replace("[Case]", WebUtl.HtmlEncode(source.Case));
             template.Replace("[Style]", WebUtl.HtmlEncode(source.Style));
@@ -157,7 +172,11 @@ namespace Thompson.RecordSearch.Utility.Models
             template.AppendLine("<td>[CaseType]</td>");
             template.AppendLine("<td>[Status]</td>");
             template.AppendLine("</tr>");
-            if (source == null) return template.ToString();
+            if (source == null)
+            {
+                return template.ToString();
+            }
+
             template.Replace("[RowIndex]", WebUtl.HtmlEncode(source.WebsiteId.ToString()));
             template.Replace("[Case]", WebUtl.HtmlEncode(source.Case));
             template.Replace("[Style]", WebUtl.HtmlEncode(source.CaseStyle));
@@ -197,7 +216,11 @@ namespace Thompson.RecordSearch.Utility.Models
             template.AppendLine("<td>[CaseType]</td>");
             template.AppendLine("<td>[Status]</td>");
             template.AppendLine("</tr>");
-            if (source == null) return template.ToString();
+            if (source == null)
+            {
+                return template.ToString();
+            }
+
             template.Replace("[Case]", WebUtl.HtmlEncode(source.CaseNumber));
             template.Replace("[Style]", WebUtl.HtmlEncode(source.CaseStyle));
             template.Replace("[DateFiled]", WebUtl.HtmlEncode(source.DateFiled));
@@ -226,8 +249,16 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public static PersonAddress ToCalculatedZip(this PersonAddress source)
         {
-            if (source == null) return null;
-            if (string.IsNullOrEmpty(source.Zip)) return source;
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrEmpty(source.Zip))
+            {
+                return source;
+            }
+
             string zipCode = source.Zip.Trim();
             zipCode = zipCode.Replace(((char)160).ToString(), " ");
             var pieces = zipCode.Split(' ').ToList();
@@ -242,8 +273,16 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public static PersonAddress ToCalculatedNames(this PersonAddress source)
         {
-            if (source == null) return null;
-            if (string.IsNullOrEmpty(source.Name)) return source;
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrEmpty(source.Name))
+            {
+                return source;
+            }
+
             string fullName = source.Name.Trim();
             var pieces = fullName.Split(' ').ToList();
             if (!pieces.Any())

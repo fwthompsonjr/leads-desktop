@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Dto
@@ -16,8 +12,9 @@ namespace Thompson.RecordSearch.Utility.Dto
 
         public GenericSettingDto(string name)
         {
-            if(_settings == null) { 
-                _settings = new Dictionary<string, GenericSetting>(); 
+            if (_settings == null)
+            {
+                _settings = new Dictionary<string, GenericSetting>();
             }
             if (!_settings.ContainsKey(name))
             {
@@ -43,7 +40,8 @@ namespace Thompson.RecordSearch.Utility.Dto
     public class GenericSetting
     {
         private string _name;
-        public string Name {
+        public string Name
+        {
             get { return _name; }
             set
             {
@@ -64,7 +62,7 @@ namespace Thompson.RecordSearch.Utility.Dto
 
                 DataFile = dataFile;
                 Content = File.ReadAllText(dataFile);
-            } 
+            }
         }
 
         public string DataFile { get; private set; }
@@ -83,7 +81,7 @@ namespace Thompson.RecordSearch.Utility.Dto
 
             var dataFile = DataFile;
             var parent = new Example { SearchSetting = source };
-            var data = Newtonsoft.Json.JsonConvert.SerializeObject(parent, 
+            var data = Newtonsoft.Json.JsonConvert.SerializeObject(parent,
                 Newtonsoft.Json.Formatting.Indented);
             if (File.Exists(dataFile)) { File.Delete(dataFile); }
             using (StreamWriter sw = new StreamWriter(dataFile))

@@ -13,16 +13,24 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override void Act(NavigationStep item)
         {
-            if (item == null) throw new System.ArgumentNullException(nameof(item));
+            if (item == null)
+            {
+                throw new System.ArgumentNullException(nameof(item));
+            }
+
             var driver = GetWeb;
             var selector = Byy.CssSelector(item.Locator.Query);
-            if (!int.TryParse(item.ExpectedValue, out int number)) return;
+            if (!int.TryParse(item.ExpectedValue, out int number))
+            {
+                return;
+            }
+
             var matches = driver.FindElements(selector);
             if (matches == null)
             {
                 throw new ArgumentOutOfRangeException(item.DisplayName,
                     string.Format(
-                    "Expected element collection {0} not found", 
+                    "Expected element collection {0} not found",
                     item.DisplayName));
             }
             if (matches.Count != number)

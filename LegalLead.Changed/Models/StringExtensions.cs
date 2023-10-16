@@ -15,7 +15,11 @@ namespace LegalLead.Changed.Models
         /// <returns></returns>
         public static string ToFixedWidth(this string data, int length)
         {
-            if (length <= 0) return string.Empty;
+            if (length <= 0)
+            {
+                return string.Empty;
+            }
+
             if (string.IsNullOrEmpty(data))
             {
                 return new string(' ', length);
@@ -52,10 +56,17 @@ namespace LegalLead.Changed.Models
         public static IEnumerable<string> SplitByLength(this string str, int maxLength, bool removeBlank)
         {
             var result = str.SplitByLength(maxLength).ToList();
-            if (!removeBlank) return result;
+            if (!removeBlank)
+            {
+                return result;
+            }
             // if the last element is an empty string, remove it
             var lastElement = result.Last().Trim();
-            if (!string.IsNullOrEmpty(lastElement)) return result;
+            if (!string.IsNullOrEmpty(lastElement))
+            {
+                return result;
+            }
+
             result.RemoveAt(result.Count - 1);
             return result;
 

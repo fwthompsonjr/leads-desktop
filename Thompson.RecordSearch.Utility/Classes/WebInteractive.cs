@@ -1,5 +1,4 @@
-﻿using LegalLead.Resources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -29,8 +28,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
 
             Parameters = parameters;
-            StartDate = GetParameterValue<DateTime>(CommonKeyIndexes.StartDate); 
-            EndingDate = GetParameterValue<DateTime>(CommonKeyIndexes.EndDate); 
+            StartDate = GetParameterValue<DateTime>(CommonKeyIndexes.StartDate);
+            EndingDate = GetParameterValue<DateTime>(CommonKeyIndexes.EndDate);
         }
 
         /// <summary>
@@ -88,7 +87,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         private List<PersonAddress> CleanUp(List<PersonAddress> personAddresses)
         {
             var found = personAddresses
-                .FindAll(f => 
+                .FindAll(f =>
                 f.Address1.Equals("Pro Se", StringComparison.CurrentCultureIgnoreCase));
             if (found.Any())
             {
@@ -101,7 +100,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
             }
             found = personAddresses
-                .FindAll(f => 
+                .FindAll(f =>
                 f.Address1.Equals(CommonKeyIndexes.NonAddressLine1, StringComparison.CurrentCultureIgnoreCase) & string.IsNullOrEmpty(f.Zip));
 
             if (found.Any())
@@ -120,22 +119,38 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="data">The data.</param>
         /// <param name="personAddresses">The person addresses.</param>
         /// <returns></returns>
-        private List<PersonAddress> MapCaseStyle(List<HLinkDataRow> data, 
+        private List<PersonAddress> MapCaseStyle(List<HLinkDataRow> data,
             List<PersonAddress> personAddresses)
         {
-            if (personAddresses == null) return personAddresses;
-            if (data == null) return personAddresses;
+            if (personAddresses == null)
+            {
+                return personAddresses;
+            }
+
+            if (data == null)
+            {
+                return personAddresses;
+            }
+
             data = data.FindAll(x => !string.IsNullOrEmpty(x.Case));
             foreach (var person in personAddresses)
             {
                 var caseNumber = person.CaseNumber;
-                if (string.IsNullOrEmpty(caseNumber)) continue;
-                var dataRow = data.Find(x => x.Case.Equals(caseNumber, 
+                if (string.IsNullOrEmpty(caseNumber))
+                {
+                    continue;
+                }
+
+                var dataRow = data.Find(x => x.Case.Equals(caseNumber,
                     StringComparison.CurrentCultureIgnoreCase));
-                if (dataRow == null) continue;
+                if (dataRow == null)
+                {
+                    continue;
+                }
+
                 person.CaseStyle = dataRow.CaseStyle;
             }
-            
+
             return personAddresses;
         }
 
@@ -160,7 +175,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     .NavInstructions
                     .ToList();
             // if doc.DocumentElement.ChildNodes.Count == 4
-            if(dta.IsCriminal)
+            if (dta.IsCriminal)
             {
                 instructions =
                     SearchSettingDto.GetCriminalMapping()
@@ -170,9 +185,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             var caseStyle = CommonKeyIndexes.CaseStyle.ToLower(CultureInfo.CurrentCulture);
             foreach (var item in instructions)
             {
-                if (dta.IsCriminal & item.Value.Equals(caseStyle, StringComparison.CurrentCultureIgnoreCase)) continue;
+                if (dta.IsCriminal & item.Value.Equals(caseStyle, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    continue;
+                }
+
                 var node = TryFindNode(doc, item.Value);
-                if (node == null) continue;
+                if (node == null)
+                {
+                    continue;
+                }
+
                 dta[item.Name] = node.InnerText;
                 dta.IsMapped = true;
             }

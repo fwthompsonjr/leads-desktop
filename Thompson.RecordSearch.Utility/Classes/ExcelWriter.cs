@@ -2,6 +2,7 @@
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -29,15 +30,26 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public static void WriteToExcel(WebFetchResult fetchResult)
         {
-            if(fetchResult == null)
+            if (fetchResult == null)
             {
                 throw new ArgumentNullException(nameof(fetchResult));
             }
-            if (fetchResult.WebsiteId < 1) fetchResult.WebsiteId = 1;
+            if (fetchResult.WebsiteId < 1)
+            {
+                fetchResult.WebsiteId = 1;
+            }
+
             var writer = new ExcelWriter();
             var extXml = CommonKeyIndexes.ExtensionXml;
             var extFile = CommonKeyIndexes.ExtensionXlsx;
             var tmpFileName = fetchResult.Result.Replace(extXml, extFile);
+            if (true)
+            {
+                // Debug.Assert(fetchResult.PeopleList.Count > 0);
+                var htmlCaseList = fetchResult.CaseList;
+                Debug.Assert(string.IsNullOrEmpty(htmlCaseList) == false);
+            }
+
             using (var workBook = writer.ConvertToPersonTable(
                 addressList: fetchResult.PeopleList,
                 worksheetName: "Addresses",
@@ -52,9 +64,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 saveFile: true,
                 outputFileName: tmpFileName,
                 websiteId: fetchResult.WebsiteId);
-            }         
+            }
 
-            
+
         }
 
         public ExcelPackage ConvertToPersonTable(
@@ -66,31 +78,48 @@ namespace Thompson.RecordSearch.Utility.Classes
             int websiteId = 1)
         {
             if (addressList == null)
+            {
                 throw new ArgumentNullException(nameof(addressList));
+            }
+
             if (string.IsNullOrEmpty(worksheetName))
+            {
                 throw new ArgumentNullException(nameof(worksheetName));
+            }
 
             var countyName = SettingsManager
                 .GetNavigation().Find(x => x.Id == websiteId)
-                .Name.Replace("County", "").Trim();
+                .Name.Replace("County", "")
+                .Replace("Criminal", "")
+                .Trim();
             var pck = excelPackage ?? new ExcelPackage();
             var wsDt = pck.Workbook.Worksheets.Add(worksheetName);
             var rowIndex = 1;
             int countyIndex = 0;
             int courtAddressIndex = 0;
             int courtNameId = 10;
-            var specialList = new Dictionary<string, string> 
+            var specialList = new Dictionary<string, string>
             {
                 { "firstname", "fname" },
                 { "lastname", "lname" }
             };
+            List<string> localFieldList = default;
             foreach (var item in addressList)
             {
-                if(rowIndex == 1)
+                if (addressList.IndexOf(item) == 0)
+                {
+                    localFieldList = item.FieldList;
+                    if (websiteId == 40)
+                    {
+                        localFieldList.RemoveAt(localFieldList.Count - 1);
+                        localFieldList.RemoveAt(localFieldList.Count - 1);
+                    }
+                }
+                if (rowIndex == 1)
                 {
                     // write header
                     var headerIndex = 1;
-                    foreach (var field in item.FieldList)
+                    foreach (var field in localFieldList)
                     {
                         var heading = wsDt.Cells[rowIndex, headerIndex];
                         heading.Value = field;
@@ -104,23 +133,23 @@ namespace Thompson.RecordSearch.Utility.Classes
                     rowIndex++;
                 }
                 var culture = CultureInfo.CurrentCulture;
-                for (int i = 0; i < item.FieldList.Count; i++)
+                for (int i = 0; i < localFieldList.Count; i++)
                 {
-                    var field = item.FieldList[i];
+                    var field = localFieldList[i];
                     var fieldName = specialList.ContainsKey(field) & websiteId == 30 ? specialList[field] : field;
                     var content = item[fieldName];
                     var cleaner = new StringBuilder(content);
                     cleaner.Replace(Environment.NewLine, " ");
                     cleaner.Replace(((char)10).ToString(culture), " ");
                     cleaner.Replace(((char)13).ToString(culture), " ");
-                    cleaner.Replace("  ", " "); 
+                    cleaner.Replace("  ", " ");
                     content = cleaner.ToString().Trim();
-                    wsDt.Cells[rowIndex, i+1].Value = content;
+                    wsDt.Cells[rowIndex, i + 1].Value = content;
                 }
-                
+
                 wsDt.Cells[rowIndex, countyIndex].Value = countyName;
                 wsDt.Cells[rowIndex, courtAddressIndex].Value =
-                    LookupCountyAddress(websiteId, 
+                    LookupCountyAddress(websiteId,
                     wsDt.Cells[rowIndex, courtNameId].Value.ToString());
                 rowIndex++;
             }
@@ -136,7 +165,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             var list = SearchSettingDto.GetCourtLookupList.CourtLocations;
             var court = list.FirstOrDefault(
                 c => c.Id.Equals(websiteId.ToString("0", new System.Globalization.NumberFormatInfo()), ccic));
-            if (court == null) return string.Empty;
+            if (court == null)
+            {
+                return string.Empty;
+            }
+
             court.Courts
                 .Where(a => string.IsNullOrEmpty(a.FullName))
                 .ToList()
@@ -146,10 +179,14 @@ namespace Thompson.RecordSearch.Utility.Classes
                 .ToList()
                 .ForEach(b => b.Name = string.Empty);
             var courtLocation = court.Courts
-                .FirstOrDefault(a => 
-                    a.Name.Equals(value, ccic) 
+                .FirstOrDefault(a =>
+                    a.Name.Equals(value, ccic)
                     | a.FullName.Equals(value, ccic));
-            if (courtLocation != null) return courtLocation.Address;
+            if (courtLocation != null)
+            {
+                return courtLocation.Address;
+            }
+
             var blankLocation = court.Courts
                 .FirstOrDefault(a => a.Name.Equals("default", ccic));
 
@@ -157,7 +194,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
         public ExcelPackage ConvertToDataTable(
-            string htmlTable, 
+            string htmlTable,
             string worksheetName,
             ExcelPackage excelPackage = null,
             bool saveFile = false,
@@ -200,10 +237,10 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             int rowIndex = 1;
             const int Case = 1;
-            const int Style = 2; 
-            const int DateFiled = 3; 
-            const int Court = 4; 
-            const int CaseType = 5; 
+            const int Style = 2;
+            const int DateFiled = 3;
+            const int Court = 4;
+            const int CaseType = 5;
             const int Status = 6;
 
             wsDt.Cells[rowIndex, Case].Value = "Case";
@@ -217,7 +254,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             foreach (var item in table.ChildNodes.Cast<XmlNode>().ToList())
             {
-                
+
                 wsDt.Cells[rowIndex, Case].Value = item.ChildNodes[Case - 1].InnerText;
                 wsDt.Cells[rowIndex, Style].Value = item.ChildNodes[Style - 1].InnerText;
                 wsDt.Cells[rowIndex, DateFiled].Value = item.ChildNodes[DateFiled - 1].InnerText;
@@ -229,14 +266,14 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             return rowIndex;
         }
-        private static int GenerateExcelOutput(ExcelWorksheet wsDt, 
-            WebNavigationKey hyperPrefix, 
-            List<XmlNode> rows, 
+        private static int GenerateExcelOutput(ExcelWorksheet wsDt,
+            WebNavigationKey hyperPrefix,
+            List<XmlNode> rows,
             int rowIndex,
             XmlNode table,
             int websiteId)
         {
-            if(websiteId == 30)
+            if (websiteId == 30)
             {
                 return GenerateExcelOutput(wsDt, table);
             }
@@ -257,12 +294,23 @@ namespace Thompson.RecordSearch.Utility.Classes
                             .ForEach(n => sbb.Append(n.InnerText.Trim() + " "));
                         target.Value = sbb.ToString().Trim();
                         colIndex++;
-                        if (hyperPrefix == null) continue;
+                        if (hyperPrefix == null)
+                        {
+                            continue;
+                        }
                         // does this node contain a hyperlink?
                         var hyperlink = nodeList.FirstOrDefault(x => x.Name.Equals("a", StringComparison.CurrentCultureIgnoreCase));
-                        if (hyperlink == null) continue;
+                        if (hyperlink == null)
+                        {
+                            continue;
+                        }
+
                         var txHref = hyperlink.Attributes.GetNamedItem("href");
-                        if (txHref == null) continue;
+                        if (txHref == null)
+                        {
+                            continue;
+                        }
+
                         var hlink = string.Format(
                             CultureInfo.CurrentCulture,
                             @"{0}{1}", hyperPrefix.Value, txHref.InnerText);
@@ -275,14 +323,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             return rowIndex;
         }
 
-        private void ApplyGridFormatting<T>(int websiteId, 
+        private void ApplyGridFormatting<T>(int websiteId,
             string sectionName,
-            ExcelWorksheet wsDt, 
+            ExcelWorksheet wsDt,
             System.Collections.Generic.List<T> rows)
         {
             const int rowIndex = 1;
             var isCaseLayout = "people" == sectionName;
-                var columns = SettingsManager.GetColumnLayouts(websiteId, sectionName);
+            var columns = SettingsManager.GetColumnLayouts(websiteId, sectionName);
             if (columns != null)
             {
                 // format first row
@@ -294,7 +342,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (isCaseLayout)
                 {
                     wsDt.Column(columns.Count + 2).Width = columns[10].ColumnWidth;
-                    wsDt.Column(columns.Count + 1).Width = columns[10].ColumnWidth; 
+                    wsDt.Column(columns.Count + 1).Width = columns[10].ColumnWidth;
                 }
             }
             // apply borders

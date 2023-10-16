@@ -21,7 +21,7 @@ namespace LegalLead.PublicData.Search
         {
             const int One = 1;
             var srcId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
-            if(srcId != (int)SourceType.DentonCounty)
+            if (srcId != (int)SourceType.DentonCounty)
             {
                 return;
             }
@@ -30,23 +30,23 @@ namespace LegalLead.PublicData.Search
             var showDistrict = searchDto.CountySearchTypeId == (int)SourceType.DentonCounty;
             var courtNames = CaseTypeSelectionDto.GetDto(
                 showDistrict ?
-                CommonKeyIndexes.DentonDistrictCaseType :  
-                CommonKeyIndexes.DentonCountyCaseType); 
+                CommonKeyIndexes.DentonDistrictCaseType :
+                CommonKeyIndexes.DentonCountyCaseType);
             sb.AppendFormat(
                 CultureInfo.CurrentCulture,
                 CommonKeyIndexes.SearchColonSpaceElement, showDistrict ?
-                CommonKeyIndexes.DistrictCourts : 
+                CommonKeyIndexes.DistrictCourts :
                 CommonKeyIndexes.JpCountyCourts);
 
             var subItemId = showDistrict ?
                 searchDto.DistrictSearchTypeId :
                 searchDto.CountySearchTypeId;
 
-            var courtItemId = showDistrict ? 
-                searchDto.DistrictCourtId + One : 
+            var courtItemId = showDistrict ?
+                searchDto.DistrictCourtId + One :
                 searchDto.CountyCourtId + One;
 
-            var courtDropDown = courtNames.DropDowns.First();
+            var courtDropDown = courtNames.DropDowns[0];
             var nameDropDown = courtDropDown.Options.Find(x => x.Id == courtItemId);
 
             _ = sb.AppendFormat(
@@ -66,14 +66,18 @@ namespace LegalLead.PublicData.Search
         {
             var changeProvider = new WebsiteChangeProvider(this);
             var changeHandler = changeProvider.GetProvider();
-            if (changeHandler == null) return;
+            if (changeHandler == null)
+            {
+                return;
+            }
+
             changeHandler.Change();
         }
 
         private void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var source = (DropDown)cboSearchType.SelectedItem;
-            
+
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && selectedItem.Id == (int)SourceType.HarrisCivil)
             {
@@ -133,7 +137,7 @@ namespace LegalLead.PublicData.Search
             Tag = new List<SearchResult>();
             tsDropFileList.Enabled = false;
             tsDropFileList.Visible = false;
-            
+
             tsWebDriver_Initialize();
 
             cboWebsite.DataSource = websites;
@@ -147,12 +151,12 @@ namespace LegalLead.PublicData.Search
 
 
             cboCourts.Visible = false;
-            cboCourts.DataSource = tarrantCourt.DropDowns.First().Options;
+            cboCourts.DataSource = tarrantCourt.DropDowns[0].Options;
             cboCourts.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboCourts.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboCaseType.Visible = false;
-            cboCaseType.DataSource = caseTypes.DropDowns.First().Options;
+            cboCaseType.DataSource = caseTypes.DropDowns[0].Options;
             cboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
 
@@ -178,27 +182,39 @@ namespace LegalLead.PublicData.Search
         {
             // when data source is changed?
             // remove all items from the tab strip
-            tsDropFileList.DropDownItems.Clear();
-            var list = GetObject<List<SearchResult>>(Tag);
-            list.ForEach(x => {
-                var button = new ToolStripMenuItem
+            try
+            {
+                tsDropFileList.DropDownItems.Clear();
+                var list = GetObject<List<SearchResult>>(Tag);
+                list.ForEach(x =>
                 {
-                    Visible = true,
-                    Tag = x,
-                    Text = x.Search,
-                    DisplayStyle = ToolStripItemDisplayStyle.Text                    
-                };
-                button.Click += Button_Click;
-                tsDropFileList.DropDownItems.Add(button);
-            });
+                    var button = new ToolStripMenuItem
+                    {
+                        Visible = true,
+                        Tag = x,
+                        Text = x.Search,
+                        DisplayStyle = ToolStripItemDisplayStyle.Text
+                    };
+                    button.Click += Button_Click;
+                    tsDropFileList.DropDownItems.Add(button);
+                });
 
-            tsDropFileList.Enabled = list.Count > 0;
-            tsDropFileList.Visible = tsDropFileList.Enabled;
+                tsDropFileList.Enabled = list.Count > 0;
+                tsDropFileList.Visible = tsDropFileList.Enabled;
+            }
+            catch (Exception)
+            {
+                ComboBox_DataSourceChanged_Background();
+            }
         }
 
         private void Button_Click(object sender, EventArgs e)
         {
-            if (sender == null) return;
+            if (sender == null)
+            {
+                return;
+            }
+
             var item = GetObject<SearchResult>(((ToolStripMenuItem)sender).Tag);
             var fileName = item.ResultFileName;
             OpenExcel(ref fileName);
@@ -212,7 +228,8 @@ namespace LegalLead.PublicData.Search
             var dto = new WebDriverDto().Get();
             var drivers = dto.WebDrivers.Drivers.ToList().FindAll(f => f.IsVerified);
             tsWebDriver.Tag = dto;
-            drivers.ForEach(x => {
+            drivers.ForEach(x =>
+            {
                 var button = new ToolStripMenuItem
                 {
                     Visible = true,
@@ -233,10 +250,17 @@ namespace LegalLead.PublicData.Search
 
         private void WebDriver_Click(object sender, EventArgs e)
         {
-            if (sender == null) return;
+            if (sender == null)
+            {
+                return;
+            }
+
             var tsItem = (ToolStripMenuItem)sender;
-            if (tsItem.Checked) return;
-            
+            if (tsItem.Checked)
+            {
+                return;
+            }
+
             var item = GetObject<Driver>(tsItem.Tag);
             var webItem = GetObject<WebDriverDto>(tsWebDriver.Tag);
             webItem.WebDrivers.SelectedIndex = item.Id;
@@ -301,22 +325,8 @@ namespace LegalLead.PublicData.Search
 
         protected void ProcessEndingMessage()
         {
-            var source = (WebNavigationParameter)cboWebsite.SelectedItem;
-            var message = CommonKeyIndexes.EndingFetchRequest
-                + Environment.NewLine + " " +
-                CommonKeyIndexes.WebsiteLabel + source.Name
-                + Environment.NewLine + " " +
-                CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
-                + Environment.NewLine + " " +
-                CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
-                + Environment.NewLine +
-                CommonKeyIndexes.EndTime + DateTime.Now.ToString(
-                    CommonKeyIndexes.GeneralLongDate,
-                    CultureInfo.CurrentCulture)
-                + Environment.NewLine +
-                CommonKeyIndexes.DashedLine
-                + Environment.NewLine +
-                CommonKeyIndexes.DashedLine;
+            var source = GetParameter();
+            var message = GetMessage(source);
 
             Console.WriteLine(message);
 
@@ -360,6 +370,89 @@ namespace LegalLead.PublicData.Search
             }
 
             System.Diagnostics.Process.Start(xmlFile);
+        }
+
+        private WebNavigationParameter GetParameter()
+        {
+            try {
+                return (WebNavigationParameter)cboWebsite.SelectedItem;
+            }
+            catch 
+            {
+                return Invoke(new Func<WebNavigationParameter>(() => 
+                    { return (WebNavigationParameter)cboWebsite.SelectedItem;  })) 
+                    as WebNavigationParameter;
+            }
+        }
+
+        private string GetMessage(WebNavigationParameter source)
+        {
+            try
+            {
+                return CommonKeyIndexes.EndingFetchRequest
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.WebsiteLabel + source.Name
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
+                + Environment.NewLine + " " +
+                CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
+                + Environment.NewLine +
+                CommonKeyIndexes.EndTime + DateTime.Now.ToString(
+                    CommonKeyIndexes.GeneralLongDate,
+                    CultureInfo.CurrentCulture)
+                + Environment.NewLine +
+                CommonKeyIndexes.DashedLine
+                + Environment.NewLine +
+                CommonKeyIndexes.DashedLine;
+            }
+            catch
+            {
+                return Invoke(new Func<string>(() =>
+                {
+                    return CommonKeyIndexes.EndingFetchRequest
+                    + Environment.NewLine + " " +
+                    CommonKeyIndexes.WebsiteLabel + source.Name
+                    + Environment.NewLine + " " +
+                    CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
+                    + Environment.NewLine + " " +
+                    CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
+                    + Environment.NewLine +
+                    CommonKeyIndexes.EndTime + DateTime.Now.ToString(
+                        CommonKeyIndexes.GeneralLongDate,
+                        CultureInfo.CurrentCulture)
+                    + Environment.NewLine +
+                    CommonKeyIndexes.DashedLine
+                    + Environment.NewLine +
+                    CommonKeyIndexes.DashedLine;
+                }))
+                    as string;
+            }
+        }
+
+        private void ComboBox_DataSourceChanged_Background()
+        {
+            this.Invoke(new Action(() =>
+            {
+                // when data source is changed?
+                // remove all items from the tab strip
+                tsDropFileList.DropDownItems.Clear();
+                var list = GetObject<List<SearchResult>>(Tag);
+                list.ForEach(x =>
+                {
+                    var button = new ToolStripMenuItem
+                    {
+                        Visible = true,
+                        Tag = x,
+                        Text = x.Search,
+                        DisplayStyle = ToolStripItemDisplayStyle.Text
+                    };
+                    button.Click += Button_Click;
+                    tsDropFileList.DropDownItems.Add(button);
+                });
+
+                tsDropFileList.Enabled = list.Count > 0;
+                tsDropFileList.Visible = tsDropFileList.Enabled;
+            }));
         }
     }
 }

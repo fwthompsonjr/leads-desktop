@@ -1,0 +1,89 @@
+﻿[
+  {
+    "id": 10,
+    "name": "Harris County Criminal Court Data Options",
+    "type": "general",
+    "labels": [
+      "How to use this form.",
+      "There are three tabs provided : General, Details, Settings",
+      "General tab is general information.",
+      "Details tab is present to provide details on the state of HCC database.",
+      "Settings tab is present to allow user control of useful properties in HCC database."
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Data Selection Mode",
+    "index": 0,
+    "type": "settings",
+    "description": "Sets the data retrieval method",
+    "values": [
+      "database",
+      "direct"
+    ],
+    "labels": [
+      "Mines data using local database, offers faster search but requires pre-load of data.",
+      "Mines data using web scraping, slower search but more reliable in data mapping."
+    ]
+  },
+  {
+    "id": 30,
+    "name": "HCC Database - Earliest Header",
+    "type": "details",
+    "index": 125
+  },
+  {
+    "id": 40,
+    "name": "HCC Database - Latest Header",
+    "type": "details",
+    "index": 100
+  },
+  {
+    "id": 50,
+    "name": "HCC Database - Earliest Detail",
+    "type": "details",
+    "index": 200
+  },
+  {
+    "id": 60,
+    "name": "HCC Database - Latest Detail",
+    "type": "details",
+    "index": 300
+  },
+  {
+    "id": 70,
+    "name": "HCC Database - Headers",
+    "type": "details",
+    "index": 400
+  },
+  {
+    "id": 80,
+    "name": "HCC Database - Case Details",
+    "type": "details",
+    "index": 500
+  },
+  {
+    "id": 90,
+    "name": "HCC Database - Preload - Header",
+    "type": "settings",
+    "description": "Controls the data load of header data, off or on. Default value is on.",
+    "index": 0,
+    "values": [ "true", "false" ]
+  },
+  {
+    "id": 100,
+    "name": "HCC Database - Preload - Detail",
+    "type": "settings",
+    "description": "Controls the data load of detail data, off or on. Default value is on.",
+    "index": 0,
+    "values": [ "true", "false" ]
+  },
+  {
+    "id": 110,
+    "name": "HCC Database - Preload - Detail Days",
+    "type": "settings",
+    "description": "Controls the data load of detail data, setting the number of business days to preload.",
+    "index": 0,
+    "values": [ "5", "15", "30", "45", "60", "90" ]
+  }
+]

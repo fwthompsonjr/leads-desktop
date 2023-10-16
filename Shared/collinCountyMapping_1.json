@@ -6,7 +6,7 @@
       "wait": 1200,
       "locator": {
         "find": "page",
-        "query": "http://cijspub.co.collin.tx.us/SecurePA/login.aspx"
+        "query": "https://cijspub.co.collin.tx.us/SecurePA/login.aspx"
       }
     },
     {
@@ -19,11 +19,12 @@
       }
     },
     {
-      "actionName": "click",
+      "actionName": "login-collin-county",
       "displayName": "login-submit",
+      "expectedValue": "collinCountyUserMap",
       "locator": {
         "find": "css",
-        "query": "input[type='submit']"
+        "query": "#UserName | #Password"
       }
     },
     {

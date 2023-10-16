@@ -20,7 +20,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
         }
 
-        public CollinWebInteractive(WebNavigationParameter parameters, 
+        public CollinWebInteractive(WebNavigationParameter parameters,
             DateTime startDate, DateTime endingDate) : base(parameters, startDate, endingDate)
         {
 
@@ -55,11 +55,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var searchTypeId = GetParameterValue<int>(CommonKeyIndexes.SearchTypeSelectedIndex); // "searchTypeSelectedIndex");
                 var selectedCase = caseTypes.DropDowns[caseTypeId];
                 // set special item values
-                var caseTypeSelect = steps.First(x => 
+                var caseTypeSelect = steps.First(x =>
                     x.ActionName.Equals(CommonKeyIndexes.SetSelectValue, // "set-select-value", 
                         StringComparison.CurrentCultureIgnoreCase));
                 caseTypeSelect.ExpectedValue = caseTypeId.ToString(CultureInfo.CurrentCulture.NumberFormat);
-                var searchSelect = steps.First(x => 
+                var searchSelect = steps.First(x =>
                     x.DisplayName.Equals(CommonKeyIndexes.SearchTypeHyperlink, // "search-type-hyperlink", 
                         StringComparison.CurrentCultureIgnoreCase));
                 searchSelect.Locator.Query = selectedCase.Options[searchTypeId].Query;
@@ -92,7 +92,11 @@ namespace Thompson.RecordSearch.Utility.Classes
                         .FirstOrDefault(x =>
                             x.ActionName.Equals(item.ActionName,
                             StringComparison.CurrentCultureIgnoreCase));
-                    if (action == null) continue;
+                    if (action == null)
+                    {
+                        continue;
+                    }
+
                     action.Act(item);
                     cases = ExtractCaseData(results, cases, actionName, action);
                     if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
@@ -136,13 +140,25 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         protected override List<PersonAddress> ExtractPeople(List<HLinkDataRow> cases)
         {
-            if (cases == null) return null;
-            if (!cases.Any()) return new List<PersonAddress>();
+            if (cases == null)
+            {
+                return null;
+            }
+
+            if (!cases.Any())
+            {
+                return new List<PersonAddress>();
+            }
+
             var list = new List<PersonAddress>();
             foreach (var item in cases)
             {
                 var styleInfo = item.IsCriminal | item.IsJustice ? item.CriminalCaseStyle : GetCaseStyle(item);
-                if (item.IsProbate) styleInfo = item.CaseStyle;
+                if (item.IsProbate)
+                {
+                    styleInfo = item.CaseStyle;
+                }
+
                 var person = new PersonAddress
                 {
                     Name = item.Defendant,
@@ -171,10 +187,11 @@ namespace Thompson.RecordSearch.Utility.Classes
             const string driverLicense = @"DL: ";
             const string secondLicense = @"SID: ";
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
-            if (string.IsNullOrEmpty(uncleanAddress)) {
+            if (string.IsNullOrEmpty(uncleanAddress))
+            {
                 return uncleanAddress;
             }
-            if(uncleanAddress.Contains(driverLicense))
+            if (uncleanAddress.Contains(driverLicense))
             {
                 var dlstart = uncleanAddress.IndexOf(driverLicense, comparison);
                 uncleanAddress = uncleanAddress.Substring(0, dlstart).Replace(driverLicense, "");
@@ -184,7 +201,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var dlstart = uncleanAddress.IndexOf(secondLicense, comparison);
                 uncleanAddress = uncleanAddress.Substring(0, dlstart).Replace(secondLicense, "");
             }
-            if(uncleanAddress.IndexOf("DOB: ", comparison) > 0)
+            if (uncleanAddress.IndexOf("DOB: ", comparison) > 0)
             {
                 uncleanAddress = string.Empty;
             }
@@ -192,7 +209,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 uncleanAddress = string.Empty;
             }
-            if(uncleanAddress.Equals("Pro Se", comparison))
+            if (uncleanAddress.Equals("Pro Se", comparison))
             {
                 uncleanAddress = string.Empty;
             }
@@ -209,7 +226,11 @@ namespace Thompson.RecordSearch.Utility.Classes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private void GetAddressInformation(IWebDriver driver, TarrantWebInteractive jsonWebInteractive, HLinkDataRow linkData)
         {
-            if (jsonWebInteractive == null) return;
+            if (jsonWebInteractive == null)
+            {
+                return;
+            }
+
             var fmt = GetParameterValue<string>(CommonKeyIndexes.HlinkUri);
             var helper = new ElementAssertion(driver);
             helper.Navigate(string.Format(CultureInfo.CurrentCulture, fmt, linkData.WebAddress));
@@ -218,7 +239,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             // heres where we will get the case style for criminal cases
 
             FindDefendant(driver, ref linkData);
-            
+
             // can we get the case-style data here
 
             driver.Navigate().Back();
@@ -238,7 +259,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
             }
             var probateLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.ProbateLinkXpath));
-            if(probateLink != null)
+            if (probateLink != null)
             {
                 linkData.IsProbate = true;
             }
@@ -261,7 +282,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var finder in finders)
             {
                 finder.Find(driver, linkData);
-                if (finder.CanFind) break;
+                if (finder.CanFind)
+                {
+                    break;
+                }
             }
         }
 
@@ -269,8 +293,16 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static void AssignStartAndEndDate(DateTime startingDate, DateTime endingDate, DateTimeFormatInfo formatDate, List<NavigationStep> items)
         {
-            if (items == null) return;
-            if (!items.Any()) return;
+            if (items == null)
+            {
+                return;
+            }
+
+            if (!items.Any())
+            {
+                return;
+            }
+
             items.ForEach(item =>
             {
                 AssignStartAndEndDate(

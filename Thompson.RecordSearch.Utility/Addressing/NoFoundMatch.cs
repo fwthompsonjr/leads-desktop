@@ -11,8 +11,15 @@ namespace Thompson.RecordSearch.Utility.Addressing
 
         public override void Find(IWebDriver driver, HLinkDataRow linkData)
         {
-            if (driver == null) throw new System.ArgumentNullException(nameof(driver));
-            if (linkData == null) throw new System.ArgumentNullException(nameof(linkData));
+            if (driver == null)
+            {
+                throw new System.ArgumentNullException(nameof(driver));
+            }
+
+            if (linkData == null)
+            {
+                throw new System.ArgumentNullException(nameof(linkData));
+            }
             // driver.FindElement(By.XPath("//th[contains(text(),'Principal')]"))
             CanFind = true;
             linkData.Address = _noMatch;

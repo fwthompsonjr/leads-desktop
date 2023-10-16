@@ -5,8 +5,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegalLead.Resources
 {
@@ -73,8 +71,16 @@ namespace LegalLead.Resources
         public static string GetText(ResourceType resourceType, ResourceKeyIndex indexType)
         {
             var item = GetResources(resourceType, indexType);
-            if (item == null) return string.Empty;
-            if (item.Count() == 0) return string.Empty;
+            if (item == null)
+            {
+                return string.Empty;
+            }
+
+            if (item.Count() == 0)
+            {
+                return string.Empty;
+            }
+
             return item.First().Value ?? string.Empty;
         }
 
@@ -123,6 +129,6 @@ namespace LegalLead.Resources
                 .ToList();
             return indexes;
         }
-    
+
     }
 }

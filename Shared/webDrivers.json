@@ -1,16 +1,16 @@
 {
     "webDrivers": {
-        "selectedIndex": 0,
+        "selectedIndex": 3,
       "drivers": [
         {
           "id": 0,
           "name": "Chrome",
-          "isVerified": true
+          "isVerified": false
         },
         {
           "id": 1,
           "name": "Firefox",
-          "isVerified": false
+          "isVerified": true
         },
         {
           "id": 2,
@@ -20,7 +20,7 @@
         {
           "id": 3,
           "name": "Chrome Legacy",
-          "isVerified": true
+          "isVerified": false
         }
       ]
     }

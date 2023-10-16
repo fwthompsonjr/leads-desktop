@@ -12,7 +12,11 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override void Act(NavigationStep item)
         {
-            if (item == null) throw new System.ArgumentNullException(nameof(item));
+            if (item == null)
+            {
+                throw new System.ArgumentNullException(nameof(item));
+            }
+
             var driver = GetWeb;
             var uri = new Uri(item.Locator.Query);
             driver.Navigate().GoToUrl(uri);

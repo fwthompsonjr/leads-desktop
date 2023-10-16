@@ -18,12 +18,24 @@ namespace Thompson.RecordSearch.Utility.Parsing
 
         public virtual bool CanParse()
         {
-            if (string.IsNullOrEmpty(CaseData)) return false;
+            if (string.IsNullOrEmpty(CaseData))
+            {
+                return false;
+            }
+
             if (!CaseData.ToLower(CCulture.CurrentCulture)
-                .StartsWith(SearchFor, comparison)) return false;
+                .StartsWith(SearchFor, comparison))
+            {
+                return false;
+            }
+
             var lowered = CaseData.ToLower(CCulture.CurrentCulture);
             var firstAnd = lowered.Substring(SearchFor.Length).IndexOf(" and ", comparison);
-            if (firstAnd < 0) return false;
+            if (firstAnd < 0)
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -31,18 +43,32 @@ namespace Thompson.RecordSearch.Utility.Parsing
         {
             const string and = " and ";
             var response = new ParseCaseDataResponseDto { CaseData = CaseData };
-            if (!CanParse()) return response;
+            if (!CanParse())
+            {
+                return response;
+            }
 
-            if (string.IsNullOrEmpty(CaseData)) return response;
+            if (string.IsNullOrEmpty(CaseData))
+            {
+                return response;
+            }
+
             var fullName = CaseData.ToLower(CCulture.CurrentCulture);
-            if (!fullName.StartsWith(SearchFor, comparison)) return response;
+            if (!fullName.StartsWith(SearchFor, comparison))
+            {
+                return response;
+            }
 
             var findItIndex = fullName.IndexOf(SearchFor, comparison);
-            if (findItIndex < 0) return response;
+            if (findItIndex < 0)
+            {
+                return response;
+            }
+
             CaseData = CaseData.Replace(" And ", and);
             fullName = CaseData.Substring(SearchFor.Length);
             var splitIndex = fullName.IndexOf(and, comparison);
-            if(splitIndex < 0)
+            if (splitIndex < 0)
             {
                 response.Defendant = fullName.Trim();
                 response.Plantiff = string.Empty;
@@ -62,7 +88,11 @@ namespace Thompson.RecordSearch.Utility.Parsing
             var pieces = fullName.Split(' ');
             foreach (var piece in pieces)
             {
-                if (piece.Trim() == and.Trim()) continue;
+                if (piece.Trim() == and.Trim())
+                {
+                    continue;
+                }
+
                 final = final + piece + " ";
             }
             return final.Trim();

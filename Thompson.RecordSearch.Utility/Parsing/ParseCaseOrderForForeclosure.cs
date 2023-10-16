@@ -18,9 +18,17 @@ namespace Thompson.RecordSearch.Utility.Parsing
 
         public virtual bool CanParse()
         {
-            if (string.IsNullOrEmpty(CaseData)) return false;
+            if (string.IsNullOrEmpty(CaseData))
+            {
+                return false;
+            }
+
             if (!CaseData.ToLower(CCulture.CurrentCulture)
-                .Contains(SearchFor)) return false;
+                .Contains(SearchFor))
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -29,24 +37,38 @@ namespace Thompson.RecordSearch.Utility.Parsing
             const string petitioner = "Petitioner:";
 
             var response = new ParseCaseDataResponseDto { CaseData = CaseData };
-            if (!CanParse()) return response;
+            if (!CanParse())
+            {
+                return response;
+            }
 
-            if (string.IsNullOrEmpty(CaseData)) return response;
+            if (string.IsNullOrEmpty(CaseData))
+            {
+                return response;
+            }
+
             var fullName = CaseData.ToLower(CCulture.CurrentCulture);
-            if (!fullName.StartsWith(SearchFor, comparison)) return response;
+            if (!fullName.StartsWith(SearchFor, comparison))
+            {
+                return response;
+            }
 
             var findItIndex = fullName.IndexOf(SearchFor, comparison);
-            if (findItIndex < 0) return response;
+            if (findItIndex < 0)
+            {
+                return response;
+            }
+
             fullName = CaseData.Substring(SearchFor.Length);
             var splitIndex = fullName.IndexOf(petitioner, comparison);
             fullName = fullName.Substring(0, splitIndex + petitioner.Length);
             fullName = CaseData.Substring(SearchFor.Length).Substring(fullName.Length).Trim();
             splitIndex = fullName.LastIndexOf(':');
-            if(splitIndex > 0)
+            if (splitIndex > 0)
             {
                 fullName = fullName.Substring(0, splitIndex).Trim();
                 splitIndex = fullName.LastIndexOf(' ');
-                if(splitIndex > 0)
+                if (splitIndex > 0)
                 {
                     fullName = fullName.Substring(0, splitIndex).Trim();
                 }
@@ -54,7 +76,7 @@ namespace Thompson.RecordSearch.Utility.Parsing
             response.Plantiff = fullName;
             fullName = CaseData.Substring(findItIndex).Trim();
             splitIndex = fullName.LastIndexOf(':');
-            response.Defendant = fullName.Substring(splitIndex).Replace(":","").Trim();
+            response.Defendant = fullName.Substring(splitIndex).Replace(":", "").Trim();
             return response;
         }
     }

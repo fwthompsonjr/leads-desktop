@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Thompson.RecordSearch.Utility.Models
 {
@@ -24,6 +20,8 @@ namespace Thompson.RecordSearch.Utility.Models
         public string TypeDesc { get; set; }
         public string Subtype { get; set; }
         public string Style { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public IList<CaseDataAddress> CaseDataAddresses { get; set; }
     }
 

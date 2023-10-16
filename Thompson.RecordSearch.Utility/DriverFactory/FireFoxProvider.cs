@@ -1,12 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Thompson.RecordSearch.Utility.DriverFactory
 {
@@ -17,10 +13,13 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
-        public IWebDriver GetWebDriver()
+        public IWebDriver GetWebDriver(bool headless = false)
         {
             var driver = GetDefaultDriver();
-            if (driver != null) return driver;;
+            if (driver != null)
+            {
+                return driver;
+            };
             return new FirefoxDriver(GetDriverFileName());
         }
 
@@ -50,7 +49,11 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         private static string GetDriverFileName()
         {
-            if (_driverFileName != null) return _driverFileName;
+            if (_driverFileName != null)
+            {
+                return _driverFileName;
+            }
+
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             if (!Directory.Exists(execName))

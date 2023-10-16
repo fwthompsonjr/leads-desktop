@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Dto;
@@ -35,10 +33,26 @@ namespace LegalLead.PublicData.Search.Classes
 
         public void ApplyStyles(TableLayoutRowStyleCollection styles, int websiteId)
         {
-            if (websiteId != WebsiteIndex) return;
-            if (styles == null) return;
-            if (HiddenRows == null) return;
-            if (!HiddenRows.Any()) return;
+            if (websiteId != WebsiteIndex)
+            {
+                return;
+            }
+
+            if (styles == null)
+            {
+                return;
+            }
+
+            if (HiddenRows == null)
+            {
+                return;
+            }
+
+            if (!HiddenRows.Any())
+            {
+                return;
+            }
+
             HiddenRows.ForEach(r => styles[r].Height = 0);
         }
 
@@ -49,9 +63,9 @@ namespace LegalLead.PublicData.Search.Classes
                 new LabelSetting { Target = main.labelCboCaseType },
                 new LabelSetting { Target = main.label4 }
                 };
-            changes.ForEach(c => 
-            { 
-                if(c.Target.Tag != null)
+            changes.ForEach(c =>
+            {
+                if (c.Target.Tag != null)
                 {
                     c.Target.Text = Convert.ToString(c.Target.Tag);
                 }
@@ -93,7 +107,7 @@ namespace LegalLead.PublicData.Search.Classes
                 c.Target.Tag = c.OldText;
                 c.Target.Text = c.ChangedText;
             });
-            main.labelCboCaseType.Text = "Courts";            
+            main.labelCboCaseType.Text = "Courts";
             main.label4.Text = "Status";
             // cboSearchType
 

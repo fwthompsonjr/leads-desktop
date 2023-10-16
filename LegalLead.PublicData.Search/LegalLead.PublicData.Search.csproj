@@ -73,11 +73,14 @@
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.6.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.AccessControl, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.4.6.0\lib\net461\System.Security.AccessControl.dll</HintPath>
@@ -97,6 +100,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Version.cs">
@@ -117,6 +123,10 @@
     <Compile Include="Classes\FormValidation.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Classes\HccDetailItem.cs" />
+    <Compile Include="Classes\HccItem.cs" />
+    <Compile Include="Classes\HccOption.cs" />
+    <Compile Include="Classes\HccSettingItem.cs" />
     <Compile Include="Classes\IRowStyleChanged.cs" />
     <Compile Include="Classes\IWebsiteChangeEvent.cs" />
     <Compile Include="Classes\SearchResult.cs" />
@@ -129,6 +139,7 @@
     <Compile Include="Command\CommandStartUp.cs" />
     <Compile Include="Command\CredentialCommand.cs" />
     <Compile Include="Command\DentonSettingCommand.cs" />
+    <Compile Include="Command\HarrisCriminalUpdate.cs" />
     <Compile Include="Command\MainCommand.cs" />
     <Compile Include="Command\MdiCommand.cs" />
     <Compile Include="FormCredential.cs">
@@ -142,6 +153,12 @@
     </Compile>
     <Compile Include="FormDentonSetting.Designer.cs">
       <DependentUpon>FormDentonSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormHcc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHcc.Designer.cs">
+      <DependentUpon>FormHcc.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -164,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormDentonSetting.resx">
       <DependentUpon>FormDentonSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormHcc.resx">
+      <DependentUpon>FormHcc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -206,6 +226,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Harris.Criminal.Db\Harris.Criminal.Db.csproj">
+      <Project>{0616cc1f-324f-43dc-be7a-8db9479bfd37}</Project>
+      <Name>Harris.Criminal.Db</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thompson.RecordSearch.Utility\Thompson.RecordSearch.Utility.csproj">
       <Project>{b33e0015-dc54-4c71-bb13-038d46748ee9}</Project>
       <Name>Thompson.RecordSearch.Utility</Name>

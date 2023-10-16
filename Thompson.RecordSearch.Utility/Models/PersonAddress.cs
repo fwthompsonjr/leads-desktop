@@ -82,7 +82,8 @@ namespace Thompson.RecordSearch.Utility.Models
         public string CaseStyle { get; set; }
         public string FirstName
         {
-            get {
+            get
+            {
                 return ParseFromFullName(0);
             }
         }
@@ -100,15 +101,27 @@ namespace Thompson.RecordSearch.Utility.Models
             {
                 return ParseFromCaseStyle(0);
             }
-
+            set { }
         }
         public bool IsValid
         {
             get
             {
-                if (string.IsNullOrEmpty(Name)) return false;
-                if (string.IsNullOrEmpty(Zip)) return false;
-                if (string.IsNullOrEmpty(Address1)) return false;
+                if (string.IsNullOrEmpty(Name))
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(Zip))
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(Address1))
+                {
+                    return false;
+                }
+
                 return true;
             }
         }
@@ -127,14 +140,22 @@ namespace Thompson.RecordSearch.Utility.Models
         /// <returns></returns>
         private string ParseFromFullName(int postionId)
         {
-            if (string.IsNullOrEmpty(Name)) return string.Empty;
+            if (string.IsNullOrEmpty(Name))
+            {
+                return string.Empty;
+            }
+
             var fullName = Name;
-            if (!fullName.Contains(',')) return postionId == 0 ? fullName : string.Empty;
+            if (!fullName.Contains(','))
+            {
+                return postionId == 0 ? fullName : string.Empty;
+            }
+
             var nameParts = fullName.Split(',');
             var lastName = nameParts[0];
             var findIt = string.Format(CultureInfo.CurrentCulture, "{0}{1}", lastName, ',');
             var firstName = fullName.Remove(0, findIt.Length).Trim();
-            if(firstName.Contains(' '))
+            if (firstName.Contains(' '))
             {
                 nameParts = firstName.Split(' ');
                 firstName = nameParts[0];
@@ -149,10 +170,22 @@ namespace Thompson.RecordSearch.Utility.Models
         /// <returns></returns>
         private string ParseFromCaseStyle(int postionId)
         {
-            if (postionId > 100) return string.Empty;
-            if (string.IsNullOrEmpty(CaseStyle)) return string.Empty;
+            if (postionId > 100)
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(CaseStyle))
+            {
+                return string.Empty;
+            }
+
             var providers = GetCaseDataParses().FindAll(x => x.CanParse());
-            if (!providers.Any()) return string.Empty;
+            if (!providers.Any())
+            {
+                return string.Empty;
+            }
+
             var response = string.Empty;
             foreach (var parser in providers)
             {
@@ -179,9 +212,16 @@ namespace Thompson.RecordSearch.Utility.Models
         {
             get
             {
-                if (string.IsNullOrEmpty(indexName)) return string.Empty;
+                if (string.IsNullOrEmpty(indexName))
+                {
+                    return string.Empty;
+                }
+
                 var keyName = indexName.ToLower(CultureInfo.CurrentCulture);
-                if (!FieldList.Contains(keyName)) return string.Empty;
+                if (!FieldList.Contains(keyName))
+                {
+                    return string.Empty;
+                }
 
                 switch (keyName)
                 {
@@ -222,9 +262,16 @@ namespace Thompson.RecordSearch.Utility.Models
             set
             {
 
-                if (string.IsNullOrEmpty(indexName)) return;
+                if (string.IsNullOrEmpty(indexName))
+                {
+                    return;
+                }
+
                 var keyName = indexName.ToLower(CultureInfo.CurrentCulture);
-                if (!FieldList.Contains(keyName)) return;
+                if (!FieldList.Contains(keyName))
+                {
+                    return;
+                }
 
                 switch (keyName)
                 {
@@ -276,15 +323,31 @@ namespace Thompson.RecordSearch.Utility.Models
         {
             get
             {
-                if (index < 0) return string.Empty;
-                if (index > FieldList.Count - 1) return string.Empty;
+                if (index < 0)
+                {
+                    return string.Empty;
+                }
+
+                if (index > FieldList.Count - 1)
+                {
+                    return string.Empty;
+                }
+
                 return this[FieldList[index]];
             }
             set
             {
 
-                if (index < 0) return;
-                if (index > FieldList.Count - 1) return;
+                if (index < 0)
+                {
+                    return;
+                }
+
+                if (index > FieldList.Count - 1)
+                {
+                    return;
+                }
+
                 this[FieldList[index]] = value;
             }
         }
@@ -294,13 +357,29 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public static string ConvertFrom(string nodeName, XmlNode personNode)
         {
-            if (string.IsNullOrEmpty(nodeName)) return string.Empty;
-            if (personNode == null) return string.Empty;
-            if (personNode.ChildNodes.Count < 2) return string.Empty;
+            if (string.IsNullOrEmpty(nodeName))
+            {
+                return string.Empty;
+            }
+
+            if (personNode == null)
+            {
+                return string.Empty;
+            }
+
+            if (personNode.ChildNodes.Count < 2)
+            {
+                return string.Empty;
+            }
+
             var lowerNodeName = nodeName.ToLower(CultureInfo.CurrentCulture);
             var addressNode = personNode.ChildNodes[1].InnerText.Trim();
-            var addressFields = "address1,address2,address3,zip".Split(',').ToList(); 
-            if (addressFields.Contains(lowerNodeName) && string.IsNullOrEmpty(addressNode)) return string.Empty;
+            var addressFields = "address1,address2,address3,zip".Split(',').ToList();
+            if (addressFields.Contains(lowerNodeName) && string.IsNullOrEmpty(addressNode))
+            {
+                return string.Empty;
+            }
+
             switch (lowerNodeName)
             {
                 case "address1":
@@ -310,8 +389,12 @@ namespace Thompson.RecordSearch.Utility.Models
                     var middle = GetAddressList(addressNode);
                     return GetMiddleAddress(middle);
                 case "address3":
-                    var second = GetAddressList(addressNode); 
-                    if (second.Count < 2) return string.Empty;
+                    var second = GetAddressList(addressNode);
+                    if (second.Count < 2)
+                    {
+                        return string.Empty;
+                    }
+
                     return second.Last();
                 case "zip":
                     var parts = addressNode
@@ -327,19 +410,35 @@ namespace Thompson.RecordSearch.Utility.Models
                     return ((XmlCDataSection)caseNode.ChildNodes[0]).Data;
                 case "court":
                     var courtNode = personNode.SelectSingleNode("court");
-                    if (courtNode == null) return string.Empty;
+                    if (courtNode == null)
+                    {
+                        return string.Empty;
+                    }
+
                     return ((XmlCDataSection)courtNode.ChildNodes[0]).Data;
                 case "datefiled":
                     var filedNode = personNode.SelectSingleNode("dateFiled");
-                    if (filedNode == null) return string.Empty;
+                    if (filedNode == null)
+                    {
+                        return string.Empty;
+                    }
+
                     return ((XmlCDataSection)filedNode.ChildNodes[0]).Data;
                 case "casetype":
                     var caseTypeNode = personNode.SelectSingleNode("caseType");
-                    if (caseTypeNode == null) return string.Empty;
+                    if (caseTypeNode == null)
+                    {
+                        return string.Empty;
+                    }
+
                     return ((XmlCDataSection)caseTypeNode.ChildNodes[0]).Data;
                 case "casestyle":
                     var caseStyleNode = personNode.SelectSingleNode("caseStyle");
-                    if (caseStyleNode == null) return string.Empty;
+                    if (caseStyleNode == null)
+                    {
+                        return string.Empty;
+                    }
+
                     return ((XmlCDataSection)caseStyleNode.ChildNodes[0]).Data;
                 default:
                     break;
@@ -349,7 +448,11 @@ namespace Thompson.RecordSearch.Utility.Models
 
         private static string GetMiddleAddress(List<string> middle)
         {
-            if (middle.Count < 3) return string.Empty;
+            if (middle.Count < 3)
+            {
+                return string.Empty;
+            }
+
             var addr = string.Empty;
             for (int i = 1; i < middle.Count - 1; i++)
             {
@@ -364,7 +467,11 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public static PersonAddress ConvertFrom(XmlNode personNode)
         {
-            if (personNode == null) return null;
+            if (personNode == null)
+            {
+                return null;
+            }
+
             var addr = new PersonAddress()
             {
                 Name = TryGet(personNode, "name"),
@@ -384,7 +491,11 @@ namespace Thompson.RecordSearch.Utility.Models
         private static string TryGet(XmlNode personNode, string nodeName)
         {
             var node = personNode.SelectSingleNode(nodeName);
-            if (node == null) return string.Empty;
+            if (node == null)
+            {
+                return string.Empty;
+            }
+
             return node.InnerText;
         }
 
@@ -393,7 +504,11 @@ namespace Thompson.RecordSearch.Utility.Models
             try
             {
                 var node = personNode.SelectSingleNode(nodeName);
-                if (node == null) return string.Empty;
+                if (node == null)
+                {
+                    return string.Empty;
+                }
+
                 if (string.IsNullOrEmpty(childNodeName))
                 {
                     return ((XmlCDataSection)(node.ChildNodes[0])).Data;
@@ -418,8 +533,16 @@ namespace Thompson.RecordSearch.Utility.Models
                     }
                 }
                 var childNode = node.SelectSingleNode(childNodeName);
-                if (childNode == null) return string.Empty;
-                if(!childNode.HasChildNodes) return string.Empty;
+                if (childNode == null)
+                {
+                    return string.Empty;
+                }
+
+                if (!childNode.HasChildNodes)
+                {
+                    return string.Empty;
+                }
+
                 return ((XmlCDataSection)(childNode.ChildNodes[0])).Data;
             }
 #pragma warning disable CA1031 // Do not catch general exception types
@@ -439,8 +562,16 @@ namespace Thompson.RecordSearch.Utility.Models
                 .Replace("<br />", "~").Split('~').ToList();
             foreach (var addr in data)
             {
-                if (string.IsNullOrEmpty(addr)) continue;
-                if (string.IsNullOrEmpty(addr.Trim())) continue;
+                if (string.IsNullOrEmpty(addr))
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(addr.Trim()))
+                {
+                    continue;
+                }
+
                 result.Add(addr.Trim());
             }
             return result;

@@ -1,6 +1,6 @@
 ﻿// EdgeProvider
-using OpenQA.Selenium;
 using Microsoft.Edge.SeleniumTools;
+using OpenQA.Selenium;
 using System;
 using System.IO;
 using System.Reflection;
@@ -14,7 +14,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
-        public IWebDriver GetWebDriver()
+        public IWebDriver GetWebDriver(bool headless = false)
         {
             return new EdgeDriver(GetDriverFileName());
         }
@@ -28,7 +28,11 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         private static string GetDriverFileName()
         {
-            if (_driverFileName != null) return _driverFileName;
+            if (_driverFileName != null)
+            {
+                return _driverFileName;
+            }
+
             var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             if (!Directory.Exists(execName))

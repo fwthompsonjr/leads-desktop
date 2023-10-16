@@ -1,10 +1,7 @@
-﻿using OpenQA.Selenium;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -43,7 +40,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var steps = new List<NavigationStep>();
                 var navigationFile = Web.GetParameterValue<string>(CommonKeyIndexes.NavigationControlFile); // "navigation.control.file");
                 var sources = navigationFile.Split(',').ToList();
-                if(caseOverrideId == null)
+                if (caseOverrideId == null)
                 {
                     caseOverrideId = TarrantComboBxValue.CourtMap.First(x => x.Name.Equals("Justice of Peace", Ccic)).Id;
                 }
@@ -52,12 +49,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                 webFetch = Web.SearchWeb(results, steps, startingDate, startingDate, ref cases, out people);
             }
 
-            
 
-            protected void SetupParameters(List<NavigationStep> steps, 
+
+            protected void SetupParameters(List<NavigationStep> steps,
                 int? caseTypeOverrideId,
                 out List<PersonAddress> people,
-                out XmlContentHolder results, 
+                out XmlContentHolder results,
                 out List<HLinkDataRow> cases)
             {
                 results = new SettingsManager().GetOutput(Web);
@@ -112,7 +109,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
-        
+
 
         class FetchProvider
         {
@@ -136,13 +133,15 @@ namespace Thompson.RecordSearch.Utility.Classes
                 switch (searchMode)
                 {
                     case 0:
-                        fetchers = fetchers.FindAll(x => {
+                        fetchers = fetchers.FindAll(x =>
+                        {
                             var lowered = x.Name.ToLower(CultureInfo.CurrentCulture);
                             return lowered.StartsWith(criminal, ccic);
                         });
                         break;
                     case 2:
-                        fetchers = fetchers.FindAll(x => {
+                        fetchers = fetchers.FindAll(x =>
+                        {
                             var lowered = x.Name.ToLower(CultureInfo.CurrentCulture);
                             return !lowered.StartsWith(criminal, ccic);
                         });

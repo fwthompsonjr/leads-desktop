@@ -17,14 +17,22 @@ namespace LegalLead.PublicData.Search.Classes
         public IWebsiteChangeEvent GetProvider()
         {
             var providers = ChangeProviders;
-            if (providers == null) return null;
+            if (providers == null)
+            {
+                return null;
+            }
+
             var provider = new Thompson.RecordSearch.Utility.Classes.VersionNameProvider();
             var matched = providers
                 .FirstOrDefault(
                 p => p.Name.Equals(
-                    provider.Name, 
+                    provider.Name,
                     StringComparison.CurrentCultureIgnoreCase));
-            if (matched == null) return null;
+            if (matched == null)
+            {
+                return null;
+            }
+
             matched.GetMain = MainForm;
             return matched;
         }

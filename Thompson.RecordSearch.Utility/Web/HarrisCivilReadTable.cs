@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Web
 {
 
 
-    using Byy = OpenQA.Selenium.By;
-    using Thompson.RecordSearch.Utility.Dto;
     using OpenQA.Selenium;
     using System.Threading;
+    using Thompson.RecordSearch.Utility.Dto;
     using Thompson.RecordSearch.Utility.Models;
+    using Byy = OpenQA.Selenium.By;
 
     public class HarrisCivilReadTable : ElementActionBase
     {
@@ -28,7 +26,11 @@ namespace Thompson.RecordSearch.Utility.Web
         public List<HLinkDataRow> DataRows { get; private set; }
         public override void Act(NavigationStep item)
         {
-            if (item == null) throw new ArgumentNullException(nameof(item));
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
             var driver = GetWeb;
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             IsOverlaid = false;
@@ -107,7 +109,11 @@ namespace Thompson.RecordSearch.Utility.Web
                         }
                     }
                 });
-                if (!HasNextPage()) break;
+                if (!HasNextPage())
+                {
+                    break;
+                }
+
                 if (!NavigateNextPage())
                 {
                     break;
@@ -125,10 +131,18 @@ namespace Thompson.RecordSearch.Utility.Web
             var driver = GetWeb;
             // if there are paging hyperlinks then their might be a next page
             var paging = driver.FindElements(Byy.CssSelector(cssPagerLink));
-            if (paging == null) return false;
+            if (paging == null)
+            {
+                return false;
+            }
+
             var list = paging.Cast<IWebElement>().ToList();
             var next = list.FirstOrDefault(a => a.Text.Contains("Next"));
-            if (next == null) return false;
+            if (next == null)
+            {
+                return false;
+            }
+
             if (!(next.GetAttribute("disabled") ?? "false").Equals("true", ccic))
             {
                 // click element (executor)
@@ -149,7 +163,8 @@ namespace Thompson.RecordSearch.Utility.Web
             {
                 return dateMin;
             }
-            if(DateTime.TryParse(found.Text, out DateTime dtFrom)){
+            if (DateTime.TryParse(found.Text, out DateTime dtFrom))
+            {
                 return dtFrom.ToString(dte, CultureInfo.CurrentCulture);
             }
             return dateMin;
@@ -197,11 +212,15 @@ namespace Thompson.RecordSearch.Utility.Web
             var cssNoData = "ctl00_ContentPlaceHolder1_lblListViewCasesEmptyMsg";
             var driver = GetWeb;
             var found = driver.TryFindElement(Byy.Id(cssNoData));
-            if (found == null) return false;
+            if (found == null)
+            {
+                return false;
+            }
+
             return found.Displayed;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design",
             "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         protected bool HasNextPage()
         {
@@ -211,10 +230,18 @@ namespace Thompson.RecordSearch.Utility.Web
                 var driver = GetWeb;
                 // if there are paging hyperlinks then their might be a next page
                 var paging = driver.FindElements(Byy.CssSelector(cssPagerLink));
-                if (paging == null) return false;
+                if (paging == null)
+                {
+                    return false;
+                }
+
                 var list = paging.Cast<IWebElement>().ToList();
                 var next = list.FirstOrDefault(a => a.Text.Contains("Next"));
-                if (next == null) return false;
+                if (next == null)
+                {
+                    return false;
+                }
+
                 return (next.GetAttribute("disabled") ?? "false").Equals("true", ccic);
             }
             catch (Exception)

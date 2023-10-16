@@ -300,6 +300,175 @@
           "address": "Harris County Civil Court at Law #4, 201 Caroline -- Suite 740, Houston TX 77002-1900"
         }
       ]
+    },
+    {
+      "id": "40",
+      "courts": [
+        {
+          "name": "default",
+          "address": "Harris County Criminal Court, 1201 Franklin St, Houston TX 77002-1900"
+        },
+        {
+          "name": "001",
+          "address": "Harris County Criminal Court at Law No. 1, 1201 Franklin St -- 8th Floor, Houston TX 77002"
+        },
+        {
+          "name": "002",
+          "address": "Harris County Criminal Court at Law No. 2, 1201 Franklin St -- 8th Floor, Houston TX 77002"
+        },
+        {
+          "name": "003",
+          "address": "Harris County Criminal Court at Law No. 3, 1201 Franklin St -- 8th Floor, Houston TX 77002"
+        },
+        {
+          "name": "004",
+          "address": "Harris County Criminal Court at Law No. 4, 1201 Franklin St -- 8th Floor, Houston TX 77002"
+        },
+        {
+          "name": "005",
+          "address": "Harris County Criminal Court at Law No. 5, 1201 Franklin St -- 9th Floor, Houston TX 77002"
+        },
+        {
+          "name": "006",
+          "address": "Harris County Criminal Court at Law No. 6, 1201 Franklin St -- 9th Floor, Houston TX 77002"
+        },
+        {
+          "name": "007",
+          "address": "Harris County Criminal Court at Law No. 7, 1201 Franklin St -- 9th Floor, Houston TX 77002"
+        },
+        {
+          "name": "008",
+          "address": "Harris County Criminal Court at Law No. 8, 1201 Franklin St -- 9th Floor, Houston TX 77002"
+        },
+        {
+          "name": "009",
+          "address": "Harris County Criminal Court at Law No. 9, 1201 Franklin St -- 10th Floor, Houston TX 77002"
+        },
+        {
+          "name": "010",
+          "address": "Harris County Criminal Court at Law No. 10, 1201 Franklin St -- 10th Floor, Houston TX 77002"
+        },
+        {
+          "name": "011",
+          "address": "Harris County Criminal Court at Law No. 11, 1201 Franklin St -- 10th Floor, Houston TX 77002"
+        },
+        {
+          "name": "012",
+          "address": "Harris County Criminal Court at Law No. 12, 1201 Franklin St -- 10th Floor, Houston TX 77002"
+        },
+        {
+          "name": "013",
+          "address": "Harris County Criminal Court at Law No. 13, 1201 Franklin St -- 11th Floor, Houston TX 77002"
+        },
+        {
+          "name": "014",
+          "address": "Harris County Criminal Court at Law No. 14, 1201 Franklin St -- 11th Floor, Houston TX 77002"
+        },
+        {
+          "name": "015",
+          "address": "Harris County Criminal Court at Law No. 15, 1201 Franklin St -- 11th Floor, Houston TX 77002"
+        },
+        {
+          "name": "016",
+          "address": "Harris County Criminal Court at Law No. 16, 1201 Franklin St -- 11th Floor, Houston TX 77002"
+        },
+        {
+          "name": "174",
+          "address": "Harris County Criminal Court at Law No. 174, 1201 Franklin St -- 19th Floor, Houston TX 77002"
+        },
+        {
+          "name": "176",
+          "address": "Harris County Criminal Court at Law No. 176, 1201 Franklin St -- 19th Floor, Houston TX 77002"
+        },
+        {
+          "name": "177",
+          "address": "Harris County Criminal Court at Law No. 177, 1201 Franklin St -- 19th Floor, Houston TX 77002"
+        },
+        {
+          "name": "178",
+          "address": "Harris County Criminal Court at Law No. 178, 1201 Franklin St -- 19th Floor, Houston TX 77002"
+        },
+        {
+          "name": "179",
+          "address": "Harris County Criminal Court at Law No. 179, 1201 Franklin St -- 18th Floor, Houston TX 77002"
+        },
+        {
+          "name": "180",
+          "address": "Harris County Criminal Court at Law No. 180, 1201 Franklin St -- 18th Floor, Houston TX 77002"
+        },
+        {
+          "name": "182",
+          "address": "Harris County Criminal Court at Law No. 182, 1201 Franklin St -- 18th Floor, Houston TX 77002"
+        },
+        {
+          "name": "183",
+          "address": "Harris County Criminal Court at Law No. 183, 1201 Franklin St -- 18th Floor, Houston TX 77002"
+        },
+        {
+          "name": "184",
+          "address": "Harris County Criminal Court at Law No. 184, 1201 Franklin St -- 17th Floor, Houston TX 77002"
+        },
+        {
+          "name": "185",
+          "address": "Harris County Criminal Court at Law No. 185, 1201 Franklin St -- 17th Floor, Houston TX 77002"
+        },
+        {
+          "name": "208",
+          "address": "Harris County Criminal Court at Law No. 208, 1201 Franklin St -- 17th Floor, Houston TX 77002"
+        },
+        {
+          "name": "209",
+          "address": "Harris County Criminal Court at Law No. 209, 1201 Franklin St -- 17th Floor, Houston TX 77002"
+        },
+        {
+          "name": "228",
+          "address": "Harris County Criminal Court at Law No. 228, 1201 Franklin St -- 16th Floor, Houston TX 77002"
+        },
+        {
+          "name": "230",
+          "address": "Harris County Criminal Court at Law No. 230, 1201 Franklin St -- 16th Floor, Houston TX 77002"
+        },
+        {
+          "name": "232",
+          "address": "Harris County Criminal Court at Law No. 232, 1201 Franklin St -- 16th Floor, Houston TX 77002"
+        },
+        {
+          "name": "248",
+          "address": "Harris County Criminal Court at Law No. 248, 1201 Franklin St -- 16th Floor, Houston TX 77002"
+        },
+        {
+          "name": "262",
+          "address": "Harris County Criminal Court at Law No. 262, 1201 Franklin St -- 15th Floor, Houston TX 77002"
+        },
+        {
+          "name": "263",
+          "address": "Harris County Criminal Court at Law No. 263, 1201 Franklin St -- 15th Floor, Houston TX 77002"
+        },
+        {
+          "name": "337",
+          "address": "Harris County Criminal Court at Law No. 337, 1201 Franklin St -- 15th Floor, Houston TX 77002"
+        },
+        {
+          "name": "338",
+          "address": "Harris County Criminal Court at Law No. 338, 1201 Franklin St -- 15th Floor, Houston TX 77002"
+        },
+        {
+          "name": "339",
+          "address": "Harris County Criminal Court at Law No. 339, 1201 Franklin St -- 14th Floor, Houston TX 77002"
+        },
+        {
+          "name": "351",
+          "address": "Harris County Criminal Court at Law No. 351, 1201 Franklin St -- 14th Floor, Houston TX 77002"
+        },
+        {
+          "name": "482",
+          "address": "Harris County Criminal Court at Law  No. 482, 1201 Franklin St -- 14th Floor, Houston TX 77002"
+        },
+        {
+          "name": "RIC",
+          "address": "Harris County Criminal Court at Law (RIC), 1201 Franklin St -- 20th Floor, Houston TX 77002"
+        }
+      ]
     }
   ]
 }

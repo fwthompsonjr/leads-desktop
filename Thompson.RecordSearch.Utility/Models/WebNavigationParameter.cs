@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using System.Xml;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Models
@@ -53,7 +52,7 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public int WebsiteId { get; set; }
         public string Data { get; set; }
-        
+
         public string WebAddress { get; set; }
 
         public string Defendant { get; set; }
@@ -62,10 +61,10 @@ namespace Thompson.RecordSearch.Utility.Models
 
         public bool IsCriminal { get; set; }
         public bool IsMapped { get; set; }
-	    public string Case { get; set; }
-	    public string DateFiled { get; set; }
-	    public string Court { get; set; }
-	    public string CaseType { get; set; }
+        public string Case { get; set; }
+        public string DateFiled { get; set; }
+        public string Court { get; set; }
+        public string CaseType { get; set; }
         public string CaseStyle { get; set; }
         public string PageHtml { get; internal set; }
 
@@ -78,7 +77,11 @@ namespace Thompson.RecordSearch.Utility.Models
         {
             get
             {
-                if (string.IsNullOrEmpty(fieldName)) return string.Empty;
+                if (string.IsNullOrEmpty(fieldName))
+                {
+                    return string.Empty;
+                }
+
                 if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("case", comparison))
                 {
                     return Case;
@@ -101,9 +104,14 @@ namespace Thompson.RecordSearch.Utility.Models
                 }
                 return string.Empty;
             }
-            set {
+            set
+            {
 
-                if (string.IsNullOrEmpty(fieldName)) return;
+                if (string.IsNullOrEmpty(fieldName))
+                {
+                    return;
+                }
+
                 if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("case", comparison))
                 {
                     Case = value;
@@ -135,7 +143,11 @@ namespace Thompson.RecordSearch.Utility.Models
 
         private string GetFromData()
         {
-            if (string.IsNullOrEmpty(Data)) return null;
+            if (string.IsNullOrEmpty(Data))
+            {
+                return null;
+            }
+
             var webHelper = new WebInteractive();
             var data = new StringBuilder(Data).ToString();
             if (data.Contains("<img"))
@@ -145,7 +157,11 @@ namespace Thompson.RecordSearch.Utility.Models
             }
             var doc = XmlDocProvider.GetDoc(data);
             var node = doc.FirstChild.ChildNodes[1];
-            if (node == null) return string.Empty;
+            if (node == null)
+            {
+                return string.Empty;
+            }
+
             return node.InnerText;
         }
     }

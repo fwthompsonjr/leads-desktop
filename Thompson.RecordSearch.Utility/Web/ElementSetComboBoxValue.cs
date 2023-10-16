@@ -1,10 +1,10 @@
 ﻿namespace Thompson.RecordSearch.Utility.Web
 {
-    using Byy = OpenQA.Selenium.By;
-    using Thompson.RecordSearch.Utility.Dto;
     using OpenQA.Selenium;
-    using System.Threading;
     using System;
+    using System.Threading;
+    using Thompson.RecordSearch.Utility.Dto;
+    using Byy = OpenQA.Selenium.By;
 
     public class ElementSetComboBoxValue : ElementActionBase
     {
@@ -14,7 +14,11 @@
 
         public override void Act(NavigationStep item)
         {
-            if (item == null) throw new System.ArgumentNullException(nameof(item));
+            if (item == null)
+            {
+                throw new System.ArgumentNullException(nameof(item));
+            }
+
             var driver = GetWeb;
             var selector = Byy.CssSelector(item.Locator.Query);
             var elementToClick = driver.FindElement(selector);
@@ -26,7 +30,10 @@
                 change = $"{getElement}.onchange();",
                 optionText = $"var sel = {getElement};\nreturn sel.options[sel.selectedIndex].text;"
             };
-            if (string.IsNullOrEmpty(item.DisplayName)) return;
+            if (string.IsNullOrEmpty(item.DisplayName))
+            {
+                return;
+            }
             //document.getElementById('personlist').value=Person_ID;
             var jse = (IJavaScriptExecutor)driver;
             jse.ExecuteScript(jv.setIndex);

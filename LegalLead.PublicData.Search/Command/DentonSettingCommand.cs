@@ -11,7 +11,7 @@ namespace LegalLead.PublicData.Search.Command
         {
             using (var form = new FormDentonSetting())
             {
-                Application.Run(form); 
+                Application.Run(form);
             }
         }
     }
