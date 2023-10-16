@@ -32,13 +32,13 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Restore Packages
-      run: nuget restore {{ env.SOLUTION_NAME }}
+      run: nuget restore ${{ env.SOLUTION_NAME }}
 
     - name: Build solution
-      run: msbuild {{ env.SOLUTION_NAME }} -t:rebuild -property:Configuration=Release
+      run: msbuild ${{ env.SOLUTION_NAME }} -t:rebuild -property:Configuration=Release
 
     - name: Test with dotnet
-      run: dotnet test {{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory "TestResults-${{ matrix.dotnet-version }}"
+      run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory "TestResults-${{ matrix.dotnet-version }}"
 
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v3
