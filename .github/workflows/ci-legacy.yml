@@ -27,7 +27,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Restore Packages
-      run: nuget restore Thompson.RecordSearch.sln
+      run: nuget restore Thompson.RecordSearch.Framework.sln
 
     - name: Build solution
-      run: msbuild Thompson.RecordSearch.sln -t:rebuild -property:Configuration=Release
+      run: msbuild Thompson.RecordSearch.Framework.sln -t:rebuild -property:Configuration=Release
