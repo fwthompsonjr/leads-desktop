@@ -1,4 +1,5 @@
 using legallead.permissions.api.Entity;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 namespace permissions.api.tests
@@ -7,10 +8,10 @@ namespace permissions.api.tests
     {
         private static readonly object locker = new();
         private bool disposedValue;
-
+        private readonly legallead.permissions.api.DataProvider Provider;
         public ApiDbTests()
         {
-            DropDb();
+            Provider = GetDataProvider();
         }
 
         [Fact]
@@ -22,14 +23,14 @@ namespace permissions.api.tests
                 UserId = "john.smith@email.org",
                 Pwd = "abcdefghijklmop"
             };
-            user.Add(user);
+            Provider.Insert(user);
             Assert.NotNull(user.Id);
             user.Name = "Test Changed";
-            user.Save(user);
-            var item = new UserEntity().Get(x => { return x.Id == user.Id; });
+            Provider.Update(user);
+            var item = Provider.Get(user, x => { return x.Id == user.Id; });
             Assert.NotNull(item);
             Assert.Equal(user.Name, item.Name);
-            user.Remove(user);
+            Provider.Delete(user);
         }
 
 
@@ -56,9 +57,9 @@ namespace permissions.api.tests
                     Pwd = "abcdefghijklmop"
                 }
             };
-            users.ForEach(u => u.Add(u));
+            users.ForEach(u => Provider.Insert(u));
 
-            var items = new UserEntity().GetAll(x => { return x.UserId == users[0].UserId; });
+            var items = Provider.GetAll(users[0], x => { return x.UserId == users[0].UserId; });
             Assert.NotNull(items);
             Assert.Equal(2, items.Count());
         }
@@ -81,6 +82,11 @@ namespace permissions.api.tests
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+        private static legallead.permissions.api.DataProvider GetDataProvider()
+        {
+            var config = GetConfiguration();
+            return new legallead.permissions.api.DataProvider(config);
+        }
 
         private static void DropDb()
         {
@@ -100,5 +106,13 @@ namespace permissions.api.tests
             }
         }
 
+        private static IConfiguration GetConfiguration()
+        {
+            return new ConfigurationBuilder()
+                 .SetBasePath(Directory.GetCurrentDirectory())
+                 .AddJsonFile("appsettings.json")
+                 .AddJsonFile("appsettings.Development.json")
+                 .Build();
+        }
     }
 }

@@ -8,169 +8,132 @@ namespace legallead.permissions.api.Entity
     {
         private const string dbFolder = "_db";
         private static readonly object _instance = new();
-        private readonly string? _location;
 
-        protected BaseEntity()
-        {
-            var name = typeof(T).Name.ToLower();
-            Generate(name, this.IsProtected, ref _location);
-        }
         protected abstract bool IsProtected { get; }
         public string? Id { get; set; }
         public string? Name { get; set; }
         public bool IsDeleted { get; set; }
 
 
-        public void Add(T item)
+        public void Add(T item, string location)
         {
-            _ = Insert(item);
+            _ = Insert(item, location);
         }
 
-        public void Save(T item)
+        public void Save(T item, string location)
         {
-            _ = Update(item);
+            _ = Update(item, location);
         }
 
-        public void Remove(T item)
+        public void Remove(T item, string location)
         {
-            _ = Delete(item);
+            _ = Delete(item, location);
         }
 
-        public T? Get(Func<T, bool> expression)
+        public T? Get(string location, Func<T, bool> expression)
         {
-            return Find(expression);
+            return Find(location, expression);
         }
 
-        public IEnumerable<T>? GetAll(Func<T, bool> expression)
+        public IEnumerable<T>? GetAll(string location, Func<T, bool> expression)
         {
-            return FindAll(expression);
+            return FindAll(location, expression);
         }
 
-        private string Location => _location ?? string.Empty;
-
-        protected T Insert(T entity)
+        protected T Insert(T entity, string location)
         {
-            if (string.IsNullOrEmpty(Location)) 
-                throw new ArgumentNullException(nameof(entity), "Data file is missing or not initialized.");
+            if (string.IsNullOrEmpty(location)) 
+                throw new ArgumentNullException(nameof(location), "Data file is missing or not initialized.");
 
             if (!string.IsNullOrEmpty(entity.Id)) { 
                 throw new ArgumentOutOfRangeException(nameof(entity), "Id is not expected for data insert");
             }
             entity.Id = Guid.NewGuid().ToString();
-            var table = GetContent();
+            var table = GetContent(location);
             table.Add(entity);
             var content = JsonConvert.SerializeObject(table);
-            SaveContent(content);
+            SaveContent(content, location);
             return entity;
         }
 
-        protected T Update(T entity)
+        protected T Update(T entity, string location)
         {
-            if (string.IsNullOrEmpty(Location))
-                throw new ArgumentNullException(nameof(entity), "Data file is missing or not initialized.");
+            if (string.IsNullOrEmpty(location))
+                throw new ArgumentNullException(nameof(location), "Data file is missing or not initialized.");
 
             if (string.IsNullOrEmpty(entity.Id))
             {
                 throw new ArgumentOutOfRangeException(nameof(entity), "Id is required for data update");
             }
-            var table = GetContent();
+            var table = GetContent(location);
             var id = table.FindIndex(x => (x.Id ?? "").Equals(entity.Id, StringComparison.OrdinalIgnoreCase));
             table[id] = entity;
             var content = JsonConvert.SerializeObject(table);
-            SaveContent(content);
+            SaveContent(content, location);
             return entity;
         }
 
-        protected T? Find(Func<T, bool> expression)
+        protected T? Find(string location, Func<T, bool> expression)
         {
-            if (string.IsNullOrEmpty(Location))
+            if (string.IsNullOrEmpty(location))
                 throw new FileNotFoundException("Data file is missing or not initialized.");
 
-            var table = GetContent();
+            var table = GetContent(location);
             return table.Find(x => expression(x));
         }
 
-        protected IEnumerable<T>? FindAll(Func<T, bool> expression)
+        protected IEnumerable<T>? FindAll(string location, Func<T, bool> expression)
         {
-            if (string.IsNullOrEmpty(Location))
+            if (string.IsNullOrEmpty(location))
                 throw new FileNotFoundException("Data file is missing or not initialized.");
 
-            var table = GetContent();
+            var table = GetContent(location);
             return table.FindAll(x => expression(x));
         }
 
-        protected T? Delete(T entity)
+        protected T? Delete(T entity, string location)
         {
-            if (string.IsNullOrEmpty(Location))
+            if (string.IsNullOrEmpty(location))
                 throw new ArgumentNullException(nameof(entity), "Data file is missing or not initialized.");
 
             if (string.IsNullOrEmpty(entity.Id))
             {
                 throw new ArgumentOutOfRangeException(nameof(entity), "Id is required for data delete");
             }
-            var table = GetContent();
+            var table = GetContent(location);
             var found = table.FindIndex(x => (x.Id ?? "").Equals(entity.Id, StringComparison.OrdinalIgnoreCase));
             if (found < 0) return null;
             table.RemoveAt(found);
             var content = JsonConvert.SerializeObject(table);
-            SaveContent(content);
+            SaveContent(content, location);
             return entity;
         }
 
-        private List<T> GetContent()
+        private List<T> GetContent(string location)
         {
             lock (_instance)
             {
-                var content = File.ReadAllText(Location);
+                var content = File.ReadAllText(location);
                 if (IsProtected)
                 {
                     // decrypt 
-                    var prefix = GetFileKeyName(Location);
+                    var prefix = GetFileKeyName(location);
                     content = CryptoEngine.Decrypt(content, prefix);
                 }
                 return JsonConvert.DeserializeObject<List<T>>(content) ?? new();
             }
         }
-        private void SaveContent(string content)
+        private void SaveContent(string content, string location)
         {
             lock (_instance)
             {
                 if (IsProtected)
                 {
                     // encrypt 
-                    var prefix = GetFileKeyName(Location);
+                    var prefix = GetFileKeyName(location);
                     content = CryptoEngine.Encrypt(content, prefix);
                 }
-                File.WriteAllText(Location, content);
-            }
-        }
-
-        private static void Generate(string entityName, bool isProtected, ref string? location)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            if (assembly == null || assembly.Location == null) return;
-            var execName = new Uri(assembly.Location).AbsolutePath;
-            if (execName != null && System.IO.File.Exists(execName))
-            {
-                var name = $"{entityName}.json";
-                var contentRoot = Path.GetDirectoryName(execName) ?? "";
-                var dataRoot = Path.Combine(contentRoot, dbFolder);
-                var dataFile = Path.Combine(dataRoot, name);
-                if (!System.IO.File.Exists(dataFile))
-                {
-                    lock (_instance)
-                    {
-                        var content = "[]";
-                        if (isProtected)
-                        {
-                            // encrypt 
-                            var prefix = GetFileKeyName(dataFile);
-                            content = CryptoEngine.Encrypt(content, prefix);
-                        }
-                        System.IO.File.WriteAllText(dataFile, content);
-                    }
-                }
-                location = dataFile;
+                File.WriteAllText(location, content);
             }
         }
 

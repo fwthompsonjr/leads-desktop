@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using legallead.permissions.api.Entity;
+using legallead.permissions.api.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 
@@ -13,8 +15,10 @@ namespace legallead.permissions.api.Controllers
 
         private static readonly object _instance = new object();
         private string? _readme;
-        public ApplicationController()
+        private readonly DataProvider _db;
+        public ApplicationController(DataProvider db)
         {
+            _db = db;
         }
 
         [HttpGet(Name = "ReadMe")]
@@ -26,6 +30,28 @@ namespace legallead.permissions.api.Controllers
             return _readme;
         }
 
+        [HttpPost(Name = "Register")]
+        [Route("register")]
+        public string Register([FromBody] RegisterAccountModel model)
+        {
+            var response = "An error occurred registering account.";
+            var merrors = model.Validate(out bool isModelValid);
+            if (!isModelValid)
+            {
+                response = string.Join(';', merrors.Select(m => m.ErrorMessage));
+                return response;
+            }
+            var applicationCheck = Request.Validate(_db, response);
+            if (!applicationCheck.Key) { return applicationCheck.Value; }
+            var account = new UserEntity
+            {
+                Name = model.UserName,
+                UserId = model.UserName,
+                Pwd = model.Password,
+            };
+            _db.Insert(account);
+            return account.Id ?? response;
+        }
 
         private static void GenerateReadMe(ref string readme)
         {
@@ -53,5 +79,7 @@ namespace legallead.permissions.api.Controllers
 
             }
         }
+
+        
     }
 }
