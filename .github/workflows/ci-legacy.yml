@@ -17,8 +17,8 @@ jobs:
         dotnet-version: [ '6.0.x' ]
     env:
         SOLUTION_NAME: Thompson.RecordSearch.Framework.sln
-        TEST_FILE_NAME: "test-results-${{ matrix.dotnet-version }}.trx"
-        REPORT_FILE_NAME: "test-report-${{ matrix.dotnet-version }}.md"
+        TEST_FILE_NAME: "test-results-${{ matrix.dotnet-version }}"
+        REPORT_FILE_NAME: "test-results-${{ matrix.dotnet-version }}.md"
 
 
     steps:
@@ -45,12 +45,10 @@ jobs:
     - name: Test with dotnet
       run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory ${{ env.TEST_FILE_NAME }}
 
-    - name: Publish Test Results
-      shell: pwsh
-      run: |
-        $input = "File=$($env:TEST_FILE_NAME);Format=Trx"
-        Write-Warning "output file:= $input"
-        liquid --inputs $input --output-file $env:REPORT_FILE_NAME
-        $content = [system.io.file]::ReadAllText( $Env:TEST_FILE_NAME )
-        $content | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-    
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: dotnet-results-${{ matrix.dotnet-version }}
+        path: ${{ env.TEST_FILE_NAME }}
+      # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}
