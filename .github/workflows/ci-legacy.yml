@@ -18,6 +18,7 @@ jobs:
     env:
         SOLUTION_NAME: Thompson.RecordSearch.Framework.sln
         TEST_FILE_NAME: "test-results-${{ matrix.dotnet-version }}"
+        REPORT_FILE_NAME: "test-report-${{ matrix.dotnet-version }}.md"
 
 
     steps:
@@ -32,6 +33,9 @@ jobs:
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1.1
 
+    - name: setup-liquid-test-reports
+      run: dotnet tool install --global LiquidTestReports.Cli --version 1.4.3-beta
+
     - name: Restore Packages
       run: nuget restore ${{ env.SOLUTION_NAME }}
 
@@ -41,19 +45,11 @@ jobs:
     - name: Test with dotnet
       run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory ${{ env.TEST_FILE_NAME }}
 
-    - name: Upload dotnet test results
-      uses: actions/upload-artifact@v3
-      with:
-        name: dotnet-results-${{ matrix.dotnet-version }}
-        path: ${{ env.TEST_FILE_NAME }}
-      # Use always() to always run this step to publish test results when there are test failures
-      if: ${{ always() }}
-
     - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2
-      if: ${{ always() }}
-      with:
-        files: |
-          ./**/test-results-*.xml
-          ./**/test-results-*.trx
-          ./**/test-results-*.json
+      shell: pwsh
+      run: |
+        $input = "File=$($env:TEST_FILE_NAME).trx;Format=Trx"
+        liquid --inputs $input --output-file $env:REPORT_FILE_NAME
+        $content = [system.io.file]::ReadAllText( $Env:TEST_FILE_NAME )
+        $content | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+    
