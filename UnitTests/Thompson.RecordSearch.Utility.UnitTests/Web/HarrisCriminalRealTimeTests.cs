@@ -20,6 +20,7 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
         [TestInitialize]
         public void Setup()
         {
+#if DEBUG
             if (GetDriver == null)
             {
                 var src = SrcFile.Replace(@"\", "/");
@@ -29,10 +30,12 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
                     Url = url
                 };
             }
+#endif
         }
         [TestCleanup]
         public void CleanUp()
         {
+#if DEBUG
             if (GetDriver != null)
             {
                 GetDriver.Close();
@@ -40,11 +43,13 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
                 GetDriver.Dispose();
                 GetDriver = null;
             }
+#endif
         }
 
         [TestMethod]
         public void Criminal_CanIterate()
         {
+#if DEBUG
             const int expected = 4331;
             var obj = new HarrisCriminalRealTime();
             try
@@ -58,7 +63,9 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
             {
                 Assert.Fail(ex.Message + Environment.NewLine + ex.StackTrace);
             }
-
+#else
+            Assert.Inconclusive("Test only runs in debug configuration.");            
+#endif
         }
 
         private static string SrcDir()

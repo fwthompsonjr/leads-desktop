@@ -1,0 +1,49 @@
+# This workflow will build a .NET framework project(s)
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: CI .NET Framework Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    env:
+        SOLUTION_NAME: Thompson.RecordSearch.Framework.sln
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        dotnet-version: [ '6.0.x' ]
+
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+      
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Restore Packages
+      run: nuget restore ${{ env.SOLUTION_NAME }}
+
+    - name: Build solution
+      run: msbuild ${{ env.SOLUTION_NAME }} -t:rebuild -property:Configuration=Release
+
+    - name: Test with dotnet
+      run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory "TestResults-${{ matrix.dotnet-version }}"
+
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: dotnet-results-${{ matrix.dotnet-version }}
+        path: TestResults-${{ matrix.dotnet-version }}
+      # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}
