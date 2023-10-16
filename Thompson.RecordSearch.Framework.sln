@@ -63,8 +63,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{EB64B2C2-E247-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalLead.Resources", "LegalLead.Resources\LegalLead.Resources.csproj", "{AB526DB3-E334-4C6B-A634-1A890F63AADF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Install", "_Install", "{5B2D3423-3610-427E-ABEE-FCC309844A03}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_ChangeLog", "_ChangeLog", "{6EB0A66F-8CF8-49D2-9932-67BFC016B733}"
 	ProjectSection(SolutionItems) = preProject
 		changeLog.json = changeLog.json
@@ -79,8 +77,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LegalLead.Changed.UnitTests", "UnitTests\LegalLead.Change.UnitTests\LegalLead.Changed.UnitTests.csproj", "{BEEF0DAE-102E-4744-ABD4-B3B8464A2C0F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thompson.RecordSearch.Utility.UnitTests", "UnitTests\Thompson.RecordSearch.Utility.UnitTests\Thompson.RecordSearch.Utility.UnitTests.csproj", "{294E53B4-32E8-430A-B215-4FBEDF191DAE}"
-EndProject
-Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Legal Lead Install", "Legal Lead Install\Legal Lead Install.aiproj", "{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,16 +167,6 @@ Global
 		{294E53B4-32E8-430A-B215-4FBEDF191DAE}.Integration|Any CPU.Build.0 = Debug|Any CPU
 		{294E53B4-32E8-430A-B215-4FBEDF191DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{294E53B4-32E8-430A-B215-4FBEDF191DAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.All|Any CPU.ActiveCfg = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.All|Any CPU.Build.0 = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.Debug|Any CPU.ActiveCfg = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.Debug|Any CPU.Build.0 = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.DefaultBuild|Any CPU.ActiveCfg = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.DefaultBuild|Any CPU.Build.0 = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.Integration|Any CPU.ActiveCfg = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.Integration|Any CPU.Build.0 = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.Release|Any CPU.ActiveCfg = DefaultBuild
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136}.Release|Any CPU.Build.0 = DefaultBuild
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,7 +180,6 @@ Global
 		{B4866D63-37FD-4143-8566-4439C421BEA1} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
 		{BEEF0DAE-102E-4744-ABD4-B3B8464A2C0F} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
 		{294E53B4-32E8-430A-B215-4FBEDF191DAE} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
-		{FFB0FEBE-51C6-4203-BA2A-6C8B646A2136} = {5B2D3423-3610-427E-ABEE-FCC309844A03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
