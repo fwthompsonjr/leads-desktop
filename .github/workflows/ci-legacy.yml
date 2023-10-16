@@ -52,3 +52,12 @@ jobs:
         path: ${{ env.TEST_FILE_NAME }}
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
+
+    - uses: actions/download-artifact@v3
+      id: download
+      with:
+        name: dotnet-results-${{ matrix.dotnet-version }}
+        path: ${{ env.TEST_FILE_NAME }}
+
+    - name: 'Echo download path'
+      run: echo ${{steps.download.outputs.download-path}}
