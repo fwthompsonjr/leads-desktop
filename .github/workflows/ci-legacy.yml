@@ -49,6 +49,7 @@ jobs:
       shell: pwsh
       run: |
         $input = "File=$($env:TEST_FILE_NAME);Format=Trx"
+        Write-Warning "output file:= $input"
         liquid --inputs $input --output-file $env:REPORT_FILE_NAME
         $content = [system.io.file]::ReadAllText( $Env:TEST_FILE_NAME )
         $content | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
