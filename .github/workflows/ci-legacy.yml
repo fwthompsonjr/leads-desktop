@@ -13,6 +13,10 @@ jobs:
   build:
 
     runs-on: windows-2019
+    strategy:
+      matrix:
+        dotnet-version: [ '3.1.x', '6.0.x' ]
+
 
     steps:
     - uses: actions/checkout@v2
@@ -31,3 +35,14 @@ jobs:
 
     - name: Build solution
       run: msbuild Thompson.RecordSearch.Framework.sln -t:rebuild -property:Configuration=Release
+
+    - name: Test with dotnet
+      run: dotnet test --logger trx -c Release --no-restore --results-directory "TestResults-${{ matrix.dotnet-version }}"
+
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: dotnet-results-${{ matrix.dotnet-version }}
+        path: TestResults-${{ matrix.dotnet-version }}
+      # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}
