@@ -60,4 +60,7 @@ jobs:
         path: ${{ env.TEST_FILE_NAME }}
 
     - name: 'Echo download path'
-      run: echo ${{steps.download.outputs.download-path}}
+      shell: pwsh
+      run: |
+        $dir = [system.io.directoryinfo]::new( ${{steps.download.outputs.download-path}} );
+        $dir.GetFiles() | ForEach-Object { Write-Output ([system.io.fileinfo]$_).FullName }
