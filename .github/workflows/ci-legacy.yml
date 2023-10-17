@@ -63,4 +63,6 @@ jobs:
       shell: pwsh
       run: |
         $dir = [system.io.directoryinfo]::new( ${{steps.download.outputs.download-path}} );
-        $dir.GetFiles() | ForEach-Object { Write-Output ([system.io.fileinfo]$_).FullName }
+        $dir.GetFiles() | ForEach-Object { 
+        $fi = ([system.io.fileinfo]$_);
+        Write-Output "$($fi.FullName)" }
