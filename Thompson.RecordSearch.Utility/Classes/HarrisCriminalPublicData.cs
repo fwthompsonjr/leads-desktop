@@ -14,14 +14,12 @@ namespace SeleniumTests
     {
         private static IWebDriver driver;
         private StringBuilder verificationErrors;
-        private static string baseURL;
         private bool acceptNextAlert = true;
         
         [ClassInitialize]
         public static void InitializeClass(TestContext testContext)
         {
             driver = new FirefoxDriver();
-            baseURL = "https://www.google.com/";
         }
         
         [ClassCleanup]

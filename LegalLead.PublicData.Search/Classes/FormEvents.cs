@@ -130,6 +130,9 @@ namespace LegalLead.PublicData.Search
         {
 
             var websites = SettingsManager.GetNavigation();
+            var hcconfig = HccConfiguration.Load().Dropdown;
+            var hcitem = websites.Find(x => x.Id.Equals(hcconfig.Index));
+            if(hcitem != null && !hcconfig.IsEnabled) { websites.Remove(hcitem); }
             var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
             var tarrantCourt = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.TarrantCountyCaseType);
             const int Zero = 0;

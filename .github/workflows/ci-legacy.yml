@@ -62,7 +62,7 @@ jobs:
     - name: 'Echo download path'
       shell: pwsh
       run: |
-        $dir = [system.io.directoryinfo]::new( "${{steps.download.outputs.download-path}}" );
+        $dir = "${{steps.download.outputs.download-path}}"
         $dir.GetFiles() | ForEach-Object { 
         $fi = ([system.io.fileinfo]$_);
         Write-Output "$($fi.FullName)" }

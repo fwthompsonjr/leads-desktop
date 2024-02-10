@@ -11,6 +11,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shared", "_Shared", "{C68AF7EF-946E-412F-895D-97D403F84ED9}"
 	ProjectSection(SolutionItems) = preProject
 		app.config = app.config
+		Shared\application-settings.json = Shared\application-settings.json
 		Shared\basAddress.bas.txt = Shared\basAddress.bas.txt
 		Shared\basCommon.bas.txt = Shared\basCommon.bas.txt
 		Shared\basPeople.bas.txt = Shared\basPeople.bas.txt
@@ -84,9 +85,9 @@ Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Legal Lead Install", "Legal
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{646987C5-548B-4347-806B-4A24B72B58EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "legallead.permissions.api", "legallead.permissions.api\legallead.permissions.api.csproj", "{9A2B634D-08FB-4ECC-B11C-82CFC4CCF2EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "legallead.permissions.api", "legallead.permissions.api\legallead.permissions.api.csproj", "{9A2B634D-08FB-4ECC-B11C-82CFC4CCF2EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "permissions.api.tests", "UnitTests\permissions.api.tests\permissions.api.tests.csproj", "{1B6427ED-15B9-4480-B739-B29D994C2B06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "permissions.api.tests", "UnitTests\permissions.api.tests\permissions.api.tests.csproj", "{1B6427ED-15B9-4480-B739-B29D994C2B06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -225,7 +226,7 @@ Global
 		{1B6427ED-15B9-4480-B739-B29D994C2B06} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
+		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 	EndGlobalSection
 EndGlobal

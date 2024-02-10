@@ -13,7 +13,7 @@ namespace legallead.permissions.api.Controllers
         private const string defaultReadme = "No ReadMe information is available.";
         private static bool isReadMeBuilt = false;
 
-        private static readonly object _instance = new object();
+        private static readonly object _instance = new();
         private string? _readme;
         private readonly DataProvider _db;
         public ApplicationController(DataProvider db)

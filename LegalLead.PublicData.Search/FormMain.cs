@@ -26,10 +26,16 @@ namespace LegalLead.PublicData.Search
             string version = appName.Version.ToString();
             Text = string.Format(CultureInfo.CurrentCulture, @"{0} - {1}",
                 appName.Name, version);
-
+            FormClosing += FormMain_FormClosing;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            const string processNames = "chromedriver,geckodriver";
+            KillProcess(processNames);
         }
 
         protected static T GetObject<T>(object item)
@@ -282,5 +288,6 @@ namespace LegalLead.PublicData.Search
                 Refresh();
             }));
         }
+
     }
 }
