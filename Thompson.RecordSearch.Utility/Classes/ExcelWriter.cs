@@ -11,6 +11,7 @@ using System.Xml;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
+using Thompson.RecordSearch.Utility.Tools;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -154,7 +155,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 rowIndex++;
             }
             addressList.Add(new PersonAddress());
-            ApplyGridFormatting(websiteId, "people", wsDt, addressList);
+            ApplyGridFormatting(websiteId, "people", wsDt, addressList, pck);
             if (saveFile) { FileWriter.SaveAs(pck, outputFileName); }
             return pck;
         }
@@ -326,7 +327,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         private void ApplyGridFormatting<T>(int websiteId,
             string sectionName,
             ExcelWorksheet wsDt,
-            System.Collections.Generic.List<T> rows)
+            List<T> rows,
+            ExcelPackage excelPackage = null)
         {
             const int rowIndex = 1;
             var isCaseLayout = "people" == sectionName;
@@ -368,7 +370,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             rngCells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
             rngCells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
             rngCells.Style.WrapText = true;
-
+            if (excelPackage == null) return;
+            var index = websiteId.ToString(CultureInfo.CurrentCulture);
+            var layout = ExcelLayoutContainer.GetContainer.TryGetInstance<IExcelLayout>(index);
+            layout?.Configure(excelPackage);
         }
     }
 }

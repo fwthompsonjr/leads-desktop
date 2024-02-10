@@ -45,7 +45,7 @@ namespace Thompson.RecordSearch.Utility.Db
             return -1 * indexId;
         }
 
-        private HccOptionDto GetOption()
+        private static HccOptionDto GetOption()
         {
 
             var data = DataOptions.Read();

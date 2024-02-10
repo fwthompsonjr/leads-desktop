@@ -31,7 +31,7 @@ namespace Thompson.RecordSearch.Utility.Tools
             if (size > 0)
             {
                 var builder = new StringBuilder(size + 1);
-                GetWindowText(hWnd, builder, builder.Capacity);
+                _ = GetWindowText(hWnd, builder, builder.Capacity);
                 return builder.ToString();
             }
 

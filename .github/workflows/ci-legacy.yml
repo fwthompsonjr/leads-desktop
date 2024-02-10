@@ -11,12 +11,14 @@ on:
 
 jobs:
   build:
-    env:
-        SOLUTION_NAME: Thompson.RecordSearch.Framework.sln
     runs-on: windows-2019
     strategy:
       matrix:
         dotnet-version: [ '6.0.x' ]
+    env:
+        SOLUTION_NAME: Thompson.RecordSearch.Framework.sln
+        TEST_FILE_NAME: "test-results-${{ matrix.dotnet-version }}"
+        REPORT_FILE_NAME: "test-results-${{ matrix.dotnet-version }}.md"
 
 
     steps:
@@ -31,6 +33,9 @@ jobs:
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1.1
 
+    - name: setup-liquid-test-reports
+      run: dotnet tool install --global LiquidTestReports.Cli --version 1.4.3-beta
+
     - name: Restore Packages
       run: nuget restore ${{ env.SOLUTION_NAME }}
 
@@ -38,12 +43,18 @@ jobs:
       run: msbuild ${{ env.SOLUTION_NAME }} -t:rebuild -property:Configuration=Release
 
     - name: Test with dotnet
-      run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory "TestResults-${{ matrix.dotnet-version }}"
+      run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory ${{ env.TEST_FILE_NAME }}
 
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v3
       with:
         name: dotnet-results-${{ matrix.dotnet-version }}
-        path: TestResults-${{ matrix.dotnet-version }}
+        path: ${{ env.TEST_FILE_NAME }}
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
+
+    - uses: actions/download-artifact@v3
+      id: download
+      with:
+        name: dotnet-results-${{ matrix.dotnet-version }}
+        path: ${{ env.TEST_FILE_NAME }}

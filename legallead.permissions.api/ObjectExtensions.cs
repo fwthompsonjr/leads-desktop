@@ -31,7 +31,7 @@ namespace legallead.permissions.api
             var application = request.GetObjectFromHeader<ApplicationRequestModel>("APP_IDENTITY");
             if (application == null)
             {
-                return new KeyValuePair<bool, string>(false, response); ;
+                return new KeyValuePair<bool, string>(false, response);
             }
             var apperrors = application.Validate(out bool isAppValid);
             if (!application.Id.HasValue || !isAppValid)

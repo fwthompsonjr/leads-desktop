@@ -36,9 +36,7 @@ namespace LegalLead.PublicData.Search.Command
                 IWebDriver driver = GetDriver(true);
                 try
                 {
-                    var result = obj.GetData(driver);
-                    // Debug.Assert(result != null);
-                    // Debug.Assert(File.Exists(result));
+                    _ = obj.GetData(driver);
                 }
                 finally
                 {

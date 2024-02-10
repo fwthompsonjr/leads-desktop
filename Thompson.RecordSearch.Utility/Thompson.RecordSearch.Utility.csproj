@@ -257,6 +257,7 @@
     <Compile Include="Classes\ElementWaitForNavigation.cs" />
     <Compile Include="Classes\ExcAutomationServer.cs" />
     <Compile Include="Classes\ExcelFileWriter.cs" />
+    <Compile Include="Classes\ExcelLayoutHarrisCivil.cs" />
     <Compile Include="Classes\ExcelWriter.cs" />
     <Compile Include="Classes\HarrisCivilInteractive.cs" />
     <Compile Include="Classes\HarrisCriminalInteractive.cs" />
@@ -297,8 +298,11 @@
     <Compile Include="Dto\HarrisCaseSearchDto.cs" />
     <Compile Include="Dto\HarrisCriminalExtensions.cs" />
     <Compile Include="Dto\HccOptionDto.cs" />
+    <Compile Include="Interfaces\IExcelLayout.cs" />
     <Compile Include="Parsing\CaseStyleExtensions.cs" />
     <Compile Include="Tools\EnumerateWindows.cs" />
+    <Compile Include="Tools\ExcelLayoutContainer.cs" />
+    <Compile Include="Tools\LayoutRegistry.cs" />
     <Compile Include="Web\ElementCollinLoginAction.cs" />
     <Compile Include="Web\HarriCriminalsRealTimeDetail.cs" />
     <Compile Include="Web\HarrisCriminalRealTime.cs" />

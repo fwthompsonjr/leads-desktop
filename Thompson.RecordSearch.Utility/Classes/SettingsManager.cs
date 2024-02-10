@@ -52,7 +52,16 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             get { return _excelFileName ?? (_excelFileName = GetExcelFileName()); }
         }
-
+        private static string _customSettings;
+        public static string CustomSettings
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_customSettings)) return _customSettings;
+                _customSettings = LoadFile("application-settings.json");
+                return _customSettings;
+            }
+        }
 
         /// <summary>
         /// Gets the content of the xml source file.
@@ -95,7 +104,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 return null;
             }
-
+            
             var parent = doc.DocumentElement.SelectSingleNode("setting[@name='Websites']");
             var response = new List<WebNavigationParameter>();
             foreach (var node in parent.ChildNodes)

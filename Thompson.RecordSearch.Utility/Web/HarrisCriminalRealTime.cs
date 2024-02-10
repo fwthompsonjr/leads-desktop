@@ -226,7 +226,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 return dto;
             }
 
-            private void UpdateAddress(HarrisCriminalDto dto, string fullAddress)
+            private static void UpdateAddress(HarrisCriminalDto dto, string fullAddress)
             {
                 if (dto == null | string.IsNullOrEmpty(fullAddress))
                 {
@@ -237,7 +237,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 // return
             }
 
-            private string TryFindRow(List<HtmlNode> table, string heading)
+            private static string TryFindRow(List<HtmlNode> table, string heading)
             {
                 var found = table.FirstOrDefault(f =>
                 {

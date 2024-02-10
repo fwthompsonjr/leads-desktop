@@ -1,4 +1,5 @@
-﻿using LegalLead.PublicData.Search.Command;
+﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Command;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -56,7 +57,10 @@ namespace LegalLead.PublicData.Search
                     frm.Save();
                 }
                 mainForm = new FormMain();
-                HarrisCriminalUpdate.Update();
+
+                var hcconfig = HccConfiguration.Load().Background;
+                if (hcconfig.Loader) { HarrisCriminalUpdate.Update(); }
+                
                 command.Execute(mainForm);
             }
         }
