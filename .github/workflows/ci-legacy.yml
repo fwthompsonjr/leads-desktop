@@ -58,11 +58,3 @@ jobs:
       with:
         name: dotnet-results-${{ matrix.dotnet-version }}
         path: ${{ env.TEST_FILE_NAME }}
-
-    - name: 'Echo download path'
-      shell: pwsh
-      run: |
-        $dir = "${{steps.download.outputs.download-path}}"
-        $dir.GetFiles() | ForEach-Object { 
-        $fi = ([system.io.fileinfo]$_);
-        Write-Output "$($fi.FullName)" }
