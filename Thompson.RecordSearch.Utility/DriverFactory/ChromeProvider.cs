@@ -29,6 +29,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
                 options.AddUserProfilePreference("download.prompt_for_download", false);
                 options.AddUserProfilePreference("download.directory_upgrade", true);
                 options.AddUserProfilePreference("download.default_directory", CalculateDownloadPath());
+                options.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
                 var driver = new ChromeDriver(GetDriverFileName(), options);
                 Console.WriteLine("Chrome executable location:\n {0}", binaryName);
                 return driver;

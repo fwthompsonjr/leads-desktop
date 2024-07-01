@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
@@ -98,6 +99,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                     }
 
                     action.Act(item);
+                    if (item.ActionName == "click" && item.DisplayName == "search-type-hyperlink")
+                    {
+                        Thread.Sleep(1250);
+                    }
                     cases = ExtractCaseData(results, cases, actionName, action);
                     if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
                     {
