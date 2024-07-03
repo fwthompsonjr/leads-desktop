@@ -39,16 +39,16 @@
             this.tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cboWebsite = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txConsole = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.cboSearchType = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
             this.labelCboCaseType = new System.Windows.Forms.Label();
-            this.cboCaseType = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
             this.label6 = new System.Windows.Forms.Label();
+            this.cboWebsite = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
+            this.cboSearchType = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
+            this.cboCaseType = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
             this.cboCourts = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -175,18 +175,6 @@
             this.tsStatusLabel.Name = "tsStatusLabel";
             this.tsStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // cboWebsite
-            // 
-            this.cboWebsite.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboWebsite.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboWebsite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboWebsite.FormattingEnabled = true;
-            this.cboWebsite.Location = new System.Drawing.Point(123, 8);
-            this.cboWebsite.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.cboWebsite.Name = "cboWebsite";
-            this.cboWebsite.Size = new System.Drawing.Size(526, 21);
-            this.cboWebsite.TabIndex = 6;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -238,6 +226,38 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Search Type";
             // 
+            // labelCboCaseType
+            // 
+            this.labelCboCaseType.AutoSize = true;
+            this.labelCboCaseType.Location = new System.Drawing.Point(10, 170);
+            this.labelCboCaseType.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
+            this.labelCboCaseType.Name = "labelCboCaseType";
+            this.labelCboCaseType.Size = new System.Drawing.Size(58, 13);
+            this.labelCboCaseType.TabIndex = 11;
+            this.labelCboCaseType.Text = "Case Type";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 210);
+            this.label6.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(58, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Case Type";
+            // 
+            // cboWebsite
+            // 
+            this.cboWebsite.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboWebsite.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboWebsite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboWebsite.FormattingEnabled = true;
+            this.cboWebsite.Location = new System.Drawing.Point(123, 8);
+            this.cboWebsite.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.cboWebsite.Name = "cboWebsite";
+            this.cboWebsite.Size = new System.Drawing.Size(526, 21);
+            this.cboWebsite.TabIndex = 6;
+            // 
             // cboSearchType
             // 
             this.cboSearchType.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -250,16 +270,6 @@
             this.cboSearchType.Size = new System.Drawing.Size(526, 21);
             this.cboSearchType.TabIndex = 10;
             // 
-            // labelCboCaseType
-            // 
-            this.labelCboCaseType.AutoSize = true;
-            this.labelCboCaseType.Location = new System.Drawing.Point(10, 170);
-            this.labelCboCaseType.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
-            this.labelCboCaseType.Name = "labelCboCaseType";
-            this.labelCboCaseType.Size = new System.Drawing.Size(58, 13);
-            this.labelCboCaseType.TabIndex = 11;
-            this.labelCboCaseType.Text = "Case Type";
-            // 
             // cboCaseType
             // 
             this.cboCaseType.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -271,16 +281,6 @@
             this.cboCaseType.Name = "cboCaseType";
             this.cboCaseType.Size = new System.Drawing.Size(526, 21);
             this.cboCaseType.TabIndex = 12;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 210);
-            this.label6.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(58, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Case Type";
             // 
             // cboCourts
             // 

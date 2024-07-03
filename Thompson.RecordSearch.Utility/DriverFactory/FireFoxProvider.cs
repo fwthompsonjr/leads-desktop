@@ -19,7 +19,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             if (driver != null)
             {
                 return driver;
-            };
+            }
             return new FirefoxDriver(GetDriverFileName());
         }
 
