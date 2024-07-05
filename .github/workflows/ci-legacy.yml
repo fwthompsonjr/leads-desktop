@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: windows-latest
     strategy:
       matrix:
         dotnet-version: [ '6.0.x' ]
@@ -40,7 +40,7 @@ jobs:
       run: dotnet restore ${{ env.SOLUTION_NAME }}
 
     - name: Build solution
-      run: dotnet build ${{ env.SOLUTION_NAME }} -c Release --no-restore
+      run: dotnet build ${{ env.SOLUTION_NAME }} -c Release
 
     - name: Test with dotnet
       run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory ${{ env.TEST_FILE_NAME }}
