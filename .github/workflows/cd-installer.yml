@@ -12,6 +12,7 @@ jobs:
     runs-on: windows-latest
     env:
         SOLUTION_NAME: Thompson.RecordSearch.sln
+        INSTALL_PROJ: ${{ github.workspace }}\setup\setup.vdproj
 
 
     steps:
@@ -22,3 +23,6 @@ jobs:
 
     - name: Build solution
       run: dotnet build ${{ env.SOLUTION_NAME }} -c Release
+
+    - name: Build installer
+      run: devenv.com ${{ env.INSTALL_PROJ }} /builf "Release"
