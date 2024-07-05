@@ -19,7 +19,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             if (driver != null)
             {
                 return driver;
-            };
+            }
             return new FirefoxDriver(GetDriverFileName());
         }
 
@@ -33,7 +33,11 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         {
             try
             {
-                return new FirefoxDriver();
+                var profile = new FirefoxOptions();
+                profile.SetPreference("browser.safebrowsing.enabled", true);
+                profile.SetPreference("browser.safebrowsing.malware.enabled", true);
+                profile.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
+                return new FirefoxDriver(profile);
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch

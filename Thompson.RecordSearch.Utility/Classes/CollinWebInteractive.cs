@@ -1,8 +1,11 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
@@ -96,8 +99,15 @@ namespace Thompson.RecordSearch.Utility.Classes
                     {
                         continue;
                     }
-
+                    if (item.DisplayName == "case-type-search")
+                    {
+                        WaitSequence(1, driver);
+                    }
                     action.Act(item);
+                    if (item.DisplayName == "search-type-hyperlink" || item.DisplayName == "case-type-search")
+                    {
+                        WaitSequence(4, driver);
+                    }
                     cases = ExtractCaseData(results, cases, actionName, action);
                     if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
                     {
@@ -133,11 +143,41 @@ namespace Thompson.RecordSearch.Utility.Classes
             finally
             {
                 driver.Quit();
-                driver.Dispose();
             }
         }
 
+        private static void WaitSequence(int delay, IWebDriver driver)
+        {
+            for (int i = 0; i < delay; i++)
+            {
+                Thread.Sleep(450);
+                driver.WaitForNavigation();
+                Proceed(driver);
+            }
+        }
 
+        private static void Proceed(IWebDriver driver)
+        {
+            var by = By.CssSelector("#proceed-button");
+            var element = driver.TryFindElement(by);
+            if (element == null) { return; }
+            var alert = GetAlert(driver);
+            alert?.Accept();
+            var command = "document.getElementById('proceed-button').click()";
+            var jse = (IJavaScriptExecutor)driver;
+            jse.ExecuteScript(command);
+        }
+        private static IAlert GetAlert(IWebDriver driver)
+        {
+            try
+            {
+                return driver.SwitchTo().Alert();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         protected override List<PersonAddress> ExtractPeople(List<HLinkDataRow> cases)
         {
             if (cases == null)
