@@ -35,6 +35,8 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             {
                 options.BinaryLocation = binaryName;
             }
+            options.AddArgument("guest");
+            options.AddUserProfilePreference("reduce-security-for-testing", null);
             options.AddUserProfilePreference("download.prompt_for_download", false);
             options.AddUserProfilePreference("download.directory_upgrade", true);
             options.AddUserProfilePreference("download.default_directory", CalculateDownloadPath());

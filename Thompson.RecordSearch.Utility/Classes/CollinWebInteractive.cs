@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -150,9 +152,32 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 Thread.Sleep(450);
                 driver.WaitForNavigation();
+                Proceed(driver);
             }
         }
 
+        private static void Proceed(IWebDriver driver)
+        {
+            var by = By.CssSelector("#proceed-button");
+            var element = driver.TryFindElement(by);
+            if (element == null) { return; }
+            var alert = GetAlert(driver);
+            alert?.Accept();
+            var command = "document.getElementById('proceed-button').click()";
+            var jse = (IJavaScriptExecutor)driver;
+            jse.ExecuteScript(command);
+        }
+        private static IAlert GetAlert(IWebDriver driver)
+        {
+            try
+            {
+                return driver.SwitchTo().Alert();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         protected override List<PersonAddress> ExtractPeople(List<HLinkDataRow> cases)
         {
             if (cases == null)
