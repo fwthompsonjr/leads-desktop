@@ -16,7 +16,7 @@ jobs:
       matrix:
         dotnet-version: [ '6.0.x' ]
     env:
-        SOLUTION_NAME: Thompson.RecordSearch.Framework.sln
+        SOLUTION_NAME: Thompson.RecordSearch.Core.sln
         TEST_FILE_NAME: "test-results-${{ matrix.dotnet-version }}"
         REPORT_FILE_NAME: "test-results-${{ matrix.dotnet-version }}.md"
 
