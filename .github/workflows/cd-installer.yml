@@ -24,11 +24,8 @@ jobs:
     - name: Set VS.net environment
       run: cmd.exe /C CALL "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
       
-    - name: Build Solution
-      run: dotnet build ${{ env.SOLUTION_NAME }}
-      
     - name: Setup VS Dev Environment
       uses: seanmiddleditch/gha-setup-vsdevenv@v4
 
     - name: Build installer
-      run: devenv.com ${{github.workspace}}\setup\setup.vdproj /build "Release|Any CPU"
+      run: devenv.com ${{ env.SOLUTION_NAME }} /Build "Release|Any CPU"
