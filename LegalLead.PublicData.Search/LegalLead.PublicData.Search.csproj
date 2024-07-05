@@ -24,6 +24,7 @@
 		<ApplicationIcon>law-icon.ico</ApplicationIcon>
 		<AssemblyVersion>2.7.0.0</AssemblyVersion>
 		<FileVersion>2.7.0.0</FileVersion>
+		<PackageIcon>law-icon.png</PackageIcon>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
 		<DebugSymbols>true</DebugSymbols>
@@ -203,5 +204,15 @@
 		<Compile Remove="obj\x64\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
 		<Compile Remove="obj\x64\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
 		<Compile Remove="obj\x64\Release\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="law-icon.ico">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Update="law-icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>

@@ -38,8 +38,8 @@ Dim link
 
     Set link = shell.CreateShortcut(DesktopLink)
     shortName = fso.GetFileName(exeLocation)
-    iconLocation = exeLocation & ",1"
     workingDirectory = fso.GetParentFolderName(exeLocation)
+    iconLocation = exeLocation & ",0"
     link.Arguments = "1 2 3"
     link.Description = "Legal Lead Search - v 2.7.0"
     link.iconLocation = iconLocation

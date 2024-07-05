@@ -237,7 +237,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Legal Lead Installer"
         "ProductCode" = "8:{8D85EF9F-BB03-4DE0-A52E-E018D2C6D85D}"
-        "PackageCode" = "8:{51E37EDC-0645-4E90-8039-ABB865D045F7}"
+        "PackageCode" = "8:{B6675DCB-CA94-4B85-B67F-9880E63A93F5}"
         "UpgradeCode" = "8:{1D89BAB8-5E03-4E0B-9901-61B39A0C4641}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
