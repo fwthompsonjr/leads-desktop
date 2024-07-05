@@ -47,7 +47,7 @@ namespace Thompson.RecordSearch.Utility.Web
             }
             executor.ExecuteScript("document.getElementById('Login').submit()");
             driver.WaitForNavigation();
-            Thread.Sleep(1000);
+            Thread.Sleep(1050);
         }
     }
 }

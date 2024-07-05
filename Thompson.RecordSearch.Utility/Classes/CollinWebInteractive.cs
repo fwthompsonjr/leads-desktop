@@ -97,11 +97,14 @@ namespace Thompson.RecordSearch.Utility.Classes
                     {
                         continue;
                     }
-
-                    action.Act(item);
-                    if (item.ActionName == "click" && item.DisplayName == "search-type-hyperlink")
+                    if (item.DisplayName == "case-type-search")
                     {
-                        Thread.Sleep(1250);
+                        WaitSequence(1, driver);
+                    }
+                    action.Act(item);
+                    if (item.DisplayName == "search-type-hyperlink" || item.DisplayName == "case-type-search")
+                    {
+                        WaitSequence(4, driver);
                     }
                     cases = ExtractCaseData(results, cases, actionName, action);
                     if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
@@ -138,10 +141,17 @@ namespace Thompson.RecordSearch.Utility.Classes
             finally
             {
                 driver.Quit();
-                driver.Dispose();
             }
         }
 
+        private static void WaitSequence(int delay, IWebDriver driver)
+        {
+            for (int i = 0; i < delay; i++)
+            {
+                Thread.Sleep(450);
+                driver.WaitForNavigation();
+            }
+        }
 
         protected override List<PersonAddress> ExtractPeople(List<HLinkDataRow> cases)
         {
