@@ -1,0 +1,26 @@
+[
+	{
+		"id": "2.7.0",
+		"date": "2024-07-06 18:35",
+		"description": [
+			"## Problem:",
+			"",
+			"When a user attempts to perform Collin county search",
+			"New items in the search workflow are raising errors that prevent search completion.",
+			"",
+			"## Resolution:",
+			"### Web Interactive",
+			"1. (Collin Interactive) Added pause and wait-for-navigation instructions after login and after search submission   ",
+			"2. (Collin Login) Added pause and wait-for-navigation in login-submit process",
+			"",
+			"### Chrome Driver   ",
+			"1. (Chrome) added option guest to address password strength",
+			"2. (Chrome) added preference to set security to testing in sessions",
+			"3. (Chrome) added prompt behavior to accept unexpected dialog   ",
+			"",
+			"### FireFox",
+			"1. (FireFox) added preference to set safe browsing in sessions",
+			"2. (FireFox) added prompt behavior to accept unexpected dialog"
+		]
+	}
+]
