@@ -40,7 +40,7 @@ jobs:
       run: dotnet restore ${{ env.SOLUTION_NAME }}
 
     - name: Build solution
-      run: dotnet msbuild -v:normal ${{ env.SOLUTION_NAME }} -p:Configuration=RELEASE
+      run: dotnet msbuild ${{ env.SOLUTION_NAME }} -c Release
 
     - name: Test with dotnet
       run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory ${{ env.TEST_FILE_NAME }}
