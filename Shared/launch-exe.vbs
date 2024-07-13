@@ -41,7 +41,7 @@ Dim link
     workingDirectory = fso.GetParentFolderName(exeLocation)
     iconLocation = exeLocation & ",0"
     link.Arguments = "1 2 3"
-    link.Description = "Legal Lead Search - v 2.7.0"
+    link.Description = "Legal Lead Search - v 2.7.1"
     link.iconLocation = iconLocation
     link.TargetPath = exeLocation
     link.WindowStyle = 3

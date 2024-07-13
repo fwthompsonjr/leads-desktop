@@ -247,6 +247,7 @@ namespace LegalLead.PublicData.Search
                 ExcelWriter.WriteToExcel(CaseData);
                 searchItem.ResultFileName = CaseData.Result;
                 searchItem.IsCompleted = true;
+                searchItem.MoveToCommon();
                 GetObject<List<SearchResult>>(Tag).Add(searchItem);
                 ComboBox_DataSourceChanged(null, null);
 
