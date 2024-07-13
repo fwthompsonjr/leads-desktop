@@ -492,6 +492,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             List<XmlNode> caseInspetor = GetCaseInspector(parameterId, doc);
             var probateInspector = GetCaseInspector(parameterId, doc, "probate");
             var justiceInspector = GetCaseInspector(parameterId, doc, "justice");
+            if (probateInspector == null) probateInspector = caseInspetor;
+            if (justiceInspector == null) justiceInspector = caseInspetor;
             //var caseInfo = doc.DocumentElement.SelectSingleNode("");
             foreach (var item in caseList)
             {
@@ -534,13 +536,21 @@ namespace Thompson.RecordSearch.Utility.Classes
             try
             {
 
-                var inspector = doc.DocumentElement.SelectSingleNode("directions").SelectNodes("caseInspection")
-                    .Cast<XmlNode>().ToList()
-                    .FindAll(x => x.Attributes.GetNamedItem("id").Value == parameterId
-                        .ToString(CultureInfo.CurrentCulture.NumberFormat))
-                    .Find(x => x.Attributes.GetNamedItem("type").Value == typeName)
-                    .ChildNodes.Cast<XmlNode>().ToList();
-                return inspector;
+                var directions = doc.DocumentElement.SelectSingleNode("directions");
+                if (directions == null) return null;
+                var inspection = directions.SelectNodes("caseInspection");
+                if (inspection == null) return null;
+                var indexes = inspection.Cast<XmlNode>().ToList()
+                    .FindAll(x => 
+                    {
+                        var attr = x.Attributes.GetNamedItem("id");
+                        if (attr == null) return false;
+                        return attr.Value == parameterId.ToString(CultureInfo.CurrentCulture.NumberFormat);
+                    });
+                if (indexes == null || indexes.Count == 0) return null;
+                var inspector = indexes.Find(x => x.Attributes.GetNamedItem("type").Value == typeName);
+                if (inspector == null) return null;
+                return inspector.ChildNodes.Cast<XmlNode>().ToList();
             }
             catch
             {

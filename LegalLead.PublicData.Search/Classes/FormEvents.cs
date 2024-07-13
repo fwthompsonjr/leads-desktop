@@ -338,6 +338,9 @@ namespace LegalLead.PublicData.Search
         private void TryOpenExcel()
         {
             var xmlFile = CaseData == null ? string.Empty : CaseData.Result;
+            xmlFile = xmlFile.Replace(CommonKeyIndexes.ExtensionXml, CommonKeyIndexes.ExtensionXlsx);
+            var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
+            if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
             OpenExcel(ref xmlFile);
         }
 
@@ -362,7 +365,8 @@ namespace LegalLead.PublicData.Search
                 return;
             }
             xmlFile = xmlFile.Replace(CommonKeyIndexes.ExtensionXml, CommonKeyIndexes.ExtensionXlsx);
-            if (!File.Exists(xmlFile))
+            var length = GetFileLength(xmlFile);
+            if (length == 0)
             {
                 MessageBox.Show(
                     CommonKeyIndexes.ExcelSourceNotFoundError, // "Excel source file not found error.", 
@@ -372,6 +376,8 @@ namespace LegalLead.PublicData.Search
                 return;
             }
 
+            var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
+            if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
             System.Diagnostics.Process.Start(xmlFile);
         }
 
@@ -387,7 +393,12 @@ namespace LegalLead.PublicData.Search
                     as WebNavigationParameter;
             }
         }
-
+        private static long GetFileLength(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return 0;
+            if (!File.Exists(path)) return 0;
+            return new System.IO.FileInfo(path).Length;
+        }
         private string GetMessage(WebNavigationParameter source)
         {
             try

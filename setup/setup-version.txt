@@ -8,7 +8,9 @@
 			"When a user attempts to perform Collin county search",
 			"The process will not open the generated Excel output.",
 			"",
-			"## Resolution:"
+			"## Resolution:",
+			"- [ ] Confirm excel file generation",
+			"- [ ] Create staging folder in user directory"
 		]
 	},
 	{
