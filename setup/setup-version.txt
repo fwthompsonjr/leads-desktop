@@ -9,8 +9,9 @@
 			"The process will not open the generated Excel output.",
 			"",
 			"## Resolution:",
-			"- [ ] Confirm excel file generation",
-			"- [ ] Create staging folder in user directory"
+			"- [x] Confirm excel file generation",
+			"- [x] Create staging folder in user directory",
+			"- [x] Test behavior for all counties"
 		]
 	},
 	{
