@@ -1,0 +1,5 @@
+Steps:
+1. create a change node in ..\lead-old\setup\setup-version.txt
+2. update assembly versions using find and replace
+3. update installer properties to set version number
+4. update excel file to set version number

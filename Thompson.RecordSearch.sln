@@ -68,6 +68,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_ChangeLog", "_ChangeLog", "{6EB0A66F-8CF8-49D2-9932-67BFC016B733}"
 	ProjectSection(SolutionItems) = preProject
 		changeLog.json = changeLog.json
+		_notes\howto-build-release.txt = _notes\howto-build-release.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Harris.Criminal.Db", "Harris.Criminal.Db\Harris.Criminal.Db.csproj", "{0616CC1F-324F-43DC-BE7A-8DB9479BFD37}"
@@ -207,7 +208,7 @@ Global
 		{3BF191A6-7E8B-4A6E-AA55-393C1A8BD0DA} = {5B2D3423-3610-427E-ABEE-FCC309844A03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
+		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 	EndGlobalSection
 EndGlobal
