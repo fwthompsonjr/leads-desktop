@@ -26,9 +26,13 @@ if ($null -eq $version ) { return; }
 $versionDescription = [string]::Join([Environment]::NewLine, $version.description)
 [System.IO.File]::WriteAllText( $changelog, $versionDescription);
 $versionTitle = $version.title
-$setupZip = "legal-lead-install-$($version.id).zip"
-$excelZip = "legal-lead-excel-addin-$($version.id).zip"
+$setupZip = [System.IO.Path]::Combine( $basefolder,"legal-lead-install-$($version.id).zip")
+$excelZip = [System.IO.Path]::Combine( $basefolder,"legal-lead-excel-addin-$($version.id).zip")
 
+    echo "ASSET_SETUP_FILE=$setupZip" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+    echo "ASSET_EXCEL_FILE=$excelZip" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+<#
 updateGitVariable -key "RELEASE_TITLE" -setting $versionTitle
 updateGitVariable -key "ASSET_SETUP_FILE" -setting $setupZip
 updateGitVariable -key "ASSET_EXCEL_FILE" -setting $excelZip
+#>
