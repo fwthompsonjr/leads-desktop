@@ -60,13 +60,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                     }
                     catch
                     {
-                        driver.Quit();
+                        TryCloseDriver(driver);
                         throw;
                     }
                     finally
                     {
-                        driver.Close();
-                        driver.Quit();
+                        TryCloseDriver(driver);
                     }
                 }
 
@@ -171,6 +170,19 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
 
             private List<HLinkDataRow> _dataRows;
+
+            private static void TryCloseDriver(IWebDriver driver)
+            {
+                try
+                {
+                    driver.Close();
+                    driver.Quit();
+                }
+                catch (Exception)
+                {
+                    // take no action on fail
+                }
+            }
         }
 
         protected class CriminalCaseFetch : NonCriminalCaseFetch
