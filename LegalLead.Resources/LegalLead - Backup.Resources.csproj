@@ -1,0 +1,90 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{AB526DB3-E334-4C6B-A634-1A890F63AADF}</ProjectGuid>
+    <TargetFramework>net48</TargetFramework>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <AssemblyTitle>LegalLead.Resources</AssemblyTitle>
+    <Product>LegalLead.Resources</Product>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Copyright>Copyright ©  2019</Copyright>
+    <AssemblyVersion>2.7.22.0</AssemblyVersion>
+    <FileVersion>2.7.22.0</FileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <LangVersion>7.3</LangVersion>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DebugType>full</DebugType>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <LangVersion>7.3</LangVersion>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="16.4.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.6.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.6.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" Version="15.5.31" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.3" />
+    <PackageReference Include="System.Security.AccessControl" Version="4.6.0" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="4.6.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="text\resource-table.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="text\PostBuildMacro.txt" />
+    <Content Include="text\ResourceTextBuilder.txt" />
+    <Content Include="text\settings-xml-builder.txt" />
+    <Content Include="text\TextFile1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="obj\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\Integration\net48\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\Integration\net48\LegalLead.Resources.AssemblyInfo.cs" />
+    <Compile Remove="obj\x64\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Release\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Debug\net48\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Debug\net48\LegalLead.Resources.AssemblyInfo.cs" />
+    <Compile Remove="obj\x64\Integration\net48\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Integration\net48\LegalLead.Resources.AssemblyInfo.cs" />
+    <Compile Remove="obj\x64\Release\net48\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Release\net48\LegalLead.Resources.AssemblyInfo.cs" />
+  </ItemGroup>
+</Project>

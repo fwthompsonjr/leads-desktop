@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -207,9 +208,18 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public void Navigate(string target)
         {
-            Console.WriteLine(CommonKeyIndexes.NavigateToUrlMessage, target);
-            var newUri = new Uri(target);
-            PageDriver.Navigate().GoToUrl(newUri);
+            try
+            {
+                Console.WriteLine(CommonKeyIndexes.NavigateToUrlMessage, target);
+                var newUri = new Uri(target);
+                PageDriver.Navigate().GoToUrl(newUri);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Navigate {target} failed.. " + ex.Message;
+                Console.WriteLine(message);
+                throw;
+            }
         }
 
 

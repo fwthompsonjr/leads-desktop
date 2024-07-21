@@ -1,0 +1,107 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{0A9E83C4-AA86-4F7D-8BAF-FCB8F174D190}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <AssemblyTitle>LegalLead.Changed</AssemblyTitle>
+    <Product>LegalLead.Changed</Product>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Copyright>Copyright ©  2019</Copyright>
+    <NoWarn>7035</NoWarn>
+    <PreBuildEvent>powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File "$(SolutionDir)StopChromeDriverProcesses.ps1"</PreBuildEvent>
+    <PreBuildEvent>powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File "$(SolutionDir)StopChromeDriverProcesses.ps1"</PreBuildEvent>
+    <PreBuildEvent>powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File "$(SolutionDir)StopChromeDriverProcesses.ps1"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <LangVersion>7.3</LangVersion>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DebugType>full</DebugType>
+    <LangVersion>7.3</LangVersion>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <LangVersion>7.3</LangVersion>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <LangVersion>7.3</LangVersion>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File "$(SolutionDir)StopChromeDriverProcesses.ps1"</PreBuildEvent>
+    <AssemblyVersion>2.7.22.0</AssemblyVersion>
+    <FileVersion>2.7.22.0</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeCoverage" Version="16.4.0" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.6.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.6.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" Version="15.5.31" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SlowCheetah" Version="2.5.48" />
+    <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.3" />
+    <PackageReference Include="System.Security.AccessControl" Version="4.6.0" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="4.6.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\changeLog.json">
+      <Link>changeLog.json</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="obj\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x64\Release\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,218 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<ProjectGuid>{FDC972D5-85CC-418C-A08B-D2BD940D9A35}</ProjectGuid>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net48</TargetFramework>
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+		<RuntimeIdentifiers>win</RuntimeIdentifiers>
+		<AssemblyTitle>LegalLead.PublicData.Search</AssemblyTitle>
+		<Product>LegalLead.PublicData.Search</Product>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Copyright>Copyright ©  2019</Copyright>
+		<NoWarn>7035</NoWarn>
+		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugType>full</DebugType>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>pdbonly</DebugType>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ApplicationIcon>law-icon.ico</ApplicationIcon>
+		<AssemblyVersion>2.7.22.0</AssemblyVersion>
+		<FileVersion>2.7.22.0</FileVersion>
+		<PackageIcon>law-icon.png</PackageIcon>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<DebugType>full</DebugType>
+		<LangVersion>7.3</LangVersion>
+		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+		<Prefer32Bit>true</Prefer32Bit>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+		<OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+		<DebugType>full</DebugType>
+		<LangVersion>7.3</LangVersion>
+		<Prefer32Bit>true</Prefer32Bit>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+		<OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+		<DebugType>pdbonly</DebugType>
+		<LangVersion>7.3</LangVersion>
+		<Prefer32Bit>true</Prefer32Bit>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|x64'">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<DebugType>full</DebugType>
+		<LangVersion>7.3</LangVersion>
+		<CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+		<Prefer32Bit>true</Prefer32Bit>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" Version="2.9.8">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeCoverage" Version="16.4.0" />
+		<PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.8">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.NetFramework.Analyzers" Version="2.9.8">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="3.2.26">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.6.13" />
+		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.6.13" />
+		<PackageReference Include="Microsoft.VisualStudio.Validation" Version="15.5.31" />
+		<PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
+		<PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.3" />
+		<PackageReference Include="System.Security.AccessControl" Version="4.6.0" />
+		<PackageReference Include="System.Security.Principal.Windows" Version="4.6.0" />
+		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.3" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+			<HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Configuration" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="System.Deployment" />
+		<Reference Include="System.Net.Http" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Classes\BackgroundProcessor.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Classes\ComboBoxEx.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="Classes\CredentialEvents.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Classes\FormEvents.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Classes\FormValidation.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="FormCredential.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="FormCredential.Designer.cs">
+			<DependentUpon>FormCredential.cs</DependentUpon>
+		</Compile>
+		<Compile Update="FormDentonSetting.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="FormDentonSetting.Designer.cs">
+			<DependentUpon>FormDentonSetting.cs</DependentUpon>
+		</Compile>
+		<Compile Update="FormHcc.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="FormHcc.Designer.cs">
+			<DependentUpon>FormHcc.cs</DependentUpon>
+		</Compile>
+		<Compile Update="FormMain.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="FormMain.Designer.cs">
+			<DependentUpon>FormMain.cs</DependentUpon>
+		</Compile>
+		<Compile Update="MDIParent.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="MDIParent.Designer.cs">
+			<DependentUpon>MDIParent.cs</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="FormCredential.resx">
+			<DependentUpon>FormCredential.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Update="FormDentonSetting.resx">
+			<DependentUpon>FormDentonSetting.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Update="FormHcc.resx">
+			<DependentUpon>FormHcc.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Update="FormMain.resx">
+			<DependentUpon>FormMain.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Update="MDIParent.resx">
+			<DependentUpon>MDIParent.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+		</Compile>
+		<None Include="..\Shared\application-settings.json">
+			<Link>xml\application-settings.json</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Harris.Criminal.Db\Harris.Criminal.Db.csproj" />
+		<ProjectReference Include="..\Thompson.RecordSearch.Utility\Thompson.RecordSearch.Utility.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\shared\caselayout.xml">
+			<Link>xml\caselayout.xml</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="..\shared\settings.xml">
+			<Link>xml\settings.xml</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<SubType>Designer</SubType>
+		</Content>
+		<Content Include="law-icon.ico" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="obj\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+		<Compile Remove="obj\x64\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+		<Compile Remove="obj\x64\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+		<Compile Remove="obj\x64\Release\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="law-icon.ico">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Update="law-icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+</Project>
