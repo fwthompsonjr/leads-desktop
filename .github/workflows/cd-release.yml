@@ -10,7 +10,6 @@ on:
 env:
   ZIP_SETUP_FILE_NAME: "installation"
   ZIP_EXCEL_FILE_NAME: "excel-addin"
-  INTERNAL_VERSION_NUMBER: "2.7.2"
   NET_VERSION: "8.0.x"
   NUGET_CERT_REVOCATION_MODE: offline
 
@@ -24,8 +23,9 @@ jobs:
         shell: bash
         run: |
             echo "BUILD_VERSION=${{format('{0}.{1}', vars.LEGALLEAD_READER_PREFIX, github.run_number)}}" >> $GITHUB_ENV
-            echo "ASSET_SETUP_FILE=${{format('./legal-lead-install-{0}.zip', env.INTERNAL_VERSION_NUMBER)}}" >> $GITHUB_ENV
-            echo "ASSET_EXCEL_FILE=${{format('./legal-lead-excel-addin-{0}.zip', env.INTERNAL_VERSION_NUMBER)}}" >> $GITHUB_ENV
+            echo "BUILD_NUMBER_INTERNAL=${{format('{0}.{1}', vars.LEGALLEAD_READER_PREFIX, vars.INTERNAL_VERSION_NUMBER)}}" >> $GITHUB_ENV
+            echo "ASSET_SETUP_FILE=${{format('./legal-lead-install-{0}.zip', env.BUILD_NUMBER_INTERNAL)}}" >> $GITHUB_ENV
+            echo "ASSET_EXCEL_FILE=${{format('./legal-lead-excel-addin-{0}.zip', env.BUILD_NUMBER_INTERNAL)}}" >> $GITHUB_ENV
 
       - name: Create Release
         uses: actions/create-release@v1
