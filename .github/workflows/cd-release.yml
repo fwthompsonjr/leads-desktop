@@ -8,8 +8,8 @@ on:
 
 
 env:
-  ZIP_SETUP_FILE_NAME: "installation"
-  ZIP_EXCEL_FILE_NAME: "excel-addin"
+  ZIP_SETUP_FILE_NAME: "installation.zip"
+  ZIP_EXCEL_FILE_NAME: "excel-addin.zip"
   INTERNAL_VERSION_NUMBER: "2.7.2"
   NET_VERSION: "8.0.x"
   NUGET_CERT_REVOCATION_MODE: offline
