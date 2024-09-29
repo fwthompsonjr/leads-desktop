@@ -1,9 +1,9 @@
-// is captcha needed
+~ is captcha needed
 dvcaptcha = document.getElementById('recaptcha-accessible-status');
 if ( dvcaptcha == null ) return true;
 return dvcaptcha.offsetParent == null
 
-// set start and end date
+~ set start and end date
 dteStart = '{0}';
 dteEnding = '{1}';
 searchParm = '{2}';
@@ -15,7 +15,7 @@ document.getElementById('dteEnding').value = dteStart;
 document.getElementById('caseCriteria.FileDateEnd').value = dteEnding;
 
 
-// select max rows per page
+~ select max rows per page
 var list = document.getElementsByTagName("span");
 var arr = Array.prototype.slice.call( list, 0 );
 var find = list.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
@@ -29,7 +29,7 @@ liitem = ulitms[ ulitms.length - 1].getElementsByTagName('li')
 liitem[liitem.length - 1].click();
 
 
-// get case list
+~ get case list
 var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
 links = links.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'caseLink' });
 
@@ -60,7 +60,7 @@ links.forEach((lnk) => {
 });
 return JSON.stringify(alldata);
 
-// get case style
+~ get case style
 dv = document.getElementById('divCaseInformation_body').getElementsByTagName('div')[2]
 var cs = dv.innerText.trim().split('|')[1].trim();
 /* get plaintiff */
@@ -72,4 +72,4 @@ var pln = find[0].closest('p').innerText.replace('PLAINTIFF','').trim();
 var obj = { "casestyle": cs, "plaintiff": pln };
 return JSON.stringify(obj);
 
-// end of file
+~ end of file

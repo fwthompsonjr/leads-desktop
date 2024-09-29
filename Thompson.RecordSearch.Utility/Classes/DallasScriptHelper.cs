@@ -10,7 +10,32 @@ namespace Thompson.RecordSearch.Utility.Classes
 {
     public static class DallasScriptHelper
     {
-
+        public static Dictionary<string, string> ScriptCollection
+        {
+            get
+            {
+                if (collection != null) return collection;
+                string nline = Environment.NewLine;
+                var nl = nline.ToCharArray();
+                collection = new Dictionary<string, string>();
+                Scripts.ForEach(s => {
+                    var items = s.Split(nl);
+                    var name = items[0].Trim();
+                    items[0] = $"/* {name} */";
+                    collection.Add(name, string.Join(nline, items));
+                });
+                return collection;
+            }
+        }
+        public static List<string> Scripts
+        {
+            get
+            {
+                if (scripts != null) return scripts;
+                scripts = ScriptBlocks();
+                return scripts;
+            }
+        }
         public static string GetScriptContent
         {
             get
@@ -29,6 +54,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 return scriptFileName;
             }
         }
+        private static Dictionary<string, string> collection = null;
+        private static List<string> scripts = null;
         private static string scriptFileName;
         private static string scriptContent;
         private static string ScriptFileName()
@@ -43,8 +70,13 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static string ScriptContent()
         {
             var content = File.ReadAllText(GetScriptFileName);
-            content = content.Replace('\\', '~').Replace("~~", "~");
             return content;
+        }
+        private static List<string> ScriptBlocks()
+        {
+            var content = GetScriptContent;
+            var arr = content.Split('~').ToList();
+            return arr;
         }
     }
 }
