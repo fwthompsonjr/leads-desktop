@@ -1,0 +1,105 @@
+{
+  "dropDowns": [
+    {
+      "id": 0,
+      "name": "COUNTY CIVIL COURTS",
+      "query": "#ctl00_ContentPlaceHolder1_ddlCourt",
+      "options": [
+        {
+          "id": 0,
+          "name": "All",
+          "query": "#divOption1 > a"
+        },
+        {
+          "id": 1,
+          "name": "1",
+          "query": "#divOption2 > a"
+        },
+        {
+          "id": 2,
+          "name": "2",
+          "query": "#divOption3 > a"
+        },
+        {
+          "id": 3,
+          "name": "3",
+          "query": "#divOption4 > a"
+        },
+        {
+          "id": 4,
+          "name": "4",
+          "query": "#divOption4 > a"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "COUNTY CASE STATUSES",
+      "query": "",
+      "options": [
+        {
+          "id": 0,
+          "name": "-All",
+          "query": "#divOption1 > a"
+        },
+        {
+          "id": 1,
+          "name": "Closed",
+          "query": "#divOption2 > a"
+        },
+        {
+          "id": 2,
+          "name": "Dismissed",
+          "query": "#divOption3 > a"
+        },
+        {
+          "id": 3,
+          "name": "Inactive",
+          "query": "#divOption4 > a"
+        },
+        {
+          "id": 4,
+          "name": "Open",
+          "query": "#divOption4 > a"
+        },
+        {
+          "id": 5,
+          "name": "Open Garnishment",
+          "query": "#divOption4 > a"
+        },
+        {
+          "id": 6,
+          "name": "Other",
+          "query": "#divOption4 > a"
+        },
+        {
+          "id": 7,
+          "name": "Re-Opened",
+          "query": "#divOption4 > a"
+        },
+        {
+          "id": 8,
+          "name": "Reopen Garnishment",
+          "query": "#divOption4 > a"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "DEFAULT INDEXES",
+      "query": "#ctl00_ContentPlaceHolder1_ddlCourt",
+      "options": [
+        {
+          "id": 0,
+          "name": "ctl00$ContentPlaceHolder1$ddlCourt",
+          "query": "0"
+        },
+        {
+          "id": 1,
+          "name": "ctl00$ContentPlaceHolder1$DropDownListStatus",
+          "query": "4"
+        }
+      ]
+    }
+  ]
+}

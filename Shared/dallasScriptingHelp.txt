@@ -1,0 +1,12 @@
+// is element visible
+document.getElementById('caseCriteria_SearchCases_Section').offsetParent == null
+
+// get span where role
+var arr = Array.prototype.slice.call( list, 0 );
+list.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+
+
+var ularr = Array.prototype.slice.call( itms, 0 );
+ulitms = ularr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+liitem = ulitms[ ulitms.length - 1].getElementsByTagName('li')
+liitem[liitem.length - 1].click();

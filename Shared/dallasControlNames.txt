@@ -1,0 +1,30 @@
+[
+	{ 
+		"name": "CaptchaStatus", 
+		"id": "recaptcha-accessible-status"
+	},
+	{ 
+		"name": "SearchCriteriaTextBox", 
+		"id": "caseCriteria_SearchCriteria"
+	},
+	{
+		"name": "SearchStartDate",
+		"id": "caseCriteria.FileDateStart"
+	},
+	{
+		"name": "SearchEndDate",
+		"id": "caseCriteria.FileDateEnd"
+	},
+	{
+		"name": "AdvancedOptions",
+		"id": "AdvOptions"
+	},
+	{
+		"name": "SearchCriteriaContainer",
+		"id": "caseCriteria_SearchCases_Section"
+	},
+	{
+		"name": "SearchSubmit",
+		"id": "btnSSSubmit"
+	}
+]

@@ -1,0 +1,73 @@
+{
+  "steps": [
+    {
+      "actionName": "navigate",
+      "displayName": "open-website-base-uri",
+      "locator": {
+        "find": "page",
+        "query": "https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil"
+      }
+    },
+    {
+      "actionName": "check-captcha",
+      "displayName": "get captcha status",
+      "expectedValue": "1",
+      "locator": {
+        "find": "id",
+        "query": "recaptcha-accessible-status"
+      }
+    },
+    {
+      "actionName": "jquery-set-record-number",
+      "displayName": "set record search criteria",
+      "expectedValue": "JPC-YY-MM*",
+      "locator": {
+        "find": "css",
+        "query": "#caseCriteria_SearchCriteria"
+      }
+    },
+    {
+      "actionName": "jquery-show-search-container",
+      "displayName": "display advanced option",
+      "expectedValue": "1",
+      "locator": {
+        "find": "css",
+        "query": "caseCriteria_SearchCases_Section"
+      }
+    },
+    {
+      "actionName": "jquery-set-text",
+      "displayName": "startDate",
+      "expectedValue": "1",
+      "locator": {
+        "find": "css",
+        "query": "caseCriteria.FileDateStart"
+      }
+    },
+    {
+      "actionName": "jquery-set-text",
+      "displayName": "endDate",
+      "expectedValue": "1",
+      "locator": {
+        "find": "css",
+        "query": "caseCriteria.FileDateEnd"
+      }
+    },
+    {
+      "actionName": "click",
+      "displayName": "login-submit",
+      "locator": {
+        "find": "css",
+        "query": "btnSSSubmit"
+      }
+    },
+    {
+      "actionName": "dallas-county-read-table",
+      "displayName": "read-result",
+      "locator": {
+        "find": "css",
+        "query": "dallas-county-reader"
+      }
+    }
+  ]
+}

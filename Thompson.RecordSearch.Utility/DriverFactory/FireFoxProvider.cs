@@ -15,7 +15,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         public IWebDriver GetWebDriver(bool headless = false)
         {
-            var driver = GetDefaultDriver();
+            var driver = GetDefaultDriver(headless);
             if (driver != null)
             {
                 return driver;
@@ -29,11 +29,12 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the default driver.
         /// </summary>
         /// <returns></returns>
-        private static IWebDriver GetDefaultDriver()
+        private static IWebDriver GetDefaultDriver(bool headless = false)
         {
             try
             {
                 var profile = new FirefoxOptions();
+                if (headless) profile.AddArgument("--headless");
                 profile.SetPreference("browser.safebrowsing.enabled", true);
                 profile.SetPreference("browser.safebrowsing.malware.enabled", true);
                 profile.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
