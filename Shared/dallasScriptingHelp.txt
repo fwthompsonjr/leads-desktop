@@ -1,12 +1,75 @@
-// is element visible
-document.getElementById('caseCriteria_SearchCases_Section').offsetParent == null
+// is captcha needed
+dvcaptcha = document.getElementById('recaptcha-accessible-status');
+if ( dvcaptcha == null ) return true;
+return dvcaptcha.offsetParent == null
 
-// get span where role
+// set start and end date
+dteStart = '{0}';
+dteEnding = '{1}';
+searchParm = '{2}';
+dvsearch = document.getElementById('caseCriteria_SearchCases_Section');
+ishidden = dvsearch == null || dvsearch.offsetParent == null
+if (ishidden) { document.getElementById('AdvOptions').click(); }
+document.getElementById('caseCriteria_SearchCriteria').value = searchParm;
+document.getElementById('dteEnding').value = dteStart;
+document.getElementById('caseCriteria.FileDateEnd').value = dteEnding;
+
+
+// select max rows per page
+var list = document.getElementsByTagName("span");
 var arr = Array.prototype.slice.call( list, 0 );
-list.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+var find = list.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+find[0].click();
 
-
+/* get max records per page */
+var itms = document.getElementsByTagName("ul")
 var ularr = Array.prototype.slice.call( itms, 0 );
 ulitms = ularr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
 liitem = ulitms[ ulitms.length - 1].getElementsByTagName('li')
 liitem[liitem.length - 1].click();
+
+
+// get case list
+var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
+links = links.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'caseLink' });
+
+var columns = [ 
+	"party-case-caseid", 
+	"party-case-filedate", 
+	"party-case-type", 
+	"party-case-status", 
+	"party-case-location", 
+	"party-case-partyname" ];
+var alldata = [];
+links.forEach((lnk) => {
+	datarow = Array.prototype.slice.call( lnk.closest('tr').getElementsByTagName('td'), 0 ) 
+	datarow = datarow.filter(d => { 
+		var found = false; 
+		columns.forEach((c) => { if ( d.classList.contains(c) ) { found = true; }});
+		return found}); 
+	var data = {
+		"uri": lnk.href,
+		"caseNumber": datarow[0].innerText,
+		"filedate": datarow[1].innerText,
+		"casetype": datarow[2].innerText,
+		"casestatus": datarow[3].innerText,
+		"location": datarow[4].innerText,
+		"partyname": datarow[5].innerText
+	}
+	if (data.casestatus == 'OPEN') { alldata.push(data); }
+});
+return JSON.stringify(alldata);
+
+// get case style
+dv = document.getElementById('divCaseInformation_body').getElementsByTagName('div')[2]
+var cs = dv.innerText.trim().split('|')[1].trim();
+/* get plaintiff */
+var list = document.getElementsByTagName("span");
+var arr = Array.prototype.slice.call( list, 0 );
+var find = arr.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'text-primary' });
+find = find.filter(a => { let txt = a.innerText.trim(); return txt == 'PLAINTIFF' });
+var pln = find[0].closest('p').innerText.replace('PLAINTIFF','').trim();
+var obj = { "casestyle": cs, "plaintiff": pln };
+return JSON.stringify(obj);
+
+// end of file
