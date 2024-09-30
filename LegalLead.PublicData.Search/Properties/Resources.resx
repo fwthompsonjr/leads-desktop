@@ -129,4 +129,13 @@
   <data name="ERR_DELEGATE_REQUIRED" xml:space="preserve">
     <value>Expected delegate action is not provided</value>
   </data>
+  <data name="ERR_START_DATE_MISSING" xml:space="preserve">
+    <value>Expected Parameter Start Date is missing</value>
+  </data>
+  <data name="ERR_END_DATE_MISSING" xml:space="preserve">
+    <value>Expected Parameter End Date is missing</value>
+  </data>
+  <data name="ERR_COURT_TYPE_MISSING" xml:space="preserve">
+    <value>Expected Parameter Court Type is missing</value>
+  </data>
 </root>

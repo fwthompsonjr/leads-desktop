@@ -41,6 +41,8 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Dallas
         [DataRow("select max rows per page")]
         [DataRow("get case list")]
         [DataRow("get case style")]
+        [DataRow("click search")]
+        [DataRow("return to search selection")]
         public void DoesScriptCollectionContainKey(string keyname)
         {
             var obj = DallasScriptHelper.ScriptCollection;

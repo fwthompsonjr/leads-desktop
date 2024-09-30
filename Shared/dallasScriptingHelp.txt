@@ -14,6 +14,8 @@ document.getElementById('caseCriteria_SearchCriteria').value = searchParm;
 document.getElementById('dteEnding').value = dteStart;
 document.getElementById('caseCriteria.FileDateEnd').value = dteEnding;
 
+~ click search
+document.getElementById('btnSSSubmit').click();
 
 ~ select max rows per page
 var list = document.getElementsByTagName("span");
@@ -71,5 +73,8 @@ find = find.filter(a => { let txt = a.innerText.trim(); return txt == 'PLAINTIFF
 var pln = find[0].closest('p').innerText.replace('PLAINTIFF','').trim();
 var obj = { "casestyle": cs, "plaintiff": pln };
 return JSON.stringify(obj);
+
+~ return to search selection
+document.getElementById('tcControllerLink_0').click();
 
 ~ end of file

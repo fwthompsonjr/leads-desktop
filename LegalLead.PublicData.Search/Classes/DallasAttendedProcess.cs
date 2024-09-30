@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Classes
 {
@@ -9,14 +12,60 @@ namespace LegalLead.PublicData.Search.Classes
         public string EndingDate { get; private set; }
         public string CourtType { get; private set; }
 
-        public void Search(DateTime startDate, DateTime endDate, string courtType)
+        public void Search(DateTime? startDate, DateTime? endDate, string courtType)
         {
             const string fmt = "MM/dd/yyyy";
-            CourtType = GetPrefix(startDate, courtType);
-            StartDate = startDate.ToString(fmt, culture);
-            EndingDate = endDate.ToString(fmt, culture);
+            var name = CourtNames.Find(x => x.Equals(courtType, StringComparison.OrdinalIgnoreCase));
+            if (startDate != null)
+            {
+                StartDate = startDate.Value.ToString(fmt, culture);
+            }
+            if (!string.IsNullOrEmpty(name))
+            {
+                CourtType = GetPrefix(startDate.GetValueOrDefault(), name);
+            }
+            if (endDate != null)
+            {
+                EndingDate = endDate.Value.ToString(fmt, culture);
+            }
         }
 
+        public static List<DateRangeDto> GetRangeDtos(DateTime startDate, DateTime endingDate)
+        {
+            const string fmt = "yyyy-MM";
+            var businessDays = GetBusinessDays(startDate, endingDate);
+            var groupa = startDate.ToString(fmt, culture);
+            var groups = businessDays.Select(x => new { indx = x.ToString(fmt, culture), date = x });
+            var collection = new List<DateRangeDto>();
+            var one = groups.Where(x => x.indx == groupa).Select(x => x.date).ToArray();
+            var two = groups.Where(x => x.indx != groupa).Select(x => x.date).ToArray();
+            collection.Add(new DateRangeDto
+            {
+                StartDate = one.Min(),
+                EndDate = one.Max()
+            });
+            if (two.Length == 0) return collection;
+            collection.Add(new DateRangeDto
+            {
+                StartDate = two.Min(),
+                EndDate = two.Max()
+            });
+            return collection;
+        }
+
+
+        private static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate)
+        {
+            var list = new List<DateTime>();
+            var begin = startDate.Date;
+            var weekends = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
+            while (begin <= endingDate.Date)
+            {
+                if (!weekends.Contains(begin.DayOfWeek)) list.Add(begin);
+                begin = begin.AddDays(1);
+            }
+            return list.Distinct().ToList();
+        }
 
         private static string GetPrefix(DateTime startDate, string courtType)
         {
@@ -33,13 +82,14 @@ namespace LegalLead.PublicData.Search.Classes
             switch (courtType)
             {
                 case "COUNTY":
-                    return string.Concat("CC-", year, "*", month);
+                    return string.Concat("CC-", year, "*", month, "*");
                 case "DISTRICT":
-                    return string.Concat("DC-", year, "*-", month);
+                    return string.Concat("DC-", year, "*-", month, "*");
                 default:
-                    return string.Concat("JPC-", year, "*", month);
+                    return string.Concat("JPC-", year, "*", month, "*");
             }
         }
         private static readonly CultureInfo culture = CultureInfo.InvariantCulture;
+        private static readonly List<string> CourtNames = new List<string> { "COUNTY", "DISTRICT", "JUSTICE" };
     }
 }

@@ -61,6 +61,15 @@ namespace LegalLead.PublicData.Search.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected Parameter Court Type is missing.
+        /// </summary>
+        internal static string ERR_COURT_TYPE_MISSING {
+            get {
+                return ResourceManager.GetString("ERR_COURT_TYPE_MISSING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected delegate action is not provided.
         /// </summary>
         internal static string ERR_DELEGATE_REQUIRED {
@@ -79,11 +88,29 @@ namespace LegalLead.PublicData.Search.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected Parameter End Date is missing.
+        /// </summary>
+        internal static string ERR_END_DATE_MISSING {
+            get {
+                return ResourceManager.GetString("ERR_END_DATE_MISSING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected Javascript Instruction Is Missing.
         /// </summary>
         internal static string ERR_SCRIPT_MISSING {
             get {
                 return ResourceManager.GetString("ERR_SCRIPT_MISSING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected Parameter Start Date is missing.
+        /// </summary>
+        internal static string ERR_START_DATE_MISSING {
+            get {
+                return ResourceManager.GetString("ERR_START_DATE_MISSING", resourceCulture);
             }
         }
         
