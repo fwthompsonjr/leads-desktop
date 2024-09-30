@@ -59,5 +59,41 @@ namespace LegalLead.PublicData.Search.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected delegate action is not provided.
+        /// </summary>
+        internal static string ERR_DELEGATE_REQUIRED {
+            get {
+                return ResourceManager.GetString("ERR_DELEGATE_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to access WebDriver.
+        /// </summary>
+        internal static string ERR_DRIVER_UNAVAILABLE {
+            get {
+                return ResourceManager.GetString("ERR_DRIVER_UNAVAILABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected Javascript Instruction Is Missing.
+        /// </summary>
+        internal static string ERR_SCRIPT_MISSING {
+            get {
+                return ResourceManager.GetString("ERR_SCRIPT_MISSING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination Uri is missing.
+        /// </summary>
+        internal static string ERR_URI_MISSING {
+            get {
+                return ResourceManager.GetString("ERR_URI_MISSING", resourceCulture);
+            }
+        }
     }
 }

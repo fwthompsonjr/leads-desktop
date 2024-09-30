@@ -5,7 +5,7 @@
       "displayName": "open-website-base-uri",
       "locator": {
         "find": "page",
-        "query": "https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil"
+        "query": "https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29"
       }
     },
     {
