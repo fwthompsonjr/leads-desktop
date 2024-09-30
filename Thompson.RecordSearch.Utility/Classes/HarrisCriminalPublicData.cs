@@ -1,11 +1,8 @@
-using System;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
+using System;
+using System.Text;
 
 namespace SeleniumTests
 {
@@ -15,13 +12,13 @@ namespace SeleniumTests
         private static IWebDriver driver;
         private StringBuilder verificationErrors;
         private bool acceptNextAlert = true;
-        
+
         [ClassInitialize]
         public static void InitializeClass(TestContext testContext)
         {
             driver = new FirefoxDriver();
         }
-        
+
         [ClassCleanup]
         public static void CleanupClass()
         {
@@ -36,19 +33,19 @@ namespace SeleniumTests
                 // Ignore errors if unable to close the browser
             }
         }
-        
+
         [TestInitialize]
         public void InitializeTest()
         {
             verificationErrors = new StringBuilder();
         }
-        
+
         [TestCleanup]
         public void CleanupTest()
         {
             Assert.AreEqual("", verificationErrors.ToString());
         }
-        
+
         [TestMethod]
         public void ThePublicDataTest()
         {
@@ -77,7 +74,7 @@ namespace SeleniumTests
                 return false;
             }
         }
-        
+
         private bool IsAlertPresent()
         {
             try
@@ -90,18 +87,25 @@ namespace SeleniumTests
                 return false;
             }
         }
-        
-        private string CloseAlertAndGetItsText() {
-            try {
+
+        private string CloseAlertAndGetItsText()
+        {
+            try
+            {
                 IAlert alert = driver.SwitchTo().Alert();
                 string alertText = alert.Text;
-                if (acceptNextAlert) {
+                if (acceptNextAlert)
+                {
                     alert.Accept();
-                } else {
+                }
+                else
+                {
                     alert.Dismiss();
                 }
                 return alertText;
-            } finally {
+            }
+            finally
+            {
                 acceptNextAlert = true;
             }
         }

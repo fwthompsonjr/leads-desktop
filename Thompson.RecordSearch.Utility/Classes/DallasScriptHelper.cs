@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -31,7 +29,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 string nline = Environment.NewLine;
                 var nl = nline.ToCharArray();
                 collection = new Dictionary<string, string>();
-                Scripts.ForEach(s => {
+                Scripts.ForEach(s =>
+                {
                     var items = s.Split(nl);
                     var name = items[0].Trim();
                     items[0] = $"/* {name} */";

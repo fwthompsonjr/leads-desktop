@@ -12,7 +12,7 @@ namespace LegalLead.PublicData.Search.Classes
             if (string.IsNullOrEmpty(CommonFolder)) { return originalFileName; }
             if (!File.Exists(originalFileName)) { return originalFileName; }
             var shortName = Path.GetFileName(originalFileName);
-            if (shortName == null) {  return originalFileName; }
+            if (shortName == null) { return originalFileName; }
             if (shortName.StartsWith(prefix, StringComparison.Ordinal)) shortName = shortName.Replace(prefix, string.Empty);
             var fullName = Path.Combine(CommonFolder, shortName);
             if (fullName.Equals(originalFileName, StringComparison.OrdinalIgnoreCase)) { return originalFileName; }

@@ -50,7 +50,7 @@ namespace LegalLead.PublicData.Search
                 GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.SettingsLabel; // "Settings";
                 GetMain.SetDentonStatusLabelFromSetting();
             }
-            else if(source.Id == (int)SourceType.HarrisCriminal)
+            else if (source.Id == (int)SourceType.HarrisCriminal)
             {
                 GetMain.ButtonDentonSetting.Text = "Options";
             }

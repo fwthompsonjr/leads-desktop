@@ -132,7 +132,7 @@ namespace LegalLead.PublicData.Search
             var websites = SettingsManager.GetNavigation();
             var hcconfig = HccConfiguration.Load().Dropdown;
             var hcitem = websites.Find(x => x.Id.Equals(hcconfig.Index));
-            if(hcitem != null && !hcconfig.IsEnabled) { websites.Remove(hcitem); }
+            if (hcitem != null && !hcconfig.IsEnabled) { websites.Remove(hcitem); }
             var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
             var tarrantCourt = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.TarrantCountyCaseType);
             const int Zero = 0;
@@ -383,13 +383,14 @@ namespace LegalLead.PublicData.Search
 
         private WebNavigationParameter GetParameter()
         {
-            try {
+            try
+            {
                 return (WebNavigationParameter)cboWebsite.SelectedItem;
             }
             catch (Exception)
             {
-                return Invoke(new Func<WebNavigationParameter>(() => 
-                    { return (WebNavigationParameter)cboWebsite.SelectedItem;  })) 
+                return Invoke(new Func<WebNavigationParameter>(() =>
+                    { return (WebNavigationParameter)cboWebsite.SelectedItem; }))
                     as WebNavigationParameter;
             }
         }

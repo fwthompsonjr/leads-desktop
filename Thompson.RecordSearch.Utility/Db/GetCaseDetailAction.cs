@@ -2,13 +2,10 @@
 using Harris.Criminal.Db;
 using Harris.Criminal.Db.Entities;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Web;
 
@@ -28,20 +25,20 @@ namespace Thompson.RecordSearch.Utility.Db
 
             DateTime MxDate = DateTime.Now.AddDays(-1).Date;
             DateTime MnDate = MxDate.AddDays(GetOptionValue());
-            
+
             ReportProgress = progress;
             Start();
             var fileName = GetDownload(MnDate, MxDate);
             Information($"File {fileName}. Downloaded");
             End();
         }
-        
+
         private int GetOptionValue()
         {
             var data = GetOption();
             var list = data.Values.ToList();
-			var listId = data.Index.GetValueOrDefault(0);
-			var indexId = Convert.ToInt32(list[listId], CultureInfo.CurrentCulture);
+            var listId = data.Index.GetValueOrDefault(0);
+            var indexId = Convert.ToInt32(list[listId], CultureInfo.CurrentCulture);
             return -1 * indexId;
         }
 

@@ -83,7 +83,7 @@ namespace Harris.Criminal.Db.Entities
             {
                 data[index] = process;
             }
-            
+
             return Update(data);
         }
 
@@ -103,8 +103,8 @@ namespace Harris.Criminal.Db.Entities
             return process ?? new HccProcess
             {
                 Id = data.Count + 1,
-                Name = processName, 
-                StartTime = DateTime.Now 
+                Name = processName,
+                StartTime = DateTime.Now
             };
         }
         public static HccProcess End(string processName)

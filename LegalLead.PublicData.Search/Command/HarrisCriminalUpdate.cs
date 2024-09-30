@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Threading;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Web;
@@ -46,8 +45,8 @@ namespace LegalLead.PublicData.Search.Command
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", 
-            "CA1031:Do not catch general exception types", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design",
+            "CA1031:Do not catch general exception types",
             Justification = "Intention is to suppress an exception during close/quit of iwebdriver")]
         private static void KillDriver(IWebDriver driver)
         {

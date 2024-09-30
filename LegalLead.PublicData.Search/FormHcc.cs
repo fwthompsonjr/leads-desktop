@@ -71,7 +71,8 @@ namespace LegalLead.PublicData.Search
                     return new BindingSource(aList, null);
                 case "details":
                     var listb = datasource.Select(s =>
-                        new HccDetailItem { 
+                        new HccDetailItem
+                        {
                             Id = s.Index.GetValueOrDefault(),
                             Key = s.Name,
                             Value = HccDetailItem.GetValue(s.Index.GetValueOrDefault())

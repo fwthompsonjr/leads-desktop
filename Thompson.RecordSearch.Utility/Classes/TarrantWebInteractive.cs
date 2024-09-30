@@ -541,7 +541,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var inspection = directions.SelectNodes("caseInspection");
                 if (inspection == null) return null;
                 var indexes = inspection.Cast<XmlNode>().ToList()
-                    .FindAll(x => 
+                    .FindAll(x =>
                     {
                         var attr = x.Attributes.GetNamedItem("id");
                         if (attr == null) return false;

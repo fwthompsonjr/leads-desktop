@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System;
 using System.IO;
-using System.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.UnitTests.Dallas
@@ -55,7 +52,7 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Dallas
         public void DoesScriptBlockExist()
         {
             var obj = DallasScriptHelper.Scripts;
-            
+
             Assert.IsNotNull(obj);
             Assert.IsTrue(obj.Count > 0);
         }
