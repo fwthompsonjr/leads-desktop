@@ -386,7 +386,7 @@ namespace LegalLead.PublicData.Search
             try {
                 return (WebNavigationParameter)cboWebsite.SelectedItem;
             }
-            catch 
+            catch (Exception)
             {
                 return Invoke(new Func<WebNavigationParameter>(() => 
                     { return (WebNavigationParameter)cboWebsite.SelectedItem;  })) 

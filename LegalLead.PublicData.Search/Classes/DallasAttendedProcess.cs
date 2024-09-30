@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LegalLead.PublicData.Search.Classes
 {
-    internal class DallasAttendedProcess
+    public class DallasAttendedProcess
     {
         public string StartDate { get; private set; }
         public string EndingDate { get; private set; }
@@ -17,8 +18,8 @@ namespace LegalLead.PublicData.Search.Classes
         {
             const string fmt = "MM/dd/yyyy";
             CourtType = GetPrefix(startDate, courtType);
-            StartDate = startDate.ToString(fmt);
-            EndingDate = endDate.ToString(fmt);
+            StartDate = startDate.ToString(fmt, culture);
+            EndingDate = endDate.ToString(fmt, culture);
         }
 
 
@@ -32,16 +33,18 @@ namespace LegalLead.PublicData.Search.Classes
                 COUNTY COURTS
                 Search: CC-YY* + DATE
             */
+            var year = startDate.ToString("yy", culture);
+            var month = startDate.ToString("MM", culture);
             switch (courtType)
             {
                 case "COUNTY":
-                    return string.Concat("CC-", startDate.ToString("yy"), "*", startDate.Month.ToString("MM"));
+                    return string.Concat("CC-", year, "*", month);
                 case "DISTRICT":
-                    return string.Concat("DC-", startDate.ToString("yy"), "*-", startDate.Month.ToString("MM"));
+                    return string.Concat("DC-", year, "*-", month);
                 default:
-                    return string.Concat("JPC-", startDate.ToString("yy"), "*", startDate.Month.ToString("MM"));
+                    return string.Concat("JPC-", year, "*", month);
             }
         }
-
+        private static readonly CultureInfo culture = CultureInfo.InvariantCulture;
     }
 }
