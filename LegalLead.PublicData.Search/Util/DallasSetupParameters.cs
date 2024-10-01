@@ -5,6 +5,7 @@ namespace LegalLead.PublicData.Search.Util
     using Rx = Properties.Resources;
     public class DallasSetupParameters : DallasBaseExecutor
     {
+        public override int OrderId => 3;
         public override object Execute()
         {
             var js = JsScript;

@@ -10,6 +10,7 @@ namespace LegalLead.PublicData.Search.Util
     using Rx = Properties.Resources;
     public class DallasBaseExecutor : IDallasAction
     {
+        public virtual int OrderId => 0;
         protected virtual string ScriptName { get; }
         public IWebDriver Driver { get; set; }
         public DallasAttendedProcess Parameters { get; set; }
@@ -32,14 +33,14 @@ namespace LegalLead.PublicData.Search.Util
             wait.Until(driver1 => jsexec.ExecuteScript(request).Equals(response));
         }
 
-        protected virtual string jsContent { get; set; } = null;
+        protected virtual string JavaScriptContent { get; set; } = null;
         protected string JsScript
         {
             get
             {
-                if (!string.IsNullOrEmpty(jsContent)) return jsContent;
-                jsContent = GetJsScript(ScriptName);
-                return jsContent;
+                if (!string.IsNullOrEmpty(JavaScriptContent)) return JavaScriptContent;
+                JavaScriptContent = GetJsScript(ScriptName);
+                return JavaScriptContent;
             }
         }
 

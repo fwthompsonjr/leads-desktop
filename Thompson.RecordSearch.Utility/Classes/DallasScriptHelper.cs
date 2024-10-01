@@ -31,10 +31,13 @@ namespace Thompson.RecordSearch.Utility.Classes
                 collection = new Dictionary<string, string>();
                 Scripts.ForEach(s =>
                 {
-                    var items = s.Split(nl);
-                    var name = items[0].Trim();
-                    items[0] = $"/* {name} */";
-                    collection.Add(name, string.Join(nline, items));
+                    if (!string.IsNullOrWhiteSpace(s))
+                    {
+                        var items = s.Split(nl, StringSplitOptions.RemoveEmptyEntries);
+                        var name = items[0].Trim();
+                        items[0] = $"/* {name} */";
+                        collection.Add(name, string.Join(nline, items));
+                    }
                 });
                 return collection;
             }

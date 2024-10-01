@@ -6,6 +6,7 @@ namespace LegalLead.PublicData.Search.Util
     using Rx = Properties.Resources;
     public class DallasRequestCaptcha : DallasBaseExecutor
     {
+        public override int OrderId => 2;
         public Action PromptUser { get; set; }
         public override object Execute()
         {

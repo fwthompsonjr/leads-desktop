@@ -7,6 +7,7 @@ namespace LegalLead.PublicData.Search.Util
     using Rx = Properties.Resources;
     public class DallasBeginNavigation : DallasBaseExecutor
     {
+        public override int OrderId => 1;
         public override object Execute()
         {
             var destination = NavigationUri;
