@@ -43,6 +43,7 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Dallas
         [DataRow("get case style")]
         [DataRow("click search")]
         [DataRow("return to search selection")]
+        [DataRow("get search record count")]
         public void DoesScriptCollectionContainKey(string keyname)
         {
             var obj = DallasScriptHelper.ScriptCollection;

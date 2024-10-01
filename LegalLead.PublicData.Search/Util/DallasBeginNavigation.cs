@@ -23,7 +23,7 @@ namespace LegalLead.PublicData.Search.Util
         [ExcludeFromCodeCoverage]
         private static Uri GetUri(string destination)
         {
-            if (!Uri.TryCreate(destination, UriKind.RelativeOrAbsolute, out var uri))
+            if (!Uri.TryCreate(destination, UriKind.Absolute, out var uri))
                 throw new ArgumentException(Rx.ERR_URI_MISSING);
             return uri;
         }

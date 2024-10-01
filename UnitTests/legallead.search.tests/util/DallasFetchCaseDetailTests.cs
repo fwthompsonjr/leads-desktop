@@ -7,13 +7,13 @@ using System.Threading;
 
 namespace legallead.search.tests.util
 {
-    public class DallasRequestCaptchaTests
+    public class DallasFetchCaseDetailTests
     {
         [Fact]
         public void ComponentHasCorrectOrder()
         {
-            const int index = 20;
-            var service = new DallasRequestCaptcha();
+            const int index = 60;
+            var service = new DallasFetchCaseDetail();
             Assert.Equal(index, service.OrderId);
         }
         [Fact]
@@ -24,11 +24,10 @@ namespace legallead.search.tests.util
             var parameters = new DallasAttendedProcess();
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
-            var service = new MockDallasRequestCaptcha
+            var service = new MockDallasFetchCaseDetail
             {
                 Parameters = parameters,
-                Driver = driver.Object,
-                PromptUser = MockUserPrompt
+                Driver = driver.Object
             };
             _ = service.Execute();
             service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtMost(3));
@@ -36,7 +35,6 @@ namespace legallead.search.tests.util
         [Theory]
         [InlineData(0)]
         [InlineData(1)]
-        [InlineData(2)]
         public void ComponentThrowingException(int target)
         {
             var driver = new Mock<IWebDriver>();
@@ -44,21 +42,15 @@ namespace legallead.search.tests.util
             var parameters = new DallasAttendedProcess();
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
-            var service = new MockDallasRequestCaptcha
+            var service = new MockDallasFetchCaseDetail
             {
                 Parameters = target != 1 ? parameters : null,
-                Driver = target != 0 ? driver.Object : null,
-                PromptUser = target != 2 ? MockUserPrompt : null
+                Driver = target != 0 ? driver.Object : null
             };
             Assert.Throws<NullReferenceException>(() => { _ = service.Execute(); });
         }
 
-        private static void MockUserPrompt()
-        {
-            Thread.Sleep(100);
-        }
-
-        private sealed class MockDallasRequestCaptcha : DallasRequestCaptcha
+        private sealed class MockDallasFetchCaseDetail : DallasFetchCaseDetail
         {
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override IJavaScriptExecutor GetJavaScriptExecutor()

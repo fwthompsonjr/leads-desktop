@@ -77,4 +77,11 @@ return JSON.stringify(obj);
 ~ return to search selection
 document.getElementById('tcControllerLink_0').click();
 
+~ get search record count
+var sps = Array.prototype.slice.call( document.getElementsByTagName("span"), 0 );
+sps = sps.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'k-pager-info k-label'; });
+var arrspan = [];
+sps.forEach(s => arrspan.push(s.innerText.trim()));
+return JSON.stringify(arrspan);
+
 ~ end of file

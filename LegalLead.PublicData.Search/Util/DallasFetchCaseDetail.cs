@@ -3,9 +3,9 @@
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasNavigateSearch : DallasBaseExecutor
+    public class DallasFetchCaseDetail : DallasBaseExecutor
     {
-        public override int OrderId => 40;
+        public override int OrderId => 60;
         public override object Execute()
         {
             var js = JsScript;
@@ -15,11 +15,10 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 
             js = VerifyScript(js);
-            executor.ExecuteScript(js);
-            WaitForNavigation();
-            return true;
+            var content = executor.ExecuteScript(js);
+            return Convert.ToString(content);
         }
 
-        protected override string ScriptName { get; } = "click search";
+        protected override string ScriptName { get; } = "get case list";
     }
 }

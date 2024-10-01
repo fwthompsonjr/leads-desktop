@@ -9,6 +9,14 @@ namespace legallead.search.tests.util
     public class DallasNavigateSearchTests
     {
         [Fact]
+        public void ComponentHasCorrectOrder()
+        {
+            const int index = 40;
+            var service = new MockDallasNavigateSearch();
+            Assert.Equal(index, service.OrderId);
+        }
+
+        [Fact]
         public void ComponentCanExecute()
         {
             var driver = new Mock<IWebDriver>();

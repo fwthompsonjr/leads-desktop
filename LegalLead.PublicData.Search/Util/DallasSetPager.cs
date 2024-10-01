@@ -3,9 +3,9 @@
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasNavigateSearch : DallasBaseExecutor
+    public class DallasSetPager : DallasBaseExecutor
     {
-        public override int OrderId => 40;
+        public override int OrderId => 50;
         public override object Execute()
         {
             var js = JsScript;
@@ -16,10 +16,9 @@ namespace LegalLead.PublicData.Search.Util
 
             js = VerifyScript(js);
             executor.ExecuteScript(js);
-            WaitForNavigation();
             return true;
         }
 
-        protected override string ScriptName { get; } = "click search";
+        protected override string ScriptName { get; } = "select max rows per page";
     }
 }
