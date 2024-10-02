@@ -3,7 +3,6 @@ using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;
 using System;
-using System.Threading;
 
 namespace legallead.search.tests.util
 {

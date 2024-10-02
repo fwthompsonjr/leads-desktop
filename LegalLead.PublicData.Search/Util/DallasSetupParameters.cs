@@ -20,13 +20,13 @@ namespace LegalLead.PublicData.Search.Util
             if (string.IsNullOrEmpty(Parameters.EndingDate))
                 throw new NullReferenceException(Rx.ERR_END_DATE_MISSING);
 
-            if (string.IsNullOrEmpty(Parameters.CourtType))
+            if (string.IsNullOrEmpty(Parameters.CourtLocator))
                 throw new NullReferenceException(Rx.ERR_COURT_TYPE_MISSING);
 
             js = VerifyScript(js);
             var script = js.Replace("{0}", Parameters.StartDate)
                 .Replace("{1}", Parameters.EndingDate)
-                .Replace("{2}", Parameters.CourtType);
+                .Replace("{2}", Parameters.CourtLocator);
             executor.ExecuteScript(script);
             return true;
         }

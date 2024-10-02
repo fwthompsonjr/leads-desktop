@@ -122,5 +122,23 @@ namespace LegalLead.PublicData.Search.Properties {
                 return ResourceManager.GetString("ERR_URI_MISSING", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The web page you are on requests CAPTCHA. Please respond to CAPTCHA and click OK..
+        /// </summary>
+        internal static string UI_CAPTCHA_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("UI_CAPTCHA_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System requires CAPTCHA.
+        /// </summary>
+        internal static string UI_CAPTCHA_TITLE {
+            get {
+                return ResourceManager.GetString("UI_CAPTCHA_TITLE", resourceCulture);
+            }
+        }
     }
 }

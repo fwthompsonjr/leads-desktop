@@ -138,4 +138,10 @@
   <data name="ERR_COURT_TYPE_MISSING" xml:space="preserve">
     <value>Expected Parameter Court Type is missing</value>
   </data>
+  <data name="UI_CAPTCHA_TITLE" xml:space="preserve">
+    <value>System requires CAPTCHA</value>
+  </data>
+  <data name="UI_CAPTCHA_DESCRIPTION" xml:space="preserve">
+    <value>The web page you are on requests CAPTCHA. Please respond to CAPTCHA and click OK.</value>
+  </data>
 </root>

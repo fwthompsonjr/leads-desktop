@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -19,7 +20,7 @@ namespace LegalLead.PublicData.Search.Util
 
             if (string.IsNullOrEmpty(PageAddress))
                 throw new NullReferenceException(Rx.ERR_URI_MISSING);
-            
+
             if (!Uri.TryCreate(PageAddress, UriKind.Absolute, out var uri))
                 throw new NullReferenceException(Rx.ERR_URI_MISSING);
 
@@ -28,7 +29,7 @@ namespace LegalLead.PublicData.Search.Util
 
             js = VerifyScript(js);
             var content = executor.ExecuteScript(js);
-            return Convert.ToString(content);
+            return Convert.ToString(content, CultureInfo.CurrentCulture);
         }
 
 

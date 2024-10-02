@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Util;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace LegalLead.PublicData.Search.Classes
     {
         public string StartDate { get; private set; }
         public string EndingDate { get; private set; }
+        public string CourtLocator { get; private set; }
         public string CourtType { get; private set; }
 
         public void Search(DateTime? startDate, DateTime? endDate, string courtType)
@@ -22,12 +24,17 @@ namespace LegalLead.PublicData.Search.Classes
             }
             if (!string.IsNullOrEmpty(name))
             {
-                CourtType = GetPrefix(startDate.GetValueOrDefault(), name);
+                CourtType = name;
+                CourtLocator = GetPrefix(startDate.GetValueOrDefault(), name);
             }
             if (endDate != null)
             {
                 EndingDate = endDate.Value.ToString(fmt, culture);
             }
+        }
+        public DallasUiInteractive GetUiInteractive()
+        {
+            return new DallasUiInteractive(GetNavigationParameter());
         }
 
         public static List<DateRangeDto> GetRangeDtos(DateTime startDate, DateTime endingDate)
@@ -54,7 +61,7 @@ namespace LegalLead.PublicData.Search.Classes
         }
 
 
-        private static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate)
+        public static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate)
         {
             var list = new List<DateTime>();
             var begin = startDate.Date;
@@ -66,6 +73,29 @@ namespace LegalLead.PublicData.Search.Classes
             }
             return list.Distinct().ToList();
         }
+
+        private WebNavigationParameter GetNavigationParameter()
+        {
+            if (string.IsNullOrEmpty(StartDate)) return null;
+            if (string.IsNullOrEmpty(EndingDate)) return null;
+            if (string.IsNullOrEmpty(CourtLocator) ||
+                string.IsNullOrEmpty(CourtType)) return null;
+
+            var keys = new List<WebNavigationKey>
+            {
+                new WebNavigationKey { Name = "StartDate", Value = StartDate  },
+                new WebNavigationKey { Name = "EndDate", Value = EndingDate  },
+                new WebNavigationKey { Name = "CourtLocator", Value = CourtLocator  },
+                new WebNavigationKey { Name = "CourtType", Value = CourtType  }
+            };
+
+            return new WebNavigationParameter
+            {
+                Name = "DallasSearch",
+                Keys = keys,
+            };
+        }
+
 
         private static string GetPrefix(DateTime startDate, string courtType)
         {

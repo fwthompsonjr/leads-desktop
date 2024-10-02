@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -16,7 +17,7 @@ namespace LegalLead.PublicData.Search.Util
 
             js = VerifyScript(js);
             var content = executor.ExecuteScript(js);
-            return Convert.ToString(content);
+            return Convert.ToString(content, CultureInfo.CurrentCulture);
         }
 
         protected override string ScriptName { get; } = "get case list";
