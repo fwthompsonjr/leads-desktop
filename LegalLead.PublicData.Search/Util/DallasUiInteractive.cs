@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -49,6 +50,8 @@ namespace LegalLead.PublicData.Search.Util
             result.PeopleList = People;
             return result;
         }
+
+        [ExcludeFromCodeCoverage]
         public virtual IWebDriver GetDriver(bool headless = false)
         {
             return new FireFoxProvider().GetWebDriver(headless);
@@ -140,6 +143,8 @@ namespace LegalLead.PublicData.Search.Util
             if (a is DallasRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }
             if (!string.IsNullOrEmpty(uri) && a is DallasFetchCaseStyle style) { style.PageAddress = uri; }
         }
+
+        [ExcludeFromCodeCoverage]
         private void UserPrompt()
         {
             if (!DisplayDialogue)
@@ -187,6 +192,7 @@ namespace LegalLead.PublicData.Search.Util
             return dte;
         }
 
+        [ExcludeFromCodeCoverage]
         private static List<DallasCaseItemDto> GetData(string json)
         {
             try
@@ -201,7 +207,7 @@ namespace LegalLead.PublicData.Search.Util
             }
         }
 
-
+        [ExcludeFromCodeCoverage]
         private static DallasCaseStyleDto GetStyle(string json)
         {
             try
