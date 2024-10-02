@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -58,14 +59,12 @@ namespace LegalLead.PublicData.Search
             Application.DoEvents();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         private void Button1_Click(object sender, EventArgs e)
         {
-
+            string driverNames = string.Concat("geckodriver,", CommonKeyIndexes.ChromeDriver);
             try
             {
-
-                KillProcess(CommonKeyIndexes.ChromeDriver);
+                KillProcess(driverNames);
                 SetStatus(StatusType.Running);
                 if (!ValidateCustom())
                 {
@@ -86,35 +85,16 @@ namespace LegalLead.PublicData.Search
                     SearchDate = DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString(),
                 };
                 searchItem.Search = $"{searchItem.SearchDate} : {searchItem.Website} from {searchItem.StartDate} to {searchItem.EndDate}";
-                const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
-                var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
-                var keys = siteData.Keys;
-                var isDistrictSearch = keys.Find(x =>
-                    x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType"
-                    ccic)) != null;
-                var criminalToggle = keys.Find(x =>
-                    x.Name.Equals(CommonKeyIndexes.CriminalCaseInclusion,
-                    ccic));
-                if (isDentonCounty && criminalToggle != null)
+                switch (siteData.Id)
                 {
-                    criminalToggle.Value = isDistrictSearch ?
-                        CommonKeyIndexes.NumberZero :
-                        CommonKeyIndexes.NumberOne;
+                    case (int)SourceType.DallasCounty:
+                        DallasButtonExecution(siteData, searchItem);
+                        break;
+                    default:
+                        NonDallasButtonExecution(siteData, searchItem, startDate, endingDate);
+                        break;
                 }
 
-                if (!isDentonCounty && criminalToggle != null)
-                {
-                    criminalToggle.Value = CommonKeyIndexes.NumberOne;
-                }
-
-                IWebInteractive webmgr =
-                    WebFetchingProvider.
-                    GetInteractive(siteData, startDate, endingDate);
-                Task.Run(async () =>
-                {
-                    await ProcessAsync(webmgr, siteData, searchItem);
-                }).ConfigureAwait(true);
-                
             }
             catch (Exception ex)
             {
@@ -127,9 +107,57 @@ namespace LegalLead.PublicData.Search
             }
             finally
             {
-
-                KillProcess(CommonKeyIndexes.ChromeDriver);
+                KillProcess(driverNames);
             }
+        }
+
+        private void DallasButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
+        {
+            var index = cboSearchType.SelectedIndex;
+            var searchType = DallasAttendedProcess.GetCourtName(index);
+            var keys = new List<WebNavigationKey> {
+                new WebNavigationKey() { Name = "StartDate", Value = searchItem.StartDate},
+                new WebNavigationKey() { Name = "EndDate", Value = searchItem.EndDate },
+                new WebNavigationKey() { Name = "CourtType", Value = searchType }
+            };
+            var wb = new WebNavigationParameter { Keys = keys };
+            var dweb = new DallasUiInteractive(wb);
+            Task.Run(async () =>
+            {
+                await ProcessAsync(dweb, siteData, searchItem);
+            }).ConfigureAwait(true);
+        }
+
+        private void NonDallasButtonExecution(WebNavigationParameter siteData, SearchResult searchItem, DateTime startDate, DateTime endingDate)
+        {
+            const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
+            var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
+            var keys = siteData.Keys;
+            var isDistrictSearch = keys.Find(x =>
+                x.Name.Equals(CommonKeyIndexes.DistrictSearchType, // "DistrictSearchType"
+                ccic)) != null;
+            var criminalToggle = keys.Find(x =>
+                x.Name.Equals(CommonKeyIndexes.CriminalCaseInclusion,
+                ccic));
+            if (isDentonCounty && criminalToggle != null)
+            {
+                criminalToggle.Value = isDistrictSearch ?
+                    CommonKeyIndexes.NumberZero :
+                    CommonKeyIndexes.NumberOne;
+            }
+
+            if (!isDentonCounty && criminalToggle != null)
+            {
+                criminalToggle.Value = CommonKeyIndexes.NumberOne;
+            }
+
+            IWebInteractive webmgr =
+            WebFetchingProvider.
+                GetInteractive(siteData, startDate, endingDate);
+            Task.Run(async () =>
+            {
+                await ProcessAsync(webmgr, siteData, searchItem);
+            }).ConfigureAwait(true);
         }
 
         private void ExportDataToolStripMenuItem_Click(object sender, EventArgs e)
@@ -145,7 +173,7 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        private void ShowNoDataErrorBox()
+        private static void ShowNoDataErrorBox()
         {
             MessageBox.Show(CommonKeyIndexes.PleaseCheckSourceDataNotFound,
                 CommonKeyIndexes.DataNotFound,
@@ -189,7 +217,7 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        private void KillProcess(string processName)
+        private static void KillProcess(string processName)
         {
             var processes = new List<string> { processName };
             if (processName.Contains(','))
@@ -244,7 +272,10 @@ namespace LegalLead.PublicData.Search
                     throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
                 CaseData.WebsiteId = siteData.Id;
-                ExcelWriter.WriteToExcel(CaseData);
+                if (siteData.Id != (int)SourceType.DallasCounty)
+                {
+                    ExcelWriter.WriteToExcel(CaseData);
+                }
                 searchItem.ResultFileName = CaseData.Result;
                 searchItem.IsCompleted = true;
                 searchItem.MoveToCommon();

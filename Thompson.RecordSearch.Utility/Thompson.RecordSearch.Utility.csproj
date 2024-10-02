@@ -151,6 +151,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Shared\ExpectedConditions.cs" Link="Classes\ExpectedConditions.cs" />
+    <Content Include="..\Shared\dallasCountyCaseOptions.json" Link="xml\dallasCountyCaseOptions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\dallasCountyMapping.json" Link="xml\dallasCountyMapping.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\Shared\dallasScriptingHelp.txt" Link="xml\dallasScriptingHelp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="..\Shared\geckodriver.exe">
       <Link>geckodriver.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

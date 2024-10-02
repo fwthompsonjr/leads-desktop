@@ -7,7 +7,6 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
 {
     public class ChromeOlderProvider : BaseChromeProvider, IWebDriverProvider
     {
-        private const string ChromeLocationMessage = "Chrome executable location:\n {0}";
 
         public string Name => "Chrome Legacy";
 

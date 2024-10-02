@@ -1,10 +1,7 @@
 ﻿using Harris.Criminal.Db.Entities;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Thompson.RecordSearch.Utility.Db
 {

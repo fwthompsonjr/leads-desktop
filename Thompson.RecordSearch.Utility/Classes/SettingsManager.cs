@@ -104,7 +104,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 return null;
             }
-            
+
             var parent = doc.DocumentElement.SelectSingleNode("setting[@name='Websites']");
             var response = new List<WebNavigationParameter>();
             foreach (var node in parent.ChildNodes)

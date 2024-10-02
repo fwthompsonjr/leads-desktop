@@ -23,50 +23,23 @@ namespace Harris.Criminal.Db
             {
                 return false;
             }
+            var fileDt = filingDate.ToString("M/d/yyyy", CultureInfo.InvariantCulture);
             var fileDate = filingDate.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
-            foreach (var dataset in db)
-            {
-                var found = dataset.Data.Exists(a => a.FilingDate.Equals(fileDate, Oic));
-                if (!found)
-                {
-                    continue;
-                }
-
-                found = dataset.Data.Exists(a =>
-                    a.FilingDate.Equals(fileDate, Oic));
-                if (found)
-                {
-                    return true;
-                }
-            }
-            return false;
+            var datasets = db.SelectMany(d => d.Data).ToList();
+            var actual = datasets.Find(a => a.FilingDate.Equals(fileDate, Oic) || a.FilingDate.Equals(fileDt, Oic));
+            return actual != null;
         }
 
         public static bool HasDetail(DateTime filingDate, string caseNumber)
         {
             var db = Startup.Downloads.DataList;
-            if (!HasDetail(filingDate) || db == null)
-            {
-                return false;
-            }
-            var fileDate = filingDate.ToString("M/d/yyyy", CultureInfo.InvariantCulture);
-            foreach (var dataset in db)
-            {
-                var found = dataset.Data.Exists(a => a.FilingDate.Equals(fileDate, Oic));
-                if (!found)
-                {
-                    continue;
-                }
-
-                found = dataset.Data.Exists(a =>
-                    a.FilingDate.Equals(fileDate, Oic) &&
-                    a.CaseNumber.Equals(caseNumber, Oic));
-                if (found)
-                {
-                    return true;
-                }
-            }
-            return false;
+            if (!HasDetail(filingDate) || db == null) return false;
+            var fileDt = filingDate.ToString("M/d/yyyy", CultureInfo.InvariantCulture);
+            var fileDate = filingDate.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+            var datasets = db.SelectMany(d => d.Data).ToList();
+            var subset = datasets.FindAll(a => a.FilingDate.Equals(fileDate, Oic) || a.FilingDate.Equals(fileDt, Oic));
+            var actual = subset.Find(a => a.CaseNumber.Equals(caseNumber, Oic));
+            return actual != null;
         }
     }
 }

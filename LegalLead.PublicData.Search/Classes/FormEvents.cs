@@ -74,14 +74,13 @@ namespace LegalLead.PublicData.Search
             changeHandler.Change();
         }
 
-        private void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
+        internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var source = (DropDown)cboSearchType.SelectedItem;
-
+            var nonactors = new List<int> { (int)SourceType.HarrisCivil, (int)SourceType.DallasCounty };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
-            if (selectedItem != null && selectedItem.Id == (int)SourceType.HarrisCivil)
+            if (selectedItem != null && nonactors.Contains(selectedItem.Id))
             {
-                // rebind ??
                 return;
             }
 
@@ -132,7 +131,7 @@ namespace LegalLead.PublicData.Search
             var websites = SettingsManager.GetNavigation();
             var hcconfig = HccConfiguration.Load().Dropdown;
             var hcitem = websites.Find(x => x.Id.Equals(hcconfig.Index));
-            if(hcitem != null && !hcconfig.IsEnabled) { websites.Remove(hcitem); }
+            if (hcitem != null && !hcconfig.IsEnabled) { websites.Remove(hcitem); }
             var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
             var tarrantCourt = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.TarrantCountyCaseType);
             const int Zero = 0;
@@ -288,6 +287,7 @@ namespace LegalLead.PublicData.Search
                 cboWebsite.SelectedIndex = Convert.ToInt32(
                     configIndex,
                     CultureInfo.CurrentCulture);
+                CboWebsite_SelectedValueChanged(null, null);
             }
             if (!string.IsNullOrEmpty(startDate))
             {
@@ -383,13 +383,14 @@ namespace LegalLead.PublicData.Search
 
         private WebNavigationParameter GetParameter()
         {
-            try {
+            try
+            {
                 return (WebNavigationParameter)cboWebsite.SelectedItem;
             }
-            catch 
+            catch (Exception)
             {
-                return Invoke(new Func<WebNavigationParameter>(() => 
-                    { return (WebNavigationParameter)cboWebsite.SelectedItem;  })) 
+                return Invoke(new Func<WebNavigationParameter>(() =>
+                    { return (WebNavigationParameter)cboWebsite.SelectedItem; }))
                     as WebNavigationParameter;
             }
         }

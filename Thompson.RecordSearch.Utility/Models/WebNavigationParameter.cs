@@ -135,7 +135,6 @@ namespace Thompson.RecordSearch.Utility.Models
                 if (fieldName.ToLower(CultureInfo.CurrentCulture).Equals("casestyle", comparison))
                 {
                     CaseStyle = value;
-                    return;
                 }
                 /* set the specified index to value here */
             }

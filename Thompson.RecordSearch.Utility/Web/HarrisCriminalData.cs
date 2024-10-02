@@ -47,13 +47,8 @@ namespace Thompson.RecordSearch.Utility.Web
         /// <param name="driver">The driver.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException">driver</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2234:Pass system uri objects instead of strings", Justification = "<Pending>")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static",
-            Justification = "Plan to use DI to expose this behavior.")]
         public virtual string GetData(IWebDriver driver)
         {
-            var current = DateTime.Now;
             var computedName = GetDownloadName();
             if (File.Exists(computedName))
             {
@@ -68,7 +63,6 @@ namespace Thompson.RecordSearch.Utility.Web
                 var jse = (IJavaScriptExecutor)driver;
                 var address = Keys["address"];
                 var search = Keys["tr.monthly"];
-                var link = Keys["download"];
 
                 driver.Navigate().GoToUrl(address);
                 if (!driver.IsElementPresent(By.XPath(search)))

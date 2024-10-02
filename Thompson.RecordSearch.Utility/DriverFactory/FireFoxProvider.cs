@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -15,7 +16,9 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         public IWebDriver GetWebDriver(bool headless = false)
         {
-            var driver = GetDefaultDriver();
+            // make sure all instances of geckodriver are gone
+            KillProcess("geckodriver");
+            var driver = GetDefaultDriver(headless);
             if (driver != null)
             {
                 return driver;
@@ -29,11 +32,12 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the default driver.
         /// </summary>
         /// <returns></returns>
-        private static IWebDriver GetDefaultDriver()
+        private static IWebDriver GetDefaultDriver(bool headless = false)
         {
             try
             {
                 var profile = new FirefoxOptions();
+                if (headless) profile.AddArgument("--headless");
                 profile.SetPreference("browser.safebrowsing.enabled", true);
                 profile.SetPreference("browser.safebrowsing.malware.enabled", true);
                 profile.UnhandledPromptBehavior = UnhandledPromptBehavior.Accept;
@@ -67,6 +71,16 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             }
             _driverFileName = execName;
             return execName;
+        }
+
+
+
+        private static void KillProcess(string processName)
+        {
+            foreach (var process in Process.GetProcessesByName(processName))
+            {
+                process.Kill();
+            }
         }
     }
 }
