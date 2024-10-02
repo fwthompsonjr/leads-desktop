@@ -151,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Shared\ExpectedConditions.cs" Link="Classes\ExpectedConditions.cs" />
+    <Content Include="..\Shared\dallasCountyCaseOptions.json" Link="xml\dallasCountyCaseOptions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Shared\dallasCountyMapping.json" Link="xml\dallasCountyMapping.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

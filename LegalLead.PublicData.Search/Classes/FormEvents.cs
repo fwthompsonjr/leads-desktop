@@ -74,14 +74,13 @@ namespace LegalLead.PublicData.Search
             changeHandler.Change();
         }
 
-        private void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
+        internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var source = (DropDown)cboSearchType.SelectedItem;
-
+            var nonactors = new List<int> { (int)SourceType.HarrisCivil, (int)SourceType.DallasCounty };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
-            if (selectedItem != null && selectedItem.Id == (int)SourceType.HarrisCivil)
+            if (selectedItem != null && nonactors.Contains(selectedItem.Id))
             {
-                // rebind ??
                 return;
             }
 
