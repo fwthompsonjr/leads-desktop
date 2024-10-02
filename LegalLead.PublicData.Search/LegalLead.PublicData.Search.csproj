@@ -9,7 +9,7 @@
 		<Product>LegalLead.PublicData.Search</Product>
 		<NeutralLanguage>en</NeutralLanguage>
 		<Copyright>Copyright ©  2019</Copyright>
-		<NoWarn>7035</NoWarn>
+		<NoWarn>7035;CA1031</NoWarn>
 		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
