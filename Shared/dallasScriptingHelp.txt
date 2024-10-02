@@ -47,13 +47,14 @@ var columns = [
 	"party-case-partyname" ];
 var alldata = [];
 links.forEach((lnk) => {
+	var linkurl = lnk.getAttribute('data-url');
 	datarow = Array.prototype.slice.call( lnk.closest('tr').getElementsByTagName('td'), 0 ) 
 	datarow = datarow.filter(d => { 
 		var found = false; 
 		columns.forEach((c) => { if ( d.classList.contains(c) ) { found = true; }});
 		return found}); 
 	var data = {
-		"uri": lnk.href,
+		"uri": linkurl,
 		"caseNumber": datarow[0].innerText,
 		"filedate": datarow[1].innerText,
 		"casetype": datarow[2].innerText,

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Globalization;
 
 namespace LegalLead.PublicData.Search.Util
@@ -28,10 +29,22 @@ namespace LegalLead.PublicData.Search.Util
             WaitForNavigation();
 
             js = VerifyScript(js);
-            var content = executor.ExecuteScript(js);
-            return Convert.ToString(content, CultureInfo.CurrentCulture);
+            var content = TryFetchCaseData(executor, js);
+            return content;
         }
-
+        private static string TryFetchCaseData(IJavaScriptExecutor executor, string js)
+        {
+            const string errtext = "--error--";
+            try
+            {
+                var content = executor.ExecuteScript(js);
+                return Convert.ToString(content, CultureInfo.CurrentCulture);
+            }
+            catch
+            {
+                return errtext;
+            }
+        }
 
         protected override string ScriptName { get; } = "get case style";
     }

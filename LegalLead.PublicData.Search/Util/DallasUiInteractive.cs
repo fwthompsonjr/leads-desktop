@@ -88,7 +88,7 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
-
+            var count = common.Count - 1;
             dates.ForEach(d =>
             {
                 parameters.Search(d, d, CourtType);
@@ -100,6 +100,7 @@ namespace LegalLead.PublicData.Search.Util
                         var response = a.Execute();
                         if (a is DallasFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
                         if (a is DallasRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
+                        if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
                     }
                 });
             });
@@ -153,6 +154,7 @@ namespace LegalLead.PublicData.Search.Util
             while (response != DialogResult.OK)
             {
                 response = MessageBox.Show(Rx.UI_CAPTCHA_DESCRIPTION, Rx.UI_CAPTCHA_TITLE, MessageBoxButtons.OKCancel);
+                if (response == DialogResult.Cancel) break;
             }
             return response == DialogResult.OK;
         }

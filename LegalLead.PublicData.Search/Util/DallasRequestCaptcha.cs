@@ -18,8 +18,9 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DELEGATE_REQUIRED);
 
             var retries = 0;
+            const int max_retries = 5;
             var result = false;
-            while (!result && retries < 10)
+            while (!result && retries < max_retries)
             {
                 result = PromptUser();
                 retries++;

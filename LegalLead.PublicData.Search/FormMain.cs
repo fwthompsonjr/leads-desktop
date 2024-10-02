@@ -59,7 +59,6 @@ namespace LegalLead.PublicData.Search
             Application.DoEvents();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         private void Button1_Click(object sender, EventArgs e)
         {
             string driverNames = string.Concat("geckodriver,", CommonKeyIndexes.ChromeDriver);
@@ -114,7 +113,7 @@ namespace LegalLead.PublicData.Search
 
         private void DallasButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
         {
-            var index = cboCaseType.SelectedIndex;
+            var index = cboSearchType.SelectedIndex;
             var searchType = DallasAttendedProcess.GetCourtName(index);
             var keys = new List<WebNavigationKey> {
                 new WebNavigationKey() { Name = "StartDate", Value = searchItem.StartDate},
@@ -174,7 +173,7 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        private void ShowNoDataErrorBox()
+        private static void ShowNoDataErrorBox()
         {
             MessageBox.Show(CommonKeyIndexes.PleaseCheckSourceDataNotFound,
                 CommonKeyIndexes.DataNotFound,
@@ -218,7 +217,7 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        private void KillProcess(string processName)
+        private static void KillProcess(string processName)
         {
             var processes = new List<string> { processName };
             if (processName.Contains(','))
