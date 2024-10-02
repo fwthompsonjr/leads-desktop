@@ -31,6 +31,17 @@ namespace legallead.search.tests.classes
             var result = DallasAttendedProcess.GetBusinessDays(startDt, endDt);
             Assert.Equal(expected, result.Count);
         }
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(12)]
+        public void GetCourtNameTest(int courtId)
+        {
+            var result = DallasAttendedProcess.GetCourtName(courtId);
+            Assert.False(string.IsNullOrEmpty(result));
+        }
 
         [Theory]
         [InlineData("2024-09-01", "2024-09-07", "COUNTY")]
@@ -38,7 +49,8 @@ namespace legallead.search.tests.classes
         [InlineData("2024-09-01", "2024-09-07", "JUSTICE")]
         public void ServiceCanGetInteractive(string startDate, string endingDate, string caseType)
         {
-            var error = Record.Exception(() => {
+            var error = Record.Exception(() =>
+            {
                 var culture = CultureInfo.CurrentCulture;
                 var startDt = DateTime.Parse(startDate, culture);
                 var endDt = DateTime.Parse(endingDate, culture);

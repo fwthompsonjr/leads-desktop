@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -49,14 +48,14 @@ namespace legallead.search.tests.util
         [InlineData(false)]
         public void ServiceCanGetDriver(bool show)
         {
-            if (!Debugger.IsAttached) return;
             var keys = new List<WebNavigationKey> {
                 new() { Name = "StartDate", Value = "2024-05-25"},
                 new() { Name = "EndDate", Value = "2024-05-25"},
                 new() { Name = "CourtType", Value = "JUSTICE"} };
             var wb = new WebNavigationParameter { Keys = keys };
             var service = new DallasUiInteractive(wb);
-            using var driver = service.GetDriver(show);
+            var driver = service.GetDriver(show);
+            driver.Close();
             Assert.NotNull(driver);
         }
 

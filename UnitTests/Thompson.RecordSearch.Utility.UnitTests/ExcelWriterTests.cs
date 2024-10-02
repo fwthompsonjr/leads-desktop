@@ -10,12 +10,12 @@ using Thompson.RecordSearch.Utility.Models;
 namespace Thompson.RecordSearch.Utility.Tests
 {
     [TestClass]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", 
-        "S2325:Methods and properties that don't access instance data should be static", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell",
+        "S2325:Methods and properties that don't access instance data should be static",
         Justification = "This class in is test code and not in any public assemblies.")]
     public class ExcelWriterTests
     {
-        
+
         private string SampleTable()
         {
             return "<table style='border-collapse: collapse; border: 1px solid black;'>" +

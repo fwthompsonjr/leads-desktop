@@ -20,6 +20,9 @@ namespace legallead.search.tests.util
         public void ComponentCanExecute()
         {
             var driver = new Mock<IWebDriver>();
+            var element = new Mock<IWebElement>();
+            driver.Setup(m => m.FindElement(It.IsAny<By>())).Returns(element.Object);
+            element.Setup(m => m.Click()).Verifiable();
             var parameters = new DallasAttendedProcess();
             var service = new MockDallasNavigateSearch
             {
@@ -27,6 +30,7 @@ namespace legallead.search.tests.util
                 Driver = driver.Object
             };
             _ = service.Execute();
+            element.Verify(x => x.Click(), Times.Once);
             service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtLeast(3));
         }
         [Theory]

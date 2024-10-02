@@ -7,12 +7,15 @@ return dvcaptcha.offsetParent == null
 dteStart = '{0}';
 dteEnding = '{1}';
 searchParm = '{2}';
+tboxes = [ 'caseCriteria_SearchCriteria', 'caseCriteria.FileDateStart', 'caseCriteria.FileDateEnd' ];
 dvsearch = document.getElementById('caseCriteria_SearchCases_Section');
 ishidden = dvsearch == null || dvsearch.offsetParent == null
 if (ishidden) { document.getElementById('AdvOptions').click(); }
-document.getElementById('caseCriteria_SearchCriteria').value = searchParm;
-document.getElementById('dteEnding').value = dteStart;
-document.getElementById('caseCriteria.FileDateEnd').value = dteEnding;
+document.getElementById(tboxes[0]).value = searchParm;
+document.getElementById(tboxes[1]).value = dteStart;
+document.getElementById(tboxes[2]).value = dteEnding;
+tboxes.forEach(t => document.getElementById(t).dispatchEvent(new Event('change')))
+
 
 ~ click search
 document.getElementById('btnSSSubmit').click();

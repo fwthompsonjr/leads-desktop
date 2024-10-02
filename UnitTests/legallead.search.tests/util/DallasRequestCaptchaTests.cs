@@ -53,9 +53,10 @@ namespace legallead.search.tests.util
             Assert.Throws<NullReferenceException>(() => { _ = service.Execute(); });
         }
 
-        private static void MockUserPrompt()
+        private static bool MockUserPrompt()
         {
             Thread.Sleep(100);
+            return true;
         }
 
         private sealed class MockDallasRequestCaptcha : DallasRequestCaptcha

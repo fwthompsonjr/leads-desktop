@@ -287,6 +287,7 @@ namespace LegalLead.PublicData.Search
                 cboWebsite.SelectedIndex = Convert.ToInt32(
                     configIndex,
                     CultureInfo.CurrentCulture);
+                CboWebsite_SelectedValueChanged(null, null);
             }
             if (!string.IsNullOrEmpty(startDate))
             {

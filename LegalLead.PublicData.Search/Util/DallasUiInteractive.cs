@@ -1,7 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -34,6 +33,7 @@ namespace LegalLead.PublicData.Search.Util
 
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<DallasCaseItemDto> Items { get; private set; } = new List<DallasCaseItemDto>();
+        protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
         private readonly List<IDallasAction> ActionItems = new List<IDallasAction>();
@@ -51,7 +51,6 @@ namespace LegalLead.PublicData.Search.Util
             return result;
         }
 
-        [ExcludeFromCodeCoverage]
         public virtual IWebDriver GetDriver(bool headless = false)
         {
             return new FireFoxProvider().GetWebDriver(headless);
@@ -71,17 +70,14 @@ namespace LegalLead.PublicData.Search.Util
                 IterateDateRange(driver, parameters, dates, common);
                 IterateItems(driver, parameters, postcommon);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // no action on excpetion thrown.
+                Console.WriteLine(ex);
             }
             finally
             {
-                if (driver != null)
-                {
-                    driver.Quit();
-                    driver.Dispose();
-                }
+                driver?.Quit();
             }
 
         }
@@ -98,11 +94,12 @@ namespace LegalLead.PublicData.Search.Util
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
                 {
-                    Populate(a, driver, parameters);
-                    var response = a.Execute();
-                    if (a is DallasFetchCaseDetail _ && response is string cases)
+                    if (!ExecutionCancelled)
                     {
-                        Items.AddRange(GetData(cases));
+                        Populate(a, driver, parameters);
+                        var response = a.Execute();
+                        if (a is DallasFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
+                        if (a is DallasRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
                     }
                 });
             });
@@ -115,7 +112,7 @@ namespace LegalLead.PublicData.Search.Util
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
-
+            if (ExecutionCancelled) return;
             Items.ForEach(i =>
             {
                 postcommon.ForEach(a =>
@@ -145,18 +142,19 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         [ExcludeFromCodeCoverage]
-        private void UserPrompt()
+        private bool UserPrompt()
         {
             if (!DisplayDialogue)
             {
                 Thread.Sleep(100);
-                return;
+                return true;
             }
             var response = DialogResult.None;
             while (response != DialogResult.OK)
             {
                 response = MessageBox.Show(Rx.UI_CAPTCHA_DESCRIPTION, Rx.UI_CAPTCHA_TITLE, MessageBoxButtons.OKCancel);
             }
+            return response == DialogResult.OK;
         }
 
         private void AppendPerson(DallasCaseItemDto dto)

@@ -60,6 +60,11 @@ namespace LegalLead.PublicData.Search.Classes
             return collection;
         }
 
+        public static string GetCourtName(int courtId)
+        {
+            if (courtId < 0 || courtId > 2) return CourtNames[2];
+            return CourtNames[courtId];
+        }
 
         public static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate)
         {

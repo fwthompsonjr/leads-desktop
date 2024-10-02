@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -7,10 +6,9 @@ namespace LegalLead.PublicData.Search.Util
     public class DallasRequestCaptcha : DallasBaseExecutor
     {
         public override int OrderId => 20;
-        public Action PromptUser { get; set; }
+        public Func<bool> PromptUser { get; set; }
         public override object Execute()
         {
-            var js = JsScript;
             var executor = GetJavaScriptExecutor();
 
             if (Parameters == null || Driver == null || executor == null)
@@ -19,15 +17,14 @@ namespace LegalLead.PublicData.Search.Util
             if (PromptUser == null)
                 throw new NullReferenceException(Rx.ERR_DELEGATE_REQUIRED);
 
-            js = VerifyScript(js);
-            var result = true;
-            while (result)
+            var retries = 0;
+            var result = false;
+            while (!result && retries < 10)
             {
-                result = Convert.ToBoolean(executor.ExecuteScript(js), CultureInfo.CurrentCulture);
-                if (result) { PromptUser(); }
-
+                result = PromptUser();
+                retries++;
             }
-            return true;
+            return result;
         }
 
 

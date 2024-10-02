@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -15,6 +16,8 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// <returns></returns>
         public IWebDriver GetWebDriver(bool headless = false)
         {
+            // make sure all instances of geckodriver are gone
+            KillProcess("geckodriver");
             var driver = GetDefaultDriver(headless);
             if (driver != null)
             {
@@ -68,6 +71,16 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             }
             _driverFileName = execName;
             return execName;
+        }
+
+
+
+        private static void KillProcess(string processName)
+        {
+            foreach (var process in Process.GetProcessesByName(processName))
+            {
+                process.Kill();
+            }
         }
     }
 }

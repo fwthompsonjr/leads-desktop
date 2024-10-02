@@ -1,5 +1,4 @@
 ﻿using LegalLead.PublicData.Search.Classes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -69,8 +68,6 @@ namespace LegalLead.PublicData.Search
 
         private void ToggleComboBoxBinding(ComboBoxEx cbo, bool isDallasCounty)
         {
-            if (!cbo.Visible) return;
-
             var find = isDallasCounty ? "dallasCountyCaseOptions" : CommonKeyIndexes.CollinCountyCaseType;
             var caseTypes = CaseTypeSelectionDto.GetDto(find);
             var caseIndex = cbo.SelectedIndex;

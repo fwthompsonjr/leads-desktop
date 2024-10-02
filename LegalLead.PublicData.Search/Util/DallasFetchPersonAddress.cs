@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
