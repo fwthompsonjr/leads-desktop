@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Classes;
@@ -48,6 +50,8 @@ namespace LegalLead.PublicData.Search.Util
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
             result.PeopleList = People;
+            result.Result = GetExcelFileName();
+            result.CaseList = JsonConvert.SerializeObject(People);
             return result;
         }
 
@@ -56,7 +60,17 @@ namespace LegalLead.PublicData.Search.Util
             return new FireFoxProvider().GetWebDriver(headless);
         }
 
-
+        public string GenerateExcel()
+        {
+            try
+            {
+                return GetExcelFileName();
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
         protected virtual void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
         {
             try
@@ -221,5 +235,44 @@ namespace LegalLead.PublicData.Search.Util
                 return new DallasCaseStyleDto();
             }
         }
+
+        private string GetExcelFileName()
+        {
+            var folder = ExcelDirectoyName();
+            var fmt = $"DALLAS_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            var fullName = Path.Combine(folder, $"{fmt}.xlsx");
+            var idx = 1;
+            while (File.Exists(fullName))
+            {
+                fullName = Path.Combine(folder, $"{fmt}_{idx:D4}.xlsx");
+                idx++;
+            }
+            var writer = new ExcelWriter();
+            var content = writer.ConvertToPersonTable(People, "addresses");
+            using (var ms = new MemoryStream())
+            {
+                content.SaveAs(ms);
+                var data = ms.ToArray();
+                File.WriteAllBytes(fullName, data);
+            }
+            return fullName;
+        }
+        
+        private static string GetDateString(DateTime date)
+        {
+            const string fmt = "yyMMdd";
+            return date.ToString(fmt);
+
+        }
+        
+        private static string ExcelDirectoyName()
+        {
+            var appFolder =
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var xmlFolder = Path.Combine(appFolder, "data");
+            if (!Directory.Exists(xmlFolder)) Directory.CreateDirectory(xmlFolder);
+            return xmlFolder;
+        }
+
     }
 }

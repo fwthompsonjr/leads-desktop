@@ -272,7 +272,10 @@ namespace LegalLead.PublicData.Search
                     throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
                 CaseData.WebsiteId = siteData.Id;
-                ExcelWriter.WriteToExcel(CaseData);
+                if (siteData.Id != (int)SourceType.DallasCounty)
+                {
+                    ExcelWriter.WriteToExcel(CaseData);
+                }
                 searchItem.ResultFileName = CaseData.Result;
                 searchItem.IsCompleted = true;
                 searchItem.MoveToCommon();
