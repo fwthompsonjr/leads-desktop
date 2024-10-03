@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace legallead.search.tests.util
@@ -158,6 +159,9 @@ namespace legallead.search.tests.util
             }
             protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
             {
+                var count = new Faker().Random.Int(10, 20);
+                Items.AddRange(itemFaker.Generate(count));
+                Items.ForEach(i => People.Add(i.FromDto()));
             }
         }
 
@@ -302,11 +306,22 @@ namespace legallead.search.tests.util
             = new Faker<DallasCaseItemDto>()
             .RuleFor(x => x.Href, y => y.Internet.Url())
             .RuleFor(x => x.CaseNumber, y => y.Random.AlphaNumeric(16))
-            .RuleFor(x => x.FileDate, y => y.Date.Recent().ToString("s"))
+            .RuleFor(x => x.FileDate, y => y.Date.Recent().ToString("s").Split('T')[0])
             .RuleFor(x => x.CaseStyle, y => y.Random.AlphaNumeric(10))
             .RuleFor(x => x.CaseStatus, y => y.Random.AlphaNumeric(10))
             .RuleFor(x => x.Court, y => y.Random.AlphaNumeric(10))
-            .RuleFor(x => x.PartyName, y => y.Random.AlphaNumeric(10));
+            .RuleFor(x => x.CaseType, y => y.Random.AlphaNumeric(10))
+            .RuleFor(x => x.PartyName, y =>
+            {
+                var fname = y.Name.FirstName();
+                var lname = y.Name.LastName();
+                return $"{lname}, {fname}".ToUpper();
+            })
+            .FinishWith((a,b) =>
+            {
+                b.Plaintiff = a.Company.CompanyName().ToUpper();
+                b.CaseStyle = $"{b.Plaintiff} vs. {b.PartyName}";
+            });
 
         private static readonly Faker<DallasCaseStyleDto> caseFaker
             = new Faker<DallasCaseStyleDto>()

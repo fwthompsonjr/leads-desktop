@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
@@ -146,6 +147,16 @@ namespace LegalLead.PublicData.Search.Util
                     }
                 });
             });
+            var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
+            casenumbers.ForEach(i =>
+            {
+                var p = People.Find(x => x.CaseNumber == i);
+                if (p == null)
+                {
+                    var source = Items.Find(x => x.CaseNumber == i);
+                    if (source != null) { AppendPerson(source); }
+                }
+            });
         }
 
         private void Populate(IDallasAction a, IWebDriver driver, DallasAttendedProcess parameters, string uri = "")
@@ -176,19 +187,7 @@ namespace LegalLead.PublicData.Search.Util
 
         private void AppendPerson(DallasCaseItemDto dto)
         {
-            var person = new PersonAddress
-            {
-                Court = dto.Court,
-                CaseNumber = dto.CaseNumber,
-                CaseStyle = dto.CaseStyle,
-                DateFiled = dto.FileDate,
-                Status = dto.CaseStatus,
-                Name = dto.PartyName,
-                Plantiff = dto.Plaintiff,
-                Zip = "00000",
-                Address1 = "000 No Street",
-                Address3 = "Not, NA"
-            };
+            var person = dto.FromDto();
             People.Add(person);
         }
 
@@ -249,7 +248,10 @@ namespace LegalLead.PublicData.Search.Util
                 idx++;
             }
             var writer = new ExcelWriter();
-            var content = writer.ConvertToPersonTable(People, "addresses");
+            var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: 60);
+            content.TransferColumn("County", "fname");
+            content.TransferColumn("CourtAddress", "lname");
+            
             using (var ms = new MemoryStream())
             {
                 content.SaveAs(ms);
