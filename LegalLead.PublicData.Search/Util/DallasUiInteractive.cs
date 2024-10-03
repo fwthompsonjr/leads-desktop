@@ -154,6 +154,7 @@ namespace LegalLead.PublicData.Search.Util
             a.Parameters = parameters;
             if (a is DallasRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }
             if (!string.IsNullOrEmpty(uri) && a is DallasFetchCaseStyle style) { style.PageAddress = uri; }
+            if (a is DallasFetchCaseItems items) { items.PauseForPage = true; }
         }
 
         [ExcludeFromCodeCoverage]
