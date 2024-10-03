@@ -61,8 +61,11 @@ namespace legallead.search.tests.util
         }
 
 
-        [Fact]
-        public void ServiceCanFetch()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        public void ServiceCanFetch(int instanceId)
         {
             var error = Record.Exception(() =>
             {
@@ -72,7 +75,13 @@ namespace legallead.search.tests.util
                     new() { Name = "CourtType", Value = "JUSTICE"}
                 };
                 var wb = new WebNavigationParameter { Keys = keys };
-                var service = new NoIteratingWeb(wb);
+                DallasUiInteractive service = instanceId switch
+                {
+                    0 => new NoIteratingWeb(wb),
+                    1 => new NoIteratingWebWithCancellation(wb),
+                    2 => new NoIteratingWebWithNoData(wb),
+                    _ => new NoIteratingWeb(wb)
+                };
                 _ = service.Fetch();
             });
             Assert.Null(error);
@@ -165,6 +174,38 @@ namespace legallead.search.tests.util
             }
         }
 
+        private sealed class NoIteratingWebWithCancellation : DallasUiInteractive
+        {
+            public NoIteratingWebWithCancellation(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters, displayDialogue)
+            {
+            }
+            public override IWebDriver GetDriver(bool headless = false)
+            {
+                var mock = new Mock<IWebDriver>();
+                return mock.Object;
+            }
+            protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
+            {
+                var count = new Faker().Random.Int(10, 20);
+                Items.AddRange(itemFaker.Generate(count));
+                Items.ForEach(i => People.Add(i.FromDto()));
+                ExecutionCancelled = true;
+            }
+        }
+        private sealed class NoIteratingWebWithNoData : DallasUiInteractive
+        {
+            public NoIteratingWebWithNoData(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters, displayDialogue)
+            {
+            }
+            public override IWebDriver GetDriver(bool headless = false)
+            {
+                var mock = new Mock<IWebDriver>();
+                return mock.Object;
+            }
+            protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
+            {
+            }
+        }
         private sealed class IteratingWeb : DallasUiInteractive
         {
             public IteratingWeb(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters, displayDialogue)

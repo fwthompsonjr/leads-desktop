@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,9 @@ namespace LegalLead.PublicData.Search.Util
             if (PauseForPage) Thread.Sleep(2000);
             var alldata = new List<DallasCaseItemDto>();
             var locator = By.Id(elementId);
-            var element = Driver.FindElement(locator);
+            WaitForElement(locator);
+            var element = TryGetElement(Driver, locator);
+            if (element == null) return string.Empty;
             var content = element.GetAttribute("outerHTML");
             var doc = GetHtml(content);
             var node = doc.DocumentNode;
@@ -71,6 +74,27 @@ namespace LegalLead.PublicData.Search.Util
             return JsonConvert.SerializeObject(alldata);
         }
 
+
+        private void WaitForElement(By locator)
+        {
+            try
+            {
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(500)
+                };
+                wait.Until(d =>
+                {
+                    var element = TryGetElement(Driver, locator);
+                    return element != null;
+                });
+            }
+            catch (Exception)
+            {
+                // suppress errors
+            }
+        }
+
         protected static HtmlNode GetClosest(string tagName, HtmlNode element)
         {
             const StringComparison Oic = StringComparison.OrdinalIgnoreCase;
@@ -97,5 +121,24 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         protected override string ScriptName { get; } = "get case list";
+        /// <summary>
+        /// Tries the find element on a specfic web page using the By condition supplied.
+        /// </summary>
+        /// <param name="parent">The parent web browser instance.</param>
+        /// <param name="by">The by condition used to locate the element</param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
+        private static IWebElement TryGetElement(IWebDriver parent, By by)
+        {
+            try
+            {
+                if (parent == null) return null;
+                return parent.FindElement(by);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -35,6 +35,27 @@ namespace legallead.search.tests.util
             _ = service.Execute();
             element.Verify(m => m.GetAttribute(It.IsAny<string>()), Times.Once);
         }
+        [Fact]
+        public void ComponentCanExecuteWhenElementNotFound()
+        {
+            var driver = new Mock<IWebDriver>();
+            var navigation = new Mock<INavigation>();
+            IWebElement element = null;
+            var parameters = new DallasAttendedProcess();
+            driver.Setup(x => x.Navigate()).Returns(navigation.Object);
+            driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element);
+            navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
+            var service = new MockDallasFetchCaseItems
+            {
+                Parameters = parameters,
+                Driver = driver.Object
+            };
+            var actual = service.Execute();
+            if (actual is string str)
+            {
+                Assert.True(string.IsNullOrEmpty(str));
+            }
+        }
         [Theory]
         [InlineData(0)]
         [InlineData(1)]

@@ -50,6 +50,7 @@ namespace LegalLead.PublicData.Search.Util
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
+            if (ExecutionCancelled || People.Count == 0) return result;
             result.PeopleList = People;
             result.Result = GetExcelFileName();
             result.CaseList = JsonConvert.SerializeObject(People);
