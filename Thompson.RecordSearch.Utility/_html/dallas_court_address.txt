@@ -1,0 +1,263 @@
+[
+	{
+		"name": "county",
+		"items": [
+			{
+				"id": 1,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Court at Law No. 1",
+					"George L. Allen, Sr. Courts Building",
+					"600 Commerce Street",
+					"Dallas, TX 75202"
+				]
+			},
+			{
+				"id": 2,
+				"name": "County Court at Law No. 2",
+				"address": [
+					"County Court at Law No. 2",
+					"George L. Allen, Sr. Courts Building",
+					"600 Commerce Street",
+					"Dallas, TX 75202"
+				]
+			},
+			{
+				"id": 3,
+				"name": "County Court at Law No. 3",
+				"address": [
+					"County Court at Law No. 3",
+					"George L. Allen, Sr. Courts Building",
+					"600 Commerce Street",
+					"Dallas, TX 75202"
+				]
+			},
+			{
+				"id": 4,
+				"name": "County Court at Law No. 4",
+				"address": [
+					"County Court at Law No. 4",
+					"George L. Allen, Sr. Courts Building",
+					"600 Commerce Street",
+					"Dallas, TX 75202"
+				]
+			},
+			{
+				"id": 5,
+				"name": "County Court at Law No. 4",
+				"address": [
+					"County Court at Law No. 5",
+					"George L. Allen, Sr. Courts Building",
+					"600 Commerce Street",
+					"Dallas, TX 75202"
+				]
+			}
+		]
+	},
+	{
+		"name": "justice",
+		"items": [
+			{
+				"id": 1,
+				"name": "Justice of the Peace, 1-1",
+				"address": [
+					"South Dallas Government Center",
+					"8301 S. Polk Street",
+					"Suite 2100",
+					"Dallas, TX 75232"
+				]
+			},
+			{
+				"id": 2,
+				"name": "Justice of the Peace, 1-2",
+				"address": [
+					"South Dallas Government Center",
+					"8301 S. Polk Street",
+					"Suite 2200",
+					"Dallas, TX 75232"
+				]
+			},
+			{
+				"id": 3,
+				"name": "Justice of the Peace, 2-1",
+				"address": [
+					"Garland Office",
+					"140 N. Garland Avenue",
+					"Garland, TX 75040"
+				]
+			},
+			{
+				"id": 4,
+				"name": "Justice of the Peace, 2-2",
+				"address": [
+					"Mesquite Office",
+					"823 N. Galloway Avenue",
+					"Mesquite, TX 75149"
+				]
+			},
+			{
+				"id": 5,
+				"name": "Justice of the Peace, 3-1",
+				"address": [
+					"North Dallas Government Center",
+					"6820 Lyndon B. Johnson Freeway",
+					"Suite 3100",
+					"Dallas, TX 75240"
+				]
+			},
+			{
+				"id": 5,
+				"name": "Justice of the Peace, 3-2",
+				"address": [
+					"North Dallas Government Center",
+					"6820 Lyndon B. Johnson Freeway",
+					"Suite 2100",
+					"Dallas, TX 75240"
+				]
+			},
+			{
+				"id": 6,
+				"name": "Justice of the Peace, 4-1",
+				"address": [
+					"Grand Prairie Government Center",
+					"106 W. Church Street",
+					"Suite 205",
+					"Grand Prairie, TX 75050"
+				]
+			},
+			{
+				"id": 7,
+				"name": "Justice of the Peace, 4-2",
+				"address": [
+					"Grand Prairie Government Center",
+					"106 W. Church Street",
+					"Suite 210",
+					"Grand Prairie, TX 75050"
+				]
+			},
+			{
+				"id": 8,
+				"name": "Justice of the Peace, 5-1",
+				"address": [
+					"East Dallas Government Center",
+					"3443 St. Francis Avenue",
+					"Dallas, TX 75228"
+				]
+			},
+			{
+				"id": 9,
+				"name": "Justice of the Peace, 5-2",
+				"address": [
+					"Oak Cliff Government Center",
+					"702 E. Jefferson Boulevard",
+					"Suite 2100",
+					"Dallas, TX 75203"
+				]
+			}
+		]
+	},
+	{
+		"name": "criminal",
+		"items": [
+			{
+				"id": 1,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No. 1",
+					"133 N. Riverfront Boulevard, LB14",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 2,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No. 2",
+					"133 N. Riverfront Boulevard, LB15",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 3,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No. 3",
+					"133 N. Riverfront Boulevard, LB16",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 4,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No. 4",
+					"133 N. Riverfront Boulevard, LB17",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 5,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No. 5",
+					"133 N. Riverfront Boulevard, LB18",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 6,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No. 6",
+					"133 N. Riverfront Boulevard, LB20",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 7,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No.7",
+					"133 N. Riverfront Boulevard, LB21",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 8,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No.8",
+					"133 N. Riverfront Boulevard, LB22",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 9,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No.9",
+					"133 N. Riverfront Boulevard, LB23",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 10,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No. 10",
+					"133 N. Riverfront Boulevard, LB24",
+					"Dallas, Texas 75207"
+				]
+			},
+			{
+				"id": 11,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Criminal Court No. 11",
+					"133 N. Riverfront Boulevard, 4th Floor",
+					"Dallas, Texas 75207"
+				]
+			}
+		]
+	}
+]
