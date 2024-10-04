@@ -3,7 +3,7 @@ Option Explicit
 Dim Title,sh,rv,ProcessPath,ProcessName
 Title = "Launching application using Vb Script"
 Set sh = CreateObject("WScript.Shell")
-ProcessPath = sh.ExpandEnvironmentStrings("%LOCALAPPDATA%\LegalLead\2.7\LegalLead.PublicData.Search.exe")
+ProcessPath = sh.ExpandEnvironmentStrings("%LOCALAPPDATA%\LegalLead\2.8\LegalLead.PublicData.Search.exe")
 CreateShortcut sh, ProcessPath
 
 rv = sh.Run(DblQuote(ProcessPath),1,False)
@@ -41,7 +41,7 @@ Dim link
     workingDirectory = fso.GetParentFolderName(exeLocation)
     iconLocation = exeLocation & ",0"
     link.Arguments = "1 2 3"
-    link.Description = "Legal Lead Search - v 2.7.2"
+    link.Description = "Legal Lead Search - v 2.8.0"
     link.iconLocation = iconLocation
     link.TargetPath = exeLocation
     link.WindowStyle = 3

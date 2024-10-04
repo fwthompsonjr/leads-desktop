@@ -199,7 +199,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_B0FF2CC24EC14FD49804651B31D29B32"
             {
-            "DefaultLocation" = "8:[LocalAppDataFolder]\\LegalLead\\2.7"
+            "DefaultLocation" = "8:[LocalAppDataFolder]\\LegalLead\\2.8"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -237,7 +237,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Legal Lead Installer"
         "ProductCode" = "8:{E980BA78-FD2F-4764-85A4-BCA1014FCD56}"
-        "PackageCode" = "8:{DA6E930F-E1D2-4D96-9939-CE635D29800E}"
+        "PackageCode" = "8:{68671104-9B7F-4BF1-BE3F-74114E488FFD}"
         "UpgradeCode" = "8:{C4319792-24AD-4295-A670-BAE13A7DB6AA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
