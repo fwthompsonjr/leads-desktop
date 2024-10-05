@@ -25,6 +25,24 @@ namespace Thompson.RecordSearch.Utility.Extensions
             return columns;
         }
 
+        public static void PopulateColumn(
+            this ExcelPackage package,
+            string destination,
+            List<string> values)
+        {
+            if (package == null) throw new ArgumentNullException(nameof(package));
+            if (values == null) throw new ArgumentNullException(nameof(values));
+            var columns = package.GetColumns();
+            var hasDestination = columns.TryGetValue(destination, out var destinationId);
+            if (!hasDestination) return;
+            var worksheet = package.Workbook.Worksheets.First();
+            values.ForEach(v =>
+            {
+                var dest = (v ?? string.Empty).Trim();
+                var idx = values.IndexOf(v) + 2;
+                worksheet.Cells[idx, destinationId].Value = dest;
+            });
+        }
         public static void TransferColumn(this ExcelPackage package, string source, string destination)
         {
             if (package == null) throw new ArgumentNullException(nameof(package));

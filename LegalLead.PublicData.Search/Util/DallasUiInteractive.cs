@@ -251,9 +251,16 @@ namespace LegalLead.PublicData.Search.Util
             }
             var writer = new ExcelWriter();
             var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: 60);
+            var courtlist = People.Select(p =>
+            {
+                if (string.IsNullOrEmpty(p.Court)) return string.Empty;
+                var find = DallasCourtLookupService.GetAddress(name, p.Court);
+                if (string.IsNullOrEmpty(find)) return string.Empty;
+                return find;
+            }).ToList();
             content.TransferColumn("County", "fname");
             content.TransferColumn("CourtAddress", "lname");
-
+            content.PopulateColumn("CourtAddress", courtlist);
             using (var ms = new MemoryStream())
             {
                 content.SaveAs(ms);

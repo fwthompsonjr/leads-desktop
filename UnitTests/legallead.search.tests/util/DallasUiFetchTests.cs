@@ -65,14 +65,22 @@ namespace legallead.search.tests.util
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]
+        [InlineData(3)]
+        [InlineData(4)]
         public void ServiceCanFetch(int instanceId)
         {
             var error = Record.Exception(() =>
             {
+                var lookup = instanceId switch
+                {
+                    3 => "DISTRICT",
+                    4 => "COUNTY",
+                    _ => "JUSTICE"
+                };
                 var keys = new List<WebNavigationKey> {
                     new() { Name = "StartDate", Value = "2024-05-25"},
                     new() { Name = "EndDate", Value = "2024-05-25"},
-                    new() { Name = "CourtType", Value = "JUSTICE"}
+                    new() { Name = "CourtType", Value = lookup}
                 };
                 var wb = new WebNavigationParameter { Keys = keys };
                 DallasUiInteractive service = instanceId switch
