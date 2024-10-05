@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace legallead.search.tests.util
@@ -60,18 +61,35 @@ namespace legallead.search.tests.util
         }
 
 
-        [Fact]
-        public void ServiceCanFetch()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        [InlineData(4)]
+        public void ServiceCanFetch(int instanceId)
         {
             var error = Record.Exception(() =>
             {
+                var lookup = instanceId switch
+                {
+                    3 => "DISTRICT",
+                    4 => "COUNTY",
+                    _ => "JUSTICE"
+                };
                 var keys = new List<WebNavigationKey> {
                     new() { Name = "StartDate", Value = "2024-05-25"},
                     new() { Name = "EndDate", Value = "2024-05-25"},
-                    new() { Name = "CourtType", Value = "JUSTICE"}
+                    new() { Name = "CourtType", Value = lookup}
                 };
                 var wb = new WebNavigationParameter { Keys = keys };
-                var service = new NoIteratingWeb(wb);
+                DallasUiInteractive service = instanceId switch
+                {
+                    0 => new NoIteratingWeb(wb),
+                    1 => new NoIteratingWebWithCancellation(wb),
+                    2 => new NoIteratingWebWithNoData(wb),
+                    _ => new NoIteratingWeb(wb)
+                };
                 _ = service.Fetch();
             });
             Assert.Null(error);
@@ -158,9 +176,44 @@ namespace legallead.search.tests.util
             }
             protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
             {
+                var count = new Faker().Random.Int(10, 20);
+                Items.AddRange(itemFaker.Generate(count));
+                Items.ForEach(i => People.Add(i.FromDto()));
             }
         }
 
+        private sealed class NoIteratingWebWithCancellation : DallasUiInteractive
+        {
+            public NoIteratingWebWithCancellation(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters, displayDialogue)
+            {
+            }
+            public override IWebDriver GetDriver(bool headless = false)
+            {
+                var mock = new Mock<IWebDriver>();
+                return mock.Object;
+            }
+            protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
+            {
+                var count = new Faker().Random.Int(10, 20);
+                Items.AddRange(itemFaker.Generate(count));
+                Items.ForEach(i => People.Add(i.FromDto()));
+                ExecutionCancelled = true;
+            }
+        }
+        private sealed class NoIteratingWebWithNoData : DallasUiInteractive
+        {
+            public NoIteratingWebWithNoData(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters, displayDialogue)
+            {
+            }
+            public override IWebDriver GetDriver(bool headless = false)
+            {
+                var mock = new Mock<IWebDriver>();
+                return mock.Object;
+            }
+            protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
+            {
+            }
+        }
         private sealed class IteratingWeb : DallasUiInteractive
         {
             public IteratingWeb(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters, displayDialogue)
@@ -302,11 +355,22 @@ namespace legallead.search.tests.util
             = new Faker<DallasCaseItemDto>()
             .RuleFor(x => x.Href, y => y.Internet.Url())
             .RuleFor(x => x.CaseNumber, y => y.Random.AlphaNumeric(16))
-            .RuleFor(x => x.FileDate, y => y.Date.Recent().ToString("s"))
+            .RuleFor(x => x.FileDate, y => y.Date.Recent().ToString("s").Split('T')[0])
             .RuleFor(x => x.CaseStyle, y => y.Random.AlphaNumeric(10))
             .RuleFor(x => x.CaseStatus, y => y.Random.AlphaNumeric(10))
             .RuleFor(x => x.Court, y => y.Random.AlphaNumeric(10))
-            .RuleFor(x => x.PartyName, y => y.Random.AlphaNumeric(10));
+            .RuleFor(x => x.CaseType, y => y.Random.AlphaNumeric(10))
+            .RuleFor(x => x.PartyName, y =>
+            {
+                var fname = y.Name.FirstName();
+                var lname = y.Name.LastName();
+                return $"{lname}, {fname}".ToUpper();
+            })
+            .FinishWith((a, b) =>
+            {
+                b.Plaintiff = a.Company.CompanyName().ToUpper();
+                b.CaseStyle = $"{b.Plaintiff} vs. {b.PartyName}";
+            });
 
         private static readonly Faker<DallasCaseStyleDto> caseFaker
             = new Faker<DallasCaseStyleDto>()

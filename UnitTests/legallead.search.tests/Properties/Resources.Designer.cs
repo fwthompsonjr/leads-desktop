@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Thompson.RecordSearch.Utility.Properties {
+namespace legallead.search.tests.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Thompson.RecordSearch.Utility.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Thompson.RecordSearch.Utility.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("legallead.search.tests.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,36 +61,11 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [
-        ///	{
-        ///		&quot;name&quot;: &quot;county&quot;,
-        ///		&quot;items&quot;: [
-        ///			{
-        ///				&quot;id&quot;: 1,
-        ///				&quot;name&quot;: &quot;County Court at Law No. 1&quot;,
-        ///				&quot;address&quot;: [
-        ///					&quot;County Court at Law No. 1&quot;,
-        ///					&quot;George L. Allen, Sr. Courts Building&quot;,
-        ///					&quot;600 Commerce Street&quot;,
-        ///					&quot;Dallas, TX 75202&quot;
-        ///				]
-        ///			},
-        ///			{
-        ///				&quot;id&quot;: 2,
-        ///				&quot;name&quot;: &quot;County Court at Law No. 2&quot;,
-        ///				&quot;address&quot;: [
-        ///					&quot;County Court at Law No. 2&quot;,
-        ///					&quot;George L. Allen, Sr. Courts Building&quot;,
-        ///					&quot;600 Commerce Street&quot;,
-        ///					&quot;Dallas, TX 75202&quot;
-        ///				]
-        ///			},
-        ///			{
-        ///				&quot;i [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;div class=&quot;k-widget k-grid can-morph-to-card is-morph-ready&quot; id=&quot;CasesGrid&quot; data-role=&quot;grid&quot; style=&quot;overflow-x: auto; min-height: 0px;&quot;&gt;&lt;table cellspacing=&quot;0&quot; role=&quot;table&quot; class=&quot;kgrid-card-table&quot;&gt;&lt;colgroup&gt;&lt;col class=&quot;k-hierarchy-col&quot;&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;/colgroup&gt;&lt;thead class=&quot;k-grid-header kgrid-card-thead&quot;&gt;&lt;tr&gt;&lt;th class=&quot;k-hierarchy-cell k-header&quot;&gt;&amp;nbsp;&lt;/th&gt;&lt;th class=&quot;k-header&quot; data-configurable-grid=&quot;True&quot; data-field=&quot;CaseNumber&quot; data-title=&quot;Case Number&quot; scope=&quot;col&quot; data-role=&quot;sortable&quot;&gt;&lt;a [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string dallas_court_address {
+        internal static string dallas_case_items {
             get {
-                return ResourceManager.GetString("dallas_court_address", resourceCulture);
+                return ResourceManager.GetString("dallas_case_items", resourceCulture);
             }
         }
     }

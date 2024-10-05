@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
@@ -49,6 +50,7 @@ namespace LegalLead.PublicData.Search.Util
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
+            if (ExecutionCancelled || People.Count == 0) return result;
             result.PeopleList = People;
             result.Result = GetExcelFileName();
             result.CaseList = JsonConvert.SerializeObject(People);
@@ -146,6 +148,16 @@ namespace LegalLead.PublicData.Search.Util
                     }
                 });
             });
+            var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
+            casenumbers.ForEach(i =>
+            {
+                var p = People.Find(x => x.CaseNumber == i);
+                if (p == null)
+                {
+                    var source = Items.Find(x => x.CaseNumber == i);
+                    if (source != null) { AppendPerson(source); }
+                }
+            });
         }
 
         private void Populate(IDallasAction a, IWebDriver driver, DallasAttendedProcess parameters, string uri = "")
@@ -154,6 +166,7 @@ namespace LegalLead.PublicData.Search.Util
             a.Parameters = parameters;
             if (a is DallasRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }
             if (!string.IsNullOrEmpty(uri) && a is DallasFetchCaseStyle style) { style.PageAddress = uri; }
+            if (a is DallasFetchCaseItems items) { items.PauseForPage = true; }
         }
 
         [ExcludeFromCodeCoverage]
@@ -175,19 +188,7 @@ namespace LegalLead.PublicData.Search.Util
 
         private void AppendPerson(DallasCaseItemDto dto)
         {
-            var person = new PersonAddress
-            {
-                Court = dto.Court,
-                CaseNumber = dto.CaseNumber,
-                CaseStyle = dto.CaseStyle,
-                DateFiled = dto.FileDate,
-                Status = dto.CaseStatus,
-                Name = dto.PartyName,
-                Plantiff = dto.Plaintiff,
-                Zip = "00000",
-                Address1 = "000 No Street",
-                Address3 = "Not, NA"
-            };
+            var person = dto.FromDto();
             People.Add(person);
         }
 
@@ -239,7 +240,8 @@ namespace LegalLead.PublicData.Search.Util
         private string GetExcelFileName()
         {
             var folder = ExcelDirectoyName();
-            var fmt = $"DALLAS_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            var name = DallasAttendedProcess.GetCourtName(CourtType);
+            var fmt = $"DALLAS_{name}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
             var fullName = Path.Combine(folder, $"{fmt}.xlsx");
             var idx = 1;
             while (File.Exists(fullName))
@@ -248,7 +250,17 @@ namespace LegalLead.PublicData.Search.Util
                 idx++;
             }
             var writer = new ExcelWriter();
-            var content = writer.ConvertToPersonTable(People, "addresses");
+            var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: 60);
+            var courtlist = People.Select(p =>
+            {
+                if (string.IsNullOrEmpty(p.Court)) return string.Empty;
+                var find = DallasCourtLookupService.GetAddress(name, p.Court);
+                if (string.IsNullOrEmpty(find)) return string.Empty;
+                return find;
+            }).ToList();
+            content.TransferColumn("County", "fname");
+            content.TransferColumn("CourtAddress", "lname");
+            content.PopulateColumn("CourtAddress", courtlist);
             using (var ms = new MemoryStream())
             {
                 content.SaveAs(ms);
@@ -257,14 +269,14 @@ namespace LegalLead.PublicData.Search.Util
             }
             return fullName;
         }
-        
+
         private static string GetDateString(DateTime date)
         {
             const string fmt = "yyMMdd";
             return date.ToString(fmt);
 
         }
-        
+
         private static string ExcelDirectoyName()
         {
             var appFolder =
