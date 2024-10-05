@@ -100,7 +100,7 @@ namespace LegalLead.PublicData.Search.Util
             const StringComparison Oic = StringComparison.OrdinalIgnoreCase;
             if (element == null) return null;
             var parent = element.ParentNode;
-            while(!parent.Name.Equals(tagName, Oic)) parent = parent.ParentNode;
+            while (!parent.Name.Equals(tagName, Oic)) parent = parent.ParentNode;
             return parent;
         }
 

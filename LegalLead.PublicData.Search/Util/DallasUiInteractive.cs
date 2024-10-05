@@ -240,7 +240,8 @@ namespace LegalLead.PublicData.Search.Util
         private string GetExcelFileName()
         {
             var folder = ExcelDirectoyName();
-            var fmt = $"DALLAS_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            var name = DallasAttendedProcess.GetCourtName(CourtType);
+            var fmt = $"DALLAS_{name}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
             var fullName = Path.Combine(folder, $"{fmt}.xlsx");
             var idx = 1;
             while (File.Exists(fullName))
@@ -252,7 +253,7 @@ namespace LegalLead.PublicData.Search.Util
             var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: 60);
             content.TransferColumn("County", "fname");
             content.TransferColumn("CourtAddress", "lname");
-            
+
             using (var ms = new MemoryStream())
             {
                 content.SaveAs(ms);
@@ -261,14 +262,14 @@ namespace LegalLead.PublicData.Search.Util
             }
             return fullName;
         }
-        
+
         private static string GetDateString(DateTime date)
         {
             const string fmt = "yyMMdd";
             return date.ToString(fmt);
 
         }
-        
+
         private static string ExcelDirectoyName()
         {
             var appFolder =

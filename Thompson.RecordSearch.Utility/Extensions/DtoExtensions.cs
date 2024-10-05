@@ -1,5 +1,4 @@
-﻿using System.Security.AccessControl;
-using Thompson.RecordSearch.Utility.Dto;
+﻿using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Extensions

@@ -66,6 +66,12 @@ namespace LegalLead.PublicData.Search.Classes
             return CourtNames[courtId];
         }
 
+        public static string GetCourtName(string courtName)
+        {
+            const StringComparison oic = StringComparison.OrdinalIgnoreCase;
+            var id = CourtNames.FindIndex(x => x.Equals(courtName, oic));
+            return GetCourtName(id);
+        }
         public static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate)
         {
             var list = new List<DateTime>();

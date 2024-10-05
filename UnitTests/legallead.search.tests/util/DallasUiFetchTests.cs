@@ -358,7 +358,7 @@ namespace legallead.search.tests.util
                 var lname = y.Name.LastName();
                 return $"{lname}, {fname}".ToUpper();
             })
-            .FinishWith((a,b) =>
+            .FinishWith((a, b) =>
             {
                 b.Plaintiff = a.Company.CompanyName().ToUpper();
                 b.CaseStyle = $"{b.Plaintiff} vs. {b.PartyName}";

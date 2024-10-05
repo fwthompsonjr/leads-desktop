@@ -37,9 +37,23 @@ namespace legallead.search.tests.classes
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(12)]
-        public void GetCourtNameTest(int courtId)
+        public void GetCourtNameById(int courtId)
         {
             var result = DallasAttendedProcess.GetCourtName(courtId);
+            Assert.False(string.IsNullOrEmpty(result));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("nomatch")]
+        [InlineData("justice")]
+        [InlineData("county")]
+        [InlineData("district")]
+        [InlineData("District")]
+        public void GetCourtNameFromText(string court)
+        {
+            var result = DallasAttendedProcess.GetCourtName(court);
             Assert.False(string.IsNullOrEmpty(result));
         }
 
