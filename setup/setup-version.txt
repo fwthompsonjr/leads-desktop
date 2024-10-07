@@ -1,5 +1,22 @@
 [
 	{
+		"id": "2.8.0",
+		"date": "2024-10-07 08:15",
+		"title": "Add Dallas County Attended Search",
+		"description": [
+			"## Problem:",
+			"",
+			"When a user selects Dallas county a search parameter",
+			"The process will perform a search for Dallas county.",
+			"",
+			"## Resolution:",
+			"- [x] Confirm excel file generation",
+			"- [x] Create excal file to open generated files",
+			"- [x] Test behavior for Dallas counties",
+			"- [x] Update package to generate release"
+		]
+	},
+	{
 		"id": "2.7.2",
 		"date": "2024-07-21 08:45",
 		"title": "Add Excel File Management Utility",
