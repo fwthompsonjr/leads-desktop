@@ -59,5 +59,39 @@ namespace Thompson.RecordSearch.Utility.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;name&quot;: &quot;county&quot;,
+        ///		&quot;items&quot;: [
+        ///			{
+        ///				&quot;id&quot;: 1,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 1&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 1&quot;,
+        ///					&quot;George L. Allen, Sr. Courts Building&quot;,
+        ///					&quot;600 Commerce Street&quot;,
+        ///					&quot;Dallas, TX 75202&quot;
+        ///				]
+        ///			},
+        ///			{
+        ///				&quot;id&quot;: 2,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 2&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 2&quot;,
+        ///					&quot;George L. Allen, Sr. Courts Building&quot;,
+        ///					&quot;600 Commerce Street&quot;,
+        ///					&quot;Dallas, TX 75202&quot;
+        ///				]
+        ///			},
+        ///			{
+        ///				&quot;i [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string dallas_court_address {
+            get {
+                return ResourceManager.GetString("dallas_court_address", resourceCulture);
+            }
+        }
     }
 }

@@ -1,0 +1,22 @@
+{
+  "dropDowns": [
+    {
+      "id": 0,
+      "name": "county courts",
+      "query": "#sbxControlID2",
+      "options": []
+    },
+    {
+      "id": 1,
+      "name": "district courts",
+      "query": "#sbxControlID2",
+      "options": []
+    },
+    {
+      "id": 2,
+      "name": "justice courts",
+      "query": "#sbxControlID2",
+      "options": []
+    }
+  ]
+}

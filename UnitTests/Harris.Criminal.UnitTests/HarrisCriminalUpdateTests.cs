@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Threading;
-using Thompson.RecordSearch.Utility.Web;
 
 namespace Harris.Criminal.UnitTests
 {

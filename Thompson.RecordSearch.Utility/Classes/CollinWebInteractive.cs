@@ -1,8 +1,6 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -263,7 +261,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="driver">The driver.</param>
         /// <param name="jsonWebInteractive">The json web interactive.</param>
         /// <param name="linkData">The link data.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private void GetAddressInformation(IWebDriver driver, TarrantWebInteractive jsonWebInteractive, HLinkDataRow linkData)
         {
             if (jsonWebInteractive == null)

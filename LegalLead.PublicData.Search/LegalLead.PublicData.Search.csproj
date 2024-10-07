@@ -9,7 +9,7 @@
 		<Product>LegalLead.PublicData.Search</Product>
 		<NeutralLanguage>en</NeutralLanguage>
 		<Copyright>Copyright ©  2019</Copyright>
-		<NoWarn>7035</NoWarn>
+		<NoWarn>7035;CA1031</NoWarn>
 		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -22,8 +22,8 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<ApplicationIcon>law-icon.ico</ApplicationIcon>
-		<AssemblyVersion>2.7.2.0</AssemblyVersion>
-		<FileVersion>2.7.2.0</FileVersion>
+		<AssemblyVersion>2.8.0.0</AssemblyVersion>
+		<FileVersion>2.8.0.0</FileVersion>
 		<PackageIcon>law-icon.png</PackageIcon>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">

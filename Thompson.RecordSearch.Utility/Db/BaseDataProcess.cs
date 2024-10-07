@@ -41,9 +41,11 @@ namespace Thompson.RecordSearch.Utility.Db
             var collection = Assembly.GetAssembly(typeof(T)).GetTypes()
                 .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(T)))
                 .Where(x => x.GetCustomAttributes(actionable) != null)
-                .Select(y => new { 
-                    DataType = y, 
-                    CustomInfo = y.GetCustomAttributes(actionable).First() as DataActionAttribute })
+                .Select(y => new
+                {
+                    DataType = y,
+                    CustomInfo = y.GetCustomAttributes(actionable).First() as DataActionAttribute
+                })
                 .Where(z => z.CustomInfo.IsShared || z.CustomInfo.Name.Equals(processName, StringComparison.OrdinalIgnoreCase))
                 .ToList();
             collection.Sort((a, b) => a.CustomInfo.ProcessId.CompareTo(b.CustomInfo.ProcessId));
