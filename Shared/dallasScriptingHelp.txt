@@ -88,4 +88,27 @@ var arrspan = [];
 sps.forEach(s => arrspan.push(s.innerText.trim()));
 return JSON.stringify(arrspan);
 
+~ login process 01
+var bttn = document.getElementById('dropdownMenu1');
+var parentDiv = bttn.closest('div');
+var ul = parentDiv.getElementsByTagName('ul')[0];
+var li = ul.getElementsByTagName('li')
+var lastLi = li.length - 1;
+var link = li[lastLi].children[0]
+bttn.click();
+link.click();
+
+~ login process 02
+var uid = 'kerriphillipslaw@gmail.com'
+var pwd = 'M@ri1007'
+var userBox = document.getElementById('UserName');
+var wordBox = document.getElementById('Password');
+var chekBox = document.getElementById('TOSCheckBox');
+var signin = document.getElementById('btnSignIn');
+userBox.value = uid;
+wordBox.value = pwd;
+chekBox.click();
+while (signin.getAttribute('disabled') !== null ) { chekBox.click(); }
+signin.click();
+
 ~ end of file

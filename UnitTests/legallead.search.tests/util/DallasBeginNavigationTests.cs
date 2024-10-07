@@ -11,7 +11,7 @@ namespace legallead.search.tests.util
         [Fact]
         public void ComponentHasCorrectOrder()
         {
-            const int index = 1;
+            const int index = 10;
             var service = new DallasBeginNavigation();
             Assert.Equal(index, service.OrderId);
         }
