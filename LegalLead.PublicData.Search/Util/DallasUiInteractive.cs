@@ -104,25 +104,33 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
-            var count = common.Count - 1;
+            bool isCaptchaNeeded = true;
             dates.ForEach(d =>
             {
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
                 {
-                    if (!ExecutionCancelled)
-                    {
-                        Populate(a, driver, parameters);
-                        var response = a.Execute();
-                        if (a is DallasFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
-                        if (a is DallasRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
-                        if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
-                    }
+                    isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
                 });
             });
             parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
         }
 
+        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasAttendedProcess parameters, List<IDallasAction> common, IDallasAction a)
+        {
+            if (ExecutionCancelled) return isCaptchaNeeded;
+            if (!isCaptchaNeeded && a is DallasAuthenicateBegin _) return isCaptchaNeeded;
+            if (!isCaptchaNeeded && a is DallasAuthenicateSubmit _) return isCaptchaNeeded;
+            if (!isCaptchaNeeded && a is DallasRequestCaptcha _) return isCaptchaNeeded;
+            var count = common.Count - 1;
+            Populate(a, driver, parameters);
+            var response = a.Execute();
+            if (a is DallasAuthenicateSubmit _ && response is bool captchaCompleted && captchaCompleted) isCaptchaNeeded = false;
+            if (a is DallasFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
+            if (a is DallasRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
+            if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
+            return isCaptchaNeeded;
+        }
 
         protected virtual void IterateItems(IWebDriver driver, DallasAttendedProcess parameters, List<IDallasAction> postcommon)
         {

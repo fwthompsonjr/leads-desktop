@@ -99,8 +99,8 @@ bttn.click();
 link.click();
 
 ~ login process 02
-var uid = 'kerriphillipslaw@gmail.com'
-var pwd = 'M@ri1007'
+var uid = '{0}'
+var pwd = '{1}'
 var userBox = document.getElementById('UserName');
 var wordBox = document.getElementById('Password');
 var chekBox = document.getElementById('TOSCheckBox');

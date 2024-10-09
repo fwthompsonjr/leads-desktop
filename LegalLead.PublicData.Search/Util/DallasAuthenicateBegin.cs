@@ -3,15 +3,25 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
     public class DallasAuthenicateBegin : DallasBaseExecutor
     {
+        protected readonly ICountyCodeReader _reader;
+        public DallasAuthenicateBegin(ICountyCodeReader reader)
+        {
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
+            _reader = reader;
+        }
         public override int OrderId => 4;
         public override object Execute()
         {
+            if (string.IsNullOrEmpty(_credential))
+                _credential = GetCountyCode(_reader);
+
             var js = JsScript;
             var executor = GetJavaScriptExecutor();
 
@@ -21,6 +31,7 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             Uri uri = GetUri(destination);
             Driver.Navigate().GoToUrl(uri);
+            if (string.IsNullOrEmpty(_credential)) return false;
 
             js = VerifyScript(js);
             executor.ExecuteScript(js);
@@ -41,6 +52,21 @@ namespace LegalLead.PublicData.Search.Util
                 return false;
             }
             return true;
+        }
+
+        protected string _credential;
+        protected static string GetCountyCode(ICountyCodeReader reader)
+        {
+            try
+            {
+                var dallasId = (int)SourceType.DallasCounty;
+                if (reader == null) return string.Empty;
+                return reader.GetCountyCode(dallasId);
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
 
         [ExcludeFromCodeCoverage]

@@ -55,7 +55,7 @@ namespace legallead.search.tests.util
                 new() { Name = "CourtType", Value = "JUSTICE"} };
             var wb = new WebNavigationParameter { Keys = keys };
             var service = new DallasUiInteractive(wb);
-            var driver = service.GetDriver(show);
+            using var driver = service.GetDriver(show);
             driver.Close();
             Assert.NotNull(driver);
         }

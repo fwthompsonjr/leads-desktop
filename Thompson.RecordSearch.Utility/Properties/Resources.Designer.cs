@@ -61,6 +61,26 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;web&quot;: &quot;https://oxfordlegalleads.com/app/get-county-code&quot;,
+        ///	&quot;counties&quot;: 
+        ///		[
+        ///			{
+        ///			&quot;id&quot;: 60,
+        ///			&quot;name&quot;: &quot;dallas&quot;,
+        ///			&quot;code&quot;: &quot;legal.lead.dallas.uindex&quot;,
+        ///			&quot;vector&quot;: &quot;04fvxOSLb7yEYgBPQCR0Gw==&quot;
+        ///			}
+        ///		]
+        ///}.
+        /// </summary>
+        internal static string credential_service_map {
+            get {
+                return ResourceManager.GetString("credential_service_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [
         ///	{
         ///		&quot;name&quot;: &quot;county&quot;,
