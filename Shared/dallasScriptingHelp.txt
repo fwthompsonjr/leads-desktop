@@ -75,7 +75,24 @@ var arr = Array.prototype.slice.call( list, 0 );
 var find = arr.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'text-primary' });
 find = find.filter(a => { let txt = a.innerText.trim(); return txt == 'PLAINTIFF' });
 var pln = find[0].closest('p').innerText.replace('PLAINTIFF','').trim();
-var obj = { "casestyle": cs, "plaintiff": pln };
+var obj = { "casestyle": cs, "plaintiff": pln, "addr": "" };
+
+/* get defendant address */
+
+var dvparty = document.getElementById('divPartyInformation_body');
+var parties = Array.prototype.slice.call( dvparty.getElementsByTagName('p'), 0 ); 
+var partytypes = [ "RESPONDENT", "DEFENDANT" ];
+parties = parties.filter(f => { 
+    var found = false;
+    var txt = f.closest('div').innerText.trim();
+    partytypes.forEach(p => { if( txt.indexOf(p) >= 0 ) { found = true; } });
+	if (!found) { return false; }
+	return f.innerHTML.indexOf('<span') < 0;
+	});
+if (parties.length <= 0 ) return JSON.stringify(obj);
+var addr = parties[0].innerText; 
+while (addr.indexOf('\n') >= 0) { addr = addr.replace('\n','|').trim(); }
+obj.addr = addr;
 return JSON.stringify(obj);
 
 ~ return to search selection

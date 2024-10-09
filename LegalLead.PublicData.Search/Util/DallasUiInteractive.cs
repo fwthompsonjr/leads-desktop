@@ -36,6 +36,8 @@ namespace LegalLead.PublicData.Search.Util
 
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<DallasCaseItemDto> Items { get; private set; } = new List<DallasCaseItemDto>();
+        protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = new List<DallasCaseStyleDto>();
+
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
@@ -151,6 +153,7 @@ namespace LegalLead.PublicData.Search.Util
                         {
                             i.CaseStyle = info.CaseStyle;
                             i.Plaintiff = info.Plaintiff;
+                            if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
                             AppendPerson(i);
                         }
                     }
@@ -197,9 +200,35 @@ namespace LegalLead.PublicData.Search.Util
         private void AppendPerson(DallasCaseItemDto dto)
         {
             var person = dto.FromDto();
+            var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
+            if (address != null && address.Any())
+            {
+                var ln = address.Count - 1;
+                var last = address[ln].Trim();
+                var pieces = last.Split(' ');
+                person.Zip = pieces[pieces.Length - 1];
+                person.Address3 = last;
+                person.Address1 = address[0];
+                person.Address2 = string.Empty;
+                if (ln > 1)
+                {
+                    address.RemoveAt(0); // remove first item
+                    if (address.Count > 1) address.RemoveAt(address.Count - 1); // remove last, when applicable
+                    person.Address2 = string.Join(" ", address);
+                }
+            }
             People.Add(person);
         }
 
+        private static List<string> GetAddress(DallasCaseStyleDto dto)
+        {
+            var pipe = "|";
+            var doublepipe = "||";
+            if (dto == null || string.IsNullOrEmpty(dto.Address)) return null;
+            var data = dto.Address;
+            while (data.Contains(doublepipe)) { data = data.Replace(doublepipe, pipe); }
+            return data.Split('|').ToList();
+        }
 
         private static string FetchKeyedItem(List<WebNavigationKey> keys, string keyname)
         {
