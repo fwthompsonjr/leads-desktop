@@ -26,7 +26,7 @@ namespace legallead.search.tests.util
                 var item = DallasActionContainer.GetContainer;
                 var children = item.GetAllInstances<IDallasAction>();
                 Assert.NotNull(children);
-                Assert.Equal(8, children.Count());
+                Assert.Equal(9, children.Count());
             });
             Assert.Null(error);
         }

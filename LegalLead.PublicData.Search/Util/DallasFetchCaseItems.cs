@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
@@ -33,6 +34,9 @@ namespace LegalLead.PublicData.Search.Util
             WaitForElement(locator);
             var element = TryGetElement(Driver, locator);
             if (element == null) return string.Empty;
+
+            // run script to reveal max-rows
+
             var content = element.GetAttribute("outerHTML");
             var doc = GetHtml(content);
             var node = doc.DocumentNode;
@@ -85,7 +89,7 @@ namespace LegalLead.PublicData.Search.Util
                 };
                 wait.Until(d =>
                 {
-                    var element = TryGetElement(Driver, locator);
+                    var element = d.TryFindElement(locator);
                     return element != null;
                 });
             }

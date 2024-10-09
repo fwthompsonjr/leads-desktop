@@ -23,7 +23,7 @@ document.getElementById('btnSSSubmit').click();
 ~ select max rows per page
 var list = document.getElementsByTagName("span");
 var arr = Array.prototype.slice.call( list, 0 );
-var find = list.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+var find = arr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
 find[0].click();
 
 /* get max records per page */
