@@ -36,12 +36,13 @@ namespace Thompson.RecordSearch.Utility.Extensions
             var hasDestination = columns.TryGetValue(destination, out var destinationId);
             if (!hasDestination) return;
             var worksheet = package.Workbook.Worksheets.First();
-            values.ForEach(v =>
+            var rowCount = worksheet.Dimension.End.Row;
+            for (int i = 0; i < rowCount; i++)
             {
-                var dest = (v ?? string.Empty).Trim();
-                var idx = values.IndexOf(v) + 2;
-                worksheet.Cells[idx, destinationId].Value = dest;
-            });
+                if (i > values.Count - 1) continue;
+                var idx = i + 2;
+                worksheet.Cells[idx, destinationId].Value = values[i];
+            }
         }
         public static void TransferColumn(this ExcelPackage package, string source, string destination)
         {

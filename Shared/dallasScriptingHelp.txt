@@ -23,7 +23,7 @@ document.getElementById('btnSSSubmit').click();
 ~ select max rows per page
 var list = document.getElementsByTagName("span");
 var arr = Array.prototype.slice.call( list, 0 );
-var find = list.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+var find = arr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
 find[0].click();
 
 /* get max records per page */
@@ -75,7 +75,24 @@ var arr = Array.prototype.slice.call( list, 0 );
 var find = arr.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'text-primary' });
 find = find.filter(a => { let txt = a.innerText.trim(); return txt == 'PLAINTIFF' });
 var pln = find[0].closest('p').innerText.replace('PLAINTIFF','').trim();
-var obj = { "casestyle": cs, "plaintiff": pln };
+var obj = { "casestyle": cs, "plaintiff": pln, "addr": "" };
+
+/* get defendant address */
+
+var dvparty = document.getElementById('divPartyInformation_body');
+var parties = Array.prototype.slice.call( dvparty.getElementsByTagName('p'), 0 ); 
+var partytypes = [ "RESPONDENT", "DEFENDANT" ];
+parties = parties.filter(f => { 
+    var found = false;
+    var txt = f.closest('div').innerText.trim();
+    partytypes.forEach(p => { if( txt.indexOf(p) >= 0 ) { found = true; } });
+	if (!found) { return false; }
+	return f.innerHTML.indexOf('<span') < 0;
+	});
+if (parties.length <= 0 ) return JSON.stringify(obj);
+var addr = parties[0].innerText; 
+while (addr.indexOf('\n') >= 0) { addr = addr.replace('\n','|').trim(); }
+obj.addr = addr;
 return JSON.stringify(obj);
 
 ~ return to search selection
@@ -87,5 +104,28 @@ sps = sps.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { 
 var arrspan = [];
 sps.forEach(s => arrspan.push(s.innerText.trim()));
 return JSON.stringify(arrspan);
+
+~ login process 01
+var bttn = document.getElementById('dropdownMenu1');
+var parentDiv = bttn.closest('div');
+var ul = parentDiv.getElementsByTagName('ul')[0];
+var li = ul.getElementsByTagName('li')
+var lastLi = li.length - 1;
+var link = li[lastLi].children[0]
+bttn.click();
+link.click();
+
+~ login process 02
+var uid = '{0}'
+var pwd = '{1}'
+var userBox = document.getElementById('UserName');
+var wordBox = document.getElementById('Password');
+var chekBox = document.getElementById('TOSCheckBox');
+var signin = document.getElementById('btnSignIn');
+userBox.value = uid;
+wordBox.value = pwd;
+chekBox.click();
+while (signin.getAttribute('disabled') !== null ) { chekBox.click(); }
+signin.click();
 
 ~ end of file

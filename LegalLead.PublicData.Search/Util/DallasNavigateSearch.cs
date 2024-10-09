@@ -38,13 +38,12 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 if (jse == null || button == null) return failed;
-                jse.ExecuteScript("window.scrollBy(0,400)");
+                jse.ExecuteScript("window.scrollBy(0,500)");
                 button.Click();
                 return success;
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.Message);
                 return failed;
             }
         }
