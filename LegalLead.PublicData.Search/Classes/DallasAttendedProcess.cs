@@ -119,15 +119,14 @@ namespace LegalLead.PublicData.Search.Classes
                 Search: CC-YY* + DATE
             */
             var year = startDate.ToString("yy", culture);
-            var month = startDate.ToString("MM", culture);
             switch (courtType)
             {
                 case "COUNTY":
-                    return string.Concat("CC-", year, "*", month, "*");
+                    return string.Concat("CC-", year, "-*");
                 case "DISTRICT":
-                    return string.Concat("DC-", year, "*-", month, "*");
+                    return string.Concat("DC-", year, "-*");
                 default:
-                    return string.Concat("JPC-", year, "*", month, "*");
+                    return string.Concat("JPC-", year, "*");
             }
         }
         private static readonly CultureInfo culture = CultureInfo.InvariantCulture;

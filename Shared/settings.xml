@@ -79,7 +79,7 @@
 			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
 			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
 		</keys>
-		<keys id="60" name="Dallas County - Attended">
+		<keys id="60" name="Dallas County">
 			<key name="baseUri">
 				<![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29]]>
 			</key>
