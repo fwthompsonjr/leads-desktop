@@ -10,7 +10,7 @@ namespace legallead.search.tests.classes
             for (int i = 0; i < 3; i++)
             {
                 var error = Record.Exception(() => ShortcutGenerator.Generate());
-                Assert.Null(error); 
+                Assert.Null(error);
             }
         }
     }

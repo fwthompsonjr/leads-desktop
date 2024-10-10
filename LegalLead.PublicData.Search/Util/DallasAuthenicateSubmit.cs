@@ -1,7 +1,5 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+﻿using OpenQA.Selenium.Support.UI;
 using System;
-using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace LegalLead.PublicData.Search.Util

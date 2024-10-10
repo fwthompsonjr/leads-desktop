@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,7 +19,9 @@ namespace LegalLead.PublicData.Search.Classes
                     var setupFile = SetupFile;
                     if (string.IsNullOrEmpty(setupFile)) return;
                     var version = CurrentAssembly.GetName().Version.ToString();
-                    UpdateVersionNumber(setupFile, version);
+                    var update = UpdateVersionNumber(setupFile, version);
+                    if (!update) return;
+                    DeleteAppShortcut();
                     using (var process = new System.Diagnostics.Process())
                     {
                         process.StartInfo.FileName = "cscript";
@@ -35,20 +38,33 @@ namespace LegalLead.PublicData.Search.Classes
                 finally
                 {
                     hasRun = true;
-                } 
+                }
             }
         }
-
-        private static void UpdateVersionNumber(string targetFile, string config)
+        private static void DeleteAppShortcut()
+        {
+            try
+            {
+                var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                var linkFile = Path.Combine(desktopFolder, "legal-lead-search.lnk");
+                if (File.Exists(linkFile)) File.Delete(linkFile);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+        private static bool UpdateVersionNumber(string targetFile, string config)
         {
             const char dot = '.';
             const string line1 = "VersionName = \"{0}\"";
             const string line2 = "VersionNumber = VersionName & \"{0}\"";
             var ds = dot.ToString();
-            if (!File.Exists(targetFile)) return;
-            if (string.IsNullOrEmpty(config)) return;
-            if (!config.Contains(ds)) return;
+            if (!File.Exists(targetFile)) return false;
+            if (string.IsNullOrEmpty(config)) return false;
+            if (!config.Contains(ds)) return false;
             var list = config.Split(dot).ToList();
+            if (list.Count != 4) return false;
             var content = new StringBuilder(File.ReadAllText(targetFile));
             var find1 = GetVersionReplacement(line1, "2.8");
             var find2 = GetVersionReplacement(line2, ".0");
@@ -56,7 +72,7 @@ namespace LegalLead.PublicData.Search.Classes
             var replace2 = GetVersionReplacement(line2, $".{list[3]}");
             var hasReplacements = content.ToString().Contains(find1) ||
                 content.ToString().Contains(find2);
-            if (!hasReplacements) return;
+            if (!hasReplacements) return false;
             var replacements = new Dictionary<string, string>()
             {
                 { find1, replace1 },
@@ -69,8 +85,9 @@ namespace LegalLead.PublicData.Search.Classes
                 content.Replace(replacement.Key, replacement.Value);
                 isUpdated = true;
             }
-            if (!isUpdated) return;
+            if (!isUpdated) return false;
             File.WriteAllText(targetFile, content.ToString());
+            return true;
         }
         private static string GetVersionReplacement(string pattern, string replacement)
         {
