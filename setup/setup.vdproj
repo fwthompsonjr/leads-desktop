@@ -238,7 +238,7 @@
         "ProductName" = "8:Legal Lead Installer"
         "ProductCode" = "8:{E980BA78-FD2F-4764-85A4-BCA1014FCD56}"
         "PackageCode" = "8:{68671104-9B7F-4BF1-BE3F-74114E488FFD}"
-        "UpgradeCode" = "8:{C4319792-24AD-4295-A670-BAE13A7DB6AA}"
+        "UpgradeCode" = "8:{CDFCBAEF-6049-4E4C-8564-5B12A4AA4513}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"

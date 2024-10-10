@@ -16,7 +16,7 @@ namespace LegalLead.PublicData.Search.Util
 
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-            
+
             WaitForGrid();
 
             js = VerifyScript(js);

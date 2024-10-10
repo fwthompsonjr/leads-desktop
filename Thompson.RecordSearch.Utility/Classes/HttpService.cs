@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,7 +25,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     if (!response.IsSuccessStatusCode) return default;
                     var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     return JsonConvert.DeserializeObject<TItem>(content);
-                }   
+                }
             }
             catch (Exception ex)
             {
@@ -38,7 +37,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static ByteArrayContent GetContent(object payload)
         {
             var content = JsonConvert.SerializeObject(payload);
-            var buffer = Encoding.UTF8.GetBytes(content); 
+            var buffer = Encoding.UTF8.GetBytes(content);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             return byteContent;
