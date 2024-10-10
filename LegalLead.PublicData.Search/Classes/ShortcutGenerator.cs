@@ -20,7 +20,8 @@ namespace LegalLead.PublicData.Search.Classes
                     if (string.IsNullOrEmpty(setupFile)) return;
                     var version = CurrentAssembly.GetName().Version.ToString();
                     var update = UpdateVersionNumber(setupFile, version);
-                    if (!update) return;
+                    var exists = DoesAppShortcutExist();
+                    if (exists || !update) return;
                     DeleteAppShortcut();
                     using (var process = new System.Diagnostics.Process())
                     {
@@ -39,6 +40,20 @@ namespace LegalLead.PublicData.Search.Classes
                 {
                     hasRun = true;
                 }
+            }
+        }
+
+        private static bool DoesAppShortcutExist()
+        {
+            try
+            {
+                var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                var linkFile = Path.Combine(desktopFolder, "legal-lead-search.lnk");
+                return File.Exists(linkFile);
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
         private static void DeleteAppShortcut()
