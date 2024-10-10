@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.UnitTests.Services
