@@ -5,7 +5,7 @@ using System.Globalization;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasNavigateSearch : DallasBaseExecutor
+    public class DallasNavigateSearch : BaseCountySearchAction
     {
         public override int OrderId => 40;
         public override object Execute()
@@ -38,12 +38,13 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 if (jse == null || button == null) return failed;
-                jse.ExecuteScript("window.scrollBy(0,500)");
+                jse.ExecuteScript("window.scrollBy(0,400)");
                 button.Click();
                 return success;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return failed;
             }
         }

@@ -8,7 +8,7 @@ using Thompson.RecordSearch.Utility.Interfaces;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasAuthenicateBegin : DallasBaseExecutor
+    public class DallasAuthenicateBegin : BaseCountySearchAction
     {
         protected readonly ICountyCodeReader _reader;
         public DallasAuthenicateBegin(ICountyCodeReader reader)

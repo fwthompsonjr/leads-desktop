@@ -1,7 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using OpenQA.Selenium;
 
-namespace LegalLead.PublicData.Search.Util
+namespace LegalLead.PublicData.Search.Interfaces
 {
     public interface ICountySearchAction
     {

@@ -4,7 +4,7 @@ using Thompson.RecordSearch.Utility.Dto;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasFetchPersonAddress : DallasBaseExecutor
+    public class DallasFetchPersonAddress : BaseCountySearchAction
     {
         public override int OrderId => 80;
 

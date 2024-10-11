@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -8,7 +9,7 @@ using Thompson.RecordSearch.Utility.Classes;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasBaseExecutor : ICountySearchAction
+    public class BaseCountySearchAction : ICountySearchAction
     {
         public virtual int OrderId => 0;
         protected virtual string ScriptName { get; }

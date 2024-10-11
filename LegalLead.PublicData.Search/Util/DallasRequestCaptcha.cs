@@ -3,7 +3,7 @@
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasRequestCaptcha : DallasBaseExecutor
+    public class DallasRequestCaptcha : BaseCountySearchAction
     {
         public override int OrderId => 20;
         public Func<bool> PromptUser { get; set; }

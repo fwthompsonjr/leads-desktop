@@ -5,9 +5,9 @@ using Thompson.RecordSearch.Utility.Classes;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasBeginNavigation : DallasBaseExecutor
+    public class DallasBeginNavigation : BaseCountySearchAction
     {
-        public override int OrderId => 10;
+        public override int OrderId => 1;
         public override object Execute()
         {
             var destination = NavigationUri;

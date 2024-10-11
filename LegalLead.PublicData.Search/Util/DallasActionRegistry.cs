@@ -1,3 +1,4 @@
+using LegalLead.PublicData.Search.Interfaces;
 using StructureMap;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Interfaces;
