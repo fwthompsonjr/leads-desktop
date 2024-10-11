@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    public interface IDallasAction
+    public interface ICountySearchAction
     {
         int OrderId { get; }
         IWebDriver Driver { get; set; }

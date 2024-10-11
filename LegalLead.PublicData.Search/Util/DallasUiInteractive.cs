@@ -29,7 +29,7 @@ namespace LegalLead.PublicData.Search.Util
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
             DisplayDialogue = displayDialogue;
             var container = DallasActionContainer.GetContainer;
-            var collection = container.GetAllInstances<IDallasAction>().ToList();
+            var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
         }
@@ -41,7 +41,7 @@ namespace LegalLead.PublicData.Search.Util
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
-        private readonly List<IDallasAction> ActionItems = new List<IDallasAction>();
+        private readonly List<ICountySearchAction> ActionItems = new List<ICountySearchAction>();
         public override WebFetchResult Fetch()
         {
             var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
@@ -75,7 +75,7 @@ namespace LegalLead.PublicData.Search.Util
                 return string.Empty;
             }
         }
-        protected virtual void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
+        protected virtual void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace LegalLead.PublicData.Search.Util
 
         }
 
-        protected virtual void IterateDateRange(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common)
+        protected virtual void IterateDateRange(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<ICountySearchAction> common)
         {
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
@@ -118,7 +118,7 @@ namespace LegalLead.PublicData.Search.Util
             parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
         }
 
-        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasAttendedProcess parameters, List<IDallasAction> common, IDallasAction a)
+        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasAttendedProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
         {
             if (ExecutionCancelled) return isCaptchaNeeded;
             if (!isCaptchaNeeded && a is DallasAuthenicateBegin _) return isCaptchaNeeded;
@@ -134,7 +134,7 @@ namespace LegalLead.PublicData.Search.Util
             return isCaptchaNeeded;
         }
 
-        protected virtual void IterateItems(IWebDriver driver, DallasAttendedProcess parameters, List<IDallasAction> postcommon)
+        protected virtual void IterateItems(IWebDriver driver, DallasAttendedProcess parameters, List<ICountySearchAction> postcommon)
         {
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
@@ -171,7 +171,7 @@ namespace LegalLead.PublicData.Search.Util
             });
         }
 
-        private void Populate(IDallasAction a, IWebDriver driver, DallasAttendedProcess parameters, string uri = "")
+        private void Populate(ICountySearchAction a, IWebDriver driver, DallasAttendedProcess parameters, string uri = "")
         {
             a.Driver = driver;
             a.Parameters = parameters;

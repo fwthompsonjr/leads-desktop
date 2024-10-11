@@ -24,7 +24,7 @@ namespace legallead.search.tests.util
             var error = Record.Exception(() =>
             {
                 var item = DallasActionContainer.GetContainer;
-                var children = item.GetAllInstances<IDallasAction>();
+                var children = item.GetAllInstances<ICountySearchAction>();
                 Assert.NotNull(children);
                 Assert.Equal(9, children.Count());
             });

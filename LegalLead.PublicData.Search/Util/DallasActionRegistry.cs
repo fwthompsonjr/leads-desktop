@@ -12,15 +12,15 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountyCodeService>().Add<CountyCodeService>().Singleton();
             For<ICountyCodeReader>().Add<CountyCodeReaderService>().Singleton();
 
-            For<IDallasAction>().Add<DallasAuthenicateBegin>().Named("authenticate-step-1");
-            For<IDallasAction>().Add<DallasAuthenicateSubmit>().Named("authenticate-step-2");
-            For<IDallasAction>().Add<DallasBeginNavigation>().Named("begin");
-            For<IDallasAction>().Add<DallasRequestCaptcha>().Named("initialize");
-            For<IDallasAction>().Add<DallasSetupParameters>().Named("set-parameters");
-            For<IDallasAction>().Add<DallasNavigateSearch>().Named("perform-search");
-            For<IDallasAction>().Add<DallasSetPager>().Named("set-max-rows");
-            For<IDallasAction>().Add<DallasFetchCaseItems>().Named("get-case-list");
-            For<IDallasAction>().Add<DallasFetchCaseStyle>().Named("get-case-style");
+            For<ICountySearchAction>().Add<DallasAuthenicateBegin>().Named("authenticate-step-1");
+            For<ICountySearchAction>().Add<DallasAuthenicateSubmit>().Named("authenticate-step-2");
+            For<ICountySearchAction>().Add<DallasBeginNavigation>().Named("begin");
+            For<ICountySearchAction>().Add<DallasRequestCaptcha>().Named("initialize");
+            For<ICountySearchAction>().Add<DallasSetupParameters>().Named("set-parameters");
+            For<ICountySearchAction>().Add<DallasNavigateSearch>().Named("perform-search");
+            For<ICountySearchAction>().Add<DallasSetPager>().Named("set-max-rows");
+            For<ICountySearchAction>().Add<DallasFetchCaseItems>().Named("get-case-list");
+            For<ICountySearchAction>().Add<DallasFetchCaseStyle>().Named("get-case-style");
         }
     }
 }

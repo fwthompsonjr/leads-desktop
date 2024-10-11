@@ -8,7 +8,7 @@ using Thompson.RecordSearch.Utility.Classes;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasBaseExecutor : IDallasAction
+    public class DallasBaseExecutor : ICountySearchAction
     {
         public virtual int OrderId => 0;
         protected virtual string ScriptName { get; }
