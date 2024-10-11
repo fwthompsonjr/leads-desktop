@@ -75,7 +75,8 @@ namespace Thompson.RecordSearch.Utility.Web
                     return latestFile?.FullName;
                 }
                 var trElement = driver.FindElement(By.XPath(search));
-                var tdLast = trElement.FindElements(By.TagName("td")).Last();
+                var tdCollection = trElement.FindElements(By.TagName("td"));
+                var tdLast = tdCollection[tdCollection.Count - 1];
                 var anchor = tdLast.FindElement(By.TagName("a"));
                 var expectedFileName = GetDownloadName(anchor);
                 if (File.Exists(expectedFileName))
@@ -138,18 +139,15 @@ namespace Thompson.RecordSearch.Utility.Web
         {
             var trackingEnd = startTime.AddSeconds(timeoutInSeconds);
             var isTrackingTimeout = false;
-            if (trackingEnd < DateTime.Now) { isTrackingTimeout = true; };
+            if (trackingEnd < DateTime.Now) { isTrackingTimeout = true; }
 
             var files = new DirectoryInfo(DownloadTo).GetFiles("*.txt");
             if (!files.Any())
             {
-                return false | isTrackingTimeout; // keep looking nothing found
+                return isTrackingTimeout; // keep looking nothing found
             }
-
-            var list = files.ToList()
-                .FindAll(a => Path.GetExtension(a.Name).Equals(".txt", StringComparison.OrdinalIgnoreCase));
             var downloaded = GetFiles();
-            var hasFile = downloaded.Any(a => a.CreationTime > startTime);
+            var hasFile = downloaded.Exists(a => a.CreationTime > startTime);
             if (hasFile)
             {
                 UpdateDownloadDatabase(downloaded);
@@ -198,7 +196,7 @@ namespace Thompson.RecordSearch.Utility.Web
         protected static IWebDriver GetDriver()
         {
             var wdriver = (new WebDriverDto().Get()).WebDrivers;
-            var driver = wdriver.Drivers.Where(d => d.Id == wdriver.SelectedIndex).FirstOrDefault();
+            var driver = wdriver.Drivers.FirstOrDefault(d => d.Id == wdriver.SelectedIndex);
             var container = WebDriverContainer.GetContainer;
             var provider = container.GetInstance<IWebDriverProvider>(driver.Name);
             var showBrowser =
