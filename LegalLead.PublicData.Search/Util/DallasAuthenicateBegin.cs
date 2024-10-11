@@ -8,13 +8,13 @@ using Thompson.RecordSearch.Utility.Interfaces;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
+        [SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
     public class DallasAuthenicateBegin : BaseCountySearchAction
     {
         protected readonly ICountyCodeReader _reader;
         public DallasAuthenicateBegin(ICountyCodeReader reader)
         {
-            if (reader == null) throw new ArgumentNullException(nameof(reader));
-            _reader = reader;
+            _reader = reader ?? throw new ArgumentNullException(nameof(reader));
         }
         public override int OrderId => 4;
         public override object Execute()

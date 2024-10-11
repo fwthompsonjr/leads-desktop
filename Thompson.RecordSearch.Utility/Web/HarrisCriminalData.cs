@@ -63,8 +63,11 @@ namespace Thompson.RecordSearch.Utility.Web
                 var jse = (IJavaScriptExecutor)driver;
                 var address = Keys["address"];
                 var search = Keys["tr.monthly"];
-
-                driver.Navigate().GoToUrl(address);
+                if (!Uri.TryCreate(address, UriKind.Absolute, out var url))
+                {
+                    throw new InvalidOperationException();
+                }
+                driver.Navigate().GoToUrl(url);
                 if (!driver.IsElementPresent(By.XPath(search)))
                 {
                     // get the latest file, if any
@@ -72,7 +75,7 @@ namespace Thompson.RecordSearch.Utility.Web
                     return latestFile?.FullName;
                 }
                 var trElement = driver.FindElement(By.XPath(search));
-                var tdLast = trElement.FindElements(By.TagName("td")).ToList().Last();
+                var tdLast = trElement.FindElements(By.TagName("td")).Last();
                 var anchor = tdLast.FindElement(By.TagName("a"));
                 var expectedFileName = GetDownloadName(anchor);
                 if (File.Exists(expectedFileName))
@@ -82,7 +85,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 jse.ExecuteScript("arguments[0].click();", anchor);
                 var trackingStart = DateTime.Now;
                 var timeout = 5 * 60; // allow five minutes
-                while (FileCreateComplete(trackingStart, timeout) == false)
+                while (!FileCreateComplete(trackingStart, timeout))
                 {
                     Thread.Sleep(500);
                     if (File.Exists(expectedFileName))

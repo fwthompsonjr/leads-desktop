@@ -56,7 +56,8 @@ namespace Thompson.RecordSearch.Utility.Tests
             {
                 Assert.Inconclusive("This method to be executed in debug mode only.");
             }
-            var caseNumber = CaseNumbers.Last();
+            var caseid = CaseNumbers.Count - 1;
+            var caseNumber = CaseNumbers[caseid];
             var dto = new HarrisCaseSearchDto { CaseNumber = caseNumber.CaseNumber };
             var obj = new HarrisCriminalCaseStyle();
             IWebDriver driver = GetDriver();
@@ -77,7 +78,7 @@ namespace Thompson.RecordSearch.Utility.Tests
 
         [TestMethod]
         [TestCategory("Integration Only")]
-        public async Task CaseStyle_CanGet_Bulk()
+        public async Task CaseStyle_CanGet_Bulk_Async()
         {
             if (!System.Diagnostics.Debugger.IsAttached)
             {
@@ -132,7 +133,7 @@ namespace Thompson.RecordSearch.Utility.Tests
 
         [TestMethod]
         [TestCategory("Integration Only")]
-        public async Task CaseStyle_CanGet_RealTime()
+        public async Task CaseStyle_CanGet_RealTime_Async()
         {
             if (!System.Diagnostics.Debugger.IsAttached)
             {

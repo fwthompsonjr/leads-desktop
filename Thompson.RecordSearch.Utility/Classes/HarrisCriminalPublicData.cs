@@ -11,9 +11,11 @@ namespace SeleniumTests
     {
         private static IWebDriver driver;
         private StringBuilder verificationErrors;
-        private bool acceptNextAlert = true;
 
         [ClassInitialize]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", 
+            "IDE0060:Remove unused parameter", 
+            Justification = "TestContext injection is part of the testing framework")]
         public static void InitializeClass(TestContext testContext)
         {
             driver = new FirefoxDriver();
@@ -51,7 +53,9 @@ namespace SeleniumTests
         {
             try
             {
-                driver.Navigate().GoToUrl("https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx");
+                const string navTo = "https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx";
+                if (!Uri.TryCreate(navTo, UriKind.Absolute, out var url)) throw new InvalidOperationException();
+                driver.Navigate().GoToUrl(url);
                 driver.FindElement(By.XPath("//div[contains(string(), \"CrimFilingsWithFutureSettings\")]")).Click();
                 driver.FindElement(By.XPath("//div[@id='ctl00_ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder2_ContentPlaceHolder2_blah']/table/tbody/tr[58]/td[3]/a/u/b")).Click();
             }
@@ -60,53 +64,6 @@ namespace SeleniumTests
                 Console.WriteLine(ex);
                 Assert.Inconclusive("unexpected exception.");
                 throw;
-            }
-        }
-        private bool IsElementPresent(By by)
-        {
-            try
-            {
-                driver.FindElement(by);
-                return true;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
-        private bool IsAlertPresent()
-        {
-            try
-            {
-                driver.SwitchTo().Alert();
-                return true;
-            }
-            catch (NoAlertPresentException)
-            {
-                return false;
-            }
-        }
-
-        private string CloseAlertAndGetItsText()
-        {
-            try
-            {
-                IAlert alert = driver.SwitchTo().Alert();
-                string alertText = alert.Text;
-                if (acceptNextAlert)
-                {
-                    alert.Accept();
-                }
-                else
-                {
-                    alert.Dismiss();
-                }
-                return alertText;
-            }
-            finally
-            {
-                acceptNextAlert = true;
             }
         }
     }
