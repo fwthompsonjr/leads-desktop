@@ -26,7 +26,7 @@ namespace legallead.search.tests.util
             service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtMost(3));
         }
 
-        private sealed class MockWaitForNavigation : BaseCountySearchAction
+        private sealed class MockWaitForNavigation : BaseDallasSearchAction
         {
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override object Execute()

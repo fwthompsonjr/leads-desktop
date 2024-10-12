@@ -3,7 +3,7 @@
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasSetPager : BaseCountySearchAction
+    public class DallasSetPager : BaseDallasSearchAction
     {
         public override int OrderId => 50;
         public override object Execute()

@@ -1,0 +1,126 @@
+~ set start and end date
+dteStart = '{0}';
+dteEnding = '{1}';
+searchParm = '{2}';
+tboxes = [ 'caseCriteria_SearchCriteria', 'caseCriteria.FileDateStart', 'caseCriteria.FileDateEnd' ];
+dvsearch = document.getElementById('caseCriteria_SearchCases_Section');
+ishidden = dvsearch == null || dvsearch.offsetParent == null
+if (ishidden) { document.getElementById('AdvOptions').click(); }
+document.getElementById(tboxes[0]).value = searchParm;
+document.getElementById(tboxes[1]).value = dteStart;
+document.getElementById(tboxes[2]).value = dteEnding;
+tboxes.forEach(t => document.getElementById(t).dispatchEvent(new Event('change')))
+
+
+~ click search
+document.getElementById('btnSSSubmit').click();
+
+~ select max rows per page
+var list = document.getElementsByTagName("span");
+var arr = Array.prototype.slice.call( list, 0 );
+var find = arr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+find[0].click();
+
+/* get max records per page */
+var itms = document.getElementsByTagName("ul")
+var ularr = Array.prototype.slice.call( itms, 0 );
+ulitms = ularr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+liitem = ulitms[ ulitms.length - 1].getElementsByTagName('li')
+liitem[liitem.length - 1].click();
+
+
+~ get case list
+var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
+links = links.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'caseLink' });
+
+var columns = [ 
+	"party-case-caseid", 
+	"party-case-filedate", 
+	"party-case-type", 
+	"party-case-status", 
+	"party-case-location", 
+	"party-case-partyname" ];
+var alldata = [];
+links.forEach((lnk) => {
+	var linkurl = lnk.getAttribute('data-url');
+	datarow = Array.prototype.slice.call( lnk.closest('tr').getElementsByTagName('td'), 0 ) 
+	datarow = datarow.filter(d => { 
+		var found = false; 
+		columns.forEach((c) => { if ( d.classList.contains(c) ) { found = true; }});
+		return found}); 
+	var data = {
+		"uri": linkurl,
+		"caseNumber": datarow[0].innerText,
+		"filedate": datarow[1].innerText,
+		"casetype": datarow[2].innerText,
+		"casestatus": datarow[3].innerText,
+		"location": datarow[4].innerText,
+		"partyname": datarow[5].innerText
+	}
+	if (data.casestatus == 'OPEN') { alldata.push(data); }
+});
+return JSON.stringify(alldata);
+
+~ get case style
+dv = document.getElementById('divCaseInformation_body').getElementsByTagName('div')[2]
+var cs = dv.innerText.trim().split('|')[1].trim();
+/* get plaintiff */
+var list = document.getElementsByTagName("span");
+var arr = Array.prototype.slice.call( list, 0 );
+var find = arr.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'text-primary' });
+find = find.filter(a => { let txt = a.innerText.trim(); return txt == 'PLAINTIFF' });
+var pln = find[0].closest('p').innerText.replace('PLAINTIFF','').trim();
+var obj = { "casestyle": cs, "plaintiff": pln, "addr": "" };
+
+/* get defendant address */
+
+var dvparty = document.getElementById('divPartyInformation_body');
+var parties = Array.prototype.slice.call( dvparty.getElementsByTagName('p'), 0 ); 
+var partytypes = [ "RESPONDENT", "DEFENDANT" ];
+parties = parties.filter(f => { 
+    var found = false;
+    var txt = f.closest('div').innerText.trim();
+    partytypes.forEach(p => { if( txt.indexOf(p) >= 0 ) { found = true; } });
+	if (!found) { return false; }
+	return f.innerHTML.indexOf('<span') < 0;
+	});
+if (parties.length <= 0 ) return JSON.stringify(obj);
+var addr = parties[0].innerText; 
+while (addr.indexOf('\n') >= 0) { addr = addr.replace('\n','|').trim(); }
+obj.addr = addr;
+return JSON.stringify(obj);
+
+~ return to search selection
+document.getElementById('tcControllerLink_0').click();
+
+~ get search record count
+var sps = Array.prototype.slice.call( document.getElementsByTagName("span"), 0 );
+sps = sps.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'k-pager-info k-label'; });
+var arrspan = [];
+sps.forEach(s => arrspan.push(s.innerText.trim()));
+return JSON.stringify(arrspan);
+
+~ login process 01
+var bttn = document.getElementById('dropdownMenu1');
+var parentDiv = bttn.closest('div');
+var ul = parentDiv.getElementsByTagName('ul')[0];
+var li = ul.getElementsByTagName('li')
+var lastLi = li.length - 1;
+var link = li[lastLi].children[0]
+bttn.click();
+link.click();
+
+~ login process 02
+var uid = '{0}'
+var pwd = '{1}'
+var userBox = document.getElementById('UserName');
+var wordBox = document.getElementById('Password');
+var chekBox = document.getElementById('TOSCheckBox');
+var signin = document.getElementById('btnSignIn');
+userBox.value = uid;
+wordBox.value = pwd;
+chekBox.click();
+while (signin.getAttribute('disabled') !== null ) { chekBox.click(); }
+signin.click();
+
+~ end of file

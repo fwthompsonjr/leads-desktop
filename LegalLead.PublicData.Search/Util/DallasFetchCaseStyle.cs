@@ -5,7 +5,7 @@ using System.Globalization;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasFetchCaseStyle : BaseCountySearchAction
+    public class DallasFetchCaseStyle : BaseDallasSearchAction
     {
         public override int OrderId => 70;
 

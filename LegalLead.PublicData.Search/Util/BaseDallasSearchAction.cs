@@ -9,7 +9,7 @@ using Thompson.RecordSearch.Utility.Classes;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class BaseCountySearchAction : ICountySearchAction
+    public class BaseDallasSearchAction : ICountySearchAction
     {
         public virtual int OrderId => 0;
         protected virtual string ScriptName { get; }

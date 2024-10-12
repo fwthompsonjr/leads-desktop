@@ -9,7 +9,7 @@ namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
         [SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
-    public class DallasAuthenicateBegin : BaseCountySearchAction
+    public class DallasAuthenicateBegin : BaseDallasSearchAction
     {
         protected readonly ICountyCodeReader _reader;
         public DallasAuthenicateBegin(ICountyCodeReader reader)

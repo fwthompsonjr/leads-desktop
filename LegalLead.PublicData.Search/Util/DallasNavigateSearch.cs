@@ -5,7 +5,7 @@ using System.Globalization;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasNavigateSearch : BaseCountySearchAction
+    public class DallasNavigateSearch : BaseDallasSearchAction
     {
         public override int OrderId => 40;
         public override object Execute()
