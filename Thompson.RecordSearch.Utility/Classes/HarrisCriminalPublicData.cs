@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace SeleniumTests
@@ -53,6 +54,7 @@ namespace SeleniumTests
         {
             try
             {
+                if (!Debugger.IsAttached) return;
                 const string navTo = "https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx";
                 if (!Uri.TryCreate(navTo, UriKind.Absolute, out var url)) throw new InvalidOperationException();
                 driver.Navigate().GoToUrl(url);
