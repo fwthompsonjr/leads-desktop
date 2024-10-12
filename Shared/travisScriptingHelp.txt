@@ -1,11 +1,23 @@
+~ select search by case
+var colinput = Array.prototype.slice.call( document.getElementsByTagName('input'), 0 );
+
+var colstatus = colinput.filter(x => { 
+let attr = x.getAttribute('name'); 
+if ( attr == null ) { return false; } 
+return attr == 'CaseStatusType' });
+
+colinput = colinput.filter(x => { 
+let attr = x.getAttribute('name'); 
+if ( attr == null ) { return false; } 
+return attr == 'SearchBy' });
+colinput[0].click();
+colstatus[1].click();
+
 ~ set start and end date
 dteStart = '{0}';
 dteEnding = '{1}';
 searchParm = '{2}';
-tboxes = [ 'caseCriteria_SearchCriteria', 'caseCriteria.FileDateStart', 'caseCriteria.FileDateEnd' ];
-dvsearch = document.getElementById('caseCriteria_SearchCases_Section');
-ishidden = dvsearch == null || dvsearch.offsetParent == null
-if (ishidden) { document.getElementById('AdvOptions').click(); }
+tboxes = [ 'CaseSearchValue', 'DateFiledOnAfter', 'DateFiledOnBefore' ];
 document.getElementById(tboxes[0]).value = searchParm;
 document.getElementById(tboxes[1]).value = dteStart;
 document.getElementById(tboxes[2]).value = dteEnding;
@@ -13,53 +25,11 @@ tboxes.forEach(t => document.getElementById(t).dispatchEvent(new Event('change')
 
 
 ~ click search
-document.getElementById('btnSSSubmit').click();
-
-~ select max rows per page
-var list = document.getElementsByTagName("span");
-var arr = Array.prototype.slice.call( list, 0 );
-var find = arr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
-find[0].click();
-
-/* get max records per page */
-var itms = document.getElementsByTagName("ul")
-var ularr = Array.prototype.slice.call( itms, 0 );
-ulitms = ularr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
-liitem = ulitms[ ulitms.length - 1].getElementsByTagName('li')
-liitem[liitem.length - 1].click();
-
+document.getElementById('SearchSubmit').click();
 
 ~ get case list
-var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
-links = links.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'caseLink' });
-
-var columns = [ 
-	"party-case-caseid", 
-	"party-case-filedate", 
-	"party-case-type", 
-	"party-case-status", 
-	"party-case-location", 
-	"party-case-partyname" ];
-var alldata = [];
-links.forEach((lnk) => {
-	var linkurl = lnk.getAttribute('data-url');
-	datarow = Array.prototype.slice.call( lnk.closest('tr').getElementsByTagName('td'), 0 ) 
-	datarow = datarow.filter(d => { 
-		var found = false; 
-		columns.forEach((c) => { if ( d.classList.contains(c) ) { found = true; }});
-		return found}); 
-	var data = {
-		"uri": linkurl,
-		"caseNumber": datarow[0].innerText,
-		"filedate": datarow[1].innerText,
-		"casetype": datarow[2].innerText,
-		"casestatus": datarow[3].innerText,
-		"location": datarow[4].innerText,
-		"partyname": datarow[5].innerText
-	}
-	if (data.casestatus == 'OPEN') { alldata.push(data); }
-});
-return JSON.stringify(alldata);
+var tables = Array.prototype.slice.call( document.getElementsByTagName('table'), 0);
+return tables[5].outerHTML;
 
 ~ get case style
 dv = document.getElementById('divCaseInformation_body').getElementsByTagName('div')[2]
