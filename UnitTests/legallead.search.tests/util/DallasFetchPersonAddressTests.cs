@@ -30,7 +30,7 @@ namespace legallead.search.tests.util
                 {
                     Parameters = new DallasSearchProcess(),
                     Driver = driver.Object,
-                    Dto = new DallasCaseItemDto()
+                    Dto = new CaseItemDto()
                 };
                 _ = service.Execute();
             });
@@ -52,7 +52,7 @@ namespace legallead.search.tests.util
             {
                 Parameters = target != 1 ? parameters : null,
                 Driver = target != 0 ? driver.Object : null,
-                Dto = target != 2 ? new DallasCaseItemDto() : null
+                Dto = target != 2 ? new CaseItemDto() : null
             };
             Assert.Throws<NullReferenceException>(() => { _ = service.Execute(); });
         }

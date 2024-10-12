@@ -36,7 +36,7 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
-        public List<DallasCaseItemDto> Items { get; private set; } = new List<DallasCaseItemDto>();
+        public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = new List<DallasCaseStyleDto>();
 
         protected bool ExecutionCancelled { get; set; }
@@ -198,7 +198,7 @@ namespace LegalLead.PublicData.Search.Util
             return response == DialogResult.OK;
         }
 
-        private void AppendPerson(DallasCaseItemDto dto)
+        private void AppendPerson(CaseItemDto dto)
         {
             var person = dto.FromDto();
             var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
@@ -246,17 +246,17 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         [ExcludeFromCodeCoverage]
-        private static List<DallasCaseItemDto> GetData(string json)
+        private static List<CaseItemDto> GetData(string json)
         {
             try
             {
-                var data = JsonConvert.DeserializeObject<List<DallasCaseItemDto>>(json);
-                if (data == null) return new List<DallasCaseItemDto>();
+                var data = JsonConvert.DeserializeObject<List<CaseItemDto>>(json);
+                if (data == null) return new List<CaseItemDto>();
                 return data;
             }
             catch (Exception)
             {
-                return new List<DallasCaseItemDto>();
+                return new List<CaseItemDto>();
             }
         }
 

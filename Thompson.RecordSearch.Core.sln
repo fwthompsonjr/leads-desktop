@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shared", "_Shared", "{C68A
 		Shared\tarrantCountyCustomType.json = Shared\tarrantCountyCustomType.json
 		Shared\tarrantCountyDataPoint.json = Shared\tarrantCountyDataPoint.json
 		Shared\tarrantCountyMapping_2.json = Shared\tarrantCountyMapping_2.json
+		Shared\travisScriptingHelp.txt = Shared\travisScriptingHelp.txt
 		Version.cs = Version.cs
 		Shared\webDrivers.json = Shared\webDrivers.json
 	EndProjectSection
@@ -199,7 +200,7 @@ Global
 		{F2941B1B-F45A-4BB8-B93D-52E6C11AEE08} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
+		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
 	EndGlobalSection
 EndGlobal

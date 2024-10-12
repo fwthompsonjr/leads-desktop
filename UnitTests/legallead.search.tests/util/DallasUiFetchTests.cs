@@ -352,8 +352,8 @@ namespace legallead.search.tests.util
                 return item;
             }
         }
-        private static readonly Faker<DallasCaseItemDto> itemFaker
-            = new Faker<DallasCaseItemDto>()
+        private static readonly Faker<CaseItemDto> itemFaker
+            = new Faker<CaseItemDto>()
             .RuleFor(x => x.Href, y => y.Internet.Url())
             .RuleFor(x => x.CaseNumber, y => y.Random.AlphaNumeric(16))
             .RuleFor(x => x.FileDate, y => y.Date.Recent().ToString("s").Split('T')[0])

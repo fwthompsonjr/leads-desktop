@@ -8,7 +8,7 @@ namespace LegalLead.PublicData.Search.Util
     {
         public override int OrderId => 80;
 
-        public DallasCaseItemDto Dto { get; set; }
+        public CaseItemDto Dto { get; set; }
 
         public override object Execute()
         {

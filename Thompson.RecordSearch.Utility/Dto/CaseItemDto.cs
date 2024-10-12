@@ -2,7 +2,7 @@
 
 namespace Thompson.RecordSearch.Utility.Dto
 {
-    public class DallasCaseItemDto
+    public class CaseItemDto
     {
         [JsonProperty("uri")]
         public string Href { get; set; }

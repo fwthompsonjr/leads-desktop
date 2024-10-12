@@ -29,7 +29,7 @@ namespace LegalLead.PublicData.Search.Util
             if (Parameters == null || Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             if (PauseForPage) Thread.Sleep(2000);
-            var alldata = new List<DallasCaseItemDto>();
+            var alldata = new List<CaseItemDto>();
             var locator = By.Id(elementId);
             WaitForElement(locator);
             var element = TryGetElement(Driver, locator);
@@ -61,7 +61,7 @@ namespace LegalLead.PublicData.Search.Util
                         columns.ForEach((c) => { if (classlist.Contains(c)) { found = true; } });
                         return found;
                     });
-                    var data = new DallasCaseItemDto
+                    var data = new CaseItemDto
                     {
                         Href = linkurl,
                         CaseNumber = datarow[0].InnerText,

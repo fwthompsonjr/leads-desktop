@@ -5,7 +5,7 @@ namespace Thompson.RecordSearch.Utility.Extensions
 {
     public static class DtoExtensions
     {
-        public static PersonAddress FromDto(this DallasCaseItemDto dto)
+        public static PersonAddress FromDto(this CaseItemDto dto)
         {
             if (dto == null) return null;
             return new PersonAddress
