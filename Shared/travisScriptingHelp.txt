@@ -29,46 +29,32 @@ document.getElementById('SearchSubmit').click();
 
 ~ get case list
 var tables = Array.prototype.slice.call( document.getElementsByTagName('table'), 0);
+if (tables.length < 6) return "";
 return tables[5].outerHTML;
 
-~ get case style
-dv = document.getElementById('divCaseInformation_body').getElementsByTagName('div')[2]
-var cs = dv.innerText.trim().split('|')[1].trim();
-/* get plaintiff */
-var list = document.getElementsByTagName("span");
-var arr = Array.prototype.slice.call( list, 0 );
-var find = arr.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'text-primary' });
-find = find.filter(a => { let txt = a.innerText.trim(); return txt == 'PLAINTIFF' });
-var pln = find[0].closest('p').innerText.replace('PLAINTIFF','').trim();
-var obj = { "casestyle": cs, "plaintiff": pln, "addr": "" };
-
-/* get defendant address */
-
-var dvparty = document.getElementById('divPartyInformation_body');
-var parties = Array.prototype.slice.call( dvparty.getElementsByTagName('p'), 0 ); 
-var partytypes = [ "RESPONDENT", "DEFENDANT" ];
-parties = parties.filter(f => { 
-    var found = false;
-    var txt = f.closest('div').innerText.trim();
-    partytypes.forEach(p => { if( txt.indexOf(p) >= 0 ) { found = true; } });
-	if (!found) { return false; }
-	return f.innerHTML.indexOf('<span') < 0;
-	});
-if (parties.length <= 0 ) return JSON.stringify(obj);
-var addr = parties[0].innerText; 
-while (addr.indexOf('\n') >= 0) { addr = addr.replace('\n','|').trim(); }
-obj.addr = addr;
+~ get name and address
+var obj = {
+	"defendant": "",
+	"address": ""
+};
+var nospace = "&nbsp;"
+var linbreak = "<br>";
+var twopipe = "||";
+var headers = Array.prototype.slice.call( document.getElementsByTagName('th'), 0);
+headers = headers.filter(a => { 
+  let attr = a.getAttribute('rowspan'); 
+  if (attr == null) { return false; } 
+  return attr == '2' });
+if (headers.length == 0) return JSON.stringify(obj);
+var rw = headers[0].closest('tr');
+var rwindex = rw.rowIndex + 1;
+var addr = rw.closest('table').rows[rwindex].getElementsByTagName('td')[0].innerHTML.trim();
+while (addr.indexOf(nospace) >= 0) { addr = addr.replace(nospace, ' '); }
+while (addr.indexOf(linbreak) >= 0) { addr = addr.replace(linbreak, '|'); }
+while (addr.indexOf(twopipe) >= 0) { addr = addr.replace(twopipe, '|'); }
+addr = addr.trim();
+obj.defendant = rw.getElementsByTagName('th')[1].innerText;
 return JSON.stringify(obj);
-
-~ return to search selection
-document.getElementById('tcControllerLink_0').click();
-
-~ get search record count
-var sps = Array.prototype.slice.call( document.getElementsByTagName("span"), 0 );
-sps = sps.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'k-pager-info k-label'; });
-var arrspan = [];
-sps.forEach(s => arrspan.push(s.innerText.trim()));
-return JSON.stringify(arrspan);
 
 ~ login process 01
 var bttn = document.getElementById('dropdownMenu1');
