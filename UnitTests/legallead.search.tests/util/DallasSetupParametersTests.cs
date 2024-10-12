@@ -21,7 +21,7 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
-            var parameters = new DallasAttendedProcess();
+            var parameters = new DallasSearchProcess();
             var startDt = DateTime.Now;
             var endingDt = DateTime.Now.AddDays(3);
             parameters.Search(startDt, endingDt, "JUSTICE");
@@ -46,7 +46,7 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
-            var parameters = new DallasAttendedProcess();
+            var parameters = new DallasSearchProcess();
             DateTime? startDt = hasStartDate ? DateTime.Now : null;
             DateTime? endingDt = hasEndingDate ? DateTime.Now.AddDays(3) : null;
             parameters.Search(startDt, endingDt, searchType);

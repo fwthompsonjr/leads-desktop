@@ -113,5 +113,45 @@ namespace Thompson.RecordSearch.Utility.Properties {
                 return ResourceManager.GetString("dallas_court_address", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;url-county&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
+        ///	&quot;url-district&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
+        ///	&quot;url-justice&quot;: &quot;https://odysseypa.traviscountytx.gov/JPPublicAccess/default.aspx&quot;,
+        ///	&quot;searchLink&quot;: &quot;//a[@class=&apos;ssSearchHyperlink&apos;][contains(text(), &apos;Civil&apos;)]&quot;
+        ///}.
+        /// </summary>
+        internal static string travis_navigation {
+            get {
+                return ResourceManager.GetString("travis_navigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ select search by case
+        ///var colinput = Array.prototype.slice.call( document.getElementsByTagName(&apos;input&apos;), 0 );
+        ///
+        ///var colstatus = colinput.filter(x =&gt; { 
+        ///let attr = x.getAttribute(&apos;name&apos;); 
+        ///if ( attr == null ) { return false; } 
+        ///return attr == &apos;CaseStatusType&apos; });
+        ///
+        ///colinput = colinput.filter(x =&gt; { 
+        ///let attr = x.getAttribute(&apos;name&apos;); 
+        ///if ( attr == null ) { return false; } 
+        ///return attr == &apos;SearchBy&apos; });
+        ///colinput[0].click();
+        ///colstatus[1].click();
+        ///
+        ///~ set start and end date
+        ///dteStart = &apos;{0}&apos;;
+        ///dte [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string travisScriptingHelp {
+            get {
+                return ResourceManager.GetString("travisScriptingHelp", resourceCulture);
+            }
+        }
     }
 }

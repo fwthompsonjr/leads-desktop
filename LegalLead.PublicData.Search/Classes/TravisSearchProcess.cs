@@ -7,11 +7,11 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Classes
 {
-    public class DallasAttendedProcess
+    public class TravisSearchProcess
     {
         public string StartDate { get; private set; }
         public string EndingDate { get; private set; }
-        public string CourtLocator { get; private set; }
+        public List<string> CourtLocator { get; private set; }
         public string CourtType { get; private set; }
 
         public void Search(DateTime? startDate, DateTime? endDate, string courtType)
@@ -39,7 +39,7 @@ namespace LegalLead.PublicData.Search.Classes
 
         public static List<DateRangeDto> GetRangeDtos(DateTime startDate, DateTime endingDate)
         {
-            const string fmt = "yyyy-MM";
+            const string fmt = "yyyy"; // separate items by year
             var businessDays = GetBusinessDays(startDate, endingDate);
             var groupa = startDate.ToString(fmt, culture);
             var groups = businessDays.Select(x => new { indx = x.ToString(fmt, culture), date = x });
@@ -89,45 +89,58 @@ namespace LegalLead.PublicData.Search.Classes
         {
             if (string.IsNullOrEmpty(StartDate)) return null;
             if (string.IsNullOrEmpty(EndingDate)) return null;
-            if (string.IsNullOrEmpty(CourtLocator) ||
-                string.IsNullOrEmpty(CourtType)) return null;
-
+            if (CourtLocator == null || CourtLocator.Count == 0) return null;
+            if (string.IsNullOrEmpty(CourtType)) return null;
+            var courtLocator = string.Join("|", CourtLocator);
             var keys = new List<WebNavigationKey>
             {
                 new WebNavigationKey { Name = "StartDate", Value = StartDate  },
                 new WebNavigationKey { Name = "EndDate", Value = EndingDate  },
-                new WebNavigationKey { Name = "CourtLocator", Value = CourtLocator  },
+                new WebNavigationKey { Name = "CourtLocator", Value = courtLocator  },
                 new WebNavigationKey { Name = "CourtType", Value = CourtType  }
             };
 
             return new WebNavigationParameter
             {
-                Name = "DallasSearch",
+                Name = "TravisSearch",
                 Keys = keys,
             };
         }
 
 
-        private static string GetPrefix(DateTime startDate, string courtType)
+        private static List<string> GetPrefix(DateTime startDate, string courtType)
         {
             /*
                 JUSTICE COURTS 
-                Search: JPC-YY* + DATE
-                DISTRICT COURTS
-                Search:  DC-YY-MM* + DATE
-                COUNTY COURTS
-                Search: CC-YY* + DATE
+                Search J1-CV-YY* + DATE
+                Search J2-CV-YY* + DATE
+                Search J3-CV-YY* + DATE
+                Search J4-CV-YY* + DATE
+                Search J5-CV-YY* + DATE
+
+                DISTRICT and COUNTY COURTS
+                C-1-CV-YY*
+                D-1-GN-YY*
             */
+            var list = new List<string>();
             var year = startDate.ToString("yy", culture);
             switch (courtType)
             {
                 case "COUNTY":
-                    return string.Concat("CC-", year, "-*");
+                    list.Add($"D-1-GN-{year}*");
+                    break; 
                 case "DISTRICT":
-                    return string.Concat("DC-", year, "-*");
+                    list.Add($"C-1-CV-{year}*");
+                    break;
                 default:
-                    return string.Concat("JPC-", year, "*");
+
+                    for (int i = 1; i < 6; i++)
+                    {
+                        list.Add($"J{i}-CV-{year}*"); 
+                    }
+                    break;
             }
+            return list;
         }
         private static readonly CultureInfo culture = CultureInfo.InvariantCulture;
         private static readonly List<string> CourtNames = new List<string> { "COUNTY", "DISTRICT", "JUSTICE" };

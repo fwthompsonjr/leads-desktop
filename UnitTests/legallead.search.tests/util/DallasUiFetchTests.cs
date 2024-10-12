@@ -175,7 +175,7 @@ namespace legallead.search.tests.util
                 var mock = new Mock<IWebDriver>();
                 return mock.Object;
             }
-            protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
+            protected override void Iterate(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
             {
                 var count = new Faker().Random.Int(10, 20);
                 Items.AddRange(itemFaker.Generate(count));
@@ -193,7 +193,7 @@ namespace legallead.search.tests.util
                 var mock = new Mock<IWebDriver>();
                 return mock.Object;
             }
-            protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
+            protected override void Iterate(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
             {
                 var count = new Faker().Random.Int(10, 20);
                 Items.AddRange(itemFaker.Generate(count));
@@ -211,7 +211,7 @@ namespace legallead.search.tests.util
                 var mock = new Mock<IWebDriver>();
                 return mock.Object;
             }
-            protected override void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
+            protected override void Iterate(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
             {
             }
         }
@@ -229,7 +229,7 @@ namespace legallead.search.tests.util
             public void CheckIteration(int conditionId)
             {
                 var driver = GetDriver();
-                var prc = new DallasAttendedProcess();
+                var prc = new DallasSearchProcess();
                 List<DateTime> dates = [];
                 List<ICountySearchAction> common = [];
                 List<ICountySearchAction> postcommon = [];
@@ -241,11 +241,11 @@ namespace legallead.search.tests.util
                 if (conditionId == 5) Iterate(driver, prc, dates, common, postcommon);
             }
 
-            protected override void IterateDateRange(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<ICountySearchAction> common)
+            protected override void IterateDateRange(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common)
             {
             }
 
-            protected override void IterateItems(IWebDriver driver, DallasAttendedProcess parameters, List<ICountySearchAction> postcommon)
+            protected override void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
             {
             }
         }
@@ -263,10 +263,10 @@ namespace legallead.search.tests.util
             public void CheckIteration(int conditionId)
             {
                 var driver = GetDriver();
-                var prc = new DallasAttendedProcess();
+                var prc = new DallasSearchProcess();
                 var mock = new Mock<ICountySearchAction>();
                 mock.Setup(a => a.Execute()).Returns(string.Empty);
-                List<DateTime> dates = DallasAttendedProcess.GetBusinessDays(StartDate, EndingDate);
+                List<DateTime> dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
                 List<ICountySearchAction> common = [new FakeDallasFetchCaseDetail(), new FakeIntCaseDetail(), new FakeRequestCaptcha(), mock.Object];
                 if (conditionId == 0) IterateDateRange(null, prc, dates, common);
                 if (conditionId == 1) IterateDateRange(driver, null, dates, common);
@@ -290,7 +290,7 @@ namespace legallead.search.tests.util
             public void CheckIteration(int conditionId)
             {
                 var driver = GetDriver();
-                var prc = new DallasAttendedProcess();
+                var prc = new DallasSearchProcess();
                 var mock = new Mock<ICountySearchAction>();
                 var count = new Faker().Random.Int(10, 20);
                 var items = itemFaker.Generate(count);

@@ -23,7 +23,7 @@ namespace legallead.search.tests.util
             var element = new Mock<IWebElement>();
             driver.Setup(m => m.FindElement(It.IsAny<By>())).Returns(element.Object);
             element.Setup(m => m.Click()).Verifiable();
-            var parameters = new DallasAttendedProcess();
+            var parameters = new DallasSearchProcess();
             var service = new MockDallasNavigateSearch
             {
                 Parameters = parameters,
@@ -39,7 +39,7 @@ namespace legallead.search.tests.util
         public void ComponentThrowingException(int target)
         {
             var driver = new Mock<IWebDriver>();
-            var parameters = new DallasAttendedProcess();
+            var parameters = new DallasSearchProcess();
             var service = new MockDallasNavigateSearch
             {
                 Parameters = target != 1 ? parameters : null,

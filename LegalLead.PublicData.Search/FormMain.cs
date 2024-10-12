@@ -114,7 +114,7 @@ namespace LegalLead.PublicData.Search
         private void DallasButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
         {
             var index = cboSearchType.SelectedIndex;
-            var searchType = DallasAttendedProcess.GetCourtName(index);
+            var searchType = DallasSearchProcess.GetCourtName(index);
             var keys = new List<WebNavigationKey> {
                 new WebNavigationKey() { Name = "StartDate", Value = searchItem.StartDate},
                 new WebNavigationKey() { Name = "EndDate", Value = searchItem.EndDate },

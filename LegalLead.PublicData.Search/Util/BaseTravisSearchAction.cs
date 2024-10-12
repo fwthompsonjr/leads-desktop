@@ -9,12 +9,13 @@ using Thompson.RecordSearch.Utility.Classes;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class BaseDallasSearchAction : ICountySearchAction
+    public class BaseTravisSearchAction : ITravisSearchAction
     {
         public virtual int OrderId => 0;
+        public virtual bool IsPostSearch => false;
         protected virtual string ScriptName { get; }
         public IWebDriver Driver { get; set; }
-        public DallasSearchProcess Parameters { get; set; }
+        public TravisSearchProcess Parameters { get; set; }
 
         public virtual object Execute() { return null; }
 
@@ -57,7 +58,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             lock (lockObject)
             {
-                var obj = DallasScriptHelper.ScriptCollection;
+                var obj = TravisScriptHelper.ScriptCollection;
                 var exists = obj.TryGetValue(keyname, out var js);
                 if (!exists) return string.Empty;
                 return js;
