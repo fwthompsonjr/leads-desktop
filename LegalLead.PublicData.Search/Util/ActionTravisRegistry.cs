@@ -14,6 +14,7 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountyCodeReader>().Add<CountyCodeReaderService>().Singleton();
 
             For<ITravisSearchAction>().Add<TravisBeginNavigation>();
+            For<ITravisSearchAction>().Add<TravisSetupLocation>();
             For<ITravisSearchAction>().Add<TravisSetupOptions>();
             For<ITravisSearchAction>().Add<TravisSetupParameters>();
             For<ITravisSearchAction>().Add<TravisNavigateSearch>();

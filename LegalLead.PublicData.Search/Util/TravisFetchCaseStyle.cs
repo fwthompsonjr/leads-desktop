@@ -14,6 +14,7 @@ namespace LegalLead.PublicData.Search.Util
         public override object Execute()
         {
             var js = JsScript;
+            if (string.IsNullOrEmpty(js)) js = Rx.travis_get_name_and_address;
             var executor = GetJavaScriptExecutor();
 
             if (Parameters == null || Driver == null || executor == null)
