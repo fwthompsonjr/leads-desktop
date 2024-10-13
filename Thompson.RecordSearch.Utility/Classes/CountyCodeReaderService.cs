@@ -69,12 +69,12 @@ namespace Thompson.RecordSearch.Utility.Classes
             catch { return null; }
         }
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Sonar Qube", 
-            "S1144:Unused private types or members should be removed", 
+            "Sonar Qube",
+            "S1144:Unused private types or members should be removed",
             Justification = "Ignoring rule for this private sealed member")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Sonar Qube", 
-            "S3459:Unassigned members should be removed", 
+            "Sonar Qube",
+            "S3459:Unassigned members should be removed",
             Justification = "As POCO class exposing both get/set operations")]
         private sealed class JsModel
         {

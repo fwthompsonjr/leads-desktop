@@ -1,9 +1,7 @@
-﻿using StructureMap.Building;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Thompson.RecordSearch.Utility.Classes;
-using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -12,7 +10,7 @@ namespace LegalLead.PublicData.Search.Util
     {
         public override int OrderId => 10;
         public override object Execute()
-        {   
+        {
             if (Parameters == null || Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 

@@ -8,6 +8,7 @@ namespace LegalLead.PublicData.Search.Util
         public ActionZeroRegistry()
         {
             For<ICountySearchAction>().Add<NonActionSearch>();
+            For<ITravisSearchAction>().Add<NonTravisActionSearch>();
         }
     }
 }

@@ -13,15 +13,11 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountyCodeService>().Add<CountyCodeService>().Singleton();
             For<ICountyCodeReader>().Add<CountyCodeReaderService>().Singleton();
 
-            For<ICountySearchAction>().Add<DallasAuthenicateBegin>().Named("authenticate-step-1");
-            For<ICountySearchAction>().Add<DallasAuthenicateSubmit>().Named("authenticate-step-2");
-            For<ICountySearchAction>().Add<DallasBeginNavigation>().Named("begin");
-            For<ICountySearchAction>().Add<DallasRequestCaptcha>().Named("initialize");
-            For<ICountySearchAction>().Add<DallasSetupParameters>().Named("set-parameters");
-            For<ICountySearchAction>().Add<DallasNavigateSearch>().Named("perform-search");
-            For<ICountySearchAction>().Add<DallasSetPager>().Named("set-max-rows");
-            For<ICountySearchAction>().Add<DallasFetchCaseItems>().Named("get-case-list");
-            For<ICountySearchAction>().Add<DallasFetchCaseStyle>().Named("get-case-style");
+            For<ITravisSearchAction>().Add<TravisBeginNavigation>();
+            For<ITravisSearchAction>().Add<TravisSetupOptions>();
+            For<ITravisSearchAction>().Add<TravisSetupParameters>();
+            For<ITravisSearchAction>().Add<TravisNavigateSearch>();
+            For<ITravisSearchAction>().Add<TravisFetchCaseItems>();
         }
     }
 }

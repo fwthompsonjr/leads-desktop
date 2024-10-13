@@ -128,7 +128,7 @@ namespace LegalLead.PublicData.Search.Classes
             {
                 case "COUNTY":
                     list.Add($"D-1-GN-{year}*");
-                    break; 
+                    break;
                 case "DISTRICT":
                     list.Add($"C-1-CV-{year}*");
                     break;
@@ -136,7 +136,7 @@ namespace LegalLead.PublicData.Search.Classes
 
                     for (int i = 1; i < 6; i++)
                     {
-                        list.Add($"J{i}-CV-{year}*"); 
+                        list.Add($"J{i}-CV-{year}*");
                     }
                     break;
             }
