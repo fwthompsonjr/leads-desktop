@@ -6,7 +6,7 @@ namespace LegalLead.PublicData.Search.Util
     public class TravisSetupParameters : BaseTravisSearchAction
     {
         public override int OrderId => 30;
-        public int CourtLocationId { get; set; }
+        public int CourtLocationId { get; set; } = -1;
         public override object Execute()
         {
             var js = JsScript;

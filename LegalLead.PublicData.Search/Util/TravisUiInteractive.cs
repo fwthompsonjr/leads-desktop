@@ -40,7 +40,7 @@ namespace LegalLead.PublicData.Search.Util
 
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
-        protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = new List<DallasCaseStyleDto>();
+        protected List<TravisCaseStyleDto> CaseStyles { get; private set; } = new List<TravisCaseStyleDto>();
 
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
@@ -48,10 +48,10 @@ namespace LegalLead.PublicData.Search.Util
         private readonly List<ITravisSearchAction> ActionItems = new List<ITravisSearchAction>();
         public override WebFetchResult Fetch()
         {
-            var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
+            var postsearchtypes = new List<Type> { typeof(TravisFetchCaseStyle) };
             var driver = GetDriver();
             var parameters = new TravisSearchProcess();
-            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
+            var dates = TravisSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
             var result = new WebFetchResult();
@@ -88,9 +88,12 @@ namespace LegalLead.PublicData.Search.Util
                 if (dates == null) throw new ArgumentNullException(nameof(dates));
                 if (common == null) throw new ArgumentNullException(nameof(common));
                 if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
-
-                IterateDateRange(driver, parameters, dates, common);
-                IterateItems(driver, parameters, postcommon);
+                parameters.CourtLocator.ForEach(location =>
+                {
+                    var locationId = parameters.CourtLocator.IndexOf(location);
+                    IterateDateRange(driver, parameters, dates, common, locationId);
+                    IterateItems(driver, parameters, postcommon);
+                });
             }
             catch (Exception ex)
             {
@@ -104,7 +107,7 @@ namespace LegalLead.PublicData.Search.Util
 
         }
 
-        protected virtual void IterateDateRange(IWebDriver driver, TravisSearchProcess parameters, List<DateTime> dates, List<ITravisSearchAction> common)
+        protected virtual void IterateDateRange(IWebDriver driver, TravisSearchProcess parameters, List<DateTime> dates, List<ITravisSearchAction> common, int locationId)
         {
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
@@ -116,24 +119,21 @@ namespace LegalLead.PublicData.Search.Util
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
                 {
-                    isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
+                    isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a, locationId);
                 });
             });
             parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
         }
 
-        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, TravisSearchProcess parameters, List<ITravisSearchAction> common, ITravisSearchAction a)
+        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, TravisSearchProcess parameters, List<ITravisSearchAction> common, ITravisSearchAction a, int locationId)
         {
             if (ExecutionCancelled) return isCaptchaNeeded;
-            if (!isCaptchaNeeded && a is DallasAuthenicateBegin _) return isCaptchaNeeded;
-            if (!isCaptchaNeeded && a is DallasAuthenicateSubmit _) return isCaptchaNeeded;
-            if (!isCaptchaNeeded && a is DallasRequestCaptcha _) return isCaptchaNeeded;
+            if (!isCaptchaNeeded && a is TravisRequestCaptcha _) return isCaptchaNeeded;
             var count = common.Count - 1;
-            Populate(a, driver, parameters);
+            Populate(a, driver, parameters, locationId);
             var response = a.Execute();
-            if (a is DallasAuthenicateSubmit _ && response is bool captchaCompleted && captchaCompleted) isCaptchaNeeded = false;
-            if (a is DallasFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
-            if (a is DallasRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
+            if (a is TravisFetchCaseItems _ && response is string cases) Items.AddRange(GetData(cases));
+            if (a is TravisRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
             if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
             return isCaptchaNeeded;
         }
@@ -148,15 +148,16 @@ namespace LegalLead.PublicData.Search.Util
             {
                 postcommon.ForEach(a =>
                 {
-                    Populate(a, driver, parameters, i.Href);
+                    Populate(a, driver, parameters, 0, i.Href);
                     var response = a.Execute();
-                    if (a is DallasFetchCaseStyle _ && response is string cases)
+                    if (a is TravisFetchCaseStyle _ && response is string cases)
                     {
                         var info = GetStyle(cases);
                         if (info != null)
                         {
                             i.CaseStyle = info.CaseStyle;
                             i.Plaintiff = info.Plaintiff;
+                            i.PartyName = info.PartyName;
                             if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
                             AppendPerson(i);
                         }
@@ -175,13 +176,14 @@ namespace LegalLead.PublicData.Search.Util
             });
         }
 
-        private void Populate(ITravisSearchAction a, IWebDriver driver, TravisSearchProcess parameters, string uri = "")
+        private void Populate(ITravisSearchAction a, IWebDriver driver, TravisSearchProcess parameters, int locationId, string uri = "")
         {
             a.Driver = driver;
             a.Parameters = parameters;
-            if (a is DallasRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }
-            if (!string.IsNullOrEmpty(uri) && a is DallasFetchCaseStyle style) { style.PageAddress = uri; }
-            if (a is DallasFetchCaseItems items) { items.PauseForPage = true; }
+            if (a is TravisRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }
+            if (!string.IsNullOrEmpty(uri) && a is TravisFetchCaseStyle style) { style.PageAddress = uri; }
+            if (a is TravisFetchCaseItems items) { items.PauseForPage = true; }
+            if (a is TravisSetupParameters prms) { prms.CourtLocationId = locationId; }
         }
 
         [ExcludeFromCodeCoverage]
@@ -224,7 +226,7 @@ namespace LegalLead.PublicData.Search.Util
             People.Add(person);
         }
 
-        private static List<string> GetAddress(DallasCaseStyleDto dto)
+        private static List<string> GetAddress(TravisCaseStyleDto dto)
         {
             var pipe = "|";
             var doublepipe = "||";
@@ -264,17 +266,17 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         [ExcludeFromCodeCoverage]
-        private static DallasCaseStyleDto GetStyle(string json)
+        private static TravisCaseStyleDto GetStyle(string json)
         {
             try
             {
-                var data = JsonConvert.DeserializeObject<DallasCaseStyleDto>(json);
-                if (data == null) return new DallasCaseStyleDto();
+                var data = JsonConvert.DeserializeObject<TravisCaseStyleDto>(json);
+                if (data == null) return new TravisCaseStyleDto();
                 return data;
             }
             catch (Exception)
             {
-                return new DallasCaseStyleDto();
+                return new TravisCaseStyleDto();
             }
         }
 
@@ -282,7 +284,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             var folder = ExcelDirectoyName();
             var name = TravisSearchProcess.GetCourtName(CourtType);
-            var fmt = $"DALLAS_{name}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            var fmt = $"TRAVIS_{name}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
             var fullName = Path.Combine(folder, $"{fmt}.xlsx");
             var idx = 1;
             while (File.Exists(fullName))
@@ -291,7 +293,7 @@ namespace LegalLead.PublicData.Search.Util
                 idx++;
             }
             var writer = new ExcelWriter();
-            var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: 60);
+            var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: websiteMappingId);
             var courtlist = People.Select(p =>
             {
                 if (string.IsNullOrEmpty(p.Court)) return string.Empty;
@@ -327,5 +329,6 @@ namespace LegalLead.PublicData.Search.Util
             return xmlFolder;
         }
         private static readonly CultureInfo Culture = CultureInfo.CurrentCulture;
+        private const int websiteMappingId = 70;
     }
 }

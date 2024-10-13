@@ -35,11 +35,18 @@ return tables[5].outerHTML;
 ~ get name and address
 var obj = {
 	"defendant": "",
+	"casestyle": "",
+	"plaintiff": "",
 	"address": ""
 };
 var nospace = "&nbsp;"
 var linbreak = "<br>";
 var twopipe = "||";
+var pipe = "|";
+var tables = Array.prototype.slice.call( document.getElementsByTagName('table'), 0);
+if (tables.length > 3) {
+	obj.casestyle = tables[4].getElementsByTagName('b')[0].innerText;
+}
 var headers = Array.prototype.slice.call( document.getElementsByTagName('th'), 0);
 headers = headers.filter(a => { 
   let attr = a.getAttribute('rowspan'); 
@@ -47,13 +54,24 @@ headers = headers.filter(a => {
   return attr == '2' });
 if (headers.length == 0) return JSON.stringify(obj);
 var rw = headers[0].closest('tr');
+obj.defendant = rw.getElementsByTagName('th')[1].innerText;
+
 var rwindex = rw.rowIndex + 1;
 var addr = rw.closest('table').rows[rwindex].getElementsByTagName('td')[0].innerHTML.trim();
 while (addr.indexOf(nospace) >= 0) { addr = addr.replace(nospace, ' '); }
-while (addr.indexOf(linbreak) >= 0) { addr = addr.replace(linbreak, '|'); }
-while (addr.indexOf(twopipe) >= 0) { addr = addr.replace(twopipe, '|'); }
+while (addr.indexOf(linbreak) >= 0) { addr = addr.replace(linbreak, pipe); }
+while (addr.indexOf(twopipe) >= 0) { addr = addr.replace(twopipe, pipe); }
 addr = addr.trim();
-obj.defendant = rw.getElementsByTagName('th')[1].innerText;
+if (addr.endsWith('|')) { addr = addr.substr(0, addr.length - 1) }
+if (addr.indexOf(pipe) < 0 && addr.length > 0) { addr = "".concat("000 No Street Address|", addr); } 
+obj.address = addr;
+
+if (headers.length < 2) return JSON.stringify(obj);
+var hdplaintiff = headers.find(x => { return x.innerText == 'Plaintiff'}) 
+if (hdplaintiff == null) return JSON.stringify(obj);
+rw = hdplaintiff.closest('tr');
+obj.plaintiff = rw.getElementsByTagName('th')[1].innerText;
+
 return JSON.stringify(obj);
 
 ~ login process 01

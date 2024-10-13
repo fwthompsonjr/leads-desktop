@@ -6,9 +6,9 @@ using System;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasRequestCaptcha : BaseRequestCaptcha, ICountySearchAction
+    public class TravisRequestCaptcha : BaseRequestCaptcha, ITravisSearchAction
     {
-        public virtual object Execute()
+        public object Execute()
         {
             if (Parameters == null || Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
@@ -18,8 +18,10 @@ namespace LegalLead.PublicData.Search.Util
         public int OrderId => 20;
 
         public IWebDriver Driver { get; set; }
-        public DallasSearchProcess Parameters { get; set; }
+        public TravisSearchProcess Parameters { get; set; }
 
         protected override IWebDriver WebDriver => Driver;
+
+        public bool IsPostSearch => false;
     }
 }
