@@ -32,9 +32,9 @@ namespace LegalLead.PublicData.Search.Classes
                 EndingDate = endDate.Value.ToString(fmt, culture);
             }
         }
-        public DallasUiInteractive GetUiInteractive()
+        public TravisUiInteractive GetUiInteractive()
         {
-            return new DallasUiInteractive(GetNavigationParameter());
+            return new TravisUiInteractive(GetNavigationParameter());
         }
 
         public static List<DateRangeDto> GetRangeDtos(DateTime startDate, DateTime endingDate)

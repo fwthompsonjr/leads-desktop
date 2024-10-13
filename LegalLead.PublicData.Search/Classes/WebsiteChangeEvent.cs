@@ -15,21 +15,23 @@ namespace LegalLead.PublicData.Search
         public virtual void Change()
         {
             const int DallasIndx = 60;
+            const int TravisIndx = 70;
             const int FortyNine = 49;
             const int Zero = 0;
             const int Three = 3;
             const int Five = 5;
-
+            var boxindicies = new List<int> { DallasIndx, TravisIndx };
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             var cbo = GetMain.cboSearchType;
+            var customBindingNeeded = boxindicies.Contains(source.Id);
             GetMain.ButtonDentonSetting.Visible = (
                 source.Id == (int)SourceType.DentonCounty |
                 source.Id == (int)SourceType.CollinCounty |
                 source.Id == (int)SourceType.HarrisCriminal);
-            GetMain.cboSearchType.Visible = source.Id == (int)SourceType.CollinCounty || source.Id == DallasIndx;
+            GetMain.cboSearchType.Visible = source.Id == (int)SourceType.CollinCounty || customBindingNeeded;
             GetMain.cboCaseType.Visible = source.Id == (int)SourceType.CollinCounty;
             GetMain.cboCourts.Visible = source.Id == (int)SourceType.TarrantCounty;
-            ToggleComboBoxBinding(cbo, source.Id == DallasIndx);
+            ToggleComboBoxBinding(cbo, customBindingNeeded);
             var fives = new List<int>
             {
                 (int)SourceType.CollinCounty,
@@ -39,7 +41,7 @@ namespace LegalLead.PublicData.Search
             for (int i = Three; i <= Five; i++)
             {
                 styles[i].SizeType = SizeType.Absolute;
-                styles[i].Height = fives.Contains(source.Id) || i == 3 && source.Id == DallasIndx
+                styles[i].Height = fives.Contains(source.Id) || i == 3 && customBindingNeeded
                     ? FortyNine : Zero;
                 if (i == Five)
                 {
@@ -52,7 +54,7 @@ namespace LegalLead.PublicData.Search
             // when in Denton County write Settings
             if (source.Id == (int)SourceType.DentonCounty)
             {
-                GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.SettingsLabel; // "Settings";
+                GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.SettingsLabel;
                 GetMain.SetDentonStatusLabelFromSetting();
             }
             else if (source.Id == (int)SourceType.HarrisCriminal)
@@ -61,14 +63,14 @@ namespace LegalLead.PublicData.Search
             }
             else
             {
-                GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.PasswordLabel; // "Password";
+                GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.PasswordLabel;
             }
             ApplyRowStyles(styles, source.Id);
         }
 
-        private void ToggleComboBoxBinding(ComboBoxEx cbo, bool isDallasCounty)
+        private void ToggleComboBoxBinding(ComboBoxEx cbo, bool isCustomBindingNeeded)
         {
-            var find = isDallasCounty ? "dallasCountyCaseOptions" : CommonKeyIndexes.CollinCountyCaseType;
+            var find = isCustomBindingNeeded ? "dallasCountyCaseOptions" : CommonKeyIndexes.CollinCountyCaseType;
             var caseTypes = CaseTypeSelectionDto.GetDto(find);
             var caseIndex = cbo.SelectedIndex;
 
@@ -93,8 +95,7 @@ namespace LegalLead.PublicData.Search
         public void MapLabels(TableLayoutRowStyleCollection styles)
         {
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
-            var mapper = RowStyleChangeProvider.RowChangeProviders
-                .FirstOrDefault(r => r.WebsiteIndex == source.Id);
+            var mapper = RowStyleChangeProvider.RowChangeProviders.Find(r => r.WebsiteIndex == source.Id);
             if (mapper == null) { return; }
             mapper.MapLabels(GetMain);
         }

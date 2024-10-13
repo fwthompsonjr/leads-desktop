@@ -15,6 +15,7 @@ using Thompson.RecordSearch.Utility.Models;
 namespace LegalLead.PublicData.Search
 {
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
     public partial class FormMain : Form
     {
         protected WebFetchResult CaseData { get; set; }
@@ -90,6 +91,9 @@ namespace LegalLead.PublicData.Search
                     case (int)SourceType.DallasCounty:
                         DallasButtonExecution(siteData, searchItem);
                         break;
+                    case (int)SourceType.TravisCounty:
+                        TravisButtonExecution(siteData, searchItem, startDate, endingDate);
+                        break;
                     default:
                         NonDallasButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
@@ -122,6 +126,19 @@ namespace LegalLead.PublicData.Search
             };
             var wb = new WebNavigationParameter { Keys = keys };
             var dweb = new DallasUiInteractive(wb);
+            Task.Run(async () =>
+            {
+                await ProcessAsync(dweb, siteData, searchItem);
+            }).ConfigureAwait(true);
+        }
+
+        private void TravisButtonExecution(WebNavigationParameter siteData, SearchResult searchItem, DateTime startDate, DateTime endingDate)
+        {
+            var index = cboSearchType.SelectedIndex;
+            var searchType = TravisSearchProcess.GetCourtName(index);
+            var search = new TravisSearchProcess();
+            search.Search(startDate, endingDate, searchType);
+            var dweb = search.GetUiInteractive();
             Task.Run(async () =>
             {
                 await ProcessAsync(dweb, siteData, searchItem);

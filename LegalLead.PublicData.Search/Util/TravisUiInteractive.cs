@@ -49,11 +49,11 @@ namespace LegalLead.PublicData.Search.Util
         public override WebFetchResult Fetch()
         {
             var postsearchtypes = new List<Type> { typeof(TravisFetchCaseStyle) };
-            var driver = GetDriver();
             var parameters = new TravisSearchProcess();
             var dates = TravisSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
+            var driver = GetDriver();
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
             if (ExecutionCancelled || People.Count == 0) return result;
@@ -88,6 +88,10 @@ namespace LegalLead.PublicData.Search.Util
                 if (dates == null) throw new ArgumentNullException(nameof(dates));
                 if (common == null) throw new ArgumentNullException(nameof(common));
                 if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
+                var dcount = dates.Count - 1;
+                var dtStart = dates[0];
+                var dtEnding = dates[dcount];
+                parameters.Search(dtStart, dtEnding, CourtType);
                 parameters.CourtLocator.ForEach(location =>
                 {
                     var locationId = parameters.CourtLocator.IndexOf(location);
