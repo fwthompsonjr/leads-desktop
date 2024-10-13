@@ -5,9 +5,9 @@ using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    public class DallasActionRegistry : Registry
+    public class ActionDallasRegistry : Registry
     {
-        public DallasActionRegistry()
+        public ActionDallasRegistry()
         {
             For<IHttpService>().Add<HttpService>().Singleton();
             For<ICountyCodeService>().Add<CountyCodeService>().Singleton();

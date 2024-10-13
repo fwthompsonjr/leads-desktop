@@ -29,7 +29,7 @@ namespace LegalLead.PublicData.Search.Util
             EndingDate = FetchKeyedData(parameters.Keys, "EndDate");
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
             DisplayDialogue = displayDialogue;
-            var container = DallasActionContainer.GetContainer;
+            var container = ActionDallasContainer.GetContainer;
             var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);

@@ -115,6 +115,44 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;name&quot;: &quot;county&quot;,
+        ///		&quot;items&quot;: [
+        ///			{
+        ///				&quot;id&quot;: 1,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 1&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 1&quot;,
+        ///					&quot;1700 Guadalupe, Austin, TX 78701&quot;
+        ///				]
+        ///			},
+        ///			{
+        ///				&quot;id&quot;: 2,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 2&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 2&quot;,
+        ///					&quot;1700 Guadalupe, Austin, TX 78701&quot;
+        ///				]
+        ///			}
+        ///		]
+        ///	},
+        ///	{
+        ///		&quot;name&quot;: &quot;justice&quot;,
+        ///		&quot;items&quot;: [
+        ///			{
+        ///				&quot;id&quot;: 1,
+        ///				&quot;name&quot;: &quot;Precinct 1&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;Justice of [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string travis_court_address {
+            get {
+                return ResourceManager.GetString("travis_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;url-county&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
         ///	&quot;url-district&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,

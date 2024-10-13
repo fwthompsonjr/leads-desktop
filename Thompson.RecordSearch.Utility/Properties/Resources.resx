@@ -130,4 +130,7 @@
   <data name="travis_navigation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\travis_navigation.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="travis_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\travis_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

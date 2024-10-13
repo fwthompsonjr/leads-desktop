@@ -2,7 +2,7 @@
 
 namespace LegalLead.PublicData.Search.Util
 {
-    public static class DallasActionContainer
+    public static class ActionDallasContainer
     {
         private static Container _container;
 
@@ -17,7 +17,7 @@ namespace LegalLead.PublicData.Search.Util
             get
             {
                 return _container ?? (_container =
-                  new Container(new DallasActionRegistry()));
+                  new Container(new ActionDallasRegistry()));
             }
         }
     }

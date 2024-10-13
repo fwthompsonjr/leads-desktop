@@ -13,7 +13,7 @@ namespace legallead.search.tests.util
         {
             var error = Record.Exception(() =>
             {
-                var item = DallasActionContainer.GetContainer;
+                var item = ActionDallasContainer.GetContainer;
                 Assert.NotNull(item);
             });
             Assert.Null(error);
@@ -24,7 +24,7 @@ namespace legallead.search.tests.util
         {
             var error = Record.Exception(() =>
             {
-                var item = DallasActionContainer.GetContainer;
+                var item = ActionDallasContainer.GetContainer;
                 var children = item.GetAllInstances<ICountySearchAction>();
                 Assert.NotNull(children);
                 Assert.Equal(9, children.Count());
@@ -39,7 +39,7 @@ namespace legallead.search.tests.util
         {
             var error = Record.Exception(() =>
             {
-                var item = DallasActionContainer.GetContainer;
+                var item = ActionDallasContainer.GetContainer;
                 var actual = item.GetInstance(type);
                 Assert.NotNull(actual);
             });
