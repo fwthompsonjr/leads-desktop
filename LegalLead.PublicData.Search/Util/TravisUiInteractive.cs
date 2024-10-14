@@ -58,6 +58,10 @@ namespace LegalLead.PublicData.Search.Util
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
             if (ExecutionCancelled || People.Count == 0) return result;
+            if (People.Exists(x => string.IsNullOrWhiteSpace(x.Name) && !string.IsNullOrEmpty(x.CaseStyle)))
+            {
+                People.ReMapNameFromCaseStyle();
+            }
             result.PeopleList = People;
             result.Result = GetExcelFileName();
             result.CaseList = JsonConvert.SerializeObject(People);
@@ -195,7 +199,21 @@ namespace LegalLead.PublicData.Search.Util
                     var source = Items.Find(x => x.CaseNumber == i);
                     if (source != null) { AppendPerson(source); }
                 }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(p.Name))
+                    {
+                        p.Name = TryMapName(i);
+                    }
+                }
             });
+        }
+
+        private string TryMapName(string caseNumber)
+        {
+            var style = CaseStyles.Find(x => x.CaseNumber.Equals(caseNumber, StringComparison.OrdinalIgnoreCase));
+            if (style == null) return string.Empty;
+            return style.PartyName;
         }
 
         private void Populate(ITravisSearchAction a, IWebDriver driver, TravisSearchProcess parameters, int locationId, string uri = "")

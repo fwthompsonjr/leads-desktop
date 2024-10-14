@@ -107,7 +107,11 @@ namespace LegalLead.PublicData.Search.Util
             });
             var tables = node.SelectNodes("//table").ToList();
             var headers = node.SelectNodes("//th").ToList();
-            var courtName = headers.Find(x => x.InnerText.Equals("Location:", comparison));
+            var courtName = headers.Find(x =>
+            {
+                if (string.IsNullOrEmpty(x.InnerText)) return false;
+                return x.InnerText.Equals("Location:", comparison);
+            });
             headers = headers.FindAll(a =>
             {
                 var attr = a.Attributes.FirstOrDefault(b => b.Name == "rowspan");
