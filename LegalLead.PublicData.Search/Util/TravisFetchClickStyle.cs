@@ -29,8 +29,10 @@ namespace LegalLead.PublicData.Search.Util
                 return JsonConvert.SerializeObject(alldata);
             var id = 0;
             var mx = collection.Count;
-            while(id < mx)
+            var retries = new List<int>();
+            while (id < mx)
             {
+                var current = id;
                 var element = GetLink(id++);
                 element.Click();
                 
@@ -39,9 +41,39 @@ namespace LegalLead.PublicData.Search.Util
                 var body = Driver.FindElement(By.TagName("body"));
                 var content = body.GetAttribute("innerHTML");
                 var dto = GetDto(content);
-                if (dto != null) alldata.Add(dto);
+                if (dto != null) 
+                    alldata.Add(dto);
+                else
+                    retries.Add(current);
 
                 Driver.Navigate().Back();
+            }
+            if (!retries.Any())
+            {
+                Console.WriteLine("Search mapped {0} records", alldata.Count);
+                return JsonConvert.SerializeObject(alldata);
+            }
+            var rc = 0;
+            var retrylist = retries.Select(s => new RetryDto { Id = s }).ToList();
+            while (retrylist.Exists(x => !x.IsCompleted))
+            {
+                retrylist.ForEach(r =>
+                {
+                    var current = r.Id;
+                    var element = GetLink(current);
+                    element.Click();
+
+                    Thread.Sleep(750);
+
+                    var body = Driver.FindElement(By.TagName("body"));
+                    var content = body.GetAttribute("innerHTML");
+                    var dto = GetDto(content);
+                    r.IsCompleted = dto != null;
+                    if (dto != null) alldata.Add(dto);
+                    Driver.Navigate().Back();
+                });
+                rc++;
+                if (rc > 4) break;
             }
             Console.WriteLine("Search mapped {0} records", alldata.Count);
             return JsonConvert.SerializeObject(alldata);
@@ -95,6 +127,7 @@ namespace LegalLead.PublicData.Search.Util
             var obj = new TravisCaseStyleDto();
             var tables = node.SelectNodes("//table").ToList();
             var headers = node.SelectNodes("//th").ToList();
+            var courtName = headers.Find(x => x.InnerText.Equals("Location:", comparison));
             headers = headers.FindAll(a =>
             {
                 var attr = a.Attributes.FirstOrDefault(b => b.Name == "rowspan");
@@ -106,6 +139,13 @@ namespace LegalLead.PublicData.Search.Util
             var plantId = headers.FindIndex(x => x.InnerText.Equals("Plaintiff", comparison));
             if (plantId < 0) plantId = headers.Count - 1;
 
+            
+            var ndeCourt = courtName?.ParentNode;
+            while (ndeCourt != null && !ndeCourt.Name.Equals("tr", comparison)) ndeCourt = ndeCourt.ParentNode;
+            if (ndeCourt != null)
+            {
+                obj.Court = ndeCourt.ChildNodes[1].InnerText.Trim();
+            }
             obj.CaseStyle = tables[4].SelectNodes("//b")[0].InnerText;
             obj.PartyName = headers[0].ParentNode.ChildNodes[1].InnerText;
             obj.Plaintiff = headers[plantId].ParentNode.ChildNodes[1].InnerText;
@@ -143,6 +183,10 @@ namespace LegalLead.PublicData.Search.Util
             return doc;
         }
         
-
+        private sealed class RetryDto
+        {
+            public int Id { get; set; }
+            public bool IsCompleted { get; set; }
+        }
     }
 }

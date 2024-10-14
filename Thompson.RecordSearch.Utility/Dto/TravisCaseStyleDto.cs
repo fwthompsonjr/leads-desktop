@@ -12,5 +12,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         public string PartyName { get; set; }
         [JsonProperty("addr")]
         public string Address { get; set; } = string.Empty;
+        public string Court { get; set; }
+        public string CaseNumber { get; set; }
     }
 }

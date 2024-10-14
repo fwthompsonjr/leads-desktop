@@ -272,6 +272,10 @@ namespace LegalLead.PublicData.Search
                     return webmgr.Fetch();
                 }).ConfigureAwait(true);
 
+                var nonactors = new List<int> {
+                    (int)SourceType.DallasCounty,
+                    (int)SourceType.TravisCounty
+                };
 
                 ProcessEndingMessage();
                 SetStatus(StatusType.Finished);
@@ -289,7 +293,7 @@ namespace LegalLead.PublicData.Search
                     throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
                 CaseData.WebsiteId = siteData.Id;
-                if (siteData.Id != (int)SourceType.DallasCounty)
+                if (!nonactors.Contains(siteData.Id))
                 {
                     ExcelWriter.WriteToExcel(CaseData);
                 }

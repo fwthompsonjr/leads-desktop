@@ -87,9 +87,9 @@ namespace LegalLead.PublicData.Search.Util
             data.CaseNumber = cells[0].InnerText.Trim();
             data.CaseStyle = cells[1].InnerText.Trim();
             data.FileDate = GetDivText(cells[2], 0);
-            data.Court = GetDivText(cells[2], 0);
+            data.Court = GetDivText(cells[2], 1);
             data.CaseType = GetDivText(cells[3], 0);
-            data.CaseStatus = GetDivText(cells[3], 0);
+            data.CaseStatus = GetDivText(cells[3], 1);
             return data;
         }
 

@@ -48,7 +48,7 @@ namespace LegalLead.PublicData.Search.Util
         private readonly List<ITravisSearchAction> ActionItems = new List<ITravisSearchAction>();
         public override WebFetchResult Fetch()
         {
-            var postsearchtypes = new List<Type> { typeof(TravisFetchCaseStyle) };
+            var postsearchtypes = new List<Type> { };
             var parameters = new TravisSearchProcess();
             var dates = TravisSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
@@ -153,16 +153,31 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
             if (ExecutionCancelled) return;
-            CaseStyles.ForEach(c =>
+            Items.ForEach(item =>
             {
+                if (item.Court == "Precinct One") item.Court = "Precinct 1";
+                if (item.Court == "Precinct Two") item.Court = "Precinct 2";
+                if (item.Court == "Precinct Three") item.Court = "Precinct 3";
+                if (item.Court == "Precinct Four") item.Court = "Precinct 4";
+                if (item.Court == "Precinct Five") item.Court = "Precinct 5";
+            });
+            CaseStyles.ForEach(c =>
+            {   
                 var item = Items.Find(x => x.CaseStyle == c.CaseStyle);
                 if (item != null &&
                     !string.IsNullOrEmpty(c.Plaintiff) &&
                     !string.IsNullOrEmpty(c.PartyName) &&
                     !string.IsNullOrEmpty(c.Address))
                 {
+                    c.CaseNumber = item.CaseNumber;
+                    item.Court = c.Court;
                     item.Plaintiff = c.Plaintiff;
                     item.PartyName = c.PartyName;
+                    if (item.Court == "Precinct One") item.Court = "Precinct 1";
+                    if (item.Court == "Precinct Two") item.Court = "Precinct 2";
+                    if (item.Court == "Precinct Three") item.Court = "Precinct 3";
+                    if (item.Court == "Precinct Four") item.Court = "Precinct 4";
+                    if (item.Court == "Precinct Five") item.Court = "Precinct 5";
                     AppendPerson(item);
                 }
             });
@@ -183,8 +198,7 @@ namespace LegalLead.PublicData.Search.Util
             a.Driver = driver;
             a.Parameters = parameters;
             if (a is TravisRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }
-            if (!string.IsNullOrEmpty(uri) && a is TravisFetchCaseStyle style) { style.PageAddress = uri; }
-            if (a is TravisFetchCaseItems items) { items.PauseForPage = true; }
+            if (a is TravisFetchCaseItems items) { items.PauseForPage = false; }
             if (a is TravisSetupParameters prms) { prms.CourtLocationId = locationId; }
         }
 
@@ -264,21 +278,6 @@ namespace LegalLead.PublicData.Search.Util
             catch (Exception)
             {
                 return new List<CaseItemDto>();
-            }
-        }
-
-        [ExcludeFromCodeCoverage]
-        private static TravisCaseStyleDto GetStyle(string json)
-        {
-            try
-            {
-                var data = JsonConvert.DeserializeObject<TravisCaseStyleDto>(json);
-                if (data == null) return new TravisCaseStyleDto();
-                return data;
-            }
-            catch (Exception)
-            {
-                return new TravisCaseStyleDto();
             }
         }
 
