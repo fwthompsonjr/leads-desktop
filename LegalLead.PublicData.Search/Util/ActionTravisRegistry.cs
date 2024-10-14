@@ -19,7 +19,7 @@ namespace LegalLead.PublicData.Search.Util
             For<ITravisSearchAction>().Add<TravisSetupParameters>();
             For<ITravisSearchAction>().Add<TravisNavigateSearch>();
             For<ITravisSearchAction>().Add<TravisFetchCaseItems>();
-            For<ITravisSearchAction>().Add<TravisFetchCaseStyle>();
+            For<ITravisSearchAction>().Add<TravisFetchClickStyle>();
         }
     }
 }

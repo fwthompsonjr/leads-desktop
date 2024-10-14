@@ -95,9 +95,13 @@ namespace LegalLead.PublicData.Search.Util
                 parameters.CourtLocator.ForEach(location =>
                 {
                     var locationId = parameters.CourtLocator.IndexOf(location);
+                    if (locationId != 0)
+                    {
+                        common[0].Execute();
+                    }
                     IterateDateRange(driver, parameters, dates, common, locationId);
-                    IterateItems(driver, parameters, postcommon);
                 });
+                IterateItems(driver, parameters, postcommon);
             }
             catch (Exception ex)
             {
@@ -123,22 +127,23 @@ namespace LegalLead.PublicData.Search.Util
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
                 {
-                    isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a, locationId);
+                    isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, a, locationId);
                 });
             });
             parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
         }
 
-        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, TravisSearchProcess parameters, List<ITravisSearchAction> common, ITravisSearchAction a, int locationId)
+        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, TravisSearchProcess parameters, ITravisSearchAction a, int locationId)
         {
             if (ExecutionCancelled) return isCaptchaNeeded;
             if (!isCaptchaNeeded && a is TravisRequestCaptcha _) return isCaptchaNeeded;
-            var count = common.Count - 1;
+            
             Populate(a, driver, parameters, locationId);
             var response = a.Execute();
             if (a is TravisFetchCaseItems _ && response is string cases) Items.AddRange(GetData(cases));
+            if (a is TravisFetchClickStyle _ && response is string mapping) CaseStyles.AddRange(GetMapping(mapping));
             if (a is TravisRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
-            if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
+            Thread.Sleep(750); // add pause to be more human in interaction
             return isCaptchaNeeded;
         }
 
@@ -148,25 +153,18 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
             if (ExecutionCancelled) return;
-            Items.ForEach(i =>
+            CaseStyles.ForEach(c =>
             {
-                postcommon.ForEach(a =>
+                var item = Items.Find(x => x.CaseStyle == c.CaseStyle);
+                if (item != null &&
+                    !string.IsNullOrEmpty(c.Plaintiff) &&
+                    !string.IsNullOrEmpty(c.PartyName) &&
+                    !string.IsNullOrEmpty(c.Address))
                 {
-                    Populate(a, driver, parameters, 0, i.Href);
-                    var response = a.Execute();
-                    if (a is TravisFetchCaseStyle _ && response is string cases)
-                    {
-                        var info = GetStyle(cases);
-                        if (info != null)
-                        {
-                            i.CaseStyle = info.CaseStyle;
-                            i.Plaintiff = info.Plaintiff;
-                            i.PartyName = info.PartyName;
-                            if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
-                            AppendPerson(i);
-                        }
-                    }
-                });
+                    item.Plaintiff = c.Plaintiff;
+                    item.PartyName = c.PartyName;
+                    AppendPerson(item);
+                }
             });
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             casenumbers.ForEach(i =>
@@ -281,6 +279,21 @@ namespace LegalLead.PublicData.Search.Util
             catch (Exception)
             {
                 return new TravisCaseStyleDto();
+            }
+        }
+
+        [ExcludeFromCodeCoverage]
+        private static List<TravisCaseStyleDto> GetMapping(string json)
+        {
+            try
+            {
+                var data = JsonConvert.DeserializeObject<List<TravisCaseStyleDto>>(json);
+                if (data == null) return new List<TravisCaseStyleDto>();
+                return data;
+            }
+            catch (Exception)
+            {
+                return new List<TravisCaseStyleDto>();
             }
         }
 
