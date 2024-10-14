@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -163,7 +164,11 @@ namespace LegalLead.PublicData.Search.Util
             });
             CaseStyles.ForEach(c =>
             {   
-                var item = Items.Find(x => x.CaseStyle == c.CaseStyle);
+                var item = Items.Find(x =>
+                {
+                    if (x.CaseNumber.Equals(c.CaseNumber, StringComparison.OrdinalIgnoreCase)) return true;
+                    return x.CaseStyle.Equals(x.CaseStyle, StringComparison.OrdinalIgnoreCase);
+                });
                 if (item != null &&
                     !string.IsNullOrEmpty(c.Plaintiff) &&
                     !string.IsNullOrEmpty(c.PartyName) &&
@@ -195,6 +200,7 @@ namespace LegalLead.PublicData.Search.Util
 
         private void Populate(ITravisSearchAction a, IWebDriver driver, TravisSearchProcess parameters, int locationId, string uri = "")
         {
+            Debug.WriteIf(!string.IsNullOrEmpty(uri), "uri is provided");
             a.Driver = driver;
             a.Parameters = parameters;
             if (a is TravisRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }

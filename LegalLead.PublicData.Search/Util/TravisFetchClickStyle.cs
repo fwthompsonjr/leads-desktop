@@ -48,33 +48,7 @@ namespace LegalLead.PublicData.Search.Util
 
                 Driver.Navigate().Back();
             }
-            if (!retries.Any())
-            {
-                Console.WriteLine("Search mapped {0} records", alldata.Count);
-                return JsonConvert.SerializeObject(alldata);
-            }
-            var rc = 0;
-            var retrylist = retries.Select(s => new RetryDto { Id = s }).ToList();
-            while (retrylist.Exists(x => !x.IsCompleted))
-            {
-                retrylist.ForEach(r =>
-                {
-                    var current = r.Id;
-                    var element = GetLink(current);
-                    element.Click();
-
-                    Thread.Sleep(750);
-
-                    var body = Driver.FindElement(By.TagName("body"));
-                    var content = body.GetAttribute("innerHTML");
-                    var dto = GetDto(content);
-                    r.IsCompleted = dto != null;
-                    if (dto != null) alldata.Add(dto);
-                    Driver.Navigate().Back();
-                });
-                rc++;
-                if (rc > 4) break;
-            }
+            
             Console.WriteLine("Search mapped {0} records", alldata.Count);
             return JsonConvert.SerializeObject(alldata);
         }
@@ -125,6 +99,12 @@ namespace LegalLead.PublicData.Search.Util
             var doc = GetHtml(pageHtml);
             var node = doc.DocumentNode;
             var obj = new TravisCaseStyleDto();
+            var dv = node.SelectNodes("//div").ToList().Find(x =>
+            {
+                var attr = x.Attributes.FirstOrDefault(b => b.Name == "class");
+                if (attr == null) { return false; }
+                return attr.Value.Equals("ssCaseDetailCaseNbr", comparison);
+            });
             var tables = node.SelectNodes("//table").ToList();
             var headers = node.SelectNodes("//th").ToList();
             var courtName = headers.Find(x => x.InnerText.Equals("Location:", comparison));
@@ -136,6 +116,10 @@ namespace LegalLead.PublicData.Search.Util
             });
             if (tables.Count < 3) return null;
             if (headers.Count < 2) return null;
+            if (dv != null)
+            {
+                obj.CaseNumber = dv.InnerText.Split('.')[1].Trim();
+            }
             var plantId = headers.FindIndex(x => x.InnerText.Equals("Plaintiff", comparison));
             if (plantId < 0) plantId = headers.Count - 1;
 
@@ -181,12 +165,6 @@ namespace LegalLead.PublicData.Search.Util
             var doc = new HtmlDocument();
             doc.LoadHtml(content);
             return doc;
-        }
-        
-        private sealed class RetryDto
-        {
-            public int Id { get; set; }
-            public bool IsCompleted { get; set; }
         }
     }
 }
