@@ -33,7 +33,7 @@ namespace LegalLead.PublicData.Search.Util
             get
             {
                 return _alternateContainer ?? (_alternateContainer =
-                  new Container(new ActionZeroRegistry()));
+                  new Container(new ActionTravisAlternateRegistry()));
             }
         }
     }

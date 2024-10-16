@@ -224,6 +224,7 @@ namespace LegalLead.PublicData.Search.Util
             if (a is TravisRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }
             if (a is TravisFetchCaseItems items) { items.PauseForPage = false; }
             if (a is TravisSetupParameters prms) { prms.CourtLocationId = locationId; }
+            if (a is TravisSetupAlternateParameters altprms) { altprms.CourtLocationId = locationId; }
         }
 
         [ExcludeFromCodeCoverage]
