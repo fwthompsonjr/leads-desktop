@@ -8,9 +8,6 @@ using System.Text;
 namespace SeleniumTests
 {
     [TestClass]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style",
-            "IDE0060:Remove unused parameter",
-            Justification = "TestContext injection is part of the testing framework")]
     public class PublicData
     {
         private static IWebDriver driver;
@@ -20,6 +17,7 @@ namespace SeleniumTests
         public static void InitializeClass(TestContext testContext)
         {
             driver = new FirefoxDriver();
+            Assert.IsNotNull(testContext);
         }
 
         [ClassCleanup]

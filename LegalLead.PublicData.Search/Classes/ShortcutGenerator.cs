@@ -24,7 +24,7 @@ namespace LegalLead.PublicData.Search.Classes
                     var exists = DoesAppShortcutExist();
                     if (exists || !update) return;
                     DeleteAppShortcut();
-                    using (var process = new System.Diagnostics.Process())
+                    using (var process = new Process())
                     {
                         process.StartInfo.FileName = "cscript";
                         process.StartInfo.Arguments = $"\"{setupFile}\"";
