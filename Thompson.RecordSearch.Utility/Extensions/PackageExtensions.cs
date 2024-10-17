@@ -41,7 +41,7 @@ namespace Thompson.RecordSearch.Utility.Extensions
             {
                 if (i > values.Count - 1) continue;
                 var idx = i + 2;
-                worksheet.Cells[idx, destinationId].Value = values[i];
+                UpdateValue(worksheet, idx, destinationId, values[i]);
             }
         }
         public static void TransferColumn(this ExcelPackage package, string source, string destination)
@@ -79,6 +79,20 @@ namespace Thompson.RecordSearch.Utility.Extensions
         {
             return columns.Count(x => x.Key == name) > 1;
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
+        private static void UpdateValue(ExcelWorksheet worksheet, int rowNumber, int columnNumber, string data)
+        {
+            try
+            {
+                worksheet.Cells[rowNumber, columnNumber].Value = data;
+            }
+            catch (Exception)
+            {
+                // ignoring errors from this method
+            }
+        }
+
 
         private static readonly CultureInfo culture = new CultureInfo("en-US");
     }

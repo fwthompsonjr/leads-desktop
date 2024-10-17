@@ -113,5 +113,83 @@ namespace Thompson.RecordSearch.Utility.Properties {
                 return ResourceManager.GetString("dallas_court_address", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;name&quot;: &quot;county&quot;,
+        ///		&quot;items&quot;: [
+        ///			{
+        ///				&quot;id&quot;: 1,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 1&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 1&quot;,
+        ///					&quot;1700 Guadalupe, Austin, TX 78701&quot;
+        ///				]
+        ///			},
+        ///			{
+        ///				&quot;id&quot;: 2,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 2&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 2&quot;,
+        ///					&quot;1700 Guadalupe, Austin, TX 78701&quot;
+        ///				]
+        ///			}
+        ///		]
+        ///	},
+        ///	{
+        ///		&quot;name&quot;: &quot;justice&quot;,
+        ///		&quot;items&quot;: [
+        ///			{
+        ///				&quot;id&quot;: 1,
+        ///				&quot;name&quot;: &quot;Precinct 1&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;Justice of [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string travis_court_address {
+            get {
+                return ResourceManager.GetString("travis_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;url-county&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
+        ///	&quot;url-district&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
+        ///	&quot;url-justice&quot;: &quot;https://odysseypa.traviscountytx.gov/JPPublicAccess/default.aspx&quot;,
+        ///	&quot;searchLink&quot;: &quot;//a[@class=&apos;ssSearchHyperlink&apos;][contains(text(), &apos;Civil&apos;)]&quot;
+        ///}.
+        /// </summary>
+        internal static string travis_navigation {
+            get {
+                return ResourceManager.GetString("travis_navigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ select search by case
+        ///var colinput = Array.prototype.slice.call( document.getElementsByTagName(&apos;input&apos;), 0 );
+        ///
+        ///var colstatus = colinput.filter(x =&gt; { 
+        ///let attr = x.getAttribute(&apos;name&apos;); 
+        ///if ( attr == null ) { return false; } 
+        ///return attr == &apos;CaseStatusType&apos; });
+        ///
+        ///colinput = colinput.filter(x =&gt; { 
+        ///let attr = x.getAttribute(&apos;name&apos;); 
+        ///if ( attr == null ) { return false; } 
+        ///return attr == &apos;SearchBy&apos; });
+        ///colinput[0].click();
+        ///colstatus[1].click();
+        ///
+        ///~ set start and end date
+        ///dteStart = &apos;{0}&apos;;
+        ///dte [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string travisScriptingHelp {
+            get {
+                return ResourceManager.GetString("travisScriptingHelp", resourceCulture);
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace legallead.search.tests.classes
             var culture = CultureInfo.CurrentCulture;
             var startDt = DateTime.Parse(startDate, culture);
             var endDt = DateTime.Parse(endingDate, culture);
-            var result = DallasAttendedProcess.GetRangeDtos(startDt, endDt);
+            var result = DallasSearchProcess.GetRangeDtos(startDt, endDt);
             Assert.Equal(expected, result.Count);
         }
 
@@ -28,7 +28,7 @@ namespace legallead.search.tests.classes
             var culture = CultureInfo.CurrentCulture;
             var startDt = DateTime.Parse(startDate, culture);
             var endDt = DateTime.Parse(endingDate, culture);
-            var result = DallasAttendedProcess.GetBusinessDays(startDt, endDt);
+            var result = DallasSearchProcess.GetBusinessDays(startDt, endDt);
             Assert.Equal(expected, result.Count);
         }
         [Theory]
@@ -39,7 +39,7 @@ namespace legallead.search.tests.classes
         [InlineData(12)]
         public void GetCourtNameById(int courtId)
         {
-            var result = DallasAttendedProcess.GetCourtName(courtId);
+            var result = DallasSearchProcess.GetCourtName(courtId);
             Assert.False(string.IsNullOrEmpty(result));
         }
 
@@ -53,7 +53,7 @@ namespace legallead.search.tests.classes
         [InlineData("District")]
         public void GetCourtNameFromText(string court)
         {
-            var result = DallasAttendedProcess.GetCourtName(court);
+            var result = DallasSearchProcess.GetCourtName(court);
             Assert.False(string.IsNullOrEmpty(result));
         }
 
@@ -68,7 +68,7 @@ namespace legallead.search.tests.classes
                 var culture = CultureInfo.CurrentCulture;
                 var startDt = DateTime.Parse(startDate, culture);
                 var endDt = DateTime.Parse(endingDate, culture);
-                var service = new DallasAttendedProcess();
+                var service = new DallasSearchProcess();
                 service.Search(startDt, endDt, caseType);
                 var web = service.GetUiInteractive();
                 Assert.NotNull(web);

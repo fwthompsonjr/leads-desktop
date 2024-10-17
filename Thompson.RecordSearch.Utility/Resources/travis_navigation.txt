@@ -1,0 +1,6 @@
+{
+	"url-county": "https://odysseyweb.traviscountytx.gov/Portal/Home/Dashboard/29",
+	"url-district": "https://odysseyweb.traviscountytx.gov/Portal/Home/Dashboard/29",
+	"url-justice": "https://odysseypa.traviscountytx.gov/JPPublicAccess/default.aspx",
+	"searchLink": "//a[@class='ssSearchHyperlink'][contains(text(), 'Civil')]"
+}

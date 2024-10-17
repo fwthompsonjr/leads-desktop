@@ -4,7 +4,7 @@ using System.Globalization;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasFetchCaseDetail : DallasBaseExecutor
+    public class DallasFetchCaseDetail : BaseDallasSearchAction
     {
         public override int OrderId => 60;
         public override object Execute()

@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -26,19 +26,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             get
             {
                 if (collection != null) return collection;
-                string nline = Environment.NewLine;
-                var nl = nline.ToCharArray();
                 collection = new Dictionary<string, string>();
-                Scripts.ForEach(s =>
-                {
-                    if (!string.IsNullOrWhiteSpace(s))
-                    {
-                        var items = s.Split(nl, StringSplitOptions.RemoveEmptyEntries);
-                        var name = items[0].Trim();
-                        items[0] = $"/* {name} */";
-                        collection.Add(name, string.Join(nline, items));
-                    }
-                });
+                collection.AppendScripts(Scripts);
                 return collection;
             }
         }

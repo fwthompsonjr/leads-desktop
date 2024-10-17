@@ -10,7 +10,7 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Db
     public class DataataProcessTest
     {
         [TestMethod]
-        public async Task CanExecute_Download()
+        public async Task CanExecute_Download_Async()
         {
             if (!System.Diagnostics.Debugger.IsAttached)
             {
@@ -32,7 +32,7 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Db
 
 
         [TestMethod]
-        public async Task CanExecute_DownloadCases()
+        public async Task CanExecute_DownloadCases_Async()
         {
             if (!System.Diagnostics.Debugger.IsAttached)
             {

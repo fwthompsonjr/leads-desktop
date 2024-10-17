@@ -3,7 +3,7 @@ using System;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasSetupParameters : DallasBaseExecutor
+    public class DallasSetupParameters : BaseDallasSearchAction
     {
         public override int OrderId => 30;
         public override object Execute()

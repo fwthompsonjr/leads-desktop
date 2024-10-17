@@ -21,7 +21,7 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
-            var parameters = new DallasAttendedProcess();
+            var parameters = new DallasSearchProcess();
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new DallasBeginNavigation
@@ -39,7 +39,7 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
-            var parameters = new DallasAttendedProcess();
+            var parameters = new DallasSearchProcess();
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new DallasBeginNavigation

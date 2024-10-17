@@ -5,7 +5,7 @@ using Thompson.RecordSearch.Utility.Classes;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasBeginNavigation : DallasBaseExecutor
+    public class DallasBeginNavigation : BaseDallasSearchAction
     {
         public override int OrderId => 10;
         public override object Execute()

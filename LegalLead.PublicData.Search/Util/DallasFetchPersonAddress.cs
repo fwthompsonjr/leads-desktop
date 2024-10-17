@@ -4,11 +4,11 @@ using Thompson.RecordSearch.Utility.Dto;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasFetchPersonAddress : DallasBaseExecutor
+    public class DallasFetchPersonAddress : BaseDallasSearchAction
     {
         public override int OrderId => 80;
 
-        public DallasCaseItemDto Dto { get; set; }
+        public CaseItemDto Dto { get; set; }
 
         public override object Execute()
         {

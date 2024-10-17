@@ -13,7 +13,7 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
-            var parameters = new DallasAttendedProcess();
+            var parameters = new DallasSearchProcess();
             var startDt = DateTime.Now;
             var endingDt = DateTime.Now.AddDays(3);
             parameters.Search(startDt, endingDt, "JUSTICE");
@@ -26,7 +26,7 @@ namespace legallead.search.tests.util
             service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtMost(3));
         }
 
-        private sealed class MockWaitForNavigation : DallasBaseExecutor
+        private sealed class MockWaitForNavigation : BaseDallasSearchAction
         {
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override object Execute()
