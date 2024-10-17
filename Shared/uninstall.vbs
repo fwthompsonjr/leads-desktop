@@ -1,12 +1,15 @@
 ' ../Shared/uninstall.vbs
 Option Explicit
 Dim Title,sh,rv,ProcessPath,ProcessName,RootPath,DownloadPath,XmlDataPath,XmlPath
+Dim versionTag, versionPrefix
 Title = "Launching application using Vb Script"
 Set sh = CreateObject("WScript.Shell")
-RootPath = sh.ExpandEnvironmentStrings("%LOCALAPPDATA%\LegalLead\2.8")
-DownloadPath = sh.ExpandEnvironmentStrings("%LOCALAPPDATA%\LegalLead\2.8\_downloads")
-XmlDataPath = sh.ExpandEnvironmentStrings("%LOCALAPPDATA%\LegalLead\2.8\xml\data")
-XmlPath = sh.ExpandEnvironmentStrings("%LOCALAPPDATA%\LegalLead\2.8\xml")
+versionTag = "2.8"
+versionPrefix = "%LOCALAPPDATA%\LegalLead\" & versionTag
+RootPath = sh.ExpandEnvironmentStrings(versionPrefix)
+DownloadPath = sh.ExpandEnvironmentStrings(versionPrefix & "\_downloads")
+XmlDataPath = sh.ExpandEnvironmentStrings(versionPrefix & "\xml\data")
+XmlPath = sh.ExpandEnvironmentStrings(versionPrefix & "\xml")
 DeleteShortcut sh
 DeleteFolder XmlDataPath
 DeleteFolder XmlPath
