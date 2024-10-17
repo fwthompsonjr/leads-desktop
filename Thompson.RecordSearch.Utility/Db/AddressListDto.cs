@@ -20,7 +20,21 @@ namespace Thompson.RecordSearch.Utility.Db
             }
         }
 
+        public static List<AddressListDto> TravisList
+        {
+            get
+            {
+                if (travisList != null) return travisList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(travisContent);
+                travisList = tmp;
+                return travisList;
+            }
+        }
+
+        private static List<AddressListDto> travisList = null;
         private static List<AddressListDto> dallasList = null;
+
         private static readonly string dallasContent = Properties.Resources.dallas_court_address;
+        private static readonly string travisContent = Properties.Resources.travis_court_address;
     }
 }

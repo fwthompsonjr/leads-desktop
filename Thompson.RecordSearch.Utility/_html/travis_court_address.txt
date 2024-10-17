@@ -1,0 +1,174 @@
+[
+	{
+		"name": "county",
+		"items": [
+			{
+				"id": 1,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Court at Law No. 1",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 2,
+				"name": "County Court at Law No. 2",
+				"address": [
+					"County Court at Law No. 2",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			}
+		]
+	},
+	{
+		"name": "justice",
+		"items": [
+			{
+				"id": 1,
+				"name": "Precinct 1",
+				"address": [
+					"Justice of the Peace for Precinct 1",
+					"4717 Heflin Lane, Suite 107, Austin, TX 78721"
+				]
+			},
+			{
+				"id": 2,
+				"name": "Precinct 2",
+				"address": [
+					"Justice of the Peace for Precinct 2",
+					"10409 Burnet Road, Suite 180, Austin, TX 78758"
+				]
+			},
+			{
+				"id": 3,
+				"name": "Precinct 3",
+				"address": [
+					"Justice of the Peace for Precinct 3",
+					"8656-B West Hwy 71, Suite 200, Austin, Texas 78735"
+				]
+			},
+			{
+				"id": 4,
+				"name": "Precinct 4",
+				"address": [
+					"Justice of the Peace for Precinct 4",
+					"4011 McKinney Falls Parkway, Suite 1200, Austin, Texas 78744"
+				]
+			},
+			{
+				"id": 5,
+				"name": "Precinct 5",
+				"address": [
+					"Justice of the Peace for Precinct 5",
+					"1000 Guadalupe Street Suite 117, Austin, TX 78701"
+				]
+			}
+		]
+	},
+	{
+		"name": "criminal",
+		"items": [
+		]
+	},
+	{
+		"name": "district",
+		"items": [
+			{
+				"id": 1,
+				"name": "53rd District Court",
+				"address": [
+					"53rd District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 2,
+				"name": "98th District Court",
+				"address": [
+					"98th District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 3,
+				"name": "126th District Court",
+				"address": [
+					"126th District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 4,
+				"name": "200th District Court",
+				"address": [
+					"200th District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 5,
+				"name": "201st District Court",
+				"address": [
+					"201st District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 6,
+				"name": "250th District Court",
+				"address": [
+					"250th District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 7,
+				"name": "261st District Court",
+				"address": [
+					"261st District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 8,
+				"name": "345th District Court",
+				"address": [
+					"345th District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 9,
+				"name": "353rd District Court",
+				"address": [
+					"353rd District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 10,
+				"name": "419th District Court",
+				"address": [
+					"419th District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 11,
+				"name": "455th District Court",
+				"address": [
+					"455th District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			},
+			{
+				"id": 12,
+				"name": "459th District Court",
+				"address": [
+					"459th District Court",
+					"1700 Guadalupe, Austin, TX 78701"
+				]
+			}
+		]
+	}
+]

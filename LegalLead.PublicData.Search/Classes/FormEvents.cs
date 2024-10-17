@@ -77,7 +77,11 @@ namespace LegalLead.PublicData.Search
         internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var source = (DropDown)cboSearchType.SelectedItem;
-            var nonactors = new List<int> { (int)SourceType.HarrisCivil, (int)SourceType.DallasCounty };
+            var nonactors = new List<int> { 
+                (int)SourceType.HarrisCivil, 
+                (int)SourceType.DallasCounty,
+                (int)SourceType.TravisCounty
+            };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && nonactors.Contains(selectedItem.Id))
             {

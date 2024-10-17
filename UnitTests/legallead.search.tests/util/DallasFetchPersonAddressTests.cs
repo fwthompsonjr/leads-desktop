@@ -28,9 +28,9 @@ namespace legallead.search.tests.util
                 navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
                 var service = new DallasFetchPersonAddress
                 {
-                    Parameters = new DallasAttendedProcess(),
+                    Parameters = new DallasSearchProcess(),
                     Driver = driver.Object,
-                    Dto = new DallasCaseItemDto()
+                    Dto = new CaseItemDto()
                 };
                 _ = service.Execute();
             });
@@ -45,14 +45,14 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
-            var parameters = new DallasAttendedProcess();
+            var parameters = new DallasSearchProcess();
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new DallasFetchPersonAddress
             {
                 Parameters = target != 1 ? parameters : null,
                 Driver = target != 0 ? driver.Object : null,
-                Dto = target != 2 ? new DallasCaseItemDto() : null
+                Dto = target != 2 ? new CaseItemDto() : null
             };
             Assert.Throws<NullReferenceException>(() => { _ = service.Execute(); });
         }

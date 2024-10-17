@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -81,13 +82,16 @@ namespace LegalLead.PublicData.Search.Classes
             var list = config.Split(dot).ToList();
             if (list.Count != 4) return false;
             var content = new StringBuilder(File.ReadAllText(targetFile));
+            var versionId = string.Join(ds, list.Take(2));
             var find1 = GetVersionReplacement(line1, "2.8");
             var find2 = GetVersionReplacement(line2, ".0");
-            var replace1 = GetVersionReplacement(line1, string.Join(ds, list.Take(2)));
+            var replace1 = GetVersionReplacement(line1, versionId);
             var replace2 = GetVersionReplacement(line2, $".{list[3]}");
             var hasReplacements = content.ToString().Contains(find1) ||
                 content.ToString().Contains(find2);
             if (!hasReplacements) return false;
+            if (string.IsNullOrEmpty(ExeFileName(versionId, config))) return false;
+            if (find1 == replace1 && find2 == replace2) return false;
             var replacements = new Dictionary<string, string>()
             {
                 { find1, replace1 },
@@ -128,7 +132,20 @@ namespace LegalLead.PublicData.Search.Classes
                 !File.Exists(setupFile)) return string.Empty;
             return setupFile;
         }
-
+        private static string ExeFileName(string versionNumber, string fileVersion)
+        {
+            var localDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            if (string.IsNullOrEmpty(localDataFolder) || !Directory.Exists(localDataFolder)) return string.Empty;
+            var appDir = Path.Combine(localDataFolder, "LegalLead");
+            if (string.IsNullOrEmpty(appDir) || !Directory.Exists(appDir)) return string.Empty;
+            var versionDir = Path.Combine(appDir, versionNumber);
+            if (string.IsNullOrEmpty(versionDir) || !Directory.Exists(versionDir)) return string.Empty;
+            var applicationFile = Path.Combine(versionDir, "LegalLead.PublicData.Search.exe");
+            if (string.IsNullOrEmpty(applicationFile) ||!File.Exists(applicationFile)) return string.Empty;
+            var versionInfo = FileVersionInfo.GetVersionInfo(applicationFile).FileVersion;
+            if (!versionInfo.Equals(fileVersion, StringComparison.OrdinalIgnoreCase)) return string.Empty;
+            return applicationFile;
+        }
         private static string SetupDirectoyName()
         {
             var appFolder = Path.GetDirectoryName(CurrentAssembly.Location);

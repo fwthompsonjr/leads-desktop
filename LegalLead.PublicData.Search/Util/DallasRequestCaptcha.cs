@@ -1,34 +1,25 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Interfaces;
+using OpenQA.Selenium;
+using System;
 
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class DallasRequestCaptcha : DallasBaseExecutor
+    public class DallasRequestCaptcha : BaseRequestCaptcha, ICountySearchAction
     {
-        public override int OrderId => 20;
-        public Func<bool> PromptUser { get; set; }
-        public override object Execute()
+        public virtual object Execute()
         {
-            var executor = GetJavaScriptExecutor();
-
-            if (Parameters == null || Driver == null || executor == null)
+            if (Parameters == null || Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 
-            if (PromptUser == null)
-                throw new NullReferenceException(Rx.ERR_DELEGATE_REQUIRED);
-
-            var retries = 0;
-            const int max_retries = 5;
-            var result = false;
-            while (!result && retries < max_retries)
-            {
-                result = PromptUser();
-                retries++;
-            }
-            return result;
+            return GetPromptResponse();
         }
+        public int OrderId => 20;
 
+        public IWebDriver Driver { get; set; }
+        public DallasSearchProcess Parameters { get; set; }
 
-        protected override string ScriptName { get; } = "is captcha needed";
+        protected override IWebDriver WebDriver => Driver;
     }
 }

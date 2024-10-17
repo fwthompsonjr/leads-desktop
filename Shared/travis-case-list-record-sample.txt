@@ -1,0 +1,8 @@
+https://odysseypa.traviscountytx.gov/JPPublicAccess/CaseDetail.aspx?CaseID=5346735
+<!-- case detail row (justice) -->
+<tr>
+	<td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=5345348" style="color: blue">J1-CV-24-005307</a></td>
+	<td valign="top">THE RESIDENCES AT HOWARD LANE LTD DBA THE ELEMENT vs. TRESHON PICKETT</td>
+	<td valign="top" nowrap="true"><div>10/03/2024</div><div>Precinct One</div></td>
+	<td valign="top" nowrap="true"><div>Eviction</div><div>Active</div></td>
+</tr>

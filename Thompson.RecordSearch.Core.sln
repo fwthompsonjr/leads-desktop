@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shared", "_Shared", "{C68A
 		Shared\tarrantCountyCustomType.json = Shared\tarrantCountyCustomType.json
 		Shared\tarrantCountyDataPoint.json = Shared\tarrantCountyDataPoint.json
 		Shared\tarrantCountyMapping_2.json = Shared\tarrantCountyMapping_2.json
+		Shared\travisScriptingHelp.txt = Shared\travisScriptingHelp.txt
 		Version.cs = Version.cs
 		Shared\webDrivers.json = Shared\webDrivers.json
 	EndProjectSection
@@ -66,8 +67,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{EB64B2C2-E247-475C-B0A1-5C261C693C57}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LegalLead.Resources", "LegalLead.Resources\LegalLead.Resources.csproj", "{AB526DB3-E334-4C6B-A634-1A890F63AADF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Install", "_Install", "{5B2D3423-3610-427E-ABEE-FCC309844A03}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_ChangeLog", "_ChangeLog", "{6EB0A66F-8CF8-49D2-9932-67BFC016B733}"
 	ProjectSection(SolutionItems) = preProject

@@ -15,6 +15,7 @@ using Thompson.RecordSearch.Utility.Models;
 namespace LegalLead.PublicData.Search
 {
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
     public partial class FormMain : Form
     {
         protected WebFetchResult CaseData { get; set; }
@@ -90,6 +91,9 @@ namespace LegalLead.PublicData.Search
                     case (int)SourceType.DallasCounty:
                         DallasButtonExecution(siteData, searchItem);
                         break;
+                    case (int)SourceType.TravisCounty:
+                        TravisButtonExecution(siteData, searchItem, startDate, endingDate);
+                        break;
                     default:
                         NonDallasButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
@@ -114,7 +118,7 @@ namespace LegalLead.PublicData.Search
         private void DallasButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
         {
             var index = cboSearchType.SelectedIndex;
-            var searchType = DallasAttendedProcess.GetCourtName(index);
+            var searchType = DallasSearchProcess.GetCourtName(index);
             var keys = new List<WebNavigationKey> {
                 new WebNavigationKey() { Name = "StartDate", Value = searchItem.StartDate},
                 new WebNavigationKey() { Name = "EndDate", Value = searchItem.EndDate },
@@ -122,6 +126,18 @@ namespace LegalLead.PublicData.Search
             };
             var wb = new WebNavigationParameter { Keys = keys };
             var dweb = new DallasUiInteractive(wb);
+            Task.Run(async () =>
+            {
+                await ProcessAsync(dweb, siteData, searchItem);
+            }).ConfigureAwait(true);
+        }
+
+        private void TravisButtonExecution(WebNavigationParameter siteData, SearchResult searchItem, DateTime startDate, DateTime endingDate)
+        {
+            var searchType = cboSearchType.SelectedText.ToUpper(CultureInfo.CurrentCulture).Trim();
+            var search = new TravisSearchProcess();
+            search.Search(startDate, endingDate, searchType);
+            var dweb = search.GetUiInteractive();
             Task.Run(async () =>
             {
                 await ProcessAsync(dweb, siteData, searchItem);
@@ -255,6 +271,10 @@ namespace LegalLead.PublicData.Search
                     return webmgr.Fetch();
                 }).ConfigureAwait(true);
 
+                var nonactors = new List<int> {
+                    (int)SourceType.DallasCounty,
+                    (int)SourceType.TravisCounty
+                };
 
                 ProcessEndingMessage();
                 SetStatus(StatusType.Finished);
@@ -272,7 +292,7 @@ namespace LegalLead.PublicData.Search
                     throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
                 CaseData.WebsiteId = siteData.Id;
-                if (siteData.Id != (int)SourceType.DallasCounty)
+                if (!nonactors.Contains(siteData.Id))
                 {
                     ExcelWriter.WriteToExcel(CaseData);
                 }

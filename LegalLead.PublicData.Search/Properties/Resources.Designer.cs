@@ -124,6 +124,31 @@ namespace LegalLead.PublicData.Search.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to var obj = {
+        ///	&apos;defendant&apos;: &apos;&apos;,
+        ///	&apos;casestyle&apos;: &apos;&apos;,
+        ///	&apos;plaintiff&apos;: &apos;&apos;,
+        ///	&apos;address&apos;: &apos;&apos;
+        ///};
+        ///var nospace = &apos;&amp;nbsp;&apos;
+        ///var linbreak = &apos;&lt;br&gt;&apos;;
+        ///var twopipe = &apos;||&apos;;
+        ///var pipe = &apos;|&apos;;
+        ///var tables = Array.prototype.slice.call( document.getElementsByTagName(&apos;table&apos;), 0);
+        ///if (tables.length &gt; 3) {
+        ///	obj.casestyle = tables[4].getElementsByTagName(&apos;b&apos;)[0].innerText;
+        ///}
+        ///var headers = Array.prototype.slice.call( document.getElementsByTagName(&apos;th&apos;), 0);
+        ///headers = headers.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;rowspa [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string travis_get_name_and_address {
+            get {
+                return ResourceManager.GetString("travis_get_name_and_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The web page you are on requests CAPTCHA. Please respond to CAPTCHA and click OK..
         /// </summary>
         internal static string UI_CAPTCHA_DESCRIPTION {

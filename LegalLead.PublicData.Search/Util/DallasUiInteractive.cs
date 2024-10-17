@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
@@ -28,26 +29,26 @@ namespace LegalLead.PublicData.Search.Util
             EndingDate = FetchKeyedData(parameters.Keys, "EndDate");
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
             DisplayDialogue = displayDialogue;
-            var container = DallasActionContainer.GetContainer;
-            var collection = container.GetAllInstances<IDallasAction>().ToList();
+            var container = ActionDallasContainer.GetContainer;
+            var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
         }
 
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
-        public List<DallasCaseItemDto> Items { get; private set; } = new List<DallasCaseItemDto>();
+        public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = new List<DallasCaseStyleDto>();
 
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
-        private readonly List<IDallasAction> ActionItems = new List<IDallasAction>();
+        private readonly List<ICountySearchAction> ActionItems = new List<ICountySearchAction>();
         public override WebFetchResult Fetch()
         {
             var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
             var driver = GetDriver();
-            var parameters = new DallasAttendedProcess();
-            var dates = DallasAttendedProcess.GetBusinessDays(StartDate, EndingDate);
+            var parameters = new DallasSearchProcess();
+            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
             var result = new WebFetchResult();
@@ -75,7 +76,7 @@ namespace LegalLead.PublicData.Search.Util
                 return string.Empty;
             }
         }
-        protected virtual void Iterate(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common, List<IDallasAction> postcommon)
+        protected virtual void Iterate(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
         {
             try
             {
@@ -100,7 +101,7 @@ namespace LegalLead.PublicData.Search.Util
 
         }
 
-        protected virtual void IterateDateRange(IWebDriver driver, DallasAttendedProcess parameters, List<DateTime> dates, List<IDallasAction> common)
+        protected virtual void IterateDateRange(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common)
         {
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
@@ -118,7 +119,7 @@ namespace LegalLead.PublicData.Search.Util
             parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
         }
 
-        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasAttendedProcess parameters, List<IDallasAction> common, IDallasAction a)
+        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
         {
             if (ExecutionCancelled) return isCaptchaNeeded;
             if (!isCaptchaNeeded && a is DallasAuthenicateBegin _) return isCaptchaNeeded;
@@ -134,7 +135,7 @@ namespace LegalLead.PublicData.Search.Util
             return isCaptchaNeeded;
         }
 
-        protected virtual void IterateItems(IWebDriver driver, DallasAttendedProcess parameters, List<IDallasAction> postcommon)
+        protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
         {
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
@@ -171,7 +172,7 @@ namespace LegalLead.PublicData.Search.Util
             });
         }
 
-        private void Populate(IDallasAction a, IWebDriver driver, DallasAttendedProcess parameters, string uri = "")
+        private void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters, string uri = "")
         {
             a.Driver = driver;
             a.Parameters = parameters;
@@ -197,7 +198,7 @@ namespace LegalLead.PublicData.Search.Util
             return response == DialogResult.OK;
         }
 
-        private void AppendPerson(DallasCaseItemDto dto)
+        private void AppendPerson(CaseItemDto dto)
         {
             var person = dto.FromDto();
             var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
@@ -245,17 +246,17 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         [ExcludeFromCodeCoverage]
-        private static List<DallasCaseItemDto> GetData(string json)
+        private static List<CaseItemDto> GetData(string json)
         {
             try
             {
-                var data = JsonConvert.DeserializeObject<List<DallasCaseItemDto>>(json);
-                if (data == null) return new List<DallasCaseItemDto>();
+                var data = JsonConvert.DeserializeObject<List<CaseItemDto>>(json);
+                if (data == null) return new List<CaseItemDto>();
                 return data;
             }
             catch (Exception)
             {
-                return new List<DallasCaseItemDto>();
+                return new List<CaseItemDto>();
             }
         }
 
@@ -277,7 +278,7 @@ namespace LegalLead.PublicData.Search.Util
         private string GetExcelFileName()
         {
             var folder = ExcelDirectoyName();
-            var name = DallasAttendedProcess.GetCourtName(CourtType);
+            var name = DallasSearchProcess.GetCourtName(CourtType);
             var fmt = $"DALLAS_{name}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
             var fullName = Path.Combine(folder, $"{fmt}.xlsx");
             var idx = 1;
@@ -310,7 +311,7 @@ namespace LegalLead.PublicData.Search.Util
         private static string GetDateString(DateTime date)
         {
             const string fmt = "yyMMdd";
-            return date.ToString(fmt);
+            return date.ToString(fmt, Culture);
 
         }
 
@@ -322,6 +323,6 @@ namespace LegalLead.PublicData.Search.Util
             if (!Directory.Exists(xmlFolder)) Directory.CreateDirectory(xmlFolder);
             return xmlFolder;
         }
-
+        private static readonly CultureInfo Culture = CultureInfo.CurrentCulture;
     }
 }

@@ -10,3 +10,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:Thompson.RecordSearch.Utility.Tests.ExcelWriterTests.CanWritePeopleToExcelLocal")]
 [assembly: SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:Thompson.RecordSearch.Utility.Tests.ExcelWriterTests.CanWritePeopleAndTableLocal")]
 [assembly: SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:Thompson.RecordSearch.Utility.Tests.TarrantCountyNavigationTests.CanGetFromJsonInteractive")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Thompson.RecordSearch.Utility.Tests")]
