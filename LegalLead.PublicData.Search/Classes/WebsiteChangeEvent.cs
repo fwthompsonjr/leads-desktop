@@ -14,8 +14,6 @@ namespace LegalLead.PublicData.Search
         public FormMain GetMain { get; set; }
         public virtual void Change()
         {
-            const int DallasIndx = 60;
-            const int TravisIndx = 70;
             const int FortyNine = 49;
             const int Zero = 0;
             const int Three = 3;
@@ -31,7 +29,7 @@ namespace LegalLead.PublicData.Search
             GetMain.cboSearchType.Visible = source.Id == (int)SourceType.CollinCounty || customBindingNeeded;
             GetMain.cboCaseType.Visible = source.Id == (int)SourceType.CollinCounty;
             GetMain.cboCourts.Visible = source.Id == (int)SourceType.TarrantCounty;
-            ToggleComboBoxBinding(cbo, customBindingNeeded);
+            ToggleComboBoxBinding(cbo, customBindingNeeded, source.Id);
             var fives = new List<int>
             {
                 (int)SourceType.CollinCounty,
@@ -68,7 +66,7 @@ namespace LegalLead.PublicData.Search
             ApplyRowStyles(styles, source.Id);
         }
 
-        private void ToggleComboBoxBinding(ComboBoxEx cbo, bool isCustomBindingNeeded)
+        private void ToggleComboBoxBinding(ComboBoxEx cbo, bool isCustomBindingNeeded, int countyId = 60)
         {
             var find = isCustomBindingNeeded ? "dallasCountyCaseOptions" : CommonKeyIndexes.CollinCountyCaseType;
             var caseTypes = CaseTypeSelectionDto.GetDto(find);
@@ -77,7 +75,11 @@ namespace LegalLead.PublicData.Search
             // remove event handler
             cbo.SelectedIndexChanged -= GetMain.CboSearchType_SelectedIndexChanged;
 
-            cbo.DataSource = caseTypes.DropDowns;
+            var dataSource = caseTypes.DropDowns.FindAll(x => {
+                if (countyId != TravisIndx) return true;
+                return caseTypes.DropDowns.IndexOf(x) == 2;
+            });
+            cbo.DataSource = dataSource;
             cbo.DisplayMember = CommonKeyIndexes.NameProperCase;
             cbo.ValueMember = CommonKeyIndexes.IdProperCase;
             cbo.SelectedIndex = caseIndex;
@@ -99,5 +101,8 @@ namespace LegalLead.PublicData.Search
             if (mapper == null) { return; }
             mapper.MapLabels(GetMain);
         }
+
+        private const int DallasIndx = 60;
+        private const int TravisIndx = 70;
     }
 }

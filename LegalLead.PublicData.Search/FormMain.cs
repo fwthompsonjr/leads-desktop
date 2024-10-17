@@ -134,8 +134,7 @@ namespace LegalLead.PublicData.Search
 
         private void TravisButtonExecution(WebNavigationParameter siteData, SearchResult searchItem, DateTime startDate, DateTime endingDate)
         {
-            var index = cboSearchType.SelectedIndex;
-            var searchType = TravisSearchProcess.GetCourtName(index);
+            var searchType = cboSearchType.SelectedText.ToUpper(CultureInfo.CurrentCulture).Trim();
             var search = new TravisSearchProcess();
             search.Search(startDate, endingDate, searchType);
             var dweb = search.GetUiInteractive();
