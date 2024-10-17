@@ -142,7 +142,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             if (ExecutionCancelled) return isCaptchaNeeded;
             if (!isCaptchaNeeded && a is TravisRequestCaptcha _) return isCaptchaNeeded;
-            
+
             Populate(a, driver, parameters, locationId);
             var response = a.Execute();
             if (a is TravisFetchCaseItems _ && response is string cases) Items.AddRange(GetData(cases));
@@ -167,7 +167,7 @@ namespace LegalLead.PublicData.Search.Util
                 if (item.Court == "Precinct Five") item.Court = "Precinct 5";
             });
             CaseStyles.ForEach(c =>
-            {   
+            {
                 var item = Items.Find(x =>
                 {
                     if (x.CaseNumber.Equals(c.CaseNumber, StringComparison.OrdinalIgnoreCase)) return true;

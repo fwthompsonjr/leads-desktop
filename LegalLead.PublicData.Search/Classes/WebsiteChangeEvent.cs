@@ -1,6 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Dto;
@@ -75,7 +74,8 @@ namespace LegalLead.PublicData.Search
             // remove event handler
             cbo.SelectedIndexChanged -= GetMain.CboSearchType_SelectedIndexChanged;
 
-            var dataSource = caseTypes.DropDowns.FindAll(x => {
+            var dataSource = caseTypes.DropDowns.FindAll(x =>
+            {
                 if (countyId != TravisIndx) return true;
                 return caseTypes.DropDowns.IndexOf(x) == 2;
             });

@@ -141,7 +141,7 @@ namespace LegalLead.PublicData.Search.Classes
             var versionDir = Path.Combine(appDir, versionNumber);
             if (string.IsNullOrEmpty(versionDir) || !Directory.Exists(versionDir)) return string.Empty;
             var applicationFile = Path.Combine(versionDir, "LegalLead.PublicData.Search.exe");
-            if (string.IsNullOrEmpty(applicationFile) ||!File.Exists(applicationFile)) return string.Empty;
+            if (string.IsNullOrEmpty(applicationFile) || !File.Exists(applicationFile)) return string.Empty;
             var versionInfo = FileVersionInfo.GetVersionInfo(applicationFile).FileVersion;
             if (!versionInfo.Equals(fileVersion, StringComparison.OrdinalIgnoreCase)) return string.Empty;
             return applicationFile;
