@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{AB526DB3-E334-4C6B-A634-1A890F63AADF}</ProjectGuid>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <AssemblyTitle>LegalLead.Resources</AssemblyTitle>
     <Product>LegalLead.Resources</Product>

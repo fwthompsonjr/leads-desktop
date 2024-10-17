@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<ProjectGuid>{FDC972D5-85CC-418C-A08B-D2BD940D9A35}</ProjectGuid>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net48</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<RuntimeIdentifiers>win</RuntimeIdentifiers>
 		<AssemblyTitle>LegalLead.PublicData.Search</AssemblyTitle>
@@ -88,7 +88,6 @@
 		<Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
 			<HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<Reference Include="System.Configuration" />
 		<Reference Include="System.Data.DataSetExtensions" />
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="System.Deployment" />

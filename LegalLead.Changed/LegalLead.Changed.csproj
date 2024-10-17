@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{0A9E83C4-AA86-4F7D-8BAF-FCB8F174D190}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <AssemblyTitle>LegalLead.Changed</AssemblyTitle>
@@ -78,6 +78,7 @@
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SlowCheetah" Version="2.5.48" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.3" />
     <PackageReference Include="System.Security.AccessControl" Version="4.6.0" />
@@ -88,10 +89,6 @@
     <None Include="..\changeLog.json">
       <Link>changeLog.json</Link>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Configuration" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt">
