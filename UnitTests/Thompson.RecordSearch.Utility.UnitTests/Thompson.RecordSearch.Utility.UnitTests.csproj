@@ -30,11 +30,11 @@
 		<PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
 		<PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
 		<PackageReference Include="coverlet.collector" Version="1.2.0" />
-		<PackageReference Include="NewtonSoft.Json" Version="13.0.1" />
+		<PackageReference Include="NewtonSoft.Json" Version="13.0.3" />
 		<PackageReference Include="Selenium.Chrome.WebDriver" Version="85.0.0" />
 		<PackageReference Include="Selenium.Firefox.WebDriver" Version="0.27.0" />
 		<PackageReference Include="Selenium.Microsoft.Webdriver2" Version="2.0.10586.1" />
-		<PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+		<PackageReference Include="Selenium.WebDriver" Version="4.25.0" />
 		<PackageReference Include="Shouldly" Version="4.0.3" />
 		<PackageReference Include="StructureMap" Version="4.7.1" />
 	</ItemGroup>
