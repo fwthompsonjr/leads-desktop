@@ -126,7 +126,7 @@ namespace LegalLead.PublicData.Search
             };
             var wb = new WebNavigationParameter { Keys = keys };
             var dweb = new DallasUiInteractive(wb);
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 await ProcessAsync(dweb, siteData, searchItem);
             }).ConfigureAwait(true);
@@ -138,7 +138,7 @@ namespace LegalLead.PublicData.Search
             var search = new TravisSearchProcess();
             search.Search(startDate, endingDate, searchType);
             var dweb = search.GetUiInteractive();
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 await ProcessAsync(dweb, siteData, searchItem);
             }).ConfigureAwait(true);
@@ -170,7 +170,7 @@ namespace LegalLead.PublicData.Search
             IWebInteractive webmgr =
             WebFetchingProvider.
                 GetInteractive(siteData, startDate, endingDate);
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 await ProcessAsync(webmgr, siteData, searchItem);
             }).ConfigureAwait(true);

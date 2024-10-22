@@ -21,11 +21,11 @@ namespace LegalLead.Resources
         {
             get
             {
-                if (string.IsNullOrEmpty(_resourceFileName) | !File.Exists(_resourceFileName))
+                if (string.IsNullOrEmpty(_resourceFileName) || !File.Exists(_resourceFileName))
                 {
                     _resourceFileName = Path.Combine(
                         AppFolder, ResourceFolder, ResourceFile);
-                    var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+                    var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
                     execName = Path.GetDirectoryName(execName);
                     var targetFile = new Uri(string.Format(
                         CultureInfo.CurrentCulture,
@@ -49,7 +49,7 @@ namespace LegalLead.Resources
         /// <returns></returns>
         private static string GetAppFolderName()
         {
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             return Path.GetDirectoryName(execName);
         }
 
@@ -76,7 +76,7 @@ namespace LegalLead.Resources
                 return string.Empty;
             }
 
-            if (item.Count() == 0)
+            if (!item.Any())
             {
                 return string.Empty;
             }
@@ -101,7 +101,6 @@ namespace LegalLead.Resources
             if (!File.Exists(resourceFile))
             {
                 return GetMapFromBuilder();
-                // throw new FileNotFoundException("Unable to locate resource table.", resourceFile);
             }
             return GetMapFromFile();
         }

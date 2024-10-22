@@ -58,12 +58,19 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
         public void CanReadFileAndGetCases()
         {
             const string testFile = @"C:/Code/SandBox/RecordSearch/Thompson.RecordSearch.Utility.Tests/bin/Debug/xml/data/data_rqst_dentoncounty_04152019_04172019.xml";
-            var settings = SettingsManager.GetNavigation();
-            var sttg = settings.First();
-            var startDate = DateTime.Now.Date.AddDays(-2);
-            var endingDate = DateTime.Now.Date.AddDays(0);
-            var webactive = new WebInteractive(sttg, startDate, endingDate);
-            webactive.ReadFromFile(testFile);
+            try
+            {
+                var settings = SettingsManager.GetNavigation();
+                var sttg = settings[0];
+                var startDate = DateTime.Now.Date.AddDays(-2);
+                var endingDate = DateTime.Now.Date.AddDays(0);
+                var webactive = new WebInteractive(sttg, startDate, endingDate);
+                _ = webactive.ReadFromFile(testFile);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
         }
 
 
@@ -82,7 +89,6 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
                 var node = TryFindNode(doc, item.Value);
                 Assert.IsNotNull(node, $"{item.FriendlyName} is null");
                 Assert.IsFalse(string.IsNullOrEmpty(node.InnerText), $"{item.FriendlyName} is blank or empty");
-                // if (item.Name.Equals("CaseStyle")) continue;
                 Assert.AreEqual(expectedList[indx++].CommandType, node.InnerText,
                     $"{item.FriendlyName} not matched. ");
             }
@@ -140,13 +146,14 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
                 return;
             }
 
-            var failing = noPlantiffList.First();
+            var failing = noPlantiffList[0];
             var actual = failing.Plantiff;
+            Assert.IsFalse(string.IsNullOrEmpty(actual));
 
         }
 
 
-        private XmlNode TryFindNode(XmlDocument doc, string xpath)
+        private static XmlNode TryFindNode(XmlDocument doc, string xpath)
         {
             try
             {
@@ -161,7 +168,7 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
 #pragma warning restore CA1031 // Do not catch general exception types
         }
 
-        private string CriminalRow()
+        private static string CriminalRow()
         {
 
             return " <tr> " + Environment.NewLine +
@@ -197,7 +204,7 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
             " </tr>";
         }
 
-        private string NonCriminalRow()
+        private static string NonCriminalRow()
         {
             return "<tr> " + Environment.NewLine +
             "<td index='1' nowrap='true' valign='top'>" + Environment.NewLine +
@@ -212,7 +219,7 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
             "</td>" + Environment.NewLine +
             "</tr>";
         }
-        private IList<WebNavInstruction> ExpectedCriminalValues()
+        private static IList<WebNavInstruction> ExpectedCriminalValues()
         {
             var caseInstructions = SearchSettingDto.GetCriminalMapping();
             foreach (var item in caseInstructions.NavInstructions)
@@ -242,7 +249,7 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
         }
 
 
-        private IList<WebNavInstruction> ExpectedNonCriminalValues()
+        private static IList<WebNavInstruction> ExpectedNonCriminalValues()
         {
             var caseInstructions = SearchSettingDto.GetCriminalMapping();
             foreach (var item in caseInstructions.NavInstructions)
@@ -273,7 +280,7 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
 
 
 
-        private List<PersonAddress> SamplePersonAddress()
+        private static List<PersonAddress> SamplePersonAddress()
         {
             const string jsFile = @"Json\collincounty_probate.csv";
             var appFile = GetAppDirectoryName();
@@ -294,7 +301,7 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
         private static string GetAppDirectoryName()
         {
 
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             return Path.GetDirectoryName(execName);
         }
     }

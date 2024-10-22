@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{0616CC1F-324F-43DC-BE7A-8DB9479BFD37}</ProjectGuid>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net6</TargetFramework>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <AssemblyTitle>Harris.Criminal.Db</AssemblyTitle>
     <Product>Harris.Criminal.Db</Product>
@@ -30,11 +30,6 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Selenium.WebDriver" Version="4.25.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_db\hccc.background.prc.json">
