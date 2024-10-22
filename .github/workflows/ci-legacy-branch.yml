@@ -13,38 +13,22 @@ jobs:
   build:
     runs-on: windows-latest
     timeout-minutes: 15
-    strategy:
-      matrix:
-        dotnet-version: [ '6.0.x' ]
     env:
         SOLUTION_NAME: Thompson.RecordSearch.Core.sln
         TEST_FILE_NAME: "test-results-${{ matrix.dotnet-version }}"
         REPORT_FILE_NAME: "test-results-${{ matrix.dotnet-version }}.md"
+        NET_VERSION: "8.0.x"
+        NUGET_CERT_REVOCATION_MODE: offline
 
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
-      
-    - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v1.1
+    - uses: actions/checkout@v4
 
     - name: setup-liquid-test-reports
       run: dotnet tool install --global LiquidTestReports.Cli --version 1.4.3-beta
 
-    - name: Restore Packages
-      run: dotnet restore ${{ env.SOLUTION_NAME }}
-
-    - name: Build solution
-      run: dotnet build ${{ env.SOLUTION_NAME }} -c Release
-
     - name: Test with dotnet
-      run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --no-restore --results-directory ${{ env.TEST_FILE_NAME }}
+      run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --results-directory ${{ env.TEST_FILE_NAME }}
 
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v3
