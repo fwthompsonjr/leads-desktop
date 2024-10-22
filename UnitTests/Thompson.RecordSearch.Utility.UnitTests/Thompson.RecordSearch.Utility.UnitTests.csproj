@@ -16,11 +16,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
-		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 		<PackageReference Include="Bogus" Version="35.6.1" />
 		<PackageReference Include="CsvHelper" Version="33.0.1" />
 		<PackageReference Include="EPPlus" Version="4.5.3.2" />
-		<PackageReference Include="Microsoft.Edge.SeleniumTools" Version="3.141.3" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
 		<PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="4.0.50">

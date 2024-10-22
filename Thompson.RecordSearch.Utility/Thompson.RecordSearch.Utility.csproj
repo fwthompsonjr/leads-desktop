@@ -93,7 +93,6 @@
 		<PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.2">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Edge.SeleniumTools" Version="3.141.3" />
 		<PackageReference Include="Microsoft.NetCore.Analyzers" Version="3.3.2">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
