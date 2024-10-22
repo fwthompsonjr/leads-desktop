@@ -3,6 +3,7 @@ using CsvHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -278,7 +279,7 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
             var appFile = GetAppDirectoryName();
             appFile = Path.Combine(appFile, jsFile);
             using (var reader = new StreamReader(appFile))
-            using (var csv = new CsvReader(reader))
+            using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture))
             {
                 var dto = csv.GetRecords<PersonAddressDto>().ToList();
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<PersonAddressDto, PersonAddress>());
@@ -287,7 +288,6 @@ namespace Thompson.RecordSearch.Utility.Tests.Data
                 dto.ForEach(x => people.Add(mapper.Map<PersonAddress>(x)));
                 return people;
             }
-            // return null;
         }
 
 
