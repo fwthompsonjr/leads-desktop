@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,6 +48,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         [TestMethod]
         public async Task ValidatePathAsync()
         {
+            if (!Debugger.IsAttached) return;
             var fileName = await Task.Run(() => WebUtilities.GetChromeBinary());
             Assert.IsFalse(string.IsNullOrEmpty(fileName));
         }

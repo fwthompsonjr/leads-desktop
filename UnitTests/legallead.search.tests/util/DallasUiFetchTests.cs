@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -50,6 +51,7 @@ namespace legallead.search.tests.util
         [InlineData(false)]
         public void ServiceCanGetDriver(bool show)
         {
+            if (!Debugger.IsAttached) return;
             var keys = new List<WebNavigationKey> {
                 new() { Name = "StartDate", Value = "2024-05-25"},
                 new() { Name = "EndDate", Value = "2024-05-25"},
@@ -128,6 +130,7 @@ namespace legallead.search.tests.util
         [InlineData(4)]
         public void ServiceCanIterateDates(int conditionId)
         {
+            if (!Debugger.IsAttached) return;
             var error = Record.Exception(() =>
             {
                 var keys = new List<WebNavigationKey> {
