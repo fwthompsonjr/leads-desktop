@@ -109,11 +109,13 @@ namespace LegalLead.Changed.Classes
             var appFolder =
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var dir = new DirectoryInfo(appFolder);
-            while (!dir.Parent.Name.Equals(solutionName,
-                StringComparison.CurrentCultureIgnoreCase))
+            while (!dir.Name.StartsWith(solutionName, StringComparison.CurrentCultureIgnoreCase))
             {
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
+            if (dir.Parent == null)
+                throw new InvalidOperationException();
+            dir = dir.Parent;
             return Path.Combine(dir.Parent.FullName, utilityName, @"xml\ReadMe.txt");
         }
     }
