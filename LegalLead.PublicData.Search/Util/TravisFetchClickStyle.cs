@@ -16,7 +16,7 @@ namespace LegalLead.PublicData.Search.Util
         public bool PauseForPage { get; set; }
         public override object Execute()
         {
-            if (Parameters == null || Driver == null)
+            if (Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             if (PauseForPage) Thread.Sleep(2000);
             var alldata = new List<TravisCaseStyleDto>();
@@ -48,7 +48,7 @@ namespace LegalLead.PublicData.Search.Util
 
                 Driver.Navigate().Back();
             }
-
+            
             Console.WriteLine("Search mapped {0} records", alldata.Count);
             return JsonConvert.SerializeObject(alldata);
         }

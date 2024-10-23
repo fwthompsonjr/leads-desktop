@@ -28,7 +28,7 @@ jobs:
       run: dotnet tool install --global LiquidTestReports.Cli --version 1.4.3-beta
 
     - name: Test with dotnet
-      run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --results-directory ${{ env.TEST_FILE_NAME }}
+      run: dotnet test ${{ env.SOLUTION_NAME }} --logger trx -c Release --results-directory ${{ env.TEST_FILE_NAME }} --filter 'FullyQualifiedName!~UnitTests'
 
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v3

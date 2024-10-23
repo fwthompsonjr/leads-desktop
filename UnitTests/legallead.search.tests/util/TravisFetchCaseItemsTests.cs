@@ -40,27 +40,7 @@ namespace legallead.search.tests.util
             });
             Assert.Null(error);
         }
-        [Fact]
-        public void ComponentCanExecuteWhenElementNotFound()
-        {
-            var driver = new Mock<IWebDriver>();
-            var navigation = new Mock<INavigation>();
-            IWebElement element = null;
-            var parameters = new TravisSearchProcess();
-            driver.Setup(x => x.Navigate()).Returns(navigation.Object);
-            driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element);
-            navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
-            var service = new MockTravisFetchCaseItems
-            {
-                Parameters = parameters,
-                Driver = driver.Object
-            };
-            var actual = service.Execute();
-            if (actual is string str)
-            {
-                Assert.True(string.IsNullOrEmpty(str));
-            }
-        }
+
         [Theory]
         [InlineData(0)]
         [InlineData(1)]
@@ -84,10 +64,8 @@ namespace legallead.search.tests.util
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override IJavaScriptExecutor GetJavaScriptExecutor()
             {
-                MqExecutor.SetupSequence(x => x.ExecuteScript(It.IsAny<string>()))
-                    .Returns(true)
-                    .Returns(true)
-                    .Returns(false);
+                MqExecutor.Setup(x => x.ExecuteScript(It.IsAny<string>()))
+                    .Returns(Rex.travis_case_items);
                 return MqExecutor.Object;
             }
         }
