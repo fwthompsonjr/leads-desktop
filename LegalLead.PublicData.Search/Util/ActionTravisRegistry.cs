@@ -13,13 +13,13 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountyCodeService>().Add<CountyCodeService>().Singleton();
             For<ICountyCodeReader>().Add<CountyCodeReaderService>().Singleton();
 
-            For<ITravisSearchAction>().Add<TravisBeginNavigation>();
-            For<ITravisSearchAction>().Add<TravisSetupLocation>();
-            For<ITravisSearchAction>().Add<TravisSetupOptions>();
-            For<ITravisSearchAction>().Add<TravisSetupParameters>();
-            For<ITravisSearchAction>().Add<TravisNavigateSearch>();
-            For<ITravisSearchAction>().Add<TravisFetchCaseItems>();
-            For<ITravisSearchAction>().Add<TravisFetchClickStyle>();
+            For<ITravisSearchAction>().Add<TravisBeginNavigation>().Named("begin");
+            For<ITravisSearchAction>().Add<TravisSetupLocation>().Named("setup-location");
+            For<ITravisSearchAction>().Add<TravisSetupOptions>().Named("setup-options");
+            For<ITravisSearchAction>().Add<TravisSetupParameters>().Named("setup-parameters");
+            For<ITravisSearchAction>().Add<TravisNavigateSearch>().Named("navigate");
+            For<ITravisSearchAction>().Add<TravisFetchCaseItems>().Named("fetch-items");
+            For<ITravisSearchAction>().Add<TravisFetchClickStyle>().Named("fetch-style");
         }
     }
 }

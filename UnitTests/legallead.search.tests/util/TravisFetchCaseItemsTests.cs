@@ -3,7 +3,6 @@ using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;
 using System;
-using Thompson.RecordSearch.Utility.Dto;
 
 namespace legallead.search.tests.util
 {
@@ -35,7 +34,7 @@ namespace legallead.search.tests.util
                 var service = new MockTravisFetchCaseItems
                 {
                     Parameters = parameters,
-                    Driver = driver.Object                    
+                    Driver = driver.Object
                 };
                 _ = service.Execute();
             });

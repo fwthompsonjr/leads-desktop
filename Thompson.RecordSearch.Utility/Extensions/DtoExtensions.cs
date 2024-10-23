@@ -27,8 +27,8 @@ namespace Thompson.RecordSearch.Utility.Extensions
             return mapped.ToCalculatedNames();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube", 
-            "S1854:Unused assignments should be removed", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube",
+            "S1854:Unused assignments should be removed",
             Justification = "False positive. Variable assignment is needed to update item in list")]
         public static void ReMapNameFromCaseStyle(this List<PersonAddress> people)
         {
@@ -52,8 +52,8 @@ namespace Thompson.RecordSearch.Utility.Extensions
         }
 
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", 
-            "CA1031:Do not catch general exception types", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design",
+            "CA1031:Do not catch general exception types",
             Justification = "Excluding this method as it is a private static with behavior tested and covered")]
         private static string DecodeString(string data)
         {
