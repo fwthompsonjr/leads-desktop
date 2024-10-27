@@ -61,6 +61,32 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ~ set search parameters and submit
+        ///var indx = &apos;{0}&apos;;
+        ///var startDate = &apos;{1}&apos;;
+        ///var endDate = &apos;{2}&apos;;
+        ///var searchDate = &apos;{3}&apos;;
+        ///var fallbackDate = new Date().toLocaleString().split(&apos;,&apos;)[0];
+        ///var search =
+        ///{
+        ///	setLocation: function(id) {
+        ///		const cboname = &quot;cboHSLocationGroup&quot;;
+        ///		var cbo = document.getElementById(cboname);
+        ///		cbo.selectedIndex = id;
+        ///		cbo.dispatchEvent(new Event(&apos;change&apos;))
+        ///	},
+        ///	setSearchType: function() {
+        ///		const cboname = &quot;cboHSSearchBy&quot;;
+        ///		var cbo = document.getElementById(cboname);
+        ///	 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string bexar_scripts {
+            get {
+                return ResourceManager.GetString("bexar_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;web&quot;: &quot;https://oxfordlegalleads.com/app/get-county-code&quot;,
         ///	&quot;counties&quot;: 
@@ -154,8 +180,8 @@ namespace Thompson.RecordSearch.Utility.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///	&quot;url-county&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
-        ///	&quot;url-district&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
+        ///	&quot;url-county&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/Home/Dashboard/29&quot;,
+        ///	&quot;url-district&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/Home/Dashboard/29&quot;,
         ///	&quot;url-justice&quot;: &quot;https://odysseypa.traviscountytx.gov/JPPublicAccess/default.aspx&quot;,
         ///	&quot;searchLink&quot;: &quot;//a[@class=&apos;ssSearchHyperlink&apos;][contains(text(), &apos;Civil&apos;)]&quot;
         ///}.

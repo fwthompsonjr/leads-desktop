@@ -48,7 +48,7 @@ namespace LegalLead.PublicData.Search.Util
 
                 Driver.Navigate().Back();
             }
-            
+
             Console.WriteLine("Search mapped {0} records", alldata.Count);
             return JsonConvert.SerializeObject(alldata);
         }

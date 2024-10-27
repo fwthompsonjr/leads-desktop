@@ -94,10 +94,10 @@ namespace LegalLead.PublicData.Search.Classes
 
             var keys = new List<WebNavigationKey>
             {
-                new WebNavigationKey { Name = "StartDate", Value = StartDate  },
-                new WebNavigationKey { Name = "EndDate", Value = EndingDate  },
-                new WebNavigationKey { Name = "CourtLocator", Value = CourtLocator  },
-                new WebNavigationKey { Name = "CourtType", Value = CourtType  }
+                new() { Name = "StartDate", Value = StartDate  },
+                new() { Name = "EndDate", Value = EndingDate  },
+                new() { Name = "CourtLocator", Value = CourtLocator  },
+                new() { Name = "CourtType", Value = CourtType  }
             };
 
             return new WebNavigationParameter
@@ -130,6 +130,6 @@ namespace LegalLead.PublicData.Search.Classes
             }
         }
         private static readonly CultureInfo culture = CultureInfo.InvariantCulture;
-        private static readonly List<string> CourtNames = new List<string> { "COUNTY", "DISTRICT", "JUSTICE" };
+        private static readonly List<string> CourtNames = new() { "COUNTY", "DISTRICT", "JUSTICE" };
     }
 }

@@ -113,7 +113,7 @@ namespace LegalLead.PublicData.Search
             // If these threads are different, it returns true.
             if (txConsole.InvokeRequired)
             {
-                SetTextCallback d = new SetTextCallback(SetText);
+                SetTextCallback d = new(SetText);
                 Invoke(d, new object[] { text });
             }
             else

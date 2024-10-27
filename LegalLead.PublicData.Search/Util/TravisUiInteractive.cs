@@ -46,7 +46,7 @@ namespace LegalLead.PublicData.Search.Util
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
-        private readonly List<ITravisSearchAction> ActionItems = new List<ITravisSearchAction>();
+        private readonly List<ITravisSearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
             var postsearchtypes = new List<Type> { };

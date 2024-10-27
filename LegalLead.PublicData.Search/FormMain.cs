@@ -120,9 +120,9 @@ namespace LegalLead.PublicData.Search
             var index = cboSearchType.SelectedIndex;
             var searchType = DallasSearchProcess.GetCourtName(index);
             var keys = new List<WebNavigationKey> {
-                new WebNavigationKey() { Name = "StartDate", Value = searchItem.StartDate},
-                new WebNavigationKey() { Name = "EndDate", Value = searchItem.EndDate },
-                new WebNavigationKey() { Name = "CourtType", Value = searchType }
+                new() { Name = "StartDate", Value = searchItem.StartDate},
+                new() { Name = "EndDate", Value = searchItem.EndDate },
+                new() { Name = "CourtType", Value = searchType }
             };
             var wb = new WebNavigationParameter { Keys = keys };
             var dweb = new DallasUiInteractive(wb);

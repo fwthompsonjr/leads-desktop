@@ -9,7 +9,7 @@ using Thompson.RecordSearch.Utility.Classes;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class BaseDallasSearchAction : ICountySearchAction
+    public class BaseBexarSearchAction : ICountySearchAction
     {
         public virtual int OrderId => 0;
         protected virtual string ScriptName { get; }
@@ -31,7 +31,12 @@ namespace LegalLead.PublicData.Search.Util
             var driver = Driver;
             var jsexec = GetJavaScriptExecutor();
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-            wait.Until(driver1 => jsexec.ExecuteScript(request).Equals(response));
+            wait.Until(driver1 =>
+            {
+                var obj = jsexec.ExecuteScript(request);
+                if (obj is not string pagestatus) return false;
+                return pagestatus.Equals(response);
+            });
         }
 
         protected virtual string JavaScriptContent { get; set; } = null;
@@ -57,7 +62,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             lock (lockObject)
             {
-                var obj = DallasScriptHelper.ScriptCollection;
+                var obj = BexarScriptHelper.ScriptCollection;
                 var exists = obj.TryGetValue(keyname, out var js);
                 if (!exists) return string.Empty;
                 return js;

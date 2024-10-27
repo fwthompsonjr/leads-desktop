@@ -165,6 +165,6 @@ namespace LegalLead.PublicData.Search.Classes
         private static string setupFileName = null;
         private static Assembly executingAssembly = null;
         private static bool hasRun = false;
-        private static readonly object locker = new object();
+        private static readonly object locker = new();
     }
 }

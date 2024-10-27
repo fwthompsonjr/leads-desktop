@@ -1,9 +1,7 @@
 using LegalLead.PublicData.Search.Util;
 using Moq;
-using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
 using OpenQA.Selenium;
 using System;
-using System.Windows.Documents;
 using System.Collections.ObjectModel;
 
 namespace legallead.search.tests.util
@@ -26,7 +24,8 @@ namespace legallead.search.tests.util
         [Fact]
         public void ServiceCanBeExecuted()
         {
-            var error = Record.Exception(() => {
+            var error = Record.Exception(() =>
+            {
                 var service = new MockTravisFetchClickStyle();
                 _ = service.Execute();
             });
@@ -37,7 +36,7 @@ namespace legallead.search.tests.util
             public MockTravisFetchClickStyle()
             {
                 const string uri = "http://localhost/testing";
-                var collection = new [] { MqElement.Object };
+                var collection = new[] { MqElement.Object };
                 var roCollection = new ReadOnlyCollection<IWebElement>(collection);
                 MqDriver.Setup(x => x.Navigate()).Returns(MqNavigation.Object);
                 MqDriver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(MqElement.Object);
