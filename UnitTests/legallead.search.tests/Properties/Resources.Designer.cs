@@ -61,6 +61,18 @@ namespace legallead.search.tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to     &lt;div id=&quot;omni&quot; class=&quot;omni&quot; style=&quot;background:white;&quot;&gt;&lt;md-toolbar class=&quot;omni-toolbar md-default-theme md-whiteframe-z2 ng-scope&quot; id=&quot;omnibar&quot; ng-controller=&quot;omniCtrl&quot;&gt;
+        ///  &lt;div class=&quot;md-toolbar-tools&quot;&gt;
+        ///    &lt;div ng-click=&quot;navigate(data.appTitleLink)&quot; role=&quot;button&quot; tabindex=&quot;0&quot;&gt;
+        ///      &lt;md-icon md-svg-src=&quot;/app/RegisterOfActions/Content/tylerui/svgs/Icon_Talking_Ts.svg&quot; style=&quot;height:3.7rem; width:3.7rem;&quot; class=&quot;ng-isolate-scope&quot; aria-hidden=&quot;true&quot;&gt;&lt;svg version=&quot;1.1&quot; id=&quot;Layer_1&quot; xmlns=&quot;http://www.w3.org/ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string bexar_single_page {
+            get {
+                return ResourceManager.GetString("bexar_single_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;div class=&quot;k-widget k-grid can-morph-to-card is-morph-ready&quot; id=&quot;CasesGrid&quot; data-role=&quot;grid&quot; style=&quot;overflow-x: auto; min-height: 0px;&quot;&gt;&lt;table cellspacing=&quot;0&quot; role=&quot;table&quot; class=&quot;kgrid-card-table&quot;&gt;&lt;colgroup&gt;&lt;col class=&quot;k-hierarchy-col&quot;&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;/colgroup&gt;&lt;thead class=&quot;k-grid-header kgrid-card-thead&quot;&gt;&lt;tr&gt;&lt;th class=&quot;k-hierarchy-cell k-header&quot;&gt;&amp;nbsp;&lt;/th&gt;&lt;th class=&quot;k-header&quot; data-configurable-grid=&quot;True&quot; data-field=&quot;CaseNumber&quot; data-title=&quot;Case Number&quot; scope=&quot;col&quot; data-role=&quot;sortable&quot;&gt;&lt;a [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string dallas_case_items {
