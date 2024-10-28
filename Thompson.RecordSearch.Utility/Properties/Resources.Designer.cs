@@ -61,6 +61,40 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;name&quot;: &quot;county&quot;,
+        ///		&quot;items&quot;: [
+        ///			{
+        ///				&quot;id&quot;: 1,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 1&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 1&quot;,
+        ///					&quot;300 Dolorosa, San Antonio, TX 78205&quot;
+        ///				]
+        ///			},
+        ///			{
+        ///				&quot;id&quot;: 2,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 2&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 2&quot;,
+        ///					&quot;300 Dolorosa, San Antonio, TX 78205&quot;
+        ///				]
+        ///			},
+        ///			{
+        ///				&quot;id&quot;: 3,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 3&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 3&quot;,
+        ///					&quot;100 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string bexar_court_address {
+            get {
+                return ResourceManager.GetString("bexar_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ~ set search parameters and submit
         ///var indx = &apos;{0}&apos;;
         ///var startDate = &apos;{1}&apos;;

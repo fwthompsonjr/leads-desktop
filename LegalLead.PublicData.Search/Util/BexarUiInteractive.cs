@@ -122,15 +122,10 @@ namespace LegalLead.PublicData.Search.Util
         private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
         {
             if (ExecutionCancelled) return isCaptchaNeeded;
-            if (!isCaptchaNeeded && a is DallasAuthenicateBegin _) return isCaptchaNeeded;
-            if (!isCaptchaNeeded && a is DallasAuthenicateSubmit _) return isCaptchaNeeded;
-            if (!isCaptchaNeeded && a is DallasRequestCaptcha _) return isCaptchaNeeded;
             var count = common.Count - 1;
             Populate(a, driver, parameters);
             var response = a.Execute();
-            if (a is DallasAuthenicateSubmit _ && response is bool captchaCompleted && captchaCompleted) isCaptchaNeeded = false;
-            if (a is DallasFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
-            if (a is DallasRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
+            if (a is BexarFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
             if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
             return isCaptchaNeeded;
         }
@@ -147,7 +142,7 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     Populate(a, driver, parameters, i.Href);
                     var response = a.Execute();
-                    if (a is DallasFetchCaseStyle _ && response is string cases)
+                    if (a is BexarFetchFilingDetail _ && response is string cases)
                     {
                         var info = GetStyle(cases);
                         if (info != null)
@@ -172,30 +167,10 @@ namespace LegalLead.PublicData.Search.Util
             });
         }
 
-        private void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters, string uri = "")
+        private static void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters, string uri = "")
         {
             a.Driver = driver;
             a.Parameters = parameters;
-            if (a is DallasRequestCaptcha captcha) { captcha.PromptUser = UserPrompt; }
-            if (!string.IsNullOrEmpty(uri) && a is DallasFetchCaseStyle style) { style.PageAddress = uri; }
-            if (a is DallasFetchCaseItems items) { items.PauseForPage = true; }
-        }
-
-        [ExcludeFromCodeCoverage]
-        private bool UserPrompt()
-        {
-            if (!DisplayDialogue)
-            {
-                Thread.Sleep(100);
-                return true;
-            }
-            var response = DialogResult.None;
-            while (response != DialogResult.OK)
-            {
-                response = MessageBox.Show(Rx.UI_CAPTCHA_DESCRIPTION, Rx.UI_CAPTCHA_TITLE, MessageBoxButtons.OKCancel);
-                if (response == DialogResult.Cancel) break;
-            }
-            return response == DialogResult.OK;
         }
 
         private void AppendPerson(CaseItemDto dto)
@@ -288,11 +263,11 @@ namespace LegalLead.PublicData.Search.Util
                 idx++;
             }
             var writer = new ExcelWriter();
-            var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: 60);
+            var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: 80);
             var courtlist = People.Select(p =>
             {
                 if (string.IsNullOrEmpty(p.Court)) return string.Empty;
-                var find = DallasCourtLookupService.GetAddress(name, p.Court);
+                var find = BexarCourtLookupService.GetAddress(name, p.Court);
                 if (string.IsNullOrEmpty(find)) return string.Empty;
                 return find;
             }).ToList();

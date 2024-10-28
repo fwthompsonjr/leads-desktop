@@ -9,6 +9,17 @@ namespace Thompson.RecordSearch.Utility.Db
         public string Name { get; set; }
         public IEnumerable<AddressItemDto> Items { get; set; } = Array.Empty<AddressItemDto>();
 
+        public static List<AddressListDto> BexarList
+        {
+            get
+            {
+                if (bexarList != null) return bexarList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(bexarContent);
+                bexarList = tmp;
+                return bexarList;
+            }
+        }
+
         public static List<AddressListDto> DallasList
         {
             get
@@ -31,9 +42,11 @@ namespace Thompson.RecordSearch.Utility.Db
             }
         }
 
+        private static List<AddressListDto> bexarList = null;
         private static List<AddressListDto> travisList = null;
         private static List<AddressListDto> dallasList = null;
 
+        private static readonly string bexarContent = Properties.Resources.bexar_court_address;
         private static readonly string dallasContent = Properties.Resources.dallas_court_address;
         private static readonly string travisContent = Properties.Resources.travis_court_address;
     }
