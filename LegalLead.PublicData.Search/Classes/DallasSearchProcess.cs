@@ -74,6 +74,9 @@ namespace LegalLead.PublicData.Search.Classes
         }
         public static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate)
         {
+            /*
+             * Note: add method to remove holidays from date range
+            */
             var list = new List<DateTime>();
             var begin = startDate.Date;
             var weekends = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };

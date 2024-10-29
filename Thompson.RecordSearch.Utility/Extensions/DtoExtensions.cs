@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Web;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
@@ -25,6 +27,14 @@ namespace Thompson.RecordSearch.Utility.Extensions
                 Address3 = "Not, NA"
             };
             return mapped.ToCalculatedNames();
+        }
+
+        public static DateTime? GetCourtDate(this CaseItemDto dto)
+        {
+            if (dto == null) return null;
+            if (string.IsNullOrWhiteSpace(dto.CourtDate)) return null;
+            if (!DateTime.TryParse(dto.CourtDate, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out var courtDt)) return null;
+            return courtDt;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube",

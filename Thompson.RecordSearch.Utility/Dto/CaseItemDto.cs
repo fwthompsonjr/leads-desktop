@@ -18,7 +18,12 @@ namespace Thompson.RecordSearch.Utility.Dto
         public string Court { get; set; }
         [JsonProperty("partyname")]
         public string PartyName { get; set; }
-        public string CaseStyle { get; set; }
         public string Plaintiff { get; set; }
+        [JsonProperty("caseStyle")]
+        public string CaseStyle { get; set; } = string.Empty;
+        [JsonProperty("courtDate")]
+        public string CourtDate { get; set; } = string.Empty;
+        [JsonProperty("hearingType")]
+        public string HearingType { get; set; } = string.Empty;
     }
 }

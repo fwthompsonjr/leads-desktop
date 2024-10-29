@@ -37,7 +37,7 @@ namespace LegalLead.PublicData.Search.Util
 
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
-        protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = new List<DallasCaseStyleDto>();
+        protected List<CaseItemDto> CaseStyles { get; private set; } = new List<CaseItemDto>();
 
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
@@ -46,11 +46,12 @@ namespace LegalLead.PublicData.Search.Util
         public override WebFetchResult Fetch()
         {
             var postsearchtypes = new List<Type> { typeof(BexarFetchFilingDetail) };
+            var getitemsearchtypes = new List<Type> { typeof(BexarFetchCaseDetail) };
             var driver = GetDriver();
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
-            var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
+            var postcommon = ActionItems.FindAll(a => getitemsearchtypes.Contains(a.GetType()));
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
             if (ExecutionCancelled || People.Count == 0) return result;
@@ -126,6 +127,7 @@ namespace LegalLead.PublicData.Search.Util
             Populate(a, driver, parameters);
             var response = a.Execute();
             if (a is BexarFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
+            if (a is BexarFetchFilingDetail _ && response is string details) CaseStyles.AddRange(GetData(details));
             if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
             return isCaptchaNeeded;
         }
@@ -136,24 +138,25 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
             if (ExecutionCancelled) return;
-            Items.ForEach(i =>
+            var courtDates = Items.Select(s => s.GetCourtDate())
+                .Where(c => c != null)
+                .Select(d => d.GetValueOrDefault())
+                .Distinct().ToList();
+            if (courtDates.Count > 0)
             {
-                postcommon.ForEach(a =>
+                courtDates.ForEach(d =>
                 {
-                    Populate(a, driver, parameters, i.Href);
-                    var response = a.Execute();
-                    if (a is BexarFetchFilingDetail _ && response is string cases)
+                    parameters.Search(d, d, CourtType);
+                    postcommon.ForEach(a =>
                     {
-                        var info = GetStyle(cases);
-                        if (info != null)
-                        {
-                            i.CaseStyle = info.CaseStyle;
-                            i.Plaintiff = info.Plaintiff;
-                            if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
-                            AppendPerson(i);
-                        }
-                    }
+                        IterateCommonActions(false, driver, parameters, postcommon, a);
+                    });
                 });
+            }
+            CaseStyles.ForEach(c =>
+            {
+                var targets = Items.FindAll(x => x.CaseNumber == c.CaseNumber);
+                targets.ForEach(t => AssignFilingDateAndPartyName(c, t));
             });
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             casenumbers.ForEach(i =>
@@ -167,7 +170,14 @@ namespace LegalLead.PublicData.Search.Util
             });
         }
 
-        private static void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters, string uri = "")
+        private static void AssignFilingDateAndPartyName(CaseItemDto c, CaseItemDto target)
+        {
+            target.FileDate = c.FileDate;
+            if (string.IsNullOrWhiteSpace(target.PartyName) && !string.IsNullOrWhiteSpace(c.PartyName))
+                target.PartyName = c.PartyName;
+        }
+
+        private static void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters)
         {
             a.Driver = driver;
             a.Parameters = parameters;
@@ -176,34 +186,7 @@ namespace LegalLead.PublicData.Search.Util
         private void AppendPerson(CaseItemDto dto)
         {
             var person = dto.FromDto();
-            var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
-            if (address != null && address.Any())
-            {
-                var ln = address.Count - 1;
-                var last = address[ln].Trim();
-                var pieces = last.Split(' ');
-                person.Zip = pieces[pieces.Length - 1];
-                person.Address3 = last;
-                person.Address1 = address[0];
-                person.Address2 = string.Empty;
-                if (ln > 1)
-                {
-                    address.RemoveAt(0); // remove first item
-                    if (address.Count > 1) address.RemoveAt(address.Count - 1); // remove last, when applicable
-                    person.Address2 = string.Join(" ", address);
-                }
-            }
             People.Add(person);
-        }
-
-        private static List<string> GetAddress(DallasCaseStyleDto dto)
-        {
-            var pipe = "|";
-            var doublepipe = "||";
-            if (dto == null || string.IsNullOrEmpty(dto.Address)) return null;
-            var data = dto.Address;
-            while (data.Contains(doublepipe)) { data = data.Replace(doublepipe, pipe); }
-            return data.Split('|').ToList();
         }
 
         private static string FetchKeyedItem(List<WebNavigationKey> keys, string keyname)

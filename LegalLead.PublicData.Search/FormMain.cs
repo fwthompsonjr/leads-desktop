@@ -88,6 +88,9 @@ namespace LegalLead.PublicData.Search
                 searchItem.Search = $"{searchItem.SearchDate} : {searchItem.Website} from {searchItem.StartDate} to {searchItem.EndDate}";
                 switch (siteData.Id)
                 {
+                    case (int)SourceType.BexarCounty:
+                        BexarButtonExecution(siteData, searchItem);
+                        break;
                     case (int)SourceType.DallasCounty:
                         DallasButtonExecution(siteData, searchItem);
                         break;
@@ -113,6 +116,23 @@ namespace LegalLead.PublicData.Search
             {
                 KillProcess(driverNames);
             }
+        }
+
+        private void BexarButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
+        {
+            var index = cboSearchType.SelectedIndex;
+            var searchType = DallasSearchProcess.GetCourtName(index);
+            var keys = new List<WebNavigationKey> {
+                new() { Name = "StartDate", Value = searchItem.StartDate},
+                new() { Name = "EndDate", Value = searchItem.EndDate },
+                new() { Name = "CourtType", Value = searchType }
+            };
+            var wb = new WebNavigationParameter { Keys = keys };
+            var dweb = new BexarUiInteractive(wb);
+            _ = Task.Run(async () =>
+            {
+                await ProcessAsync(dweb, siteData, searchItem);
+            }).ConfigureAwait(true);
         }
 
         private void DallasButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
@@ -273,7 +293,8 @@ namespace LegalLead.PublicData.Search
 
                 var nonactors = new List<int> {
                     (int)SourceType.DallasCounty,
-                    (int)SourceType.TravisCounty
+                    (int)SourceType.TravisCounty,
+                    (int)SourceType.BexarCounty
                 };
 
                 ProcessEndingMessage();

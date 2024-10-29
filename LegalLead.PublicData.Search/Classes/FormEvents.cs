@@ -80,7 +80,8 @@ namespace LegalLead.PublicData.Search
             var nonactors = new List<int> {
                 (int)SourceType.HarrisCivil,
                 (int)SourceType.DallasCounty,
-                (int)SourceType.TravisCounty
+                (int)SourceType.TravisCounty,
+                (int)SourceType.BexarCounty
             };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && nonactors.Contains(selectedItem.Id))

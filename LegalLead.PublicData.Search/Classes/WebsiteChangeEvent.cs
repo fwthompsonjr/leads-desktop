@@ -17,7 +17,7 @@ namespace LegalLead.PublicData.Search
             const int Zero = 0;
             const int Three = 3;
             const int Five = 5;
-            var boxindicies = new List<int> { DallasIndx, TravisIndx };
+            var boxindicies = new List<int> { DallasIndx, TravisIndx, BexarIndx };
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             var cbo = GetMain.cboSearchType;
             var customBindingNeeded = boxindicies.Contains(source.Id);
@@ -104,5 +104,6 @@ namespace LegalLead.PublicData.Search
 
         private const int DallasIndx = 60;
         private const int TravisIndx = 70;
+        private const int BexarIndx = 80;
     }
 }
