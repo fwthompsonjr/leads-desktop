@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -383,7 +384,14 @@ namespace LegalLead.PublicData.Search
 
             var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
             if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
-            System.Diagnostics.Process.Start(xmlFile);
+            using (var p = new Process())
+            {
+                p.StartInfo = new ProcessStartInfo(xmlFile)
+                {
+                    UseShellExecute = true
+                };
+                p.Start();
+            }
         }
 
         private WebNavigationParameter GetParameter()

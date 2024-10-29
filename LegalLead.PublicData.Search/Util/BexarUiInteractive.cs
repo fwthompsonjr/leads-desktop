@@ -51,7 +51,7 @@ namespace LegalLead.PublicData.Search.Util
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
-            var postcommon = ActionItems.FindAll(a => getitemsearchtypes.Contains(a.GetType()));
+            var postcommon = ActionItems.FindAll(a => !getitemsearchtypes.Contains(a.GetType()));
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
             if (ExecutionCancelled || People.Count == 0) return result;
@@ -115,21 +115,11 @@ namespace LegalLead.PublicData.Search.Util
                 common.ForEach(a =>
                 {
                     isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
+                    var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
+                    unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); });
                 });
             });
             parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
-        }
-
-        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
-        {
-            if (ExecutionCancelled) return isCaptchaNeeded;
-            var count = common.Count - 1;
-            Populate(a, driver, parameters);
-            var response = a.Execute();
-            if (a is BexarFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
-            if (a is BexarFetchFilingDetail _ && response is string details) CaseStyles.AddRange(GetData(details));
-            if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
-            return isCaptchaNeeded;
         }
 
         protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
@@ -168,6 +158,18 @@ namespace LegalLead.PublicData.Search.Util
                     if (source != null) { AppendPerson(source); }
                 }
             });
+        }
+
+        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
+        {
+            if (ExecutionCancelled) return isCaptchaNeeded;
+            var count = common.Count - 1;
+            Populate(a, driver, parameters);
+            var response = a.Execute();
+            if (a is BexarFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
+            if (a is BexarFetchFilingDetail _ && response is string details) CaseStyles.AddRange(GetData(details));
+            if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
+            return isCaptchaNeeded;
         }
 
         private static void AssignFilingDateAndPartyName(CaseItemDto c, CaseItemDto target)
@@ -215,21 +217,6 @@ namespace LegalLead.PublicData.Search.Util
             catch (Exception)
             {
                 return new List<CaseItemDto>();
-            }
-        }
-
-        [ExcludeFromCodeCoverage]
-        private static DallasCaseStyleDto GetStyle(string json)
-        {
-            try
-            {
-                var data = JsonConvert.DeserializeObject<DallasCaseStyleDto>(json);
-                if (data == null) return new DallasCaseStyleDto();
-                return data;
-            }
-            catch (Exception)
-            {
-                return new DallasCaseStyleDto();
             }
         }
 

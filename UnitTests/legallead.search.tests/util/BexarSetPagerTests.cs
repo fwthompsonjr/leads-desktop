@@ -1,4 +1,5 @@
-﻿using LegalLead.PublicData.Search.Classes;
+﻿using Bogus;
+using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;
@@ -21,6 +22,9 @@ namespace legallead.search.tests.util
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
             var parameters = new DallasSearchProcess();
+            var element = new Mock<IWebElement>();
+            driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.Id("hearingResultsGrid")))).Returns(element.Object);
+            driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.TagName("ul")))).Returns(element.Object);
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new MockBexarSetPager
@@ -34,19 +38,52 @@ namespace legallead.search.tests.util
         [Theory]
         [InlineData(0)]
         [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
         public void ComponentThrowingException(int target)
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
             var parameters = new DallasSearchProcess();
+            var element = new Mock<IWebElement>();
+            IWebElement nonElement = default;
+
+            if (target < 2)
+            {
+                driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.Id("hearingResultsGrid")))).Returns(element.Object);
+                driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.TagName("ul")))).Returns(element.Object);
+            }
+            if (target == 2)
+            {
+                driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(nonElement);
+            }
+            if (target == 3)
+            {
+                driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.Id("hearingResultsGrid")))).Returns(element.Object);
+                driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.TagName("ul")))).Returns(nonElement);
+            }
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new MockBexarSetPager
             {
-                Parameters = target != 1 ? parameters : null,
-                Driver = target != 0 ? driver.Object : null
+                Parameters = GetItemOrDefault(target == 0, parameters),
+                Driver = GetItemOrDefault(target == 1, driver.Object)
             };
-            Assert.Throws<NullReferenceException>(() => { _ = service.Execute(); });
+            if (target < 2)
+            {
+                Assert.Throws<NullReferenceException>(() => { _ = service.Execute(); });
+            }
+            else
+            {
+                _ = service.Execute();
+                driver.Verify(x => x.FindElement(It.IsAny<By>()));
+            }
+        }
+
+        private static T GetItemOrDefault<T>(bool isNull, T defaultValue)
+        {
+            if (isNull) return default;
+            return defaultValue;
         }
 
         private sealed class MockBexarSetPager : BexarSetPager
