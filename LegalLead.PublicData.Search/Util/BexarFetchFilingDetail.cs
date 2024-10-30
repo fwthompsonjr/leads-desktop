@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,10 +11,12 @@ using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
 {
+    using static System.Windows.Forms.LinkLabel;
     using Rx = Properties.Resources;
     public class BexarFetchFilingDetail : BaseBexarSearchAction
     {
         public override int OrderId => 70;
+
         public override object Execute()
         {
             if (Driver == null)
@@ -28,17 +31,40 @@ namespace LegalLead.PublicData.Search.Util
             var mx = collection.Count;
             while (id < mx)
             {
-                var element = GetLink(id++);
-                element.Click();
-                Thread.Sleep(500);
-
-                var body = Driver.FindElement(By.TagName("body"));
-                var content = body.GetAttribute("innerHTML");
-                var dto = GetDto(content);
+                _ = GetLink(id++);
+                Driver.SwitchTo().Window(Driver.WindowHandles[^1]);
+                var dto = TryFetchDto();
                 if (dto != null) alldata.Add(dto);
+                if (Driver.WindowHandles.Count > 1)
+                {
+                    Driver.Close();
+                    Driver.SwitchTo().Window(Driver.WindowHandles[0]);
+                }
             }
             return JsonConvert.SerializeObject(alldata);
         }
+
+        private CaseItemDto TryFetchDto()
+        {
+            try
+            {
+                CaseItemDto dto = null;
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(90)) { PollingInterval = TimeSpan.FromSeconds(2) };
+                wait.Until(w =>
+                {
+                    var body = Driver.FindElement(By.TagName("body"));
+                    var content = body.GetAttribute("innerHTML");
+                    dto = GetDto(content);
+                    return dto != null;
+                });
+                return dto;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         private List<IWebElement> GetLinks()
         {
             const string linkIndicator = "RegisterOfActions";
@@ -60,7 +86,7 @@ namespace LegalLead.PublicData.Search.Util
             if (index > list.Count - 1) return null;
             var item = list[index];
             if (Driver is not IJavaScriptExecutor executor) return item;
-            executor.ExecuteScript("arguments[0].scrollIntoView(true);", item);
+            executor.ExecuteScript("arguments[0].click();", item);
             return item;
         }
         private static CaseItemDto GetDto(string pageHtml)
