@@ -11,7 +11,6 @@ using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    using static System.Windows.Forms.LinkLabel;
     using Rx = Properties.Resources;
     public class BexarFetchFilingDetail : BaseBexarSearchAction
     {
@@ -23,7 +22,7 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 
             var alldata = new List<CaseItemDto>();
-            var collection = GetLinks();
+            var collection = GetLinkRetry();
             if (collection == null || collection.Count == 0)
                 return JsonConvert.SerializeObject(alldata);
 
@@ -65,6 +64,32 @@ namespace LegalLead.PublicData.Search.Util
             }
         }
 
+        private List<IWebElement> GetLinkRetry()
+        {
+            var retries = 10;
+            var getLinks = () =>
+            {
+                try
+                {
+                    return GetLinks();
+                }
+                catch
+                {
+                    return null;
+                }
+            };
+            var response = getLinks();
+            if (response != null) return response;
+            while(response == null && retries > 0)
+            {
+                Thread.Sleep(1000);
+                response = getLinks();
+                retries--;
+            }
+            return response;
+
+        }
+
         private List<IWebElement> GetLinks()
         {
             const string linkIndicator = "RegisterOfActions";
@@ -82,7 +107,7 @@ namespace LegalLead.PublicData.Search.Util
         private IWebElement GetLink(int index)
         {
             if (index < 0) return null;
-            var list = GetLinks();
+            var list = GetLinkRetry();
             if (index > list.Count - 1) return null;
             var item = list[index];
             if (Driver is not IJavaScriptExecutor executor) return item;

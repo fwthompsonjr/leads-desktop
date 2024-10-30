@@ -1,5 +1,4 @@
-﻿using Bogus;
-using LegalLead.PublicData.Search.Classes;
+﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;

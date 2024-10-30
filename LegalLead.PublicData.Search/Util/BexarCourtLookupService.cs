@@ -1,6 +1,4 @@
-﻿using LegalLead.Resources;
-using OpenQA.Selenium.BiDi.Modules.Script;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Db;
@@ -21,8 +19,9 @@ namespace LegalLead.PublicData.Search.Util
             var fallback = GetFallbackAddress(list);
             var addr = list.Items.FirstOrDefault(x => x.Name.Equals(court, oic));
             addr ??= LookupAddress(court);
-            if (addr == null) {
-                return fallback; 
+            if (addr == null)
+            {
+                return fallback;
             }
             return string.Join(" ", addr.Address).Trim();
         }
@@ -46,7 +45,8 @@ namespace LegalLead.PublicData.Search.Util
             if (list == null) return null;
             var courtId = GetNumeric(court);
             if (string.IsNullOrEmpty(courtId)) return null;
-            var addr = list.Items.FirstOrDefault(x => {
+            var addr = list.Items.FirstOrDefault(x =>
+            {
                 if ((courtType.Equals("county") || courtType.Equals("justice")) && int.TryParse(courtId, out var cidx)) return x.Id.Equals(cidx);
                 if (courtType.Equals("district") && int.TryParse(courtId, out var _)) return x.Name.StartsWith(courtId);
                 return false;

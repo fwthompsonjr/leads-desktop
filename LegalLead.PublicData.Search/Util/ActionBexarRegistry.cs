@@ -15,7 +15,9 @@ namespace LegalLead.PublicData.Search.Util
 
             For<ICountySearchAction>().Add<BexarBeginNavigation>().Named("begin");
             For<ICountySearchAction>().Add<BexarSetupParameters>().Named("set-parameters");
+            For<ICountySearchAction>().Add<BexarSetNoCountVerification>().Named("check-no-count");
             For<ICountySearchAction>().Add<BexarSetPager>().Named("set-max-rows");
+            For<ICountySearchAction>().Add<BexarSetPagerVerification>().Named("set-max-rows-verification");
             For<ICountySearchAction>().Add<BexarFetchCaseDetail>().Named("get-case-list");
             For<ICountySearchAction>().Add<BexarFetchFilingDetail>().Named("get-filing-list");
         }

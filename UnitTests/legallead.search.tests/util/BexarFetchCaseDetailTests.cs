@@ -21,7 +21,9 @@ namespace legallead.search.tests.util
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
             var parameters = new DallasSearchProcess();
+            var element = new Mock<IWebElement>().Object;
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
+            driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new MockBexarFetchCaseDetail
             {
@@ -39,7 +41,9 @@ namespace legallead.search.tests.util
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
             var parameters = new DallasSearchProcess();
+            var element = new Mock<IWebElement>().Object;
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
+            driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new MockBexarFetchCaseDetail
             {

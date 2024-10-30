@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
@@ -19,7 +18,6 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    using Rx = Properties.Resources;
     public class BexarUiInteractive : BexarWebInteractive
     {
         public BexarUiInteractive(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters)
@@ -42,6 +40,7 @@ namespace LegalLead.PublicData.Search.Util
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
+        private bool IsDateRangeComplete = false;
         private readonly List<ICountySearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
@@ -109,16 +108,22 @@ namespace LegalLead.PublicData.Search.Util
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
             bool isCaptchaNeeded = true;
+            
             dates.ForEach(d =>
             {
+                IsDateRangeComplete = false;
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
                 {
-                    isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
-                    var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
-                    unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); });
+                    if (!IsDateRangeComplete)
+                    {
+                        isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
+                        var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
+                        unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); }); 
+                    }
                 });
             });
+            IsDateRangeComplete = false;
             parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
         }
 
@@ -130,7 +135,7 @@ namespace LegalLead.PublicData.Search.Util
             if (ExecutionCancelled) return;
             var courtDates = Items.Select(s => s.GetCourtDate())
                 .Where(c => c != null)
-                .Select(d => d.GetValueOrDefault())
+                .Select(d => d.GetValueOrDefault().Date)
                 .Distinct().ToList();
             if (courtDates.Count > 0)
             {
@@ -168,6 +173,10 @@ namespace LegalLead.PublicData.Search.Util
             var response = a.Execute();
             if (a is BexarFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
             if (a is BexarFetchFilingDetail _ && response is string details) CaseStyles.AddRange(GetData(details));
+            if (a is BexarSetNoCountVerification _ && response is bool hasNoCount && hasNoCount)
+            {
+                IsDateRangeComplete = true;
+            }
             if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
             return isCaptchaNeeded;
         }

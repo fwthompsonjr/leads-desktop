@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util
@@ -9,6 +10,7 @@ namespace LegalLead.PublicData.Search.Util
     public class BexarSetPager : BaseBexarSearchAction
     {
         public override int OrderId => 50;
+        public bool UseElementWait { get; set; } = true;
         public override object Execute()
         {
             var js = JsScript;
@@ -17,7 +19,7 @@ namespace LegalLead.PublicData.Search.Util
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 
-            if (!WaitForPager()) return false;
+            if (UseElementWait && !WaitForPager()) return false;
 
             js = VerifyScript(js);
             executor.ExecuteScript(js);
@@ -28,16 +30,19 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 const int mxwait = 3;
+                bool elementMissing = false;
                 IWebElement found = null;
-                // wait for result grid to exist
-                var finder = By.Id("hearingResultsGrid");
-                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(mxwait)) { PollingInterval = TimeSpan.FromMilliseconds(500) };
-                wait.Until(d => CheckForElement(d, finder, out found));
-                if (found == null) return false;
-                // wait for pager to also exist
-                finder = By.TagName("ul");
-                var wait2 = new WebDriverWait(Driver, TimeSpan.FromSeconds(mxwait)) { PollingInterval = TimeSpan.FromMilliseconds(500) };
-                wait2.Until(d => CheckForElement(d, finder, out found));
+                var selections = elementSelections.ToList();
+                selections.ForEach(selection => {
+                    if (!elementMissing)
+                    {
+                        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(mxwait)) { 
+                            PollingInterval = TimeSpan.FromMilliseconds(500) 
+                        };
+                        wait.Until(d => CheckForElement(d, selection, out found));
+                        elementMissing = found == null; 
+                    }
+                });
                 return found != null;
             }
             catch (Exception ex)
@@ -46,7 +51,6 @@ namespace LegalLead.PublicData.Search.Util
                 return false;
             }
         }
-
         private static bool CheckForElement(IWebDriver d, By finder, out IWebElement element)
         {
             element = d.TryFindElement(finder);
@@ -54,5 +58,10 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         protected override string ScriptName { get; } = "select max rows per page";
+        private static readonly By[] elementSelections = new[] {
+                    By.Id("hearingResultsGrid"),
+                    By.CssSelector(".k-pager-info"),
+                    By.XPath("//span[@class='k-pager-info k-label']")
+                };
     }
 }

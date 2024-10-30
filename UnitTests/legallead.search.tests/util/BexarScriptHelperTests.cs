@@ -17,6 +17,8 @@ namespace legallead.search.tests.util
         [InlineData("set search parameters and submit", true)]
         [InlineData("select max rows per page", true)]
         [InlineData("get list of case items", true)]
+        [InlineData("verify page count", true)]
+        [InlineData("check for no count", true)]
         public void CollectionContainsNamedScript(string scriptName, bool isFound)
         {
             var service = BexarScriptHelper.ScriptCollection;

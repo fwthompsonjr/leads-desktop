@@ -98,6 +98,55 @@ links.forEach((lnk) => {
 });
 return JSON.stringify(alldata);
 
+~ verify page count
+var tmp = {
+	getExpectedCount : function ()
+	{
+		var spns = document.getElementsByTagName("span");
+		var spnarr = Array.prototype.slice.call( spns, 0 );
+		spnarr = spnarr.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'k-pager-info k-label' });
+		if (spnarr.length == 0) { return 0; }
+		var txt = spnarr[0].innerText;
+		t = txt.indexOf(' of ');
+		if (t < 0) { return 0; }
+		expectedText = txt.substr(t + 4).split(' ')[0];
+		expected = parseInt(expectedText);
+		if (isNaN(expected)) { return 0; }
+		return expected;
+	},
+	getActualCount: function ()
+	{
+		try {
+		var links = document.getElementsByTagName("a");
+		var linkarr = Array.prototype.slice.call( links, 0 );
+		linkarr = linkarr.filter(a => { 
+			let attr = a.getAttribute('class'); 
+			if (attr == null) { return false; } 
+			return attr == 'caseLink show-only-in-desktop-view' }); 
+		return linkarr.length;
+		} catch {
+			return 0;
+		}
+	}, 
+	getCount: function() {
+		let expected = tmp.getExpectedCount();
+		let actual = tmp.getActualCount();
+		let obj = { "expected": expected, "actual": actual };
+		return JSON.stringify(obj);
+	}
+};
+var rsp = tmp.getCount();
+return rsp;
 
+~ check for no count
+var obj = { "status": false }
+var dv = document.getElementById('noResults');
+var attr = dv.getAttribute('style');
+if (attr == null) { return JSON.stringify(obj); }
+if (attr.length == 0) { return JSON.stringify(obj); }
+if (attr.indexOf('display') == -1) { return JSON.stringify(obj); }
+if (attr.indexOf('block') == -1) { return JSON.stringify(obj); }
+obj.status = true;
+return JSON.stringify(obj);
 
 ~ end of file
