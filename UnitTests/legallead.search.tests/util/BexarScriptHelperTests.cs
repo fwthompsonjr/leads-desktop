@@ -19,6 +19,7 @@ namespace legallead.search.tests.util
         [InlineData("get list of case items", true)]
         [InlineData("verify page count", true)]
         [InlineData("check for no count", true)]
+        [InlineData("get defendant address", true)]
         public void CollectionContainsNamedScript(string scriptName, bool isFound)
         {
             var service = BexarScriptHelper.ScriptCollection;

@@ -250,19 +250,7 @@ namespace LegalLead.PublicData.Search.Util
             var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
             if (address != null && address.Any())
             {
-                var ln = address.Count - 1;
-                var last = address[ln].Trim();
-                var pieces = last.Split(' ');
-                person.Zip = pieces[pieces.Length - 1];
-                person.Address3 = last;
-                person.Address1 = address[0];
-                person.Address2 = string.Empty;
-                if (ln > 1)
-                {
-                    address.RemoveAt(0); // remove first item
-                    if (address.Count > 1) address.RemoveAt(address.Count - 1); // remove last, when applicable
-                    person.Address2 = string.Join(" ", address);
-                }
+                person.UpdateAddress(address);
             }
             People.Add(person);
         }

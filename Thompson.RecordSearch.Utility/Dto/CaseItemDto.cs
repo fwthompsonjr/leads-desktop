@@ -25,5 +25,6 @@ namespace Thompson.RecordSearch.Utility.Dto
         public string CourtDate { get; set; } = string.Empty;
         [JsonProperty("hearingType")]
         public string HearingType { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
     }
 }

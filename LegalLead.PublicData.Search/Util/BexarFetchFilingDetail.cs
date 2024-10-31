@@ -4,9 +4,11 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
@@ -15,7 +17,7 @@ namespace LegalLead.PublicData.Search.Util
     public class BexarFetchFilingDetail : BaseBexarSearchAction
     {
         public override int OrderId => 70;
-
+        public bool IsTestMode { get; set; }
         public override object Execute()
         {
             if (Driver == null)
@@ -33,7 +35,18 @@ namespace LegalLead.PublicData.Search.Util
                 _ = GetLink(id++);
                 Driver.SwitchTo().Window(Driver.WindowHandles[^1]);
                 var dto = TryFetchDto();
-                if (dto != null) alldata.Add(dto);
+                if (dto != null)
+                {
+                    var helper = new BexarFetchFilingHelper { Driver = Driver };
+                    var info = helper.GetAddress();
+                    if (info != null)
+                    {
+                        dto.PartyName = info.PartyName;
+                        dto.Address = info.Address;
+                        dto.Court = info.Court;
+                    }
+                    alldata.Add(dto);
+                }
                 if (Driver.WindowHandles.Count > 1)
                 {
                     Driver.Close();
@@ -48,7 +61,8 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 CaseItemDto dto = null;
-                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(90)) { PollingInterval = TimeSpan.FromSeconds(2) };
+                WaitForElementsExist();
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(90)) { PollingInterval = TimeSpan.FromMilliseconds(750) };
                 wait.Until(w =>
                 {
                     var body = Driver.FindElement(By.TagName("body"));
@@ -63,6 +77,35 @@ namespace LegalLead.PublicData.Search.Util
                 return null;
             }
         }
+
+        private void WaitForElementsExist()
+        {
+            try
+            {
+                if (IsTestMode) return;
+                var selectors = new[] {
+                    By.TagName("body"),
+                    By.Id("header-info"),
+                    By.Id("party-info"),
+                    By.XPath("//tr[@class='roa-party-row roa-pad-b-10 ng-scope']") }.ToList();
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromSeconds(1) };
+                wait.Until(d =>
+                {
+                    var exists = false;
+                    selectors.ForEach(sel =>
+                    {
+                        var item = d.TryFindElement(sel);
+                        exists = item != null;
+                    });
+                    return exists;
+                });
+            }
+            catch
+            {
+                Debug.WriteLine("WaitForElementsExist failed to find collection");
+            }
+        }
+
 
         private List<IWebElement> GetLinkRetry()
         {
@@ -80,7 +123,7 @@ namespace LegalLead.PublicData.Search.Util
             };
             var response = getLinks();
             if (response != null) return response;
-            while(response == null && retries > 0)
+            while (response == null && retries > 0)
             {
                 Thread.Sleep(1000);
                 response = getLinks();

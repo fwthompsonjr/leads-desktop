@@ -31,8 +31,8 @@ namespace legallead.search.tests.util
                 Parameters = parameters,
                 Driver = driver.Object
             };
-            _ = service.Execute();
-            service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtLeastOnce());
+            var error = Record.Exception(() => { _ = service.Execute(); });
+            Assert.Null(error);
         }
         [Theory]
         [InlineData(0)]

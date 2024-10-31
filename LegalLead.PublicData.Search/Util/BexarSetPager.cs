@@ -33,14 +33,16 @@ namespace LegalLead.PublicData.Search.Util
                 bool elementMissing = false;
                 IWebElement found = null;
                 var selections = elementSelections.ToList();
-                selections.ForEach(selection => {
+                selections.ForEach(selection =>
+                {
                     if (!elementMissing)
                     {
-                        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(mxwait)) { 
-                            PollingInterval = TimeSpan.FromMilliseconds(500) 
+                        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(mxwait))
+                        {
+                            PollingInterval = TimeSpan.FromMilliseconds(500)
                         };
                         wait.Until(d => CheckForElement(d, selection, out found));
-                        elementMissing = found == null; 
+                        elementMissing = found == null;
                     }
                 });
                 return found != null;

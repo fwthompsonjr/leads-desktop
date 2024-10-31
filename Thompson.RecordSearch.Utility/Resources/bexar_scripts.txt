@@ -149,4 +149,61 @@ if (attr.indexOf('block') == -1) { return JSON.stringify(obj); }
 obj.status = true;
 return JSON.stringify(obj);
 
+~ get defendant address
+
+var findName =
+{
+	"defendant": function ()
+	{
+		var searches = ['Defendant'];
+		var rows = Array.prototype.slice.call( document.getElementsByTagName('tr'), 0 );
+		rows = rows.filter(a => { 
+					let attr = a.getAttribute('class'); 
+					if (attr == null) { return false; } 
+					return attr == 'roa-party-row roa-pad-b-10 ng-scope' });
+		rows = rows.filter(a => { 
+					let attr = a.innerText; 
+					if (attr == null || attr.length == 0) { return false; } 
+					var isFound = false;
+					for(let i = 0; i < searches.length; i++)
+					{
+						if(attr.indexOf(searches[i]) < 0) { continue; }
+						isFound = true;
+						break;
+					}
+					return isFound });
+		var dvs = Array.prototype.slice.call( document.getElementsByTagName('div'), 0 );
+		var dvstlye = "roa-header-sect-row hide-xs layout-row";
+		dvs = dvs.filter(a => { 
+					let attr = a.getAttribute('class'); 
+					if (attr == null) { return false; } 
+					return attr == dvstlye });
+		dvs = dvs.filter(a => a.innerText.indexOf('Location') == 0);
+		var obj = { "name": "", "address": "", "court": "" };
+		if (dvs.length > 0) {
+			var dtexts = dvs[0].innerText.trim().split(':');
+			if (dtexts.length > 1) {
+				obj.court = dtexts[1].trim();
+			}
+		}
+		if (rows.length <= 0 ) { return JSON.stringify(obj); }
+		var txts = rows[0].innerText.split('\t');
+		if (txts.length < 2 ) { return JSON.stringify(obj); }
+		var names = txts[1].split('\n');
+		if (names.length == 0 ) { return JSON.stringify(obj); }
+		obj.name = names[0].trim();
+		if (names.length < 2 ) { return JSON.stringify(obj); }
+		var arr = [];
+		for(var i = 1; i < names.length; i++) {
+			let txt = names[i].trim();
+			if (txt.length > 0) { arr.push( txt ); }
+		}
+		obj.address = arr.join('|');
+		return JSON.stringify(obj);
+	}
+}
+
+return findName.defendant();
+
+
 ~ end of file

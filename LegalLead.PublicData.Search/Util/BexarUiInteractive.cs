@@ -108,7 +108,7 @@ namespace LegalLead.PublicData.Search.Util
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
             bool isCaptchaNeeded = true;
-            
+
             dates.ForEach(d =>
             {
                 IsDateRangeComplete = false;
@@ -119,7 +119,7 @@ namespace LegalLead.PublicData.Search.Util
                     {
                         isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
                         var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
-                        unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); }); 
+                        unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); });
                     }
                 });
             });
@@ -186,6 +186,8 @@ namespace LegalLead.PublicData.Search.Util
             target.FileDate = c.FileDate;
             if (string.IsNullOrWhiteSpace(target.PartyName) && !string.IsNullOrWhiteSpace(c.PartyName))
                 target.PartyName = c.PartyName;
+            if (!string.IsNullOrWhiteSpace(c.Court)) target.Court = c.Court;
+            if (!string.IsNullOrWhiteSpace(c.Address)) target.Address = c.Address;
         }
 
         private static void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters)
@@ -197,6 +199,12 @@ namespace LegalLead.PublicData.Search.Util
         private void AppendPerson(CaseItemDto dto)
         {
             var person = dto.FromDto();
+            if (!string.IsNullOrWhiteSpace(dto.Address))
+            {
+                var address = dto.Address;
+                var parts = address.Split('|').ToList();
+                person.UpdateAddress(parts);
+            }
             People.Add(person);
         }
 

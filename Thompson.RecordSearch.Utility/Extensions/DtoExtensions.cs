@@ -29,6 +29,24 @@ namespace Thompson.RecordSearch.Utility.Extensions
             return mapped.ToCalculatedNames();
         }
 
+        public static void UpdateAddress(this PersonAddress person, List<string> parts)
+        {
+
+            var ln = parts.Count - 1;
+            var last = parts[ln].Trim();
+            var pieces = last.Split(' ');
+            person.Zip = pieces[pieces.Length - 1].Trim();
+            person.Address3 = last;
+            person.Address1 = parts[0];
+            person.Address2 = string.Empty;
+            if (ln > 1)
+            {
+                parts.RemoveAt(0); // remove first item
+                if (parts.Count > 1) parts.RemoveAt(parts.Count - 1); // remove last, when applicable
+                person.Address2 = string.Join(" ", parts);
+            }
+        }
+
         public static DateTime? GetCourtDate(this CaseItemDto dto)
         {
             if (dto == null) return null;
