@@ -175,6 +175,21 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ~ say hello
+        ///return &quot;hello&quot;;
+        ///
+        ///
+        ///
+        ///~ end of file
+        ///.
+        /// </summary>
+        internal static string hidalgo_scripts {
+            get {
+                return ResourceManager.GetString("hidalgo_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [
         ///	{
         ///		&quot;name&quot;: &quot;county&quot;,
