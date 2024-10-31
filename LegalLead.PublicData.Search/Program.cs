@@ -39,7 +39,7 @@ namespace LegalLead.PublicData.Search
                     StringComparison.CurrentCultureIgnoreCase)) ?? new Command.MainCommand();
 
                 // get the chrome path in a separate thread
-                ThreadStart ts = new ThreadStart(() =>
+                ThreadStart ts = new(() =>
                 {
                     var settings = WebUtilities.GetChromeBinary();
                     Console.WriteLine("Using {0} as Chrome file location.", settings);

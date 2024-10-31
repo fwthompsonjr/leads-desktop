@@ -127,7 +127,7 @@ namespace LegalLead.PublicData.Search
                 case "details":
                     grid.Columns[0].Width = 30;
                     // Add button for update
-                    DataGridViewButtonColumn btnColumn = new DataGridViewButtonColumn
+                    DataGridViewButtonColumn btnColumn = new()
                     {
                         Name = "Update",
                         DefaultCellStyle = defaultCellFont,
@@ -163,7 +163,7 @@ namespace LegalLead.PublicData.Search
                     grid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
                     grid.Columns[2].Visible = false;
                     // add new column for Value
-                    DataGridViewComboBoxColumn newColumn = new DataGridViewComboBoxColumn
+                    DataGridViewComboBoxColumn newColumn = new()
                     {
                         Name = "DataValue",
                         DefaultCellStyle = defaultCellFont,

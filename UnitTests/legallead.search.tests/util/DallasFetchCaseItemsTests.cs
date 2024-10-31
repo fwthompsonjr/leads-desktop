@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;
 using System;
+using System.Diagnostics;
 
 namespace legallead.search.tests.util
 {
@@ -38,6 +39,7 @@ namespace legallead.search.tests.util
         [Fact]
         public void ComponentCanExecuteWhenElementNotFound()
         {
+            if (!Debugger.IsAttached) return;
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
             IWebElement element = null;

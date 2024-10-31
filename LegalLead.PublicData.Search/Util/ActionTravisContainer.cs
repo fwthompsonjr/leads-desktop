@@ -17,8 +17,8 @@ namespace LegalLead.PublicData.Search.Util
         {
             get
             {
-                return _container ?? (_container =
-                  new Container(new ActionTravisRegistry()));
+                return _container ??=
+                  new Container(new ActionTravisRegistry());
             }
         }
 
@@ -32,8 +32,8 @@ namespace LegalLead.PublicData.Search.Util
         {
             get
             {
-                return _alternateContainer ?? (_alternateContainer =
-                  new Container(new ActionTravisAlternateRegistry()));
+                return _alternateContainer ??=
+                  new Container(new ActionTravisAlternateRegistry());
             }
         }
     }

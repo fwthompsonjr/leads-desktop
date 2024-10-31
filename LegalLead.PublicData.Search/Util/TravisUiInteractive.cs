@@ -46,7 +46,7 @@ namespace LegalLead.PublicData.Search.Util
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
-        private readonly List<ITravisSearchAction> ActionItems = new List<ITravisSearchAction>();
+        private readonly List<ITravisSearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
             var postsearchtypes = new List<Type> { };
@@ -142,7 +142,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             if (ExecutionCancelled) return isCaptchaNeeded;
             if (!isCaptchaNeeded && a is TravisRequestCaptcha _) return isCaptchaNeeded;
-            
+
             Populate(a, driver, parameters, locationId);
             var response = a.Execute();
             if (a is TravisFetchCaseItems _ && response is string cases) Items.AddRange(GetData(cases));
@@ -167,7 +167,7 @@ namespace LegalLead.PublicData.Search.Util
                 if (item.Court == "Precinct Five") item.Court = "Precinct 5";
             });
             CaseStyles.ForEach(c =>
-            {   
+            {
                 var item = Items.Find(x =>
                 {
                     if (x.CaseNumber.Equals(c.CaseNumber, StringComparison.OrdinalIgnoreCase)) return true;
@@ -250,19 +250,7 @@ namespace LegalLead.PublicData.Search.Util
             var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
             if (address != null && address.Any())
             {
-                var ln = address.Count - 1;
-                var last = address[ln].Trim();
-                var pieces = last.Split(' ');
-                person.Zip = pieces[pieces.Length - 1];
-                person.Address3 = last;
-                person.Address1 = address[0];
-                person.Address2 = string.Empty;
-                if (ln > 1)
-                {
-                    address.RemoveAt(0); // remove first item
-                    if (address.Count > 1) address.RemoveAt(address.Count - 1); // remove last, when applicable
-                    person.Address2 = string.Join(" ", address);
-                }
+                person.UpdateAddress(address);
             }
             People.Add(person);
         }

@@ -29,6 +29,19 @@ namespace legallead.search.tests.classes
         }
 
 
+        [Theory]
+        [InlineData("county")]
+        [InlineData("district")]
+        [InlineData("justice")]
+        public void DtoCanGetBexarCollection(string name)
+        {
+            const StringComparison oic = StringComparison.OrdinalIgnoreCase;
+            var list = AddressListDto.BexarList;
+            var collection = list.Find(x => x.Name.Equals(name, oic));
+            Assert.NotNull(collection);
+            Assert.NotEmpty(collection.Items);
+        }
+
 
         [Theory]
         [InlineData("missing", "County Court at Law No. 1", false)]

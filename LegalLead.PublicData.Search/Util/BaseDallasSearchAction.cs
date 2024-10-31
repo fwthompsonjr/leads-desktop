@@ -63,6 +63,6 @@ namespace LegalLead.PublicData.Search.Util
                 return js;
             }
         }
-        private static readonly object lockObject = new object();
+        private static readonly object lockObject = new();
     }
 }

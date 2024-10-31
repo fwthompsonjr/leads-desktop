@@ -10,5 +10,6 @@
         HarrisCriminal = 40,
         DallasCounty = 60,
         TravisCounty = 70,
+        BexarCounty = 80,
     }
 }

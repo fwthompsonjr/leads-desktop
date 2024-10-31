@@ -42,7 +42,7 @@ namespace LegalLead.PublicData.Search.Util
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
-        private readonly List<ICountySearchAction> ActionItems = new List<ICountySearchAction>();
+        private readonly List<ICountySearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
             var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };

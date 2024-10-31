@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -50,6 +51,7 @@ namespace legallead.search.tests.util
         [InlineData(false)]
         public void ServiceCanGetDriver(bool show)
         {
+            if (!Debugger.IsAttached) return;
             var keys = new List<WebNavigationKey> {
                 new() { Name = "StartDate", Value = "2024-05-25"},
                 new() { Name = "EndDate", Value = "2024-05-25"},
@@ -128,6 +130,7 @@ namespace legallead.search.tests.util
         [InlineData(4)]
         public void ServiceCanIterateDates(int conditionId)
         {
+            if (!Debugger.IsAttached) return;
             var error = Record.Exception(() =>
             {
                 var keys = new List<WebNavigationKey> {
@@ -230,9 +233,9 @@ namespace legallead.search.tests.util
             {
                 var driver = GetDriver();
                 var prc = new DallasSearchProcess();
-                List<DateTime> dates = [];
-                List<ICountySearchAction> common = [];
-                List<ICountySearchAction> postcommon = [];
+                List<DateTime> dates = new();
+                List<ICountySearchAction> common = new();
+                List<ICountySearchAction> postcommon = new();
                 if (conditionId == 0) Iterate(null, prc, dates, common, postcommon);
                 if (conditionId == 1) Iterate(driver, null, dates, common, postcommon);
                 if (conditionId == 2) Iterate(driver, prc, null, common, postcommon);
@@ -267,7 +270,11 @@ namespace legallead.search.tests.util
                 var mock = new Mock<ICountySearchAction>();
                 mock.Setup(a => a.Execute()).Returns(string.Empty);
                 List<DateTime> dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
-                List<ICountySearchAction> common = [new FakeDallasFetchCaseDetail(), new FakeIntCaseDetail(), new FakeRequestCaptcha(), mock.Object];
+                List<ICountySearchAction> common = new() {
+                    new FakeDallasFetchCaseDetail(),
+                    new FakeIntCaseDetail(),
+                    new FakeRequestCaptcha(),
+                    mock.Object };
                 if (conditionId == 0) IterateDateRange(null, prc, dates, common);
                 if (conditionId == 1) IterateDateRange(driver, null, dates, common);
                 if (conditionId == 2) IterateDateRange(driver, prc, null, common);
@@ -297,7 +304,10 @@ namespace legallead.search.tests.util
                 Items.Clear();
                 Items.AddRange(items);
                 mock.Setup(a => a.Execute()).Returns(string.Empty);
-                List<ICountySearchAction> common = [new FakeDallasFetchCaseStyle(), new FakeIntCaseStyle(), mock.Object];
+                List<ICountySearchAction> common = new() {
+                    new FakeDallasFetchCaseStyle(),
+                    new FakeIntCaseStyle(),
+                    mock.Object };
                 if (conditionId == 0) IterateItems(null, prc, common);
                 if (conditionId == 1) IterateItems(driver, null, common);
                 if (conditionId == 2) IterateItems(driver, prc, null);

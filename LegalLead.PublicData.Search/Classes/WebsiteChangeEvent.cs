@@ -1,6 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Dto;
@@ -18,7 +17,7 @@ namespace LegalLead.PublicData.Search
             const int Zero = 0;
             const int Three = 3;
             const int Five = 5;
-            var boxindicies = new List<int> { DallasIndx, TravisIndx };
+            var boxindicies = new List<int> { DallasIndx, TravisIndx, BexarIndx };
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             var cbo = GetMain.cboSearchType;
             var customBindingNeeded = boxindicies.Contains(source.Id);
@@ -75,7 +74,8 @@ namespace LegalLead.PublicData.Search
             // remove event handler
             cbo.SelectedIndexChanged -= GetMain.CboSearchType_SelectedIndexChanged;
 
-            var dataSource = caseTypes.DropDowns.FindAll(x => {
+            var dataSource = caseTypes.DropDowns.FindAll(x =>
+            {
                 if (countyId != TravisIndx) return true;
                 return caseTypes.DropDowns.IndexOf(x) == 2;
             });
@@ -104,5 +104,6 @@ namespace LegalLead.PublicData.Search
 
         private const int DallasIndx = 60;
         private const int TravisIndx = 70;
+        private const int BexarIndx = 80;
     }
 }

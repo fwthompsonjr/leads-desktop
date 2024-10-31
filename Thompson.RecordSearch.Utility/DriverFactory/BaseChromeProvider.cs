@@ -70,7 +70,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
                 return _driverFileName;
             }
 
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             if (!Directory.Exists(execName))
             {
@@ -92,7 +92,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
                 return _downloadPath;
             }
 
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             if (!Directory.Exists(execName))
             {

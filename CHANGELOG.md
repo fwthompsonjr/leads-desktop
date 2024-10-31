@@ -1,10 +1,10 @@
-## Problem:
+# Release | 2.8.1 Travis County
 
-When a user selects Dallas county a search parameter
-The process will perform a search for Dallas county.
+## Description
+As an application developer, I want to release v2.8.1 so that Travis search is available to consumers.
 
-## Resolution:
-- [x] Confirm excel file generation
-- [x] Create excal file to open generated files
-- [x] Test behavior for Dallas counties
-- [x] Update package to generate release
+### Details
+- setup search infrastructure
+- test travis search process
+- update shortcut creation process
+- code clean up and refactoring

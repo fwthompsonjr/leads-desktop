@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -77,10 +78,11 @@ namespace LegalLead.PublicData.Search
         internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var source = (DropDown)cboSearchType.SelectedItem;
-            var nonactors = new List<int> { 
-                (int)SourceType.HarrisCivil, 
+            var nonactors = new List<int> {
+                (int)SourceType.HarrisCivil,
                 (int)SourceType.DallasCounty,
-                (int)SourceType.TravisCounty
+                (int)SourceType.TravisCounty,
+                (int)SourceType.BexarCounty
             };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && nonactors.Contains(selectedItem.Id))
@@ -382,7 +384,14 @@ namespace LegalLead.PublicData.Search
 
             var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
             if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
-            System.Diagnostics.Process.Start(xmlFile);
+            using (var p = new Process())
+            {
+                p.StartInfo = new ProcessStartInfo(xmlFile)
+                {
+                    UseShellExecute = true
+                };
+                p.Start();
+            }
         }
 
         private WebNavigationParameter GetParameter()

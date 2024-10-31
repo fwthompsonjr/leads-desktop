@@ -1,0 +1,209 @@
+~ set search parameters and submit
+var indx = '{0}';
+var startDate = '{1}';
+var endDate = '{2}';
+var searchDate = '{3}';
+var fallbackDate = new Date().toLocaleString().split(',')[0];
+var search =
+{
+	setLocation: function(id) {
+		const cboname = "cboHSLocationGroup";
+		var cbo = document.getElementById(cboname);
+		cbo.selectedIndex = id;
+		cbo.dispatchEvent(new Event('change'))
+	},
+	setSearchType: function() {
+		const cboname = "cboHSSearchBy";
+		var cbo = document.getElementById(cboname);
+		cbo.selectedIndex = 1;
+		cbo.dispatchEvent(new Event('change'))
+	},
+	setSearchValue: function(id, dteStart)
+	{
+		const tbxname = "SearchCriteria_SearchValue";
+		var tbx = document.getElementById(tbxname);
+		var tbxvalue = "";
+		var dte = (new Date(dteStart)).getFullYear().toString();
+		if (id == 2) { tbxvalue = "".concat(dte, "CV*"); }
+		if (id == 3) { tbxvalue = "".concat(dte, "CI*"); }
+		if (id == 4) { tbxvalue = "11DC2*"; }
+		tbx.value = tbxvalue;
+		tbx.dispatchEvent(new Event('change'))	
+	},
+	setSearchDates: function(dteStart, dteEnding)
+	{
+		const tbxnames = "SearchCriteria_DateFrom,SearchCriteria_DateTo";
+		var tbxs = tbxnames.split(',');
+		for(var i = 0; i < tbxs.length; i++) {
+			var tbxname = tbxs[i];
+			var tbx = document.getElementById(tbxname);
+			var tbxvalue = i == 0 ? dteStart : dteEnding;
+			tbx.value = tbxvalue;
+			tbx.dispatchEvent(new Event('change'))
+		}	
+	},
+	populate: function(id, dteStart, dteEnding, dteSearch)
+	{
+		if (isNaN(id)) { return; }
+		if (isNaN(Date.parse(dteStart))) { return; }
+		if (isNaN(Date.parse(dteEnding))) { return; }
+		if (isNaN(Date.parse(dteSearch))) { 
+			dteSearch = fallbackDate;
+		}
+		nbr = parseInt(id);
+		search.setLocation(0);
+		search.setLocation(nbr);
+		search.setSearchType();
+		search.setSearchValue(nbr, dteSearch);
+		search.setSearchDates(dteStart, dteEnding);
+		search.submit();
+	},
+	submit: function()
+	{
+		const btnname = "btnHSSubmit";
+		var btn = document.getElementById(btnname);
+		btn.click();
+	}
+}
+// if searchDate is not provided assume search in current year
+if (isNaN(Date.parse(searchDate))) { 
+	searchDate = fallbackDate;
+}
+search.populate(indx, startDate, endDate, searchDate);
+
+~ select max rows per page
+var itms = document.getElementsByTagName("ul")
+var ularr = Array.prototype.slice.call( itms, 0 );
+ulitms = ularr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+liitem = ulitms[ ulitms.length - 1].getElementsByTagName('li')
+liitem[liitem.length - 1].click();
+
+~ get list of case items
+var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
+links = links.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr.indexOf('caseLink') >= 0; });
+var alldata = [];
+links.forEach((lnk) => {
+	var linkurl = lnk.getAttribute('data-url');
+	datarow = Array.prototype.slice.call( lnk.closest('tr').getElementsByTagName('td'), 0 ) 
+	var data = {
+		"uri": linkurl,
+		"caseNumber": datarow[0].innerText,
+		"caseStyle": datarow[1].innerText,
+		"casetype": datarow[2].innerText,
+		"courtDate": datarow[3].innerText,
+		"hearingType": datarow[4].innerText,
+		"location": datarow[6].innerText
+	}
+	alldata.push(data);
+});
+return JSON.stringify(alldata);
+
+~ verify page count
+var tmp = {
+	getExpectedCount : function ()
+	{
+		var spns = document.getElementsByTagName("span");
+		var spnarr = Array.prototype.slice.call( spns, 0 );
+		spnarr = spnarr.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'k-pager-info k-label' });
+		if (spnarr.length == 0) { return 0; }
+		var txt = spnarr[0].innerText;
+		t = txt.indexOf(' of ');
+		if (t < 0) { return 0; }
+		expectedText = txt.substr(t + 4).split(' ')[0];
+		expected = parseInt(expectedText);
+		if (isNaN(expected)) { return 0; }
+		return expected;
+	},
+	getActualCount: function ()
+	{
+		try {
+		var links = document.getElementsByTagName("a");
+		var linkarr = Array.prototype.slice.call( links, 0 );
+		linkarr = linkarr.filter(a => { 
+			let attr = a.getAttribute('class'); 
+			if (attr == null) { return false; } 
+			return attr == 'caseLink show-only-in-desktop-view' }); 
+		return linkarr.length;
+		} catch {
+			return 0;
+		}
+	}, 
+	getCount: function() {
+		let expected = tmp.getExpectedCount();
+		let actual = tmp.getActualCount();
+		let obj = { "expected": expected, "actual": actual };
+		return JSON.stringify(obj);
+	}
+};
+var rsp = tmp.getCount();
+return rsp;
+
+~ check for no count
+var obj = { "status": false }
+var dv = document.getElementById('noResults');
+var attr = dv.getAttribute('style');
+if (attr == null) { return JSON.stringify(obj); }
+if (attr.length == 0) { return JSON.stringify(obj); }
+if (attr.indexOf('display') == -1) { return JSON.stringify(obj); }
+if (attr.indexOf('block') == -1) { return JSON.stringify(obj); }
+obj.status = true;
+return JSON.stringify(obj);
+
+~ get defendant address
+
+var findName =
+{
+	"defendant": function ()
+	{
+		var searches = ['Defendant'];
+		var rows = Array.prototype.slice.call( document.getElementsByTagName('tr'), 0 );
+		rows = rows.filter(a => { 
+					let attr = a.getAttribute('class'); 
+					if (attr == null) { return false; } 
+					return attr == 'roa-party-row roa-pad-b-10 ng-scope' });
+		rows = rows.filter(a => { 
+					let attr = a.innerText; 
+					if (attr == null || attr.length == 0) { return false; } 
+					var isFound = false;
+					for(let i = 0; i < searches.length; i++)
+					{
+						if(attr.indexOf(searches[i]) < 0) { continue; }
+						isFound = true;
+						break;
+					}
+					return isFound });
+		var dvs = Array.prototype.slice.call( document.getElementsByTagName('div'), 0 );
+		var dvstlye = "roa-header-sect-row hide-xs layout-row";
+		dvs = dvs.filter(a => { 
+					let attr = a.getAttribute('class'); 
+					if (attr == null) { return false; } 
+					return attr == dvstlye });
+		dvs = dvs.filter(a => a.innerText.indexOf('Location') == 0);
+		var obj = { "name": "", "address": "", "court": "" };
+		if (dvs.length > 0) {
+			var dtexts = dvs[0].innerText.trim().split(':');
+			if (dtexts.length > 1) {
+				obj.court = dtexts[1].trim();
+			}
+		}
+		if (rows.length <= 0 ) { return JSON.stringify(obj); }
+		var txts = rows[0].innerText.split('\t');
+		if (txts.length < 2 ) { return JSON.stringify(obj); }
+		var names = txts[1].split('\n');
+		if (names.length == 0 ) { return JSON.stringify(obj); }
+		obj.name = names[0].trim();
+		if (names.length < 2 ) { return JSON.stringify(obj); }
+		var arr = [];
+		for(var i = 1; i < names.length; i++) {
+			let txt = names[i].trim();
+			if (txt.length > 0) { arr.push( txt ); }
+		}
+		obj.address = arr.join('|');
+		return JSON.stringify(obj);
+	}
+}
+
+return findName.defendant();
+
+
+~ end of file

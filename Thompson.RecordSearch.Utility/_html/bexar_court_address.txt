@@ -1,0 +1,270 @@
+[
+	{
+		"name": "county",
+		"items": [
+			{
+				"id": 1,
+				"name": "County Court at Law No. 1",
+				"address": [
+					"County Court at Law No. 1",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 2,
+				"name": "County Court at Law No. 2",
+				"address": [
+					"County Court at Law No. 2",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 3,
+				"name": "County Court at Law No. 3",
+				"address": [
+					"County Court at Law No. 3",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 4,
+				"name": "County Court at Law No. 4",
+				"address": [
+					"County Court at Law No. 4",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 5,
+				"name": "County Court at Law No. 5",
+				"address": [
+					"County Court at Law No. 5",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 6,
+				"name": "County Court at Law No. 6",
+				"address": [
+					"County Court at Law No. 6",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 7,
+				"name": "County Court at Law No. 7",
+				"address": [
+					"County Court at Law No. 7",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 8,
+				"name": "County Court at Law No. 8",
+				"address": [
+					"County Court at Law No. 8",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 9,
+				"name": "County Court at Law No. 9",
+				"address": [
+					"County Court at Law No. 9",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 10,
+				"name": "County Court at Law No. 10",
+				"address": [
+					"County Court at Law No. 10",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 11,
+				"name": "County Court at Law No. 11",
+				"address": [
+					"County Court at Law No. 11",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 12,
+				"name": "County Court at Law No. 12",
+				"address": [
+					"County Court at Law No. 12",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 13,
+				"name": "County Court at Law No. 13",
+				"address": [
+					"County Court at Law No. 13",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 14,
+				"name": "County Court at Law No. 14",
+				"address": [
+					"County Court at Law No. 14",
+					"300 Dolorosa, San Antonio, TX 78205"
+				]
+			}
+		]
+	},
+	{
+		"name": "justice",
+		"items": [
+			{
+				"id": 1,
+				"name": "Precinct 1",
+				"address": [
+					"Justice of the Peace for Precinct 1",
+					"3505 Pleasanton Road, San Antonio, TX 78221"
+				]
+			},
+			{
+				"id": 2,
+				"name": "Precinct 2",
+				"address": [
+					"Justice of the Peace for Precinct 2",
+					"7723 Guilbeau Road, Suite 105, San Antonio, TX 78250"
+				]
+			},
+			{
+				"id": 3,
+				"name": "Precinct 3",
+				"address": [
+					"Justice of the Peace for Precinct 3",
+					"320 Interpark Blvd., San Antonio, TX 78216"
+				]
+			},
+			{
+				"id": 4,
+				"name": "Precinct 4",
+				"address": [
+					"Justice of the Peace for Precinct 4",
+					"2711 S.E. Loop 410 South, San Antonio, TX 78222"
+				]
+			}
+		]
+	},
+	{
+		"name": "criminal",
+		"items": [
+		]
+	},
+	{
+		"name": "district",
+		"items": [
+			{
+				"id": 1,
+				"name": "37th Civil District Court",
+				"address": [
+					"37th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 2,
+				"name": "45th Civil District Court",
+				"address": [
+					"45th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 3,
+				"name": "57th Civil District Court",
+				"address": [
+					"57th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 4,
+				"name": "73rd Civil District Court",
+				"address": [
+					"73rd Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 5,
+				"name": "131st Civil District Court",
+				"address": [
+					"131st Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 6,
+				"name": "150th Civil District Court",
+				"address": [
+					"150th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 7,
+				"name": "166th Civil District Court",
+				"address": [
+					"166th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 8,
+				"name": "224th Civil District Court",
+				"address": [
+					"224th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 9,
+				"name": "285th Civil District Court",
+				"address": [
+					"285th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 10,
+				"name": "288th Civil District Court",
+				"address": [
+					"288th Civil District Court",
+					"101 W. Nueva, 4th Floor, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 11,
+				"name": "407th Civil District Court",
+				"address": [
+					"407th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 12,
+				"name": "408th Civil District Court",
+				"address": [
+					"408th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			},
+			{
+				"id": 13,
+				"name": "438th Civil District Court",
+				"address": [
+					"438th Civil District Court",
+					"100 Dolorosa, San Antonio, TX 78205"
+				]
+			}
+		]
+	}
+]

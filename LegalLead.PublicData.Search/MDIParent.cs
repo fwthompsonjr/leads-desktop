@@ -27,7 +27,7 @@ namespace LegalLead.PublicData.Search
 
         private void ShowNewForm(object sender, EventArgs e)
         {
-            using (Form childForm = new Form())
+            using (Form childForm = new())
             {
                 childForm.MdiParent = this;
                 childForm.Text = "Window " + childFormNumber++;
@@ -37,7 +37,7 @@ namespace LegalLead.PublicData.Search
 
         private void OpenFile(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            using (OpenFileDialog openFileDialog = new())
             {
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 openFileDialog.Filter = CommonKeyIndexes.TextAndAllFilesFilter;
@@ -50,7 +50,7 @@ namespace LegalLead.PublicData.Search
 
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            using (SaveFileDialog saveFileDialog = new())
             {
                 saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 saveFileDialog.Filter = CommonKeyIndexes.TextAndAllFilesFilter;

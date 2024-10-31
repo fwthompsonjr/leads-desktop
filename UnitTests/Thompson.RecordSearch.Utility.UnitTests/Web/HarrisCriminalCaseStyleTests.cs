@@ -24,7 +24,7 @@ namespace Thompson.RecordSearch.Utility.Tests
         {
             if (CaseNumbers == null)
             {
-                Startup.Downloads.Read();
+                Startup.Downloads.ReadFilings();
                 var datalist = Startup.Downloads.DataList.FirstOrDefault();
                 var dtos = datalist.Data.Select(x =>
                     new HarrisCaseSearchDto

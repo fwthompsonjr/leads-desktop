@@ -12,7 +12,6 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
             For<IWebDriverProvider>().Add<ChromeProvider>().Named("Chrome");
             For<IWebDriverProvider>().Add<ChromeOlderProvider>().Named("Chrome Legacy");
             For<IWebDriverProvider>().Add<FireFoxProvider>().Named("Firefox");
-            For<IWebDriverProvider>().Add<EdgeProvider>().Named("Edge");
         }
     }
 }

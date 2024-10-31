@@ -16,7 +16,7 @@ namespace LegalLead.PublicData.Search.Util
         public bool PauseForPage { get; set; }
         public override object Execute()
         {
-            if (Parameters == null || Driver == null)
+            if (Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             if (PauseForPage) Thread.Sleep(2000);
             var alldata = new List<TravisCaseStyleDto>();
@@ -35,20 +35,20 @@ namespace LegalLead.PublicData.Search.Util
                 var current = id;
                 var element = GetLink(id++);
                 element.Click();
-                
+
                 Thread.Sleep(500);
-                
+
                 var body = Driver.FindElement(By.TagName("body"));
                 var content = body.GetAttribute("innerHTML");
                 var dto = GetDto(content);
-                if (dto != null) 
+                if (dto != null)
                     alldata.Add(dto);
                 else
                     retries.Add(current);
 
                 Driver.Navigate().Back();
             }
-            
+
             Console.WriteLine("Search mapped {0} records", alldata.Count);
             return JsonConvert.SerializeObject(alldata);
         }
@@ -127,7 +127,7 @@ namespace LegalLead.PublicData.Search.Util
             var plantId = headers.FindIndex(x => x.InnerText.Equals("Plaintiff", comparison));
             if (plantId < 0) plantId = headers.Count - 1;
 
-            
+
             var ndeCourt = courtName?.ParentNode;
             while (ndeCourt != null && !ndeCourt.Name.Equals("tr", comparison)) ndeCourt = ndeCourt.ParentNode;
             if (ndeCourt != null)
