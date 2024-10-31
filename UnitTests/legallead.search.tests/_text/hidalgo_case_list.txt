@@ -1,0 +1,189 @@
+<table border="0" cellpadding="2" cellspacing="0" width="100%" style="font-size: 8pt; font-family: arial" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:user="http://www.tylertechnologies.com" xmlns:publicaccessuser="urn:PublicAccessUser"><colgroup><col width="25%"><col width="35%"><col width="20%"><col width="20%"></colgroup><tbody><tr><th class="ssSearchResultHeader" nowrap="true"><b>Case Number</b></th><th class="ssSearchResultHeader" nowrap="true"><b>Style</b></th><th class="ssSearchResultHeader" nowrap="true"><b>Filed/Location</b></th><th class="ssSearchResultHeader" nowrap="true"><b>Type</b><b>/Status</b></th></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4733883" style="color: blue">CL-24-4151-J</a></td><td valign="top">Barclays Bank Delaware
+VS.
+Melissa Guevara</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4733996" style="color: blue">CL-24-4152-D</a></td><td valign="top">LUIS NELSON PACHECHO,ALMA NELI TREVINO
+ VS. 
+NEWREZ LLC D/B/A SHELLPOINT MORTGAGE SERVICING,MARCIA CHAPA AS SUBSTITUTE TRUSTEE</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #4</div></td><td valign="top" nowrap="true"><div>All Other Civil Cases (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734057" style="color: blue">CL-24-4153-I</a></td><td valign="top">Alma Salas
+VS.
+Foremost Lloyd's of Texas</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734186" style="color: blue">CL-24-4154-I</a></td><td valign="top">LEEROY CLARK
+ VS. 
+VERONICA CASTRO AREBALO, AUGUSTIN AREBALO</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734192" style="color: blue">CL-24-4155-H</a></td><td valign="top">Victoria Nicole Alonzo
+ VS. 
+Genesis Ivonne Gomez Quintero</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #8</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734195" style="color: blue">CL-24-4156-H</a></td><td valign="top">Mitzi Zubiate, Armando Gomez
+VS.
+STATE FARM LLOYDS</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #8</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Other (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734201" style="color: blue">CL-24-4157-G</a></td><td valign="top">State Farm Mutual Automobile Insurance Company aso Juan Pena
+ VS. 
+Hugo Regalado-Ozuna</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734402" style="color: blue">CL-24-4158-B</a></td><td valign="top">BIANCA ROSALES
+ VS. 
+URIEL EDUARDO  CHAVEZ RAMIREZ</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734567" style="color: blue">CL-24-4159-H</a></td><td valign="top">ELLIE  ESTRADA
+VS.
+HOMESITE INSURANCE COMPANY</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #8</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734631" style="color: blue">CL-24-4160-J</a></td><td valign="top">MILTON  GARCIA
+ VS. 
+ISIDORO LOPEZ GARCIA</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734713" style="color: blue">CL-24-4161-J</a></td><td valign="top"> Bank Of America, N.a.
+VS.
+Fernando Zuniga</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734715" style="color: blue">CL-24-4162-H</a></td><td valign="top">Bank Of America N.a.
+VS.
+Jose J. Sanchez</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #8</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734717" style="color: blue">CL-24-4163-G</a></td><td valign="top">Bank Of America N.a.
+VS.
+Sarita Mireles</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734719" style="color: blue">CL-24-4164-F</a></td><td valign="top">Bank Of America N.a.
+VS.
+Jose F. Sanchez</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734720" style="color: blue">CL-24-4165-D</a></td><td valign="top">Bank Of America N.a.
+VS.
+Francisca Nayeli Garza</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #4</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734721" style="color: blue">CL-24-4166-B</a></td><td valign="top">Bank Of America N.a.
+VS.
+Monique Lynette Mata</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734722" style="color: blue">CL-24-4167-B</a></td><td valign="top">Bank Of America N.a.
+VS.
+Joanna L. Walker</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734724" style="color: blue">CL-24-4168-F</a></td><td valign="top">Bank Of America N.a.
+VS.
+Israel Garcia</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4734893" style="color: blue">CL-24-4172-E</a></td><td valign="top">DWAIN LEWIS d/b/a LEWIS CONSTRUCTION
+ VS. 
+ARMANDO GARCIA d/b/a A'S PLUMBING</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>All Other Civil Cases (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735059" style="color: blue">CL-24-4173-I</a></td><td valign="top">Ignacio Guel, Elisa  Guel
+ VS. 
+Pedro Israel Perez</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735062" style="color: blue">CL-24-4174-D</a></td><td valign="top">Ponciano Ramos
+VS.
+Industrial and Warehouse Solutions, LLC</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #4</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Other (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735273" style="color: blue">CL-24-4176-I</a></td><td valign="top">Angel Moralez, Jr.
+ VS. 
+Ana Paoloa Gonzalez Mireles, Oziel Gutierrez</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735323" style="color: blue">CL-24-4178-B</a></td><td valign="top">THE STATE OF TEXAS,THE STATE OF TEXAS
+ VS. 
+BRENDA  LIZATH MAREZ</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>Habeas Corpus</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735324" style="color: blue">CL-24-4179-G</a></td><td valign="top">H.E.B. Federal Credit Union
+VS.
+Ernie Alaniz</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735326" style="color: blue">CL-24-4180-E</a></td><td valign="top">Enedelia Tijerina
+ VS. 
+Robin Nicole Garza</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735339" style="color: blue">CL-24-4181-G</a></td><td valign="top">Katie Lynn Underwood
+ VS. 
+Kirk Allen Wood</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>All Other Civil Cases (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735425" style="color: blue">CL-24-4182-E</a></td><td valign="top">Capital One N.a.
+VS.
+Gilberto R. Pena</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735430" style="color: blue">CL-24-4183-A</a></td><td valign="top">Alvaro Rivera
+ VS. 
+Sergio Alan Bentacourt Munoz, Genaro Gonzalez</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #1</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735435" style="color: blue">CL-24-4184-I</a></td><td valign="top">Jpmorgan Chase Bank N.a.
+VS.
+Jonah Riley</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735436" style="color: blue">CL-24-4185-J</a></td><td valign="top">IN RE:
+
+J.G. WENTWORTH ORIGINATIONS, LLC</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>All Other Civil Cases (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735437" style="color: blue">CL-24-4186-I</a></td><td valign="top">Capital One N.a.
+VS.
+Khristopher B. Contreras</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735441" style="color: blue">CL-24-4189-A</a></td><td valign="top">Jpmorgan Chase Bank N.a.
+VS.
+Rogelio Saldivar Galicia</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law #1</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735439" style="color: blue">CL-24-4187-G</a></td><td valign="top">Citibank, N.a.
+VS.
+Jorge Valadez</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735459" style="color: blue">CL-24-4190-G</a></td><td valign="top">Citibank, N.a.
+VS.
+Benjamin De Luna</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735524" style="color: blue">CL-24-4191-J</a></td><td valign="top">Jpmorgan Chase Bank, N.a.
+VS.
+Christina Gonzalez</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735687" style="color: blue">CL-24-4192-E</a></td><td valign="top">Carmax Business Services Llc D/b/a Carmax Auto Finance
+VS.
+Annabel Molloy,Devin A. Molloy</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735690" style="color: blue">CL-24-4193-F</a></td><td valign="top">Guadalupe Guerrero, IV, CESAR ROMEO CERDA
+ VS. 
+ALLSTATE COUNTY MUTUAL INSURANCE COMPANY</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735755" style="color: blue">CL-24-4194-G</a></td><td valign="top">Barclays Bank Delaware
+VS.
+Clarissa Sanchez</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735861" style="color: blue">CL-24-4195-E</a></td><td valign="top">Amadeo Hernandez, Jr., Maria Garza
+ VS. 
+Nathanael Fonseca, Jr.</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735874" style="color: blue">CL-24-4196-J</a></td><td valign="top">DAISY BONILLA
+VS.
+Allstate Vehicle and Property Insurance Company</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735883" style="color: blue">CL-24-4197-J</a></td><td valign="top">Aurelio Garza
+ VS. 
+Mark Anthony Sanchez, Superior Alarms</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735923" style="color: blue">CL-24-4198-G</a></td><td valign="top">Credit Corp Solutions Inc.
+VS.
+Armando Ramos</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735939" style="color: blue">CL-24-4199-F</a></td><td valign="top">Mayra Munoz
+ VS. 
+McAllen Independent School District</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>All Other Civil Cases (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4735978" style="color: blue">CL-24-4200-G</a></td><td valign="top">Melissa Martinez
+ VS. 
+Geico County Mutual Insurance Company</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736001" style="color: blue">CL-24-4201-J</a></td><td valign="top">Diana Isela Vazquez, Maria Teresa Bernal
+ VS. 
+Robert Rodriguez, Monica Cardenas</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736002" style="color: blue">CL-24-4202-A</a></td><td valign="top">Didier Alexander Gonzalez Reyes
+ VS. 
+Alayna Clariss Montalvo</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #1</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736005" style="color: blue">CL-24-4203-A</a></td><td valign="top">Unifund Ccr, Llc
+VS.
+Miguel Meza</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #1</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736008" style="color: blue">CL-24-4204-A</a></td><td valign="top">Jefferson Capital Systems Llc
+VS.
+Abraham Gutierres</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #1</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736029" style="color: blue">CL-24-4205-A</a></td><td valign="top">OSCAR PEREZ
+ VS. 
+MIGUEL ANGEL MEZA, CHRISTOPHER M BRIGGS</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #1</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736031" style="color: blue">CL-24-4206-A</a></td><td valign="top">Mario Guerrero
+VS.
+EDINBURG CAR WASH SERVICES, LLC</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #1</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Other (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736094" style="color: blue">CL-24-4207-E</a></td><td valign="top">Discover Bank
+VS.
+Arlene Y Sanchez</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736179" style="color: blue">CL-24-4208-I</a></td><td valign="top">Benito Elizondo, Narcedalia Elizondo
+VS.
+Allstate Vehicle and Property Insurance Company</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736250" style="color: blue">CL-24-4209-E</a></td><td valign="top">Rosa Rios, Oviedo Rios
+VS.
+Surechoice Underwriters Reciprocal Exchange</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736260" style="color: blue">CL-24-4210-F</a></td><td valign="top">Luis Eduardo  Lozano
+ VS. 
+Erick Hernandez Medrano, Complete Signs, LLC</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736272" style="color: blue">CL-24-4211-B</a></td><td valign="top">Estela  Rios Mendoza 
+VS.
+Kaizen Clinical Partners, Inc</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Other (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736318" style="color: blue">CL-24-4212-J</a></td><td valign="top">Margarita Barbosa
+VS.
+Surechoice Underwriters Reciprocal Exchange</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736319" style="color: blue">CL-24-4213-F</a></td><td valign="top">Jose Tapia
+VS.
+Allstate Vehicle and Property Insurance, IMAN OWEN</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736323" style="color: blue">CL-24-4214-G</a></td><td valign="top">VICTOR MANUEL CASTELLANO CALDERON
+ VS. 
+DIEGO HERRERA MENDOZA</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736392" style="color: blue">CL-24-4215-E</a></td><td valign="top">Elizabeth Moya
+VS.
+RGV Equine Services, LLC</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Other (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736467" style="color: blue">CL-24-4216-G</a></td><td valign="top">LESLIE VILLEGAS
+ VS. 
+MOR-WILL MANAGEMENT LLC, DANIEL GONZALEZ</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736472" style="color: blue">CL-24-4217-J</a></td><td valign="top">Citibank, N.a.
+VS.
+Jorge Fernandez De Lara</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736475" style="color: blue">CL-24-4218-B</a></td><td valign="top">Ncb Management Services Inc.
+VS.
+Ricardo Rodriguez</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736494" style="color: blue">CL-24-4219-I</a></td><td valign="top">Capital One N.a.
+VS.
+Aimee A. Castro</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736497" style="color: blue">CL-24-4220-F</a></td><td valign="top">AMERICAN EXPRESS NATIONAL BANK
+VS.
+Daniel Banuelos</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736499" style="color: blue">CL-24-4221-B</a></td><td valign="top">Tania Abigail Hernandez
+ VS. 
+Miguel Angel Lara Cisneros, Carolina Roman Sanchez</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736500" style="color: blue">CL-24-4222-G</a></td><td valign="top">AMERICAN EXPRESS NATIONAL BANK
+VS.
+Octavio Avalos</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736528" style="color: blue">CL-24-4223-G</a></td><td valign="top">FOUR MORE, LLC
+VS.
+Herbert Anaya</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Real Property - Other Real Property (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736532" style="color: blue">CL-24-4224-G</a></td><td valign="top">ANDRES DAVID MONTES
+VS.
+MAPLE MANOR APARTMENTS, LLC</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Other (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736835" style="color: blue">CL-24-4225-G</a></td><td valign="top">Velocity Investments, Llc
+VS.
+Fernando Mendoza</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736850" style="color: blue">CL-24-4226-B</a></td><td valign="top">Linda Quinn
+VS.
+State Farm Mutual Automibile Insurance Company</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4736858" style="color: blue">CL-24-4227-G</a></td><td valign="top">Katarina Marciana Avila
+ VS. 
+Domingo Sebastian Soliz, Priscilla Monique Ochoa</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737001" style="color: blue">CL-24-4228-H</a></td><td valign="top">Amalia Recio, Norberto Recio
+VS.
+STATE FARM LLOYDS</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #8</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Other (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737005" style="color: blue">CL-24-4229-E</a></td><td valign="top">LOBL, LLC
+ VS. 
+Kimberly Redman fna Kimberly Harper dba Hannah &amp; Lucille's Boutique</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>All Other Civil Cases (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737043" style="color: blue">CL-24-4230-G</a></td><td valign="top">Raquel Cavazos Martinez, Noe Rodriguez
+ VS. 
+Elizabeth Puentes</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737048" style="color: blue">CL-24-4231-G</a></td><td valign="top">Carmen Gonzalez
+ VS. 
+Ana Rodriguez</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737073" style="color: blue">CL-24-4232-I</a></td><td valign="top">Saul Marroquin Electric &amp; Plumbing
+VS.
+Pueblo De Paz,Vesta Corporation</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737118" style="color: blue">CL-24-4233-H</a></td><td valign="top">Lizbeth A. Saavedra Castillo
+ VS. 
+Rubio Rios Cantu</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #8</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737119" style="color: blue">CL-24-4234-E</a></td><td valign="top">VILLITA AVOCADOS, INC
+ VS. 
+SIGMA SIX SERVICES, INC ,DFW 360 TRANSPORT,  LLC</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>All Other Civil Cases (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737121" style="color: blue">CL-24-4235-F</a></td><td valign="top">Credit Corp Solutions Inc.
+VS.
+Cynthia Salazar</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737124" style="color: blue">CL-24-4236-B</a></td><td valign="top">VILLITA AVOCADOS, INC 
+ VS. 
+SIGMA SIX SERVICES, INC ,LANZA TRANSPORT, LLC</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #2</div></td><td valign="top" nowrap="true"><div>All Other Civil Cases (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737126" style="color: blue">CL-24-4237-J</a></td><td valign="top">Jefferson Capital Systems Llc
+VS.
+Luz Salinas</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737129" style="color: blue">CL-24-4238-A</a></td><td valign="top">Norma Patricia Albino Mata, INDIVIDUALLY A/N/F K.A.A.S.
+ VS. 
+Cecilia Herrera</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #1</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737137" style="color: blue">CL-24-4239-G</a></td><td valign="top">Credit Corp Solutions Inc.
+VS.
+Juan Moreno</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #7</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737146" style="color: blue">CL-24-4240-H</a></td><td valign="top">Credit Corp Solutions Inc.
+VS.
+Joann Alonzo</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #8</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737150" style="color: blue">CL-24-4241-H</a></td><td valign="top">Capital One N.a.
+VS.
+Jorge M. Corripio</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #8</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737152" style="color: blue">CL-24-4242-F</a></td><td valign="top">Bank Of America N.a.
+VS.
+Jose J. Guzman Jr.</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737157" style="color: blue">CL-24-4243-J</a></td><td valign="top">Bank Of America N.a.
+VS.
+Aracely Gonzalez</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737159" style="color: blue">CL-24-4244-I</a></td><td valign="top">Bank Of America N.a.
+VS.
+Deisy Keren Mariscal</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737173" style="color: blue">CL-24-4246-F</a></td><td valign="top">Carlos Alanis, Diana Villegas de Alanis
+VS.
+Allstate Vehicle and Property Insurance</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737180" style="color: blue">CL-24-4247-E</a></td><td valign="top">Jefferson Capital Systems Llc
+VS.
+Jose Villarreal</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #5</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737199" style="color: blue">CL-24-4248-I</a></td><td valign="top">NORMA IRIS NINO, Minor Child, A.R.
+ VS. 
+DEBBIE LEE TAMEZ</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737265" style="color: blue">CL-24-4249-J</a></td><td valign="top">Discover Bank
+VS.
+Mayra Pena</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #10</div></td><td valign="top" nowrap="true"><div>Contract - Other Contract (OCA)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737268" style="color: blue">CL-24-4250-F</a></td><td valign="top">Monica Garza
+VS.
+American Security Insurance Company</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #6</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt (OCA)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=4737452" style="color: blue">CL-24-4251-I</a></td><td valign="top">ANDREA SANCHEZ
+ VS. 
+STATE FARM LLOYDS, INC.</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law #9</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle (OCA)</div><div>Filed</div></td></tr></tbody></table>

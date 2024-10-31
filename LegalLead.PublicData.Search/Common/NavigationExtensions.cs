@@ -1,6 +1,9 @@
-﻿using OpenQA.Selenium;
+﻿using HtmlAgilityPack;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
+using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Common
 {
@@ -21,6 +24,26 @@ namespace LegalLead.PublicData.Search.Common
                 if (obj is not string pagestatus) return false;
                 return pagestatus.Equals(response);
             });
+        }
+
+        public static HtmlDocument GetHtml(this IWebDriver driver, By locator, string propertyName)
+        {
+            var element = driver.TryFindElement(locator);
+            if (element == null) return null;
+            var html = element.GetAttribute(propertyName);
+            if (string.IsNullOrEmpty(html)) return null;
+            var arr = new List<string>
+                {
+                    "<html>",
+                    "<body>",
+                    html,
+                    "</body>",
+                    "</html>"
+                };
+            var content = string.Join(Environment.NewLine, arr);
+            var doc = new HtmlDocument();
+            doc.LoadHtml(content);
+            return doc;
         }
 
         public static IJavaScriptExecutor GetJsExecutor(

@@ -63,6 +63,20 @@ namespace Thompson.RecordSearch.Utility.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///	{
+        ///		&quot;key&quot;: &quot;STATUS_MSG_SEARCH_FOUND_RECORDS&quot;,
+        ///		&quot;value&quot;: &quot;Search found {0} records&quot;
+        ///	}
+        ///].
+        /// </summary>
+        internal static string app_messages {
+            get {
+                return ResourceManager.GetString("app_messages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
         ///		&quot;name&quot;: &quot;county&quot;,
         ///		&quot;items&quot;: [
         ///			{
@@ -178,10 +192,21 @@ namespace Thompson.RecordSearch.Utility.Properties {
         ///   Looks up a localized string similar to ~ say hello
         ///return &quot;hello&quot;;
         ///
+        ///~ get navigation url
+        ////* https://pa.co.hidalgo.tx.us/default.aspx */
         ///
+        ///~ nav to search screen
+        ///var links = Array.prototype.slice.call( document.getElementsByTagName(&apos;a&apos;), 0 );
+        ///links = links.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;class&apos;); 
+        ///  if (attr == null) { return false; } 
+        ///  if (attr != &apos;ssSearchHyperlink&apos;) return false; 
+        ///  return a.innerText.indexOf(&apos;Civil&apos;) &gt;= 0 });
+        ///links[0].click();
         ///
-        ///~ end of file
-        ///.
+        ///~ populate search parameters
+        ///var case_filter = &apos;{0}&apos;;
+        ///var dtes = [ &apos;{1 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string hidalgo_scripts {
             get {
