@@ -17,7 +17,7 @@ namespace LegalLead.PublicData.Search
             const int Zero = 0;
             const int Three = 3;
             const int Five = 5;
-            var boxindicies = new List<int> { DallasIndx, TravisIndx, BexarIndx };
+            var boxindicies = new List<int> { DallasIndx, TravisIndx, BexarIndx, HidalgoIndx };
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             var cbo = GetMain.cboSearchType;
             var customBindingNeeded = boxindicies.Contains(source.Id);
@@ -70,14 +70,16 @@ namespace LegalLead.PublicData.Search
             var find = isCustomBindingNeeded ? "dallasCountyCaseOptions" : CommonKeyIndexes.CollinCountyCaseType;
             var caseTypes = CaseTypeSelectionDto.GetDto(find);
             var caseIndex = cbo.SelectedIndex;
-
+            var customIndexes = new List<int> { TravisIndx, HidalgoIndx };
             // remove event handler
             cbo.SelectedIndexChanged -= GetMain.CboSearchType_SelectedIndexChanged;
 
             var dataSource = caseTypes.DropDowns.FindAll(x =>
             {
-                if (countyId != TravisIndx) return true;
-                return caseTypes.DropDowns.IndexOf(x) == 2;
+                if (!customIndexes.Contains(countyId)) return true;
+                if (countyId == TravisIndx) return caseTypes.DropDowns.IndexOf(x) == 2;
+                if (countyId == HidalgoIndx) return caseTypes.DropDowns.IndexOf(x) == 0;
+                return true;
             });
             cbo.DataSource = dataSource;
             cbo.DisplayMember = CommonKeyIndexes.NameProperCase;
@@ -102,8 +104,9 @@ namespace LegalLead.PublicData.Search
             mapper.MapLabels(GetMain);
         }
 
-        private const int DallasIndx = 60;
-        private const int TravisIndx = 70;
-        private const int BexarIndx = 80;
+        private const int DallasIndx = (int)SourceType.DallasCounty;
+        private const int TravisIndx = (int)SourceType.TravisCounty;
+        private const int BexarIndx = (int)SourceType.BexarCounty;
+        private const int HidalgoIndx = (int)SourceType.HidalgoCounty;
     }
 }

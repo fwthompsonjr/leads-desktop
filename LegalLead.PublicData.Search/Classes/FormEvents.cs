@@ -82,7 +82,8 @@ namespace LegalLead.PublicData.Search
                 (int)SourceType.HarrisCivil,
                 (int)SourceType.DallasCounty,
                 (int)SourceType.TravisCounty,
-                (int)SourceType.BexarCounty
+                (int)SourceType.BexarCounty,
+                (int)SourceType.HidalgoCounty
             };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && nonactors.Contains(selectedItem.Id))
@@ -384,14 +385,12 @@ namespace LegalLead.PublicData.Search
 
             var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
             if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
-            using (var p = new Process())
+            using var p = new Process();
+            p.StartInfo = new ProcessStartInfo(xmlFile)
             {
-                p.StartInfo = new ProcessStartInfo(xmlFile)
-                {
-                    UseShellExecute = true
-                };
-                p.Start();
-            }
+                UseShellExecute = true
+            };
+            p.Start();
         }
 
         private WebNavigationParameter GetParameter()
@@ -403,8 +402,7 @@ namespace LegalLead.PublicData.Search
             catch (Exception)
             {
                 return Invoke(new Func<WebNavigationParameter>(() =>
-                    { return (WebNavigationParameter)cboWebsite.SelectedItem; }))
-                    as WebNavigationParameter;
+                    { return (WebNavigationParameter)cboWebsite.SelectedItem; }));
             }
         }
         private static long GetFileLength(string path)
@@ -452,8 +450,7 @@ namespace LegalLead.PublicData.Search
                     CommonKeyIndexes.DashedLine
                     + Environment.NewLine +
                     CommonKeyIndexes.DashedLine;
-                }))
-                    as string;
+                }));
             }
         }
 

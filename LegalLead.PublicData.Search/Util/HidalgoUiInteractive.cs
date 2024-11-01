@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -55,6 +56,7 @@ namespace LegalLead.PublicData.Search.Util
                 if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
 
                 IterateDateRange(driver, parameters, dates, common);
+                IterateItems(driver, parameters, postcommon);
             }
             catch (Exception ex)
             {
@@ -99,6 +101,8 @@ namespace LegalLead.PublicData.Search.Util
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
+            var nonames = Items.FindAll(x => string.IsNullOrWhiteSpace(x.PartyName) && !string.IsNullOrWhiteSpace(x.CaseStyle));
+            nonames.ForEach(n => n.SetPartyNameFromCaseStyle());
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             casenumbers.ForEach(i =>
             {
