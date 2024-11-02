@@ -42,7 +42,7 @@ namespace LegalLead.PublicData.Search.Util
 
         protected override string GetCourtAddress(string courtType, string court)
         {
-            return string.Empty;
+            return HidalgoCourtLookupService.GetAddress(courtType, court);
         }
 
         protected virtual void Iterate(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)

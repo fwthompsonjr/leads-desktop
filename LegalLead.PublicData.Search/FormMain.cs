@@ -134,7 +134,7 @@ namespace LegalLead.PublicData.Search
             var dweb = siteData.Id switch
             {
                 _ => new HidalgoUiInteractive(wb)
-			};
+            };
             _ = Task.Run(async () =>
             {
                 await ProcessAsync(dweb, siteData, searchItem);

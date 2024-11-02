@@ -9,13 +9,18 @@ namespace LegalLead.PublicData.Search.Common
 
         public static void SetPartyNameFromCaseStyle(this CaseItemDto dto, bool overwrite = false)
         {
-            const string find = "VS. ";
+            const string versus = "VS. ,VS ,vs ,vs. ";
             const string etal = "ET AL";
             const char space = ' ';
+            const char comma = ',';
             if (!overwrite && !string.IsNullOrWhiteSpace(dto.PartyName)) return;
+            var arr = versus.Split(comma);
             var caseStyle = ClearWhiteSpace(dto.CaseStyle);
             if (string.IsNullOrEmpty(caseStyle)) return;
-            if (!caseStyle.Contains(find)) return;
+            var indexes = arr.Select(a => new { index = caseStyle.IndexOf(a), find = a });
+            var match = indexes.FirstOrDefault(x => x.index >= 0);
+            if (match == null) return;
+            var find = match.find;
             var indx = caseStyle.IndexOf(find);
             var name = indx == -1 ? string.Empty : caseStyle[(indx + find.Length)..];
             if (name.EndsWith(etal))

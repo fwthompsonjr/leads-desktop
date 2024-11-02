@@ -30,6 +30,16 @@ namespace Thompson.RecordSearch.Utility.Db
                 return dallasList;
             }
         }
+        public static List<AddressListDto> HidalgoList
+        {
+            get
+            {
+                if (hidalgoList != null) return hidalgoList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(hidalgoContent);
+                hidalgoList = tmp;
+                return hidalgoList;
+            }
+        }
 
         public static List<AddressListDto> TravisList
         {
@@ -43,11 +53,13 @@ namespace Thompson.RecordSearch.Utility.Db
         }
 
         private static List<AddressListDto> bexarList = null;
-        private static List<AddressListDto> travisList = null;
         private static List<AddressListDto> dallasList = null;
+        private static List<AddressListDto> travisList = null;
+        private static List<AddressListDto> hidalgoList = null;
 
         private static readonly string bexarContent = Properties.Resources.bexar_court_address;
         private static readonly string dallasContent = Properties.Resources.dallas_court_address;
         private static readonly string travisContent = Properties.Resources.travis_court_address;
+        private static readonly string hidalgoContent = Properties.Resources.hidalgo_court_address;
     }
 }

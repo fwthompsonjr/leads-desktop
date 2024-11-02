@@ -189,6 +189,34 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;county&quot;,
+        ///    &quot;items&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court #1&quot;,
+        ///        &quot;id&quot;: 1,
+        ///        &quot;address&quot;: [ &quot;County Court #1&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court #2&quot;,
+        ///        &quot;id&quot;: 2,
+        ///        &quot;address&quot;: [ &quot;County Court #2&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court #4&quot;,
+        ///        &quot;id&quot;: 4,
+        ///        &quot;address&quot;: [ &quot;County Court #4&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]
+        ///      },
+        ///       [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hidalgo_court_address {
+            get {
+                return ResourceManager.GetString("hidalgo_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ~ say hello
         ///return &quot;hello&quot;;
         ///
