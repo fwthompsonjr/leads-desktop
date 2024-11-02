@@ -1,26 +1,31 @@
-﻿using LegalLead.PublicData.Search.Classes;
+﻿using Bogus;
+using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Util;
 using Moq;
+using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
 
 namespace legallead.search.tests.util
 {
-    public class FortBendGetLinkCollectionTests
+    public class FortBendFetchClickStyleTests
     {
         [Fact]
         public void ComponentHasCorrectOrder()
         {
-            const int index = 70;
-            var service = new FortBendGetLinkCollection();
+            const int index = 65;
+            var service = new FortBendFetchClickStyle();
             Assert.Equal(index, service.OrderId);
         }
         [Fact]
         public void ComponentCanExecute()
         {
             var driver = new Mock<IWebDriver>();
+            var element = new Mock<IWebElement>();
             var parameters = new DallasSearchProcess();
-            var service = new MockFortBendGetLinkCollection
+            driver.Setup(s => s.FindElement(It.IsAny<By>())).Returns(element.Object);
+            var service = new MockFortBendFetchClickStyle
             {
                 Parameters = parameters,
                 Driver = driver.Object
@@ -35,7 +40,7 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var parameters = new DallasSearchProcess();
-            var service = new MockFortBendGetLinkCollection
+            var service = new MockFortBendFetchClickStyle
             {
                 Parameters = GetItemOrDefault(target == 0, parameters),
                 Driver = GetItemOrDefault(target == 1, driver.Object)
@@ -49,15 +54,22 @@ namespace legallead.search.tests.util
             return defaultValue;
         }
 
-        private sealed class MockFortBendGetLinkCollection : FortBendGetLinkCollection
+        private sealed class MockFortBendFetchClickStyle : FortBendFetchClickStyle
         {
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override IJavaScriptExecutor GetJavaScriptExecutor()
             {
-                MqExecutor.SetupSequence(x => x.ExecuteScript(It.IsAny<string>()))
-                    .Returns(true)
-                    .Returns(true)
-                    .Returns(false);
+                var faker = new Faker();
+                var linkcount = faker.Random.Int(3, 5);
+                var items = new List<string>();
+                var person = new { name = "John Smith", address = "1234 Somewhere Dallas TX 75240", caseNo = "123abc" };
+                var json = JsonConvert.SerializeObject(person);
+                while(linkcount > 0) { items.Add(faker.Random.AlphaNumeric(8)); linkcount--; }
+                var collection = JsonConvert.SerializeObject(items);
+
+                MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains("get person address")))).Returns(json);
+                MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains("find case detail links")))).Returns(collection);
+                MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains("click case detail links")))).Returns(string.Empty);
                 return MqExecutor.Object;
             }
         }

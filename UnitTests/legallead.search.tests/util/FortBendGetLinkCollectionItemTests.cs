@@ -19,8 +19,10 @@ namespace legallead.search.tests.util
         public void ComponentHasLinkItemId()
         {
             const int index = 75;
-            var service = new FortBendGetLinkCollectionItem();
-            service.LinkItemId = index;
+            var service = new FortBendGetLinkCollectionItem
+            {
+                LinkItemId = index
+            };
             Assert.Equal(index, service.LinkItemId);
         }
         [Fact]
@@ -42,10 +44,7 @@ namespace legallead.search.tests.util
         public void ComponentThrowingException(int target)
         {
             var driver = new Mock<IWebDriver>();
-            var navigation = new Mock<INavigation>();
             var parameters = new DallasSearchProcess();
-            var element = new Mock<IWebElement>();
-            IWebElement nonElement = default;
             var service = new MockFortBendGetLinkCollectionItem
             {
                 Parameters = GetItemOrDefault(target == 0, parameters),
