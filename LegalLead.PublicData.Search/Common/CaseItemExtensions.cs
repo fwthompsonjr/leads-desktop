@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using Thompson.RecordSearch.Utility.Dto;
 
@@ -9,40 +10,74 @@ namespace LegalLead.PublicData.Search.Common
 
         public static void SetPartyNameFromCaseStyle(this CaseItemDto dto, bool overwrite = false)
         {
-            const string versus = "VS. ,VS ,vs ,vs. ";
-            const string etal = "ET AL";
-            const char space = ' ';
+            const string versus = "VS. ,VS ,vs ,vs. ,vs.,v. ,EX PARTE: ,IN RE: ";
             const char comma = ',';
             if (!overwrite && !string.IsNullOrWhiteSpace(dto.PartyName)) return;
             var arr = versus.Split(comma);
             var caseStyle = ClearWhiteSpace(dto.CaseStyle);
             if (string.IsNullOrEmpty(caseStyle)) return;
-            var indexes = arr.Select(a => new { index = caseStyle.IndexOf(a), find = a });
-            var match = indexes.FirstOrDefault(x => x.index >= 0);
+            ItemDto match = FindPartyInCaseStyle(arr, caseStyle);
             if (match == null) return;
-            var find = match.find;
-            var indx = caseStyle.IndexOf(find);
-            var name = indx == -1 ? string.Empty : caseStyle[(indx + find.Length)..];
-            if (name.EndsWith(etal))
+            var find = match.Find;
+            var indx = match.Id;
+            var name = FindPartyName(indx, indx + find.Length, caseStyle);
+            if (string.IsNullOrEmpty(name)) return;
+            dto.PartyName = name;
+        }
+
+        private static ItemDto FindPartyInCaseStyle(string[] arr, string caseStyle)
+        {
+            ItemDto match = null;
+            for (int i = 0; i < 2; i++)
             {
-                name = name[..^etal.Length].Trim();
+                var indexes = arr.Select(a =>
+                {
+                    if (i == 0) return new ItemDto { Id = caseStyle.IndexOf(a), Find = a };
+                    else return new ItemDto { Id = caseStyle.IndexOf(a, StringComparison.OrdinalIgnoreCase), Find = a };
+                }
+                );
+                match = indexes.FirstOrDefault(x => x.Id >= 0);
+                if (match != null) break;
+            }
+
+            return match;
+        }
+        private static string FindPartyName(int indx, int startIndex, string caseStyle)
+        {
+            var oic = StringComparison.OrdinalIgnoreCase;
+            const string etal = "ET AL";
+            const char comma = ',';
+            const char pipe = '|';
+            const char space = ' ';
+            const string suffixes = ", Jr.|, Sr.|, I|, II|, III|, IV|, V";
+            if (indx < 0) return string.Empty;
+            if (startIndex > caseStyle.Length - 1) return string.Empty;
+            var name = caseStyle[(startIndex)..].Trim();
+            if (name.EndsWith(etal)) name = name[..^etal.Length].Trim();
+            var suffix = string.Empty;
+            var arr = suffixes.Split(pipe);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                var find = arr[i];
+                if (!name.EndsWith(find, oic)) continue;
+                suffix = find.Replace(comma.ToString(), string.Empty);
+                name = name[..^find.Length].Trim();
             }
             if (name.Contains(space))
             {
                 var names = name.Split(space).ToList();
                 if (names.Count == 2)
                 {
-                    name = $"{names[1]}, {names[0]}";
+                    name = $"{names[1]}{suffix}, {names[0]}";
                 }
                 if (names.Count > 2)
                 {
                     var ending = string.Join(" ", names.GetRange(1, names.Count - 1));
-                    name = $"{ending}, {names[0]}";
+                    name = $"{ending}{suffix}, {names[0]}";
                 }
             }
-            dto.PartyName = name;
+            return name;
         }
-
         private static string ClearWhiteSpace(string str)
         {
             const char spc = ' ';
@@ -61,6 +96,12 @@ namespace LegalLead.PublicData.Search.Common
             var final = builder.ToString();
             while (final.Contains(doublespace)) { final = final.Replace(doublespace, space); }
             return final.Trim();
+        }
+
+        private sealed class ItemDto
+        {
+            public string Find { get; set; }
+            public int Id { get; set; }
         }
     }
 }

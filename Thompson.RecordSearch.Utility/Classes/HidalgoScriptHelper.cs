@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Tools;
 
 namespace Thompson.RecordSearch.Utility.Classes

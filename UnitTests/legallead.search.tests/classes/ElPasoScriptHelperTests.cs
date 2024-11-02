@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace legallead.search.tests.classes
@@ -42,6 +43,32 @@ namespace legallead.search.tests.classes
             var actual = script.Contains(token);
             Assert.Equal(expected, actual);
         }
+
+
+        [Fact]
+        public void CollectionContainsNavigationUrl()
+        {
+            const char star = '*';
+            const string scriptName = "get navigation url";
+            var service = collection;
+            var isFound = service.TryGetValue(scriptName, out var actual);
+            Assert.True(isFound);
+            Assert.False(string.IsNullOrEmpty(actual));
+            Assert.Contains(star, actual);
+            var pieces = actual.Split(star, StringSplitOptions.RemoveEmptyEntries);
+            Assert.Equal(5, pieces.Length);
+            var indx = pieces.Length - 2;
+            var testUri = pieces[indx].Trim();
+            Assert.True(Uri.TryCreate(testUri, UriKind.Absolute, out var _));
+        }
+
+        [Fact]
+        public void ServiceCanGetNavigationUrl()
+        {
+            var testUri = ElPasoScriptHelper.GetNavigationUri;
+            Assert.True(Uri.TryCreate(testUri, UriKind.Absolute, out var _));
+        }
+
         private static readonly Dictionary<string, string> collection = ElPasoScriptHelper.ScriptCollection;
     }
 }
