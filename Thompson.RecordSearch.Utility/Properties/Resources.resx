@@ -154,4 +154,7 @@
   <data name="elpaso_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\elpaso_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="fortbend_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fortbend_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

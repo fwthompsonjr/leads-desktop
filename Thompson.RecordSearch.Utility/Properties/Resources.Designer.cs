@@ -245,6 +245,32 @@ namespace Thompson.RecordSearch.Utility.Properties {
         ///    &quot;name&quot;: &quot;county&quot;,
         ///    &quot;items&quot;: [
         ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 1&quot;,
+        ///        &quot;id&quot;: 1,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.1&quot;, &quot;301 Jackson Street, Richmond, TX. 77469&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 2&quot;,
+        ///        &quot;id&quot;: 2,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.2&quot;, &quot;301 Jackson Street, Richmond, TX. 77469&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 3&quot;,
+        ///        &quot;id&quot;: 3,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.3&quot;, &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string fortbend_court_address {
+            get {
+                return ResourceManager.GetString("fortbend_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;county&quot;,
+        ///    &quot;items&quot;: [
+        ///      {
         ///        &quot;name&quot;: &quot;County Court #1&quot;,
         ///        &quot;id&quot;: 1,
         ///        &quot;address&quot;: [ &quot;County Court #1&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]
