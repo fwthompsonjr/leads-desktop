@@ -21,6 +21,9 @@ namespace legallead.search.tests.classes
         [InlineData("nav to search screen", true)]
         [InlineData("populate search parameters", true)]
         [InlineData("find no match", true)]
+        [InlineData("get person address", true)]
+        [InlineData("find case detail links", true)]
+        [InlineData("click case detail links", true)]
         public void CollectionContainsNamedScript(string scriptName, bool isFound)
         {
             var service = collection;

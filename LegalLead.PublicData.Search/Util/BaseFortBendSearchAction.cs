@@ -9,7 +9,7 @@ using Thompson.RecordSearch.Utility.Classes;
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class BaseElPasoSearchAction : ICountySearchAction
+    public class BaseFortBendSearchAction : ICountySearchAction
     {
         public virtual int OrderId => 0;
         protected virtual string ScriptName { get; }
@@ -65,7 +65,7 @@ namespace LegalLead.PublicData.Search.Util
             }
         }
         private static readonly object lockObject = new();
-        private static readonly string _navUri = ElPasoScriptHelper.GetNavigationUri;
-        private static readonly Dictionary<string, string> _collection = ElPasoScriptHelper.ScriptCollection;
+        private static readonly string _navUri = FortBendScriptHelper.GetNavigationUri;
+        private static readonly Dictionary<string, string> _collection = FortBendScriptHelper.ScriptCollection;
     }
 }

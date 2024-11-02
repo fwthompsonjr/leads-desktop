@@ -70,7 +70,67 @@ links = links.filter(a => {
   if (attr != 'color: blue') return false; 
   attr = a.getAttribute('href'); 
   if (attr == null) { return false; } 
-  if (attr.indexOf('CaseDetail.aspx?CaseID=') < 0) return false; 
-  return true });
+  if (attr.indexOf('CaseDetail.aspx?') < 0) return false; 
+  return true });  
+ var arr = [];
+ links.forEach(a => arr.push(a.innerText));
+return JSON.stringify(obj);
+
+~ click case detail links
+
+var clickComplete = false;
+var indx = parseInt('{0}');
+var links = null;
+if(!isNaN(indx)) { 
+	links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
+	links = links.filter(a => { 
+	  let attr = a.getAttribute('style'); 
+	  if (attr == null) { return false; } 
+	  if (attr != 'color: blue') return false; 
+	  attr = a.getAttribute('href'); 
+	  if (attr == null) { return false; } 
+	  if (attr.indexOf('CaseDetail.aspx?') < 0) return false; 
+	  return true });
+	  console.log(links.length);
+	if (indx < links.length - 1) { 
+		clickComplete = true;		
+	}	
+}
+if (clickComplete) { 
+	links[indx].click();
+}
+else { 
+	return "clickFailed";
+}
+
+
+~ get person address
+var headers = Array.prototype.slice.call( document.getElementsByTagName('th'), 0);
+headers = headers.filter(a => { 
+  let attr = a.getAttribute('class'); 
+  if (attr == null) { return false; } 
+  if (attr != 'ssTableHeader') return false;
+  attr = a.getAttribute('rowspan');  
+  return attr != null });
+// get first from collection
+var obj = { "caseNo": "", "name": "", "address": "" };
+if (headers.length > 0 ) {
+	var heading = headers[0];
+	var row = heading.closest("tr");
+	var table = row.closest("table");
+	var rowId = row.rowIndex + 1;
+	obj.name = row.getElementsByTagName('th')[1].innerText.trim();
+	var rows = Array.prototype.slice.call( table.getElementsByTagName('tr'), 0);
+	if ( rows.length > rowId ) {
+		var addrRow = Array.prototype.slice.call( table.getElementsByTagName('tr'), 0)[rowId];
+		obj.address = addrRow.innerText.trim();
+	}
+}
+// get case number
+var divs = $x("//div[@class='ssCaseDetailCaseNbr']");
+if (divs.length > 0 ) {
+	obj.caseNo = divs[0].innerText.split('.')[1].trim();
+}
+return JSON.stringify(obj);
 
 ~ end of file
