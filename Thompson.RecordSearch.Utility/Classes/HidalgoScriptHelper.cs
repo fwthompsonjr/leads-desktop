@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Thompson.RecordSearch.Utility.Extensions;
+using Thompson.RecordSearch.Utility.Tools;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -11,45 +10,12 @@ namespace Thompson.RecordSearch.Utility.Classes
             get
             {
                 if (collection != null) return collection;
-                collection = new Dictionary<string, string>();
-                collection.AppendScripts(Scripts);
+                collection = ScriptHelpBuilder.GetCollection(script_content);
                 return collection;
-            }
-        }
-        public static List<string> Scripts
-        {
-            get
-            {
-                if (scripts != null) return scripts;
-                scripts = ScriptBlocks();
-                return scripts;
-            }
-        }
-        public static string GetScriptContent
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(scriptContent)) return scriptContent;
-                scriptContent = ScriptContent();
-                return scriptContent;
             }
         }
 
         private static Dictionary<string, string> collection = null;
-        private static List<string> scripts = null;
-        private static string scriptContent;
-
-
-        private static string ScriptContent()
-        {
-            var content = Properties.Resources.hidalgo_scripts;
-            return content;
-        }
-        private static List<string> ScriptBlocks()
-        {
-            var content = GetScriptContent;
-            var arr = content.Split('~').ToList();
-            return arr;
-        }
+        private static readonly string script_content = Properties.Resources.hidalgo_scripts;
     }
 }

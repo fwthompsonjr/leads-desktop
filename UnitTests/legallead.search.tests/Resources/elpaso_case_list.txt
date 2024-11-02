@@ -1,0 +1,401 @@
+<table border="0" cellpadding="2" cellspacing="0" width="100%" style="font-size: 8pt; font-family: arial" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:user="http://www.tylertechnologies.com" xmlns:publicaccessuser="urn:PublicAccessUser"><colgroup><col width="25%"><col width="35%"><col width="20%"><col width="20%"></colgroup><tbody><tr><th class="ssSearchResultHeader" nowrap="true"><b>Case Number</b></th><th class="ssSearchResultHeader" nowrap="true"><b>Style</b></th><th class="ssSearchResultHeader" nowrap="true"><b>Filed/Location</b></th><th class="ssSearchResultHeader" nowrap="true"><b>Type</b><b>/Status</b></th></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500332" style="color: blue">2024DCV4529</a></td><td valign="top">Guadalupe M. Lopez
+VS
+Laura Serafin Olvera</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500336" style="color: blue">2024DCV4530</a></td><td valign="top"> Citibank, N.A.
+ vs 
+Angela J Muela</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500360" style="color: blue">2024DCV4531</a></td><td valign="top"> Ally Bank
+ vs 
+Irene Mejia</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500516" style="color: blue">2024DCV4533</a></td><td valign="top">Fernando Ramos, Jr.
+VS
+Manny Reza A/K/A Manuel Bernard Reza</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Real Property - Other</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500603" style="color: blue">2024DCV4534</a></td><td valign="top">INGRAM PROFESSIONAL SERVICES INC.
+vs
+TWAS PROPERTIES LLC and RECONN CONSTRUCTION SERVICES, LLC.</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Other Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500671" style="color: blue">2024DCV4536</a></td><td valign="top">DOUGLAS SPILSBURY
+Plaintiff,
+v.
+EL PASO VI ENTERPRISES, LLC d/b/a ST. TERESA NURSING &amp; REHAB CENTER; CREATIVE SOLUTIONS IN HEALTHCARE, INC; HONOR X ENTERPRISES, LLC</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Medical Malpractice</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500696" style="color: blue">2024DCV4537</a></td><td valign="top">Jasmin Rodriguez
+VS
+Diana Estrada</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500703" style="color: blue">2024DCV4538</a></td><td valign="top">AMERICAN EXPRESS NATIONAL BANK
+ vs 
+ELOY DE LA ROCHA AKA ELOLY DE LA ROCHA</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500718" style="color: blue">2024DCV4539</a></td><td valign="top">Ex-Parte:
+Anthony Nathaniel Cordova</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500815" style="color: blue">2024DCV4542</a></td><td valign="top">Jose Medina-Truax
+VS
+Amo Enterprises Inc. d/b/a Vista Markets</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501065" style="color: blue">2024DCV4547</a></td><td valign="top">IN THE MATTER OF THE 
+MARRIAGE OF:
+ROSALBA SOTO FLORES
+AND
+EDUARDO MALDONADO AVILA
+AND IN THE INTEREST OF
+E.A.M.S., A CHILD</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>388th District Court</div></td><td valign="top" nowrap="true"><div>DC Bill of Review</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501066" style="color: blue">2024DCV4548</a></td><td valign="top">JPMorgan Chase Bank, N.A.
+ vs 
+Fred E Strickler</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501085" style="color: blue">2024DCV4550</a></td><td valign="top">CECILIA BUSTAMANTE, A/N/F A.R., A MINOR 
+VS
+FRANK ESPINOZA</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501282" style="color: blue">2024DCV4553</a></td><td valign="top">EX-PARTE: 
+BRANDON SILVA</td><td valign="top" nowrap="true"><div>10/01/2024</div><div>County Criminal Court 3</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><img src="Images/Jail.png" alt="Active Jailing"> <a href="CaseDetail.aspx?CaseID=9500605" style="color: blue">2024DCV4535</a></td><td valign="top">JEREMY OZUNA
+VS
+THE STATE OF TEXAS</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Writ of Habeas Corpus (Felony)</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500785" style="color: blue">2024DCV4540</a></td><td valign="top">THE STATE OF TEXAS
+VS.
+JEREMY NATHANIEL OZUNA</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law 2</div></td><td valign="top" nowrap="true"><div>Writ of Habeas Corpus (Misdemeanor)</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500856" style="color: blue">2024DCV4543</a></td><td valign="top">Velocity Investments LLC Assignee Of Finwisebank
+vs. 
+Jennifer Gomez</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9500874" style="color: blue">2024DCV4544</a></td><td valign="top">Bank of America, N.A.
+vs. 
+Vienna P. Sanchez</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501045" style="color: blue">2024DCV4545</a></td><td valign="top">LILIA HERNANDEZ
+V.
+WINSUPPLY W EL PASO TX CO. AND ISAAC  RUIZ</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501162" style="color: blue">2024DCV4551</a></td><td valign="top">Lvnv Funding Llc
+vs. 
+Silvia Hernandez</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501165" style="color: blue">2024DCV4552</a></td><td valign="top">Elavon, Inc.
+vs. 
+Marcus Ivy</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501403" style="color: blue">2024DCV4554</a></td><td valign="top">LORENA MARGARITA HERNANDEZ 
+V.
+GEORGINA RIOS</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501415" style="color: blue">2024DCV4555</a></td><td valign="top">CREDIT HUMAN FEDERAL CREDIT UNION
+V.
+ENRIQUE  LANDIN  AGUILAR</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501639" style="color: blue">2024DCV4556</a></td><td valign="top">Richard Hunt
+VS
+Janice Ann Schlak</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501643" style="color: blue">2024DCV4557</a></td><td valign="top">Nadine Monique Moreno
+VS
+Janice Ann Schlak</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501837" style="color: blue">2024DCV4559</a></td><td valign="top">MULLER-PLASTIC GMBH
+ vs 
+LEAR EEDS AND INTERIORS, LLC</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501858" style="color: blue">2024DCV4560</a></td><td valign="top">BRITTANY PERKINS, INDIVIDUALLY AND AS NEXT FRIEND OF IVORY ROBERTSON 
+VS.
+STEVEN YANEZ</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501872" style="color: blue">2024DCV4561</a></td><td valign="top">DIANA NEWTON 
+VS.
+DOLLAR TREE STORES INC.</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501875" style="color: blue">2024DCV4562</a></td><td valign="top">JPMORGAN CHASE BANK, N.A. 
+VS.
+JESUS A MARISCAL, JR</td><td valign="top" nowrap="true"><div>10/02/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9501905" style="color: blue">2024DCV4563</a></td><td valign="top">ROSETTA SPENCER
+VS
+NORTH MOUNTAIN VILLAGE, LTD,WINNCOMPANIES,WINN RESIDENTIAL</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>168th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9502216" style="color: blue">2024DCV4564</a></td><td valign="top">VELOCITY INVESTMENTS , LLC 
+VS.
+JESUS MIRAMONTES</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9502248" style="color: blue">2024DCV4565</a></td><td valign="top">Shirley Walizer
+VS
+State Farm Lloyds</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>DC Bill of Review</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9502309" style="color: blue">2024DCV4568</a></td><td valign="top">BRIDGECREST CREDIT COMPANY,LLC, AS AGENT AND SERVICER FORCARVANA LLC
+ vs 
+CHRISTOPHER ARMANDO LUCERO</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>168th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9502384" style="color: blue">2024DCV4569</a></td><td valign="top">COMMUNICATIONS SUPPLY CORP., ALSO KNOWN AS CSC, A SUBSIDIARY OF WESCO INTERNATIONAL
+vs. 
+REDGEAR, LLC</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9503175" style="color: blue">2024DCV4572</a></td><td valign="top">Ex Parte: 
+XENIA GONZALEZ</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law 1</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9503267" style="color: blue">2024DCV4574</a></td><td valign="top">IN RE: 
+RAUL ORDUNO</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9503283" style="color: blue">2024DCV4575</a></td><td valign="top">IN RE: 
+STEPHAN MARTINEZ</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9503597" style="color: blue">2024DCV4577</a></td><td valign="top">M&amp;T Bank
+VS
+Oladimeji Bamidele Famuyiwa, Adefunke Adewunmi Famuyiwa, and Secretary of Veterans Affairs</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9503694" style="color: blue">2024DCV4578</a></td><td valign="top">RODRIGO ASTUDILLO and 
+REMEDIOS HERNANDEZ VICENCIO
+VS
+EDUARDO FUENTES, III, and 
+IMPETUS, LLC</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9503892" style="color: blue">2024DCV4579</a></td><td valign="top">Heather Michelle Chatterton
+vs.
+Verlander Enterprises, LLC d/b/a Butter Smith Kitchen &amp; Pies and SJV-JJG PARTNERSHIP</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504005" style="color: blue">2024DCV4580</a></td><td valign="top">Elizabeth Ann Pimentel
+v. 
+Scotty Lee Clark d/b/a Scott Heating, Cooling &amp; Plumbing El Paso and A. Janssen, Inc.</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Deceptive Trade Practices</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504017" style="color: blue">2024DCV4581</a></td><td valign="top">JPMorgan Chase Bank, N.A.
+vs. 
+Erik G Gomez</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504026" style="color: blue">2024DCV4582</a></td><td valign="top">Pablo Diaz Ramos, Miguel Hernandez, Isaac Roldan and Eduardo Cisneros
+vs.
+Carlos Ernesto Guerrero-Gutierrez, Deployed Services, LLC, Deployed Resources, LLC and Deployed Global Solutions, LLC</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504029" style="color: blue">2024DCV4583</a></td><td valign="top">U.S. Bank National Association dba Elan Financial Services
+vs. 
+Marco Antonio Matamoros Sandoval</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504039" style="color: blue">2024DCV4585</a></td><td valign="top">Steven Jones
+vs.
+Desirae Torres and Jadyn Thomas</td><td valign="top" nowrap="true"><div>10/03/2024</div><div>168th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9502509" style="color: blue">2024DCV4570</a></td><td valign="top">GRISELDA CHEDA
+V.
+RAFAEL BORRUEL,D/B/A DIAMOND 
+LUXURY POOLS AND RENOVATIONS,
+LILIA DE LA RIVA, EP SUNSET POOLS &amp;
+RENOVATIONS LLC</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504032" style="color: blue">2024DCV4584</a></td><td valign="top">Eva Dominguez
+v. 
+Blanca Garcia</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504053" style="color: blue">2024DCV4586</a></td><td valign="top">Wells Fargo Bank, Na
+vs. 
+Rodolfo Sanchez, III</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>346th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504063" style="color: blue">2024DCV4587</a></td><td valign="top">Krystle Shokley
+VS
+Shirlee M. Shockley, Jesus Magallenez and US Bank National Association as Trustee for BKPL-EG Holding Trust</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>346th District Court</div></td><td valign="top" nowrap="true"><div>Real Property - Other</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504067" style="color: blue">2024DCV4588</a></td><td valign="top">Wells Fargo Bank, Na
+vs. 
+Francisco M Morales</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504073" style="color: blue">2024DCV4589</a></td><td valign="top">Jorge Fuentes
+vs.
+State Farm Lloyds</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Deceptive Trade Practices</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504083" style="color: blue">2024DCV4590</a></td><td valign="top">LYAN GUTIERREZ AND ROXANA VILLA 
+VS.
+HARRY DAWKINS 
+</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504086" style="color: blue">2024DCV4591</a></td><td valign="top">Navy Federal Credit Union
+ vs. 
+Rebekah L Georgios</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504102" style="color: blue">2024DCV4592</a></td><td valign="top">BMO Bank N.A.
+v. 
+Rogelio Adrian Salazar</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Other Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504127" style="color: blue">2024DCV4593</a></td><td valign="top">S31 TAX FUNDING, LLC
+VS
+ALFONSO P LOPEZ</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Deceptive Trade Practices</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504175" style="color: blue">2024DCV4595</a></td><td valign="top">Wells Fargo Bank, NA
+ vs 
+Alonso Chavez, Jr.</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>168th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504183" style="color: blue">2024DCV4596</a></td><td valign="top">JUAN SIMON LOPEZ FLORES
+VS
+FRANCISCO ALFREDO RIVERA and MINICONCRETE MATERIALS, INC.</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504222" style="color: blue">2024DCV4597</a></td><td valign="top">THOMAS AGUILAR
+VS. 
+GREAT AMERICAN STEAKHOUSE, GA AIRWAY, LLC D/B/A GREAT AMERICAN STEAKHOUSE</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>168th District Court</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504227" style="color: blue">2024DCV4598</a></td><td valign="top">Ana Andrade
+VS
+Katsuri, Inc. and Ramada Worldwide, Inc.</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504274" style="color: blue">2024DCV4599</a></td><td valign="top">SAUL SALIDO, d/b/a LONESTAR PLUMBING
+ V. 
+LA WHEELA, LLC, d/b/a LA WHEELA BICYCLE PLACE; DUARTE MANAGEMENT SERVICES, INC, d/b/a CT CONSTRUCTION MANAGEMENT, and MERG HOLDINGS, LLC</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504279" style="color: blue">2024DCV4600</a></td><td valign="top">Patricia Escajeda
+VS
+Tyheim Khayyn Smith-Hayward and U.S. Xpress, Inc.</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>346th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504422" style="color: blue">2024DCV4602</a></td><td valign="top">EX PARTE:
+M.P.R.</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>County Court at Law 1</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504424" style="color: blue">2024DCV4603</a></td><td valign="top">P&amp;K BUILDERS LLC
+VS
+RETAIL VENTURES ONE LLC, et al.,</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504426" style="color: blue">2024DCV4604</a></td><td valign="top">RITA FERNANDEZ, Individually,
+and as next friend of
+I.R.F.-K, a minor child,
+As PLAINTIFFS
+VS. 
+
+THE CITY OF EL PASO 
+and GREGORY ALLEN, Individually, 
+As DEFENDANTS</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505572" style="color: blue">2024DCV4639</a></td><td valign="top">Olga Escobar, Kimberly Escobar, John Escobar, and Serenity Garcia, Individually, as wrongfull death beneficiaries, and on behalf of the Estate of Claudia Escobar, Olga Escobar, as next friend of B.G., a minor child
+VS
+Run Bull Run, LLC d/b/a Toro Burger Bar</td><td valign="top" nowrap="true"><div>10/04/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9503177" style="color: blue">2024DCV4573</a></td><td valign="top">IN RE: A PURPORTED LIEN OR CLAIM AGAINST 5944 LOS PUEBLOS DR EL PASO TX 79912</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Real Property - Other</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504502" style="color: blue">2024DCV4605</a></td><td valign="top">Carlos Jose de Jesus Jurado Rojas
+ vs 
+ManpowerGroup US Inc.,Resideo Technologies, Inc.</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Wrongful Termination</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504507" style="color: blue">2024DCV4606</a></td><td valign="top">LAURA Y. CARLOS, and JORGE A. DIAZ 
+VS
+IRENE GONZALES GIBSON, ROBELI J. RAMOS, SR., and UNITED STATES AUTOMOBILEASSOCIATION d/b/a USAA</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504508" style="color: blue">2024DCV4607</a></td><td valign="top">Amy Sims
+vs.
+Texas Mutual Insurance</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Worker's Compensation Appeal</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504510" style="color: blue">2024DCV4608</a></td><td valign="top">21ST MORTGAGE CORPORATION
+ vs 
+WASKAN HERRERA AND GERALDINE HERRERA</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>346th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504727" style="color: blue">2024DCV4609</a></td><td valign="top"> Velocity Investments, LLC
+ vs 
+Thomas Herman</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504753" style="color: blue">2024DCV4611</a></td><td valign="top">Jacqueline Gutierrez
+ vs 
+Socorro Independent School District</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Wrongful Termination</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504756" style="color: blue">2024DCV4612</a></td><td valign="top">SHALOM LEASING, LLC
+VS
+SERVICIO INTERNACIONAL DE ENLACE TERRESTRE, S.A. de C.V.</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504757" style="color: blue">2024DCV4613</a></td><td valign="top">ISABELA M.   FIGUEROA 
+VS
+JENNA  MARIE  JIMENEZ</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504774" style="color: blue">2024DCV4614</a></td><td valign="top">IN RE: AILEEN NAYELI DOFFNEY</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Criminal Court  2</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504818" style="color: blue">2024DCV4615</a></td><td valign="top"> TD Bank USA, N.A.
+ vs 
+Rosa Gonzalez</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504822" style="color: blue">2024DCV4616</a></td><td valign="top"> Navy Federal Credit Union
+ vs 
+Julian L Gutierrez</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504877" style="color: blue">2024DCV4617</a></td><td valign="top">El Paso Electric Company
+v.
+Mario Chavez and Carmen Chavez</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504881" style="color: blue">2024DCV4618</a></td><td valign="top">El Paso Electric Company 
+v. 
+All Known and Unknown Heirs of Dorothy Kratz, Deceased</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504887" style="color: blue">2024DCV4619</a></td><td valign="top">JAMIL A. ABDULLA
+VS.
+JEREMY JOSHUA MEDRANO</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504894" style="color: blue">2024DCV4620</a></td><td valign="top">EL PASO ELECTRIC COMPANY
+VS
+MILDRED W. SCHAFER LIVING TRUST</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504895" style="color: blue">2024DCV4621</a></td><td valign="top">El Paso Electric Company 
+v.
+All Known and Unknown Heirs of Joseph Mosberger and Theresa Mosberger, Deceased</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504901" style="color: blue">2024DCV4622</a></td><td valign="top">El Paso Electric Company 
+vs.
+All Known and Unknown Heirs of Anna L. Meline, Deceased, Including the Estate of Catherine T. Bowcott</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504928" style="color: blue">2024DCV4623</a></td><td valign="top">Albert Padilla
+ vs 
+Centro De Salud Familiar La Fe Inc. and Snelling Staffing, L.L.C</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Wrongful Termination</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504931" style="color: blue">2024DCV4624</a></td><td valign="top">El Paso Electric Company 
+vs.
+THE ESTATE OF BERNARD SOBOTTA AND THE JIM L. &amp; BRENDA A. BAILES FAMILY TRUST</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504937" style="color: blue">2024DCV4625</a></td><td valign="top">EL PASO ELECTRIC COMPANY
+VS
+RANCHO EL PASO CORP.</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504968" style="color: blue">2024DCV4626</a></td><td valign="top">PRISCILLA MENDEZ
+VS.
+ROBERTO HERNANDEZ AND SAENZ MATERIAL &amp; HANDLING OF EL PASO, INC.</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504971" style="color: blue">2024DCV4627</a></td><td valign="top">VICTOR PRADO
+vs.
+LYLE WEEKS, M.D</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Medical Malpractice</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504972" style="color: blue">2024DCV4628</a></td><td valign="top">IN THE MATTER OF THE MARRIAGE OF:
+BRENDA CERVANTES
+AND 
+JONATHAN CERVANTES</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>388th District Court</div></td><td valign="top" nowrap="true"><div>DC Bill of Review</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505005" style="color: blue">2024DCV4629</a></td><td valign="top">YSAURA RUELAS
+VS
+MCDONALD'S COPORATION,
+MCDONALD'S RESTAURANTS OF TEXAS, INC., and
+CASTRO ENTERPRISES, INC. d/b/a
+MCDONALD'S</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505082" style="color: blue">2024DCV4630</a></td><td valign="top">ELAMEX USA, CORP AND MOUNT FRANKLIN FOODS, LLC
+VS. 
+HCC INSURANCE HOLDINGS, INC. D/B/A TOKIO MARINE HCC</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>346th District Court</div></td><td valign="top" nowrap="true"><div>Other Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507801" style="color: blue">2024DCV4694</a></td><td valign="top">Noel Life 
+VS
+Edward Zuniga</td><td valign="top" nowrap="true"><div>10/07/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9504139" style="color: blue">2024DCV4594</a></td><td valign="top">KASCO STRUCTURES, LLC
+VS 
+HARRINGTON CONSTRUCTION, LLC d/b/a
+HB CONSTRUCTION and
+FEDERAL INSURANCE COMPANY</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505233" style="color: blue">2024DCV4632</a></td><td valign="top">PNC BANK, NATIONAL ASSOCIATION
+ vs 
+JOHN DIAZ</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505244" style="color: blue">2024DCV4633</a></td><td valign="top">XTRA LEASE LLC
+ VS. 
+MGA TRANSPORT, LLC</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505279" style="color: blue">2024DCV4634</a></td><td valign="top">MARY  DRAPER
+VS. 
+ABIGALE M. MOLINA AND PROGRESSIVE NORTHERN INSURANCE COMPANY</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505492" style="color: blue">2024DCV4636</a></td><td valign="top">KATHERINE VOCKERODT
+vs.
+EPT SAN CLEMENTE APARTMENTS, LP, D/B/A SUMMERSTONE ELITE APARTMENT HOMES and EPT INTEGRITY ASSET MANAGEMENT, LLC</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505551" style="color: blue">2024DCV4637</a></td><td valign="top">FASANARA APEX I, SERVICED BY UPGRADE, INC.
+vs. 
+ELIODORO RIOS</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505556" style="color: blue">2024DCV4638</a></td><td valign="top">Cecilia Velez
+vs.
+Jose Vargas Chamorro</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505655" style="color: blue">2024DCV4640</a></td><td valign="top">City of El Paso, Texas as subrogee of Daniel Monge and Alejandro Batista
+v. 
+Diana I. Frayre Quezada</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505656" style="color: blue">2024DCV4641</a></td><td valign="top">Jacqueline  Ambriz, as Next Friend of Evelyn Briones
+v. 
+Sandra Mendoza and Allstate Fire and Casualty Insurance Company</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505675" style="color: blue">2024DCV4642</a></td><td valign="top">CARRINGTON MORTGAGE SERVICES, LLC
+v.
+MONICA ESPARZA, an individual; MARIO ESPARZA, an individual; SECRETARY OF HOUSING AND URBAN DEVELOPMENT, a government agency; LOANPAL, LLC,  a limited liability company; DOES 1 through 10 and ROES BUSINESS ENTITIES 1 through 10, inclusive</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Real Property - Other</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505756" style="color: blue">2024DCV4644</a></td><td valign="top">MIREYDA ZUNIGA CARRILLO,INDIVIDUALLY AND AS THE NEXTFRIEND AND LEGAL GUARDIAN OF N.R., MINOR; ANGELA GUADALUPEMEDINA ZUNIGA; AND MICHEL CAROLINA ZUNIGA MONTES
+VS.
+EDGAR ISRAEL RIVAS AND TRANSPORTATION COMMODITIES INC.</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505773" style="color: blue">2024DCV4646</a></td><td valign="top">DARLENE MORRISON
+VS
+TENET HOSPITALS LIMITED D/B/A THE HOSPITALS OF PROVIDENCE SIERRA CAMPUS</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505805" style="color: blue">2024DCV4647</a></td><td valign="top">IN THE MATTER OF THE MARRIAGE OF
+ANA LOPEZ VALLES
+AND
+MARTIN JIMENEZ OZONA
+AND IN THE INTEREST OF
+D.S.J., A CHILD</td><td valign="top" nowrap="true"><div>10/08/2024</div><div>388th District Court</div></td><td valign="top" nowrap="true"><div>DC Bill of Review</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505167" style="color: blue">2024DCV4631</a></td><td valign="top">STEVEN OPELLA
+V.
+FIVE STAR PAINTING OF EL PASO</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505753" style="color: blue">2024DCV4643</a></td><td valign="top">Wells Fargo Bank, NA
+ vs 
+ABEL OLIVAS</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505758" style="color: blue">2024DCV4645</a></td><td valign="top">Wells Fargo Bank, NA
+ v. 
+Isaac Antunez</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9505860" style="color: blue">2024DCV4648</a></td><td valign="top"> Wells Fargo Bank, NA
+ vs 
+Elena Silva</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506044" style="color: blue">2024DCV4649</a></td><td valign="top">In Re:
+Miguel Angel Mendoza</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Criminal Court 4</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506103" style="color: blue">2024DCV4650</a></td><td valign="top">Lion Productivities Holdings, LLC
+VS
+Manuel F. Villareal, Individually and d/b/a Barbacoa El Guero</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506123" style="color: blue">2024DCV4651</a></td><td valign="top">LION PRODUCTIVITIES HOLDINGS, LLC. 
+VS
+LUIS  CARLOS VILLARREAL</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506125" style="color: blue">2024DCV4652</a></td><td valign="top">WELLS FARGO BANK, NA
+ V.
+GERARDO VARGAS</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506126" style="color: blue">2024DCV4653</a></td><td valign="top">WELLS FARGO BANK, NA
+V.
+SEIRRA MATA</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506248" style="color: blue">2024DCV4654</a></td><td valign="top">El Paso Electric Company
+vs.
+A.G.  Klimam</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506249" style="color: blue">2024DCV4655</a></td><td valign="top">EL PASO ELECTRIC COMPANY
+VS
+RAYMOND O. YORK</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506265" style="color: blue">2024DCV4656</a></td><td valign="top">BANK OF AMERICA, N.A. 
+ vs 
+FRANCISCO  LUJAN , Jr.</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506298" style="color: blue">2024DCV4657</a></td><td valign="top">EL PASO ELECTRIC COMPANY
+VS
+NORMA ORTIZ, SANTIAGO ARANDA, Jr., PEDRO ARANDA, VANEZA ARANDA, FERNANDO ARANDA, 
+SANTIAGO ARANDA, Sr.</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506305" style="color: blue">2024DCV4658</a></td><td valign="top">EL PASO ELECTRIC COMPANY
+VS
+GILBERTO MUNOZ AND 
+GUADALUPE MUNOZ</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506309" style="color: blue">2024DCV4659</a></td><td valign="top">SARAH DE LA GARZA 
+VS
+NATIVIDAD VARGAS DE LAGUNA Individually and as Next Friend of H.L, minor child and HECTOR LAGUNA</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506316" style="color: blue">2024DCV4660</a></td><td valign="top">EL PASO ELECTRIC COMPANY,
+v.
+ALL KNOWN AND UNKNOWN HEIRS OF ALVIN FRAISURE AND CONNIE FRAISURE, DECEASED,</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506408" style="color: blue">2024DCV4661</a></td><td valign="top">Manuel Franqui
+vs.
+CHOOSE THE RIGHT SOLAR LLC, d/b/a FARADAY ENERGY and THOMAS HUDGINS, Individually</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506420" style="color: blue">2024DCV4662</a></td><td valign="top">Oscar  Ornelas
+VS
+Ramona Guevara</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506442" style="color: blue">2024DCV4663</a></td><td valign="top">Nusenda Federal Credit Union
+vs.
+Kayla Monique Roderick</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506447" style="color: blue">2024DCV4664</a></td><td valign="top">Cecicila Bustamante, A/N/F of A.R., a Minor
+VS
+Frank Espinoza</td><td valign="top" nowrap="true"><div>10/09/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506460" style="color: blue">2024DCV4665</a></td><td valign="top">CYNTHIA SANCHEZ
+VS
+JORGE ERNESTO SORIANO, JR.</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506491" style="color: blue">2024DCV4666</a></td><td valign="top">El Paso Electric Company 
+vs.
+MARGARITA ROJAS, THERESA ANN ROJAS, DAVID CARLOS ROJAS AND THE ESTATE OF SALVADOR ROJAS, DECEASED</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506492" style="color: blue">2024DCV4667</a></td><td valign="top">EL PASO ELECTRIC COMPANY
+vs.
+MARY A. PHILLIPS</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506495" style="color: blue">2024DCV4668</a></td><td valign="top">El Paso Electric Company
+vs.
+Gertrud Assfalg</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506566" style="color: blue">2024DCV4669</a></td><td valign="top">REECE SUPPLY, LLC D/B/A REECE PLUMBING F/K/A MORSCO SUPPLY, LLC D/B/A MORRISON SUPPLY COMPANY
+VS.
+ROCCO DEVELOPERS LLC -SERIES 2- SOCORRO &amp; GALILEE, ROCCO DEVELOPERS, LLC, A TEXAS LIMITED LIABILITY COMPANY, SKI HEATING &amp; AIR, INC., AND HUMBERTO RAMIREZ, INDIVIDUALLY</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Deceptive Trade Practices</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506635" style="color: blue">2024DCV4671</a></td><td valign="top">SoFi Lending Corp. as Attorney-in-fact For Santander Bank, N.A.
+ vs 
+Luz Beam</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506642" style="color: blue">2024DCV4672</a></td><td valign="top">VIENTO FLORES and ANA SOFIA FUENTES MANAURE, individually and as next friend of B.F. and F.F., 
+VS
+CARLOS ESPARAZA MIRAMONTES, JR.,</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506695" style="color: blue">2024DCV4674</a></td><td valign="top">Lorenzo Medina
+VS
+Tenet Healthcare Corporation d/b/a Hospitals of Providence Sierra Campus and Jason Mendivil</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Medical Malpractice</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507511" style="color: blue">2024DCV4679</a></td><td valign="top">Carlos J Quintanar, Individually and as Representative of the Estate of Carlos Quintanar, Daniela Castro, Individually and as Representative of the Estate of Fernanda Quintanar and Olivia Quintanar
+VS
+AFC Logistics Corp., Jorge Eduardo Sepulveda, and Jesus Alberto R.C.</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507564" style="color: blue">2024DCV4680</a></td><td valign="top"> Nusenda Federal Credit Union
+VS
+Ubaldo Guerra Santos</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507565" style="color: blue">2024DCV4681</a></td><td valign="top">Nusenda Federal Credit Union
+VS
+Jose Raul Mercado and Diana Laura Shedd</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507578" style="color: blue">2024DCV4682</a></td><td valign="top">Carino Aranda
+VS
+Monica Woodhouse</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507579" style="color: blue">2024DCV4683</a></td><td valign="top">MBC VENTURES, LLC 
+VS. 
+ANTONIO TARANGO D/B/A BODY MASTERS COLLISION CENTER</td><td valign="top" nowrap="true"><div>10/10/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9506596" style="color: blue">2024DCV4670</a></td><td valign="top">THE STATE OF TEXAS
+VS
+THREE THOUSAND FIVE HUNDRED FIFTY THREE DOLLARS IN UNITED STATES CURRENCY ($3,553.00)</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>Criminal District Court 1</div></td><td valign="top" nowrap="true"><div>Seizure and Forfeiture</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507588" style="color: blue">2024DCV4684</a></td><td valign="top">El Paso Electric Company
+vs.
+All Known and Unknown Heirs of Homer D. Carmean, Deceased, Charles E. Alexander and Robert C. Harper</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507597" style="color: blue">2024DCV4685</a></td><td valign="top"> Synchrony Bank
+ vs 
+Lizette Rodriguez</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507624" style="color: blue">2024DCV4686</a></td><td valign="top"> AMERICAN EXPRESS NATIONAL BANK
+ vs 
+Rosy Fonseca</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507625" style="color: blue">2024DCV4687</a></td><td valign="top"> AMERICAN EXPRESS NATIONAL BANK
+ vs 
+Claudia Knight</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507805" style="color: blue">2024DCV4695</a></td><td valign="top">FUNDING CIRCLE USA, INC D/B/A FC MARKETPLACE, LLC
+ vs 
+HDZ AUTO CONNECT, LLC,ADRIAN HERNANDEZ,ANTHONY HERNANDEZ, AND DANIEL HERNANDEZ</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507807" style="color: blue">2024DCV4696</a></td><td valign="top">HYDE DE LA ROSA
+VS.
+NOE CARRASCO ADVIX LOGISTICS, L.L.C., AND RUSSELL TRANSPORT, INC.</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507845" style="color: blue">2024DCV4697</a></td><td valign="top">El Paso Electric Company
+vs.
+Gordon G. Smith and Helen L. Smith</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507852" style="color: blue">2024DCV4698</a></td><td valign="top">El Paso Electric Company
+vs.
+All Known and Unknown Heirs of Vincent J. Ferdinand and Marie Ferdinand</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507862" style="color: blue">2024DCV4699</a></td><td valign="top">DAVID ISAAC LARA
+VS. 
+GROENDYKE TRANSPORT, INC., MLACO, LLC a/k/a MLACO, INC., and BERNABE CARDENAS JR.</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507868" style="color: blue">2024DCV4700</a></td><td valign="top">Oscar Terrazas, Veronica Jaramillo, Luis Terrazas &amp; Marco Terrazas
+VS
+Yvonne Granados &amp; Uber Technologies, Inc.</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507872" style="color: blue">2024DCV4701</a></td><td valign="top">SHAUNA LAGRANGE, Individually as Plaintiff
+VS. 
+JOSE S. ARRUNADA, Individually as Defendant</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507873" style="color: blue">2024DCV4702</a></td><td valign="top">IN RE ABRIL DOHLMAN</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9507874" style="color: blue">2024DCV4703</a></td><td valign="top">Crown Asset Management, LLC Assignee Of Cross River Bank (Upstart Network Inc.)
+ vs 
+Homero Martinez Arroyo</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508079" style="color: blue">2024DCV4708</a></td><td valign="top">Jesus Zamarron Acosta
+vs.
+Augustine Alpha and Theresa Kapuwa</td><td valign="top" nowrap="true"><div>10/11/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Real Property - Other</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508062" style="color: blue">2024DCV4705</a></td><td valign="top">AMERICAN EXPRESS NATIONAL BANK
+ vs 
+MARCOS PERALES a/k/a MARCOS T PERALES a/k/a JOSE PERALES PINA</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508067" style="color: blue">2024DCV4706</a></td><td valign="top">Key Building Rentals, LLC
+ vs 
+Maria M. Cardenas</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Contract - Consumer/Commercial/Debt</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508074" style="color: blue">2024DCV4707</a></td><td valign="top">Healthcare Realty Services Incorporated
+VS
+Jacquelyn Gouveia and El Paso Infectious Diseases, PA</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Other Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508080" style="color: blue">2024DCV4709</a></td><td valign="top">WELLS FARGO BANK, NA 
+ V.
+ANDREA N BUSTAMANTE</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>County Court at Law 7</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508103" style="color: blue">2024DCV4710</a></td><td valign="top">GECU
+VS.
+Juan Dominguez and Mayra Gabriela Olivas, Jointly &amp; Severally</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Deceptive Trade Practices</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508108" style="color: blue">2024DCV4711</a></td><td valign="top">GECU
+VS.
+Richard Lugo</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Deceptive Trade Practices</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508121" style="color: blue">2024DCV4712</a></td><td valign="top">Brenda Salas, as Next Friend of A.S., Minor
+vs.
+Government Employees Insurance Company, The Top Five Club, Inc.</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508124" style="color: blue">2024DCV4713</a></td><td valign="top"> Troy Capital, LLC
+ vs 
+Jose Vega</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>34th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508125" style="color: blue">2024DCV4714</a></td><td valign="top">GECU
+VS.
+Melissa Rose Carreon</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Deceptive Trade Practices</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508146" style="color: blue">2024DCV4715</a></td><td valign="top">Brothers Transportation LLC
+VS
+World Insurance Associates LLC, 1st Patriot Insurance Services LLC, and Robert Long</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508162" style="color: blue">2024DCV4716</a></td><td valign="top">CARRINGTON MORTGAGE SERVICES, LLC
+VS
+JOHN P. CAVES, an individual; STEPHANIE D. MAGEE, an individual; SECRETARY OF HOUSING AND URBAN DEVELOPMENT, a government agency; DOES 1 through 10 and ROES BUSINESS ENTITIES 1 through 10,inclusive,</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>346th District Court</div></td><td valign="top" nowrap="true"><div>Real Property - Other</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508165" style="color: blue">2024DCV4717</a></td><td valign="top">KEY BUILDING RENTALS, LLC,
+VS
+HUGO CASTILLO AKA HUGO CASTILLO HERNANDEZ</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Other Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508187" style="color: blue">2024DCV4718</a></td><td valign="top">RAUL CASSO
+VS
+GUSTAVO RODRIGUEZ PEREZ and GENARO MELENDEZ AGUIRRE</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508257" style="color: blue">2024DCV4720</a></td><td valign="top">KEY BUILDING RENTALS, LLC,  
+V.
+VICTOR LORENZO REY</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Other Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508273" style="color: blue">2024DCV4721</a></td><td valign="top">Daniel Reyes Munguia
+VS
+Roberto  Vicente Carrillo</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508274" style="color: blue">2024DCV4722</a></td><td valign="top">Discover Bank
+vs. 
+Claudia Lozano</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508300" style="color: blue">2024DCV4723</a></td><td valign="top">ROY  DAVIS 
+V.
+COUNTY OF EL PASO, TEXAS</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508334" style="color: blue">2024DCV4724</a></td><td valign="top">Inclusive Logistics, LLC
+VS
+Circuitronix, LLC and Wattera, LLC</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>243rd District Court</div></td><td valign="top" nowrap="true"><div>Other Civil</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508341" style="color: blue">2024DCV4725</a></td><td valign="top">MEDTRONIC USA, INC.
+ vs 
+MESA HILLS SPECIALTY HOSPITAL OPERATOR LLC D/B/ A PREMIER SPECIALTY HOSPITAL OF EL PASO</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>120th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508359" style="color: blue">2024DCV4726</a></td><td valign="top">Jesus Ramirez
+vs.
+Chedraui USA, Inc. d/b/a El Super</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>346th District Court</div></td><td valign="top" nowrap="true"><div>Other Injury or Damage</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508424" style="color: blue">2024DCV4727</a></td><td valign="top">Vicente Rodas
+ vs 
+El Paso MHMR d/b/a EMERGENCE HEALTH NETWORK</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>171st District Court</div></td><td valign="top" nowrap="true"><div>Wrongful Termination</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508499" style="color: blue">2024DCV4728</a></td><td valign="top">Perla Lerma, Individually and as Parent and Next Friend of
+Lynette Lerma
+VS
+Jose Eduardo Avila, and FedEx Freight, Inc.</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508536" style="color: blue">2024DCV4729</a></td><td valign="top">UNITED RENTALS (NORTH AMERICA), INC.
+VS.
+CSGSO, LLC., AND TONY'S BURRITO HOUSE AND MEXICAN FOOD, INC.</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508543" style="color: blue">2024DCV4730</a></td><td valign="top">GECU FEDERAL CREDIT UNION 
+V.
+STEPHANIE CHAVEZ AND 
+CRISTIAN H. RODRIGUEZ</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508549" style="color: blue">2024DCV4731</a></td><td valign="top">GECU Federal Credit Union
+vs. 
+Michael Kirwa</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>205th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508683" style="color: blue">2024DCV4732</a></td><td valign="top">El Paso Electric Company
+vs.
+All Known and Unknown Heirs of Frank A. North, Deceased, and Martha E. North, Deceased</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Real Property - Eminent Domain</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508720" style="color: blue">2024DCV4733</a></td><td valign="top">Barbara D. Lowe, Individually on Behalf of All Wrongful Death Beneficiares and as Representative of the Estate of Theodora B. Williams, Deceased
+ VS
+Anson Hospital District D/B/A Los Arcos Del Norte Care Center</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>384th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Medical Malpractice</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508721" style="color: blue">2024DCV4734</a></td><td valign="top"> Sun Ridge Property Owners Association
+ vs 
+Leonor Armendariz</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508732" style="color: blue">2024DCV4735</a></td><td valign="top">MEGHAN NICOLE ARMENDARIZ
+VS
+JESUS OMAR NAVA,GREEN VALLEY LOGISTICS CORP</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508752" style="color: blue">2024DCV4736</a></td><td valign="top">FRANK DELGADO
+VS
+JOAQUIN JAVIER GUERRERO and SUN AUTO TIRE SERVICES</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>County Court at Law 6</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508786" style="color: blue">2024DCV4737</a></td><td valign="top">ANTHONY MACIAS, Individually and d/b/a ROOF CHECK CONSTRUCTION
+ vs 
+JOSE and JOYCE DIAZ, Individually</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508975" style="color: blue">2024DCV4739</a></td><td valign="top"> First National Bank Of Omaha
+ vs 
+Michael Bock</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>168th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508984" style="color: blue">2024DCV4740</a></td><td valign="top"> Velocity Investments, LLC
+ vs 
+Cristian Salazar</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>41st District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9508989" style="color: blue">2024DCV4741</a></td><td valign="top"> Jefferson Capital Systems LLC
+ vs 
+Sergio Morales</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>346th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9509005" style="color: blue">2024DCV4744</a></td><td valign="top"> Jpmorgan Chase Bank N.A.
+ vs 
+Nolan Figueroa</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>210th District Court</div></td><td valign="top" nowrap="true"><div>Breach of Contract</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9509021" style="color: blue">2024DCV4747</a></td><td valign="top">Ex-Parte:
+ISMAEL MARTINEZ</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>409th District Court</div></td><td valign="top" nowrap="true"><div>Occupational Driver's License</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9509027" style="color: blue">2024DCV4748</a></td><td valign="top">IVY L. MANUEL, INDIVIDUALLY ON BEHALF OF ALL WRONGFUL DEATH BENEFICIARIES AND AS REPRESENTATIVE OF THE ESTATE OF JERMAINE MANUEL-WILSON, DECEASED 
+V. 
+TENET HOSPITALS LIMITED D/B/A THE HOSPITALS OF PROVIDENCE EAST CAMPUS</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>County Court at Law 3</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Medical Malpractice</div><div>Filed</div></td></tr><tr><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9509038" style="color: blue">2024DCV4749</a></td><td valign="top">Lee Anthony Favela and Michael Covarubbias
+VS
+Jillian Vargas</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>448th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr><tr bgcolor="#EEEEEE"><td nowrap="true" valign="top"><a href="CaseDetail.aspx?CaseID=9509047" style="color: blue">2024DCV4750</a></td><td valign="top">SAUL  QUIJAS
+VS
+ISMAEL LOPEZ AND RIGAL TRANSPORT LLC</td><td valign="top" nowrap="true"><div>10/15/2024</div><div>168th District Court</div></td><td valign="top" nowrap="true"><div>Injury or Damage - Motor Vehicle</div><div>Filed</div></td></tr></tbody></table>

@@ -1,9 +1,22 @@
 ﻿<#
     court address, csv to json converter
 #>
+
+
+function getCountyCourtIndex( $courtName, $cidx )
+{
+    try {
+        $itm = $courtName -replace "[^0-9]" , ''
+        return [int]::Parse( $itm )
+    } catch {
+        return $cidx;
+    }
+}
+
+
 $dir = "C:\_d\lead-old\_notes"
-$src = "hidalgo-court-address.csv"
-$dest = "hidalgo_court_address.json"
+$src = "elpaso-court-address.csv"
+$dest = "elpaso_court_address.json"
 $srcfile = "$dir\$src"
 $destfile = "$dir\$dest"
 
@@ -61,11 +74,12 @@ foreach( $js in $jso )
         {
             'county' {
                 $cc = @{
-                    id = $cc_count++
+                    id = getCountyCourtIndex -courtName $v.court -cidx $cc_count
                     name = $v.court
                     address = [string]::Join( "|", @( $v.court, $v.address ) )
                 }
                 $js.items += ($cc | ConvertTo-Json | ConvertFrom-Json );
+                $cc_count++
             }
             'district' {
                 $cc = @{

@@ -98,6 +98,7 @@ namespace LegalLead.PublicData.Search
                         TravisButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
                     case (int)SourceType.HidalgoCounty:
+                    case (int)SourceType.ElPasoCounty:
                         CommonButtonExecution(siteData, searchItem);
                         break;
                     default:
@@ -131,8 +132,9 @@ namespace LegalLead.PublicData.Search
                 new() { Name = "CourtType", Value = searchType }
             };
             var wb = new WebNavigationParameter { Keys = keys };
-            var dweb = siteData.Id switch
+            IWebInteractive dweb = siteData.Id switch
             {
+                100 => new ElPasoUiInteractive(wb),
                 _ => new HidalgoUiInteractive(wb)
             };
             _ = Task.Run(async () =>
@@ -319,6 +321,7 @@ namespace LegalLead.PublicData.Search
                     (int)SourceType.TravisCounty,
                     (int)SourceType.BexarCounty,
                     (int)SourceType.HidalgoCounty,
+                    (int)SourceType.ElPasoCounty,
                 };
 
                 ProcessEndingMessage();

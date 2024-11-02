@@ -194,6 +194,57 @@ namespace Thompson.RecordSearch.Utility.Properties {
         ///    &quot;name&quot;: &quot;county&quot;,
         ///    &quot;items&quot;: [
         ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 3&quot;,
+        ///        &quot;id&quot;: 3,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 3&quot;, &quot;500 E. San Antonio, El Paso, TX 79901&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 6&quot;,
+        ///        &quot;id&quot;: 6,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 6&quot;, &quot;500 E. San Antonio, El Paso, TX 79901&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 7&quot;,
+        ///        &quot;id&quot;: 7,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 7&quot;, &quot;500 E. San An [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string elpaso_court_address {
+            get {
+                return ResourceManager.GetString("elpaso_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ say hello
+        ///return &quot;hello&quot;;
+        ///
+        ///~ get navigation url
+        ////* https://portal-txelpaso.tylertech.cloud/PublicAccess/default.aspx */
+        ///
+        ///~ nav to search screen
+        ///var links = Array.prototype.slice.call( document.getElementsByTagName(&apos;a&apos;), 0 );
+        ///links = links.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;class&apos;); 
+        ///  if (attr == null) { return false; } 
+        ///  if (attr != &apos;ssSearchHyperlink&apos;) return false; 
+        ///  return a.innerText.indexOf(&apos;Civil&apos;) &gt;= 0 });
+        ///links[0].click();
+        ///
+        ///~ populate search parameters
+        ///var case_filter = [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string elpaso_scripts {
+            get {
+                return ResourceManager.GetString("elpaso_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;county&quot;,
+        ///    &quot;items&quot;: [
+        ///      {
         ///        &quot;name&quot;: &quot;County Court #1&quot;,
         ///        &quot;id&quot;: 1,
         ///        &quot;address&quot;: [ &quot;County Court #1&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]
