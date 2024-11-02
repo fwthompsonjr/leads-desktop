@@ -11,5 +11,6 @@
         DallasCounty = 60,
         TravisCounty = 70,
         BexarCounty = 80,
+        HidalgoCounty = 90,
     }
 }

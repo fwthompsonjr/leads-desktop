@@ -1,38 +1,39 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Interfaces;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class BaseTravisSearchAction : ITravisSearchAction
+    public class BaseHidalgoSearchAction : ICountySearchAction
     {
         public virtual int OrderId => 0;
-        public virtual bool IsPostSearch => false;
         protected virtual string ScriptName { get; }
+        protected virtual TimeSpan PageWaitTimeSpan => TimeSpan.FromSeconds(30);
+        protected virtual TimeSpan PageWaitPoolingInterval => TimeSpan.FromSeconds(5);
         public IWebDriver Driver { get; set; }
-        public TravisSearchProcess Parameters { get; set; }
+        public DallasSearchProcess Parameters { get; set; }
 
         public virtual object Execute() { return null; }
 
         public virtual IJavaScriptExecutor GetJavaScriptExecutor()
         {
-            if (Driver is IJavaScriptExecutor exec) return exec;
-            return null;
+            return Driver.GetJsExecutor();
+        }
+
+
+        protected static string NavigationUri()
+        {
+            return _navUri;
         }
 
         protected void WaitForNavigation()
         {
-            const string request = "return document.readyState";
-            const string response = "complete";
-            var driver = Driver;
             var jsexec = GetJavaScriptExecutor();
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromSeconds(5) };
-            wait.Until(driver1 => jsexec.ExecuteScript(request).Equals(response));
+            Driver.WaitForDocumentReady(jsexec, PageWaitTimeSpan, PageWaitPoolingInterval);
         }
 
         protected virtual string JavaScriptContent { get; set; } = null;
@@ -46,7 +47,6 @@ namespace LegalLead.PublicData.Search.Util
             }
         }
 
-        [ExcludeFromCodeCoverage]
         protected static string VerifyScript(string source)
         {
             if (string.IsNullOrWhiteSpace(source))
@@ -58,12 +58,13 @@ namespace LegalLead.PublicData.Search.Util
         {
             lock (lockObject)
             {
-                var obj = TravisScriptHelper.ScriptCollection;
+                var obj = HidalgoScriptHelper.ScriptCollection;
                 var exists = obj.TryGetValue(keyname, out var js);
                 if (!exists) return string.Empty;
                 return js;
             }
         }
         private static readonly object lockObject = new();
+        private const string _navUri = "https://pa.co.hidalgo.tx.us/default.aspx";
     }
 }

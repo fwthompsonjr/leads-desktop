@@ -64,7 +64,7 @@ namespace legallead.search.tests.Properties {
         ///   Looks up a localized string similar to     &lt;div id=&quot;omni&quot; class=&quot;omni&quot; style=&quot;background:white;&quot;&gt;&lt;md-toolbar class=&quot;omni-toolbar md-default-theme md-whiteframe-z2 ng-scope&quot; id=&quot;omnibar&quot; ng-controller=&quot;omniCtrl&quot;&gt;
         ///  &lt;div class=&quot;md-toolbar-tools&quot;&gt;
         ///    &lt;div ng-click=&quot;navigate(data.appTitleLink)&quot; role=&quot;button&quot; tabindex=&quot;0&quot;&gt;
-        ///      &lt;md-icon md-svg-src=&quot;/app/RegisterOfActions/Content/tylerui/svgs/Icon_Talking_Ts.svg&quot; style=&quot;height:3.7rem; width:3.7rem;&quot; class=&quot;ng-isolate-scope&quot; aria-hidden=&quot;true&quot;&gt;&lt;svg version=&quot;1.1&quot; id=&quot;Layer_1&quot; xmlns=&quot;http://www.w3.org/ [rest of string was truncated]&quot;;.
+        ///      &lt;md-icon md-svg-src=&quot;/app/RegisterOfActions/Content/tylerui/svgs/Icon_Talking_Ts.svg&quot; style=&quot;height:3.7rem; width:3.7rem;&quot; class=&quot;ng-isolate-scope&quot; aria-hidden=&quot;true&quot;&gt;&lt;svg version=&quot;1.1&quot; id=&quot;Layer_1&quot; xmlns=&quot;http://www.w3.o [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string bexar_single_page {
             get {
@@ -84,6 +84,15 @@ namespace legallead.search.tests.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;25%&quot;&gt;&lt;col width=&quot;35%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; no [rest of string was truncated]&quot;;.
         /// </summary>
+        internal static string hidalgo_case_list {
+            get {
+                return ResourceManager.GetString("hidalgo_case_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;25%&quot;&gt;&lt;col width=&quot;35%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; no [rest of string was truncated]&quot;;.
+        /// </summary>
         internal static string travis_case_items {
             get {
                 return ResourceManager.GetString("travis_case_items", resourceCulture);
@@ -93,7 +102,7 @@ namespace legallead.search.tests.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 
         ///  
-        ///        &lt;!--?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?--&gt;&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;100%&quot; border=&quot;0&quot; style=&quot;table-layout: fixed; margin:0px; padding:0px;&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;/table&gt;&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;100%&quot; border=&quot;0&quot; style=&quot;table-layout: fixed; margin:0px; padding:0px;&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td bgcolor=&quot;#000000&quot;  [rest of string was truncated]&quot;;.
+        ///        &lt;!--?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?--&gt;&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;100%&quot; border=&quot;0&quot; style=&quot;table-layout: fixed; margin:0px; padding:0px;&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;/table&gt;&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;100%&quot; border=&quot;0&quot; style=&quot;table-layout: fixed; margin:0px; padding:0px;&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td bgcolor=&quot;#000000 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string travis_single_page {
             get {

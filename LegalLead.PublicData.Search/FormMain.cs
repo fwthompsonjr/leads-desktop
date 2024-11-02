@@ -97,6 +97,9 @@ namespace LegalLead.PublicData.Search
                     case (int)SourceType.TravisCounty:
                         TravisButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
+                    case (int)SourceType.HidalgoCounty:
+                        CommonButtonExecution(siteData, searchItem);
+                        break;
                     default:
                         NonDallasButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
@@ -116,6 +119,26 @@ namespace LegalLead.PublicData.Search
             {
                 KillProcess(driverNames);
             }
+        }
+
+        private void CommonButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
+        {
+            var index = cboSearchType.SelectedIndex;
+            var searchType = DallasSearchProcess.GetCourtName(index);
+            var keys = new List<WebNavigationKey> {
+                new() { Name = "StartDate", Value = searchItem.StartDate},
+                new() { Name = "EndDate", Value = searchItem.EndDate },
+                new() { Name = "CourtType", Value = searchType }
+            };
+            var wb = new WebNavigationParameter { Keys = keys };
+            var dweb = siteData.Id switch
+            {
+                _ => new HidalgoUiInteractive(wb)
+            };
+            _ = Task.Run(async () =>
+            {
+                await ProcessAsync(dweb, siteData, searchItem);
+            }).ConfigureAwait(true);
         }
 
         private void BexarButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
@@ -294,7 +317,8 @@ namespace LegalLead.PublicData.Search
                 var nonactors = new List<int> {
                     (int)SourceType.DallasCounty,
                     (int)SourceType.TravisCounty,
-                    (int)SourceType.BexarCounty
+                    (int)SourceType.BexarCounty,
+                    (int)SourceType.HidalgoCounty,
                 };
 
                 ProcessEndingMessage();

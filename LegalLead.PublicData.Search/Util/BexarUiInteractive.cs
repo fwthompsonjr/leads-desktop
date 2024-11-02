@@ -124,7 +124,7 @@ namespace LegalLead.PublicData.Search.Util
                 });
             });
             IsDateRangeComplete = false;
-            parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
+            parameters.Search(dates[0], dates[^1], CourtType);
         }
 
         protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
@@ -274,7 +274,6 @@ namespace LegalLead.PublicData.Search.Util
         {
             const string fmt = "yyMMdd";
             return date.ToString(fmt, Culture);
-
         }
 
         private static string ExcelDirectoyName()
