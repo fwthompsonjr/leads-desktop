@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Tools;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
-    public static class HidalgoScriptHelper
+    public static class ElPasoScriptHelper
     {
         public static Dictionary<string, string> ScriptCollection
         {
@@ -18,6 +16,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
         private static Dictionary<string, string> collection = null;
-        private static readonly string script_content = Properties.Resources.hidalgo_scripts;
+        private static readonly string script_content = Properties.Resources.elpaso_scripts;
     }
 }

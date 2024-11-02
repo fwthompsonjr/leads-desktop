@@ -1,0 +1,133 @@
+[
+  {
+    "name": "county",
+    "items": [
+      {
+        "name": "County Court at Law 3",
+        "id": 3,
+        "address": [ "County Court at Law 3", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "County Court at Law 6",
+        "id": 6,
+        "address": [ "County Court at Law 6", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "County Court at Law 7",
+        "id": 7,
+        "address": [ "County Court at Law 7", "500 E. San Antonio, El Paso, TX 79901" ]
+      }
+    ]
+  },
+  {
+    "name": "district",
+    "items": [
+      {
+        "name": "34th District Court",
+        "id": 1,
+        "address": [ "34th District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "168th District Court",
+        "id": 2,
+        "address": [ "168th District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "243rd District Court",
+        "id": 3,
+        "address": [ "243rd District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "171st District Court",
+        "id": 4,
+        "address": [ "171st District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "120th District Court",
+        "id": 5,
+        "address": [ "120th District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "210th District Court",
+        "id": 6,
+        "address": [ "210th District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "346th District Court",
+        "id": 7,
+        "address": [ "346th District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "384th District Court",
+        "id": 8,
+        "address": [ "384th District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "41st District Court",
+        "id": 9,
+        "address": [ "41st District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "205th District Court",
+        "id": 10,
+        "address": [ "205th District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      },
+      {
+        "name": "448th District Court",
+        "id": 11,
+        "address": [ "448th District Court", "500 E. San Antonio, El Paso, TX 79901" ]
+      }
+    ]
+  },
+  {
+    "name": "justice",
+    "items": [
+      {
+        "name": "JP 1",
+        "id": 1,
+        "address": [ "Justice of the Peace for Precinct 1", "424 Executive Center, Suite 100,  EL Paso, Texas 79902" ]
+      },
+      {
+        "name": "JP 2",
+        "id": 2,
+        "address": [ "Justice of the Peace for Precinct 2", "4641 Cohen Ave., Suite A, EL Paso, Texas 79924" ]
+      },
+      {
+        "name": "JP 3",
+        "id": 3,
+        "address": [ "Justice of the Peace for Precinct 3", "500 E. San Antonio, 3rd Floor, Suite 308, EL Paso, Texas 79901" ]
+      },
+      {
+        "name": "JP 4",
+        "id": 4,
+        "address": [ "Justice of the Peace for Precinct 4", "2350 George Dieter, Suite A, EL Paso, Texas 79936" ]
+      },
+      {
+        "name": "JP 5",
+        "id": 5,
+        "address": [ "Justice of the Peace for Precinct 5", "9521 Socorro Rd., Suite B2, EL Paso, Texas 79927" ]
+      },
+      {
+        "name": "JP 6, Place 1",
+        "id": 6,
+        "address": [ "Justice of the Peace for Precinct 6, Place 1", "190 N. San Elizario Rd., Clint, Texas 79836" ]
+      },
+      {
+        "name": "JP 6, Place 2",
+        "id": 7,
+        "address": [ "Justice of the Peace for Precinct 6, Place 2", "14608 Greg Dr., EL Paso, Texas 79938" ]
+      },
+      {
+        "name": "JP 7",
+        "id": 8,
+        "address": [ "Justice of the Peace for Precinct 7", "435 E. Vinton Rd., Suite C, Vinton, Texas 79821" ]
+      }
+    ]
+  },
+  {
+    "items": [
+
+    ],
+    "name": "criminal"
+  }
+]
