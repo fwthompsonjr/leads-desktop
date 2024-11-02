@@ -46,7 +46,7 @@ namespace LegalLead.PublicData.Search.Util
             return JsonConvert.SerializeObject(alldata);
         }
 
-        private void WaitForTable(By locator)
+        protected void WaitForTable(By locator)
         {
             try
             {
@@ -63,14 +63,14 @@ namespace LegalLead.PublicData.Search.Util
             }
         }
 
-        private static string GetDivText(HtmlNode element, int divId)
+        protected static string GetDivText(HtmlNode element, int divId)
         {
             var divs = element.SelectNodes("div")?.ToList();
             if (divs == null || divs.Count - 1 < divId) return string.Empty;
             return divs[divId].InnerText.Trim();
         }
 
-        private static string GetLinkAddress(HtmlNode element)
+        protected static string GetLinkAddress(HtmlNode element)
         {
             const string question = "?";
             const string linkformat = "https://pa.co.hidalgo.tx.us/CaseDetail.aspx?CaseID={0}";
@@ -84,7 +84,7 @@ namespace LegalLead.PublicData.Search.Util
             return string.Format(CultureInfo.CurrentCulture, linkformat, indx);
         }
 
-        private static CaseItemDto GetRowItem(HtmlNode element)
+        protected static CaseItemDto GetRowItem(HtmlNode element)
         {
             var data = new CaseItemDto();
             var cells = element.SelectNodes("td").ToList();
@@ -100,7 +100,7 @@ namespace LegalLead.PublicData.Search.Util
             return data;
         }
 
-        private static string GetNameFromCaseStyle(string caseStyle)
+        protected static string GetNameFromCaseStyle(string caseStyle)
         {
             const string find = "VS. ";
             const string etal = "ET AL";
@@ -130,7 +130,7 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         private static string recordFoundMessage;
-        private static string RecordFoundMesage
+        protected static string RecordFoundMesage
         {
             get
             {

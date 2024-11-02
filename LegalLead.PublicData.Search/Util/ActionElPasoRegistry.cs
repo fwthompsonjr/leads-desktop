@@ -17,7 +17,7 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountySearchAction>().Add<HidalgoNavigateCourtPage>().Named("begin-search");
             For<ICountySearchAction>().Add<ElPasoSetParameters>().Named("set-parameters");
             For<ICountySearchAction>().Add<HidalgoNoCountVerification>().Named("check-no-count");
-            For<ICountySearchAction>().Add<HidalgoFetchCaseList>().Named("get-case-list");
+            For<ICountySearchAction>().Add<ElPasoFetchCaseList>().Named("get-case-list");
         }
     }
 }
