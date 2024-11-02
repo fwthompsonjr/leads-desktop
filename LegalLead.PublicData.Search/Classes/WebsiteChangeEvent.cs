@@ -17,7 +17,6 @@ namespace LegalLead.PublicData.Search
             const int Zero = 0;
             const int Three = 3;
             const int Five = 5;
-            var boxindicies = new List<int> { DallasIndx, TravisIndx, BexarIndx, HidalgoIndx };
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             var cbo = GetMain.cboSearchType;
             var customBindingNeeded = boxindicies.Contains(source.Id);
@@ -108,5 +107,7 @@ namespace LegalLead.PublicData.Search
         private const int TravisIndx = (int)SourceType.TravisCounty;
         private const int BexarIndx = (int)SourceType.BexarCounty;
         private const int HidalgoIndx = (int)SourceType.HidalgoCounty;
+        private const int ElPasoIndx = (int)SourceType.ElPasoCounty;
+        private static readonly List<int> boxindicies = new() { DallasIndx, TravisIndx, BexarIndx, HidalgoIndx, ElPasoIndx };
     }
 }

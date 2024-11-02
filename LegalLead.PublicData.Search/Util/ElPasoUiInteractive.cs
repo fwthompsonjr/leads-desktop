@@ -80,7 +80,7 @@ namespace LegalLead.PublicData.Search.Util
             bool isCaptchaNeeded = true;
             dates.ForEach(d =>
             {
-                var isJustice = parameters.CourtType.Equals("Justice", oic);
+                var isJustice = CourtType.Equals("Justice", oic);
                 var selections = ElPasoCourtSelectionBuilder.GetSelection(isJustice, d).Split(',').ToList();
                 selections.ForEach(sel =>
                 {

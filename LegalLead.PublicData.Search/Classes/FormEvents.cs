@@ -83,7 +83,8 @@ namespace LegalLead.PublicData.Search
                 (int)SourceType.DallasCounty,
                 (int)SourceType.TravisCounty,
                 (int)SourceType.BexarCounty,
-                (int)SourceType.HidalgoCounty
+                (int)SourceType.HidalgoCounty,
+                (int)SourceType.ElPasoCounty,
             };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && nonactors.Contains(selectedItem.Id))

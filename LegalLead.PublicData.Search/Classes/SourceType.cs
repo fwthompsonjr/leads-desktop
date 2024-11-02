@@ -12,5 +12,6 @@
         TravisCounty = 70,
         BexarCounty = 80,
         HidalgoCounty = 90,
+        ElPasoCounty = 100,
     }
 }
