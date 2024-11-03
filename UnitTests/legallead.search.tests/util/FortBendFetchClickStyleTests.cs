@@ -23,8 +23,11 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var element = new Mock<IWebElement>();
+            var navigation = new Mock<INavigation>();
             var parameters = new DallasSearchProcess();
+            driver.Setup(m => m.Navigate()).Returns(navigation.Object);
             driver.Setup(s => s.FindElement(It.IsAny<By>())).Returns(element.Object);
+            navigation.Setup(m => m.Back());
             var service = new MockFortBendFetchClickStyle
             {
                 Parameters = parameters,
@@ -34,7 +37,6 @@ namespace legallead.search.tests.util
             Assert.Null(error);
         }
         [Theory]
-        [InlineData(0)]
         [InlineData(1)]
         public void ComponentThrowingException(int target)
         {

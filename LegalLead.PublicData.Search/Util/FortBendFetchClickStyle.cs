@@ -69,7 +69,6 @@ namespace LegalLead.PublicData.Search.Util
                             var person = GetDto(executor.ExecuteScript(js));
                             if (person != null) alldata.Add(person);
                         }
-                        Thread.Sleep(500);
                     }
                     Driver.Navigate().Back(); 
                 }

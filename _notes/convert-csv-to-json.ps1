@@ -12,11 +12,11 @@ function getCountyCourtIndex( $courtName, $cidx )
         return $cidx;
     }
 }
-
+#C:\_d\lead-old\_notes\williamson-court-address.csv
 
 $dir = "C:\_d\lead-old\_notes"
-$src = "fortbend-court-address.csv"
-$dest = "fortbend_court_address.json"
+$src = "williamson-court-address.csv"
+$dest = "williamson_court_address.json"
 $srcfile = "$dir\$src"
 $destfile = "$dir\$dest"
 
