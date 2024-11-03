@@ -62,6 +62,12 @@ var b =  Array.prototype.slice.call( document.getElementsByTagName('b'), 0 );
 b = b.filter(a => a.innerText == find);
 b.length != 0
 
+~ find page has error
+var find = 'An error occurred while processing your request.'
+var b =  Array.prototype.slice.call( document.getElementsByTagName('b'), 0 );
+b = b.filter(a => a.innerText == find);
+b.length != 0
+
 ~ find case detail links
 var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
 links = links.filter(a => { 

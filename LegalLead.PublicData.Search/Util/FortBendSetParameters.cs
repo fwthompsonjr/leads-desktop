@@ -28,7 +28,7 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_COURT_TYPE_MISSING);
 
             // wait for elements
-            var locator = By.Id("SearchBy");
+            var locator = By.Id("DateFiled");
             WaitForComboBox(locator);
 
             js = VerifyScript(js);
@@ -39,7 +39,7 @@ namespace LegalLead.PublicData.Search.Util
                 .Replace("{2}", Parameters.EndingDate);
 
             executor.ExecuteScript(script);
-            WaitForNavigation();
+            WaitForNavigation(); // this pause might be unneded.
             return true;
         }
         private void WaitForComboBox(By locator)

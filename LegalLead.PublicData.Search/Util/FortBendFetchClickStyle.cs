@@ -45,17 +45,27 @@ namespace LegalLead.PublicData.Search.Util
             var links = JsonConvert.DeserializeObject<List<string>>(items);
             if (links == null || links.Count == 0)
                 return JsonConvert.SerializeObject(alldata);
+            var blnError = false;
             links.ForEach(link =>
             {
-                var id = links.IndexOf(link);
-                navigator.LinkItemId = id;
-                navigator.Execute();
-                if (ElementWait(locator))
+                if (!blnError)
                 {
-                    var person = GetDto(executor.ExecuteScript(js));
-                    if (person != null) alldata.Add(person);
+                    var id = links.IndexOf(link);
+                    navigator.LinkItemId = id;
+                    navigator.Execute();
+                    if (ElementWait(locator))
+                    {
+                        var person = GetDto(executor.ExecuteScript(js));
+                        if (person != null) alldata.Add(person);
+                    }
+                    else
+                    {
+                        // look for page error here.
+                        blnError = true;
+                        Thread.Sleep(2500);
+                    }
+                    Driver.Navigate().Back(); 
                 }
-                Driver.Navigate().Back();
             });
 
             return JsonConvert.SerializeObject(alldata);
@@ -65,7 +75,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
-                var wait = new WebDriverWait(Driver, PageWaitTimeSpan) { PollingInterval = PageWaitPoolingInterval };
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(300) };
                 wait.Until(w =>
                 {
                     return w.TryFindElement(locator) != null;
