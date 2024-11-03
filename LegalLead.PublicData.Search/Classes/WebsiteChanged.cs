@@ -21,8 +21,6 @@ namespace LegalLead.PublicData.Search
         protected Label LabelCboCaseType => GetMain.labelCboCaseType;
         public override void Change()
         {
-            const int Four = 4;
-            const int Five = 5;
             base.Change();
             var source = (WebNavigationParameter)CboWebsite.SelectedItem;
             var customList = new List<int>
@@ -31,7 +29,6 @@ namespace LegalLead.PublicData.Search
                 (int)SourceType.TarrantCounty
             };
 
-            var showList = new List<int> { Four, Five };
             CboCaseType.Visible = customList.Contains(source.Id);
             LabelCboCaseType.Text = source.Id == (int)SourceType.TarrantCounty
                 ? CommonKeyIndexes.CustomSearchLabel : CommonKeyIndexes.SearchTypeLabel;
@@ -46,14 +43,14 @@ namespace LegalLead.PublicData.Search
 
             GetMain.tsStatusLabel.Text = new string(' ', 25);
             // custom combo mapping for case type
-            var ccCaseName = CommonKeyIndexes.CollinCountyCaseType; // "collinCountyCaseType";
+            var ccCaseName = CommonKeyIndexes.CollinCountyCaseType;
             var caseTypeName = source.Id == (int)SourceType.CollinCounty ?
                 ccCaseName :
-                CommonKeyIndexes.TarrantCountyCustomType; // "tarrantCountyCustomType";
+                CommonKeyIndexes.TarrantCountyCustomType;
             var caseTypes = CaseTypeSelectionDto.GetDto(caseTypeName);
-            var dropDownOptions = caseTypes.DropDowns.First().Options;
+            var dropDownOptions = caseTypes.DropDowns[0].Options;
             CboCaseType.DataSource = dropDownOptions;
-            CboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase; // "Name";
+            CboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
             CboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
 
             if (caseTypeName.Equals(ccCaseName, System.StringComparison.CurrentCultureIgnoreCase))
@@ -62,7 +59,7 @@ namespace LegalLead.PublicData.Search
             }
 
             var selected = (Option)CboCaseType.SelectedItem;
-            var expected = dropDownOptions.FirstOrDefault(o => o.IsDefault) ?? selected;
+            var expected = dropDownOptions.Find(o => o.IsDefault) ?? selected;
             if (selected.Id.Equals(expected.Id))
             {
                 return;

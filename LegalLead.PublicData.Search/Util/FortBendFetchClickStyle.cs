@@ -60,9 +60,16 @@ namespace LegalLead.PublicData.Search.Util
                     }
                     else
                     {
-                        // look for page error here.
                         blnError = true;
-                        Thread.Sleep(2500);
+                        var findElement = Driver.TryFindElements(By.TagName("a"))?.FirstOrDefault(a => a.Text.Trim() == link);
+                        if (findElement != null)
+                        {
+                            executor.ExecuteScript("arguments[0].click();", findElement);
+                            Thread.Sleep(500);
+                            var person = GetDto(executor.ExecuteScript(js));
+                            if (person != null) alldata.Add(person);
+                        }
+                        Thread.Sleep(500);
                     }
                     Driver.Navigate().Back(); 
                 }

@@ -149,7 +149,7 @@ namespace LegalLead.PublicData.Search
             tsDropFileList.Enabled = false;
             tsDropFileList.Visible = false;
 
-            tsWebDriver_Initialize();
+            TsWebDriver_Initialize();
 
             cboWebsite.DataSource = websites;
             cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
@@ -231,7 +231,7 @@ namespace LegalLead.PublicData.Search
             OpenExcel(ref fileName);
         }
 
-        private void tsWebDriver_Initialize()
+        private void TsWebDriver_Initialize()
         {
             // when data source is changed?
             // remove all items from the tab strip
