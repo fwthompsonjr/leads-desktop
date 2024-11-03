@@ -1,0 +1,113 @@
+[
+  {
+    "name": "county",
+    "items": [
+      {
+        "name": "County Court at Law No.1",
+        "id": 1,
+        "address": [ "County Court at Law No.1", "301 Jackson Street, Richmond, TX. 77469" ]
+      },
+      {
+        "name": "County Court at Law No.2",
+        "id": 2,
+        "address": [ "County Court at Law No.2", "301 Jackson Street, Richmond, TX. 77469" ]
+      },
+      {
+        "name": "County Court at Law No.3",
+        "id": 3,
+        "address": [ "County Court at Law No.3", "301 Jackson Street, Room 101, Richmond, TX. 77469" ]
+      },
+      {
+        "name": "County Court at Law No.4",
+        "id": 4,
+        "address": [ "County Court at Law No.4", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "County Court at Law No.5",
+        "id": 5,
+        "address": [ "County Court at Law No.5", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "County Court at Law No.6",
+        "id": 6,
+        "address": [ "County Court at Law No.6", "301 Jackson Street, Richmond, TX 77469" ]
+      }
+    ]
+  },
+  {
+    "name": "district",
+    "items": [
+      {
+        "name": "240th Judicial District Court",
+        "id": 1,
+        "address": [ "240th Judicial District Court", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "268th Judicial District Court",
+        "id": 2,
+        "address": [ "268th Judicial District Court", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "328th Judicial District Court",
+        "id": 3,
+        "address": [ "328th Judicial District Court", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "387th Judicial District Court",
+        "id": 4,
+        "address": [ "387th Judicial District Court", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "400th Judicial District Court",
+        "id": 5,
+        "address": [ "400th Judicial District Court", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "434th Judicial District Court",
+        "id": 6,
+        "address": [ "434th Judicial District Court", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "458th Judicial District Court",
+        "id": 7,
+        "address": [ "458th Judicial District Court", "301 Jackson Street, Richmond, TX 77469" ]
+      },
+      {
+        "name": "505th Judicial District Court",
+        "id": 8,
+        "address": [ "505th Judicial District Court", "301 Jackson Street, Richmond, TX 77469" ]
+      }
+    ]
+  },
+  {
+    "name": "justice",
+    "items": [
+      {
+        "name": "Commissioner Precinct 1",
+        "id": 1,
+        "address": [ "Commissioner Precinct 1", "301 Jackson, Richmond, Texas 77469" ]
+      },
+      {
+        "name": "Commissioner Precinct 2",
+        "id": 2,
+        "address": [ "Commissioner Precinct 2", "303 Texas Parkway Ste. 213, Missouri City, Texas 77489" ]
+      },
+      {
+        "name": "Commissioner Precinct 3",
+        "id": 3,
+        "address": [ "Commissioner Precinct 3", "151 Stadium Drive, Suite 122, Sugarland, Texas 77498" ]
+      },
+      {
+        "name": "Commissioner Precinct 4",
+        "id": 4,
+        "address": [ "Commissioner Precinct 4", "1517 Eugene Heimann Circle, Suite #300, Richmond, Texas 77469" ]
+      }
+    ]
+  },
+  {
+    "items": [
+
+    ],
+    "name": "criminal"
+  }
+]

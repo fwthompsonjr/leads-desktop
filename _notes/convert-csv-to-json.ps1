@@ -12,11 +12,11 @@ function getCountyCourtIndex( $courtName, $cidx )
         return $cidx;
     }
 }
-
+#C:\_d\lead-old\_notes\williamson-court-address.csv
 
 $dir = "C:\_d\lead-old\_notes"
-$src = "elpaso-court-address.csv"
-$dest = "elpaso_court_address.json"
+$src = "williamson-court-address.csv"
+$dest = "williamson_court_address.json"
 $srcfile = "$dir\$src"
 $destfile = "$dir\$dest"
 

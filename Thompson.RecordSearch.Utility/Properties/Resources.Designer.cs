@@ -245,6 +245,57 @@ namespace Thompson.RecordSearch.Utility.Properties {
         ///    &quot;name&quot;: &quot;county&quot;,
         ///    &quot;items&quot;: [
         ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 1&quot;,
+        ///        &quot;id&quot;: 1,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.1&quot;, &quot;301 Jackson Street, Richmond, TX. 77469&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 2&quot;,
+        ///        &quot;id&quot;: 2,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.2&quot;, &quot;301 Jackson Street, Richmond, TX. 77469&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 3&quot;,
+        ///        &quot;id&quot;: 3,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.3&quot;, &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string fortbend_court_address {
+            get {
+                return ResourceManager.GetString("fortbend_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ say hello
+        ///return &quot;hello&quot;;
+        ///
+        ///~ get navigation url
+        ////* https://tylerpaw.fortbendcountytx.gov/PublicAccess/default.aspx */
+        ///
+        ///~ nav to search screen
+        ///var links = Array.prototype.slice.call( document.getElementsByTagName(&apos;a&apos;), 0 );
+        ///links = links.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;class&apos;); 
+        ///  if (attr == null) { return false; } 
+        ///  if (attr != &apos;ssSearchHyperlink&apos;) return false; 
+        ///  return a.innerText.indexOf(&apos;Civil&apos;) &gt;= 0 });
+        ///links[0].click();
+        ///
+        ///~ populate search parameters
+        ///var case_filter = &apos; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string fortbend_scripts {
+            get {
+                return ResourceManager.GetString("fortbend_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;county&quot;,
+        ///    &quot;items&quot;: [
+        ///      {
         ///        &quot;name&quot;: &quot;County Court #1&quot;,
         ///        &quot;id&quot;: 1,
         ///        &quot;address&quot;: [ &quot;County Court #1&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]

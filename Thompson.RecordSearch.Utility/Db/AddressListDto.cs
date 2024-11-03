@@ -63,16 +63,29 @@ namespace Thompson.RecordSearch.Utility.Db
             }
         }
 
+        public static List<AddressListDto> FortBendList
+        {
+            get
+            {
+                if (fortbendList != null) return fortbendList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(fortbendContent);
+                fortbendList = tmp;
+                return fortbendList;
+            }
+        }
+
         private static List<AddressListDto> bexarList = null;
         private static List<AddressListDto> dallasList = null;
         private static List<AddressListDto> travisList = null;
         private static List<AddressListDto> hidalgoList = null;
         private static List<AddressListDto> elpasoList = null;
+        private static List<AddressListDto> fortbendList = null;
 
         private static readonly string bexarContent = Properties.Resources.bexar_court_address;
         private static readonly string dallasContent = Properties.Resources.dallas_court_address;
         private static readonly string elpasoContent = Properties.Resources.elpaso_court_address;
         private static readonly string travisContent = Properties.Resources.travis_court_address;
         private static readonly string hidalgoContent = Properties.Resources.hidalgo_court_address;
+        private static readonly string fortbendContent = Properties.Resources.fortbend_court_address;
     }
 }

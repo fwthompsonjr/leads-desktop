@@ -85,6 +85,7 @@ namespace LegalLead.PublicData.Search
                 (int)SourceType.BexarCounty,
                 (int)SourceType.HidalgoCounty,
                 (int)SourceType.ElPasoCounty,
+                (int)SourceType.FortBendCounty,
             };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && nonactors.Contains(selectedItem.Id))
@@ -148,7 +149,7 @@ namespace LegalLead.PublicData.Search
             tsDropFileList.Enabled = false;
             tsDropFileList.Visible = false;
 
-            tsWebDriver_Initialize();
+            TsWebDriver_Initialize();
 
             cboWebsite.DataSource = websites;
             cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
@@ -230,7 +231,7 @@ namespace LegalLead.PublicData.Search
             OpenExcel(ref fileName);
         }
 
-        private void tsWebDriver_Initialize()
+        private void TsWebDriver_Initialize()
         {
             // when data source is changed?
             // remove all items from the tab strip

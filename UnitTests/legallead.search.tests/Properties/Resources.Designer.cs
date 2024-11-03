@@ -91,6 +91,15 @@ namespace legallead.search.tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;25%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Citation Number [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string fortbend_case_list {
+            get {
+                return ResourceManager.GetString("fortbend_case_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;25%&quot;&gt;&lt;col width=&quot;35%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; no [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string hidalgo_case_list {

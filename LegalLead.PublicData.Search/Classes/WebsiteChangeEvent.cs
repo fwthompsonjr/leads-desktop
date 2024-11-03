@@ -108,6 +108,7 @@ namespace LegalLead.PublicData.Search
         private const int BexarIndx = (int)SourceType.BexarCounty;
         private const int HidalgoIndx = (int)SourceType.HidalgoCounty;
         private const int ElPasoIndx = (int)SourceType.ElPasoCounty;
-        private static readonly List<int> boxindicies = new() { DallasIndx, TravisIndx, BexarIndx, HidalgoIndx, ElPasoIndx };
+        private const int FortBendIndx = (int)SourceType.FortBendCounty;
+        private static readonly List<int> boxindicies = new() { DallasIndx, TravisIndx, BexarIndx, HidalgoIndx, ElPasoIndx, FortBendIndx };
     }
 }
