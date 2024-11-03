@@ -37,8 +37,10 @@ namespace LegalLead.PublicData.Search.Util
                 ExternalExecutor = executor,
                 Parameters = Parameters
             };
-            var collection = collector.Execute();
             var locator = By.XPath("//div[@class='ssCaseDetailCaseNbr']");
+            var selector = By.XPath("//table[@border='0'][@cellpadding='2']");
+            if (!ElementWait(selector)) return JsonConvert.SerializeObject(alldata);
+            var collection = collector.Execute();
             if (collection is not string items) return JsonConvert.SerializeObject(alldata);
             var links = JsonConvert.DeserializeObject<List<string>>(items);
             if (links == null || links.Count == 0)
@@ -53,6 +55,7 @@ namespace LegalLead.PublicData.Search.Util
                     var person = GetDto(executor.ExecuteScript(js));
                     if (person != null) alldata.Add(person);
                 }
+                Driver.Navigate().Back();
             });
 
             return JsonConvert.SerializeObject(alldata);

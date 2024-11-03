@@ -74,7 +74,7 @@ links = links.filter(a => {
   return true });  
  var arr = [];
  links.forEach(a => arr.push(a.innerText));
-return JSON.stringify(obj);
+return JSON.stringify(arr);
 
 ~ click case detail links
 
@@ -98,9 +98,6 @@ if(!isNaN(indx)) {
 }
 if (clickComplete) { 
 	links[indx].click();
-}
-else { 
-	return "clickFailed";
 }
 
 
@@ -127,9 +124,10 @@ if (headers.length > 0 ) {
 	}
 }
 // get case number
-var divs = $x("//div[@class='ssCaseDetailCaseNbr']");
-if (divs.length > 0 ) {
-	obj.caseNo = divs[0].innerText.split('.')[1].trim();
+var dvs = Array.prototype.slice.call( document.getElementsByTagName('div'), 0 );
+dvs = dvs.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false; } return attr == 'ssCaseDetailCaseNbr' });
+if (dvs.length > 0 ) {
+	obj.caseNo = dvs[0].innerText.split('.')[1].trim();
 }
 return JSON.stringify(obj);
 
