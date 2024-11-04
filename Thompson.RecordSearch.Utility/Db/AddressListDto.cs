@@ -74,12 +74,24 @@ namespace Thompson.RecordSearch.Utility.Db
             }
         }
 
+        public static List<AddressListDto> WilliamsonList
+        {
+            get
+            {
+                if (williamsonList != null) return williamsonList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(williamsonContent);
+                williamsonList = tmp;
+                return williamsonList;
+            }
+        }
+
         private static List<AddressListDto> bexarList = null;
         private static List<AddressListDto> dallasList = null;
         private static List<AddressListDto> travisList = null;
         private static List<AddressListDto> hidalgoList = null;
         private static List<AddressListDto> elpasoList = null;
         private static List<AddressListDto> fortbendList = null;
+        private static List<AddressListDto> williamsonList = null;
 
         private static readonly string bexarContent = Properties.Resources.bexar_court_address;
         private static readonly string dallasContent = Properties.Resources.dallas_court_address;
@@ -87,5 +99,6 @@ namespace Thompson.RecordSearch.Utility.Db
         private static readonly string travisContent = Properties.Resources.travis_court_address;
         private static readonly string hidalgoContent = Properties.Resources.hidalgo_court_address;
         private static readonly string fortbendContent = Properties.Resources.fortbend_court_address;
+        private static readonly string williamsonContent = Properties.Resources.williamson_court_address;
     }
 }

@@ -1,0 +1,98 @@
+[
+  {
+    "name": "county",
+    "items": [
+      {
+        "name": "County Court at Law #1",
+        "id": 1,
+        "address": [ "County Court at Law 1", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "County Court at Law #2",
+        "id": 2,
+        "address": [ "County Court at Law 2", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "County Court at Law #3",
+        "id": 3,
+        "address": [ "County Court at Law 3", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "County Court at Law #4",
+        "id": 4,
+        "address": [ "County Court at Law 4", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "County Court at Law #5",
+        "id": 5,
+        "address": [ "County Court at Law 5", "405 Martin Luther King, Georgetown, TX 78626" ]
+      }
+    ]
+  },
+  {
+    "name": "district",
+    "items": [
+      {
+        "name": "26th District Court",
+        "id": 1,
+        "address": [ "26th District Court", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "277th District Court",
+        "id": 2,
+        "address": [ "277th District Court", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "368th District Court",
+        "id": 3,
+        "address": [ "368th District Court", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "395th District Court",
+        "id": 4,
+        "address": [ "395th District Court", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "425th District Court",
+        "id": 5,
+        "address": [ "425th District Court", "405 Martin Luther King, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "480th District Court",
+        "id": 6,
+        "address": [ "480th District Court", "405 Martin Luther King, Georgetown, TX 78626" ]
+      }
+    ]
+  },
+  {
+    "name": "justice",
+    "items": [
+      {
+        "name": "JP1",
+        "id": 1,
+        "address": [ "Justice of the Peace for Precinct 1", "1801 E Old Settlers Blvd, Ste 100, Round Rock, Texas, 78664" ]
+      },
+      {
+        "name": "JP2",
+        "id": 2,
+        "address": [ "Justice of the Peace for Precinct 2", "350 Discovery Blvd, Ste. 204, Cedar Park, TX 78613" ]
+      },
+      {
+        "name": "JP3",
+        "id": 3,
+        "address": [ "Justice of the Peace for Precinct 3", "100 Wilco Way, Suite 204, Georgetown, TX 78626" ]
+      },
+      {
+        "name": "JP4",
+        "id": 4,
+        "address": [ "Justice of the Peace for Precinct 4", "211 W 6th St, Taylor TX  76574-3539" ]
+      }
+    ]
+  },
+  {
+    "items": [
+
+    ],
+    "name": "criminal"
+  }
+]
