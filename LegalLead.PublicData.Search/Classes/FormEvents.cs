@@ -86,6 +86,7 @@ namespace LegalLead.PublicData.Search
                 (int)SourceType.HidalgoCounty,
                 (int)SourceType.ElPasoCounty,
                 (int)SourceType.FortBendCounty,
+                (int)SourceType.WilliamsonCounty
             };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && nonactors.Contains(selectedItem.Id))
