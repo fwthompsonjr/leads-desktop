@@ -1,0 +1,66 @@
+[
+  {
+    "items": [
+      {
+        "address": [ "County Court at Law 1", "100 W. Houston St., Sherman, Texas 75090" ],
+        "name": "County Court at Law #1",
+        "id": 1
+      },
+      {
+        "address": [ "County Court at Law 2", "100 W. Houston St., Sherman, Texas 75090" ],
+        "name": "County Court at Law #2",
+        "id": 2
+      }
+    ],
+    "name": "county"
+  },
+  {
+    "items": [
+      {
+        "address": [ "15th District Court", "200 S. Crockett St., Sherman, Texas 75090" ],
+        "name": "15th District Court",
+        "id": 1
+      },
+      {
+        "address": [ "59th District Court", "200 S. Crockett St., Sherman, Texas 75090" ],
+        "name": "59th District Court",
+        "id": 2
+      },
+      {
+        "address": [ "397th District Court", "200 S. Crockett St., Sherman, Texas 75090" ],
+        "name": "397th District Court",
+        "id": 3
+      }
+    ],
+    "name": "district"
+  },
+  {
+    "items": [
+      {
+        "address": [ "Justice of the Peace for Precinct 1", "100 W Houston St., Sherman, TX 75090" ],
+        "name": "JP1",
+        "id": 1
+      },
+      {
+        "address": [ "Justice of the Peace for Precinct 2", "101 W. Woodard St., Denison, TX 75021" ],
+        "name": "JP2",
+        "id": 2
+      },
+      {
+        "address": [ "Justice of the Peace for Precinct 3", "509 North Union, Whitesboro, TX 76273" ],
+        "name": "JP3",
+        "id": 3
+      },
+      {
+        "address": [ "Justice of the Peace for Precinct 4", "117 S. Main, Van Alstyne, TX 75495" ],
+        "name": "JP4",
+        "id": 4
+      }
+    ],
+    "name": "justice"
+  },
+  {
+    "name": "criminal",
+    "items": []
+  }
+]

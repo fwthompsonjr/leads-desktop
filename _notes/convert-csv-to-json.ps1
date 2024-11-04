@@ -15,8 +15,8 @@ function getCountyCourtIndex( $courtName, $cidx )
 #C:\_d\lead-old\_notes\williamson-court-address.csv
 
 $dir = "C:\_d\lead-old\_notes"
-$src = "williamson-court-address.csv"
-$dest = "williamson_court_address.json"
+$src = "grayson-court-address.csv"
+$dest = "grayson_court_address.json"
 $srcfile = "$dir\$src"
 $destfile = "$dir\$dest"
 
@@ -102,10 +102,13 @@ foreach( $js in $jso )
 }
 $jstring = $jso | ConvertTo-Json
 $jstring = $jstring.Replace( '"@{name=', '{ "name": "');
+$jstring = $jstring.Replace( '"@{address=', '{ "address": ["');
 $jstring = $jstring.Replace( '; id=', '", "id": ');
 $jstring = $jstring.Replace( '; address=', ', "address": [ "');
 $jstring = $jstring.Replace( '}"', '"] }');
 $jstring = $jstring.Replace( '|', '", "');
+$jstring = $jstring.Replace( '; name=', '"], "name": "');
+$jstring = $jstring.Replace( '"] }', ' }');
 $jstring
 if (Test-Path $destfile) { [System.IO.File]::Delete( $destfile ); }
 [System.IO.File]::WriteAllText( $destfile, $jstring );

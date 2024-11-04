@@ -136,6 +136,16 @@
         {
             "LaunchCondition"
             {
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_AC7FA61CCC2B4158ADF3F3600DE19126"
+                {
+                "Name" = "8:.NET Core"
+                "Message" = "8:[VSDNETCOREMSG]"
+                "AllowLaterVersions" = "11:FALSE"
+                "InstallUrl" = "8:https://dotnet.microsoft.com/download/dotnet-core/[NetCoreVerMajorDotMinor]"
+                "IsNETCore" = "11:TRUE"
+                "Architecture" = "2:0"
+                "Runtime" = "2:0"
+                }
             }
         }
         "File"
@@ -236,19 +246,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Legal Lead Installer"
-        "ProductCode" = "8:{E980BA78-FD2F-4764-85A4-BCA1014FCD56}"
-        "PackageCode" = "8:{68671104-9B7F-4BF1-BE3F-74114E488FFD}"
-        "UpgradeCode" = "8:{CDFCBAEF-6049-4E4C-8564-5B12A4AA4513}"
+        "ProductCode" = "8:{1FE73739-C531-4E82-935E-EED99F76ADEE}"
+        "PackageCode" = "8:{CC1340AF-F07C-47E9-BEB3-5AB7C5A80A28}"
+        "UpgradeCode" = "8:{A788401A-C6F4-4FE5-B686-4E2013D9BA8A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.8.0"
+        "ProductVersion" = "8:2.8.2"
         "Manufacturer" = "8:Thompson Data Solutions"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Legal Lead Installer v 2.8.0"
+        "Title" = "8:Legal Lead Installer v 2.8.2"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Thompson Data Solutions"
         "Keywords" = "8:"
@@ -758,7 +768,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E8399221E8D44F1CB062273B598D032E"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\LegalLead.PublicData.Search\\obj\\Release\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B0FF2CC24EC14FD49804651B31D29B32"

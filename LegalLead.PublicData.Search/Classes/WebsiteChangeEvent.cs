@@ -110,6 +110,7 @@ namespace LegalLead.PublicData.Search
         private const int ElPasoIndx = (int)SourceType.ElPasoCounty;
         private const int FortBendIndx = (int)SourceType.FortBendCounty;
         private const int WilliamsonIndx = (int)SourceType.WilliamsonCounty;
+        private const int GraysonIndx = (int)SourceType.GraysonCounty;
         private static readonly List<int> boxindicies = new() { 
             DallasIndx, 
             TravisIndx, 
@@ -117,7 +118,8 @@ namespace LegalLead.PublicData.Search
             HidalgoIndx, 
             ElPasoIndx, 
             FortBendIndx,
-            WilliamsonIndx
+            WilliamsonIndx,
+            GraysonIndx
         };
     }
 }
