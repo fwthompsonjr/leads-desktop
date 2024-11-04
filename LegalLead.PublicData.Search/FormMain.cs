@@ -101,6 +101,7 @@ namespace LegalLead.PublicData.Search
                     case (int)SourceType.ElPasoCounty:
                     case (int)SourceType.FortBendCounty:
                     case (int)SourceType.WilliamsonCounty:
+                    case (int)SourceType.GraysonCounty:
                         CommonButtonExecution(siteData, searchItem);
                         break;
                     default:
@@ -136,6 +137,7 @@ namespace LegalLead.PublicData.Search
             var wb = new WebNavigationParameter { Keys = keys };
             IWebInteractive dweb = siteData.Id switch
             {
+                130 => new GraysonUiInteractive(wb),
                 120 => new WilliamsonUiInteractive(wb),
                 110 => new FortBendUiInteractive(wb),
                 100 => new ElPasoUiInteractive(wb),
@@ -328,6 +330,7 @@ namespace LegalLead.PublicData.Search
                     (int)SourceType.ElPasoCounty,
                     (int)SourceType.FortBendCounty,
                     (int)SourceType.WilliamsonCounty,
+                    (int)SourceType.GraysonCounty,
                 };
 
                 ProcessEndingMessage();
