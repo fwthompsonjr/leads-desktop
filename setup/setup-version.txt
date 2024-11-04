@@ -1,5 +1,27 @@
 [
 	{
+		"id": "2.8.2",
+		"date": "2024-11-04 17:15",
+		"title": "Add Additional County Searches",
+		"description": [
+			"## Problem:",
+			"",
+			"When a user selects Bexar, Hidalgo, ElPaso, FortBend, Williamson or Grayson county as a search parameter",
+			"The process will perform a search for selected county.",
+			"",
+			"## Resolution:",
+			"- [x] Confirm excel file generation",
+			"- [x] Create excel file to open generated files",
+			"- [x] Test behavior for Bexar county",
+			"- [x] Test behavior for Hidalgo county",
+			"- [x] Test behavior for ElPaso county",
+			"- [x] Test behavior for FortBend county",
+			"- [x] Test behavior for Williamson county",
+			"- [x] Test behavior for Grayson county",
+			"- [x] Update package to generate release"
+		]
+	},
+	{
 		"id": "2.8.1",
 		"date": "2024-10-17 09:45",
 		"title": "Add Travis County Search",
