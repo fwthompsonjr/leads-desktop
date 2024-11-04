@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<ProjectGuid>{FDC972D5-85CC-418C-A08B-D2BD940D9A35}</ProjectGuid>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net48</TargetFramework>
+		<TargetFramework>net6.0-windows</TargetFramework>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<RuntimeIdentifiers>win</RuntimeIdentifiers>
 		<AssemblyTitle>LegalLead.PublicData.Search</AssemblyTitle>
@@ -11,6 +11,7 @@
 		<Copyright>Copyright ©  2019</Copyright>
 		<NoWarn>7035;CA1031</NoWarn>
 		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<DebugType>full</DebugType>
@@ -22,8 +23,8 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<ApplicationIcon>law-icon.ico</ApplicationIcon>
-		<AssemblyVersion>2.8.1.0</AssemblyVersion>
-		<FileVersion>2.8.1.0</FileVersion>
+		<AssemblyVersion>2.8.2.0</AssemblyVersion>
+		<FileVersion>2.8.2.0</FileVersion>
 		<PackageIcon>law-icon.png</PackageIcon>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
@@ -57,46 +58,27 @@
 		<Prefer32Bit>true</Prefer32Bit>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
-		<PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" Version="2.9.8">
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" Version="3.3.2">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeCoverage" Version="16.4.0" />
-		<PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8">
+		<PackageReference Include="Microsoft.CodeCoverage" Version="17.11.1" />
+		<PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="4.0.50">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.9.8">
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.NetFramework.Analyzers" Version="2.9.8">
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="3.2.26">
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.6.13" />
-		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.6.13" />
-		<PackageReference Include="Microsoft.VisualStudio.Validation" Version="15.5.31" />
-		<PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
-		<PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
-		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.3" />
-		<PackageReference Include="System.Security.AccessControl" Version="4.6.0" />
-		<PackageReference Include="System.Security.Principal.Windows" Version="4.6.0" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.3" />
+		<PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.11.20" />
+		<PackageReference Include="Microsoft.VisualStudio.Validation" Version="17.8.8" />
+		<PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
+		<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+		<PackageReference Include="System.Security.AccessControl" Version="6.0.1" />
+		<PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
+		<PackageReference Include="Selenium.WebDriver" Version="4.25.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-			<HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-		</Reference>
-		<Reference Include="System.Configuration" />
-		<Reference Include="System.Data.DataSetExtensions" />
-		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="System.Deployment" />
-		<Reference Include="System.Net.Http" />
-		<Reference Include="System.Windows.Forms" />
-		<Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
-			<HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
-		</Reference>
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Classes\BackgroundProcessor.cs">
@@ -173,15 +155,6 @@
 			<Link>xml\application-settings.json</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="Properties\Settings.settings">
-			<Generator>SettingsSingleFileGenerator</Generator>
-			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
-		</None>
-		<Compile Update="Properties\Settings.Designer.cs">
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Settings.settings</DependentUpon>
-			<DesignTimeSharedInput>True</DesignTimeSharedInput>
-		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Harris.Criminal.Db\Harris.Criminal.Db.csproj" />

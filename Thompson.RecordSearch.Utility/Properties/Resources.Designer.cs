@@ -61,6 +61,80 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;key&quot;: &quot;STATUS_MSG_SEARCH_FOUND_RECORDS&quot;,
+        ///		&quot;value&quot;: &quot;Search found {0} records&quot;
+        ///	}
+        ///].
+        /// </summary>
+        internal static string app_messages {
+            get {
+                return ResourceManager.GetString("app_messages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;name&quot;: &quot;county&quot;,
+        ///		&quot;items&quot;: [
+        ///			{
+        ///				&quot;id&quot;: 1,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 1&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 1&quot;,
+        ///					&quot;300 Dolorosa, San Antonio, TX 78205&quot;
+        ///				]
+        ///			},
+        ///			{
+        ///				&quot;id&quot;: 2,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 2&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 2&quot;,
+        ///					&quot;300 Dolorosa, San Antonio, TX 78205&quot;
+        ///				]
+        ///			},
+        ///			{
+        ///				&quot;id&quot;: 3,
+        ///				&quot;name&quot;: &quot;County Court at Law No. 3&quot;,
+        ///				&quot;address&quot;: [
+        ///					&quot;County Court at Law No. 3&quot;,
+        ///					&quot;100 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string bexar_court_address {
+            get {
+                return ResourceManager.GetString("bexar_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ set search parameters and submit
+        ///var indx = &apos;{0}&apos;;
+        ///var startDate = &apos;{1}&apos;;
+        ///var endDate = &apos;{2}&apos;;
+        ///var searchDate = &apos;{3}&apos;;
+        ///var fallbackDate = new Date().toLocaleString().split(&apos;,&apos;)[0];
+        ///var search =
+        ///{
+        ///	setLocation: function(id) {
+        ///		const cboname = &quot;cboHSLocationGroup&quot;;
+        ///		var cbo = document.getElementById(cboname);
+        ///		cbo.selectedIndex = id;
+        ///		cbo.dispatchEvent(new Event(&apos;change&apos;))
+        ///	},
+        ///	setSearchType: function() {
+        ///		const cboname = &quot;cboHSSearchBy&quot;;
+        ///		var cbo = document.getElementById(cboname);
+        ///	 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string bexar_scripts {
+            get {
+                return ResourceManager.GetString("bexar_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;web&quot;: &quot;https://oxfordlegalleads.com/app/get-county-code&quot;,
         ///	&quot;counties&quot;: 
@@ -116,6 +190,215 @@ namespace Thompson.RecordSearch.Utility.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;county&quot;,
+        ///    &quot;items&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 3&quot;,
+        ///        &quot;id&quot;: 3,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 3&quot;, &quot;500 E. San Antonio, El Paso, TX 79901&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 6&quot;,
+        ///        &quot;id&quot;: 6,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 6&quot;, &quot;500 E. San Antonio, El Paso, TX 79901&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 7&quot;,
+        ///        &quot;id&quot;: 7,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 7&quot;, &quot;500 E. San An [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string elpaso_court_address {
+            get {
+                return ResourceManager.GetString("elpaso_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ say hello
+        ///return &quot;hello&quot;;
+        ///
+        ///~ get navigation url
+        ////* https://portal-txelpaso.tylertech.cloud/PublicAccess/default.aspx */
+        ///
+        ///~ nav to search screen
+        ///var links = Array.prototype.slice.call( document.getElementsByTagName(&apos;a&apos;), 0 );
+        ///links = links.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;class&apos;); 
+        ///  if (attr == null) { return false; } 
+        ///  if (attr != &apos;ssSearchHyperlink&apos;) return false; 
+        ///  return a.innerText.indexOf(&apos;Civil&apos;) &gt;= 0 });
+        ///links[0].click();
+        ///
+        ///~ populate search parameters
+        ///var case_filter = [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string elpaso_scripts {
+            get {
+                return ResourceManager.GetString("elpaso_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;county&quot;,
+        ///    &quot;items&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 1&quot;,
+        ///        &quot;id&quot;: 1,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.1&quot;, &quot;301 Jackson Street, Richmond, TX. 77469&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 2&quot;,
+        ///        &quot;id&quot;: 2,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.2&quot;, &quot;301 Jackson Street, Richmond, TX. 77469&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law 3&quot;,
+        ///        &quot;id&quot;: 3,
+        ///        &quot;address&quot;: [ &quot;County Court at Law No.3&quot;, &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string fortbend_court_address {
+            get {
+                return ResourceManager.GetString("fortbend_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ say hello
+        ///return &quot;hello&quot;;
+        ///
+        ///~ get navigation url
+        ////* https://tylerpaw.fortbendcountytx.gov/PublicAccess/default.aspx */
+        ///
+        ///~ nav to search screen
+        ///var links = Array.prototype.slice.call( document.getElementsByTagName(&apos;a&apos;), 0 );
+        ///links = links.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;class&apos;); 
+        ///  if (attr == null) { return false; } 
+        ///  if (attr != &apos;ssSearchHyperlink&apos;) return false; 
+        ///  return a.innerText.indexOf(&apos;Civil&apos;) &gt;= 0 });
+        ///links[0].click();
+        ///
+        ///~ populate search parameters
+        ///var case_filter = &apos; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string fortbend_scripts {
+            get {
+                return ResourceManager.GetString("fortbend_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;items&quot;: [
+        ///      {
+        ///        &quot;address&quot;: [ &quot;County Court at Law 1&quot;, &quot;100 W. Houston St., Sherman, Texas 75090&quot; ],
+        ///        &quot;name&quot;: &quot;County Court at Law #1&quot;,
+        ///        &quot;id&quot;: 1
+        ///      },
+        ///      {
+        ///        &quot;address&quot;: [ &quot;County Court at Law 2&quot;, &quot;100 W. Houston St., Sherman, Texas 75090&quot; ],
+        ///        &quot;name&quot;: &quot;County Court at Law #2&quot;,
+        ///        &quot;id&quot;: 2
+        ///      }
+        ///    ],
+        ///    &quot;name&quot;: &quot;county&quot;
+        ///  },
+        ///  {
+        ///    &quot;items&quot;: [
+        ///      {
+        ///        &quot;address&quot;: [ &quot;15th District Court&quot;, &quot;200 S. Crockett St., Sherman, Texa [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string grayson_court_address {
+            get {
+                return ResourceManager.GetString("grayson_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ say hello
+        ///return &quot;hello&quot;;
+        ///
+        ///~ get navigation url
+        ////* https://judicialsearch.co.grayson.tx.us:8443/default.aspx */
+        ///
+        ///~ nav to search screen
+        ///var links = Array.prototype.slice.call( document.getElementsByTagName(&apos;a&apos;), 0 );
+        ///links = links.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;class&apos;); 
+        ///  if (attr == null) { return false; } 
+        ///  if (attr != &apos;ssSearchHyperlink&apos;) return false; 
+        ///  return a.innerText.indexOf(&apos;Civil&apos;) &gt;= 0 });
+        ///links[0].click();
+        ///
+        ///~ populate search parameters
+        ///var case_filter = &apos;{0}&apos;;        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string grayson_scripts {
+            get {
+                return ResourceManager.GetString("grayson_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;county&quot;,
+        ///    &quot;items&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court #1&quot;,
+        ///        &quot;id&quot;: 1,
+        ///        &quot;address&quot;: [ &quot;County Court #1&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court #2&quot;,
+        ///        &quot;id&quot;: 2,
+        ///        &quot;address&quot;: [ &quot;County Court #2&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court #4&quot;,
+        ///        &quot;id&quot;: 4,
+        ///        &quot;address&quot;: [ &quot;County Court #4&quot;, &quot;100 N. Closner, Edinburg, TX 78539&quot; ]
+        ///      },
+        ///       [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hidalgo_court_address {
+            get {
+                return ResourceManager.GetString("hidalgo_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ say hello
+        ///return &quot;hello&quot;;
+        ///
+        ///~ get navigation url
+        ////* https://pa.co.hidalgo.tx.us/default.aspx */
+        ///
+        ///~ nav to search screen
+        ///var links = Array.prototype.slice.call( document.getElementsByTagName(&apos;a&apos;), 0 );
+        ///links = links.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;class&apos;); 
+        ///  if (attr == null) { return false; } 
+        ///  if (attr != &apos;ssSearchHyperlink&apos;) return false; 
+        ///  return a.innerText.indexOf(&apos;Civil&apos;) &gt;= 0 });
+        ///links[0].click();
+        ///
+        ///~ populate search parameters
+        ///var case_filter = &apos;{0}&apos;;
+        ///var dtes = [ &apos;{1 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hidalgo_scripts {
+            get {
+                return ResourceManager.GetString("hidalgo_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
         ///	{
         ///		&quot;name&quot;: &quot;county&quot;,
         ///		&quot;items&quot;: [
@@ -154,8 +437,8 @@ namespace Thompson.RecordSearch.Utility.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///	&quot;url-county&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
-        ///	&quot;url-district&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/&quot;,
+        ///	&quot;url-county&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/Home/Dashboard/29&quot;,
+        ///	&quot;url-district&quot;: &quot;https://odysseyweb.traviscountytx.gov/Portal/Home/Dashboard/29&quot;,
         ///	&quot;url-justice&quot;: &quot;https://odysseypa.traviscountytx.gov/JPPublicAccess/default.aspx&quot;,
         ///	&quot;searchLink&quot;: &quot;//a[@class=&apos;ssSearchHyperlink&apos;][contains(text(), &apos;Civil&apos;)]&quot;
         ///}.
@@ -189,6 +472,57 @@ namespace Thompson.RecordSearch.Utility.Properties {
         internal static string travisScriptingHelp {
             get {
                 return ResourceManager.GetString("travisScriptingHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;name&quot;: &quot;county&quot;,
+        ///    &quot;items&quot;: [
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law #1&quot;,
+        ///        &quot;id&quot;: 1,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 1&quot;, &quot;405 Martin Luther King, Georgetown, TX 78626&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law #2&quot;,
+        ///        &quot;id&quot;: 2,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 2&quot;, &quot;405 Martin Luther King, Georgetown, TX 78626&quot; ]
+        ///      },
+        ///      {
+        ///        &quot;name&quot;: &quot;County Court at Law #3&quot;,
+        ///        &quot;id&quot;: 3,
+        ///        &quot;address&quot;: [ &quot;County Court at Law 3 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string williamson_court_address {
+            get {
+                return ResourceManager.GetString("williamson_court_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~ say hello
+        ///return &quot;hello&quot;;
+        ///
+        ///~ get navigation url
+        ////* https://judicialrecords.wilco.org/PublicAccess/default.aspx */
+        ///
+        ///~ nav to search screen
+        ///var links = Array.prototype.slice.call( document.getElementsByTagName(&apos;a&apos;), 0 );
+        ///links = links.filter(a =&gt; { 
+        ///  let attr = a.getAttribute(&apos;class&apos;); 
+        ///  if (attr == null) { return false; } 
+        ///  if (attr != &apos;ssSearchHyperlink&apos;) return false; 
+        ///  return a.innerText.indexOf(&apos;Civil&apos;) &gt;= 0 });
+        ///links[0].click();
+        ///
+        ///~ populate search parameters
+        ///var case_filter = &apos;{0}&apos; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string williamson_scripts {
+            get {
+                return ResourceManager.GetString("williamson_scripts", resourceCulture);
             }
         }
     }

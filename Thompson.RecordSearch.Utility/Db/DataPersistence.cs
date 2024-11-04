@@ -18,7 +18,7 @@ namespace Thompson.RecordSearch.Utility.Db
         /// <returns></returns>
         private static string GetAppFolderName()
         {
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             return Path.GetDirectoryName(execName);
         }
 

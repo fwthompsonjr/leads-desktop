@@ -2,6 +2,7 @@
 using Harris.Criminal.Db.Tables;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,10 +13,10 @@ namespace Harris.Criminal.Db
     public static class Startup
     {
 
-        internal static string _appFolder;
-        internal static string AppFolder => _appFolder ?? (_appFolder = GetAppFolderName());
+        private static string _appFolder;
+        internal static string AppFolder => _appFolder ??= GetAppFolderName();
 
-        public static string DataFolder => Downloads.DataFolder;
+        public static string DataFolder => Downloads.AppDataFolder;
 
         /// <summary>
         /// Gets the name of the application directory.
@@ -23,15 +24,15 @@ namespace Harris.Criminal.Db
         /// <returns></returns>
         private static string GetAppFolderName()
         {
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             return Path.GetDirectoryName(execName);
         }
 
         public static void Read()
         {
-            References.Read();
-            Downloads.Read();
-            CaseStyles.Read();
+            References.ReadReferences();
+            Downloads.ReadFilings();
+            CaseStyles.ReadCases();
         }
         public static Task ReadAsync(IProgress<bool> progress)
         {
@@ -45,8 +46,8 @@ namespace Harris.Criminal.Db
 
         public static void Reset()
         {
-            References.Read(true);
-            Downloads.Read();
+            References.ReadReferences(true);
+            Downloads.ReadFilings();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>")]
@@ -59,7 +60,7 @@ namespace Harris.Criminal.Db
             }
             private static string _dataFolder;
 
-            internal static string DataFolder => _dataFolder ?? (_dataFolder = GetDataFolderName());
+            internal static string AppDataFolder => _dataFolder ??= GetDataFolderName();
             /// <summary>
             /// Gets the name of the application data directory.
             /// </summary>
@@ -74,14 +75,14 @@ namespace Harris.Criminal.Db
 
             public static List<HarrisCountyListDto> DataList { get; private set; }
 
-            public static void Read(bool reset = false)
+            public static void ReadFilings(bool reset = false)
             {
-                if (reset == false && FileNames != null && DataList != null)
+                if (!reset && FileNames != null && DataList != null)
                 {
                     return;
                 }
                 const string extn = "*CrimFilingsWithFutureSettings*.txt";
-                var directory = new DirectoryInfo(DataFolder);
+                var directory = new DirectoryInfo(AppDataFolder);
                 var files = directory.GetFiles(extn).ToList();
                 FileNames = files.Select(f => f.FullName).ToList();
                 FileNames.Sort((a, b) => b.CompareTo(a));
@@ -151,7 +152,7 @@ namespace Harris.Criminal.Db
                 {
                     return creationTime;
                 }
-                if (DateTime.TryParse(datum.DateDatasetProduced, out DateTime dataDate))
+                if (DateTime.TryParse(datum.DateDatasetProduced, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime dataDate))
                 {
                     return dataDate;
                 }
@@ -164,7 +165,7 @@ namespace Harris.Criminal.Db
         {
             private static string _dataFolder;
 
-            private static string DataFolder => _dataFolder ?? (_dataFolder = GetDataFolderName());
+            private static string ReferenceDataFolder => _dataFolder ?? (_dataFolder = GetDataFolderName());
             /// <summary>
             /// Gets the name of the application data directory.
             /// </summary>
@@ -188,22 +189,22 @@ namespace Harris.Criminal.Db
             /// Reads Reference Data and Stores in Memory
             /// </summary>
             /// <param name="reset"></param>
-            public static void Read(bool reset = false)
+            public static void ReadReferences(bool reset = false)
             {
-                if (reset == false && FileNames != null && DataList != null)
+                if (!reset && FileNames != null && DataList != null)
                 {
                     return;
                 }
                 const string extn = "*hcc.tables.*.json";
-                var directory = new DirectoryInfo(DataFolder);
+                var directory = new DirectoryInfo(ReferenceDataFolder);
                 var files = directory.GetFiles(extn).ToList();
                 FileNames = files.Select(f => f.FullName).ToList();
                 var tables = new List<ReferenceTable>();
-                FileNames.ForEach(f => { tables.Add(Read<ReferenceTable>(f)); });
+                FileNames.ForEach(f => { tables.Add(ReadFileContent<ReferenceTable>(f)); });
                 DataList = tables;
             }
 
-            private static T Read<T>(string sourceFileName) where T : class
+            private static T ReadFileContent<T>(string sourceFileName) where T : class
             {
                 var content = GetFileContent(sourceFileName);
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content);
@@ -224,7 +225,7 @@ namespace Harris.Criminal.Db
 
             private static string _dataFolder;
 
-            private static string DataFolder => _dataFolder ?? (_dataFolder = GetDataFolderName());
+            private static string CaseDataFolder => _dataFolder ??= GetDataFolderName();
             /// <summary>
             /// Gets the name of the application data directory.
             /// </summary>
@@ -248,24 +249,24 @@ namespace Harris.Criminal.Db
             /// Reads Reference Data and Stores in Memory
             /// </summary>
             /// <param name="reset"></param>
-            public static void Read(bool reset = false)
+            public static void ReadCases(bool reset = false)
             {
-                if (reset == false && FileNames != null && DataList != null)
+                if (!reset && FileNames != null && DataList != null)
                 {
                     return;
                 }
 
                 const string extn = "*HarrisCriminalStyleDto.json";
-                var directory = new DirectoryInfo(DataFolder);
+                var directory = new DirectoryInfo(CaseDataFolder);
                 var files = directory.GetFiles(extn).ToList();
                 FileNames = files.Select(f => f.FullName).ToList();
                 FileNames.Sort((a, b) => b.CompareTo(a));
                 var tables = new List<CaseStyleDb>();
-                FileNames.ForEach(f => { tables.AddRange(Read<List<CaseStyleDb>>(f)); });
+                FileNames.ForEach(f => { tables.AddRange(ReadCases<List<CaseStyleDb>>(f)); });
                 DataList = tables;
             }
 
-            private static T Read<T>(string sourceFileName) where T : class
+            private static T ReadCases<T>(string sourceFileName) where T : class
             {
                 var content = GetFileContent(sourceFileName);
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content);

@@ -24,7 +24,7 @@ namespace LegalLead.PublicData.Search.Classes
                     var exists = DoesAppShortcutExist();
                     if (exists || !update) return;
                     DeleteAppShortcut();
-                    using (var process = new System.Diagnostics.Process())
+                    using (var process = new Process())
                     {
                         process.StartInfo.FileName = "cscript";
                         process.StartInfo.Arguments = $"\"{setupFile}\"";
@@ -141,7 +141,7 @@ namespace LegalLead.PublicData.Search.Classes
             var versionDir = Path.Combine(appDir, versionNumber);
             if (string.IsNullOrEmpty(versionDir) || !Directory.Exists(versionDir)) return string.Empty;
             var applicationFile = Path.Combine(versionDir, "LegalLead.PublicData.Search.exe");
-            if (string.IsNullOrEmpty(applicationFile) ||!File.Exists(applicationFile)) return string.Empty;
+            if (string.IsNullOrEmpty(applicationFile) || !File.Exists(applicationFile)) return string.Empty;
             var versionInfo = FileVersionInfo.GetVersionInfo(applicationFile).FileVersion;
             if (!versionInfo.Equals(fileVersion, StringComparison.OrdinalIgnoreCase)) return string.Empty;
             return applicationFile;
@@ -165,6 +165,6 @@ namespace LegalLead.PublicData.Search.Classes
         private static string setupFileName = null;
         private static Assembly executingAssembly = null;
         private static bool hasRun = false;
-        private static readonly object locker = new object();
+        private static readonly object locker = new();
     }
 }

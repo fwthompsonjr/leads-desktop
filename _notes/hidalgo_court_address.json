@@ -1,0 +1,178 @@
+[
+  {
+    "name": "county",
+    "items": [
+      {
+        "name": "County Court #1",
+        "id": 1,
+        "address": [ "County Court #1", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "County Court #2",
+        "id": 2,
+        "address": [ "County Court #2", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "County Court #4",
+        "id": 3,
+        "address": [ "County Court #4", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "County Court #5",
+        "id": 4,
+        "address": [ "County Court #5", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "County Court #6",
+        "id": 5,
+        "address": [ "County Court #6", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "County Court #7",
+        "id": 6,
+        "address": [ "County Court #7", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "County Court #8",
+        "id": 7,
+        "address": [ "County Court #8", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "County Court #9",
+        "id": 8,
+        "address": [ "County Court #9", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "County Court #10",
+        "id": 9,
+        "address": [ "County Court #10", "100 N. Closner, Edinburg, TX 78539" ]
+      }
+    ]
+  },
+  {
+    "name": "district",
+    "items": [
+      {
+        "name": "92nd District Court",
+        "id": 1,
+        "address": [ "92nd District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "93rd District Court",
+        "id": 2,
+        "address": [ "93rd District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "139th District Court",
+        "id": 3,
+        "address": [ "139th District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "206th District Court",
+        "id": 4,
+        "address": [ "206th District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "275th District Court",
+        "id": 5,
+        "address": [ "275th District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "332nd District Court",
+        "id": 6,
+        "address": [ "332nd District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "370th District Court",
+        "id": 7,
+        "address": [ "370th District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "389th District Court",
+        "id": 8,
+        "address": [ "389th District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "398th District Court",
+        "id": 9,
+        "address": [ "398th District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "430th District Court",
+        "id": 10,
+        "address": [ "430th District Court", "111 S. 9th Street, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "464th District Court",
+        "id": 11,
+        "address": [ "464th District Court", "100 N. Closner, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "449th District Court",
+        "id": 12,
+        "address": [ "449th District Court", "1001 N. Doolittle Rd, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "476th District Court",
+        "id": 13,
+        "address": [ "476th District Court", "1926 E. Griffin Parkway, Suite 200, Mission, TX 78572" ]
+      }
+    ]
+  },
+  {
+    "name": "justice",
+    "items": [
+      {
+        "name": "Precinct 1, Place 1",
+        "id": 1,
+        "address": [ "Precinct 1, Place 1", "1902 Joe Stephens Ave. , Suite 301, Weslaco, TX 78596" ]
+      },
+      {
+        "name": "Precinct 1, Place 2",
+        "id": 2,
+        "address": [ "Precinct 1, Place 2", "1902 Joe Stephens, Suite 302, Weslaco, TX 78596" ]
+      },
+      {
+        "name": "Precinct 2, Place 1",
+        "id": 3,
+        "address": [ "Precinct 2, Place 1", "300 W. Hall Acres, Suite F, Pharr, TX 78577" ]
+      },
+      {
+        "name": "Precinct 2, Place 2",
+        "id": 4,
+        "address": [ "Precinct 2, Place 2", "300 W. Hall Acres, Suite D, Pharr, TX 78577" ]
+      },
+      {
+        "name": "Precinct 3, Place 1",
+        "id": 5,
+        "address": [ "Precinct 3, Place 1", "730 N. Breyfogle, Suite C, Mission, TX 78574" ]
+      },
+      {
+        "name": "Precinct 3, Place 2",
+        "id": 6,
+        "address": [ "Precinct 3, Place 2", "730 N. Breyfogle, Suite A, Mission, TX 78574" ]
+      },
+      {
+        "name": "Precinct 4, Place 1",
+        "id": 7,
+        "address": [ "Precinct 4, Place 1", "212 N. 12th Avenue, Edinburg, TX 78541" ]
+      },
+      {
+        "name": "Precinct 4, Place 2",
+        "id": 8,
+        "address": [ "Precinct 4, Place 2", "224 N. 12th, Edinburg, TX 78539" ]
+      },
+      {
+        "name": "Precinct 5, Place 1",
+        "id": 9,
+        "address": [ "Precinct 5, Place 1", "708 E Edinburg Ave, Suite B, Elsa, TX 78543" ]
+      }
+    ]
+  },
+  {
+    "items": [
+
+    ],
+    "name": "criminal"
+  }
+]

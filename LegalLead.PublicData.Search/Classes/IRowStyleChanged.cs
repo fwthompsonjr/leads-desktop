@@ -60,8 +60,8 @@ namespace LegalLead.PublicData.Search.Classes
         {
 
             var changes = new List<LabelSetting>() {
-                new LabelSetting { Target = main.labelCboCaseType },
-                new LabelSetting { Target = main.label4 }
+                new() { Target = main.labelCboCaseType },
+                new() { Target = main.label4 }
                 };
             changes.ForEach(c =>
             {
@@ -88,7 +88,7 @@ namespace LegalLead.PublicData.Search.Classes
     {
         public override int WebsiteIndex => (int)SourceType.HarrisCivil;
 
-        public override List<int> HiddenRows => new List<int> { 3, 4 };
+        public override List<int> HiddenRows => new() { 3, 4 };
 
         public override void MapLabels(FormMain main
             // TableLayoutRowStyleCollection styles
@@ -99,8 +99,8 @@ namespace LegalLead.PublicData.Search.Classes
             styles[3].Height = 50;
             styles[4].Height = 50;
             var changes = new List<LabelSetting>() {
-                new LabelSetting { OldText = "Case Type", ChangedText = "Courts", Target = main.labelCboCaseType },
-                new LabelSetting { OldText = "Search Type", ChangedText = "Status", Target = main.label4 }
+                new() { OldText = "Case Type", ChangedText = "Courts", Target = main.labelCboCaseType },
+                new() { OldText = "Search Type", ChangedText = "Status", Target = main.label4 }
                 };
             changes.ForEach(c =>
             {
@@ -140,7 +140,7 @@ namespace LegalLead.PublicData.Search.Classes
     {
         public override int WebsiteIndex => (int)SourceType.TarrantCounty;
 
-        public override List<int> HiddenRows => new List<int> { 3, 4 };
+        public override List<int> HiddenRows => new() { 3, 4 };
 
     }
 
@@ -148,7 +148,7 @@ namespace LegalLead.PublicData.Search.Classes
     {
         public override int WebsiteIndex => (int)SourceType.CollinCounty;
 
-        public override List<int> HiddenRows => new List<int> { 4 };
+        public override List<int> HiddenRows => new() { 4 };
 
     }
 
@@ -156,7 +156,7 @@ namespace LegalLead.PublicData.Search.Classes
     {
         public override int WebsiteIndex => (int)SourceType.DentonCounty;
 
-        public override List<int> HiddenRows => new List<int> { 3, 4 };
+        public override List<int> HiddenRows => new() { 3, 4 };
 
     }
 

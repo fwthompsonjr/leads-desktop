@@ -26,7 +26,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public static void WaitForNavigation(this IWebDriver driver)
         {
 
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromSeconds(5) };
 
             wait.Until(driver1 => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
 

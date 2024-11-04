@@ -13,8 +13,9 @@ namespace LegalLead.PublicData.Search.Util
         {
             if (Parameters == null || Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-
-            var destination = GetNavigationUri(Parameters.CourtType);
+            var courtType = "Justice";
+            if (!string.IsNullOrEmpty(Parameters.CourtType)) courtType = Parameters.CourtType;
+            var destination = GetNavigationUri(courtType);
             Uri uri = GetUri(destination);
             Driver.Navigate().GoToUrl(uri);
             return true;

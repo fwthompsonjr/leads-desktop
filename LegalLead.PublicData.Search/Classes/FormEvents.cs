@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -77,10 +78,16 @@ namespace LegalLead.PublicData.Search
         internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var source = (DropDown)cboSearchType.SelectedItem;
-            var nonactors = new List<int> { 
-                (int)SourceType.HarrisCivil, 
+            var nonactors = new List<int> {
+                (int)SourceType.HarrisCivil,
                 (int)SourceType.DallasCounty,
-                (int)SourceType.TravisCounty
+                (int)SourceType.TravisCounty,
+                (int)SourceType.BexarCounty,
+                (int)SourceType.HidalgoCounty,
+                (int)SourceType.ElPasoCounty,
+                (int)SourceType.FortBendCounty,
+                (int)SourceType.WilliamsonCounty,
+                (int)SourceType.GraysonCounty,
             };
             var selectedItem = (WebNavigationParameter)cboWebsite.SelectedItem;
             if (selectedItem != null && nonactors.Contains(selectedItem.Id))
@@ -144,7 +151,7 @@ namespace LegalLead.PublicData.Search
             tsDropFileList.Enabled = false;
             tsDropFileList.Visible = false;
 
-            tsWebDriver_Initialize();
+            TsWebDriver_Initialize();
 
             cboWebsite.DataSource = websites;
             cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
@@ -226,7 +233,7 @@ namespace LegalLead.PublicData.Search
             OpenExcel(ref fileName);
         }
 
-        private void tsWebDriver_Initialize()
+        private void TsWebDriver_Initialize()
         {
             // when data source is changed?
             // remove all items from the tab strip
@@ -382,7 +389,12 @@ namespace LegalLead.PublicData.Search
 
             var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
             if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
-            System.Diagnostics.Process.Start(xmlFile);
+            using var p = new Process();
+            p.StartInfo = new ProcessStartInfo(xmlFile)
+            {
+                UseShellExecute = true
+            };
+            p.Start();
         }
 
         private WebNavigationParameter GetParameter()
@@ -394,8 +406,7 @@ namespace LegalLead.PublicData.Search
             catch (Exception)
             {
                 return Invoke(new Func<WebNavigationParameter>(() =>
-                    { return (WebNavigationParameter)cboWebsite.SelectedItem; }))
-                    as WebNavigationParameter;
+                    { return (WebNavigationParameter)cboWebsite.SelectedItem; }));
             }
         }
         private static long GetFileLength(string path)
@@ -443,8 +454,7 @@ namespace LegalLead.PublicData.Search
                     CommonKeyIndexes.DashedLine
                     + Environment.NewLine +
                     CommonKeyIndexes.DashedLine;
-                }))
-                    as string;
+                }));
             }
         }
 

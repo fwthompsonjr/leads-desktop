@@ -31,7 +31,7 @@ namespace LegalLead.PublicData.Search.Util
             const string response = "complete";
             var driver = Driver;
             var jsexec = GetJavaScriptExecutor();
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromSeconds(5) };
             wait.Until(driver1 => jsexec.ExecuteScript(request).Equals(response));
         }
 
@@ -64,6 +64,6 @@ namespace LegalLead.PublicData.Search.Util
                 return js;
             }
         }
-        private static readonly object lockObject = new object();
+        private static readonly object lockObject = new();
     }
 }

@@ -1,0 +1,140 @@
+~ say hello
+return "hello";
+
+~ get navigation url
+/* https://tylerpaw.fortbendcountytx.gov/PublicAccess/default.aspx */
+
+~ nav to search screen
+var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
+links = links.filter(a => { 
+  let attr = a.getAttribute('class'); 
+  if (attr == null) { return false; } 
+  if (attr != 'ssSearchHyperlink') return false; 
+  return a.innerText.indexOf('Civil') >= 0 });
+links[0].click();
+
+~ populate search parameters
+var case_filter = '{0}';
+var dtes = [ '{1}', '{2}' ];
+var dteboxes = ["DateFiledOnAfter", "DateFiledOnBefore"];
+var opt = document.getElementById('DateFiled');
+if (null == opt.getAttribute('checked')) { opt.setAttribute('checked', 'checked'); }
+opt.dispatchEvent(new Event('click'));
+
+var opt1 = document.getElementById('OpenOption'); 
+if (opt1.getAttribute('checked') == null) { opt1.setAttribute('checked', 'checked')}
+opt1.dispatchEvent(new Event('click'))
+opt1.dispatchEvent(new Event('change'))
+
+for (var d = 0; d < dteboxes.length; d++){
+	dbx = document.getElementById( dteboxes[d] );
+	dbx.value = dtes[d];
+	dbx.dispatchEvent(new Event('change'));
+}
+
+var type_filter = '318|4809|10546|276,10370|11209|296|4723|10612|4813|4865|4722|292|9049|316|286,10351|11210|4737|9231|328|330|331|4735|4811|4861';
+var filters = type_filter.split('|');
+var grps = document.getElementById('selCaseTypeGroups');
+var grpitems = Array.prototype.slice.call( grps.getElementsByTagName("option"), 0 );
+var sld = 'selected';
+grpitems.forEach(g => {
+	let attr = g.getAttribute('value');
+	if (attr != null) {
+		var isChecked = filters.find(x => x == attr) != null;
+		if (isChecked)
+		{
+			g.setAttribute(sld, sld);
+		}
+		else
+		{
+			g.removeAttribute(sld);
+		}
+	}
+});
+
+var btnid = 'SearchSubmit';
+var bttn = document.getElementById(btnid); 
+bttn.click();
+
+~ find no match
+var find = 'No cases matched your search criteria.'
+var b =  Array.prototype.slice.call( document.getElementsByTagName('b'), 0 );
+b = b.filter(a => a.innerText == find);
+b.length != 0
+
+~ find page has error
+var find = 'An error occurred while processing your request.'
+var b =  Array.prototype.slice.call( document.getElementsByTagName('b'), 0 );
+b = b.filter(a => a.innerText == find);
+b.length != 0
+
+~ find case detail links
+var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
+links = links.filter(a => { 
+  let attr = a.getAttribute('style'); 
+  if (attr == null) { return false; } 
+  if (attr != 'color: blue') return false; 
+  attr = a.getAttribute('href'); 
+  if (attr == null) { return false; } 
+  if (attr.indexOf('CaseDetail.aspx?') < 0) return false; 
+  return true });  
+ var arr = [];
+ links.forEach(a => arr.push(a.innerText));
+return JSON.stringify(arr);
+
+~ click case detail links
+
+var clickComplete = false;
+var indx = parseInt('{0}');
+var links = null;
+if(!isNaN(indx)) { 
+	links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
+	links = links.filter(a => { 
+	  let attr = a.getAttribute('style'); 
+	  if (attr == null) { return false; } 
+	  if (attr != 'color: blue') return false; 
+	  attr = a.getAttribute('href'); 
+	  if (attr == null) { return false; } 
+	  if (attr.indexOf('CaseDetail.aspx?') < 0) return false; 
+	  return true });
+	  console.log(links.length);
+	if (indx < links.length - 1) { 
+		clickComplete = true;		
+	}	
+}
+if (clickComplete) { 
+	links[indx].click();
+}
+
+
+~ get person address
+var headers = Array.prototype.slice.call( document.getElementsByTagName('th'), 0);
+headers = headers.filter(a => { 
+  let attr = a.getAttribute('class'); 
+  if (attr == null) { return false; } 
+  if (attr != 'ssTableHeader') return false;
+  attr = a.getAttribute('rowspan');  
+  return attr != null });
+// get first from collection
+var obj = { "caseNo": "", "name": "", "address": "" };
+if (headers.length > 0 ) {
+	var heading = headers[0];
+	var row = heading.closest("tr");
+	var table = row.closest("table");
+	var rowId = row.rowIndex + 1;
+	obj.name = row.getElementsByTagName('th')[1].innerText.trim();
+	var rows = Array.prototype.slice.call( table.getElementsByTagName('tr'), 0);
+	if ( rows.length > rowId ) {
+		var addrRow = Array.prototype.slice.call( table.getElementsByTagName('tr'), 0)[rowId];
+		obj.address = addrRow.innerText.trim();
+	}
+}
+// get case number
+var dvs = Array.prototype.slice.call( document.getElementsByTagName('div'), 0 );
+dvs = dvs.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false; } return attr == 'ssCaseDetailCaseNbr' });
+if (dvs.length > 0 ) {
+	obj.caseNo = dvs[0].innerText.split('.')[1].trim();
+}
+return JSON.stringify(obj);
+
+~ end of file

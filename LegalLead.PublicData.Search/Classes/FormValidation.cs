@@ -201,10 +201,10 @@ namespace LegalLead.PublicData.Search
             var court = ((Thompson.RecordSearch.Utility.Dto.Option)(cboCaseType.SelectedItem));
             var caseStatus = ((Thompson.RecordSearch.Utility.Dto.DropDown)(cboSearchType.SelectedItem));
             var keys = new List<WebNavigationKey>() {
-                new WebNavigationKey {
+                new() {
                     Name = "courtIndex",
                     Value = court.Id.ToString() },
-                new WebNavigationKey {
+                new() {
                     Name= "caseStatusIndex",
                     Value = caseStatus.Id.ToString()}
             };

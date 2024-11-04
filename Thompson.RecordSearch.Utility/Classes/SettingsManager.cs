@@ -38,7 +38,6 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         #region Fields
 
-        // private string _fileContent;
         private string _layoutContent;
         private string _excelFileName;
 
@@ -329,7 +328,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns>the contents of specified file as string</returns>
         private static string LoadFile(string fileName)
         {
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             var targetFile = new Uri(string.Format(
                 CultureInfo.CurrentCulture,
@@ -629,7 +628,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 dteStart,
                 dteEnding,
                 settingFile.Parameters.Name.Replace(" ", "").ToLower(CultureInfo.CurrentCulture));
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             var targetPath = new Uri(string.Format(
                 CultureInfo.CurrentCulture,
@@ -661,7 +660,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         private static string GetExcelFileName()
         {
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             execName = Path.GetDirectoryName(execName);
             var targetFile = new Uri(string.Format(
                 CultureInfo.CurrentCulture,
@@ -681,7 +680,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <returns></returns>
         public static string GetAppFolderName()
         {
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             return Path.GetDirectoryName(execName);
         }
 

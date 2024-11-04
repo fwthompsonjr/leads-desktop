@@ -9,6 +9,17 @@ namespace Thompson.RecordSearch.Utility.Db
         public string Name { get; set; }
         public IEnumerable<AddressItemDto> Items { get; set; } = Array.Empty<AddressItemDto>();
 
+        public static List<AddressListDto> BexarList
+        {
+            get
+            {
+                if (bexarList != null) return bexarList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(bexarContent);
+                bexarList = tmp;
+                return bexarList;
+            }
+        }
+
         public static List<AddressListDto> DallasList
         {
             get
@@ -17,6 +28,16 @@ namespace Thompson.RecordSearch.Utility.Db
                 var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(dallasContent);
                 dallasList = tmp;
                 return dallasList;
+            }
+        }
+        public static List<AddressListDto> HidalgoList
+        {
+            get
+            {
+                if (hidalgoList != null) return hidalgoList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(hidalgoContent);
+                hidalgoList = tmp;
+                return hidalgoList;
             }
         }
 
@@ -31,10 +52,66 @@ namespace Thompson.RecordSearch.Utility.Db
             }
         }
 
-        private static List<AddressListDto> travisList = null;
-        private static List<AddressListDto> dallasList = null;
+        public static List<AddressListDto> ElPasoList
+        {
+            get
+            {
+                if (elpasoList != null) return elpasoList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(elpasoContent);
+                elpasoList = tmp;
+                return elpasoList;
+            }
+        }
 
+        public static List<AddressListDto> FortBendList
+        {
+            get
+            {
+                if (fortbendList != null) return fortbendList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(fortbendContent);
+                fortbendList = tmp;
+                return fortbendList;
+            }
+        }
+
+        public static List<AddressListDto> WilliamsonList
+        {
+            get
+            {
+                if (williamsonList != null) return williamsonList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(williamsonContent);
+                williamsonList = tmp;
+                return williamsonList;
+            }
+        }
+
+        public static List<AddressListDto> GraysonList
+        {
+            get
+            {
+                if (graysonList != null) return graysonList;
+                var tmp = JsonConvert.DeserializeObject<List<AddressListDto>>(graysonContent);
+                graysonList = tmp;
+                return graysonList;
+            }
+        }
+
+        private static List<AddressListDto> bexarList = null;
+        private static List<AddressListDto> dallasList = null;
+        private static List<AddressListDto> travisList = null;
+        private static List<AddressListDto> hidalgoList = null;
+        private static List<AddressListDto> elpasoList = null;
+        private static List<AddressListDto> fortbendList = null;
+        private static List<AddressListDto> williamsonList = null;
+        private static List<AddressListDto> graysonList = null;
+
+        private static readonly string bexarContent = Properties.Resources.bexar_court_address;
         private static readonly string dallasContent = Properties.Resources.dallas_court_address;
+        private static readonly string elpasoContent = Properties.Resources.elpaso_court_address;
         private static readonly string travisContent = Properties.Resources.travis_court_address;
+        private static readonly string hidalgoContent = Properties.Resources.hidalgo_court_address;
+        private static readonly string fortbendContent = Properties.Resources.fortbend_court_address;
+        private static readonly string williamsonContent = Properties.Resources.williamson_court_address;
+        private static readonly string graysonContent = Properties.Resources.grayson_court_address;
     }
 }

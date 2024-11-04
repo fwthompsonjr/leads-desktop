@@ -133,4 +133,43 @@
   <data name="travis_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\travis_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="bexar_scripts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bexar_scripts.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="bexar_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bexar_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="app_messages" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\app_messages.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="hidalgo_scripts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hidalgo_scripts.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="elpaso_scripts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\elpaso_scripts.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="hidalgo_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hidalgo_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="elpaso_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\elpaso_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="fortbend_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fortbend_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="fortbend_scripts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fortbend_scripts.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="williamson_scripts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\williamson_scripts.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="williamson_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\williamson_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="grayson_court_address" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\grayson_court_address.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="grayson_scripts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\grayson_scripts.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

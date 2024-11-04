@@ -1,10 +1,14 @@
-## Problem:
+# Release | 2.8.2 Additional Counties
 
-When a user selects Dallas county a search parameter
-The process will perform a search for Dallas county.
+## Description
+As an application developer, I want to release v2.8.2 so that Bexar, Hidalgo, ElPaso, FortBend, Williamson or Grayson searches are available to consumers.
 
-## Resolution:
-- [x] Confirm excel file generation
-- [x] Create excal file to open generated files
-- [x] Test behavior for Dallas counties
-- [x] Update package to generate release
+### Details
+- setup search infrastructure
+- test Bexar search process
+- test Hidalgo search process
+- test ElPaso search process
+- test FortBend search process
+- test Williamson search process
+- test Grayson search process
+- code clean up and refactoring

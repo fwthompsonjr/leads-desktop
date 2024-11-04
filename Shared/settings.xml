@@ -117,6 +117,120 @@
 			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
 			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
 		</keys>
+		<keys id="80" name="Bexar County">
+			<key name="baseUri">
+				<![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29]]>
+			</key>
+			<key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+			<key name="dateRangeMaxDays"><![CDATA[7]]></key>
+			<key name="startDate"><![CDATA[]]></key>
+			<key name="endDate"><![CDATA[]]></key>
+			<key name="courtIndex"><![CDATA[]]></key>
+			<key name="caseStatusIndex"><![CDATA[]]></key>
+			<key name="navigation.control.file"><![CDATA[dallasCountyMapping]]></key>
+			<key name="hlinkUri"><![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
+			<key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+			<key name="personParentXath"><![CDATA[./..]]></key>
+			<key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+			<key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
+		</keys>
+		<keys id="90" name="Hidalgo County">
+			<key name="baseUri">
+				<![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29]]>
+			</key>
+			<key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+			<key name="dateRangeMaxDays"><![CDATA[7]]></key>
+			<key name="startDate"><![CDATA[]]></key>
+			<key name="endDate"><![CDATA[]]></key>
+			<key name="courtIndex"><![CDATA[]]></key>
+			<key name="caseStatusIndex"><![CDATA[]]></key>
+			<key name="navigation.control.file"><![CDATA[dallasCountyMapping]]></key>
+			<key name="hlinkUri"><![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
+			<key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+			<key name="personParentXath"><![CDATA[./..]]></key>
+			<key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+			<key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
+		</keys>
+		<keys id="100" name="ElPaso County">
+			<key name="baseUri">
+				<![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29]]>
+			</key>
+			<key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+			<key name="dateRangeMaxDays"><![CDATA[7]]></key>
+			<key name="startDate"><![CDATA[]]></key>
+			<key name="endDate"><![CDATA[]]></key>
+			<key name="courtIndex"><![CDATA[]]></key>
+			<key name="caseStatusIndex"><![CDATA[]]></key>
+			<key name="navigation.control.file"><![CDATA[dallasCountyMapping]]></key>
+			<key name="hlinkUri"><![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
+			<key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+			<key name="personParentXath"><![CDATA[./..]]></key>
+			<key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+			<key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
+		</keys>
+		<keys id="110" name="FortBend County">
+			<key name="baseUri">
+				<![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29]]>
+			</key>
+			<key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+			<key name="dateRangeMaxDays"><![CDATA[7]]></key>
+			<key name="startDate"><![CDATA[]]></key>
+			<key name="endDate"><![CDATA[]]></key>
+			<key name="courtIndex"><![CDATA[]]></key>
+			<key name="caseStatusIndex"><![CDATA[]]></key>
+			<key name="navigation.control.file"><![CDATA[dallasCountyMapping]]></key>
+			<key name="hlinkUri"><![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
+			<key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+			<key name="personParentXath"><![CDATA[./..]]></key>
+			<key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+			<key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
+		</keys>
+		<keys id="120" name="Williamson County">
+			<key name="baseUri">
+				<![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29]]>
+			</key>
+			<key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+			<key name="dateRangeMaxDays"><![CDATA[7]]></key>
+			<key name="startDate"><![CDATA[]]></key>
+			<key name="endDate"><![CDATA[]]></key>
+			<key name="courtIndex"><![CDATA[]]></key>
+			<key name="caseStatusIndex"><![CDATA[]]></key>
+			<key name="navigation.control.file"><![CDATA[dallasCountyMapping]]></key>
+			<key name="hlinkUri"><![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
+			<key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+			<key name="personParentXath"><![CDATA[./..]]></key>
+			<key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+			<key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
+		</keys>
+		<keys id="130" name="Grayson County">
+			<key name="baseUri">
+				<![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29]]>
+			</key>
+			<key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+			<key name="dateRangeMaxDays"><![CDATA[7]]></key>
+			<key name="startDate"><![CDATA[]]></key>
+			<key name="endDate"><![CDATA[]]></key>
+			<key name="courtIndex"><![CDATA[]]></key>
+			<key name="caseStatusIndex"><![CDATA[]]></key>
+			<key name="navigation.control.file"><![CDATA[dallasCountyMapping]]></key>
+			<key name="hlinkUri"><![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
+			<key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+			<key name="personParentXath"><![CDATA[./..]]></key>
+			<key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+			<key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
+		</keys>
 	</setting>
 	<directions>
 		<instructions id="1">
@@ -351,6 +465,108 @@
 			</columns>
 		</layout>
 		<layout id="70" name="people">
+			<columns>
+				<column name="Name" columnWidth="30"/>
+				<column name="FirstName" columnWidth="20"/>
+				<column name="LastName" columnWidth="20"/>
+				<column name="Zip" columnWidth="20"/>
+				<column name="Address1" columnWidth="30"/>
+				<column name="Address2" columnWidth="30"/>
+				<column name="Address3" columnWidth="30"/>
+				<column name="CaseNumber" columnWidth="30"/>
+				<column name="Date Filed" columnWidth="30"/>
+				<column name="Court" columnWidth="30"/>
+				<column name="Case Type" columnWidth="30"/>
+				<column name="Case Style" columnWidth="30"/>
+				<column name="Plantiff" columnWidth="30"/>
+			</columns>
+		</layout>
+		<layout id="80" name="people">
+			<columns>
+				<column name="Name" columnWidth="30"/>
+				<column name="FirstName" columnWidth="20"/>
+				<column name="LastName" columnWidth="20"/>
+				<column name="Zip" columnWidth="20"/>
+				<column name="Address1" columnWidth="30"/>
+				<column name="Address2" columnWidth="30"/>
+				<column name="Address3" columnWidth="30"/>
+				<column name="CaseNumber" columnWidth="30"/>
+				<column name="Date Filed" columnWidth="30"/>
+				<column name="Court" columnWidth="30"/>
+				<column name="Case Type" columnWidth="30"/>
+				<column name="Case Style" columnWidth="30"/>
+				<column name="Plantiff" columnWidth="30"/>
+			</columns>
+		</layout>
+		<layout id="90" name="people">
+			<columns>
+				<column name="Name" columnWidth="30"/>
+				<column name="FirstName" columnWidth="20"/>
+				<column name="LastName" columnWidth="20"/>
+				<column name="Zip" columnWidth="20"/>
+				<column name="Address1" columnWidth="30"/>
+				<column name="Address2" columnWidth="30"/>
+				<column name="Address3" columnWidth="30"/>
+				<column name="CaseNumber" columnWidth="30"/>
+				<column name="Date Filed" columnWidth="30"/>
+				<column name="Court" columnWidth="30"/>
+				<column name="Case Type" columnWidth="30"/>
+				<column name="Case Style" columnWidth="30"/>
+				<column name="Plantiff" columnWidth="30"/>
+			</columns>
+		</layout>
+		<layout id="100" name="people">
+			<columns>
+				<column name="Name" columnWidth="30"/>
+				<column name="FirstName" columnWidth="20"/>
+				<column name="LastName" columnWidth="20"/>
+				<column name="Zip" columnWidth="20"/>
+				<column name="Address1" columnWidth="30"/>
+				<column name="Address2" columnWidth="30"/>
+				<column name="Address3" columnWidth="30"/>
+				<column name="CaseNumber" columnWidth="30"/>
+				<column name="Date Filed" columnWidth="30"/>
+				<column name="Court" columnWidth="30"/>
+				<column name="Case Type" columnWidth="30"/>
+				<column name="Case Style" columnWidth="30"/>
+				<column name="Plantiff" columnWidth="30"/>
+			</columns>
+		</layout>
+		<layout id="110" name="people">
+			<columns>
+				<column name="Name" columnWidth="30"/>
+				<column name="FirstName" columnWidth="20"/>
+				<column name="LastName" columnWidth="20"/>
+				<column name="Zip" columnWidth="20"/>
+				<column name="Address1" columnWidth="30"/>
+				<column name="Address2" columnWidth="30"/>
+				<column name="Address3" columnWidth="30"/>
+				<column name="CaseNumber" columnWidth="30"/>
+				<column name="Date Filed" columnWidth="30"/>
+				<column name="Court" columnWidth="30"/>
+				<column name="Case Type" columnWidth="30"/>
+				<column name="Case Style" columnWidth="30"/>
+				<column name="Plantiff" columnWidth="30"/>
+			</columns>
+		</layout>
+		<layout id="120" name="people">
+			<columns>
+				<column name="Name" columnWidth="30"/>
+				<column name="FirstName" columnWidth="20"/>
+				<column name="LastName" columnWidth="20"/>
+				<column name="Zip" columnWidth="20"/>
+				<column name="Address1" columnWidth="30"/>
+				<column name="Address2" columnWidth="30"/>
+				<column name="Address3" columnWidth="30"/>
+				<column name="CaseNumber" columnWidth="30"/>
+				<column name="Date Filed" columnWidth="30"/>
+				<column name="Court" columnWidth="30"/>
+				<column name="Case Type" columnWidth="30"/>
+				<column name="Case Style" columnWidth="30"/>
+				<column name="Plantiff" columnWidth="30"/>
+			</columns>
+		</layout>
+		<layout id="130" name="people">
 			<columns>
 				<column name="Name" columnWidth="30"/>
 				<column name="FirstName" columnWidth="20"/>

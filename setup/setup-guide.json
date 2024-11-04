@@ -19,6 +19,7 @@
 		" Change Process - DefaultLocation to match new version",
 		"Review content in ../setup/setup-version.txt",
 		" Create release notes for latest version",
+		" Update changelog for latest version ../CHANGELOG.md",
 		"Build installer - setup.exe - in release mode",
 		"Create zip of release content",
 		" run script file: ../build-release.ps1",

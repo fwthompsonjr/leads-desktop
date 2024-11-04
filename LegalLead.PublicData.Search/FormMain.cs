@@ -88,11 +88,21 @@ namespace LegalLead.PublicData.Search
                 searchItem.Search = $"{searchItem.SearchDate} : {searchItem.Website} from {searchItem.StartDate} to {searchItem.EndDate}";
                 switch (siteData.Id)
                 {
+                    case (int)SourceType.BexarCounty:
+                        BexarButtonExecution(siteData, searchItem);
+                        break;
                     case (int)SourceType.DallasCounty:
                         DallasButtonExecution(siteData, searchItem);
                         break;
                     case (int)SourceType.TravisCounty:
                         TravisButtonExecution(siteData, searchItem, startDate, endingDate);
+                        break;
+                    case (int)SourceType.HidalgoCounty:
+                    case (int)SourceType.ElPasoCounty:
+                    case (int)SourceType.FortBendCounty:
+                    case (int)SourceType.WilliamsonCounty:
+                    case (int)SourceType.GraysonCounty:
+                        CommonButtonExecution(siteData, searchItem);
                         break;
                     default:
                         NonDallasButtonExecution(siteData, searchItem, startDate, endingDate);
@@ -115,18 +125,59 @@ namespace LegalLead.PublicData.Search
             }
         }
 
+        private void CommonButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
+        {
+            var index = cboSearchType.SelectedIndex;
+            var searchType = DallasSearchProcess.GetCourtName(index);
+            var keys = new List<WebNavigationKey> {
+                new() { Name = "StartDate", Value = searchItem.StartDate},
+                new() { Name = "EndDate", Value = searchItem.EndDate },
+                new() { Name = "CourtType", Value = searchType }
+            };
+            var wb = new WebNavigationParameter { Keys = keys };
+            IWebInteractive dweb = siteData.Id switch
+            {
+                130 => new GraysonUiInteractive(wb),
+                120 => new WilliamsonUiInteractive(wb),
+                110 => new FortBendUiInteractive(wb),
+                100 => new ElPasoUiInteractive(wb),
+                _ => new HidalgoUiInteractive(wb)
+            };
+            _ = Task.Run(async () =>
+            {
+                await ProcessAsync(dweb, siteData, searchItem);
+            }).ConfigureAwait(true);
+        }
+
+        private void BexarButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
+        {
+            var index = cboSearchType.SelectedIndex;
+            var searchType = DallasSearchProcess.GetCourtName(index);
+            var keys = new List<WebNavigationKey> {
+                new() { Name = "StartDate", Value = searchItem.StartDate},
+                new() { Name = "EndDate", Value = searchItem.EndDate },
+                new() { Name = "CourtType", Value = searchType }
+            };
+            var wb = new WebNavigationParameter { Keys = keys };
+            var dweb = new BexarUiInteractive(wb);
+            _ = Task.Run(async () =>
+            {
+                await ProcessAsync(dweb, siteData, searchItem);
+            }).ConfigureAwait(true);
+        }
+
         private void DallasButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
         {
             var index = cboSearchType.SelectedIndex;
             var searchType = DallasSearchProcess.GetCourtName(index);
             var keys = new List<WebNavigationKey> {
-                new WebNavigationKey() { Name = "StartDate", Value = searchItem.StartDate},
-                new WebNavigationKey() { Name = "EndDate", Value = searchItem.EndDate },
-                new WebNavigationKey() { Name = "CourtType", Value = searchType }
+                new() { Name = "StartDate", Value = searchItem.StartDate},
+                new() { Name = "EndDate", Value = searchItem.EndDate },
+                new() { Name = "CourtType", Value = searchType }
             };
             var wb = new WebNavigationParameter { Keys = keys };
             var dweb = new DallasUiInteractive(wb);
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 await ProcessAsync(dweb, siteData, searchItem);
             }).ConfigureAwait(true);
@@ -138,7 +189,7 @@ namespace LegalLead.PublicData.Search
             var search = new TravisSearchProcess();
             search.Search(startDate, endingDate, searchType);
             var dweb = search.GetUiInteractive();
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 await ProcessAsync(dweb, siteData, searchItem);
             }).ConfigureAwait(true);
@@ -170,7 +221,7 @@ namespace LegalLead.PublicData.Search
             IWebInteractive webmgr =
             WebFetchingProvider.
                 GetInteractive(siteData, startDate, endingDate);
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 await ProcessAsync(webmgr, siteData, searchItem);
             }).ConfigureAwait(true);
@@ -273,7 +324,13 @@ namespace LegalLead.PublicData.Search
 
                 var nonactors = new List<int> {
                     (int)SourceType.DallasCounty,
-                    (int)SourceType.TravisCounty
+                    (int)SourceType.TravisCounty,
+                    (int)SourceType.BexarCounty,
+                    (int)SourceType.HidalgoCounty,
+                    (int)SourceType.ElPasoCounty,
+                    (int)SourceType.FortBendCounty,
+                    (int)SourceType.WilliamsonCounty,
+                    (int)SourceType.GraysonCounty,
                 };
 
                 ProcessEndingMessage();

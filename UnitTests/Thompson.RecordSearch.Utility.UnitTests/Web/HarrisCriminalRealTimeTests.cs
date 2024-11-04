@@ -11,11 +11,17 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
     [TestClass]
     public class HarrisCriminalRealTimeTests
     {
+        // Note: Conditional compilation is used in this file
+        // Therefore field initialization/assignment issue is being suppressed.
+#pragma warning disable S2933 // Fields that are only assigned in the constructor should be "readonly"
+
         private static string _srcDirectory;
         private static string _srcFile;
         private static string SrcDirectoryName => _srcDirectory ?? (_srcDirectory = SrcDir());
         private static string SrcFile => _srcFile ?? (_srcFile = Path.Combine(SrcDirectoryName, "_html\\sample-harris-criminal-search-result.html"));
-        private IWebDriver GetDriver;
+        private IWebDriver GetDriver = null;
+
+#pragma warning restore S2933 // Fields that are only assigned in the constructor should be "readonly"
 
         [TestInitialize]
         public void Setup()
@@ -30,6 +36,9 @@ namespace Thompson.RecordSearch.Utility.UnitTests.Web
                     Url = url
                 };
             }
+#else
+            Assert.IsFalse(string.IsNullOrEmpty(SrcFile));
+            Assert.IsNull(GetDriver);            
 #endif
         }
         [TestCleanup]

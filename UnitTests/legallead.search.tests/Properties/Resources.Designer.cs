@@ -61,11 +61,88 @@ namespace legallead.search.tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to     &lt;div id=&quot;omni&quot; class=&quot;omni&quot; style=&quot;background:white;&quot;&gt;&lt;md-toolbar class=&quot;omni-toolbar md-default-theme md-whiteframe-z2 ng-scope&quot; id=&quot;omnibar&quot; ng-controller=&quot;omniCtrl&quot;&gt;
+        ///  &lt;div class=&quot;md-toolbar-tools&quot;&gt;
+        ///    &lt;div ng-click=&quot;navigate(data.appTitleLink)&quot; role=&quot;button&quot; tabindex=&quot;0&quot;&gt;
+        ///      &lt;md-icon md-svg-src=&quot;/app/RegisterOfActions/Content/tylerui/svgs/Icon_Talking_Ts.svg&quot; style=&quot;height:3.7rem; width:3.7rem;&quot; class=&quot;ng-isolate-scope&quot; aria-hidden=&quot;true&quot;&gt;&lt;svg version=&quot;1.1&quot; id=&quot;Layer_1&quot; xmlns=&quot;http://www.w3.o [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string bexar_single_page {
+            get {
+                return ResourceManager.GetString("bexar_single_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;div class=&quot;k-widget k-grid can-morph-to-card is-morph-ready&quot; id=&quot;CasesGrid&quot; data-role=&quot;grid&quot; style=&quot;overflow-x: auto; min-height: 0px;&quot;&gt;&lt;table cellspacing=&quot;0&quot; role=&quot;table&quot; class=&quot;kgrid-card-table&quot;&gt;&lt;colgroup&gt;&lt;col class=&quot;k-hierarchy-col&quot;&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;&lt;/colgroup&gt;&lt;thead class=&quot;k-grid-header kgrid-card-thead&quot;&gt;&lt;tr&gt;&lt;th class=&quot;k-hierarchy-cell k-header&quot;&gt;&amp;nbsp;&lt;/th&gt;&lt;th class=&quot;k-header&quot; data-configurable-grid=&quot;True&quot; data-field=&quot;CaseNumber&quot; data-title=&quot;Case Number&quot; scope=&quot;col&quot; data-role=&quot;sortable&quot;&gt;&lt;a [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string dallas_case_items {
             get {
                 return ResourceManager.GetString("dallas_case_items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;25%&quot;&gt;&lt;col width=&quot;35%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; no [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string elpaso_case_list {
+            get {
+                return ResourceManager.GetString("elpaso_case_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;15%&quot;&gt;&lt;col width=&quot;25%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Citation Number [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string fortbend_case_list {
+            get {
+                return ResourceManager.GetString("fortbend_case_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;25%&quot;&gt;&lt;col width=&quot;35%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; no [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string grayson_sample_table {
+            get {
+                return ResourceManager.GetString("grayson_sample_table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;25%&quot;&gt;&lt;col width=&quot;35%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; no [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hidalgo_case_list {
+            get {
+                return ResourceManager.GetString("hidalgo_case_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;25%&quot;&gt;&lt;col width=&quot;35%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; no [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string travis_case_items {
+            get {
+                return ResourceManager.GetString("travis_case_items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///  
+        ///        &lt;!--?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?--&gt;&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;100%&quot; border=&quot;0&quot; style=&quot;table-layout: fixed; margin:0px; padding:0px;&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;/table&gt;&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;100%&quot; border=&quot;0&quot; style=&quot;table-layout: fixed; margin:0px; padding:0px;&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td bgcolor=&quot;#000000 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string travis_single_page {
+            get {
+                return ResourceManager.GetString("travis_single_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;table border=&quot;0&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;font-size: 8pt; font-family: arial&quot; xmlns:msxsl=&quot;urn:schemas-microsoft-com:xslt&quot; xmlns:user=&quot;http://www.tylertechnologies.com&quot; xmlns:publicaccessuser=&quot;urn:PublicAccessUser&quot;&gt;&lt;colgroup&gt;&lt;col width=&quot;25%&quot;&gt;&lt;col width=&quot;35%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;col width=&quot;20%&quot;&gt;&lt;/colgroup&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Case Number&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; nowrap=&quot;true&quot;&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/th&gt;&lt;th class=&quot;ssSearchResultHeader&quot; no [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string williamsom_sample_table {
+            get {
+                return ResourceManager.GetString("williamsom_sample_table", resourceCulture);
             }
         }
     }

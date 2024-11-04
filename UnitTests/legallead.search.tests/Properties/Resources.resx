@@ -121,4 +121,28 @@
   <data name="dallas_case_items" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dallas_case_items.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="travis_case_items" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\travis_case_items.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="travis_single_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\travis_single_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="bexar_single_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bexar_single_page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="hidalgo_case_list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hidalgo_case_list.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="elpaso_case_list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\elpaso_case_list.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="fortbend_case_list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fortbend_case_list.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="williamsom_sample_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\williamsom_sample_table.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="grayson_sample_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\grayson_sample_table.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

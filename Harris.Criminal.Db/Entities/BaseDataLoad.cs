@@ -1,6 +1,7 @@
 ﻿using Harris.Criminal.Db.Downloads;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -32,7 +33,7 @@ namespace Harris.Criminal.Db.Entities
         /// <returns></returns>
         private static string GetAppFolderName()
         {
-            var execName = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            var execName = new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath;
             return Path.GetDirectoryName(execName);
         }
 
@@ -156,7 +157,7 @@ namespace Harris.Criminal.Db.Entities
             {
                 return creationTime;
             }
-            if (DateTime.TryParse(datum.DateDatasetProduced, out DateTime dataDate))
+            if (DateTime.TryParse(datum.DateDatasetProduced, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime dataDate))
             {
                 return dataDate;
             }
