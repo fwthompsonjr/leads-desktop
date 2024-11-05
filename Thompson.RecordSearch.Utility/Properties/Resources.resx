@@ -172,4 +172,7 @@
   <data name="grayson_scripts" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\grayson_scripts.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="county_code_definition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\county_code_definition.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

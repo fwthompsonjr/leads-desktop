@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using Thompson.RecordSearch.Utility.Dto;
@@ -45,16 +45,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private string GetRemoteData(CountyCodeDto code)
         {
-            var address = _countyCodeService.Map.Web;
-            using (var client = new HttpClient())
-            {
-                var response = _httpService
-                    .PostAsJsonAsync<object, JsModel>(client, address, new { name = code.Name })
-                    .GetAwaiter()
-                    .GetResult();
-                if (response == null) return null;
-                return GetDecodedData(code, response);
-            }
+            const string fallback = "default";
+            var userId = string.IsNullOrEmpty(code.Uid) ? fallback : code.Uid;
+            var item = CodeList.Find(x => x.Name == code.Name && x.User == userId);
+            if (item == null) return null;
+            return GetDecodedData(code, new JsModel { Code = item.Code, Name = item.Name });
         }
 
         private static string GetDecodedData(CountyCodeDto code, JsModel model)
@@ -81,6 +76,29 @@ namespace Thompson.RecordSearch.Utility.Classes
             public string Name { get; set; }
             public string Code { get; set; }
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Sonar Qube",
+            "S3459:Unassigned members should be removed",
+            Justification = "As POCO class exposing both get/set operations")]
+        private class JsCode
+        {
+            [JsonProperty("name")] public string Name { get; set; }
+            [JsonProperty("user")] public string User { get; set; }
+            [JsonProperty("code")] public string Code { get; set; }
+        }
+
+        private static List<JsCode> CodeList
+        {
+            get
+            {
+                if (codeList != null) return codeList;
+                var tmp = JsonConvert.DeserializeObject<List<JsCode>>(_codeLookup);
+                codeList = tmp ?? new List<JsCode>();
+                return codeList;
+            }
+        }
+
 
 
         private static class CryptoEngine
@@ -120,5 +138,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static readonly Dictionary<int, string> KeyIndexes = new Dictionary<int, string>();
 
         private static readonly Dictionary<string, string> KeyCodes = new Dictionary<string, string>();
+        private static List<JsCode> codeList;
+        private static readonly string _codeLookup = Properties.Resources.county_code_definition;
     }
 }

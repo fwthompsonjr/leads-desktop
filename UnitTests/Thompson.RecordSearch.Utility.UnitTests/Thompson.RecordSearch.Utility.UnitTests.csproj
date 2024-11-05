@@ -33,7 +33,9 @@
 		</PackageReference>
 		<PackageReference Include="NewtonSoft.Json" Version="13.0.3" />
 		<PackageReference Include="Selenium.Chrome.WebDriver" Version="85.0.0" />
-		<PackageReference Include="Selenium.Firefox.WebDriver" Version="0.27.0" />
+		<PackageReference Include="Selenium.Firefox.WebDriver" Version="0.27.0">
+			<IncludeAssets>all</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Selenium.Microsoft.Webdriver2" Version="2.0.10586.1" />
 		<PackageReference Include="Selenium.WebDriver" Version="4.25.0" />
 		<PackageReference Include="Shouldly" Version="4.2.1" />
