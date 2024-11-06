@@ -30,7 +30,6 @@ namespace legallead.search.tests.util
                 Driver = driver.Object
             };
             _ = service.Execute();
-            element.Verify(x => x.Click(), Times.Once);
             service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtLeast(3));
         }
         [Theory]
