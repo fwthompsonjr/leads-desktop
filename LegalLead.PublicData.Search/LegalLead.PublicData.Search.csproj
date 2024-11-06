@@ -191,7 +191,4 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="_setup\" />
-	</ItemGroup>
 </Project>

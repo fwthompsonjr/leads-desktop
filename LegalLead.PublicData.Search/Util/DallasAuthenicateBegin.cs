@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Interfaces;
 
@@ -32,7 +33,7 @@ namespace LegalLead.PublicData.Search.Util
             Uri uri = GetUri(destination);
             Driver.Navigate().GoToUrl(uri);
             if (string.IsNullOrEmpty(_credential)) return false;
-
+            
             js = VerifyScript(js);
             executor.ExecuteScript(js);
             try

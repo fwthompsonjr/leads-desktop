@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace LegalLead.PublicData.Search.Util
@@ -38,13 +39,12 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 if (jse == null || button == null) return failed;
-                jse.ExecuteScript("window.scrollBy(0,400)");
-                button.Click();
+                jse.ExecuteScript("arguments[0].click()", button);
                 return success;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
                 return failed;
             }
         }
