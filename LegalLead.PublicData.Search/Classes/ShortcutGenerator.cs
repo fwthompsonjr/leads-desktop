@@ -85,8 +85,9 @@ namespace LegalLead.PublicData.Search.Classes
             var versionId = string.Join(ds, list.Take(2));
             var find1 = GetVersionReplacement(line1, "2.8");
             var find2 = GetVersionReplacement(line2, ".0");
+            var revision = list[2];
             var replace1 = GetVersionReplacement(line1, versionId);
-            var replace2 = GetVersionReplacement(line2, $".{list[3]}");
+            var replace2 = GetVersionReplacement(line2, $".{revision}");
             var hasReplacements = content.ToString().Contains(find1) ||
                 content.ToString().Contains(find2);
             if (!hasReplacements) return false;
