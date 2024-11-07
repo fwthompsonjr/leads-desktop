@@ -12,6 +12,7 @@ $hasSource = [System.IO.File]::Exists( $versionFile )
 if ( $hasSource -eq $false ) { return; }
 $destination = [System.IO.Path]::Combine( $basefolder, "version\$($version.id)" );
 $zipname = [System.IO.Path]::Combine( $basefolder, "legal-lead-install-$($version.id).zip" );
+$installname = [System.IO.Path]::Combine( $basefolder, "installation.zip" );
 if ( [System.IO.Directory]::Exists( $destination ) -eq $false ) { 
     [System.IO.Directory]::CreateDirectory( $destination ) | Out-Null
 }
@@ -33,3 +34,5 @@ if ( [string]::IsNullOrWhiteSpace( $srcfiles ) -eq $true ) { return; }
 if ( [System.IO.File]::Exists( $zipname ) -eq $true ) { [System.IO.File]::Delete( $zipname ) | Out-Null }
 $srcpattern = [string]::Concat( $destination, "\*.*");
 Compress-Archive -Path $srcpattern -DestinationPath $zipname
+if ( [System.IO.File]::Exists( $installname ) -eq $true ) { [System.IO.File]::Delete( $installname ) | Out-Null }
+[System.IO.File]::Copy( $zipname, $installname );
