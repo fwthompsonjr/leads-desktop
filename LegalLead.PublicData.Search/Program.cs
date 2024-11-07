@@ -46,7 +46,6 @@ namespace LegalLead.PublicData.Search
                 });
                 ts.Invoke();
 
-                consoleWriter.WriteEvent += ConsoleWriter_WriteEvent;
                 consoleWriter.WriteLineEvent += ConsoleWriter_WriteLineEvent;
 
                 Console.SetOut(consoleWriter);
@@ -69,13 +68,6 @@ namespace LegalLead.PublicData.Search
         {
             var current = new StringBuilder(mainForm.txConsole.Text);
             current.AppendLine(e.Value);
-            AppendText(current);
-        }
-
-        static void ConsoleWriter_WriteEvent(object sender, ConsoleWriterEventArgs e)
-        {
-            var current = new StringBuilder(mainForm.txConsole.Text);
-            current.Append(e.Value);
             AppendText(current);
         }
 
