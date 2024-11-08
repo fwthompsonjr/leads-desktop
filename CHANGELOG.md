@@ -1,14 +1,8 @@
-# Release | 2.8.2 Additional Counties
+# Release | 2.8.3 Dallas County Search Revision
 
 ## Description
-As an application developer, I want to release v2.8.2 so that Bexar, Hidalgo, ElPaso, FortBend, Williamson or Grayson searches are available to consumers.
+As an application developer, I want to release v2.8.3 so that Dallas searches are refined to expected behaviors.
 
 ### Details
-- setup search infrastructure
-- test Bexar search process
-- test Hidalgo search process
-- test ElPaso search process
-- test FortBend search process
-- test Williamson search process
-- test Grayson search process
+- test Dallas search process
 - code clean up and refactoring
