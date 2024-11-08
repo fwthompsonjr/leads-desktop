@@ -116,7 +116,7 @@ namespace LegalLead.PublicData.Search.Util
                     isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
                 });
             });
-            parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
+            parameters.Search(dates[0], dates[^1], CourtType);
         }
 
         private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
@@ -127,7 +127,9 @@ namespace LegalLead.PublicData.Search.Util
             if (!isCaptchaNeeded && a is DallasRequestCaptcha _) return isCaptchaNeeded;
             var count = common.Count - 1;
             Populate(a, driver, parameters);
+            if (a is BaseDallasSearchAction preaction) { preaction.MaskUserName(); }
             var response = a.Execute();
+            if (a is BaseDallasSearchAction postaction) { postaction.MaskUserName(); }
             if (a is DallasAuthenicateSubmit _ && response is bool captchaCompleted && captchaCompleted) isCaptchaNeeded = false;
             if (a is DallasFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
             if (a is DallasRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
@@ -141,8 +143,15 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
             if (ExecutionCancelled) return;
+            var count = Items.Count;
             Items.ForEach(i =>
             {
+                var c = Items.IndexOf(i) + 1;
+                var pct = Math.Round(Convert.ToDecimal(c) / Convert.ToDecimal(count), 2) * 100;
+                if (c % 10 == 0)
+                {
+                    Console.WriteLine("Reading item {0} of {1}. {2}% Complete", c, count, pct);
+                }
                 postcommon.ForEach(a =>
                 {
                     Populate(a, driver, parameters, i.Href);
