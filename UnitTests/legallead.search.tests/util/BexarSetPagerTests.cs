@@ -24,6 +24,8 @@ namespace legallead.search.tests.util
             var element = new Mock<IWebElement>();
             driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.Id("hearingResultsGrid")))).Returns(element.Object);
             driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.TagName("ul")))).Returns(element.Object);
+            driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.CssSelector(".k-pager-info")))).Returns(element.Object);
+            driver.Setup(x => x.FindElement(It.Is<By>(x => x == By.XPath("//span[@class='k-pager-info k-label']")))).Returns(element.Object);
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new MockBexarSetPager

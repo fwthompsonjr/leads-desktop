@@ -768,7 +768,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E8399221E8D44F1CB062273B598D032E"
             {
-            "SourcePath" = "8:..\\LegalLead.PublicData.Search\\obj\\Release\\net6.0-windows\\apphost.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B0FF2CC24EC14FD49804651B31D29B32"
