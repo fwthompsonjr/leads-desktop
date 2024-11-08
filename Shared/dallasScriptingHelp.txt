@@ -24,15 +24,16 @@ document.getElementById('btnSSSubmit').click();
 var list = document.getElementsByTagName("span");
 var arr = Array.prototype.slice.call( list, 0 );
 var find = arr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
-find[0].click();
-
-/* get max records per page */
-var itms = document.getElementsByTagName("ul")
-var ularr = Array.prototype.slice.call( itms, 0 );
-ulitms = ularr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
-liitem = ulitms[ ulitms.length - 1].getElementsByTagName('li')
-liitem[liitem.length - 1].click();
-
+if(null != find && find.length > 0)
+{
+	find[0].click();
+	/* get max records per page */
+	var itms = document.getElementsByTagName("ul")
+	var ularr = Array.prototype.slice.call( itms, 0 );
+	ulitms = ularr.filter(a => { let attr = a.getAttribute('role'); if (attr == null) { return false;} return attr == 'listbox' });
+	liitem = ulitms[ ulitms.length - 1].getElementsByTagName('li')
+	liitem[liitem.length - 1].click();
+}
 
 ~ get case list
 var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
@@ -122,6 +123,7 @@ var userBox = document.getElementById('UserName');
 var wordBox = document.getElementById('Password');
 var chekBox = document.getElementById('TOSCheckBox');
 var signin = document.getElementById('btnSignIn');
+userBox.setAttribute("style", "visibility: hidden");
 userBox.value = uid;
 wordBox.value = pwd;
 chekBox.click();

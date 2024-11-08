@@ -135,6 +135,21 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;name&quot;: &quot;dallas&quot;,
+        ///		&quot;user&quot;: &quot;default&quot;,
+        ///		&quot;code&quot;: &quot;952qGQ9KGUY2Gc0KDLhFVxfIY+YZpAn1i7/h1vxUW2/fwkNamCEd5GYaT81zUTV8&quot;
+        ///	}
+        ///].
+        /// </summary>
+        internal static string county_code_definition {
+            get {
+                return ResourceManager.GetString("county_code_definition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///	&quot;web&quot;: &quot;https://oxfordlegalleads.com/app/get-county-code&quot;,
         ///	&quot;counties&quot;: 
