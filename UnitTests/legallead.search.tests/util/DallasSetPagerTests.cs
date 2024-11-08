@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;
 using System;
+using System.Collections.ObjectModel;
 
 namespace legallead.search.tests.util
 {
@@ -22,8 +23,25 @@ namespace legallead.search.tests.util
             var navigation = new Mock<INavigation>();
             var parameters = new DallasSearchProcess();
             var element = new Mock<IWebElement>();
+            var items = new[]
+            {
+                element.Object,
+                element.Object, 
+                element.Object,
+                element.Object,
+                element.Object,
+                element.Object,
+                element.Object,
+                element.Object,
+                element.Object,
+                element.Object,
+                element.Object,
+                element.Object,
+            };
+            var collection = new ReadOnlyCollection<IWebElement>(items);
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element.Object);
+            driver.Setup(x => x.FindElements(It.IsAny<By>())).Returns(collection);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new MockDallasSetPager
             {
@@ -53,6 +71,10 @@ namespace legallead.search.tests.util
 
         private sealed class MockDallasSetPager : DallasSetPager
         {
+            public MockDallasSetPager()
+            {
+                IsTesting = true;
+            }
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override IJavaScriptExecutor GetJavaScriptExecutor()
             {

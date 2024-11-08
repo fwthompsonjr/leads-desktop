@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util
@@ -23,6 +24,15 @@ namespace LegalLead.PublicData.Search.Util
             if (Driver is IJavaScriptExecutor exec) return exec;
             return null;
         }
+
+        public void MaskUserName()
+        {
+            var executor = GetJavaScriptExecutor();
+            if (executor == null) return;
+            var script = string.Join(Environment.NewLine, maskWelcome);
+            executor.ExecuteScript(script);
+        }
+
 
         protected void WaitForNavigation()
         {
@@ -64,5 +74,14 @@ namespace LegalLead.PublicData.Search.Util
             }
         }
         private static readonly object lockObject = new();
+        private static readonly List<string> maskWelcome = new()
+        {
+                "var drop = document.getElementById('dropdownMenu1');",
+                "if ( null != drop ) {",
+                "var arr = Array.prototype.slice.call( drop.getElementsByTagName('span'), 0 );",
+                "var spn = arr.find(a => a.innerText.indexOf('Welcome') >= 0); ",
+                "if ( null != spn) { spn.innerText = 'Welcome, User'}",
+                "}"
+        };
     }
 }
