@@ -20,7 +20,7 @@ namespace LegalLead.PublicData.Search
         private static List<WebNavigationKey> _dentonKeys;
         public static List<WebNavigationKey> DentonCustomKeys
         {
-            get { return _dentonKeys ?? (_dentonKeys = new List<WebNavigationKey>()); }
+            get { return _dentonKeys ??= new List<WebNavigationKey>(); }
             set { _dentonKeys = value; }
         }
         /// <summary>
@@ -31,37 +31,35 @@ namespace LegalLead.PublicData.Search
         {
             var commandName = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartup] ??
                 CommonKeyIndexes.FormNameMain.ToLower(CultureInfo.CurrentCulture);
-            using (var consoleWriter = new ConsoleWriter())
+            using var consoleWriter = new ConsoleWriter();
+            var command = Command.CommandStartUp.Commands
+                .FirstOrDefault(x =>
+                x.Name.Equals(commandName,
+                StringComparison.CurrentCultureIgnoreCase)) ?? new Command.MainCommand();
+
+            // get the chrome path in a separate thread
+            ThreadStart ts = new(() =>
             {
-                var command = Command.CommandStartUp.Commands
-                    .FirstOrDefault(x =>
-                    x.Name.Equals(commandName,
-                    StringComparison.CurrentCultureIgnoreCase)) ?? new Command.MainCommand();
+                var settings = WebUtilities.GetChromeBinary();
+                Console.WriteLine("Using {0} as Chrome file location.", settings);
+            });
+            ts.Invoke();
 
-                // get the chrome path in a separate thread
-                ThreadStart ts = new(() =>
-                {
-                    var settings = WebUtilities.GetChromeBinary();
-                    Console.WriteLine("Using {0} as Chrome file location.", settings);
-                });
-                ts.Invoke();
+            consoleWriter.WriteLineEvent += ConsoleWriter_WriteLineEvent;
 
-                consoleWriter.WriteLineEvent += ConsoleWriter_WriteLineEvent;
-
-                Console.SetOut(consoleWriter);
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                using (var frm = new FormDentonSetting())
-                {
-                    frm.Save();
-                }
-                mainForm = new FormMain();
-
-                var hcconfig = HccConfiguration.Load().Background;
-                if (hcconfig.Loader) { HarrisCriminalUpdate.Update(); }
-
-                command.Execute(mainForm);
+            Console.SetOut(consoleWriter);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            using (var frm = new FormDentonSetting())
+            {
+                frm.Save();
             }
+            mainForm = new FormMain();
+
+            var hcconfig = HccConfiguration.Load().Background;
+            if (hcconfig.Loader) { HarrisCriminalUpdate.Update(); }
+
+            command.Execute(mainForm);
         }
 
         static void ConsoleWriter_WriteLineEvent(object sender, ConsoleWriterEventArgs e)

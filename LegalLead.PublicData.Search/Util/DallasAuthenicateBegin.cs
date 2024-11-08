@@ -40,7 +40,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
                 {
-                    PollingInterval = TimeSpan.FromMilliseconds(500),
+                    PollingInterval = TimeSpan.FromMilliseconds(250),
                 };
                 wait.Until(d =>
                 {

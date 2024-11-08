@@ -123,6 +123,7 @@ var userBox = document.getElementById('UserName');
 var wordBox = document.getElementById('Password');
 var chekBox = document.getElementById('TOSCheckBox');
 var signin = document.getElementById('btnSignIn');
+userBox.setAttribute("style", "visibility: hidden");
 userBox.value = uid;
 wordBox.value = pwd;
 chekBox.click();
