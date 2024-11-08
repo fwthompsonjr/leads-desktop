@@ -14,6 +14,7 @@ namespace LegalLead.PublicData.Search.Util
         public override int OrderId => 6;
         public override object Execute()
         {
+            const char pipe = '|';
             var js = JsScript;
             var executor = GetJavaScriptExecutor();
 
@@ -24,9 +25,9 @@ namespace LegalLead.PublicData.Search.Util
                 _credential = GetCountyCode(_reader);
 
             if (string.IsNullOrEmpty(_credential)) return false;
-            if (!_credential.Contains("|")) return false;
+            if (!_credential.Contains(pipe)) return false;
             var currentTitle = Driver.Title;
-            var sustitutes = _credential.Split('|');
+            var sustitutes = _credential.Split(pipe);
             js = VerifyScript(js);
             js = js.Replace("{0}", sustitutes[0]).Replace("{1}", sustitutes[1]);
             executor.ExecuteScript(js);
