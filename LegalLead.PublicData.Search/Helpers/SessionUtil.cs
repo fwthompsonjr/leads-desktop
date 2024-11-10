@@ -58,6 +58,26 @@ namespace LegalLead.PublicData.Search.Helpers
                 }
             }
         }
+        public static bool Write(string content)
+        {
+            lock (locker)
+            {
+                var fileName = SetupFile;
+                if (string.IsNullOrEmpty(fileName)) return false;
+                if (string.IsNullOrWhiteSpace(content)) return false;
+                try
+                {
+                    var data = content.Crypt();
+                    if (File.Exists(fileName)) File.Delete(fileName);
+                    File.WriteAllText(fileName, data);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
         private static string SetupFile
         {
             get

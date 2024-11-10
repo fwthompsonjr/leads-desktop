@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -21,35 +23,48 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public string GetCountyCode(int id)
         {
-            var isExisting = KeyIndexes.TryGetValue(id, out var code);
-            if (isExisting) return code;
-            var found = _countyCodeService.Find(id);
-            if (found == null) return null;
-            var lookup = GetRemoteData(found);
-            if (string.IsNullOrEmpty(lookup)) return null;
-            KeyIndexes.Add(id, lookup);
-            return lookup;
+            lock (locker)
+            {
+                var isExisting = KeyIndexes.TryGetValue(id, out var code);
+                if (isExisting) return code;
+                var found = _countyCodeService.Find(id);
+                if (found == null) return null;
+                var lookup = GetRemoteData(found);
+                if (string.IsNullOrEmpty(lookup)) return null;
+                KeyIndexes.Add(id, lookup);
+                return lookup; 
+            }
         }
 
         public string GetCountyCode(string code)
         {
-            var isExisting = KeyCodes.TryGetValue(code, out var passcode);
-            if (isExisting) return passcode;
-            var found = _countyCodeService.Find(code);
-            if (found == null) return null;
-            var lookup = GetRemoteData(found);
-            if (string.IsNullOrEmpty(lookup)) return null;
-            KeyCodes.Add(code, lookup);
-            return lookup;
+            lock (locker)
+            {
+                var isExisting = KeyCodes.TryGetValue(code, out var passcode);
+                if (isExisting) return passcode;
+                var found = _countyCodeService.Find(code);
+                if (found == null) return null;
+                var lookup = GetRemoteData(found);
+                if (string.IsNullOrEmpty(lookup)) return null;
+                KeyCodes.Add(code, lookup);
+                return lookup; 
+            }
         }
 
         private string GetRemoteData(CountyCodeDto code)
         {
             const string fallback = "default";
             var userId = string.IsNullOrEmpty(code.Uid) ? fallback : code.Uid;
-            var item = CodeList.Find(x => x.Name == code.Name && x.User == userId);
-            if (item == null) return null;
-            return GetDecodedData(code, new JsModel { Code = item.Code, Name = item.Name });
+            var address = _countyCodeService.GetWebAddress(1);
+            using (var client = new HttpClient())
+            {
+                var response = _httpService
+                    .PostAsJsonAsync<object, JsModel>(client, address, new { name = code.Name, userId })
+                    .GetAwaiter()
+                    .GetResult();
+                if (response == null) return null;
+                return GetDecodedData(code, response);
+            }
         }
 
         private static string GetDecodedData(CountyCodeDto code, JsModel model)
@@ -67,15 +82,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             "Sonar Qube",
             "S1144:Unused private types or members should be removed",
             Justification = "Ignoring rule for this private sealed member")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Sonar Qube",
-            "S3459:Unassigned members should be removed",
-            Justification = "As POCO class exposing both get/set operations")]
-        private sealed class JsModel
-        {
-            public string Name { get; set; }
-            public string Code { get; set; }
-        }
+        
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Sonar Qube",
@@ -86,17 +93,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             [JsonProperty("name")] public string Name { get; set; }
             [JsonProperty("user")] public string User { get; set; }
             [JsonProperty("code")] public string Code { get; set; }
-        }
-
-        private static List<JsCode> CodeList
-        {
-            get
-            {
-                if (codeList != null) return codeList;
-                var tmp = JsonConvert.DeserializeObject<List<JsCode>>(_codeLookup);
-                codeList = tmp ?? new List<JsCode>();
-                return codeList;
-            }
         }
 
 
@@ -138,7 +134,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         private static readonly Dictionary<int, string> KeyIndexes = new Dictionary<int, string>();
 
         private static readonly Dictionary<string, string> KeyCodes = new Dictionary<string, string>();
-        private static List<JsCode> codeList;
-        private static readonly string _codeLookup = Properties.Resources.county_code_definition;
+        private static readonly object locker = new object();
     }
 }
