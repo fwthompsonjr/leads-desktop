@@ -54,6 +54,8 @@ namespace LegalLead.PublicData.Search
             {
                 frm.Save();
             }
+            var login = new FormLogin();
+            login.ShowDialog();
             mainForm = new FormMain();
 
             var hcconfig = HccConfiguration.Load().Background;

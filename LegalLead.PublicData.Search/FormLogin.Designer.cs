@@ -70,6 +70,7 @@
             btnSubmit.TabIndex = 9;
             btnSubmit.Text = "Login";
             btnSubmit.UseVisualStyleBackColor = true;
+            btnSubmit.Click += BtnSubmit_Click;
             // 
             // label3
             // 
