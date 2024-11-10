@@ -37,21 +37,29 @@ namespace LegalLead.PublicData.Search
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
+            SetInteraction(false);
             var form = Program.loginForm;
             var rsp = form.DialogResult;
-            if (rsp == DialogResult.None) { 
-                rsp = form.ShowDialog();
-            }
+            if (rsp == DialogResult.None) rsp = form.ShowDialog();
             switch (rsp)
             {
                 case DialogResult.OK:
                 case DialogResult.Yes:
                     Debug.WriteLine("Login success");
+                    SetInteraction(true);
                     break;
                 default:
                     Close();
                     break;
             }
+        }
+
+        private void SetInteraction(bool isEnabled)
+        {
+            cboWebsite.Enabled = isEnabled;
+            button1.Enabled = isEnabled;
+            dteEnding.Enabled = isEnabled;
+            dteStart.Enabled = isEnabled;
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
