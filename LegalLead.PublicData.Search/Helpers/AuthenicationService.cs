@@ -17,7 +17,7 @@ namespace LegalLead.PublicData.Search.Helpers
             http = service;
         }
         public int RetryCount { get; private set; } = 5;
-        public async Task<bool> LoginAsync(string username, string password)
+        public bool Login(string username, string password)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 SessionUtil.Initialize();
                 var payload = new { userName = username, password };
                 using var client = new HttpClient();
-                var response = await http.PostAsJsonAsync<object, AuthenicationResponseDto>(client, Landing, payload);
+                var response = http.PostAsJson<object, AuthenicationResponseDto>(client, Landing, payload);
                 if (response == null || response.Id < 0)
                 {
                     RetryCount--;

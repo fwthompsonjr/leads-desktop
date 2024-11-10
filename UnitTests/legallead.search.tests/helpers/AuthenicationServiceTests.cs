@@ -36,7 +36,7 @@ namespace legallead.search.tests.helpers
         [InlineData("username", "password", 1, true)]
         [InlineData("username", "password", 10, true)]
         [InlineData("username", "password", -1, false)]
-        public async Task ServiceCanLoginAsync(string uid, string pwd, int index, bool expected)
+        public void ServiceCanLoginAsync(string uid, string pwd, int index, bool expected)
         {
             var service = new MockAuthenicationService();
             var response = new AuthenicationResponseDto { Id = index };
@@ -47,12 +47,18 @@ namespace legallead.search.tests.helpers
                 It.IsAny<object>(),
                 It.IsAny<CancellationToken>()
             )).ReturnsAsync(response);
-            var actual = await service.LoginAsync(uid, pwd);
+            mock.Setup(s => s.PostAsJson<object, AuthenicationResponseDto>(
+                It.IsAny<HttpClient>(),
+                It.IsAny<string>(),
+                It.IsAny<object>(),
+                It.IsAny<CancellationToken>()
+            )).Returns(response);
+            var actual = service.Login(uid, pwd);
             Assert.Equal(expected, actual);
         }
         
         [Fact]
-        public async Task ServiceCanLoginAsyncWithRetries()
+        public void ServiceCanLoginAsyncWithRetries()
         {
             const bool expected = false;
             const string uid = "username";
@@ -68,9 +74,15 @@ namespace legallead.search.tests.helpers
                 It.IsAny<object>(),
                 It.IsAny<CancellationToken>()
             )).ReturnsAsync(response);
+            mock.Setup(s => s.PostAsJson<object, AuthenicationResponseDto>(
+                It.IsAny<HttpClient>(),
+                It.IsAny<string>(),
+                It.IsAny<object>(),
+                It.IsAny<CancellationToken>()
+            )).Returns(response);
             while (retries > 0)
             {
-                var actual = await service.LoginAsync(uid, pwd);
+                var actual = service.Login(uid, pwd);
                 Assert.Equal(expected, actual);
                 retries--;
             }

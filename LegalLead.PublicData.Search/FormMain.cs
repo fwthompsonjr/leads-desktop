@@ -29,9 +29,29 @@ namespace LegalLead.PublicData.Search
             Text = string.Format(CultureInfo.CurrentCulture, @"{0} - {1}",
                 appName.Name, version);
             FormClosing += FormMain_FormClosing;
+            Shown += FormMain_Shown;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
+        }
+
+        private void FormMain_Shown(object sender, EventArgs e)
+        {
+            var form = Program.loginForm;
+            var rsp = form.DialogResult;
+            if (rsp == DialogResult.None) { 
+                rsp = form.ShowDialog();
+            }
+            switch (rsp)
+            {
+                case DialogResult.OK:
+                case DialogResult.Yes:
+                    Debug.WriteLine("Login success");
+                    break;
+                default:
+                    Close();
+                    break;
+            }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)

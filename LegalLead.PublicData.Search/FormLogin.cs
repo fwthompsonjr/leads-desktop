@@ -24,8 +24,12 @@ namespace LegalLead.PublicData.Search
                 }
                 var uid = tbxUser.Text;
                 var pword = tbxPwd.Text;
-                var response = service.LoginAsync(uid, pword).Result;
-                if (response) return;
+                var response = service.Login(uid, pword);
+                if (response)
+                {
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
             }
             finally
             {
