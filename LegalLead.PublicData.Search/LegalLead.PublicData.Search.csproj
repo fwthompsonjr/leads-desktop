@@ -78,9 +78,6 @@
 		<PackageReference Include="Selenium.WebDriver" Version="4.25.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="System.Deployment" />
-	</ItemGroup>
-	<ItemGroup>
 		<Compile Update="Classes\BackgroundProcessor.cs">
 			<SubType>Form</SubType>
 		</Compile>
