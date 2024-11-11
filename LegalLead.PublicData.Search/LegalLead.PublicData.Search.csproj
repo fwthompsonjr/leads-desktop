@@ -187,6 +187,9 @@
 	  <None Update="_session\session.dat">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="_setup\debug_account.txt">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
 	  <None Update="_setup\generate-shortcut.vbs">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

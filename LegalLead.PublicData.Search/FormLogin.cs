@@ -12,7 +12,7 @@ namespace LegalLead.PublicData.Search
         {
             InitializeComponent();
         }
-
+        internal bool DebugMode { get; set; }
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
             ToggleEnabled(false);
@@ -23,6 +23,14 @@ namespace LegalLead.PublicData.Search
                 if (service is AuthenicationService authenicationService && authenicationService.RetryCount <= 0)
                 {
                     DialogResult = DialogResult.Cancel;
+                    return;
+                }
+                if (DebugMode)
+                {
+                    var txt = Properties.Resources.debug_account;
+                    var decodec = txt.Decrypt();
+                    SessionUtil.Write(decodec);
+                    DialogResult = DialogResult.OK;
                     return;
                 }
                 var uid = tbxUser.Text;

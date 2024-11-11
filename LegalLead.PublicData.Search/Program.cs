@@ -60,6 +60,9 @@ namespace LegalLead.PublicData.Search
             {
                 DialogResult = DialogResult.None
             };
+#if DEBUG
+            loginForm.DebugMode = true;
+#endif
             mainForm = new FormMain();
 
             var hcconfig = HccConfiguration.Load().Background;
