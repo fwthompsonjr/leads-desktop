@@ -2,7 +2,7 @@
 {
     public interface ICountyCodeReader
     {
-        string GetCountyCode(int id);
-        string GetCountyCode(string code);
+        string GetCountyCode(int id, string userId = "");
+        string GetCountyCode(string code, string userId = "");
     }
 }

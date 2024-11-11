@@ -21,7 +21,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             _countyCodeService = countyCode;
         }
 
-        public string GetCountyCode(int id)
+        public string GetCountyCode(int id, string userId = "")
         {
             lock (locker)
             {
@@ -29,14 +29,14 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (isExisting) return code;
                 var found = _countyCodeService.Find(id);
                 if (found == null) return null;
-                var lookup = GetRemoteData(found);
+                var lookup = GetRemoteData(found, userId);
                 if (string.IsNullOrEmpty(lookup)) return null;
                 KeyIndexes.Add(id, lookup);
                 return lookup; 
             }
         }
 
-        public string GetCountyCode(string code)
+        public string GetCountyCode(string code, string userId = "")
         {
             lock (locker)
             {
@@ -44,16 +44,17 @@ namespace Thompson.RecordSearch.Utility.Classes
                 if (isExisting) return passcode;
                 var found = _countyCodeService.Find(code);
                 if (found == null) return null;
-                var lookup = GetRemoteData(found);
+                var lookup = GetRemoteData(found, userId);
                 if (string.IsNullOrEmpty(lookup)) return null;
                 KeyCodes.Add(code, lookup);
                 return lookup; 
             }
         }
 
-        private string GetRemoteData(CountyCodeDto code)
+        private string GetRemoteData(CountyCodeDto code, string uid = "")
         {
             const string fallback = "default";
+            code.Uid = uid;
             var userId = string.IsNullOrEmpty(code.Uid) ? fallback : code.Uid;
             var address = _countyCodeService.GetWebAddress(1);
             using (var client = new HttpClient())

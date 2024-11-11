@@ -69,8 +69,8 @@ namespace legallead.search.tests.util
                 var actual = new CountyCodeReaderService(http, svc);
                 var resp = actual.GetCountyCode("dallas");
                 var response = actual.GetCountyCode(60);
-                mockReader.Setup(s => s.GetCountyCode(It.IsAny<int>())).Returns(response);
-                mockReader.Setup(s => s.GetCountyCode(It.IsAny<string>())).Returns(resp);
+                mockReader.Setup(s => s.GetCountyCode(It.IsAny<int>(), It.IsAny<string>())).Returns(response);
+                mockReader.Setup(s => s.GetCountyCode(It.IsAny<string>(), It.IsAny<string>())).Returns(resp);
             }
 
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
