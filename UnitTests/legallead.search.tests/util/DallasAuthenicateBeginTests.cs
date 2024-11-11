@@ -3,8 +3,11 @@ using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;
 using System;
+using System.Net.Http;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Interfaces;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace legallead.search.tests.util
 {
@@ -61,11 +64,13 @@ namespace legallead.search.tests.util
         {
             public MockDallasAuthenicateBegin() : base(mockReader.Object)
             {
-                var http = new Mock<IHttpService>();
+                var http = new HttpService();
                 var svc = new CountyCodeService();
-                var actual = new CountyCodeReaderService(http.Object, svc);
+                var actual = new CountyCodeReaderService(http, svc);
+                var resp = actual.GetCountyCode("dallas");
                 var response = actual.GetCountyCode(60);
-                mockReader.Setup(s => s.GetCountyCode(It.IsAny<int>())).Returns(response);
+                mockReader.Setup(s => s.GetCountyCode(It.IsAny<int>(), It.IsAny<string>())).Returns(response);
+                mockReader.Setup(s => s.GetCountyCode(It.IsAny<string>(), It.IsAny<string>())).Returns(resp);
             }
 
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();

@@ -17,6 +17,7 @@ namespace LegalLead.PublicData.Search
     static class Program
     {
         static FormMain mainForm;
+        static internal FormLogin loginForm;
         private static List<WebNavigationKey> _dentonKeys;
         public static List<WebNavigationKey> DentonCustomKeys
         {
@@ -54,6 +55,10 @@ namespace LegalLead.PublicData.Search
             {
                 frm.Save();
             }
+            loginForm = new FormLogin
+            {
+                DialogResult = DialogResult.None
+            };
             mainForm = new FormMain();
 
             var hcconfig = HccConfiguration.Load().Background;

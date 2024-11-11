@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
@@ -39,6 +41,13 @@ namespace LegalLead.PublicData.Search.Helpers
                 File.WriteAllText(fileName, ""); 
             }
         }
+        public static string GetCountyAccountName()
+        {
+            var data = Read();
+            if (string.IsNullOrWhiteSpace(data)) return string.Empty;
+            var dto = GetPermissionsMap(data);
+            return dto?.CountyPermission ?? string.Empty;
+        }
         public static string Read()
         {
             lock (locker)
@@ -55,6 +64,26 @@ namespace LegalLead.PublicData.Search.Helpers
                 catch
                 {
                     return string.Empty;
+                }
+            }
+        }
+        public static bool Write(string content)
+        {
+            lock (locker)
+            {
+                var fileName = SetupFile;
+                if (string.IsNullOrEmpty(fileName)) return false;
+                if (string.IsNullOrWhiteSpace(content)) return false;
+                try
+                {
+                    var data = content.Crypt();
+                    if (File.Exists(fileName)) File.Delete(fileName);
+                    File.WriteAllText(fileName, data);
+                    return true;
+                }
+                catch
+                {
+                    return false;
                 }
             }
         }
@@ -85,6 +114,21 @@ namespace LegalLead.PublicData.Search.Helpers
             if (!Directory.Exists(setupFolder)) return string.Empty;
             return setupFolder;
         }
+
+        private static PermissionMapDto GetPermissionsMap(string details)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(details)) return null;
+                return JsonConvert.DeserializeObject<PermissionMapDto>(details);
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
         private static Assembly CurrentAssembly
         {
             get

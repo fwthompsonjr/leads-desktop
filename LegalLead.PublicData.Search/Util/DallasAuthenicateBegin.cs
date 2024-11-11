@@ -56,13 +56,13 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         protected string _credential;
-        protected static string GetCountyCode(ICountyCodeReader reader)
+        protected static string GetCountyCode(ICountyCodeReader reader, string userId = "")
         {
             try
             {
                 var dallasId = (int)SourceType.DallasCounty;
                 if (reader == null) return string.Empty;
-                return reader.GetCountyCode(dallasId);
+                return reader.GetCountyCode(dallasId, userId);
             }
             catch
             {
