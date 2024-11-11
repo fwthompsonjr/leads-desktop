@@ -1,11 +1,9 @@
-﻿using HtmlAgilityPack;
+﻿using LegalLead.PublicData.Search.Common;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
@@ -25,53 +23,13 @@ namespace LegalLead.PublicData.Search.Util
             var js = JsScript;
             js = VerifyScript(js);
             var alldata = new List<CaseItemDto>();
-            var collector = new FortBendGetLinkCollection()
+            var links = this.GetCaseNumbers();
+            if (links == null || links.Count == 0) return JsonConvert.SerializeObject(alldata);
+            var dataset = this.GetCaseItems(links, GetDto, js);
+            if (dataset == null || dataset.Count == 0) return JsonConvert.SerializeObject(alldata);
+            dataset.ForEach(d =>
             {
-                Driver = Driver,
-                ExternalExecutor = executor,
-                Parameters = Parameters
-            };
-            var navigator = new FortBendGetLinkCollectionItem()
-            {
-                Driver = Driver,
-                ExternalExecutor = executor,
-                Parameters = Parameters
-            };
-            var locator = By.XPath("//div[@class='ssCaseDetailCaseNbr']");
-            var selector = By.XPath("//table[@border='0'][@cellpadding='2']");
-            if (!ElementWait(selector)) return JsonConvert.SerializeObject(alldata);
-            var collection = collector.Execute();
-            if (collection is not string items) return JsonConvert.SerializeObject(alldata);
-            var links = JsonConvert.DeserializeObject<List<string>>(items);
-            if (links == null || links.Count == 0)
-                return JsonConvert.SerializeObject(alldata);
-            var blnError = false;
-            links.ForEach(link =>
-            {
-                if (!blnError)
-                {
-                    var id = links.IndexOf(link);
-                    navigator.LinkItemId = id;
-                    navigator.Execute();
-                    if (ElementWait(locator))
-                    {
-                        var person = GetDto(executor.ExecuteScript(js));
-                        if (person != null) alldata.Add(person);
-                    }
-                    else
-                    {
-                        blnError = true;
-                        var findElement = Driver.TryFindElements(By.TagName("a"))?.FirstOrDefault(a => a.Text.Trim() == link);
-                        if (findElement != null)
-                        {
-                            executor.ExecuteScript("arguments[0].click();", findElement);
-                            Thread.Sleep(500);
-                            var person = GetDto(executor.ExecuteScript(js));
-                            if (person != null) alldata.Add(person);
-                        }
-                    }
-                    Driver.Navigate().Back(); 
-                }
+                if (d != null) alldata.Add(d);
             });
 
             return JsonConvert.SerializeObject(alldata);

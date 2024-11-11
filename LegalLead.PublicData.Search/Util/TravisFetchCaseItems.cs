@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
@@ -25,7 +26,7 @@ namespace LegalLead.PublicData.Search.Util
 
             js = VerifyScript(js);
             var table = executor.ExecuteScript(js);
-            if (!(table is string tbhtml)) return string.Empty;
+            if (table is not string tbhtml) return string.Empty;
             var alldata = new List<CaseItemDto>();
             var doc = GetHtml(tbhtml);
             var node = doc.DocumentNode;
@@ -39,7 +40,8 @@ namespace LegalLead.PublicData.Search.Util
                 var itm = GetRowItem(lnk);
                 if (itm != null && !string.IsNullOrEmpty(itm.Href)) alldata.Add(itm);
             });
-            Console.WriteLine("Search found {0} records", alldata.Count);
+            var message = AppMessages.GetMessage("STATUS_MSG_SEARCH_FOUND_RECORDS");
+            Console.WriteLine(message, alldata.Count);
             return JsonConvert.SerializeObject(alldata);
         }
 
