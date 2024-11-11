@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
@@ -9,7 +8,7 @@ using Thompson.RecordSearch.Utility.Tools;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
-    
+
     public class AuthenicationService : IAuthenicationService
     {
         public AuthenicationService(IHttpService service)
@@ -58,7 +57,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 return landing;
             }
         }
-        
+
         private static string landing = null;
         private readonly IHttpService http;
     }

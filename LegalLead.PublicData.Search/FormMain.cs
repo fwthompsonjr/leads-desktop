@@ -1,5 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Util;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
@@ -47,10 +50,60 @@ namespace LegalLead.PublicData.Search
                 case DialogResult.Yes:
                     Debug.WriteLine("Login success");
                     SetInteraction(true);
+                    FilterWebSiteByAccount();
                     break;
                 default:
                     Close();
                     break;
+            }
+        }
+
+        private void FilterWebSiteByAccount()
+        {
+            var details = GetPermissionsMap(SessionUtil.Read());
+            if (details == null || string.IsNullOrEmpty(details.WebPermissions))
+            {
+                // remove all websites from cboWebsite
+                // and disable the controls
+                SetInteraction(false);
+                cboWebsite.Items.Clear();
+                return;
+            }
+            if (details.WebPermissions.Equals("-1")) return;
+            var webid = details.WebPermissions.Split(',')
+                .Where(w => { return int.TryParse(w, out var _); })
+                .Select(s => int.Parse(s))
+                .ToList();
+            if (!webid.Any())
+            {
+                // remove all websites from cboWebsite
+                // and disable the controls
+                SetInteraction(false);
+                cboWebsite.Items.Clear();
+                return;
+            }
+
+            var websites = SettingsManager.GetNavigation()
+                .FindAll(x => webid.Contains(x.Id));
+            cboWebsite.SelectedValueChanged -= CboWebsite_SelectedValueChanged;
+            cboWebsite.DataSource = websites;
+            cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
+            cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
+            cboWebsite.SelectedIndex = 0;
+        }
+
+        private static PermissionMapDto GetPermissionsMap(string details)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(details)) return null;
+                return JsonConvert.DeserializeObject<PermissionMapDto>(details);
+            }
+            catch (Exception)
+            {
+
+                return null;
             }
         }
 
