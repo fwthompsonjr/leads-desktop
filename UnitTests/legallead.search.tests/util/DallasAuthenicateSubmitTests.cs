@@ -61,11 +61,12 @@ namespace legallead.search.tests.util
         {
             public MockDallasAuthenicateSubmit() : base(mockReader.Object)
             {
-                var http = new Mock<IHttpService>();
+                var http = new HttpService();
                 var svc = new CountyCodeService();
-                var actual = new CountyCodeReaderService(http.Object, svc);
+                var actual = new CountyCodeReaderService(http, svc);
                 var response = actual.GetCountyCode(60);
-                mockReader.Setup(s => s.GetCountyCode(It.IsAny<int>())).Returns(response);
+                mockReader.Setup(s => s.GetCountyCode(It.IsAny<int>(), It.IsAny<string>())).Returns(response);
+                mockReader.Setup(s => s.GetCountyCode(It.IsAny<string>(), It.IsAny<string>())).Returns(response);
             }
 
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();

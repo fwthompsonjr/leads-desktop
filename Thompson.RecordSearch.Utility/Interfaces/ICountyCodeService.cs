@@ -7,5 +7,6 @@ namespace Thompson.RecordSearch.Utility.Interfaces
         CountyCodeMapDto Map { get; }
         CountyCodeDto Find(int id);
         CountyCodeDto Find(string name);
+        string GetWebAddress(int id);
     }
 }

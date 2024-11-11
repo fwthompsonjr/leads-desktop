@@ -170,6 +170,31 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;web&quot;: &quot;http://legalleadpermissionsapi-dev.us-east-2.elasticbeanstalk.com&quot;,
+        ///	&quot;landings&quot;:
+        ///	{
+        ///		&quot;login&quot;: &quot;/app/login&quot;,
+        ///		&quot;county&quot;: &quot;/app/get-county-code&quot;
+        ///	},
+        ///	&quot;counties&quot;: 
+        ///		[
+        ///			{
+        ///			&quot;id&quot;: 60,
+        ///			&quot;name&quot;: &quot;dallas&quot;,
+        ///			&quot;code&quot;: &quot;legal.lead.dallas.uindex&quot;,
+        ///			&quot;vector&quot;: &quot;04fvxOSLb7yEYgBPQCR0Gw==&quot;
+        ///			}
+        ///		]
+        ///}.
+        /// </summary>
+        internal static string credential_services_map {
+            get {
+                return ResourceManager.GetString("credential_services_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [
         ///	{
         ///		&quot;name&quot;: &quot;county&quot;,
@@ -487,6 +512,26 @@ namespace Thompson.RecordSearch.Utility.Properties {
         internal static string travisScriptingHelp {
             get {
                 return ResourceManager.GetString("travisScriptingHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;id&quot;: 0,
+        ///		&quot;webIndexes&quot;: &quot;-1&quot;,
+        ///		&quot;countyId&quot;: &quot;default&quot;
+        ///	},
+        ///	{
+        ///		&quot;id&quot;: 1,
+        ///		&quot;webIndexes&quot;: &quot;-1&quot;,
+        ///		&quot;countyId&quot;: &quot;default&quot;
+        ///	}
+        ///].
+        /// </summary>
+        internal static string user_permissions_list {
+            get {
+                return ResourceManager.GetString("user_permissions_list", resourceCulture);
             }
         }
         
