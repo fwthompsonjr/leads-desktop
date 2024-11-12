@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Command;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -59,6 +60,9 @@ namespace LegalLead.PublicData.Search
             {
                 DialogResult = DialogResult.None
             };
+#if DEBUG
+            loginForm.DebugMode = true;
+#endif
             mainForm = new FormMain();
 
             var hcconfig = HccConfiguration.Load().Background;
@@ -78,17 +82,32 @@ namespace LegalLead.PublicData.Search
         {
             try
             {
-                mainForm.txConsole.Text = sb.ToString();
-                mainForm.txConsole.Refresh();
+                SetText(sb, true);
             }
             catch (Exception)
             {
-
                 mainForm.txConsole.Invoke((MethodInvoker)delegate
                 {
-                    mainForm.txConsole.Text = sb.ToString();
-                    mainForm.txConsole.Refresh();
+                    SetText(sb);
                 });
+            }
+        }
+
+        private static void SetText(StringBuilder sb, bool throwError = false)
+        {
+            try
+            {
+                var textBox = mainForm.txConsole;
+                textBox.Text = sb.ToString();
+                textBox.Refresh();
+                if (textBox.Text.Length == 0) return;
+                textBox.SelectionStart = textBox.Text.Length;
+                textBox.ScrollToCaret();
+            }
+            catch (Exception ex)
+            {
+                if (throwError) throw;
+                else Debug.WriteLine(ex.Message);
             }
         }
     }

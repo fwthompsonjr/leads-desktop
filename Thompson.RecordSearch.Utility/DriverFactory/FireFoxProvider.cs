@@ -36,7 +36,10 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         {
             try
             {
-                var profile = new FirefoxOptions();
+                var profile = new FirefoxOptions()
+                {
+                    AcceptInsecureCertificates = true
+                };
                 if (headless) profile.AddArgument("--headless");
                 profile.SetPreference("browser.safebrowsing.enabled", true);
                 profile.SetPreference("browser.safebrowsing.malware.enabled", true);

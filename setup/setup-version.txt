@@ -1,5 +1,27 @@
 [
 	{
+		"id": "2.8.5",
+		"date": "2024-11-12 11:15",
+		"title": "Review execution for counties",
+		"description": [
+			"## Problem:",
+			"",
+			"When a user runs application against a specific county",
+			"I want the search to execute as expected",
+			"so that all application functions are working as designed.",
+			"",
+			"## Resolution:",
+			"- [x] Check behavior [Denton]",
+			"- [x] Check behavior [Tarrant]",
+			"- [x] Check behavior [Travis]",
+			"- [x] Check behavior [Bexar]",
+			"- [x] Check behavior [Hidalgo]",
+			"- [x] Check behavior [ElPaso]",
+			"- [x] Check behavior [FortBend]",
+			"- [x] Check behavior [Williamson]"
+		]
+	},
+	{
 		"id": "2.8.4",
 		"date": "2024-11-10 17:45",
 		"title": "Add authentication to application",
