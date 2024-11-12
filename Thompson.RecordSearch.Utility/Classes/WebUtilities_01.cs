@@ -30,10 +30,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     return new List<HLinkDataRow>();
                 }
-                var parameter = GetParameter(Data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
+                var parameter = GetParameter(Data, CommonKeyIndexes.IsCriminalSearch);
                 if (parameter != null)
                 {
-                    parameter.Value = CommonKeyIndexes.NumberZero; // "0";
+                    parameter.Value = CommonKeyIndexes.NumberZero;
                 }
                 var cases = Search(GetNavigationAddress(), DataRows);
                 return cases;
