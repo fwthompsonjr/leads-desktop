@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using LegalLead.PublicData.Search.Common;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
@@ -16,79 +17,31 @@ namespace LegalLead.PublicData.Search.Util
         public bool PauseForPage { get; set; }
         public override object Execute()
         {
+            const string getBodyJs = "return document.getElementsByTagName('body')[0].innerHTML";
             if (Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-            if (PauseForPage) Thread.Sleep(2000);
+            var converter = new TravisConversionAction(this);
             var alldata = new List<TravisCaseStyleDto>();
             var currentUri = Driver.Url;
 
-            if (!Uri.TryCreate(currentUri, UriKind.Absolute, out var uri))
+            if (!Uri.TryCreate(currentUri, UriKind.Absolute, out var _))
                 throw new ArgumentException(Rx.ERR_URI_MISSING);
-            var collection = GetLinks();
-            if (collection == null || collection.Count == 0)
-                return JsonConvert.SerializeObject(alldata);
-            var id = 0;
-            var mx = collection.Count;
-            var retries = new List<int>();
-            while (id < mx)
+            var collection = converter.GetCaseNumbers();
+            if (collection == null || collection.Count == 0) return JsonConvert.SerializeObject(alldata);
+            var dataset = converter.GetCaseItems(collection, FromTravisDto, getBodyJs);
+            if (dataset == null || dataset.Count == 0) return JsonConvert.SerializeObject(alldata);
+            dataset.ForEach(d =>
             {
-                var current = id;
-                var element = GetLink(id++);
-                element.Click();
-
-                Thread.Sleep(500);
-
-                var body = Driver.FindElement(By.TagName("body"));
-                var content = body.GetAttribute("innerHTML");
-                var dto = GetDto(content);
-                if (dto != null)
-                    alldata.Add(dto);
-                else
-                    retries.Add(current);
-
-                Driver.Navigate().Back();
-            }
+                var item = FromCaseItem(d);
+                if (item != null) alldata.Add(item);
+            });
 
             Console.WriteLine("Search mapped {0} records", alldata.Count);
             return JsonConvert.SerializeObject(alldata);
         }
 
-        private List<IWebElement> GetLinks()
-        {
-            const string linkIndicator = "CaseDetail.aspx?";
-            const string styleIndicator = "color: blue";
-            return Driver.FindElements(By.TagName("a"))
-                .Where(a =>
-                {
-                    var navigationTo = a.GetAttribute("href");
-                    if (string.IsNullOrEmpty(navigationTo)) return false;
-                    var idx = navigationTo.IndexOf(linkIndicator, StringComparison.OrdinalIgnoreCase);
-                    return idx >= 0;
-                })
-                .Where(a =>
-                {
-                    var styleBlock = a.GetAttribute("style");
-                    if (string.IsNullOrEmpty(styleBlock)) return false;
-                    var idx = styleBlock.IndexOf(styleIndicator, StringComparison.OrdinalIgnoreCase);
-                    return idx >= 0;
-                })
-                .ToList();
-        }
-
-        private IWebElement GetLink(int index)
-        {
-            if (index < 0) return null;
-            var list = GetLinks();
-            if (index > list.Count - 1) return null;
-            var item = list[index];
-            if (!(Driver is IJavaScriptExecutor executor)) return item;
-            executor.ExecuteScript("arguments[0].scrollIntoView(true);", item);
-            return item;
-        }
-
         private static TravisCaseStyleDto GetDto(string pageHtml)
         {
-
             const string nospace = "&nbsp;";
             const string linbreak = "<br>";
             const string twopipe = "||";
@@ -153,7 +106,6 @@ namespace LegalLead.PublicData.Search.Util
             if (addr.IndexOf(pipe, comparison) < 0 && addr.Length > 0) { addr = string.Concat("000 No Street Address|", addr); }
             obj.Address = addr;
             return obj;
-
         }
         private static HtmlDocument GetHtml(string html)
         {
@@ -169,6 +121,34 @@ namespace LegalLead.PublicData.Search.Util
             var doc = new HtmlDocument();
             doc.LoadHtml(content);
             return doc;
+        }
+        private static CaseItemDto FromTravisDto(object data)
+        {
+            if (data is not string json) return null;
+            var dto = GetDto(json);
+            if (dto == null) return null;
+            return new()
+            {
+                Address = dto.Address,
+                CaseNumber = dto.CaseNumber,
+                Court = dto.Court,
+                CaseStyle = dto.CaseStyle,
+                PartyName = dto.PartyName,
+                Plaintiff = dto.Plaintiff
+            };
+        }
+        private static TravisCaseStyleDto FromCaseItem(CaseItemDto dto)
+        {
+            if (dto == null) return null;
+            return new()
+            {
+                Address = dto.Address,
+                CaseNumber = dto.CaseNumber,
+                Court = dto.Court,
+                CaseStyle = dto.CaseStyle,
+                PartyName = dto.PartyName,
+                Plaintiff = dto.Plaintiff
+            };
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using HtmlAgilityPack;
+using LegalLead.PublicData.Search.Classes;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Common
@@ -52,5 +54,22 @@ namespace LegalLead.PublicData.Search.Common
             if (driver is IJavaScriptExecutor exec) return exec;
             return null;
         }
+
+        public static DallasSearchProcess ToDallasSearch(this TravisSearchProcess source)
+        {
+            if (source == null) return null;
+            var result = new DallasSearchProcess();
+            result.Search(source.StartDate.ToNullableDate(), source.EndingDate.ToNullableDate(), source.CourtType);
+            return result;
+        }
+
+        public static DateTime? ToNullableDate(this string value)
+        {
+            if (!string.IsNullOrEmpty(value)) return null;
+            if (DateTime.TryParse(value, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out var date)) return date;
+            return null;
+        }
+
+
     }
 }

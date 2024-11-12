@@ -61,6 +61,15 @@ namespace LegalLead.PublicData.Search.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HJyZFG5dHcmgIIcclPTVatJ2ZfaQi5YJho+8n2cxtWmQyucaQov/GUHhqnFsNqMv.
+        /// </summary>
+        internal static string debug_account {
+            get {
+                return ResourceManager.GetString("debug_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected Parameter Court Type is missing.
         /// </summary>
         internal static string ERR_COURT_TYPE_MISSING {

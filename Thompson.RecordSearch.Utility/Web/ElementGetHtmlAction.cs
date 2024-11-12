@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 // using Thompson.RecordSearch.Utility.Classes.WebElementExtensions;
@@ -18,7 +19,7 @@ namespace Thompson.RecordSearch.Utility.Web
         {
             var helper = new CollinWebInteractive();
             var selector = GetSelector(item);
-            var element = GetWeb.FindElement(selector);
+            var element = WaitForElementExisting(GetWeb, selector);
             var outerHtml = element.GetAttribute("outerHTML");
             outerHtml = helper.RemoveElement(outerHtml, "<img");
             // remove colspan? <colgroup>
@@ -38,6 +39,24 @@ namespace Thompson.RecordSearch.Utility.Web
 
             IsProbateSearch = probateLink != null;
             IsJusticeSearch = isCollinCounty && justiceLocation != null;
+        }
+
+
+        private static IWebElement WaitForElementExisting(IWebDriver driver, By by)
+        {
+            try
+            {
+                var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(30))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(500)
+                };
+                wait.Until(d => { return d.TryFindElement(by) != null; });
+                return driver.TryFindElement(by);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

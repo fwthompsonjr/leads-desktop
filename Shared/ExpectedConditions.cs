@@ -20,6 +20,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Thompson.RecordSearch.Utility.Classes;
 
 namespace OpenQA.Selenium.Support.UI
 {
@@ -129,7 +130,9 @@ namespace OpenQA.Selenium.Support.UI
             {
                 try
                 {
-                    return ElementIfVisible(driver.FindElement(locator));
+                    var element = driver.TryFindElement(locator);
+                    if (element == null) return null;
+                    return ElementIfVisible(element);
                 }
                 catch (StaleElementReferenceException)
                 {

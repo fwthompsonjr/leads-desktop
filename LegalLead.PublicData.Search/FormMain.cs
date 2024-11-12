@@ -266,7 +266,9 @@ namespace LegalLead.PublicData.Search
 
         private void TravisButtonExecution(WebNavigationParameter siteData, SearchResult searchItem, DateTime startDate, DateTime endingDate)
         {
-            var searchType = cboSearchType.SelectedText.ToUpper(CultureInfo.CurrentCulture).Trim();
+            var dto = (Thompson.RecordSearch.Utility.Dto.DropDown)cboSearchType.SelectedItem;
+            var txt = dto.Name.Split(' ')[0];
+            var searchType = txt.ToUpper(CultureInfo.CurrentCulture).Trim();
             var search = new TravisSearchProcess();
             search.Search(startDate, endingDate, searchType);
             var dweb = search.GetUiInteractive();
