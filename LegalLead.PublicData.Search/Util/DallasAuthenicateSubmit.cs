@@ -12,7 +12,7 @@ namespace LegalLead.PublicData.Search.Util
         public DallasAuthenicateSubmit(ICountyCodeReader reader) : base(reader)
         {
             SessionPersistance = SessionPersistenceContainer.GetContainer
-                .GetInstance<ISessionPersistance>("legacy");
+                .GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
         }
 
         public override int OrderId => 6;

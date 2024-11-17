@@ -11,7 +11,7 @@ namespace LegalLead.PublicData.Search.Helpers
 {
     public static class SessionUtil
     {
-        private const string instanceName = "legacy";
+        private const string instanceName = ApiHelper.ApiMode;
         private static readonly byte[] key = new byte[8] { 1, 12, 3, 14, 5, 16, 7, 18 };
         private static readonly byte[] iv = new byte[8] { 21, 2, 23, 4, 25, 6, 27, 8 };
         private static readonly Encoding encoding = Encoding.UTF8;

@@ -18,7 +18,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             _reader = reader ?? throw new ArgumentNullException(nameof(reader));
             SessionPersistance = SessionPersistenceContainer.GetContainer
-                .GetInstance<ISessionPersistance>("legacy");
+                .GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
         }
         public override int OrderId => 4;
         public override object Execute()

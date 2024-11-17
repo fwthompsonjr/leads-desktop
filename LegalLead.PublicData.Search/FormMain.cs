@@ -61,7 +61,7 @@ namespace LegalLead.PublicData.Search
         {
 
             var container = SessionPersistenceContainer.GetContainer;
-            var instance = container.GetInstance<ISessionPersistance>("legacy");
+            var instance = container.GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
             var webdetail = instance.GetAccountPermissions();
             if (string.IsNullOrEmpty(webdetail))
             {

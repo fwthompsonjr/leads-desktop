@@ -20,6 +20,7 @@ namespace legallead.search.tests.helpers
         [Theory]
         [InlineData(typeof(IHttpService))]
         [InlineData(typeof(IAuthenicationService))]
+        [InlineData(typeof(SessionUserPersistence))]
         public void ServiceCanGetTypedInstance(Type type)
         {
             var error = Record.Exception(() =>
