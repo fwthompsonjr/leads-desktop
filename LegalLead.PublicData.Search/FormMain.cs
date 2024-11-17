@@ -59,10 +59,10 @@ namespace LegalLead.PublicData.Search
 
         private void FilterWebSiteByAccount()
         {
-
             var container = SessionPersistenceContainer.GetContainer;
             var instance = container.GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
             var webdetail = instance.GetAccountPermissions();
+            SetUserName();
             if (string.IsNullOrEmpty(webdetail))
             {
                 // remove all websites from cboWebsite
@@ -95,6 +95,24 @@ namespace LegalLead.PublicData.Search
             cboWebsite.SelectedIndex = 0;
         }
 
+        private void SetUserName()
+        {
+            var username = string.Empty;
+            try
+            {
+                var container = AuthenicationContainer.GetContainer;
+                var userservice = container.GetInstance<SessionUserPersistence>();
+                username = userservice.GetUserName();
+                if (string.IsNullOrEmpty(username)) return;
+            }
+            finally
+            {
+                var isVisible = !string.IsNullOrEmpty(username);
+                var txt = isVisible ? $" | {username}" : string.Empty;
+                tsUserName.Text = txt;
+                tsUserName.Visible = isVisible;
+            }
+        }
         private void SetInteraction(bool isEnabled)
         {
             cboWebsite.Enabled = isEnabled;

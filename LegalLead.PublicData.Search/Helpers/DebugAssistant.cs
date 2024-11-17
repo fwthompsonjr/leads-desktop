@@ -1,19 +1,17 @@
 ﻿using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Thompson.RecordSearch.Utility.Extensions;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
+    [ExcludeFromCodeCoverage(Justification = "This class only used in debug mode.")]
     internal static class DebugAssistant
     {
         public static string GetBo()
         {
+            if (!Debugger.IsAttached) return string.Empty;
             var data = GetToken();
             var bo = ApiAuthenicationService.GetModel(data, out var _);
             return JsonConvert.SerializeObject(bo);

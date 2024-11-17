@@ -86,11 +86,12 @@ namespace LegalLead.PublicData.Search
             try
             {
                 cbo.SelectedIndex = caseIndex;
-            } catch 
+            }
+            catch
             {
                 cbo.SelectedIndex = 0;
             }
-            
+
 
             // restore event handler
             cbo.SelectedIndexChanged += GetMain.CboSearchType_SelectedIndexChanged;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Thompson.RecordSearch.Utility.Extensions;
+﻿using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Helpers
 {

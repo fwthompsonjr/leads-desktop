@@ -29,287 +29,298 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.ButtonDentonSetting = new System.Windows.Forms.Button();
-            this.dteStart = new System.Windows.Forms.DateTimePicker();
-            this.dteEnding = new System.Windows.Forms.DateTimePicker();
-            this.button1 = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tsWebDriver = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txConsole = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.labelCboCaseType = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cboWebsite = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
-            this.cboSearchType = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
-            this.cboCaseType = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
-            this.cboCourts = new LegalLead.PublicData.Search.Classes.ComboBoxEx();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            this.SuspendLayout();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            ButtonDentonSetting = new System.Windows.Forms.Button();
+            dteStart = new System.Windows.Forms.DateTimePicker();
+            dteEnding = new System.Windows.Forms.DateTimePicker();
+            button1 = new System.Windows.Forms.Button();
+            statusStrip1 = new System.Windows.Forms.StatusStrip();
+            tsWebDriver = new System.Windows.Forms.ToolStripDropDownButton();
+            tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
+            toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            tsUserName = new System.Windows.Forms.ToolStripStatusLabel();
+            cboWebsite = new Classes.ComboBoxEx();
+            label1 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            txConsole = new System.Windows.Forms.TextBox();
+            label4 = new System.Windows.Forms.Label();
+            cboSearchType = new Classes.ComboBoxEx();
+            labelCboCaseType = new System.Windows.Forms.Label();
+            cboCaseType = new Classes.ComboBoxEx();
+            label6 = new System.Windows.Forms.Label();
+            cboCourts = new Classes.ComboBoxEx();
+            tableLayoutPanel1.SuspendLayout();
+            statusStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.ButtonDentonSetting, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.dteStart, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.dteEnding, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.cboWebsite, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.txConsole, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.cboSearchType, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.labelCboCaseType, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.cboCaseType, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.cboCourts, 1, 5);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 10;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(652, 477);
-            this.tableLayoutPanel1.TabIndex = 0;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(ButtonDentonSetting, 0, 6);
+            tableLayoutPanel1.Controls.Add(dteStart, 1, 1);
+            tableLayoutPanel1.Controls.Add(dteEnding, 1, 2);
+            tableLayoutPanel1.Controls.Add(button1, 1, 6);
+            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 8);
+            tableLayoutPanel1.Controls.Add(cboWebsite, 1, 0);
+            tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(label2, 0, 1);
+            tableLayoutPanel1.Controls.Add(label3, 0, 2);
+            tableLayoutPanel1.Controls.Add(txConsole, 0, 7);
+            tableLayoutPanel1.Controls.Add(label4, 0, 3);
+            tableLayoutPanel1.Controls.Add(cboSearchType, 1, 3);
+            tableLayoutPanel1.Controls.Add(labelCboCaseType, 0, 4);
+            tableLayoutPanel1.Controls.Add(cboCaseType, 1, 4);
+            tableLayoutPanel1.Controls.Add(label6, 0, 5);
+            tableLayoutPanel1.Controls.Add(cboCourts, 1, 5);
+            tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 10;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(869, 734);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // ButtonDentonSetting
             // 
-            this.ButtonDentonSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ButtonDentonSetting.Location = new System.Drawing.Point(3, 243);
-            this.ButtonDentonSetting.Name = "ButtonDentonSetting";
-            this.ButtonDentonSetting.Size = new System.Drawing.Size(114, 34);
-            this.ButtonDentonSetting.TabIndex = 14;
-            this.ButtonDentonSetting.Text = "Settings";
-            this.ButtonDentonSetting.UseVisualStyleBackColor = true;
-            this.ButtonDentonSetting.Click += new System.EventHandler(this.ButtonDentonSetting_Click);
+            ButtonDentonSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            ButtonDentonSetting.Location = new System.Drawing.Point(4, 377);
+            ButtonDentonSetting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            ButtonDentonSetting.Name = "ButtonDentonSetting";
+            ButtonDentonSetting.Size = new System.Drawing.Size(152, 52);
+            ButtonDentonSetting.TabIndex = 14;
+            ButtonDentonSetting.Text = "Settings";
+            ButtonDentonSetting.UseVisualStyleBackColor = true;
+            ButtonDentonSetting.Click += ButtonDentonSetting_Click;
             // 
             // dteStart
             // 
-            this.dteStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dteStart.Location = new System.Drawing.Point(123, 48);
-            this.dteStart.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.dteStart.Name = "dteStart";
-            this.dteStart.Size = new System.Drawing.Size(526, 20);
-            this.dteStart.TabIndex = 2;
+            dteStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            dteStart.Location = new System.Drawing.Point(164, 74);
+            dteStart.Margin = new System.Windows.Forms.Padding(4, 12, 4, 5);
+            dteStart.Name = "dteStart";
+            dteStart.Size = new System.Drawing.Size(701, 27);
+            dteStart.TabIndex = 2;
             // 
             // dteEnding
             // 
-            this.dteEnding.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dteEnding.Location = new System.Drawing.Point(123, 88);
-            this.dteEnding.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.dteEnding.Name = "dteEnding";
-            this.dteEnding.Size = new System.Drawing.Size(526, 20);
-            this.dteEnding.TabIndex = 3;
+            dteEnding.Dock = System.Windows.Forms.DockStyle.Fill;
+            dteEnding.Location = new System.Drawing.Point(164, 136);
+            dteEnding.Margin = new System.Windows.Forms.Padding(4, 12, 4, 5);
+            dteEnding.Name = "dteEnding";
+            dteEnding.Size = new System.Drawing.Size(701, 27);
+            dteEnding.TabIndex = 3;
             // 
             // button1
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(123, 243);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(526, 34);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Get Data";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            button1.Location = new System.Drawing.Point(164, 377);
+            button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(701, 52);
+            button1.TabIndex = 4;
+            button1.Text = "Get Data";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += Button1_Click;
             // 
             // statusStrip1
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.statusStrip1, 2);
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsWebDriver,
-            this.tsDropFileList,
-            this.toolStripStatus,
-            this.tsStatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 439);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(652, 22);
-            this.statusStrip1.TabIndex = 5;
-            this.statusStrip1.Text = "statusStrip1";
+            tableLayoutPanel1.SetColumnSpan(statusStrip1, 2);
+            statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
+            statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsWebDriver, tsDropFileList, toolStripStatus, tsStatusLabel, tsUserName });
+            statusStrip1.Location = new System.Drawing.Point(0, 663);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            statusStrip1.Size = new System.Drawing.Size(869, 46);
+            statusStrip1.TabIndex = 5;
+            statusStrip1.Text = "statusStrip1";
             // 
             // tsWebDriver
             // 
-            this.tsWebDriver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsWebDriver.Name = "tsWebDriver";
-            this.tsWebDriver.Size = new System.Drawing.Size(44, 20);
-            this.tsWebDriver.Text = "Web";
-            this.tsWebDriver.ToolTipText = "Select Browser";
+            tsWebDriver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tsWebDriver.Name = "tsWebDriver";
+            tsWebDriver.Size = new System.Drawing.Size(53, 44);
+            tsWebDriver.Text = "Web";
+            tsWebDriver.ToolTipText = "Select Browser";
             // 
             // tsDropFileList
             // 
-            this.tsDropFileList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsDropFileList.Image = ((System.Drawing.Image)(resources.GetObject("tsDropFileList.Image")));
-            this.tsDropFileList.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsDropFileList.Name = "tsDropFileList";
-            this.tsDropFileList.Size = new System.Drawing.Size(126, 20);
-            this.tsDropFileList.Text = "Previous File Results";
+            tsDropFileList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tsDropFileList.Image = (System.Drawing.Image)resources.GetObject("tsDropFileList.Image");
+            tsDropFileList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tsDropFileList.Name = "tsDropFileList";
+            tsDropFileList.Size = new System.Drawing.Size(155, 44);
+            tsDropFileList.Text = "Previous File Results";
             // 
             // toolStripStatus
             // 
-            this.toolStripStatus.Name = "toolStripStatus";
-            this.toolStripStatus.Size = new System.Drawing.Size(39, 17);
-            this.toolStripStatus.Text = "Ready";
+            toolStripStatus.Name = "toolStripStatus";
+            toolStripStatus.Size = new System.Drawing.Size(50, 40);
+            toolStripStatus.Text = "Ready";
             // 
             // tsStatusLabel
             // 
-            this.tsStatusLabel.Name = "tsStatusLabel";
-            this.tsStatusLabel.Size = new System.Drawing.Size(0, 17);
+            tsStatusLabel.Name = "tsStatusLabel";
+            tsStatusLabel.Size = new System.Drawing.Size(0, 40);
             // 
-            // label1
+            // tsUserName
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 10);
-            this.label1.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Website";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 50);
-            this.label2.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Start Date";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 90);
-            this.label3.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "End Date";
-            // 
-            // txConsole
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.txConsole, 2);
-            this.txConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txConsole.Location = new System.Drawing.Point(3, 283);
-            this.txConsole.Multiline = true;
-            this.txConsole.Name = "txConsole";
-            this.txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txConsole.Size = new System.Drawing.Size(646, 145);
-            this.txConsole.TabIndex = 8;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 130);
-            this.label4.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(68, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Search Type";
-            // 
-            // labelCboCaseType
-            // 
-            this.labelCboCaseType.AutoSize = true;
-            this.labelCboCaseType.Location = new System.Drawing.Point(10, 170);
-            this.labelCboCaseType.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
-            this.labelCboCaseType.Name = "labelCboCaseType";
-            this.labelCboCaseType.Size = new System.Drawing.Size(58, 13);
-            this.labelCboCaseType.TabIndex = 11;
-            this.labelCboCaseType.Text = "Case Type";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 210);
-            this.label6.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(58, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Case Type";
+            tsUserName.Name = "tsUserName";
+            tsUserName.Size = new System.Drawing.Size(552, 40);
+            tsUserName.Spring = true;
+            tsUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            tsUserName.Visible = false;
             // 
             // cboWebsite
             // 
-            this.cboWebsite.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboWebsite.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboWebsite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboWebsite.FormattingEnabled = true;
-            this.cboWebsite.Location = new System.Drawing.Point(123, 8);
-            this.cboWebsite.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.cboWebsite.Name = "cboWebsite";
-            this.cboWebsite.Size = new System.Drawing.Size(526, 21);
-            this.cboWebsite.TabIndex = 6;
+            cboWebsite.Dock = System.Windows.Forms.DockStyle.Fill;
+            cboWebsite.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cboWebsite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cboWebsite.FormattingEnabled = true;
+            cboWebsite.Location = new System.Drawing.Point(164, 12);
+            cboWebsite.Margin = new System.Windows.Forms.Padding(4, 12, 4, 5);
+            cboWebsite.Name = "cboWebsite";
+            cboWebsite.Size = new System.Drawing.Size(701, 28);
+            cboWebsite.TabIndex = 6;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(13, 15);
+            label1.Margin = new System.Windows.Forms.Padding(13, 15, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(62, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Website";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(13, 77);
+            label2.Margin = new System.Windows.Forms.Padding(13, 15, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(76, 20);
+            label2.TabIndex = 1;
+            label2.Text = "Start Date";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(13, 139);
+            label3.Margin = new System.Windows.Forms.Padding(13, 15, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(70, 20);
+            label3.TabIndex = 7;
+            label3.Text = "End Date";
+            // 
+            // txConsole
+            // 
+            tableLayoutPanel1.SetColumnSpan(txConsole, 2);
+            txConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            txConsole.Location = new System.Drawing.Point(4, 439);
+            txConsole.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            txConsole.Multiline = true;
+            txConsole.Name = "txConsole";
+            txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            txConsole.Size = new System.Drawing.Size(861, 219);
+            txConsole.TabIndex = 8;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(13, 201);
+            label4.Margin = new System.Windows.Forms.Padding(13, 15, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(88, 20);
+            label4.TabIndex = 9;
+            label4.Text = "Search Type";
             // 
             // cboSearchType
             // 
-            this.cboSearchType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboSearchType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboSearchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSearchType.FormattingEnabled = true;
-            this.cboSearchType.Location = new System.Drawing.Point(123, 128);
-            this.cboSearchType.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.cboSearchType.Name = "cboSearchType";
-            this.cboSearchType.Size = new System.Drawing.Size(526, 21);
-            this.cboSearchType.TabIndex = 10;
+            cboSearchType.Dock = System.Windows.Forms.DockStyle.Fill;
+            cboSearchType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cboSearchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cboSearchType.FormattingEnabled = true;
+            cboSearchType.Location = new System.Drawing.Point(164, 198);
+            cboSearchType.Margin = new System.Windows.Forms.Padding(4, 12, 4, 5);
+            cboSearchType.Name = "cboSearchType";
+            cboSearchType.Size = new System.Drawing.Size(701, 28);
+            cboSearchType.TabIndex = 10;
+            // 
+            // labelCboCaseType
+            // 
+            labelCboCaseType.AutoSize = true;
+            labelCboCaseType.Location = new System.Drawing.Point(13, 263);
+            labelCboCaseType.Margin = new System.Windows.Forms.Padding(13, 15, 4, 0);
+            labelCboCaseType.Name = "labelCboCaseType";
+            labelCboCaseType.Size = new System.Drawing.Size(75, 20);
+            labelCboCaseType.TabIndex = 11;
+            labelCboCaseType.Text = "Case Type";
             // 
             // cboCaseType
             // 
-            this.cboCaseType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboCaseType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboCaseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCaseType.FormattingEnabled = true;
-            this.cboCaseType.Location = new System.Drawing.Point(123, 168);
-            this.cboCaseType.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.cboCaseType.Name = "cboCaseType";
-            this.cboCaseType.Size = new System.Drawing.Size(526, 21);
-            this.cboCaseType.TabIndex = 12;
+            cboCaseType.Dock = System.Windows.Forms.DockStyle.Fill;
+            cboCaseType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cboCaseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cboCaseType.FormattingEnabled = true;
+            cboCaseType.Location = new System.Drawing.Point(164, 260);
+            cboCaseType.Margin = new System.Windows.Forms.Padding(4, 12, 4, 5);
+            cboCaseType.Name = "cboCaseType";
+            cboCaseType.Size = new System.Drawing.Size(701, 28);
+            cboCaseType.TabIndex = 12;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(13, 325);
+            label6.Margin = new System.Windows.Forms.Padding(13, 15, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(75, 20);
+            label6.TabIndex = 11;
+            label6.Text = "Case Type";
             // 
             // cboCourts
             // 
-            this.cboCourts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboCourts.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboCourts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCourts.FormattingEnabled = true;
-            this.cboCourts.Location = new System.Drawing.Point(123, 208);
-            this.cboCourts.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.cboCourts.Name = "cboCourts";
-            this.cboCourts.Size = new System.Drawing.Size(526, 21);
-            this.cboCourts.TabIndex = 13;
+            cboCourts.Dock = System.Windows.Forms.DockStyle.Fill;
+            cboCourts.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cboCourts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cboCourts.FormattingEnabled = true;
+            cboCourts.Location = new System.Drawing.Point(164, 322);
+            cboCourts.Margin = new System.Windows.Forms.Padding(4, 12, 4, 5);
+            cboCourts.Name = "cboCourts";
+            cboCourts.Size = new System.Drawing.Size(701, 28);
+            cboCourts.TabIndex = 13;
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(652, 477);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FormMain";
-            this.Text = "Document Search";
-            this.Load += new System.EventHandler(this.FormMain_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(869, 734);
+            Controls.Add(tableLayoutPanel1);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            Name = "FormMain";
+            Text = "Document Search";
+            Load += FormMain_Load;
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -335,6 +346,7 @@
         internal System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
         private System.Windows.Forms.ToolStripDropDownButton tsDropFileList;
         private System.Windows.Forms.ToolStripDropDownButton tsWebDriver;
+        private System.Windows.Forms.ToolStripStatusLabel tsUserName;
     }
 }
 
