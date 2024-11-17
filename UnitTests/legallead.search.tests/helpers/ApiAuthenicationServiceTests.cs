@@ -23,8 +23,13 @@ namespace legallead.search.tests.helpers
         {
             var sut = new MockApiAuthenicationService();
             var faker = new Faker();
-            var actual = sut.GetService.Login(faker.Person.Email, faker.Random.AlphaNumeric(12));
-            Assert.True(actual);
+            for (int i = 0; i < 5; i++)
+            {
+                var expected = i == 0;
+                var actual = sut.GetService
+                    .Login(faker.Person.Email, faker.Random.AlphaNumeric(12));
+                Assert.Equal(expected, actual); 
+            }
         }
         private sealed class MockApiAuthenicationService
         {
@@ -41,11 +46,28 @@ namespace legallead.search.tests.helpers
                     UserName = userName,
                     Token = fakeToken
                 };
-                httpMock.Setup(s => s.PostAsJson<object, ApiResponseModel>(
+                var emptyresponse = new ApiResponseModel
+                {
+                    UserName = userName,
+                    Token = string.Empty
+                };
+                var unmappableresponse = new ApiResponseModel
+                {
+                    UserName = userName,
+                    Token = "0123456789"
+                };
+                ApiResponseModel noresponse = null;
+                var exception = faker.System.Exception();
+                httpMock.SetupSequence(s => s.PostAsJson<object, ApiResponseModel>(
                     It.IsAny<HttpClient>(),
                     It.IsAny<string>(),
                     It.IsAny<object>(),
-                    It.IsAny<CancellationToken>())).Returns(response);
+                    It.IsAny<CancellationToken>()))
+                    .Returns(response)
+                    .Returns(emptyresponse)
+                    .Returns(noresponse)
+                    .Returns(unmappableresponse)
+                    .Throws(exception);
             }
 
             public Mock<IHttpService> GetHttp => httpMock;

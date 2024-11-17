@@ -1,7 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Util;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
-using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
@@ -60,8 +59,11 @@ namespace LegalLead.PublicData.Search
 
         private void FilterWebSiteByAccount()
         {
-            var details = GetPermissionsMap(SessionUtil.Read());
-            if (details == null || string.IsNullOrEmpty(details.WebPermissions))
+
+            var container = SessionPersistenceContainer.GetContainer;
+            var instance = container.GetInstance<ISessionPersistance>("legacy");
+            var webdetail = instance.GetAccountPermissions();
+            if (string.IsNullOrEmpty(webdetail))
             {
                 // remove all websites from cboWebsite
                 // and disable the controls
@@ -69,10 +71,10 @@ namespace LegalLead.PublicData.Search
                 cboWebsite.Items.Clear();
                 return;
             }
-            if (details.WebPermissions.Equals("-1")) return;
-            var webid = details.WebPermissions.Split(',')
+            if (webdetail.Equals("-1")) return;
+            var webid = webdetail.Split(',')
                 .Where(w => { return int.TryParse(w, out var _); })
-                .Select(s => int.Parse(s))
+                .Select(s => int.Parse(s, CultureInfo.CurrentCulture))
                 .ToList();
             if (!webid.Any())
             {
@@ -91,20 +93,6 @@ namespace LegalLead.PublicData.Search
             cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
             cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
             cboWebsite.SelectedIndex = 0;
-        }
-
-        private static PermissionMapDto GetPermissionsMap(string details)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(details)) return null;
-                return JsonConvert.DeserializeObject<PermissionMapDto>(details);
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
         }
 
         private void SetInteraction(bool isEnabled)

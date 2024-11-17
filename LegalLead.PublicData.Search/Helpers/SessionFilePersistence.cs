@@ -1,16 +1,30 @@
 ﻿using LegalLead.PublicData.Search.Interfaces;
 using System.IO;
+using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
-    internal class SessionFilePersistence : ISessionPersistance
+    public class SessionFilePersistence : ISessionPersistance
     {
+        public virtual string GetAccountPermissions()
+        {
+            var dto = Read().ToInstance<PermissionMapDto>();
+            if (dto == null || string.IsNullOrEmpty(dto.WebPermissions)) return string.Empty;
+            return dto.WebPermissions;
+        }
+
         public virtual string GetAccountCredential(string county = "")
         {
             var data = Read();
             if (string.IsNullOrWhiteSpace(data)) return string.Empty;
             var dto = SessionUtil.GetPermissionsMap(data);
-            return dto?.CountyPermission ?? string.Empty;
+            if (string.IsNullOrEmpty(dto?.CountyPermission)) return string.Empty;
+            // note that we need to connect to code-reader-service
+            // so that we get the actual credential for this county
+            // i recall that the code reader service maintains dictionary
+            // to prevent re-fetch item that has already been fetched
+            return dto.CountyPermission;
         }
 
         public void Initialize()
@@ -64,6 +78,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 }
             }
         }
+        
 
         protected virtual string SetupFile
         {

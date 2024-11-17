@@ -41,7 +41,7 @@ namespace LegalLead.PublicData.Search.Helpers
                     var json = JsonConvert.SerializeObject(mapped);
                     SessionUtil.Write(json);
                 }
-                return true;
+                return (mapped != null);
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace LegalLead.PublicData.Search.Helpers
 
         }
 
-        private static LeadUserSecurityBo GetModel(string token, out DateTime? expirationDate)
+        public static LeadUserSecurityBo GetModel(string token, out DateTime? expirationDate)
         {
             expirationDate = null;
             try
