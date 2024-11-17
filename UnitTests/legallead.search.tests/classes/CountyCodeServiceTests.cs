@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Thompson.RecordSearch.Utility.Classes;
+﻿using Thompson.RecordSearch.Utility.Classes;
 
 namespace legallead.search.tests.classes
 {
@@ -31,7 +26,7 @@ namespace legallead.search.tests.classes
         public void ServceHasMapLandings()
         {
             var service = new CountyCodeService().Map.Landings;
-            Assert.NotNull(service);            
+            Assert.NotNull(service);
             Assert.False(string.IsNullOrEmpty(service.County));
             Assert.False(string.IsNullOrEmpty(service.Login));
         }

@@ -3,11 +3,8 @@ using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;
 using System;
-using System.Net.Http;
-using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Interfaces;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace legallead.search.tests.util
 {

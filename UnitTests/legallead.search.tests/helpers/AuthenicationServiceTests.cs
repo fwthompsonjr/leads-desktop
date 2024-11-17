@@ -1,12 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -56,7 +51,7 @@ namespace legallead.search.tests.helpers
             var actual = service.Login(uid, pwd);
             Assert.Equal(expected, actual);
         }
-        
+
         [Fact]
         public void ServiceCanLoginAsyncWithRetries()
         {

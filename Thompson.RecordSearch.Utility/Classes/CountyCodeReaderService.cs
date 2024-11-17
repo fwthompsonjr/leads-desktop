@@ -32,7 +32,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var lookup = GetRemoteData(found, userId);
                 if (string.IsNullOrEmpty(lookup)) return null;
                 KeyIndexes.Add(id, lookup);
-                return lookup; 
+                return lookup;
             }
         }
 
@@ -47,7 +47,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var lookup = GetRemoteData(found, userId);
                 if (string.IsNullOrEmpty(lookup)) return null;
                 KeyCodes.Add(code, lookup);
-                return lookup; 
+                return lookup;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             "Sonar Qube",
             "S1144:Unused private types or members should be removed",
             Justification = "Ignoring rule for this private sealed member")]
-        
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Sonar Qube",

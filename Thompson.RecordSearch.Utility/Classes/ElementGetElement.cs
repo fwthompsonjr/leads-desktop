@@ -44,7 +44,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(30)) { 
+                var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(30))
+                {
                     PollingInterval = TimeSpan.FromMilliseconds(500)
                 };
                 wait.Until(d => { return d.TryFindElement(by) != null; });

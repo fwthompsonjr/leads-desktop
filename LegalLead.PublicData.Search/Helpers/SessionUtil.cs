@@ -38,7 +38,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 var fileName = SetupFile;
                 if (string.IsNullOrEmpty(fileName)) return;
                 if (File.Exists(fileName)) File.Delete(fileName);
-                File.WriteAllText(fileName, ""); 
+                File.WriteAllText(fileName, "");
             }
         }
         public static string GetCountyAccountName()

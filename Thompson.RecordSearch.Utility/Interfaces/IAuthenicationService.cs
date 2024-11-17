@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Thompson.RecordSearch.Utility.Interfaces
+﻿namespace Thompson.RecordSearch.Utility.Interfaces
 {
     public interface IAuthenicationService
     {

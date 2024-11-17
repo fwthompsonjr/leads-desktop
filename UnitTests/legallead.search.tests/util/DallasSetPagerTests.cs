@@ -26,7 +26,7 @@ namespace legallead.search.tests.util
             var items = new[]
             {
                 element.Object,
-                element.Object, 
+                element.Object,
                 element.Object,
                 element.Object,
                 element.Object,

@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;

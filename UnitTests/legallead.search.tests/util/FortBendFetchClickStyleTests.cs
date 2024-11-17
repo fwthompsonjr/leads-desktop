@@ -66,7 +66,7 @@ namespace legallead.search.tests.util
                 var items = new List<string>();
                 var person = new { name = "John Smith", address = "1234 Somewhere Dallas TX 75240", caseNo = "123abc" };
                 var json = JsonConvert.SerializeObject(person);
-                while(linkcount > 0) { items.Add(faker.Random.AlphaNumeric(8)); linkcount--; }
+                while (linkcount > 0) { items.Add(faker.Random.AlphaNumeric(8)); linkcount--; }
                 var collection = JsonConvert.SerializeObject(items);
 
                 MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains("get person address")))).Returns(json);
