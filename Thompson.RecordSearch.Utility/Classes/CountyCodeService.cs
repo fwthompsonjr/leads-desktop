@@ -31,14 +31,29 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public string GetWebAddress(int id)
         {
-            var indexes = new[] { 0, 1 };
             if (!indexes.Contains(id)) return string.Empty;
             if (Map == null || string.IsNullOrEmpty(Map.Web)) return string.Empty;
-            var suffix = id == 1 ? Map.Landings.County : Map.Landings.Login;
+            var suffix = GetSuffix(id);
             if (string.IsNullOrEmpty(suffix)) return string.Empty;
             return string.Concat(Map.Web, suffix);
         }
 
+        private string GetSuffix(int id)
+        {
+            if (!indexes.Contains(id)) return string.Empty;
+            var dto = id < 10 ? Map.Landings : Map.ApiLandings;
+            var pos = id % 10;
+            switch (pos)
+            {
+                case 0: return dto.Login ?? string.Empty;
+                case 1: return dto.County ?? string.Empty;
+                case 2: return dto.Change ?? string.Empty;
+                case 3: return dto.Indexes ?? string.Empty;
+                case 4: return dto.Register ?? string.Empty;
+                default: return string.Empty;
+            }
+        }
+        private static readonly int[] indexes = new[] { 0, 1, 10, 11, 12, 13, 14 };
         private static CountyCodeMapDto GetMap
         {
             get
