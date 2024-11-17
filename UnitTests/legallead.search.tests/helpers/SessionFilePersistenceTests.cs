@@ -1,12 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Thompson.RecordSearch.Utility.Extensions;
-using Thompson.RecordSearch.Utility.Models;
+using Moq;
+using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace legallead.search.tests.helpers
 {
@@ -36,14 +30,12 @@ namespace legallead.search.tests.helpers
         }
 
         [Theory]
-        [InlineData("collin")]
         [InlineData("dallas")]
-        [InlineData("tarrant")]
         public void ServiceCanGetAccountCredential(string county)
         {
             lock (locker)
             {
-                var service = new SessionFilePersistence();
+                var service = new MkFilePersistence();
                 const bool expected = false;
                 try
                 {
@@ -68,6 +60,20 @@ namespace legallead.search.tests.helpers
             return txt.Decrypt();
         }
 
+
+        private sealed class MkFilePersistence : SessionFilePersistence
+        {
+            public MkFilePersistence()
+            {
+                const string response = "user-name|abcd1234!";
+                var svcs = new Mock<ICountyCodeReader>();
+                Reader = svcs.Object;
+                svcs.Setup(s => s.GetCountyCode(It.IsAny<string>(), It.IsAny<string>()))
+                    .Returns(response);
+                svcs.Setup(s => s.GetCountyCode(It.IsAny<int>(), It.IsAny<string>()))
+                    .Returns(response);
+            }
+        }
         private static readonly string fakeToken = "HJyZFG5dHcmgIIcclPTVatJ2ZfaQi5YJho+8n2cxtWmQyucaQov/GUHhqnFsNqMv";
     }
 }

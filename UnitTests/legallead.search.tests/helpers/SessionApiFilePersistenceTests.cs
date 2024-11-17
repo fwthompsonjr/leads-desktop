@@ -1,10 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -15,7 +10,7 @@ namespace legallead.search.tests.helpers
         [Fact]
         public void ServiceCanInitialize()
         {
-            lock (locker) 
+            lock (locker)
             {
                 var service = new SessionApiFilePersistence();
                 try

@@ -1,30 +1,46 @@
 ﻿using LegalLead.PublicData.Search.Interfaces;
 using System.IO;
+using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
+using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
     public class SessionFilePersistence : ISessionPersistance
     {
+        public SessionFilePersistence()
+        {
+            Reader = new CountyCodeReaderService(new HttpService(), new CountyCodeService());
+        }
+        protected ICountyCodeReader Reader
+        { get; set; }
         public virtual string GetAccountPermissions()
         {
-            var dto = Read().ToInstance<PermissionMapDto>();
-            if (dto == null || string.IsNullOrEmpty(dto.WebPermissions)) return string.Empty;
-            return dto.WebPermissions;
+            lock (locker)
+            {
+                var dto = Read().ToInstance<PermissionMapDto>();
+                if (dto == null || string.IsNullOrEmpty(dto.WebPermissions)) return string.Empty;
+                return dto.WebPermissions;
+            }
         }
 
         public virtual string GetAccountCredential(string county = "")
         {
-            var data = Read();
-            if (string.IsNullOrWhiteSpace(data)) return string.Empty;
-            var dto = SessionUtil.GetPermissionsMap(data);
-            if (string.IsNullOrEmpty(dto?.CountyPermission)) return string.Empty;
-            // note that we need to connect to code-reader-service
-            // so that we get the actual credential for this county
-            // i recall that the code reader service maintains dictionary
-            // to prevent re-fetch item that has already been fetched
-            return dto.CountyPermission;
+            lock (locker)
+            {
+                if (countyAccessCode != null) return countyAccessCode;
+                var dallasId = (int)SourceType.DallasCounty;
+                var data = Read();
+                if (string.IsNullOrWhiteSpace(data)) return string.Empty;
+                var dto = SessionUtil.GetPermissionsMap(data);
+                var userId = dto?.CountyPermission;
+                if (string.IsNullOrEmpty(userId)) return string.Empty;
+                var response = Reader.GetCountyCode(dallasId, userId);
+                if (string.IsNullOrEmpty(response)) return userId;
+                countyAccessCode = response;
+                return countyAccessCode;
+            }
         }
 
         public void Initialize()
@@ -78,7 +94,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 }
             }
         }
-        
+
 
         protected virtual string SetupFile
         {
@@ -89,6 +105,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 return setupFileName;
             }
         }
+        private static string countyAccessCode = null;
         private static string setupFileName = null;
         private const string datFileName = "session.dat";
         private static readonly object locker = new();

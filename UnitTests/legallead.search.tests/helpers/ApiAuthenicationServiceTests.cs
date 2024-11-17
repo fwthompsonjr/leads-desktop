@@ -28,7 +28,7 @@ namespace legallead.search.tests.helpers
                 var expected = i == 0;
                 var actual = sut.GetService
                     .Login(faker.Person.Email, faker.Random.AlphaNumeric(12));
-                Assert.Equal(expected, actual); 
+                Assert.Equal(expected, actual);
             }
         }
         private sealed class MockApiAuthenicationService

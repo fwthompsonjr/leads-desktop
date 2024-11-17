@@ -83,7 +83,14 @@ namespace LegalLead.PublicData.Search
             cbo.DataSource = dataSource;
             cbo.DisplayMember = CommonKeyIndexes.NameProperCase;
             cbo.ValueMember = CommonKeyIndexes.IdProperCase;
-            cbo.SelectedIndex = caseIndex;
+            try
+            {
+                cbo.SelectedIndex = caseIndex;
+            } catch 
+            {
+                cbo.SelectedIndex = 0;
+            }
+            
 
             // restore event handler
             cbo.SelectedIndexChanged += GetMain.CboSearchType_SelectedIndexChanged;

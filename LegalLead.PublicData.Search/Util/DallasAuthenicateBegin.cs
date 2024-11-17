@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Interfaces;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -15,12 +17,15 @@ namespace LegalLead.PublicData.Search.Util
         public DallasAuthenicateBegin(ICountyCodeReader reader)
         {
             _reader = reader ?? throw new ArgumentNullException(nameof(reader));
+            SessionPersistance = SessionPersistenceContainer.GetContainer
+                .GetInstance<ISessionPersistance>("legacy");
         }
         public override int OrderId => 4;
         public override object Execute()
         {
+
             if (string.IsNullOrEmpty(_credential))
-                _credential = GetCountyCode(_reader);
+                _credential = SessionPersistance.GetAccountCredential("dallas");
 
             var js = JsScript;
             var executor = GetJavaScriptExecutor();
@@ -55,19 +60,6 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         protected string _credential;
-        protected static string GetCountyCode(ICountyCodeReader reader, string userId = "")
-        {
-            try
-            {
-                var dallasId = (int)SourceType.DallasCounty;
-                if (reader == null) return string.Empty;
-                return reader.GetCountyCode(dallasId, userId);
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }
 
         [ExcludeFromCodeCoverage]
         private static Uri GetUri(string destination)
@@ -97,5 +89,6 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         protected override string ScriptName { get; } = "login process 01";
+        protected ISessionPersistance SessionPersistance { get; set; }
     }
 }
