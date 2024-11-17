@@ -21,7 +21,7 @@ namespace LegalLead.PublicData.Search.Util
 
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-            var userId = SessionUtil.GetCountyAccountName();
+            var userId = SessionUtil.GetCountyAccountName("dallas");
             if (string.IsNullOrEmpty(_credential))
                 _credential = GetCountyCode(_reader, userId);
 

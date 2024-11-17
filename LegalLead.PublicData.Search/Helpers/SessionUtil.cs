@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LegalLead.PublicData.Search.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Reflection;
@@ -10,6 +11,7 @@ namespace LegalLead.PublicData.Search.Helpers
 {
     public static class SessionUtil
     {
+        private const string instanceName = "legacy";
         private static readonly byte[] key = new byte[8] { 1, 12, 3, 14, 5, 16, 7, 18 };
         private static readonly byte[] iv = new byte[8] { 21, 2, 23, 4, 25, 6, 27, 8 };
         private static readonly Encoding encoding = Encoding.UTF8;
@@ -33,80 +35,38 @@ namespace LegalLead.PublicData.Search.Helpers
 
         public static void Initialize()
         {
-            lock (locker)
-            {
-                var fileName = SetupFile;
-                if (string.IsNullOrEmpty(fileName)) return;
-                if (File.Exists(fileName)) File.Delete(fileName);
-                File.WriteAllText(fileName, "");
-            }
+            GetPersistence().Initialize();
         }
-        public static string GetCountyAccountName()
+        public static string GetCountyAccountName(string county = "")
         {
-            var data = Read();
-            if (string.IsNullOrWhiteSpace(data)) return string.Empty;
-            var dto = GetPermissionsMap(data);
-            return dto?.CountyPermission ?? string.Empty;
+            return GetPersistence().GetAccountCredential(county);
         }
         public static string Read()
         {
-            lock (locker)
-            {
-                var fileName = SetupFile;
-                if (string.IsNullOrEmpty(fileName)) return null;
-                if (!File.Exists(fileName)) return null;
-                var content = File.ReadAllText(fileName);
-                if (string.IsNullOrWhiteSpace(content)) return null;
-                try
-                {
-                    return content.Decrypt();
-                }
-                catch
-                {
-                    return string.Empty;
-                }
-            }
+            return GetPersistence().Read();
         }
         public static bool Write(string content)
         {
-            lock (locker)
-            {
-                var fileName = SetupFile;
-                if (string.IsNullOrEmpty(fileName)) return false;
-                if (string.IsNullOrWhiteSpace(content)) return false;
-                try
-                {
-                    var data = content.Crypt();
-                    if (File.Exists(fileName)) File.Delete(fileName);
-                    File.WriteAllText(fileName, data);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
+            return GetPersistence().Write(content);
         }
-        private static string SetupFile
+        private static ISessionPersistance GetPersistence()
         {
-            get
-            {
-                if (setupFileName != null) return setupFileName;
-                setupFileName = SetupFileName();
-                return setupFileName;
-            }
+            var container = SessionPersistenceContainer.GetContainer;
+            var implementation = container.GetInstance<ISessionPersistance>(instanceName);
+            return implementation;
         }
 
-        private static string SetupFileName()
+        internal static string GetFullFileName(string name)
         {
             var setupFolder = SetupDirectoyName();
             if (string.IsNullOrEmpty(setupFolder) ||
                 !Directory.Exists(setupFolder)) return string.Empty;
-            var setupFile = Path.Combine(setupFolder, "session.dat");
+            var setupFile = Path.Combine(setupFolder, name);
             if (string.IsNullOrEmpty(setupFile) ||
                 !File.Exists(setupFile)) return string.Empty;
             return setupFile;
         }
+
         private static string SetupDirectoyName()
         {
             var appFolder = Path.GetDirectoryName(CurrentAssembly.Location);
@@ -115,7 +75,7 @@ namespace LegalLead.PublicData.Search.Helpers
             return setupFolder;
         }
 
-        private static PermissionMapDto GetPermissionsMap(string details)
+        internal static PermissionMapDto GetPermissionsMap(string details)
         {
             try
             {
@@ -138,8 +98,6 @@ namespace LegalLead.PublicData.Search.Helpers
                 return executingAssembly;
             }
         }
-        private static string setupFileName = null;
         private static Assembly executingAssembly = null;
-        private static readonly object locker = new();
     }
 }
