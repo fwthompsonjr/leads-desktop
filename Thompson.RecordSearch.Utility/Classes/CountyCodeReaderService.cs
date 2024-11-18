@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Enumerations;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -56,7 +57,9 @@ namespace Thompson.RecordSearch.Utility.Classes
             const string fallback = "default";
             code.Uid = uid;
             var userId = string.IsNullOrEmpty(code.Uid) ? fallback : code.Uid;
-            var address = _countyCodeService.GetWebAddress(1);
+
+            var webid = (int)WebLandingName.LegacyCounty;
+            var address = _countyCodeService.GetWebAddress(webid);
             using (var client = new HttpClient())
             {
                 var response = _httpService

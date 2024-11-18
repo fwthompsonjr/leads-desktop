@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Enumerations;
 using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -48,10 +49,13 @@ namespace Thompson.RecordSearch.Utility.Classes
                 case 2: return dto.Change ?? string.Empty;
                 case 3: return dto.Indexes ?? string.Empty;
                 case 4: return dto.Register ?? string.Empty;
+                case 5: return dto.UsageCreate ?? string.Empty;
+                case 6: return dto.UsageIncrement ?? string.Empty;
+                case 7: return dto.UsageList ?? string.Empty;
                 default: return string.Empty;
             }
         }
-        private static readonly int[] indexes = new[] { 0, 1, 10, 11, 12, 13, 14 };
+        private static readonly int[] indexes = Enum.GetValues<WebLandingName>().Select(s => (int)s).ToArray();
         private static CountyCodeMapDto GetMap
         {
             get

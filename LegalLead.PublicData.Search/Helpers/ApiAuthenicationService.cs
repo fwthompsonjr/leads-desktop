@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Enumerations;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
@@ -77,8 +78,9 @@ namespace LegalLead.PublicData.Search.Helpers
             get
             {
                 if (landing != null) return landing;
+                var webid = (int)WebLandingName.Login;
                 var service = new CountyCodeService();
-                landing = service.GetWebAddress(10);
+                landing = service.GetWebAddress(webid);
                 return landing;
             }
         }
