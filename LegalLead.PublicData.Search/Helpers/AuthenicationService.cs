@@ -52,7 +52,7 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             get
             {
-                if (landing != null) return landing; 
+                if (landing != null) return landing;
                 var webid = (int)WebLandingName.LegacyLogin;
                 var service = new CountyCodeService();
                 landing = service.GetWebAddress(webid);

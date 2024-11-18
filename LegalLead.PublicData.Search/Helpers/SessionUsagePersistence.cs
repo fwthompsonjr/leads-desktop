@@ -43,6 +43,6 @@ namespace LegalLead.PublicData.Search.Helpers
         }
 
         private static string landing = null;
-        private readonly IHttpService http;
+        protected readonly IHttpService http;
     }
 }
