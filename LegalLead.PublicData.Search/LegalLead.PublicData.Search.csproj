@@ -193,6 +193,9 @@
 	  <None Update="_session\session.dtx">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="_session\session.mtd">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="_setup\debug_account.txt">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </None>
