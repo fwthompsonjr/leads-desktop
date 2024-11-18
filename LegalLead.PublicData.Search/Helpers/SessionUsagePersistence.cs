@@ -12,7 +12,7 @@ namespace LegalLead.PublicData.Search.Helpers
             http = service;
         }
 
-        public bool IncementUsage(string userId, string county, int recordCount)
+        public virtual bool IncrementUsage(string userId, string county, int recordCount)
         {
             if (string.IsNullOrWhiteSpace(userId) || recordCount < 0) return false;
             if (string.IsNullOrEmpty(Landing)) return false;

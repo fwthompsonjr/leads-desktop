@@ -24,7 +24,7 @@ namespace legallead.search.tests.helpers
         [InlineData(3)]
         [InlineData(4)]
         [InlineData(5)]
-        public void ServiceCanIncementUsage(int testIndex)
+        public void ServiceCanIncrementUsage(int testIndex)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace legallead.search.tests.helpers
                     It.IsAny<object>(),
                     It.IsAny<CancellationToken>())).Returns(response);
                 var expected = testIndex == 0;
-                var actual = service.IncementUsage(request.userid, request.county, request.recordCount);
+                var actual = service.IncrementUsage(request.userid, request.county, request.recordCount);
                 Assert.Equal(expected, actual);
             }
             finally
