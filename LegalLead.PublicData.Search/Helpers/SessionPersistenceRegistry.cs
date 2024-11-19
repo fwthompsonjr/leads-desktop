@@ -17,6 +17,7 @@ namespace LegalLead.PublicData.Search.Helpers
             For<SessionUsageCapPersistence>().Add<SessionUsageCapPersistence>().Singleton();
             For<SessionUsagePersistence>().Add<SessionUsagePersistence>().Singleton();
             For<SessionUsageReader>().Add<SessionUsageReader>().Singleton();
+            For<SessionMonthToDatePersistence>().Add<SessionMonthToDatePersistence>().Singleton();
         }
     }
 }

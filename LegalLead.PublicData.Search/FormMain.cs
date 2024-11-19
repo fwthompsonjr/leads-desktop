@@ -52,6 +52,8 @@ namespace LegalLead.PublicData.Search
                     Debug.WriteLine("Login success");
                     SetInteraction(true);
                     FilterWebSiteByAccount();
+                    UsageReader.WriteUserRecord();
+                    CboWebsite_SelectedValueChanged(null, null);
                     break;
                 default:
                     Close();
@@ -452,7 +454,7 @@ namespace LegalLead.PublicData.Search
                     var userName = GetUserName();
                     if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
                     UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count);
-                    UsageReader.GetUsage(DateTime.UtcNow);
+                    UsageReader.WriteUserRecord();
                 }
                 if (!nonactors.Contains(siteData.Id))
                 {
@@ -505,8 +507,8 @@ namespace LegalLead.PublicData.Search
         private static readonly SessionUsagePersistence UsageIncrementer
             = SessionPersistenceContainer.GetContainer
             .GetInstance<SessionUsagePersistence>();
-        private static readonly SessionUsageReader UsageReader
+        private static readonly SessionMonthToDatePersistence UsageReader
             = SessionPersistenceContainer.GetContainer
-            .GetInstance<SessionUsageReader>();
+            .GetInstance<SessionMonthToDatePersistence>();
     }
 }

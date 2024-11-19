@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using System;
 using System.Collections.Generic;
@@ -75,14 +76,44 @@ namespace LegalLead.PublicData.Search
             }
 
             changeHandler.Change();
-            if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
-            var userinfo = SessionUtil.Read();
-            if (string.IsNullOrEmpty(userinfo)) return;
-            var user = userinfo.ToInstance<LeadUserSecurityBo>();
-            if (user == null) return;
-            var limit = UsageGovernance.GetUsageLimit(nav.Id);
-            if (limit == -1) return;
-            //
+            WebSiteUsageValidation();
+        }
+
+        private void WebSiteUsageValidation()
+        {
+            var isEnabled = true;
+            var limit = 0;
+            var monthtodate = 0;
+            var controlled = new[]
+            {
+                (int)SourceType.DallasCounty,
+            };
+            
+            try
+            {
+                if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
+                if (!controlled.Contains(nav.Id)) return;
+
+                var userinfo = SessionUtil.Read();
+                if (string.IsNullOrEmpty(userinfo)) return;
+                var user = userinfo.ToInstance<LeadUserSecurityBo>();
+                if (user == null) return;
+                limit = UsageGovernance.GetUsageLimit(nav.Id);
+                if (limit == -1) return;
+                // get usage count
+                var member = ((SourceType)nav.Id).GetCountyName();
+                monthtodate = UsageReader.GetCount(member);
+                if (monthtodate < limit) return;
+                isEnabled = false;
+            }
+            finally
+            {
+                button1.Enabled = isEnabled;
+                var alternate = $"Search disabled. Monthly usage exceeded : {monthtodate} of {limit}";
+                var txt = isEnabled ? "Get Data" : alternate;
+                button1.Text = txt;
+            }
+            
         }
 
         internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)

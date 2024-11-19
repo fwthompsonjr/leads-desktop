@@ -84,6 +84,7 @@ namespace LegalLead.PublicData.Search.Helpers
                     requested.MonthlyLimit = 0;
                     return 0;
                 }
+                if (selected.MonthlyLimit == -1) return -1;
                 if (selected.MonthlyLimit != requested.MonthlyLimit)
                 {
                     requested.MonthlyLimit = selected.MonthlyLimit;
