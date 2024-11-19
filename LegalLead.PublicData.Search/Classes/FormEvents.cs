@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,6 +12,7 @@ using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
@@ -73,6 +75,14 @@ namespace LegalLead.PublicData.Search
             }
 
             changeHandler.Change();
+            if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
+            var userinfo = SessionUtil.Read();
+            if (string.IsNullOrEmpty(userinfo)) return;
+            var user = userinfo.ToInstance<LeadUserSecurityBo>();
+            if (user == null) return;
+            var limit = UsageGovernance.GetUsageLimit(nav.Id);
+            if (limit == -1) return;
+            //
         }
 
         internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
@@ -483,5 +493,12 @@ namespace LegalLead.PublicData.Search
                 tsDropFileList.Visible = tsDropFileList.Enabled;
             }));
         }
+
+
+
+        private static readonly SessionApiFilePersistence UsageGovernance
+            = SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionApiFilePersistence>();
     }
 }

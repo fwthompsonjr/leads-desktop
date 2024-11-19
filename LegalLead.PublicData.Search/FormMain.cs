@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Util;
@@ -13,6 +14,7 @@ using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace LegalLead.PublicData.Search
 {
@@ -95,14 +97,18 @@ namespace LegalLead.PublicData.Search
             cboWebsite.SelectedIndex = 0;
         }
 
+        private static string GetUserName()
+        {
+            var container = AuthenicationContainer.GetContainer;
+            var userservice = container.GetInstance<SessionUserPersistence>();
+            return userservice.GetUserName();
+        }
         private void SetUserName()
         {
             var username = string.Empty;
             try
             {
-                var container = AuthenicationContainer.GetContainer;
-                var userservice = container.GetInstance<SessionUserPersistence>();
-                username = userservice.GetUserName();
+                username = GetUserName();
                 if (string.IsNullOrEmpty(username)) return;
             }
             finally
@@ -438,6 +444,16 @@ namespace LegalLead.PublicData.Search
                     throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
                 CaseData.WebsiteId = siteData.Id;
+                // write search count to api
+                var count = CaseData.PeopleList.Count;
+                if (count > 0)
+                {
+                    var member = (SourceType)siteData.Id;
+                    var userName = GetUserName();
+                    if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
+                    UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count);
+                    UsageReader.GetUsage(DateTime.UtcNow);
+                }
                 if (!nonactors.Contains(siteData.Id))
                 {
                     ExcelWriter.WriteToExcel(CaseData);
@@ -486,6 +502,11 @@ namespace LegalLead.PublicData.Search
                 Refresh();
             }));
         }
-
+        private static readonly SessionUsagePersistence UsageIncrementer
+            = SessionPersistenceContainer.GetContainer
+            .GetInstance<SessionUsagePersistence>();
+        private static readonly SessionUsageReader UsageReader
+            = SessionPersistenceContainer.GetContainer
+            .GetInstance<SessionUsageReader>();
     }
 }

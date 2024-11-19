@@ -68,7 +68,7 @@ namespace LegalLead.PublicData.Search.Helpers
         }
 
 
-        private int GetUsageLimit(int countyId)
+        public int GetUsageLimit(int countyId)
         {
             lock (locker)
             {
