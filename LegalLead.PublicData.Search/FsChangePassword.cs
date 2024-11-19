@@ -3,13 +3,10 @@ using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
@@ -72,9 +69,10 @@ namespace LegalLead.PublicData.Search
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
             PopulateModel();
-            if (sender is MaskedTextBox tbx && tbx.ForeColor != _textColor) { 
+            if (sender is MaskedTextBox tbx && tbx.ForeColor != _textColor)
+            {
                 ValidateEntries(out var _);
-                tbx.ForeColor = _textColor; 
+                tbx.ForeColor = _textColor;
             }
             if (!btnSubmit.Enabled) { btnSubmit.Enabled = true; }
         }
@@ -88,6 +86,8 @@ namespace LegalLead.PublicData.Search
             var isvalid = ValidateEntries(out var errors);
             if (isvalid)
             {
+                var rsp = changeService.ChangePassword(_model);
+                lbStatus.Text = rsp.Message;
                 btnSubmit.Enabled = true;
                 return;
             }
@@ -99,7 +99,7 @@ namespace LegalLead.PublicData.Search
                 errors.Exists(a => a.MemberNames.Contains("NewPassword")),
                 errors.Exists(a => a.MemberNames.Contains("ConfirmPassword")),
             };
-            for ( var i = 0; i < issues.Length; i++)
+            for (var i = 0; i < issues.Length; i++)
             {
                 var tbx = controls[i];
                 var isError = issues[i];
@@ -110,7 +110,7 @@ namespace LegalLead.PublicData.Search
 
         private bool ValidateEntries(out List<ValidationResult> errors)
         {
-            PopulateModel(); 
+            PopulateModel();
             errors = _model.Validate(out var isvalid);
             if (isvalid) return true;
             var message = string.Join(Environment.NewLine, errors.Select(x => x.ErrorMessage));
@@ -119,5 +119,10 @@ namespace LegalLead.PublicData.Search
         }
 
         private List<MaskedTextBox> maskedBoxes = null;
+        private static readonly UserPasswordChangeService changeService
+            = SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<UserPasswordChangeService>();
+
     }
 }

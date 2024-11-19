@@ -18,6 +18,8 @@ namespace LegalLead.PublicData.Search.Helpers
             For<SessionUsagePersistence>().Add<SessionUsagePersistence>().Singleton();
             For<SessionUsageReader>().Add<SessionUsageReader>().Singleton();
             For<SessionMonthToDatePersistence>().Add<SessionMonthToDatePersistence>().Singleton();
+            // user management
+            For<UserPasswordChangeService>().Add<UserPasswordChangeService>().Singleton();
         }
     }
 }

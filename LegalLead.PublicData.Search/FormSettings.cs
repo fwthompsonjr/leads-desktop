@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
@@ -28,7 +22,7 @@ namespace LegalLead.PublicData.Search
         {
             panel1.Controls.Clear();
             if (cboSelection.SelectedItem is not SettingModel model)
-            {   
+            {
                 return;
             }
             switch (model.Id)
@@ -48,7 +42,8 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        private sealed class SettingModel {
+        private sealed class SettingModel
+        {
             public int Id { get; set; } = 0;
             public string Name { get; set; } = string.Empty;
         }

@@ -37,6 +37,8 @@ namespace legallead.search.tests.helpers
         [InlineData(typeof(SessionUsageCapPersistence))]
         [InlineData(typeof(SessionUsagePersistence))]
         [InlineData(typeof(SessionUsageReader))]
+        [InlineData(typeof(SessionMonthToDatePersistence))]
+        [InlineData(typeof(UserPasswordChangeService))]
         public void ServiceCanGetTypedInstance(Type type)
         {
             var error = Record.Exception(() =>

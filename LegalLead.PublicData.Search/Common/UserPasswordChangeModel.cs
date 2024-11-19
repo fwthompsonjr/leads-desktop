@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace LegalLead.PublicData.Search.Common
 {
-    internal class UserPasswordChangeModel
+    public class UserPasswordChangeModel
     {
         private const string Pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,255}$";
 
@@ -36,7 +36,8 @@ namespace LegalLead.PublicData.Search.Common
 
         public string this[int index]
         {
-            get {
+            get
+            {
                 var response = index switch
                 {
                     0 => UserName,
@@ -47,7 +48,8 @@ namespace LegalLead.PublicData.Search.Common
                 };
                 return response;
             }
-            set {
+            set
+            {
                 switch (index)
                 {
                     case 0: UserName = value; break;
