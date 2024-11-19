@@ -49,6 +49,7 @@ namespace LegalLead.PublicData.Search
                 {
                     var dto = new LoginAccountDto { UserName = uid };
                     userservice.Write(JsonConvert.SerializeObject(dto));
+                    FetchMonthlyUsage();
                     DialogResult = DialogResult.OK;
                     Close();
                 }
@@ -57,6 +58,14 @@ namespace LegalLead.PublicData.Search
             {
                 ToggleEnabled(true);
             }
+        }
+
+        private static void FetchMonthlyUsage()
+        {
+            var service = SessionPersistenceContainer
+                .GetContainer
+                .GetInstance<SessionUsageReader>();
+            service.GetUsage(DateTime.UtcNow);
         }
 
         private static string GetDebugAccount()

@@ -7,5 +7,6 @@ namespace Thompson.RecordSearch.Utility.Models
         public Guid Key { get; set; }
         public LeadUserModel User { get; set; }
         public string Reason { get; set; }
+        public string AuthenicationToken { get; set; }
     }
 }

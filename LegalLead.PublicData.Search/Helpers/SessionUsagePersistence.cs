@@ -1,7 +1,9 @@
 ﻿using System.Net.Http;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Enumerations;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
@@ -23,8 +25,10 @@ namespace LegalLead.PublicData.Search.Helpers
 
         protected T2 GetHttpRespone<T1, T2>(T1 payload, string address)
         {
-            var token = SessionUtil.Read();
-            if (string.IsNullOrEmpty(token)) return default;
+            var serialized = SessionUtil.Read();
+            if (string.IsNullOrEmpty(serialized)) return default;
+            var obj = serialized.ToInstance<LeadUserSecurityBo>();
+            var token = obj?.AuthenicationToken ?? string.Empty; 
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Add("LEAD_IDENTITY", token);
             var response = http.PostAsJson<T1, T2>(client, address, payload);

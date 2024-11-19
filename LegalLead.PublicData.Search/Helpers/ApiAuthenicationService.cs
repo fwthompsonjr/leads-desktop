@@ -63,6 +63,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 var serialized = encoding.GetString(data.Skip(position).ToArray());
                 var model = serialized.ToInstance<LeadUserSecurityBo>();
                 if (model == null) return null;
+                model.AuthenicationToken = token;
                 if (!DateTime.TryParseExact(expiry, "s", enUS, DateTimeStyles.None, out var dateValue)) return null;
                 expirationDate = dateValue;
                 return model;
