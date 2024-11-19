@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using LegalLead.PublicData.Search.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Helpers
@@ -26,18 +29,9 @@ namespace LegalLead.PublicData.Search.Helpers
         public void WriteUserRecord()
         {
             var now = DateTime.UtcNow.Date;
-            int months = 12;
             var list = new List<UsageHistoryModel>();
-            var indexes = Enum.GetValues<SourceType>()
-                .Select(s => (int)s).ToList();
-            while (months >= 0)
-            {
-                indexes.ForEach(i =>
-                {
-                    list.AddRange(UsagePersistence.GetUsage(now.AddMonths(-months)));
-                });
-                months--;
-            }
+            var data = UsagePersistence.GetUsage(now);
+            list.AddRange(data);
             var json = JsonConvert.SerializeObject(list);
             Write(json);
         }
@@ -46,8 +40,11 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             var text = Read();
             if (string.IsNullOrEmpty(text)) return -1;
-
-            return 0;
+            var list = text.ToInstance<List<UsageHistoryModel>>();
+            if (list == null) return -1;
+            var subset = list
+                .FindAll(x => x.CountyName.Equals(countyName, StringComparison.OrdinalIgnoreCase));
+            return subset.Sum(x => x.MonthlyUsage);
         }
 
         protected override string SetupFile

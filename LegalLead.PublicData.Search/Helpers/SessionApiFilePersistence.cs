@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -129,12 +130,7 @@ namespace LegalLead.PublicData.Search.Helpers
         }
         private static string GetSourceTypeName(SourceType type)
         {
-            var name = Enum.GetName(type);
-            name = name.Replace("County", string.Empty);
-            name = name.Replace("Civil", string.Empty);
-            name = name.Replace("Criminal", string.Empty);
-            name = name.Replace("ElPaso", "El Paso");
-            name = name.Replace("FortBend", "Fort Bend");
+            var name = type.GetCountyName();
             return name;
         }
 

@@ -14,7 +14,7 @@ namespace LegalLead.PublicData.Search.Helpers
         {
         }
 
-        public List<UsageHistoryModel> GetUsage(DateTime? usageDate = null)
+        public virtual List<UsageHistoryModel> GetUsage(DateTime? usageDate = null)
         {
             var fallback = new List<UsageHistoryModel>();
             if (string.IsNullOrEmpty(Landing)) return fallback;
