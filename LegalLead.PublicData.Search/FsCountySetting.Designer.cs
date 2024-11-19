@@ -36,30 +36,32 @@
             ColUserID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ColPassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ColButton = new System.Windows.Forms.DataGridViewButtonColumn();
-            txUserName = new System.Windows.Forms.TextBox();
-            label1 = new System.Windows.Forms.Label();
             lbStatus = new System.Windows.Forms.Label();
+            txUserName = new System.Windows.Forms.TextBox();
+            txPassword = new System.Windows.Forms.MaskedTextBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnCount = 5;
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             tableLayoutPanel1.Controls.Add(btnSubmit, 0, 2);
             tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
-            tableLayoutPanel1.Controls.Add(txUserName, 1, 0);
-            tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(lbStatus, 0, 3);
+            tableLayoutPanel1.Controls.Add(txUserName, 1, 2);
+            tableLayoutPanel1.Controls.Add(txPassword, 2, 2);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 5;
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
@@ -78,6 +80,7 @@
             btnSubmit.TabIndex = 42;
             btnSubmit.Text = "Submit";
             btnSubmit.UseVisualStyleBackColor = true;
+            btnSubmit.Click += BtnSubmit_Click;
             // 
             // dataGridView1
             // 
@@ -85,13 +88,13 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ColCounty, ColEnabled, ColUserID, ColPassword, ColButton });
-            tableLayoutPanel1.SetColumnSpan(dataGridView1, 3);
+            tableLayoutPanel1.SetColumnSpan(dataGridView1, 5);
             dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            dataGridView1.Location = new System.Drawing.Point(3, 48);
+            dataGridView1.Location = new System.Drawing.Point(3, 23);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowTemplate.Height = 24;
-            dataGridView1.Size = new System.Drawing.Size(794, 350);
+            dataGridView1.Size = new System.Drawing.Size(794, 375);
             dataGridView1.TabIndex = 41;
             // 
             // ColCounty
@@ -134,31 +137,10 @@
             ColButton.ReadOnly = true;
             ColButton.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // txUserName
-            // 
-            txUserName.Dock = System.Windows.Forms.DockStyle.Fill;
-            txUserName.Enabled = false;
-            txUserName.Location = new System.Drawing.Point(150, 9);
-            txUserName.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
-            txUserName.Name = "txUserName";
-            txUserName.ReadOnly = true;
-            txUserName.Size = new System.Drawing.Size(560, 23);
-            txUserName.TabIndex = 10;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(10, 9);
-            label1.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(68, 15);
-            label1.TabIndex = 0;
-            label1.Text = "User Name:";
-            // 
             // lbStatus
             // 
             lbStatus.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan(lbStatus, 3);
+            tableLayoutPanel1.SetColumnSpan(lbStatus, 5);
             lbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             lbStatus.Location = new System.Drawing.Point(10, 455);
             lbStatus.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
@@ -166,6 +148,26 @@
             lbStatus.Size = new System.Drawing.Size(780, 27);
             lbStatus.TabIndex = 14;
             lbStatus.Text = "Ready";
+            // 
+            // txUserName
+            // 
+            txUserName.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txUserName.Location = new System.Drawing.Point(150, 412);
+            txUserName.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            txUserName.MaxLength = 250;
+            txUserName.Name = "txUserName";
+            txUserName.Size = new System.Drawing.Size(180, 23);
+            txUserName.TabIndex = 43;
+            // 
+            // txPassword
+            // 
+            txPassword.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txPassword.Location = new System.Drawing.Point(350, 412);
+            txPassword.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            txPassword.Name = "txPassword";
+            txPassword.PasswordChar = '*';
+            txPassword.Size = new System.Drawing.Size(180, 23);
+            txPassword.TabIndex = 44;
             // 
             // FsCountySetting
             // 
@@ -187,8 +189,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox txUserName;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnSubmit;
@@ -197,5 +197,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColUserID;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPassword;
         private System.Windows.Forms.DataGridViewButtonColumn ColButton;
+        private System.Windows.Forms.TextBox txUserName;
+        private System.Windows.Forms.MaskedTextBox txPassword;
     }
 }

@@ -41,6 +41,47 @@ namespace LegalLead.PublicData.Search
                 }
             });
             dataGridView1.DataSource = vwlist;
+            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
+
+            btnSubmit.Enabled = false;
+            txUserName.Enabled = false;
+            txPassword.Enabled = false;
+
+            _initalText = lbStatus.Text;
+        }
+        private readonly string _initalText;
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var isEnabled = false;
+
+            try
+            {
+                _model.UserName = string.Empty;
+                _model.Password = string.Empty;
+                _model.CountyName = string.Empty;
+
+                if (e.RowIndex < 0) return;
+                var senderGrid = (DataGridView)sender;
+                if (senderGrid.Columns[e.ColumnIndex] is not DataGridViewButtonColumn) return;
+                var item = vwlist[e.RowIndex];
+                if (item == null || !item.IsEnabled) return;
+                var refitem = list.Find(x => x.CountyName.Equals(item.CountyName));
+                if (refitem == null) return;
+
+                isEnabled = true;
+                txUserName.Text = refitem.UserName;
+                txPassword.Text = refitem.UserPassword;
+
+                _model.UserName = refitem.UserName;
+                _model.Password = refitem.UserPassword;
+                _model.CountyName = refitem.CountyName;
+            }
+            finally
+            {
+                btnSubmit.Enabled = isEnabled;
+                txUserName.Enabled = isEnabled;
+                txPassword.Enabled = isEnabled;
+            }
 
         }
 
@@ -65,12 +106,12 @@ namespace LegalLead.PublicData.Search
         {
             const char pipe = '|';
             var model = UserAccountReader.GetAccountCredential(county);
-            if (string.IsNullOrEmpty(model) || !model.Contains(pipe)) return new[] {"", ""};
+            if (string.IsNullOrEmpty(model) || !model.Contains(pipe)) return new[] { "", "" };
             return model.Split(pipe);
         }
         private static string GetMasked(string str)
         {
-            if (string.IsNullOrEmpty (str)) return "";
+            if (string.IsNullOrEmpty(str)) return "";
             var len = str.Length;
             return string.Concat(Enumerable.Repeat("*", len));
         }
@@ -84,12 +125,26 @@ namespace LegalLead.PublicData.Search
             public string ButtonText { get; } = "Change";
         }
 
+        private readonly UserCountyPasswordModel _model = new();
         private readonly List<CountyDisplayItem> vwlist = new();
         private readonly List<CountyPermissionViewModel> list = new();
-        private static readonly List<SourceType> sourceTypes = Enum.GetValues<SourceType>().ToList(); 
-        private static ISessionPersistance UserAccountReader =
+        private static readonly List<SourceType> sourceTypes = Enum.GetValues<SourceType>().ToList();
+        private static readonly ISessionPersistance UserAccountReader =
             SessionPersistenceContainer
             .GetContainer
             .GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
+
+        private void BtnSubmit_Click(object sender, EventArgs e)
+        {
+            lbStatus.Text = _initalText;
+            _model.UserName = txUserName.Text;
+            _model.Password = txPassword.Text;
+            var errors = _model.Validate(out var isPassed);
+            if (!isPassed) {
+                lbStatus.Text = string.Join(Environment.NewLine, errors.Select(s => s.ErrorMessage));
+                return;
+            }
+            // make api call
+        }
     }
 }
