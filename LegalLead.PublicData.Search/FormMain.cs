@@ -14,7 +14,6 @@ using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace LegalLead.PublicData.Search
 {
@@ -32,13 +31,14 @@ namespace LegalLead.PublicData.Search
             string version = appName.Version.ToString();
             Text = string.Format(CultureInfo.CurrentCulture, @"{0} - {1}",
                 appName.Name, version);
+            SubmitButtonText = button1.Text;
             FormClosing += FormMain_FormClosing;
             Shown += FormMain_Shown;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
         }
-
+        private readonly string SubmitButtonText;
         private void FormMain_Shown(object sender, EventArgs e)
         {
             SetInteraction(false);

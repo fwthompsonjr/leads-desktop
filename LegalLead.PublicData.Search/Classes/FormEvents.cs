@@ -90,9 +90,6 @@ namespace LegalLead.PublicData.Search
             var member = ((SourceType)nav.Id).GetCountyName();
             try
             {
-                
-                
-
                 var userinfo = SessionUtil.Read();
                 if (string.IsNullOrEmpty(userinfo)) return;
                 var user = userinfo.ToInstance<LeadUserSecurityBo>();
@@ -107,10 +104,10 @@ namespace LegalLead.PublicData.Search
             {
                 button1.Enabled = isEnabled;
                 var alternate = $"{member} Search disabled. Monthly usage exceeded : {monthtodate} of {limit}";
-                var txt = isEnabled ? "Get Data" : alternate;
+                var txt = isEnabled ? SubmitButtonText : alternate;
                 button1.Text = txt;
             }
-            
+
         }
 
         internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)

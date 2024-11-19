@@ -28,7 +28,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var serialized = SessionUtil.Read();
             if (string.IsNullOrEmpty(serialized)) return default;
             var obj = serialized.ToInstance<LeadUserSecurityBo>();
-            var token = obj?.AuthenicationToken ?? string.Empty; 
+            var token = obj?.AuthenicationToken ?? string.Empty;
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Add("LEAD_IDENTITY", token);
             var response = http.PostAsJson<T1, T2>(client, address, payload);
