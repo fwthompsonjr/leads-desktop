@@ -20,6 +20,10 @@ namespace LegalLead.PublicData.Search
 
         private void CboSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
+            foreach (var item in panel1.Controls)
+            {
+                if (item is Form frm) { frm.Close(); }
+            }
             panel1.Controls.Clear();
             if (cboSelection.SelectedItem is not SettingModel model)
             {
@@ -33,15 +37,26 @@ namespace LegalLead.PublicData.Search
                         TopLevel = false
                     };
                     panel1.Controls.Add(fschange);
-                    fschange.FormBorderStyle = FormBorderStyle.None;
-                    fschange.Dock = DockStyle.Fill;
-                    fschange.Show();
+                    RenderChild(fschange);
+                    break;
+                case 1:
+                    var fscounty = new FsCountySetting
+                    {
+                        TopLevel = false
+                    };
+                    panel1.Controls.Add(fscounty);
+                    RenderChild(fscounty);
                     break;
                 default:
                     break;
             }
         }
-
+        private static void RenderChild(Form fschange)
+        {
+            fschange.FormBorderStyle = FormBorderStyle.None;
+            fschange.Dock = DockStyle.Fill;
+            fschange.Show();
+        }
         private sealed class SettingModel
         {
             public int Id { get; set; } = 0;
@@ -51,7 +66,8 @@ namespace LegalLead.PublicData.Search
         private static readonly List<SettingModel> options
             = new()
             {
-                new SettingModel() { Id = 0, Name = "Change Password" }
+                new SettingModel() { Id = 0, Name = "Change Password" },
+                new SettingModel() { Id = 1, Name = "County Permissions" }
             };
     }
 }
