@@ -85,7 +85,7 @@
             tbxConfirmPwd.Name = "tbxConfirmPwd";
             tbxConfirmPwd.PasswordChar = '*';
             tbxConfirmPwd.Size = new System.Drawing.Size(560, 23);
-            tbxConfirmPwd.TabIndex = 12;
+            tbxConfirmPwd.TabIndex = 30;
             tbxConfirmPwd.Tag = "ConfirmPassword";
             tbxConfirmPwd.TextChanged += TextBox_TextChanged;
             // 
@@ -97,13 +97,14 @@
             tbxCurrentPwd.Name = "tbxCurrentPwd";
             tbxCurrentPwd.PasswordChar = '*';
             tbxCurrentPwd.Size = new System.Drawing.Size(560, 23);
-            tbxCurrentPwd.TabIndex = 11;
+            tbxCurrentPwd.TabIndex = 10;
             tbxCurrentPwd.Tag = "OldPassword";
             tbxCurrentPwd.TextChanged += TextBox_TextChanged;
             // 
             // txUserName
             // 
             txUserName.Dock = System.Windows.Forms.DockStyle.Fill;
+            txUserName.Enabled = false;
             txUserName.Location = new System.Drawing.Point(150, 9);
             txUserName.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             txUserName.Name = "txUserName";
@@ -118,7 +119,7 @@
             btnSubmit.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             btnSubmit.Name = "btnSubmit";
             btnSubmit.Size = new System.Drawing.Size(560, 37);
-            btnSubmit.TabIndex = 9;
+            btnSubmit.TabIndex = 40;
             btnSubmit.Text = "Change Password";
             btnSubmit.UseVisualStyleBackColor = true;
             btnSubmit.Click += BtnSubmit_Click;
@@ -161,7 +162,7 @@
             tbxPwd.Name = "tbxPwd";
             tbxPwd.PasswordChar = '*';
             tbxPwd.Size = new System.Drawing.Size(560, 23);
-            tbxPwd.TabIndex = 5;
+            tbxPwd.TabIndex = 20;
             tbxPwd.Tag = "NewPassword";
             tbxPwd.TextChanged += TextBox_TextChanged;
             // 
@@ -197,7 +198,11 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
             Controls.Add(tableLayoutPanel1);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FsChangePassword";
+            ShowIcon = false;
+            ShowInTaskbar = false;
             Text = "FsChangePassword";
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();

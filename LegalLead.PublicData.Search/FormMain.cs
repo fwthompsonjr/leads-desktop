@@ -510,5 +510,12 @@ namespace LegalLead.PublicData.Search
         private static readonly SessionMonthToDatePersistence UsageReader
             = SessionPersistenceContainer.GetContainer
             .GetInstance<SessionMonthToDatePersistence>();
+
+
+        private void ToolStripSplitButton1_ButtonClick(object sender, EventArgs e)
+        {
+            var settings = new FormSettings();
+            settings.ShowDialog();
+        }
     }
 }
