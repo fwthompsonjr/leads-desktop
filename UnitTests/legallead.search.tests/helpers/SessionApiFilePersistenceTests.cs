@@ -45,7 +45,8 @@ namespace legallead.search.tests.helpers
         [InlineData("tarrant")]
         public void ServiceCanUpdateUsageCount(string county)
         {
-            var error = Record.Exception(() => {
+            var error = Record.Exception(() =>
+            {
                 var service = new MocPersistence();
                 var text = JsonConvert.SerializeObject(GetModel());
                 var countyId = county switch
@@ -76,7 +77,8 @@ namespace legallead.search.tests.helpers
         [InlineData("tarrant")]
         public void ServiceCanCheckIsUsageExceeded(string county)
         {
-            var error = Record.Exception(() => {
+            var error = Record.Exception(() =>
+            {
                 var service = new MocPersistence();
                 var text = JsonConvert.SerializeObject(GetModel());
                 var countyId = county switch
@@ -187,7 +189,8 @@ namespace legallead.search.tests.helpers
                 counties.ForEach(c => c.MonthlyLimit = monthlyUsage);
                 tmps.ForEach(t =>
                 {
-                    if (!counties.Exists(c => c.CountyName.Equals(t, oic))) {
+                    if (!counties.Exists(c => c.CountyName.Equals(t, oic)))
+                    {
                         var item = new LeadCountyTokenModel
                         {
                             LeadUserId = counties[0].LeadUserId,

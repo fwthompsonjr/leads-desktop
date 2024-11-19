@@ -9,7 +9,7 @@ using Thompson.RecordSearch.Utility.Models;
 namespace LegalLead.PublicData.Search.Helpers
 {
     public class SessionApiFilePersistence : SessionFilePersistence
-    {   
+    {
         protected SessionUsagePersistence UsagePersistence
         {
             get
@@ -44,7 +44,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 var bo = Read().ToInstance<LeadUserSecurityBo>();
                 if (bo == null) return;
                 _ = Task.Run(() => { PostUsageIncident(bo.User.Id, requested.CountyName, recordFound); })
-                    .ConfigureAwait(false);                
+                    .ConfigureAwait(false);
             }
         }
 
@@ -98,7 +98,7 @@ namespace LegalLead.PublicData.Search.Helpers
             {
                 UsagePersistence.IncrementUsage(id, countyName, recordFound);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
@@ -137,7 +137,7 @@ namespace LegalLead.PublicData.Search.Helpers
             name = name.Replace("FortBend", "Fort Bend");
             return name;
         }
-        
+
         private sealed class LeadIndexesBo
         {
             public string LeadUserId { get; set; } = string.Empty;
