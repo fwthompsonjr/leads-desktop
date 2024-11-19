@@ -84,15 +84,14 @@ namespace LegalLead.PublicData.Search
             var isEnabled = true;
             var limit = 0;
             var monthtodate = 0;
-            var controlled = new[]
-            {
-                (int)SourceType.DallasCounty,
-            };
-            
+            var controlled = Enum.GetValues<SourceType>().Select(s => (int)s).ToList();
+            if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
+            if (!controlled.Contains(nav.Id)) return;
+            var member = ((SourceType)nav.Id).GetCountyName();
             try
             {
-                if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
-                if (!controlled.Contains(nav.Id)) return;
+                
+                
 
                 var userinfo = SessionUtil.Read();
                 if (string.IsNullOrEmpty(userinfo)) return;
@@ -100,8 +99,6 @@ namespace LegalLead.PublicData.Search
                 if (user == null) return;
                 limit = UsageGovernance.GetUsageLimit(nav.Id);
                 if (limit == -1) return;
-                // get usage count
-                var member = ((SourceType)nav.Id).GetCountyName();
                 monthtodate = UsageReader.GetCount(member);
                 if (monthtodate < limit) return;
                 isEnabled = false;
@@ -109,7 +106,7 @@ namespace LegalLead.PublicData.Search
             finally
             {
                 button1.Enabled = isEnabled;
-                var alternate = $"Search disabled. Monthly usage exceeded : {monthtodate} of {limit}";
+                var alternate = $"{member} Search disabled. Monthly usage exceeded : {monthtodate} of {limit}";
                 var txt = isEnabled ? "Get Data" : alternate;
                 button1.Text = txt;
             }
