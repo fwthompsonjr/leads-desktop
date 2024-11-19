@@ -103,7 +103,10 @@ namespace LegalLead.PublicData.Search
             finally
             {
                 button1.Enabled = isEnabled;
-                var alternate = $"{member} Search disabled. Monthly usage exceeded : {monthtodate} of {limit}";
+                var contact = "Contact administrator for further details.";
+                var usagemessage = $"Monthly usage exceeded : {monthtodate} of {limit}.";
+                var subtext = monthtodate == 0 || limit == 0 ? contact : usagemessage;
+                var alternate = $"{member} Search disabled. {subtext}";
                 var txt = isEnabled ? SubmitButtonText : alternate;
                 button1.Text = txt;
             }
