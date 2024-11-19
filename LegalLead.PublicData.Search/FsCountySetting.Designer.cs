@@ -39,7 +39,6 @@
             txUserName = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
             lbStatus = new System.Windows.Forms.Label();
-            Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -168,14 +167,6 @@
             lbStatus.TabIndex = 14;
             lbStatus.Text = "Ready";
             // 
-            // Id
-            // 
-            Id.DataPropertyName = "CountyId";
-            Id.Frozen = true;
-            Id.HeaderText = "Id";
-            Id.Name = "Id";
-            Id.Visible = false;
-            // 
             // FsCountySetting
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -201,7 +192,6 @@
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnSubmit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCounty;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColEnabled;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColUserID;
