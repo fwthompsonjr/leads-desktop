@@ -17,16 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set Content Variables
+      - name: Set Environment Variables
         shell: pwsh
         run: |
+          ./fetch-version-id.ps1 -index ${{ github.run_number }}
           ./fetch-zip-version.ps1 -pattern "legal-lead-install*" -key "ASSET_SETUP_FILE"
           ./fetch-zip-version.ps1 -pattern "legal-lead-excel-addin*" -key "ASSET_EXCEL_FILE"
-
-      - name: Set Build Version
-        shell: bash
-        run: |
-            echo "BUILD_VERSION=${{format('{0}.{1}', vars.LEGALLEAD_READER_PREFIX, github.run_number)}}" >> $GITHUB_ENV
 
       - name: Create Release
         uses: actions/create-release@v1
