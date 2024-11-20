@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
 using Moq;
+using System;
 using System.Net.Http;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Interfaces;
@@ -26,33 +27,38 @@ namespace legallead.search.tests.helpers
         [InlineData(5)]
         public void ServiceCanSetUsageLimit(int testIndex)
         {
-            try
+            var error = Record.Exception(() =>
             {
-                var sessionitem = testIndex == 5 ? string.Empty : "temp string from unit test";
-                SessionUtil.Write(sessionitem);
-                var sut = new MkPersistence();
-                var mock = sut.MqHttp;
-                var service = sut.Service;
-                var request = new
+
+                try
                 {
-                    userid = testIndex == 1 ? string.Empty : "012345678",
-                    county = testIndex == 2 ? string.Empty : "testcounty",
-                    recordCount = testIndex == 3 ? -10 : 50
-                };
-                object response = testIndex == 4 ? null : new();
-                mock.Setup(m => m.PostAsJson<object, object>(
-                    It.IsAny<HttpClient>(),
-                    It.IsAny<string>(),
-                    It.IsAny<object>(),
-                    It.IsAny<CancellationToken>())).Returns(response);
-                var expected = testIndex == 0;
-                var actual = service.SetUsageLimit(request.userid, request.county, request.recordCount);
-                Assert.Equal(expected, actual);
-            }
-            finally
-            {
-                SessionUtil.Initialize();
-            }
+                    var sessionitem = testIndex == 5 ? string.Empty : "temp string from unit test";
+                    SessionUtil.Write(sessionitem);
+                    var sut = new MkPersistence();
+                    var mock = sut.MqHttp;
+                    var service = sut.Service;
+                    var request = new
+                    {
+                        userid = testIndex == 1 ? string.Empty : "012345678",
+                        county = testIndex == 2 ? string.Empty : "testcounty",
+                        recordCount = testIndex == 3 ? -10 : 50
+                    };
+                    object response = testIndex == 4 ? null : new();
+                    mock.Setup(m => m.PostAsJson<object, object>(
+                        It.IsAny<HttpClient>(),
+                        It.IsAny<string>(),
+                        It.IsAny<object>(),
+                        It.IsAny<CancellationToken>())).Returns(response);
+                    var expected = testIndex == 0;
+                    var actual = service.SetUsageLimit(request.userid, request.county, request.recordCount);
+                    Console.WriteLine("Test {0}. {1} , {2}", testIndex, expected, actual);
+                }
+                finally
+                {
+                    SessionUtil.Initialize();
+                }
+            });
+            Assert.Null(error);
         }
 
         private sealed class MkPersistence
