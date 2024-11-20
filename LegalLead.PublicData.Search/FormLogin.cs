@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -19,22 +20,24 @@ namespace LegalLead.PublicData.Search
             SetStatus(0);
             try
             {
-                var service = AuthenicationContainer.GetContainer.GetInstance<IAuthenicationService>();
-                if (service is AuthenicationService authenicationService && authenicationService.RetryCount <= 0)
+                var container = AuthenicationContainer.GetContainer;
+                var service = container.GetInstance<IAuthenicationService>();
+                var userservice = container.GetInstance<SessionUserPersistence>();
+                userservice.Initialize();
+                if (service.RetryCount <= 0)
                 {
                     DialogResult = DialogResult.Cancel;
                     return;
                 }
-                if (DebugMode)
+                var uid = tbxUser.Text;
+                var pword = tbxPwd.Text;
+                if (DebugMode && string.IsNullOrEmpty(uid) && string.IsNullOrEmpty(pword))
                 {
-                    var txt = Properties.Resources.debug_account;
-                    var decodec = txt.Decrypt();
+                    string decodec = GetDebugAccount();
                     SessionUtil.Write(decodec);
                     DialogResult = DialogResult.OK;
                     return;
                 }
-                var uid = tbxUser.Text;
-                var pword = tbxPwd.Text;
                 if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(pword))
                 {
                     SetStatus(1);
@@ -44,6 +47,8 @@ namespace LegalLead.PublicData.Search
                 SetStatus(response ? 2 : 1);
                 if (response)
                 {
+                    var dto = new LoginAccountDto { UserName = uid };
+                    userservice.Write(JsonConvert.SerializeObject(dto));
                     DialogResult = DialogResult.OK;
                     Close();
                 }
@@ -52,6 +57,18 @@ namespace LegalLead.PublicData.Search
             {
                 ToggleEnabled(true);
             }
+        }
+
+        private static string GetDebugAccount()
+        {
+            var mode = ApiHelper.ApiMode;
+            if (mode == "legacy")
+            {
+                var txt = Properties.Resources.debug_account;
+                var decodec = txt.Decrypt();
+                return decodec;
+            }
+            return DebugAssistant.GetBo();
         }
 
         private void ToggleEnabled(bool enabled)

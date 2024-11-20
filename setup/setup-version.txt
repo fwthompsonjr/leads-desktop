@@ -1,5 +1,24 @@
 [
 	{
+		"id": "2.8.6",
+		"date": "2024-11-19 19:15",
+		"title": "Setup remote authenication and county management",
+		"description": [
+			"## Problem:",
+			"",
+			"When a user runs application ",
+			"I want to impose security to read operations ",
+			"so that no application functions can be used without rights.",
+			"",
+			"## Resolution:",
+			"- [x] Check user can login",
+			"- [x] Check user county permissions are setup by county",
+			"- [x] Check user can only view counties where they have permission",
+			"- [x] Check user can change password",
+			"- [x] Check user can change county password"
+		]
+	},
+	{
 		"id": "2.8.5",
 		"date": "2024-11-12 11:15",
 		"title": "Review execution for counties",

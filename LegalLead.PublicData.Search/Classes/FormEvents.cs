@@ -1,4 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Extensions;
+using LegalLead.PublicData.Search.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,6 +13,7 @@ using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
@@ -73,6 +76,41 @@ namespace LegalLead.PublicData.Search
             }
 
             changeHandler.Change();
+            WebSiteUsageValidation();
+        }
+
+        private void WebSiteUsageValidation()
+        {
+            var isEnabled = true;
+            var limit = 0;
+            var monthtodate = 0;
+            var controlled = Enum.GetValues<SourceType>().Select(s => (int)s).ToList();
+            if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
+            if (!controlled.Contains(nav.Id)) return;
+            var member = ((SourceType)nav.Id).GetCountyName();
+            try
+            {
+                var userinfo = SessionUtil.Read();
+                if (string.IsNullOrEmpty(userinfo)) return;
+                var user = userinfo.ToInstance<LeadUserSecurityBo>();
+                if (user == null) return;
+                limit = UsageGovernance.GetUsageLimit(nav.Id);
+                if (limit == -1) return;
+                monthtodate = UsageReader.GetCount(member);
+                if (monthtodate < limit) return;
+                isEnabled = false;
+            }
+            finally
+            {
+                button1.Enabled = isEnabled;
+                var contact = "Contact administrator for further details.";
+                var usagemessage = $"Monthly usage exceeded : {monthtodate} of {limit}.";
+                var subtext = monthtodate == 0 || limit == 0 ? contact : usagemessage;
+                var alternate = $"{member} Search disabled. {subtext}";
+                var txt = isEnabled ? SubmitButtonText : alternate;
+                button1.Text = txt;
+            }
+
         }
 
         internal void CboSearchType_SelectedIndexChanged(object sender, EventArgs e)
@@ -483,5 +521,12 @@ namespace LegalLead.PublicData.Search
                 tsDropFileList.Visible = tsDropFileList.Enabled;
             }));
         }
+
+
+
+        private static readonly SessionApiFilePersistence UsageGovernance
+            = SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionApiFilePersistence>();
     }
 }

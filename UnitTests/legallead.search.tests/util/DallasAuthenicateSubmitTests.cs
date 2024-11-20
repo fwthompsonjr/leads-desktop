@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Util;
 using Moq;
 using OpenQA.Selenium;
@@ -61,12 +62,15 @@ namespace legallead.search.tests.util
         {
             public MockDallasAuthenicateSubmit() : base(mockReader.Object)
             {
+                var persistence = new Mock<ISessionPersistance>();
                 var http = new HttpService();
                 var svc = new CountyCodeService();
                 var actual = new CountyCodeReaderService(http, svc);
                 var response = actual.GetCountyCode(60);
                 mockReader.Setup(s => s.GetCountyCode(It.IsAny<int>(), It.IsAny<string>())).Returns(response);
                 mockReader.Setup(s => s.GetCountyCode(It.IsAny<string>(), It.IsAny<string>())).Returns(response);
+                persistence.Setup(s => s.GetAccountCredential(It.IsAny<string>())).Returns(response);
+                SessionPersistance = persistence.Object;
             }
 
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();

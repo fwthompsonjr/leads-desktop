@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web;
@@ -53,6 +54,20 @@ namespace Thompson.RecordSearch.Utility.Extensions
             if (string.IsNullOrWhiteSpace(dto.CourtDate)) return null;
             if (!DateTime.TryParse(dto.CourtDate, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out var courtDt)) return null;
             return courtDt;
+        }
+
+        public static T ToInstance<T>(this string json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return default;
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (Exception)
+            {
+                return default;
+                throw;
+            }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube",

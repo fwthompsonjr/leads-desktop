@@ -1,11 +1,9 @@
 ﻿using HtmlAgilityPack;
 using LegalLead.PublicData.Search.Common;
 using Newtonsoft.Json;
-using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util

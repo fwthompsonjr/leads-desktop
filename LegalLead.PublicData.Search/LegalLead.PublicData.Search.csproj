@@ -23,8 +23,8 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<ApplicationIcon>law-icon.ico</ApplicationIcon>
-		<AssemblyVersion>2.8.5.0</AssemblyVersion>
-		<FileVersion>2.8.5.0</FileVersion>
+		<AssemblyVersion>2.8.6.0</AssemblyVersion>
+		<FileVersion>2.8.6.0</FileVersion>
 		<PackageIcon>law-icon.png</PackageIcon>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
@@ -185,6 +185,15 @@
 	    <PackagePath>\</PackagePath>
 	  </None>
 	  <None Update="_session\session.dat">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="_session\session.dtu">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="_session\session.dtx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="_session\session.mtd">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="_setup\debug_account.txt">
