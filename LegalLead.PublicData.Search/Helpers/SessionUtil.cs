@@ -1,6 +1,8 @@
-﻿using LegalLead.PublicData.Search.Interfaces;
+﻿using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -37,6 +39,7 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             GetPersistence().Initialize();
         }
+        public static List<SettingMenuModel> GetMenuOptions => menuoptions;
         public static string GetCountyAccountName(string county = "")
         {
             return GetPersistence().GetAccountCredential(county);
@@ -99,5 +102,11 @@ namespace LegalLead.PublicData.Search.Helpers
             }
         }
         private static Assembly executingAssembly = null;
+        private static readonly List<SettingMenuModel> menuoptions
+            = new()
+            {
+                new () { Id = 0, Name = "Change Password" },
+                new () { Id = 1, Name = "County Permissions" }
+            };
     }
 }

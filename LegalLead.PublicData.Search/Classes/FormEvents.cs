@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using System;
@@ -223,10 +224,39 @@ namespace LegalLead.PublicData.Search
 
             cboSearchType.SelectedIndex = Zero;
             cboCourts.SelectedIndex = Zero;
+            var menuOptions = SessionUtil.GetMenuOptions;
+            var dropDownItem = toolStripSplitButton1.DropDownItems;
+            dropDownItem.Clear();
+            menuOptions.ForEach(item =>
+            {
+                var child = new ToolStripMenuItem { Tag = item, Text = item.Name };
+                child.Click += Child_Click;
+                dropDownItem.Add(child);
+            });
 #if DEBUG
             DebugFormLoad();
 #endif
             SetUpTimer();
+        }
+
+        private void Child_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem menuitem) return;
+            if (menuitem.Tag is not SettingMenuModel model) return;
+            var isFormOpen = false;
+            foreach(var form in Application.OpenForms)
+            {
+                if (form is not FormSettings settings) continue;
+                isFormOpen = true;
+                settings.SetMenuIndex(model.Id);
+                settings.Focus();
+            }
+            if (isFormOpen) return;
+            var fs = new FormSettings(model.Id)
+            {
+                StartPosition = FormStartPosition.CenterParent
+            };
+            fs.ShowDialog();
         }
 
         private void ComboBox_DataSourceChanged(object sender, EventArgs e)

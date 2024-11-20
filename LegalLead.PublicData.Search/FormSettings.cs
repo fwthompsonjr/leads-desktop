@@ -1,20 +1,27 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace LegalLead.PublicData.Search
 {
     public partial class FormSettings : Form
     {
-        public FormSettings()
+        public FormSettings(int menuId = 0)
         {
             InitializeComponent();
             IsMdiContainer = true;
+            var options = SessionUtil.GetMenuOptions;
             cboSelection.DataSource = options;
             cboSelection.DisplayMember = "Name";
             cboSelection.ValueMember = "Id";
             cboSelection.SelectedIndexChanged += CboSelection_SelectedIndexChanged;
-            cboSelection.SelectedIndex = 0;
+            if (options.Exists(x => x.Id == menuId))
+            {
+                cboSelection.SelectedIndex = menuId;
+            }
             CboSelection_SelectedIndexChanged(null, null);
         }
 
@@ -25,49 +32,32 @@ namespace LegalLead.PublicData.Search
                 if (item is Form frm) { frm.Close(); }
             }
             panel1.Controls.Clear();
-            if (cboSelection.SelectedItem is not SettingModel model)
+            if (cboSelection.SelectedItem is not SettingMenuModel model)
             {
                 return;
             }
-            switch (model.Id)
+            Form form = model.Id switch
             {
-                case 0:
-                    var fschange = new FsChangePassword
-                    {
-                        TopLevel = false
-                    };
-                    panel1.Controls.Add(fschange);
-                    RenderChild(fschange);
-                    break;
-                case 1:
-                    var fscounty = new FsCountySetting
-                    {
-                        TopLevel = false
-                    };
-                    panel1.Controls.Add(fscounty);
-                    RenderChild(fscounty);
-                    break;
-                default:
-                    break;
-            }
+                0 => new FsChangePassword { TopLevel = false },
+                1 => new FsCountySetting { TopLevel = false },
+                _ => null
+            };
+            if (form == null) return;
+            panel1.Controls.Add(form);
+            RenderChild(form);
         }
         private static void RenderChild(Form fschange)
-        {
+        {   
             fschange.FormBorderStyle = FormBorderStyle.None;
             fschange.Dock = DockStyle.Fill;
             fschange.Show();
         }
-        private sealed class SettingModel
-        {
-            public int Id { get; set; } = 0;
-            public string Name { get; set; } = string.Empty;
-        }
 
-        private static readonly List<SettingModel> options
-            = new()
-            {
-                new SettingModel() { Id = 0, Name = "Change Password" },
-                new SettingModel() { Id = 1, Name = "County Permissions" }
-            };
+        internal void SetMenuIndex(int id)
+        {
+            if (!SessionUtil.GetMenuOptions.Exists(x => x.Id == id)) return;
+            cboSelection.SelectedIndex = id;
+            CboSelection_SelectedIndexChanged(null, null);
+        }
     }
 }

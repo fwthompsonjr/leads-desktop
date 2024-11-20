@@ -514,7 +514,7 @@ namespace LegalLead.PublicData.Search
 
         private void ToolStripSplitButton1_ButtonClick(object sender, EventArgs e)
         {
-            var settings = new FormSettings();
+            var settings = new FormSettings() { StartPosition = FormStartPosition.CenterParent };
             settings.ShowDialog();
         }
     }
