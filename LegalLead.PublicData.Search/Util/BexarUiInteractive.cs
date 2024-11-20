@@ -32,7 +32,7 @@ namespace LegalLead.PublicData.Search.Util
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
         }
-
+        public bool DriverReadHeadless { get; set; } = true;
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<CaseItemDto> CaseStyles { get; private set; } = new List<CaseItemDto>();
@@ -46,7 +46,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             var postsearchtypes = new List<Type> { typeof(BexarFetchFilingDetail) };
             var getitemsearchtypes = new List<Type> { typeof(BexarFetchCaseDetail) };
-            var driver = GetDriver();
+            var driver = GetDriver(true);
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
@@ -112,6 +112,7 @@ namespace LegalLead.PublicData.Search.Util
             dates.ForEach(d =>
             {
                 IsDateRangeComplete = false;
+                Console.WriteLine("Searching for records on date: {0:d}", d);
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
                 {
@@ -141,6 +142,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 courtDates.ForEach(d =>
                 {
+                    Console.WriteLine("Getting case details for: {0:d}", d);
                     parameters.Search(d, d, CourtType);
                     postcommon.ForEach(a =>
                     {

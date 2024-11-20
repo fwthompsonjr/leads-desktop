@@ -85,8 +85,8 @@ namespace LegalLead.PublicData.Search
                 Console.WriteLine(CommonKeyIndexes.UnexpectedErrorOccurred);
                 Console.WriteLine(ex.Message);
 
-                Console.WriteLine(CommonKeyIndexes.DashedLine); // "- - - - - - - - - - - - - - - - -");
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(CommonKeyIndexes.DashedLine);
+                
             }
 #pragma warning restore CA1031 // Do not catch general exception types
             finally

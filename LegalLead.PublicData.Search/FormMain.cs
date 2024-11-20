@@ -212,7 +212,6 @@ namespace LegalLead.PublicData.Search
                 Console.WriteLine(ex.Message);
 
                 Console.WriteLine(CommonKeyIndexes.DashedLine);
-                Console.WriteLine(ex.StackTrace);
             }
             finally
             {
@@ -486,7 +485,6 @@ namespace LegalLead.PublicData.Search
                 Console.WriteLine(ex.Message);
 
                 Console.WriteLine(CommonKeyIndexes.DashedLine);
-                Console.WriteLine(ex.StackTrace);
             }
             finally
             {

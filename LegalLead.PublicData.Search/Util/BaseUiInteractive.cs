@@ -32,7 +32,7 @@ namespace LegalLead.PublicData.Search.Util
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
         }
         [ExcludeFromCodeCoverage(Justification = "Interacts with system, creating web browser component")]
-        public virtual IWebDriver GetDriver(bool headless = false)
+        public virtual IWebDriver GetDriver(bool headless = true)
         {
             return new FireFoxProvider().GetWebDriver(headless);
         }
