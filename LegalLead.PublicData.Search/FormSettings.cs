@@ -1,9 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using static System.Windows.Forms.Design.AxImporter;
 
 namespace LegalLead.PublicData.Search
 {
@@ -48,7 +46,7 @@ namespace LegalLead.PublicData.Search
             RenderChild(form);
         }
         private static void RenderChild(Form fschange)
-        {   
+        {
             fschange.FormBorderStyle = FormBorderStyle.None;
             fschange.Dock = DockStyle.Fill;
             fschange.Show();

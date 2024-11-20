@@ -54,6 +54,6 @@ namespace LegalLead.PublicData.Search.Helpers
                 new(){ Category = "search", Name = "End Date:", Index = 2},
                 new(){ Category = "browser", Name = "Open Headless:", Index = 10, IsSecured = true, Value = "true"},
             };
-        private static readonly object locker = new ();
+        private static readonly object locker = new();
     }
 }

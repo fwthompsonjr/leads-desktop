@@ -3,14 +3,8 @@ using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 
@@ -86,7 +80,7 @@ namespace LegalLead.PublicData.Search
 
                 _model.Category = item.Category;
                 _model.Name = item.Name;
-                _model.Value= item.Value;
+                _model.Value = item.Value;
 
                 isEnabled = true;
                 txKeyName.Text = _model.Name;
@@ -112,7 +106,8 @@ namespace LegalLead.PublicData.Search
                 Width = 80
             };
             columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            for (var i = 0; i < columns.Count; i++) { 
+            for (var i = 0; i < columns.Count; i++)
+            {
                 var col = columns[i];
                 col.ReadOnly = true;
             }
@@ -130,7 +125,7 @@ namespace LegalLead.PublicData.Search
             var webdetail = UserAccountReader.GetAccountPermissions();
             return webdetail.Equals("-1");
         }
-        
+
         private static readonly ISessionPersistance UserAccountReader =
             SessionPersistenceContainer
             .GetContainer

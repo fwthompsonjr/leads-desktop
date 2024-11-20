@@ -244,7 +244,7 @@ namespace LegalLead.PublicData.Search
             if (sender is not ToolStripMenuItem menuitem) return;
             if (menuitem.Tag is not SettingMenuModel model) return;
             var isFormOpen = false;
-            foreach(var form in Application.OpenForms)
+            foreach (var form in Application.OpenForms)
             {
                 if (form is not FormSettings settings) continue;
                 isFormOpen = true;
