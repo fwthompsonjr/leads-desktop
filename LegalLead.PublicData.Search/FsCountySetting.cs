@@ -5,6 +5,7 @@ using LegalLead.PublicData.Search.Interfaces;
 using StructureMap.Pipeline;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -40,6 +41,7 @@ namespace LegalLead.PublicData.Search
                     });
                 }
             });
+            if (!allowAllCounties) vwlist.RemoveAll(x => !x.IsEnabled);
             dataGridView1.DataSource = vwlist;
             dataGridView1.CellContentClick += DataGridView1_CellContentClick;
 
@@ -48,8 +50,10 @@ namespace LegalLead.PublicData.Search
             txPassword.Enabled = false;
 
             _initalText = lbStatus.Text;
+            _initalColor = lbStatus.ForeColor;
         }
         private readonly string _initalText;
+        private readonly Color _initalColor;
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var isEnabled = false;
@@ -85,6 +89,45 @@ namespace LegalLead.PublicData.Search
 
         }
 
+        private void BtnSubmit_Click(object sender, EventArgs e)
+        {
+            var errorColor = Color.Red;
+            lbStatus.Text = _initalText;
+            lbStatus.ForeColor = _initalColor;
+            _model.UserName = txUserName.Text;
+            _model.Password = txPassword.Text;
+            var errors = _model.Validate(out var isPassed);
+            if (!isPassed)
+            {
+                lbStatus.ForeColor = errorColor;
+                lbStatus.Text = string.Join(Environment.NewLine, errors.Select(s => s.ErrorMessage));
+                return;
+            }
+            // make api call
+            var success = CountyService.ChangePassword(_model);
+            if (success)
+            {
+                // update list objects
+                var bounditem = vwlist.Find(x => x.CountyName == _model.CountyName);
+                if (bounditem != null)
+                {
+                    bounditem.UserName = txUserName.Text;
+                    bounditem.UserPassword = GetMasked(txPassword.Text);
+                }
+                var subset = list.FindAll(x => x.CountyName == _model.CountyName);
+                subset.ForEach(s =>
+                {
+                    s.UserName = txUserName.Text;
+                    s.UserPassword = txPassword.Text;
+                });
+            }
+            else
+            {
+                lbStatus.ForeColor = errorColor;
+            }
+            var message = success ? "Password change successfully" : "An error occurred processing request";
+            lbStatus.Text = message;
+        }
         private static bool IsAllCountyEnabled()
         {
             var webdetail = UserAccountReader.GetAccountPermissions();
@@ -133,18 +176,9 @@ namespace LegalLead.PublicData.Search
             SessionPersistenceContainer
             .GetContainer
             .GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
-
-        private void BtnSubmit_Click(object sender, EventArgs e)
-        {
-            lbStatus.Text = _initalText;
-            _model.UserName = txUserName.Text;
-            _model.Password = txPassword.Text;
-            var errors = _model.Validate(out var isPassed);
-            if (!isPassed) {
-                lbStatus.Text = string.Join(Environment.NewLine, errors.Select(s => s.ErrorMessage));
-                return;
-            }
-            // make api call
-        }
+        private static readonly UserCountyPasswordService CountyService =
+            SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<UserCountyPasswordService>();
     }
 }

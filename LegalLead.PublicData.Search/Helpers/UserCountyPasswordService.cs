@@ -16,7 +16,8 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             if (string.IsNullOrEmpty(Landing)) return false;
             var response = GetHttpRespone<UserCountyPasswordModel, object>(model, Landing);
-            return response != null;
+            if (response == null) return false;
+            return filePersistence.UpdateAccountCredential(model);
         }
 
         private static string Landing
@@ -30,7 +31,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 return landing;
             }
         }
-
+        private static readonly SessionApiFilePersistence filePersistence = new();
         private static string landing = null;
 
     }

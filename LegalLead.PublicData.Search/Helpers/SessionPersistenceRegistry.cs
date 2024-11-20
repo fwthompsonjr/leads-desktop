@@ -20,6 +20,7 @@ namespace LegalLead.PublicData.Search.Helpers
             For<SessionMonthToDatePersistence>().Add<SessionMonthToDatePersistence>().Singleton();
             // user management
             For<UserPasswordChangeService>().Add<UserPasswordChangeService>().Singleton();
+            For<UserCountyPasswordService>().Add<UserCountyPasswordService>().Singleton();
         }
     }
 }

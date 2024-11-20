@@ -1,4 +1,6 @@
-﻿using LegalLead.PublicData.Search.Extensions;
+﻿using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -67,6 +69,20 @@ namespace LegalLead.PublicData.Search.Helpers
             return selected.Model;
         }
 
+        public bool UpdateAccountCredential(UserCountyPasswordModel model)
+        {
+            var county = model.CountyName;
+            var token = $"{model.UserName}|{model.Password}";
+            var bo = Read().ToInstance<LeadUserSecurityBo>();
+            if (bo == null) return false;
+            var counties = bo.User.CountyData.ToInstance<List<LeadCountyTokenModel>>();
+            var selected = counties?.Find(x => x.CountyName.Equals(county, Oic));
+            if (selected == null) return false;
+            selected.Model = token;
+            bo.User.CountyData = JsonConvert.SerializeObject(counties);
+            Write(JsonConvert.SerializeObject(bo));
+            return true;
+        }
 
         public int GetUsageLimit(int countyId)
         {
