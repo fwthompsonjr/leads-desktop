@@ -1,0 +1,61 @@
+name: "TEST : Release Process"
+
+on:
+  push:
+    branches:
+      - "feature/app-setup*"
+
+
+env:
+  ZIP_SETUP_FILE_NAME: "installation.zip"
+  ZIP_EXCEL_FILE_NAME: "excel-addin.zip"
+  NET_VERSION: "8.0.x"
+  NUGET_CERT_REVOCATION_MODE: offline
+
+jobs:
+  generate_release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Content Variables
+        shell: pwsh
+        run: |
+          ./fetch-zip-version.ps1 -pattern "legal-lead-install*" -key "ASSET_SETUP_FILE"
+          ./fetch-zip-version.ps1 -pattern "legal-lead-excel-addin*" -key "ASSET_EXCEL_FILE"
+
+      - name: Set Build Version
+        shell: bash
+        run: |
+            echo "BUILD_VERSION=${{format('{0}.{1}', vars.LEGALLEAD_READER_PREFIX, github.run_number)}}" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.LEGALLEAD_INSTALLATION_KEY }}
+        with:
+          tag_name: ${{format('v{0}', env.BUILD_VERSION)}}
+          release_name: ${{format('Release - {0}', env.BUILD_VERSION)}}
+          draft: true
+          prerelease: true
+          body_path: CHANGELOG.md
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.LEGALLEAD_INSTALLATION_KEY }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ASSET_SETUP_FILE }}
+          asset_name: ${{ env.ZIP_SETUP_FILE_NAME }}
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.LEGALLEAD_INSTALLATION_KEY }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ASSET_EXCEL_FILE }}
+          asset_name: ${{ env.ZIP_EXCEL_FILE_NAME }}
+          asset_content_type: application/zip
