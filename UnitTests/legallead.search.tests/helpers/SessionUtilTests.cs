@@ -18,7 +18,8 @@ namespace legallead.search.tests.helpers
         [Fact]
         public void ServiceCanInitialize()
         {
-            var error = Record.Exception(() => {
+            var error = Record.Exception(() =>
+            {
                 SessionUtil.Initialize();
             });
             Assert.Null(error);

@@ -12,7 +12,7 @@ namespace LegalLead.PublicData.Search.Util
     public class DallasSetPager : BaseDallasSearchAction
     {
         public override int OrderId => 50;
-        public bool IsTesting {  get; set; }
+        public bool IsTesting { get; set; }
         public override object Execute()
         {
             var js = JsScript;

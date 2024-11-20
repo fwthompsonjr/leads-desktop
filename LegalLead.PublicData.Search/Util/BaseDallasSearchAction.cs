@@ -3,8 +3,8 @@ using LegalLead.PublicData.Search.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util

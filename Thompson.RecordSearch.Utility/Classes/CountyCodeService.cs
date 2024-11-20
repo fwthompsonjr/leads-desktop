@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Enumerations;
 using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -31,14 +30,32 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public string GetWebAddress(int id)
         {
-            var indexes = new[] { 0, 1 };
             if (!indexes.Contains(id)) return string.Empty;
             if (Map == null || string.IsNullOrEmpty(Map.Web)) return string.Empty;
-            var suffix = id == 1 ? Map.Landings.County : Map.Landings.Login;
+            var suffix = GetSuffix(id);
             if (string.IsNullOrEmpty(suffix)) return string.Empty;
             return string.Concat(Map.Web, suffix);
         }
 
+        private string GetSuffix(int id)
+        {
+            if (!indexes.Contains(id)) return string.Empty;
+            var dto = id < 10 ? Map.Landings : Map.ApiLandings;
+            var pos = id % 10;
+            switch (pos)
+            {
+                case 0: return dto.Login ?? string.Empty;
+                case 1: return dto.County ?? string.Empty;
+                case 2: return dto.Change ?? string.Empty;
+                case 3: return dto.Indexes ?? string.Empty;
+                case 4: return dto.Register ?? string.Empty;
+                case 5: return dto.UsageCreate ?? string.Empty;
+                case 6: return dto.UsageIncrement ?? string.Empty;
+                case 7: return dto.UsageList ?? string.Empty;
+                default: return string.Empty;
+            }
+        }
+        private static readonly int[] indexes = Enum.GetValues<WebLandingName>().Select(s => (int)s).ToArray();
         private static CountyCodeMapDto GetMap
         {
             get

@@ -9,7 +9,9 @@ namespace LegalLead.PublicData.Search.Helpers
         public AuthenicationRegistry()
         {
             For<IHttpService>().Add<HttpService>().Singleton();
-            For<IAuthenicationService>().Add<AuthenicationService>().Singleton();
+            For<IAuthenicationService>().Use<ApiAuthenicationService>().Named("enhanced").Singleton();
+            For<IAuthenicationService>().Add<AuthenicationService>().Named("legacy").Singleton();
+            For<SessionUserPersistence>().Add<SessionUserPersistence>().Singleton();
         }
     }
 }

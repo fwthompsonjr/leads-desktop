@@ -1,7 +1,8 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Util;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +13,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
-using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
@@ -31,13 +31,14 @@ namespace LegalLead.PublicData.Search
             string version = appName.Version.ToString();
             Text = string.Format(CultureInfo.CurrentCulture, @"{0} - {1}",
                 appName.Name, version);
+            SubmitButtonText = button1.Text;
             FormClosing += FormMain_FormClosing;
             Shown += FormMain_Shown;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
         }
-
+        private readonly string SubmitButtonText;
         private void FormMain_Shown(object sender, EventArgs e)
         {
             SetInteraction(false);
@@ -51,6 +52,8 @@ namespace LegalLead.PublicData.Search
                     Debug.WriteLine("Login success");
                     SetInteraction(true);
                     FilterWebSiteByAccount();
+                    UsageReader.WriteUserRecord();
+                    CboWebsite_SelectedValueChanged(null, null);
                     break;
                 default:
                     Close();
@@ -60,8 +63,11 @@ namespace LegalLead.PublicData.Search
 
         private void FilterWebSiteByAccount()
         {
-            var details = GetPermissionsMap(SessionUtil.Read());
-            if (details == null || string.IsNullOrEmpty(details.WebPermissions))
+            var container = SessionPersistenceContainer.GetContainer;
+            var instance = container.GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
+            var webdetail = instance.GetAccountPermissions();
+            SetUserName();
+            if (string.IsNullOrEmpty(webdetail))
             {
                 // remove all websites from cboWebsite
                 // and disable the controls
@@ -69,10 +75,10 @@ namespace LegalLead.PublicData.Search
                 cboWebsite.Items.Clear();
                 return;
             }
-            if (details.WebPermissions.Equals("-1")) return;
-            var webid = details.WebPermissions.Split(',')
+            if (webdetail.Equals("-1")) return;
+            var webid = webdetail.Split(',')
                 .Where(w => { return int.TryParse(w, out var _); })
-                .Select(s => int.Parse(s))
+                .Select(s => int.Parse(s, CultureInfo.CurrentCulture))
                 .ToList();
             if (!webid.Any())
             {
@@ -93,20 +99,28 @@ namespace LegalLead.PublicData.Search
             cboWebsite.SelectedIndex = 0;
         }
 
-        private static PermissionMapDto GetPermissionsMap(string details)
+        private static string GetUserName()
         {
+            var container = AuthenicationContainer.GetContainer;
+            var userservice = container.GetInstance<SessionUserPersistence>();
+            return userservice.GetUserName();
+        }
+        private void SetUserName()
+        {
+            var username = string.Empty;
             try
             {
-                if (string.IsNullOrEmpty(details)) return null;
-                return JsonConvert.DeserializeObject<PermissionMapDto>(details);
+                username = GetUserName();
+                if (string.IsNullOrEmpty(username)) return;
             }
-            catch (Exception)
+            finally
             {
-
-                return null;
+                var isVisible = !string.IsNullOrEmpty(username);
+                var txt = isVisible ? $" | {username}" : string.Empty;
+                tsUserName.Text = txt;
+                tsUserName.Visible = isVisible;
             }
         }
-
         private void SetInteraction(bool isEnabled)
         {
             cboWebsite.Enabled = isEnabled;
@@ -432,6 +446,16 @@ namespace LegalLead.PublicData.Search
                     throw new KeyNotFoundException(CommonKeyIndexes.NoDataFoundFromCaseExtract);
                 }
                 CaseData.WebsiteId = siteData.Id;
+                // write search count to api
+                var count = CaseData.PeopleList.Count;
+                if (count > 0)
+                {
+                    var member = (SourceType)siteData.Id;
+                    var userName = GetUserName();
+                    if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
+                    UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count);
+                    UsageReader.WriteUserRecord();
+                }
                 if (!nonactors.Contains(siteData.Id))
                 {
                     ExcelWriter.WriteToExcel(CaseData);
@@ -480,6 +504,18 @@ namespace LegalLead.PublicData.Search
                 Refresh();
             }));
         }
+        private static readonly SessionUsagePersistence UsageIncrementer
+            = SessionPersistenceContainer.GetContainer
+            .GetInstance<SessionUsagePersistence>();
+        private static readonly SessionMonthToDatePersistence UsageReader
+            = SessionPersistenceContainer.GetContainer
+            .GetInstance<SessionMonthToDatePersistence>();
 
+
+        private void ToolStripSplitButton1_ButtonClick(object sender, EventArgs e)
+        {
+            var settings = new FormSettings();
+            settings.ShowDialog();
+        }
     }
 }

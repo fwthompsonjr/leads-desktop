@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Interfaces;
 using OpenQA.Selenium.Support.UI;
 using System;
 using Thompson.RecordSearch.Utility.Interfaces;
@@ -10,6 +11,8 @@ namespace LegalLead.PublicData.Search.Util
     {
         public DallasAuthenicateSubmit(ICountyCodeReader reader) : base(reader)
         {
+            SessionPersistance = SessionPersistenceContainer.GetContainer
+                .GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
         }
 
         public override int OrderId => 6;
@@ -21,9 +24,9 @@ namespace LegalLead.PublicData.Search.Util
 
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-            var userId = SessionUtil.GetCountyAccountName();
+
             if (string.IsNullOrEmpty(_credential))
-                _credential = GetCountyCode(_reader, userId);
+                _credential = SessionPersistance.GetAccountCredential("dallas");
 
             if (string.IsNullOrEmpty(_credential)) return false;
             if (!_credential.Contains(pipe)) return false;

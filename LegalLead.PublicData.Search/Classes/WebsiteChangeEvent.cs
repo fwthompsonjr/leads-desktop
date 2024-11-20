@@ -83,7 +83,15 @@ namespace LegalLead.PublicData.Search
             cbo.DataSource = dataSource;
             cbo.DisplayMember = CommonKeyIndexes.NameProperCase;
             cbo.ValueMember = CommonKeyIndexes.IdProperCase;
-            cbo.SelectedIndex = caseIndex;
+            try
+            {
+                cbo.SelectedIndex = caseIndex;
+            }
+            catch
+            {
+                cbo.SelectedIndex = 0;
+            }
+
 
             // restore event handler
             cbo.SelectedIndexChanged += GetMain.CboSearchType_SelectedIndexChanged;
@@ -111,12 +119,12 @@ namespace LegalLead.PublicData.Search
         private const int FortBendIndx = (int)SourceType.FortBendCounty;
         private const int WilliamsonIndx = (int)SourceType.WilliamsonCounty;
         private const int GraysonIndx = (int)SourceType.GraysonCounty;
-        private static readonly List<int> boxindicies = new() { 
-            DallasIndx, 
-            TravisIndx, 
-            BexarIndx, 
-            HidalgoIndx, 
-            ElPasoIndx, 
+        private static readonly List<int> boxindicies = new() {
+            DallasIndx,
+            TravisIndx,
+            BexarIndx,
+            HidalgoIndx,
+            ElPasoIndx,
             FortBendIndx,
             WilliamsonIndx,
             GraysonIndx

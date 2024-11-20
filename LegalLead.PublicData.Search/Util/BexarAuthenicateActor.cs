@@ -1,8 +1,8 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Collections.Generic;
-using OpenQA.Selenium;
 using LegalLead.PublicData.Search.Common;
+using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LegalLead.PublicData.Search.Util
 {
