@@ -63,7 +63,7 @@ namespace LegalLead.PublicData.Search.Util
             catch (Exception ex)
             {
                 // no action on excpetion thrown.
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
             }
             finally
             {
