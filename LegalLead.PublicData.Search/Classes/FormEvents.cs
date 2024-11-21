@@ -387,13 +387,17 @@ namespace LegalLead.PublicData.Search
         protected void ProcessStartingMessage()
         {
             var source = (WebNavigationParameter)cboWebsite.SelectedItem;
+
+            var strStarting = dteStart.Value.Date.ToShortDateString();
+            var strEnding = dteEnding.Value.Date.ToShortDateString();
+            WriteStartSettings(source.Name, strStarting, strEnding);
             var message = CommonKeyIndexes.StartingFetchRequest
                 + Environment.NewLine + " " +
                 CommonKeyIndexes.WebsiteLabel + source.Name
                 + Environment.NewLine + " " +
-                CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
+                CommonKeyIndexes.StartDateLabel + strStarting
                 + Environment.NewLine + " " +
-                CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
+                CommonKeyIndexes.EndDateLabel + strEnding
                 + Environment.NewLine +
                 CommonKeyIndexes.StartTime + DateTime.Now.ToString(
                     CommonKeyIndexes.GeneralLongDate,
@@ -552,7 +556,22 @@ namespace LegalLead.PublicData.Search
             }));
         }
 
+        private static void WriteStartSettings(string siteName, string startDate, string endDate)
+        {
+            const string settingName = "search";
+            var settings = new List<UserSettingChangeViewModel>()
+            {
+                new(){ Category = settingName, Name = "Last County:", Value = siteName },
+                new(){ Category = settingName, Name = "Start Date:", Value = startDate },
+                new(){ Category = settingName, Name = "End Date:", Value = endDate },
+            };
+            settings.ForEach(x => { SettingsWriter.Change(x); });
+        }
 
+        private static readonly SessionSettingPersistence SettingsWriter =
+            SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionSettingPersistence>();
 
         private static readonly SessionApiFilePersistence UsageGovernance
             = SessionPersistenceContainer

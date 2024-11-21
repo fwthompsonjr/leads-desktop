@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -44,9 +45,10 @@ namespace LegalLead.PublicData.Search.Util
         private readonly List<ICountySearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
+            using var hider = new HideProcessWindowHelper();
             var postsearchtypes = new List<Type> { typeof(BexarFetchFilingDetail) };
             var getitemsearchtypes = new List<Type> { typeof(BexarFetchCaseDetail) };
-            var driver = GetDriver(true);
+            var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));

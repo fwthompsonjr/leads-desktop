@@ -19,6 +19,7 @@ namespace LegalLead.PublicData.Search.Util
 {
     public abstract class BaseUiInteractive : BaseWebIneractive
     {
+        public bool DriverReadHeadless { get; set; } = true;
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<CaseItemDto> CaseStyles { get; private set; } = new List<CaseItemDto>();
@@ -32,9 +33,9 @@ namespace LegalLead.PublicData.Search.Util
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
         }
         [ExcludeFromCodeCoverage(Justification = "Interacts with system, creating web browser component")]
-        public virtual IWebDriver GetDriver(bool headless = true)
+        public virtual IWebDriver GetDriver(bool headless = false)
         {
-            return new FireFoxProvider().GetWebDriver(headless);
+            return new FireFoxProvider().GetWebDriver(DriverReadHeadless);
         }
 
         protected abstract string GetCourtAddress(string courtType, string court);

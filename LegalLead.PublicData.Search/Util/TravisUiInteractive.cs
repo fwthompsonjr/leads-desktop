@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -38,7 +39,7 @@ namespace LegalLead.PublicData.Search.Util
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
         }
-
+        public bool DriverReadHeadless { get; set; } = true;
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<TravisCaseStyleDto> CaseStyles { get; private set; } = new List<TravisCaseStyleDto>();
@@ -49,12 +50,13 @@ namespace LegalLead.PublicData.Search.Util
         private readonly List<ITravisSearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
+            using var hider = new HideProcessWindowHelper();
             var postsearchtypes = new List<Type> { };
             var parameters = new TravisSearchProcess();
             var dates = TravisSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
-            var driver = GetDriver();
+            var driver = GetDriver(DriverReadHeadless);
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
             if (ExecutionCancelled || People.Count == 0) return result;
