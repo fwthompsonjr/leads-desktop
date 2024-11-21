@@ -110,6 +110,7 @@ namespace LegalLead.PublicData.Search
                 var alternate = $"{member} Search disabled. {subtext}";
                 var txt = isEnabled ? SubmitButtonText : alternate;
                 button1.Text = txt;
+                if (ButtonDentonSetting.Visible) { ButtonDentonSetting.Enabled = isEnabled; }
             }
 
         }
