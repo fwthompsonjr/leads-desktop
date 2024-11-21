@@ -9,6 +9,7 @@ using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]
     public class HttpService : IHttpService
     {
         public async Task<TItem> PostAsJsonAsync<T, TItem>(HttpClient client, string webaddress, T value, CancellationToken cancellationToken = default)

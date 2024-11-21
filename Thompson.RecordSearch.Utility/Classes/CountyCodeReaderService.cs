@@ -12,6 +12,7 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]
     public class CountyCodeReaderService : ICountyCodeReader
     {
         private readonly IHttpService _httpService;
@@ -52,6 +53,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
+        
         private string GetRemoteData(CountyCodeDto code, string uid = "")
         {
             const string fallback = "default";

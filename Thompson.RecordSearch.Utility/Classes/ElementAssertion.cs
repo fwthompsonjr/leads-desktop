@@ -139,7 +139,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var message = string.Format(
                 CultureInfo.CurrentCulture,
                 CommonKeyIndexes.ElementClassNotFound, elementName, className);
-            var hasClass = allClasses.Any(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
+            var hasClass = allClasses.ToList().Exists(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
             if (!hasClass)
             {
                 Console.WriteLine(message);
@@ -157,7 +157,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var found = PageDriver.FindElement(selector, 10);
             var classes = found.GetAttribute(CommonKeyIndexes.ClassAttribute) ?? string.Empty;
             var allClasses = classes.Split(' ');
-            return allClasses.Any(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
+            return allClasses.ToList().Exists(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public bool ContainsAttribute(By selector, string attributeName, string attributeValue)
@@ -197,7 +197,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var message = string.Format(
                 CultureInfo.CurrentCulture,
                 CommonKeyIndexes.ClassNameFound, elementName, className);
-            var hasClass = allClasses.Any(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
+            var hasClass = allClasses.ToList().Exists(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
             if (hasClass)
             {
                 Console.WriteLine(message);
@@ -293,16 +293,16 @@ namespace Thompson.RecordSearch.Utility.Classes
             var startDate = data.StartDate.ToString(dteFmt, CultureInfo.CurrentCulture.DateTimeFormat);
             var endDate = data.EndingDate.ToString(dteFmt, CultureInfo.CurrentCulture.DateTimeFormat);
             var searchTypeIndex = data.Parameters.Keys
-                .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.SearchComboIndex,
+                .Find(x => x.Name.Equals(CommonKeyIndexes.SearchComboIndex,
                 StringComparison.CurrentCultureIgnoreCase));
             var searchTypeId = searchTypeIndex == null ? 0 : Convert.ToInt32(searchTypeIndex.Value,
                 CultureInfo.CurrentCulture);
             var caseTypeIndex = data.Parameters.Keys
-                .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.CaseSearchType,
+                .Find(x => x.Name.Equals(CommonKeyIndexes.CaseSearchType,
                 StringComparison.CurrentCultureIgnoreCase));
             var caseType = caseTypeIndex == null ? string.Empty : caseTypeIndex.Value;
             var districtSearchFlag = data.Parameters.Keys
-                .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType,
+                .Find(x => x.Name.Equals(CommonKeyIndexes.DistrictSearchType,
                 StringComparison.CurrentCultureIgnoreCase));
             var districtType = districtSearchFlag == null ? string.Empty : districtSearchFlag.Value;
             var isDistrictSearch = districtSearchFlag != null;
@@ -324,7 +324,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (!string.IsNullOrEmpty(caseType))
             {
                 var crimalLink = data.Parameters.Keys
-                    .FirstOrDefault(x => x.Name.Equals(CommonKeyIndexes.CriminalLinkQuery,
+                    .Find(x => x.Name.Equals(CommonKeyIndexes.CriminalLinkQuery,
                     StringComparison.CurrentCultureIgnoreCase));
                 if (isCriminalSearch && crimalLink != null)
                 {
@@ -352,7 +352,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     item.Name,
                     item.FriendlyName,
                     item.Value);
-                var navigator = navigations.FirstOrDefault(f =>
+                var navigator = navigations.Find(f =>
                     f.Name.Equals(item.Name, StringComparison.CurrentCultureIgnoreCase));
                 if (navigator == null)
                 {
