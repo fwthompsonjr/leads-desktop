@@ -29,7 +29,7 @@ namespace LegalLead.PublicData.Search
             {
                 var aa = a.Category.CompareTo(b.Category);
                 if (aa != 0) return aa;
-                return a.Name.CompareTo(b.Name);
+                return a.Index.CompareTo(b.Index);
             });
             _vwlist = list.JsonCast<List<UserSettingChangeViewModel>>();
             dataGridView1.DataSource = _vwlist;

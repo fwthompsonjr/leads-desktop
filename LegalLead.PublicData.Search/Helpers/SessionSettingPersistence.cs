@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Extensions;
 using System.Collections.Generic;
 using System.IO;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -23,6 +24,14 @@ namespace LegalLead.PublicData.Search.Helpers
             var content = Read();
             var dto = content.ToInstance<List<T>>();
             return dto ?? new();
+        }
+        public T GetSettingOrDefault<T>(string category, string key, T defaultValue)
+        {
+            var dto = GetList<UserSettingChangeModel>();
+            if (dto == null || dto.Count == 0) return defaultValue;
+            var item = dto.Find(x => x.Category == category && x.Name == key);
+            if (item == null) return defaultValue;
+            return item.Value.ChangeType(defaultValue);
         }
         public bool Change(UserSettingChangeViewModel model)
         {

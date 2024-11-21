@@ -354,6 +354,7 @@ namespace LegalLead.PublicData.Search
                 menuItem.Checked = id == item.Id;
             }
         }
+#if DEBUG
         private void DebugFormLoad()
         {
 
@@ -377,8 +378,8 @@ namespace LegalLead.PublicData.Search
                 dteEnding.Value = DateTime.Parse(endDate, CultureInfo.CurrentCulture.DateTimeFormat);
             }
         }
-
-        private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+#endif
+        private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
         {
             Application.DoEvents();
         }
@@ -485,7 +486,7 @@ namespace LegalLead.PublicData.Search
         {
             if (string.IsNullOrEmpty(path)) return 0;
             if (!File.Exists(path)) return 0;
-            return new System.IO.FileInfo(path).Length;
+            return new FileInfo(path).Length;
         }
         private string GetMessage(WebNavigationParameter source)
         {

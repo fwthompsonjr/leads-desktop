@@ -86,7 +86,7 @@ namespace LegalLead.PublicData.Search
                 Console.WriteLine(ex.Message);
 
                 Console.WriteLine(CommonKeyIndexes.DashedLine);
-                
+
             }
 #pragma warning restore CA1031 // Do not catch general exception types
             finally

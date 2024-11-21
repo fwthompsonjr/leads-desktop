@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
@@ -28,7 +25,8 @@ namespace LegalLead.PublicData.Search.Helpers
                 if (processes == null || processes.Count == 0) return;
                 foreach (var p in processes)
                 {
-                    while (p.MainWindowHandle == IntPtr.Zero) { 
+                    while (p.MainWindowHandle == IntPtr.Zero)
+                    {
                         p.Refresh();
                         Thread.Sleep(100);
                     }
@@ -38,7 +36,7 @@ namespace LegalLead.PublicData.Search.Helpers
         }
 
         private readonly System.Timers.Timer _timer;
-        private readonly object _timerLock = new ();
+        private readonly object _timerLock = new();
         private bool disposedValue;
         private const int SW_HIDE = 0;
         [System.Runtime.InteropServices.DllImport("user32.dll")]
