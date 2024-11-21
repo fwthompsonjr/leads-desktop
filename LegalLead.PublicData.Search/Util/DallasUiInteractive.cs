@@ -39,7 +39,6 @@ namespace LegalLead.PublicData.Search.Util
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = new List<DallasCaseStyleDto>();
-        public bool DriverReadHeadless { get; set; } = true;
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
@@ -219,7 +218,7 @@ namespace LegalLead.PublicData.Search.Util
                 var ln = address.Count - 1;
                 var last = address[ln].Trim();
                 var pieces = last.Split(' ');
-                person.Zip = pieces[pieces.Length - 1];
+                person.Zip = pieces[^1];
                 person.Address3 = last;
                 person.Address1 = address[0];
                 person.Address2 = string.Empty;

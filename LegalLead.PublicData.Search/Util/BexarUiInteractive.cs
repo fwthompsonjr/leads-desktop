@@ -33,7 +33,6 @@ namespace LegalLead.PublicData.Search.Util
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
         }
-        public bool DriverReadHeadless { get; set; } = true;
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<CaseItemDto> CaseStyles { get; private set; } = new List<CaseItemDto>();

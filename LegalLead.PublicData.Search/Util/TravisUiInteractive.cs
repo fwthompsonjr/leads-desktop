@@ -39,7 +39,6 @@ namespace LegalLead.PublicData.Search.Util
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
         }
-        public bool DriverReadHeadless { get; set; } = true;
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<TravisCaseStyleDto> CaseStyles { get; private set; } = new List<TravisCaseStyleDto>();
@@ -137,7 +136,7 @@ namespace LegalLead.PublicData.Search.Util
                     isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, a, locationId);
                 });
             });
-            parameters.Search(dates[0], dates[dates.Count - 1], CourtType);
+            parameters.Search(dates[0], dates[^1], CourtType);
         }
 
         private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, TravisSearchProcess parameters, ITravisSearchAction a, int locationId)
