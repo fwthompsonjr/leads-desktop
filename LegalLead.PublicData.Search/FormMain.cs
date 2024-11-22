@@ -481,8 +481,9 @@ namespace LegalLead.PublicData.Search
                 {
                     var member = (SourceType)siteData.Id;
                     var userName = GetUserName();
+                    var searchRange = $"{webmgr.StartDate:d} to {webmgr.EndingDate:d}";
                     if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
-                    UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count);
+                    UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count, searchRange);
                     UsageReader.WriteUserRecord();
                 }
                 if (!nonactors.Contains(siteData.Id))

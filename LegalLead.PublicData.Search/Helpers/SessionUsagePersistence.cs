@@ -14,11 +14,11 @@ namespace LegalLead.PublicData.Search.Helpers
             http = service;
         }
 
-        public virtual bool IncrementUsage(string userId, string county, int recordCount)
+        public virtual bool IncrementUsage(string userId, string county, int recordCount, string searchRange = "")
         {
             if (string.IsNullOrWhiteSpace(userId) || recordCount < 0) return false;
             if (string.IsNullOrEmpty(Landing)) return false;
-            var payload = new { UserName = userId, CountyName = county, MonthlyUsage = recordCount };
+            var payload = new { UserName = userId, CountyName = county, MonthlyUsage = recordCount, DateRange = searchRange };
             var response = GetHttpRespone<object, object>(payload, Landing);
             return response != null;
         }
