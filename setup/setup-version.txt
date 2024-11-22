@@ -1,5 +1,22 @@
 [
 	{
+		"id": "2.8.7",
+		"date": "2024-11-22 17:45",
+		"title": "Build custom screens for authenicated user",
+		"description": [
+			"## Problem:",
+			"",
+			"When a user runs application, ",
+			"I want to allow user to view and edit user specific content, ",
+			"so that application functions are clearly visible to consumer.",
+			"",
+			"## Resolution:",
+			"- Feature: add driver hide to county searches",
+			"- Feature: created service to read user settings",
+			"- Feature: bind user settings"
+		]
+	},
+	{
 		"id": "2.8.6",
 		"date": "2024-11-19 19:15",
 		"title": "Setup remote authenication and county management",
