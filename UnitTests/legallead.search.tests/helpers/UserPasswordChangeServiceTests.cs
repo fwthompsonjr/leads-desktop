@@ -1,13 +1,9 @@
 using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Helpers;
 using Moq;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
-using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace legallead.search.tests.helpers
 {

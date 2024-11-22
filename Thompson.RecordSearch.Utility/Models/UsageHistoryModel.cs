@@ -13,6 +13,7 @@ namespace Thompson.RecordSearch.Utility.Models
 
         [JsonProperty("createDate")]
         public DateTime CreateDate { get; set; }
+        public string DateRange { get; set; }
 
         [JsonProperty("incidentMonth")]
         public int IncidentMonth { get; set; }

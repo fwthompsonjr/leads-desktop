@@ -1,9 +1,10 @@
 ﻿using System;
+using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
-    public interface IWebInteractive
+    public interface IWebInteractive : IDriverHeadlessProperty
     {
         /// <summary>
         /// Gets or sets the ending date.

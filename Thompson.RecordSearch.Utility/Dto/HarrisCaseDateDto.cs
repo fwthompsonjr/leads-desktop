@@ -64,7 +64,7 @@ namespace Thompson.RecordSearch.Utility.Dto
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+                Console.WriteLine(ex.Message);
             }
             return list;
         }

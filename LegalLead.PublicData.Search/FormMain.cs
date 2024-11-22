@@ -17,6 +17,7 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {
+    using winforms = System.Windows.Forms;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
     public partial class FormMain : Form
@@ -53,6 +54,7 @@ namespace LegalLead.PublicData.Search
                     SetInteraction(true);
                     FilterWebSiteByAccount();
                     UsageReader.WriteUserRecord();
+                    ApplySavedSettings();
                     CboWebsite_SelectedValueChanged(null, null);
                     break;
                 default:
@@ -60,12 +62,20 @@ namespace LegalLead.PublicData.Search
                     break;
             }
         }
-
-        private void FilterWebSiteByAccount()
+        private static string GetAccountIndexes()
         {
             var container = SessionPersistenceContainer.GetContainer;
             var instance = container.GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
-            var webdetail = instance.GetAccountPermissions();
+            return instance.GetAccountPermissions();
+        }
+
+        private static bool IsAccountAdmin()
+        {
+            return GetAccountIndexes().Equals("-1");
+        }
+        private void FilterWebSiteByAccount()
+        {
+            var webdetail = GetAccountIndexes();
             SetUserName();
             if (string.IsNullOrEmpty(webdetail))
             {
@@ -146,6 +156,8 @@ namespace LegalLead.PublicData.Search
             {
                 toolStripStatus.Text = string.Format(CultureInfo.CurrentCulture, "{0}", v.Name);
                 toolStripStatus.ForeColor = v.Color;
+                var enabled = status != StatusType.Running;
+                SetControlEnabledState(enabled);
                 Refresh();
             }
             catch (Exception)
@@ -153,6 +165,19 @@ namespace LegalLead.PublicData.Search
                 SetStatusFromOffThread(v);
             }
             Application.DoEvents();
+        }
+
+        private void SetControlEnabledState(bool isEnabled)
+        {
+            // need to only toggle button-submit etc.
+            // when it has not been disabled by a different rule
+            var collection = tableLayoutPanel1.Controls;
+            foreach (Control control in collection)
+            {
+                if (control.Visible && control is winforms.ComboBox cx) { cx.Enabled = isEnabled; }
+                if (control.Visible && control is winforms.Button btn) { btn.Enabled = isEnabled; }
+                if (control.Visible && control is DateTimePicker dpicker) { dpicker.Enabled = isEnabled; }
+            }
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -212,7 +237,6 @@ namespace LegalLead.PublicData.Search
                 Console.WriteLine(ex.Message);
 
                 Console.WriteLine(CommonKeyIndexes.DashedLine);
-                Console.WriteLine(ex.StackTrace);
             }
             finally
             {
@@ -414,6 +438,11 @@ namespace LegalLead.PublicData.Search
         {
             try
             {
+                if (IsAccountAdmin())
+                {
+                    var displayMode = SettingsWriter.GetSettingOrDefault("browser", "Open Headless:", true);
+                    if (!displayMode) { webmgr.DriverReadHeadless = false; }
+                }
                 CaseData = await Task.Run(() =>
                 {
                     return webmgr.Fetch();
@@ -452,8 +481,9 @@ namespace LegalLead.PublicData.Search
                 {
                     var member = (SourceType)siteData.Id;
                     var userName = GetUserName();
+                    var searchRange = $"{webmgr.StartDate:d} to {webmgr.EndingDate:d}";
                     if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
-                    UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count);
+                    UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count, searchRange);
                     UsageReader.WriteUserRecord();
                 }
                 if (!nonactors.Contains(siteData.Id))
@@ -486,7 +516,6 @@ namespace LegalLead.PublicData.Search
                 Console.WriteLine(ex.Message);
 
                 Console.WriteLine(CommonKeyIndexes.DashedLine);
-                Console.WriteLine(ex.StackTrace);
             }
             finally
             {
@@ -495,12 +524,14 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        private void SetStatusFromOffThread(StatusState v)
+        private void SetStatusFromOffThread(StatusState v, StatusType status = StatusType.None)
         {
             this.Invoke(new Action(() =>
             {
                 toolStripStatus.Text = string.Format(CultureInfo.CurrentCulture, "{0}", v.Name);
                 toolStripStatus.ForeColor = v.Color;
+                var enabled = status != StatusType.Running;
+                SetControlEnabledState(enabled);
                 Refresh();
             }));
         }
@@ -514,7 +545,7 @@ namespace LegalLead.PublicData.Search
 
         private void ToolStripSplitButton1_ButtonClick(object sender, EventArgs e)
         {
-            var settings = new FormSettings();
+            var settings = new FormSettings() { StartPosition = FormStartPosition.CenterParent };
             settings.ShowDialog();
         }
     }

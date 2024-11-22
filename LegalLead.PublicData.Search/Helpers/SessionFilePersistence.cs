@@ -43,7 +43,7 @@ namespace LegalLead.PublicData.Search.Helpers
             }
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             lock (locker)
             {

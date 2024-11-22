@@ -215,7 +215,8 @@ namespace legallead.search.tests.helpers
                 mock.Setup(m => m.IncrementUsage(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<int>())).Returns(true).Verifiable();
+                    It.IsAny<int>(),
+                    It.IsAny<string>())).Returns(true).Verifiable();
                 UsagePersistence = mock.Object;
             }
         }

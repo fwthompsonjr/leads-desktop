@@ -26,8 +26,9 @@ namespace LegalLead.PublicData.Search.Util
         public override WebFetchResult Fetch()
         {
             const string countyName = "ElPaso";
+            using var hider = new HideProcessWindowHelper();
             var postsearchtypes = new List<Type> { typeof(NonActionSearch) };
-            var driver = GetDriver();
+            var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));

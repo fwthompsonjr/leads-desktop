@@ -70,6 +70,19 @@ namespace Thompson.RecordSearch.Utility.Extensions
             }
         }
 
+        public static string ToJsonString(this object obj)
+        {
+            if (obj == null) return null;
+            return JsonConvert.SerializeObject(obj);
+        }
+
+        public static T JsonCast<T>(this object obj)
+        {
+            if (obj == null) return default;
+            var json = obj.ToJsonString();
+            return json.ToInstance<T>();
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube",
             "S1854:Unused assignments should be removed",
             Justification = "False positive. Variable assignment is needed to update item in list")]

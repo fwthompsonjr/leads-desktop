@@ -14,7 +14,7 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
-        public IWebDriver GetWebDriver(bool headless = false)
+        public IWebDriver GetWebDriver(bool headless = true)
         {
             // make sure all instances of geckodriver are gone
             KillProcess("geckodriver");

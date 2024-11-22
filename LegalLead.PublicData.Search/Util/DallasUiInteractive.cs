@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -38,15 +39,15 @@ namespace LegalLead.PublicData.Search.Util
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = new List<DallasCaseStyleDto>();
-
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
         private readonly List<ICountySearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
+            using var hider = new HideProcessWindowHelper();
             var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
-            var driver = GetDriver();
+            var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
@@ -92,7 +93,7 @@ namespace LegalLead.PublicData.Search.Util
             catch (Exception ex)
             {
                 // no action on excpetion thrown.
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
             }
             finally
             {
@@ -110,6 +111,7 @@ namespace LegalLead.PublicData.Search.Util
             bool isCaptchaNeeded = true;
             dates.ForEach(d =>
             {
+                Console.WriteLine("Searching for records on date: {0:d}", d);
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
                 {
@@ -216,7 +218,7 @@ namespace LegalLead.PublicData.Search.Util
                 var ln = address.Count - 1;
                 var last = address[ln].Trim();
                 var pieces = last.Split(' ');
-                person.Zip = pieces[pieces.Length - 1];
+                person.Zip = pieces[^1];
                 person.Address3 = last;
                 person.Address1 = address[0];
                 person.Address2 = string.Empty;

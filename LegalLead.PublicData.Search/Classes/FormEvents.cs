@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using System;
@@ -109,6 +110,7 @@ namespace LegalLead.PublicData.Search
                 var alternate = $"{member} Search disabled. {subtext}";
                 var txt = isEnabled ? SubmitButtonText : alternate;
                 button1.Text = txt;
+                if (ButtonDentonSetting.Visible) { ButtonDentonSetting.Enabled = isEnabled; }
             }
 
         }
@@ -223,10 +225,39 @@ namespace LegalLead.PublicData.Search
 
             cboSearchType.SelectedIndex = Zero;
             cboCourts.SelectedIndex = Zero;
+            var menuOptions = SessionUtil.GetMenuOptions;
+            var dropDownItem = toolStripSplitButton1.DropDownItems;
+            dropDownItem.Clear();
+            menuOptions.ForEach(item =>
+            {
+                var child = new ToolStripMenuItem { Tag = item, Text = item.Name };
+                child.Click += Child_Click;
+                dropDownItem.Add(child);
+            });
 #if DEBUG
             DebugFormLoad();
 #endif
             SetUpTimer();
+        }
+
+        private void Child_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem menuitem) return;
+            if (menuitem.Tag is not SettingMenuModel model) return;
+            var isFormOpen = false;
+            foreach (var form in Application.OpenForms)
+            {
+                if (form is not FormSettings settings) continue;
+                isFormOpen = true;
+                settings.SetMenuIndex(model.Id);
+                settings.Focus();
+            }
+            if (isFormOpen) return;
+            var fs = new FormSettings(model.Id)
+            {
+                StartPosition = FormStartPosition.CenterParent
+            };
+            fs.ShowDialog();
         }
 
         private void ComboBox_DataSourceChanged(object sender, EventArgs e)
@@ -324,6 +355,7 @@ namespace LegalLead.PublicData.Search
                 menuItem.Checked = id == item.Id;
             }
         }
+#if DEBUG
         private void DebugFormLoad()
         {
 
@@ -347,8 +379,8 @@ namespace LegalLead.PublicData.Search
                 dteEnding.Value = DateTime.Parse(endDate, CultureInfo.CurrentCulture.DateTimeFormat);
             }
         }
-
-        private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+#endif
+        private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
         {
             Application.DoEvents();
         }
@@ -357,13 +389,17 @@ namespace LegalLead.PublicData.Search
         protected void ProcessStartingMessage()
         {
             var source = (WebNavigationParameter)cboWebsite.SelectedItem;
+
+            var strStarting = dteStart.Value.Date.ToShortDateString();
+            var strEnding = dteEnding.Value.Date.ToShortDateString();
+            WriteStartSettings(source.Name, strStarting, strEnding);
             var message = CommonKeyIndexes.StartingFetchRequest
                 + Environment.NewLine + " " +
                 CommonKeyIndexes.WebsiteLabel + source.Name
                 + Environment.NewLine + " " +
-                CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
+                CommonKeyIndexes.StartDateLabel + strStarting
                 + Environment.NewLine + " " +
-                CommonKeyIndexes.EndDateLabel + dteEnding.Value.Date.ToShortDateString()
+                CommonKeyIndexes.EndDateLabel + strEnding
                 + Environment.NewLine +
                 CommonKeyIndexes.StartTime + DateTime.Now.ToString(
                     CommonKeyIndexes.GeneralLongDate,
@@ -451,7 +487,7 @@ namespace LegalLead.PublicData.Search
         {
             if (string.IsNullOrEmpty(path)) return 0;
             if (!File.Exists(path)) return 0;
-            return new System.IO.FileInfo(path).Length;
+            return new FileInfo(path).Length;
         }
         private string GetMessage(WebNavigationParameter source)
         {
@@ -522,7 +558,22 @@ namespace LegalLead.PublicData.Search
             }));
         }
 
+        private static void WriteStartSettings(string siteName, string startDate, string endDate)
+        {
+            const string settingName = "search";
+            var settings = new List<UserSettingChangeViewModel>()
+            {
+                new(){ Category = settingName, Name = "Last County:", Value = siteName },
+                new(){ Category = settingName, Name = "Start Date:", Value = startDate },
+                new(){ Category = settingName, Name = "End Date:", Value = endDate },
+            };
+            settings.ForEach(x => { SettingsWriter.Change(x); });
+        }
 
+        private static readonly SessionSettingPersistence SettingsWriter =
+            SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionSettingPersistence>();
 
         private static readonly SessionApiFilePersistence UsageGovernance
             = SessionPersistenceContainer
