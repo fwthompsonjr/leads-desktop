@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Common

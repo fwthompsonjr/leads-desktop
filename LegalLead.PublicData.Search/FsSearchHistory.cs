@@ -4,10 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -25,7 +22,7 @@ namespace LegalLead.PublicData.Search
         }
 
         private void FsSearchHistory_Shown(object sender, EventArgs e)
-        {            
+        {
             BtnSubmit_Click(null, null);
         }
         /// <summary>
@@ -68,14 +65,14 @@ namespace LegalLead.PublicData.Search
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        {   
+        {
             e.Result = GetHistory();
         }
 
         private static void FormatGrid(DataGridView dataGrid)
         {
             Padding padding = Padding.Empty;
-            padding.Left = 3; 
+            padding.Left = 3;
             padding.Right = 3;
             var columns = dataGrid.Columns;
             if (columns.Count == 0) return;
@@ -97,7 +94,7 @@ namespace LegalLead.PublicData.Search
             var endDate = DateTime.UtcNow.Date.AddHours(1);
             var startDt = DateTime.UtcNow.Date.AddYears(-1);
             var list = new List<UsageHistoryModel>();
-            while(startDt < endDate)
+            while (startDt < endDate)
             {
                 var data = usageReader.GetUsage(startDt);
                 if (data != null && data.Count > 0) { list.AddRange(data); }
