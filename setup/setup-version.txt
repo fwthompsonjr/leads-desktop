@@ -13,7 +13,8 @@
 			"## Resolution:",
 			"- Feature: add driver hide to county searches",
 			"- Feature: created service to read user settings",
-			"- Feature: bind user settings"
+			"- Feature: bind user settings",
+			"- update notes"
 		]
 	},
 	{
