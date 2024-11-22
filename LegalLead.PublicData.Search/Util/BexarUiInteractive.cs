@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -32,7 +33,6 @@ namespace LegalLead.PublicData.Search.Util
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
         }
-
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
         public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
         protected List<CaseItemDto> CaseStyles { get; private set; } = new List<CaseItemDto>();
@@ -44,9 +44,10 @@ namespace LegalLead.PublicData.Search.Util
         private readonly List<ICountySearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
+            using var hider = new HideProcessWindowHelper();
             var postsearchtypes = new List<Type> { typeof(BexarFetchFilingDetail) };
             var getitemsearchtypes = new List<Type> { typeof(BexarFetchCaseDetail) };
-            var driver = GetDriver();
+            var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
@@ -92,7 +93,7 @@ namespace LegalLead.PublicData.Search.Util
             catch (Exception ex)
             {
                 // no action on excpetion thrown.
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
             }
             finally
             {
@@ -112,6 +113,7 @@ namespace LegalLead.PublicData.Search.Util
             dates.ForEach(d =>
             {
                 IsDateRangeComplete = false;
+                Console.WriteLine("Searching for records on date: {0:d}", d);
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
                 {
@@ -141,6 +143,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 courtDates.ForEach(d =>
                 {
+                    Console.WriteLine("Getting case details for: {0:d}", d);
                     parameters.Search(d, d, CourtType);
                     postcommon.ForEach(a =>
                     {

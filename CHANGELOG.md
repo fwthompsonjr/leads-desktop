@@ -1,17 +1,33 @@
-# Release | 2.8.6 Setup remote authenication and county management
+# Release | 2.8.7 Setup user friendly context menus
 
 ## Problem:
 			
-When a user runs application ,
-I want to impose security to read operations ,
-so that no application functions can be used without rights.,
-,
-## Resolution:,
-- [x] Check user can login,
-- [x] Check user county permissions are setup by county,
-- [x] Check user can only view counties where they have permission,
-- [x] Check user can change password,
-- [x] Check user can change county password
+When a user runs application,
+I want to allow user to view and edit user specific content,
+so that application functions are clearly visible to consumer.
+
+## Search Process
+- Feature: add driver hide to county searches
+- BugFix: refactor driver read headless property
+- BugFix: correcting console out to remove full exception detail
+
+## User Settings
+- Feature: add menu options to tool strip button
+- Feature: created service to read user settings
+- Feature: bind user settings
+- BugFix: ui enable/disable settings per account
+- BugFix: integrate user session settings to search processes
+
+## Code Management
+- BugFix: code refactor
+- BugFix: code analysis remove warnings
+- BugFix: code cleanup
+
+## Deployment Management
+- Feature: change build pipeline
+- Feature: modification to release script
+- Feature: process improvement for release creation
+- Test: release generation process
 
 ### Testing
 
@@ -19,11 +35,4 @@ Execution of backwards compatibility tests, as well as api tests to validate rem
 
 ### Component Checks
 - Check behavior [Dallas]
-- Check behavior [Denton]
-- Check behavior [Tarrant]
-- Check behavior [Travis]
 - Check behavior [Bexar]
-- Check behavior [Hidalgo]
-- Check behavior [ElPaso]
-- Check behavior [FortBend]
-- Check behavior [Williamson]

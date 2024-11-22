@@ -34,7 +34,7 @@ namespace LegalLead.PublicData.Search.Util
         [ExcludeFromCodeCoverage(Justification = "Interacts with system, creating web browser component")]
         public virtual IWebDriver GetDriver(bool headless = false)
         {
-            return new FireFoxProvider().GetWebDriver(headless);
+            return new FireFoxProvider().GetWebDriver(DriverReadHeadless);
         }
 
         protected abstract string GetCourtAddress(string courtType, string court);

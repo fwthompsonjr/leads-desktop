@@ -13,6 +13,8 @@ namespace Thompson.RecordSearch.Utility.Classes
 
 
         #region Properties
+        public bool DriverReadHeadless { get; set; } = true;
+
         protected const StringComparison comparisonIngore = StringComparison.CurrentCultureIgnoreCase;
         /// <summary>
         /// Gets or sets the parameters used to interact with public website.
@@ -133,7 +135,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (!File.Exists(result))
             {
                 return string.Empty;
-            };
+            }
             var contents = File.ReadAllText(result);
             if (contents.Contains(CommonKeyIndexes.ImageOpenTag))
             {
@@ -240,8 +242,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 .GetNavigation().Find(x => x.Id == id);
             var datelist = new List<string> { CommonKeyIndexes.StartDate, CommonKeyIndexes.EndDate };
             var keys = settings.Keys.FindAll(s => datelist.Contains(s.Name));
-            keys.First().Value = startingDate.ToString(CommonKeyIndexes.DateTimeShort, CultureInfo.CurrentCulture.DateTimeFormat);
-            keys.Last().Value = endingDate.ToString(CommonKeyIndexes.DateTimeShort, CultureInfo.CurrentCulture.DateTimeFormat);
+            keys[0].Value = startingDate.ToString(CommonKeyIndexes.DateTimeShort, CultureInfo.CurrentCulture.DateTimeFormat);
+            keys[keys.Count - 1].Value = endingDate.ToString(CommonKeyIndexes.DateTimeShort, CultureInfo.CurrentCulture.DateTimeFormat);
             return settings;
         }
 

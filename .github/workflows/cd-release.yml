@@ -10,7 +10,6 @@ on:
 env:
   ZIP_SETUP_FILE_NAME: "installation.zip"
   ZIP_EXCEL_FILE_NAME: "excel-addin.zip"
-  INTERNAL_VERSION_NUMBER: "2.7.2"
   NET_VERSION: "8.0.x"
   NUGET_CERT_REVOCATION_MODE: offline
 
@@ -20,12 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set Build Version
-        shell: bash
+      - name: Set Environment Variables
+        shell: pwsh
         run: |
-            echo "BUILD_VERSION=${{format('{0}.{1}', vars.LEGALLEAD_READER_PREFIX, github.run_number)}}" >> $GITHUB_ENV
-            echo "ASSET_SETUP_FILE=${{format('./legal-lead-install-{0}.zip', env.INTERNAL_VERSION_NUMBER)}}" >> $GITHUB_ENV
-            echo "ASSET_EXCEL_FILE=${{format('./legal-lead-excel-addin-{0}.zip', env.INTERNAL_VERSION_NUMBER)}}" >> $GITHUB_ENV
+          ./fetch-version-id.ps1 -index ${{ github.run_number }}
+          ./fetch-zip-version.ps1 -pattern "legal-lead-install*" -key "ASSET_SETUP_FILE"
+          ./fetch-zip-version.ps1 -pattern "legal-lead-excel-addin*" -key "ASSET_EXCEL_FILE"
 
       - name: Create Release
         uses: actions/create-release@v1

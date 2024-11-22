@@ -2,7 +2,6 @@
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
-using StructureMap.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

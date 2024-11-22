@@ -1,10 +1,5 @@
 ﻿using Bogus;
 using LegalLead.PublicData.Search.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace legallead.search.tests.common
 {
@@ -38,7 +33,8 @@ namespace legallead.search.tests.common
         [InlineData(4)]
         public void ModelCanSetByIndex(int position)
         {
-            var error = Record.Exception(() => {
+            var error = Record.Exception(() =>
+            {
                 var sut = faker.Generate();
                 var temp = faker.Generate()[position];
                 sut[position] = temp;

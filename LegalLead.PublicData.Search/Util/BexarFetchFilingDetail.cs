@@ -33,6 +33,7 @@ namespace LegalLead.PublicData.Search.Util
             while (id < mx)
             {
                 _ = GetLink(id++);
+                Console.WriteLine("Reading item: {0} of {1}", id, mx);
                 Driver.SwitchTo().Window(Driver.WindowHandles[^1]);
                 var dto = TryFetchDto();
                 if (dto != null)
