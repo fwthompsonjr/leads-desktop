@@ -39,6 +39,7 @@ namespace LegalLead.PublicData.Search
                 0 => new FsChangePassword { TopLevel = false },
                 1 => new FsCountySetting { TopLevel = false },
                 2 => new FsUserSettings { TopLevel = false },
+                3 => new FsSearchHistory { TopLevel = false },
                 _ => null
             };
             if (form == null) return;

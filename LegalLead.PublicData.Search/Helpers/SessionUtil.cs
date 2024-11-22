@@ -107,7 +107,8 @@ namespace LegalLead.PublicData.Search.Helpers
             {
                 new () { Id = 0, Name = "Change Password" },
                 new () { Id = 1, Name = "County Permissions" },
-                new () { Id = 2, Name = "User Settings" }
+                new () { Id = 2, Name = "User Settings" },
+                new () { Id = 3, Name = "Search History" },
             };
     }
 }
