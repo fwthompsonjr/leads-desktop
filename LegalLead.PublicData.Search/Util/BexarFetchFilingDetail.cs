@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using LegalLead.PublicData.Search.Common;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -18,13 +19,17 @@ namespace LegalLead.PublicData.Search.Util
     {
         public override int OrderId => 70;
         public bool IsTestMode { get; set; }
+        public IJavaScriptExecutor ExternalExecutor { get; set; } = null;
+
         public override object Execute()
         {
+            string caseLocator = "//div[@id = 'roa-header']";
+            const string itemLocator = "//a[@class='caseLink show-only-in-desktop-view']";
             if (Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 
             var alldata = new List<CaseItemDto>();
-            var collection = GetLinkRetry();
+            var collection = this.GetCaseNumbers(itemLocator, CustomLinkJs);
             if (collection == null || collection.Count == 0)
                 return JsonConvert.SerializeObject(alldata);
 
@@ -32,8 +37,9 @@ namespace LegalLead.PublicData.Search.Util
             var mx = collection.Count;
             while (id < mx)
             {
-                _ = GetLink(id++);
                 Console.WriteLine("Reading item: {0} of {1}", id, mx);
+                var itemscript = CustomClickJs.Replace("~0", id.ToString());
+                this.ClickCaseNumber(collection[id], id++, caseLocator, itemscript);
                 Driver.SwitchTo().Window(Driver.WindowHandles[^1]);
                 var dto = TryFetchDto();
                 if (dto != null)
@@ -66,8 +72,10 @@ namespace LegalLead.PublicData.Search.Util
                 var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(90)) { PollingInterval = TimeSpan.FromMilliseconds(750) };
                 wait.Until(w =>
                 {
-                    var body = Driver.FindElement(By.TagName("body"));
-                    var content = body.GetAttribute("innerHTML");
+                    var exec = Driver.GetJsExecutor();
+                    var body = exec.ExecuteScript(GetBodyJs);
+                    if (body is not string content) return false;
+                    if (string.IsNullOrEmpty(content)) return false;
                     dto = GetDto(content);
                     return dto != null;
                 });
@@ -108,56 +116,6 @@ namespace LegalLead.PublicData.Search.Util
         }
 
 
-        private List<IWebElement> GetLinkRetry()
-        {
-            var retries = 10;
-            var getLinks = () =>
-            {
-                try
-                {
-                    return GetLinks();
-                }
-                catch
-                {
-                    return null;
-                }
-            };
-            var response = getLinks();
-            if (response != null) return response;
-            while (response == null && retries > 0)
-            {
-                Thread.Sleep(1000);
-                response = getLinks();
-                retries--;
-            }
-            return response;
-
-        }
-
-        private List<IWebElement> GetLinks()
-        {
-            const string linkIndicator = "RegisterOfActions";
-            var elements = Driver.FindElements(By.TagName("a"));
-            return elements.Where(a =>
-                {
-                    var navigationTo = a.GetAttribute("data-url");
-                    if (string.IsNullOrEmpty(navigationTo)) return false;
-                    var idx = navigationTo.Contains(linkIndicator, StringComparison.OrdinalIgnoreCase);
-                    return idx;
-                })
-                .ToList();
-        }
-
-        private IWebElement GetLink(int index)
-        {
-            if (index < 0) return null;
-            var list = GetLinkRetry();
-            if (index > list.Count - 1) return null;
-            var item = list[index];
-            if (Driver is not IJavaScriptExecutor executor) return item;
-            executor.ExecuteScript("arguments[0].click();", item);
-            return item;
-        }
         private static CaseItemDto GetDto(string pageHtml)
         {
             const string dvStyleName = "flex-50";
@@ -270,5 +228,30 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         private const StringComparison comparison = StringComparison.OrdinalIgnoreCase;
+
+        private static readonly string[] getlinkjs = new string[]
+        {
+            "var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );",
+            "links = links.filter(l => { let attr = l.getAttribute('class'); return attr != null && attr == 'caseLink show-only-in-desktop-view'; });",
+            "var casenumbers = links.map(x => x.innerText.trim());",
+            "return JSON.stringify(casenumbers);"
+        };
+        private static readonly string[] clicklinkjs = new string[]
+        {
+            "var indx = ~0",
+            "var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );",
+            "links = links.filter(l => { let attr = l.getAttribute('class'); return attr != null && attr == 'caseLink show-only-in-desktop-view'; });",
+            "links[indx].click();"
+        };
+
+        private static readonly string[] getbodyjs = new string[]
+        {
+            "var bodies = document.getElementsByTagName('body')",
+            "if (bodies.length < 1) return '';",
+            "return bodies[0].innerHTML.trim();"
+        };
+        private static readonly string CustomLinkJs = string.Join(Environment.NewLine, getlinkjs);
+        private static readonly string CustomClickJs = string.Join(Environment.NewLine, clicklinkjs);
+        private static readonly string GetBodyJs = string.Join(Environment.NewLine, getbodyjs);
     }
 }
