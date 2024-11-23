@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using LegalLead.PublicData.Search.Common;
 using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -32,13 +33,18 @@ namespace LegalLead.PublicData.Search.Util
             var collection = this.GetCaseNumbers(itemLocator, CustomLinkJs);
             if (collection == null || collection.Count == 0)
                 return JsonConvert.SerializeObject(alldata);
-
+            var currentDate = Parameters.StartDate;
             var id = 0;
             var mx = collection.Count;
             while (id < mx)
             {
-                Console.WriteLine("Reading item: {0} of {1}", id, mx);
-                var itemscript = CustomClickJs.Replace("~0", id.ToString());
+                Console.WriteLine($"Date: {currentDate} Reading item: {id + 1} of {mx}");
+                if (id > 0 && id % 10 == 0)
+                {
+                    var pct = Math.Round(Convert.ToDecimal(id + 1) / Convert.ToDecimal(mx), 2) * 100;
+                    Console.WriteLine($"Date: {currentDate} Percent complete: {pct}");
+                }
+                var itemscript = CustomClickJs.Replace("~0", id.ToString(culture));
                 this.ClickCaseNumber(collection[id], id++, caseLocator, itemscript);
                 Driver.SwitchTo().Window(Driver.WindowHandles[^1]);
                 var dto = TryFetchDto();
@@ -253,5 +259,6 @@ namespace LegalLead.PublicData.Search.Util
         private static readonly string CustomLinkJs = string.Join(Environment.NewLine, getlinkjs);
         private static readonly string CustomClickJs = string.Join(Environment.NewLine, clicklinkjs);
         private static readonly string GetBodyJs = string.Join(Environment.NewLine, getbodyjs);
+        private static readonly CultureInfo culture = CultureInfo.CurrentCulture;
     }
 }
