@@ -35,23 +35,6 @@ namespace LegalLead.PublicData.Search.Util
             return JsonConvert.SerializeObject(alldata);
         }
 
-        private bool ElementWait(By locator)
-        {
-            try
-            {
-                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(300) };
-                wait.Until(w =>
-                {
-                    return w.TryFindElement(locator) != null;
-                });
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
         protected override string ScriptName { get; } = "get person address";
 
         private static CaseItemDto GetDto(object data)

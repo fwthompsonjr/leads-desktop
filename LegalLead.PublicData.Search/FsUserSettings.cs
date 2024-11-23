@@ -52,8 +52,9 @@ namespace LegalLead.PublicData.Search
             }
             var item = _vwlist.Find(x => x.Category == _model.Category &&
             x.Name == _model.Name);
-            if (item != null) item.Value = _model.Value;
-
+            if (item == null) return;
+            item.Value = _model.Value;
+            dataGridView1.Refresh();
         }
         private void TxKeyValue_TextChanged(object sender, EventArgs e)
         {
