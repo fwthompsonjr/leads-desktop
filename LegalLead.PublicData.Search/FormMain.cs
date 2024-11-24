@@ -340,8 +340,12 @@ namespace LegalLead.PublicData.Search
             }
 
             IWebInteractive webmgr =
-            WebFetchingProvider.
-                GetInteractive(siteData, startDate, endingDate);
+            WebFetchingProvider.GetInteractive(siteData, startDate, endingDate);
+            if (webmgr is CollinWebInteractive web) 
+            {
+                var credential = UsageGovernance.GetAccountCredential("collin");
+                if (!string.IsNullOrEmpty(credential)) { web.Credential = credential; }
+            }
             _ = Task.Run(async () =>
             {
                 await ProcessAsync(webmgr, siteData, searchItem);

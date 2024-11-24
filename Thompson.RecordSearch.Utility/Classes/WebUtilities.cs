@@ -105,13 +105,13 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
-        public static IWebDriver GetWebDriver()
+        public static IWebDriver GetWebDriver(bool headless = true)
         {
             var wdriver = (new WebDriverDto().Get()).WebDrivers;
             var driver = wdriver.Drivers.Where(d => d.Id == wdriver.SelectedIndex).FirstOrDefault();
             var container = WebDriverContainer.GetContainer;
             var provider = container.GetInstance<IWebDriverProvider>(driver.Name);
-            return provider.GetWebDriver();
+            return provider.GetWebDriver(headless);
         }
 
         public static string GetChromeBinary()

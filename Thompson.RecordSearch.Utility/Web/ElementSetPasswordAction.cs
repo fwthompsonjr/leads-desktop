@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using System;
+using System.Windows.Forms.Layout;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
@@ -13,16 +15,26 @@ namespace Thompson.RecordSearch.Utility.Web
 
         public override void Act(NavigationStep item)
         {
+            const char pipe = '|';
             if (item == null)
             {
                 throw new System.ArgumentNullException(nameof(item));
             }
 
             var driver = GetWeb;
-            var userDto = UserAccessDto.GetDto(item.ExpectedValue);
-            var pwordUser = CryptoEngine.Decrypt(userDto.UserGuid, userDto.UserKey);
-            var userId = pwordUser.Split('|');
             var selections = item.Locator.Query.Split('|');
+            string[] userId;
+            if (item.ExpectedValue.Contains(pipe))
+            {
+                userId = item.ExpectedValue.Split(pipe);
+            }
+            else
+            {
+                var userDto = UserAccessDto.GetDto(item.ExpectedValue);
+                var pwordUser = CryptoEngine.Decrypt(userDto.UserGuid, userDto.UserKey);
+                userId = pwordUser.Split('|');
+            }
+            
             var idx = 0;
             foreach (var itm in selections)
             {
