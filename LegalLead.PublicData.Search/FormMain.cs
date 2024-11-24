@@ -187,6 +187,7 @@ namespace LegalLead.PublicData.Search
             {
                 KillProcess(driverNames);
                 SetStatus(StatusType.Running);
+                using var hider = new HideProcessWindowHelper();
                 if (!ValidateCustom())
                 {
                     SetStatus(StatusType.Ready);
@@ -338,14 +339,17 @@ namespace LegalLead.PublicData.Search
             {
                 criminalToggle.Value = CommonKeyIndexes.NumberOne;
             }
-
-            IWebInteractive webmgr =
-            WebFetchingProvider.GetInteractive(siteData, startDate, endingDate);
-            if (webmgr is CollinWebInteractive web) 
+            var collinIndex = (int)SourceType.CollinCounty;
+            if (siteData.Id == collinIndex)
             {
-                var credential = UsageGovernance.GetAccountCredential("collin");
-                if (!string.IsNullOrEmpty(credential)) { web.Credential = credential; }
+                siteData.Keys.Add(new() { Name = "StartDate", Value = $"{startDate:d}" });
+                siteData.Keys.Add(new() { Name = "EndDate", Value = $"{endingDate:d}" });
+                siteData.Keys.Add(new() { Name = "CourtType", Value = "Civil" });
             }
+            IWebInteractive webmgr =
+            siteData.Id == collinIndex ?
+            new CollinUiInterative(siteData, startDate, endingDate) :
+            WebFetchingProvider.GetInteractive(siteData, startDate, endingDate);
             _ = Task.Run(async () =>
             {
                 await ProcessAsync(webmgr, siteData, searchItem);

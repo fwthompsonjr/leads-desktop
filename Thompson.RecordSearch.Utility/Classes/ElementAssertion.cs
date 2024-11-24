@@ -209,7 +209,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                Console.WriteLine(CommonKeyIndexes.NavigateToUrlMessage, target);
                 var newUri = new Uri(target);
                 PageDriver.Navigate().GoToUrl(newUri);
             }

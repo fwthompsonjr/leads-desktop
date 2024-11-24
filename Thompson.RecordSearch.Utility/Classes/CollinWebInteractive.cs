@@ -53,9 +53,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var sources = navigationFile.Split(',').ToList();
                 var cases = new List<HLinkDataRow>();
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
-                var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType); // "collinCountyCaseType");
-                var caseTypeId = GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex); // "caseTypeSelectedIndex");
-                var searchTypeId = GetParameterValue<int>(CommonKeyIndexes.SearchTypeSelectedIndex); // "searchTypeSelectedIndex");
+                var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
+                var caseTypeId = GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex);
+                var searchTypeId = GetParameterValue<int>(CommonKeyIndexes.SearchTypeSelectedIndex);
                 var selectedCase = caseTypes.DropDowns[caseTypeId];
                 if (!string.IsNullOrEmpty(Credential))
                 {
@@ -119,8 +119,15 @@ namespace Thompson.RecordSearch.Utility.Classes
                         caseList = action.OuterHtml;
                     }
                 }
-                cases.FindAll(c => string.IsNullOrEmpty(c.Address))
-                    .ForEach(c => GetAddressInformation(driver, this, c));
+                var subset = cases.FindAll(c => string.IsNullOrEmpty(c.Address));
+                var count = subset.Count;
+                subset.ForEach(c =>
+                    {
+                        var idx = subset.IndexOf(c) + 1;
+                        Console.WriteLine($"Reading record {idx} of {count}");
+                        GetAddressInformation(driver, this, c);
+                    }
+                    );
 
                 cases.FindAll(c => c.IsCriminal && !string.IsNullOrEmpty(c.CriminalCaseStyle))
                     .ForEach(d => d.CaseStyle = d.CriminalCaseStyle);

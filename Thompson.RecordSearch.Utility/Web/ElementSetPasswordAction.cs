@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Windows.Forms.Layout;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
@@ -34,7 +32,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 var pwordUser = CryptoEngine.Decrypt(userDto.UserGuid, userDto.UserKey);
                 userId = pwordUser.Split('|');
             }
-            
+
             var idx = 0;
             foreach (var itm in selections)
             {
