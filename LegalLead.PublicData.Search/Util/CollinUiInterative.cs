@@ -14,7 +14,6 @@ namespace LegalLead.PublicData.Search.Util
         {
 
             webmgr = WebFetchingProvider.GetInteractive(parameters, startDate, endingDate);
-
             if (webmgr is CollinWebInteractive web)
             {
                 var credential = UsageGovernance.GetAccountCredential("collin");
@@ -25,8 +24,11 @@ namespace LegalLead.PublicData.Search.Util
         private readonly IWebInteractive webmgr;
         public override WebFetchResult Fetch()
         {
+            webmgr.ReportProgress = ReportProgress;
+            webmgr.ReportProgessComplete = ReportProgessComplete;
             webmgr.DriverReadHeadless = DriverReadHeadless;
             var result = webmgr.Fetch();
+            webmgr.ReportProgessComplete?.Invoke();
             return result;
         }
 

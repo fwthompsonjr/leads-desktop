@@ -31,6 +31,7 @@ namespace LegalLead.PublicData.Search.Util
             var container = ActionBexarContainer.GetContainer;
             var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
+            collection.ForEach(c => c.Interactive = this);
             ActionItems.AddRange(collection);
         }
         public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();

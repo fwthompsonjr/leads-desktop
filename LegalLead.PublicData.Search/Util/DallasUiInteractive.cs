@@ -45,20 +45,27 @@ namespace LegalLead.PublicData.Search.Util
         private readonly List<ICountySearchAction> ActionItems = new();
         public override WebFetchResult Fetch()
         {
-            using var hider = new HideProcessWindowHelper();
-            var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
-            var driver = GetDriver(DriverReadHeadless);
-            var parameters = new DallasSearchProcess();
-            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
-            var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
-            var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
-            var result = new WebFetchResult();
-            Iterate(driver, parameters, dates, common, postcommon);
-            if (ExecutionCancelled || People.Count == 0) return result;
-            result.PeopleList = People;
-            result.Result = GetExcelFileName();
-            result.CaseList = JsonConvert.SerializeObject(People);
-            return result;
+            try
+            {
+                using var hider = new HideProcessWindowHelper();
+                var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
+                var driver = GetDriver(DriverReadHeadless);
+                var parameters = new DallasSearchProcess();
+                var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
+                var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
+                var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
+                var result = new WebFetchResult();
+                Iterate(driver, parameters, dates, common, postcommon);
+                if (ExecutionCancelled || People.Count == 0) return result;
+                result.PeopleList = People;
+                result.Result = GetExcelFileName();
+                result.CaseList = JsonConvert.SerializeObject(People);
+                return result;
+            }
+            finally
+            {
+                ReportProgessComplete?.Invoke();
+            }
         }
 
         public virtual IWebDriver GetDriver(bool headless = false)
@@ -149,11 +156,7 @@ namespace LegalLead.PublicData.Search.Util
             Items.ForEach(i =>
             {
                 var c = Items.IndexOf(i) + 1;
-                var pct = Math.Round(Convert.ToDecimal(c) / Convert.ToDecimal(count), 2) * 100;
-                if (c % 10 == 0)
-                {
-                    Console.WriteLine("Reading item {0} of {1}. {2}% Complete", c, count, pct);
-                }
+                this.EchoProgess(0, count, c, $"Reading item {c} of {count}.", true);
                 postcommon.ForEach(a =>
                 {
                     Populate(a, driver, parameters, i.Href);
