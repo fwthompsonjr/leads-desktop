@@ -248,7 +248,7 @@
         "ProductName" = "8:Legal Lead Installer"
         "ProductCode" = "8:{1FE73739-C531-4E82-935E-EED99F76ADEE}"
         "PackageCode" = "8:{F69B3C6A-D2D6-4BE2-8C8D-E9BB64B2D9E2}"
-        "UpgradeCode" = "8:{6CCC624B-E9D4-442B-B6E4-D0F0AA8F2CFB}"
+        "UpgradeCode" = "8:{F33AB5A5-9D0E-49EE-9B88-197CD6DC5C04}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -258,7 +258,7 @@
         "Manufacturer" = "8:Thompson Data Solutions"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Legal Lead Installer v 2.8.7"
+        "Title" = "8:Legal Lead Installer v 2.8.7.1"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Thompson Data Solutions"
         "Keywords" = "8:"
@@ -768,7 +768,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E8399221E8D44F1CB062273B598D032E"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\LegalLead.PublicData.Search\\obj\\Release\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B0FF2CC24EC14FD49804651B31D29B32"

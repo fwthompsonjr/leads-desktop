@@ -37,6 +37,7 @@ namespace LegalLead.PublicData.Search
                     SessionUtil.Write(decodec);
                     var debugdto = new LoginAccountDto { UserName = "debug-account" };
                     userservice.Write(JsonConvert.SerializeObject(debugdto));
+                    DebugAssistant.UpdateSettings();
                     DialogResult = DialogResult.OK;
                     return;
                 }

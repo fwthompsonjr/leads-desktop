@@ -240,7 +240,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 StringBuilder builder = new StringBuilder("Error in silent disposal Harris-Criminal-Data.");
                 builder.AppendLine($" Message: {ex.Message}");
                 builder.AppendLine($" Stack Trace: {ex.StackTrace}");
-                Console.WriteLine(builder.ToString());
+                Debug.WriteLine(builder.ToString());
             }
         }
 

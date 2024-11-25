@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -521,7 +522,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 item[keyName] = string.Empty;
                 if (node == null)
                 {
-                    Console.WriteLine("Unable to locate element {0} with selector - {1}",
+                    Debug.WriteLine("Unable to locate element {0} with selector - {1}",
                         search.Attributes.GetNamedItem("name").InnerText,
                         search.InnerText);
                     return false;

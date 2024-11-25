@@ -40,7 +40,7 @@
             toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             tsUserName = new System.Windows.Forms.ToolStripStatusLabel();
-            toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            tsSettingMenuButton = new System.Windows.Forms.ToolStripSplitButton();
             cboWebsite = new Classes.ComboBoxEx();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -142,7 +142,7 @@
             tableLayoutPanel1.SetColumnSpan(statusStrip1, 2);
             statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsWebDriver, tsDropFileList, toolStripStatus, tsStatusLabel, tsUserName, toolStripSplitButton1 });
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsWebDriver, tsDropFileList, toolStripStatus, tsStatusLabel, tsUserName, tsSettingMenuButton });
             statusStrip1.Location = new System.Drawing.Point(0, 497);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
@@ -181,21 +181,21 @@
             // tsUserName
             // 
             tsUserName.Name = "tsUserName";
-            tsUserName.Size = new System.Drawing.Size(497, 29);
+            tsUserName.Size = new System.Drawing.Size(466, 29);
             tsUserName.Spring = true;
             tsUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             tsUserName.Visible = false;
             // 
-            // toolStripSplitButton1
+            // tsSettingMenuButton
             // 
-            toolStripSplitButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripSplitButton1.Image = (System.Drawing.Image)resources.GetObject("toolStripSplitButton1.Image");
-            toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripSplitButton1.Name = "toolStripSplitButton1";
-            toolStripSplitButton1.Size = new System.Drawing.Size(36, 32);
-            toolStripSplitButton1.Text = "toolStripSplitButton1";
-            toolStripSplitButton1.ButtonClick += ToolStripSplitButton1_ButtonClick;
+            tsSettingMenuButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            tsSettingMenuButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            tsSettingMenuButton.Image = (System.Drawing.Image)resources.GetObject("tsSettingMenuButton.Image");
+            tsSettingMenuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tsSettingMenuButton.Name = "tsSettingMenuButton";
+            tsSettingMenuButton.Size = new System.Drawing.Size(36, 32);
+            tsSettingMenuButton.Text = "toolStripSplitButton1";
+            tsSettingMenuButton.ButtonClick += ToolStripSplitButton1_ButtonClick;
             // 
             // cboWebsite
             // 
@@ -359,7 +359,7 @@
         private System.Windows.Forms.ToolStripDropDownButton tsDropFileList;
         private System.Windows.Forms.ToolStripDropDownButton tsWebDriver;
         private System.Windows.Forms.ToolStripStatusLabel tsUserName;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripSplitButton tsSettingMenuButton;
     }
 }
 
