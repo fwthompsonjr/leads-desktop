@@ -125,7 +125,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                 subset.ForEach(c =>
                     {
                         var idx = subset.IndexOf(c) + 1;
-                        Console.WriteLine($"Date {dtstring}: Reading record {idx} of {count}");
+                        Console.WriteLine($"Date: {dtstring}. Reading record {idx} of {count}");
+                        if (idx > 0 && idx % 10 == 0)
+                        {
+                            var pct = Math.Round(Convert.ToDecimal(idx + 1) / Convert.ToDecimal(count), 2) * 100;
+                            Console.WriteLine($"Date: {dtstring} Percent complete: {pct}");
+                        }
                         GetAddressInformation(driver, this, c);
                     }
                     );
