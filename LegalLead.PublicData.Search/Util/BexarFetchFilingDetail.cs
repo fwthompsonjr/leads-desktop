@@ -1,7 +1,6 @@
 ﻿using HtmlAgilityPack;
 using LegalLead.PublicData.Search.Common;
 using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -9,9 +8,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -34,18 +33,14 @@ namespace LegalLead.PublicData.Search.Util
             if (collection == null || collection.Count == 0)
                 return JsonConvert.SerializeObject(alldata);
             var currentDate = Parameters.StartDate;
-            var id = 0;
+            var indx = 0;
             var mx = collection.Count;
-            while (id < mx)
+            while (indx < mx)
             {
-                Console.WriteLine($"Date: {currentDate} Reading item: {id + 1} of {mx}");
-                if (id > 0 && id % 10 == 0)
-                {
-                    var pct = Math.Round(Convert.ToDecimal(id + 1) / Convert.ToDecimal(mx), 2) * 100;
-                    Console.WriteLine($"Date: {currentDate} Percent complete: {pct}");
-                }
-                var itemscript = CustomClickJs.Replace("~0", id.ToString(culture));
-                this.ClickCaseNumber(collection[id], id++, caseLocator, itemscript);
+                var message = $"Date: {currentDate} Reading item: {indx + 1} of {mx}";
+                Interactive?.EchoProgess(0, mx, indx + 1, message, true);
+                var itemscript = CustomClickJs.Replace("~0", indx.ToString(culture));
+                this.ClickCaseNumber(collection[indx], indx++, caseLocator, itemscript);
                 Driver.SwitchTo().Window(Driver.WindowHandles[^1]);
                 var dto = TryFetchDto();
                 if (dto != null)
@@ -66,6 +61,7 @@ namespace LegalLead.PublicData.Search.Util
                     Driver.SwitchTo().Window(Driver.WindowHandles[0]);
                 }
             }
+            Interactive?.CompleteProgess();
             return JsonConvert.SerializeObject(alldata);
         }
 

@@ -46,8 +46,10 @@ namespace LegalLead.PublicData.Search.Util
                 if (attr == null) return false;
                 return attr.Value == "caseLink";
             });
+            var mx = links.Count;
             links.ForEach(lnk =>
             {
+                Console.WriteLine($"Fetching address detail: {links.IndexOf(lnk) + 1} of {mx}");
                 var linkurl = lnk.GetAttributeValue("data-url", "");
                 var parentRow = GetClosest("tr", lnk);
                 if (parentRow != null)

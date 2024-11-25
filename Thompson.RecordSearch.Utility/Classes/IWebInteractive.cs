@@ -37,6 +37,8 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// The start date.
         /// </value>
         DateTime StartDate { get; set; }
+        Action<int, int, int> ReportProgress { get; set; }
+        Action ReportProgessComplete { get; set; }
 
         /// <summary>
         /// Fetches this instance.

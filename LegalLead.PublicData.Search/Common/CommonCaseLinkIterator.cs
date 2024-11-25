@@ -14,7 +14,7 @@ namespace LegalLead.PublicData.Search.Common
 {
     internal static class CommonCaseLinkIterator
     {
-        public static List<string> GetCaseNumbers(this ICountySearchAction search, 
+        public static List<string> GetCaseNumbers(this ICountySearchAction search,
             string elementWaitLocator = "",
             string getLinkCollectionScript = "")
         {
@@ -75,7 +75,7 @@ namespace LegalLead.PublicData.Search.Common
             if (findElement == null) return false;
             executor.ExecuteScript("arguments[0].click();", findElement);
             return ElementWait(locator, search.Driver);
-}
+        }
         public static List<CaseItemDto> GetCaseItems(
             this ICountySearchAction search,
             List<string> links,

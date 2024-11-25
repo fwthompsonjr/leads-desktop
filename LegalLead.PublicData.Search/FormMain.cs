@@ -140,6 +140,7 @@ namespace LegalLead.PublicData.Search
         }
         private void SetInteraction(bool isEnabled)
         {
+            if (!isEnabled) TryHideProgress();
             cboWebsite.Enabled = isEnabled;
             button1.Enabled = isEnabled;
             tsSettingMenuButton.Visible = isEnabled;
@@ -475,6 +476,8 @@ namespace LegalLead.PublicData.Search
                     var displayMode = SettingsWriter.GetSettingOrDefault("browser", "Open Headless:", true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
+                webmgr.ReportProgress = TryShowProgress;
+                webmgr.ReportProgessComplete = TryHideProgress;
                 CaseData = await Task.Run(() =>
                 {
                     return webmgr.Fetch();
@@ -553,6 +556,7 @@ namespace LegalLead.PublicData.Search
             {
 
                 KillProcess(CommonKeyIndexes.ChromeDriver);
+                TryHideProgress();
             }
         }
 
@@ -579,6 +583,65 @@ namespace LegalLead.PublicData.Search
         {
             var settings = new FormSettings() { StartPosition = FormStartPosition.CenterParent };
             settings.ShowDialog();
+        }
+
+        private void TryHideProgress()
+        {
+            try
+            {
+                HideProgress();
+            }
+            catch
+            {
+                Invoke(HideProgress);
+            }
+        }
+
+        private void TryShowProgress(int min, int max, int current)
+        {
+            try
+            {
+                ShowProgress(min, max, current);
+            }
+            catch
+            {
+                Invoke(() => { ShowProgress(min, max, current); });
+            }
+        }
+
+        private void HideProgress()
+        {
+            progressBar1.Visible = false;
+            labelProgress.Visible = false;
+            tableLayoutPanel1.RowStyles[8].Height = 0;
+        }
+        private void ShowProgress(int min, int max, int current)
+        {
+            labelProgress.Visible = true;
+            ControlExtensions.Suspend(progressBar1);
+            tableLayoutPanel1.RowStyles[8].Height = 40;
+            progressBar1.Visible = false;
+            progressBar1.Minimum = min;
+            progressBar1.Maximum = max;
+            progressBar1.Value = current;
+            progressBar1.Visible = true;
+            ControlExtensions.Resume();
+        }
+        private static class ControlExtensions
+        {
+            [System.Runtime.InteropServices.DllImport("user32.dll")]
+            public static extern bool LockWindowUpdate(IntPtr hWndLock);
+
+            public static void Suspend(Control control)
+            {
+                LockWindowUpdate(control.Handle);
+            }
+
+            public static void Resume()
+            {
+                LockWindowUpdate(IntPtr.Zero);
+            }
+
         }
     }
 }

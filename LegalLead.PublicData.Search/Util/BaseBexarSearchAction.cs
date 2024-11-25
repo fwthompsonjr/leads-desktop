@@ -15,7 +15,7 @@ namespace LegalLead.PublicData.Search.Util
         protected virtual string ScriptName { get; }
         public IWebDriver Driver { get; set; }
         public DallasSearchProcess Parameters { get; set; }
-
+        public IWebInteractive Interactive { get; set; }
         public virtual object Execute() { return null; }
 
         public virtual IJavaScriptExecutor GetJavaScriptExecutor()

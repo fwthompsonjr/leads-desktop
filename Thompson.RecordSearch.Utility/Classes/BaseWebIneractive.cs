@@ -15,6 +15,9 @@ namespace Thompson.RecordSearch.Utility.Classes
         #region Properties
         public bool DriverReadHeadless { get; set; } = true;
 
+        public Action<int, int, int> ReportProgress { get; set; } = null;
+        public Action ReportProgessComplete { get; set; } = null;
+
         protected const StringComparison comparisonIngore = StringComparison.CurrentCultureIgnoreCase;
         /// <summary>
         /// Gets or sets the parameters used to interact with public website.

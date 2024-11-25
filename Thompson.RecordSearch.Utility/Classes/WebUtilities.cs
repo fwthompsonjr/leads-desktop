@@ -7,7 +7,9 @@ using System.Linq;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
+using Thompson.RecordSearch.Utility.Tools;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -29,26 +31,32 @@ namespace Thompson.RecordSearch.Utility.Classes
                 new CriminalCaseFetch(data)
             };
             var cases = new List<HLinkDataRow>();
-            fetchers.ForEach(f => cases.AddRange(f.GetCases()));
+            fetchers.ForEach(f => cases.AddRange(f.GetListCaseDataRows()));
             return cases;
         }
 
         private static IWebElement GetCaseData(WebInteractive data,
             ref List<HLinkDataRow> cases,
-            string navTo, ElementAssertion helper)
+            string navTo,
+            ElementAssertion helper,
+            IWebDriver driver = null)
         {
             IWebElement tbResult;
             helper.Navigate(navTo);
             // this is where denton county does it's data fetching..... i think
-            // todo: allow criminal hyperlink click modification...
-            var parameter = GetParameter(data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
+            // allow criminal hyperlink click modification...
+            var parameter = GetParameter(data, CommonKeyIndexes.IsCriminalSearch);
             var isCriminalSearch = parameter != null &&
                 parameter.Value.Equals(CommonKeyIndexes.NumberOne, StringComparison.CurrentCultureIgnoreCase);
             tbResult = helper.Process(data, isCriminalSearch);
             var rows = tbResult.FindElements(By.TagName("tr"));
+            var mx = rows.Count;
+            Console.WriteLine($"Search has found {mx} records.");
             foreach (var rw in rows)
             {
-                var html = rw.GetAttribute("outerHTML");
+                var indx = rows.IndexOf(rw) + 1;
+                data.EchoProgess(0, mx, indx, $"Reading item {indx} of {mx}.", true);
+                var html = JsLibrary.GetAttribute(driver, rw, "outerHTML");
                 var link = TryFindElement(rw, By.TagName("a"));
                 var tdCaseStyle = TryFindElement(rw, By.XPath("td[2]"));
                 var caseStyle = tdCaseStyle == null ? string.Empty : tdCaseStyle.Text;
@@ -61,7 +69,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
                 cases.Add(new HLinkDataRow { Data = html, WebAddress = address });
             }
-
+            data.CompleteProgess();
             return tbResult;
         }
 
@@ -108,7 +116,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public static IWebDriver GetWebDriver(bool headless = true)
         {
             var wdriver = (new WebDriverDto().Get()).WebDrivers;
-            var driver = wdriver.Drivers.Where(d => d.Id == wdriver.SelectedIndex).FirstOrDefault();
+            var driver = wdriver.Drivers.FirstOrDefault(d => d.Id == wdriver.SelectedIndex);
             var container = WebDriverContainer.GetContainer;
             var provider = container.GetInstance<IWebDriverProvider>(driver.Name);
             return provider.GetWebDriver(headless);
@@ -141,10 +149,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
 
-        // private const int SW_HIDE = 0;
-        // private const int SW_SHOW = 5;
-
-
         private static string _chromeBinaryName;
         private static string ChromeBinaryFileName()
         {
@@ -160,7 +164,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 .ToList().FindAll(x => File.Exists(x));
             if (settings.Any())
             {
-                _chromeBinaryName = settings.First();
+                _chromeBinaryName = settings[0];
                 return _chromeBinaryName;
             }
 
@@ -169,14 +173,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             var found = search.FileList;
             if (found.Any())
             {
-                _chromeBinaryName = found.First();
+                _chromeBinaryName = found[0];
                 return _chromeBinaryName;
             }
             search = new DirectorySearch(di, "*chrome.exe");
             found = search.FileList;
             if (found.Any())
             {
-                _chromeBinaryName = found.First();
+                _chromeBinaryName = found[0];
                 return _chromeBinaryName;
             }
             _chromeBinaryName = string.Empty;

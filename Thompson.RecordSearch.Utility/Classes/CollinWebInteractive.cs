@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -125,12 +126,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 subset.ForEach(c =>
                     {
                         var idx = subset.IndexOf(c) + 1;
-                        Console.WriteLine($"Date: {dtstring}. Reading record {idx} of {count}");
-                        if (idx > 0 && idx % 10 == 0)
-                        {
-                            var pct = Math.Round(Convert.ToDecimal(idx + 1) / Convert.ToDecimal(count), 2) * 100;
-                            Console.WriteLine($"Date: {dtstring} Percent complete: {pct}");
-                        }
+                        var mssg = $"Date: {dtstring}. Reading record {idx} of {count}";
+                        this.EchoProgess(0, count, idx, mssg);
                         GetAddressInformation(driver, this, c);
                     }
                     );
