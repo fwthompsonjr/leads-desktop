@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 
@@ -20,9 +21,9 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public bool DoesElementExist(By selector, string elementName)
         {
-            Console.WriteLine(CommonKeyIndexes.SearchingForElement, elementName);
+            Debug.WriteLine(CommonKeyIndexes.SearchingForElement, elementName);
             PageDriver.FindElement(selector);
-            Console.WriteLine(string.Format(
+            Debug.WriteLine(string.Format(
                 CultureInfo.CurrentCulture,
                 CommonKeyIndexes.ElementNotFound, elementName));
             return true;
@@ -31,7 +32,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public void SetSelectedIndex(By selector, string elementName, int selectedIndex)
         {
             var cmmd = CommonKeyIndexes.SetSelectElementIndex;
-            Console.WriteLine(cmmd, elementName, selectedIndex);
+            Debug.WriteLine(cmmd, elementName, selectedIndex);
             var elementToClick = PageDriver.FindElement(selector);
             var id = elementToClick.GetAttribute(CommonKeyIndexes.IdLowerCase);
             var command = string.Format(
@@ -46,14 +47,14 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             var jse = (IJavaScriptExecutor)PageDriver;
             var rsp = jse.ExecuteScript(optionName);
-            Console.WriteLine(CommonKeyIndexes.SetSelectOptionIndex, rsp.ToString());
+            Debug.WriteLine(CommonKeyIndexes.SetSelectOptionIndex, rsp.ToString());
             jse.ExecuteScript(command);
             jse.ExecuteScript(changecommand);
         }
 
         public void WaitForElementExist(By selector, string elementName, int secondsWait = 10)
         {
-            Console.WriteLine(CommonKeyIndexes.WaitingForElement, elementName);
+            Debug.WriteLine(CommonKeyIndexes.WaitingForElement, elementName);
             try
             {
                 var wait = new WebDriverWait(PageDriver, TimeSpan.FromSeconds(secondsWait));
@@ -72,7 +73,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         public void WaitForElementsToExist(By selector, string elementName, int secondsWait = 10)
         {
-            Console.WriteLine(CommonKeyIndexes.WaitingForElement, elementName);
+            Debug.WriteLine(CommonKeyIndexes.WaitingForElement, elementName);
             try
             {
                 var wait = new WebDriverWait(PageDriver, TimeSpan.FromSeconds(secondsWait));
@@ -100,7 +101,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 CommonKeyIndexes.ElementTextNotFound, elementName, searchString);
             if (!found.Text.Contains(searchString))
             {
-                Console.WriteLine(message);
+                Debug.WriteLine(message);
                 return false;
             }
 
@@ -120,7 +121,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 CommonKeyIndexes.ElementMatchTextNotFound, elementName, searchString, found.Text);
             if (!found.Text.Equals(searchString, StringComparison.CurrentCulture))
             {
-                Console.WriteLine(message);
+                Debug.WriteLine(message);
                 return false;
             }
             return true;
@@ -142,7 +143,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var hasClass = allClasses.ToList().Exists(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
             if (!hasClass)
             {
-                Console.WriteLine(message);
+                Debug.WriteLine(message);
             }
             return hasClass;
         }
@@ -179,7 +180,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var hasAttribute = actual.Equals(attributeValue, StringComparison.CurrentCultureIgnoreCase);
             if (!hasAttribute)
             {
-                Console.WriteLine(message);
+                Debug.WriteLine(message);
             }
             return hasAttribute;
         }
@@ -200,7 +201,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var hasClass = allClasses.ToList().Exists(x => x.Equals(className, StringComparison.CurrentCultureIgnoreCase));
             if (hasClass)
             {
-                Console.WriteLine(message);
+                Debug.WriteLine(message);
             }
             return !hasClass;
         }
@@ -215,7 +216,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             catch (Exception ex)
             {
                 var message = $"Navigate {target} failed.. " + ex.Message;
-                Console.WriteLine(message);
+                Debug.WriteLine(message);
                 throw;
             }
         }
@@ -232,7 +233,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             try
             {
-                Console.WriteLine(CommonKeyIndexes.ClickingOnElement, controlId);
+                Debug.WriteLine(CommonKeyIndexes.ClickingOnElement, controlId);
                 var jse = (IJavaScriptExecutor)PageDriver;
                 jse.ExecuteScript(string.Format(
                 CultureInfo.CurrentCulture,
@@ -266,7 +267,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     controlValue = string.Empty;
                 }
 
-                Console.WriteLine(CommonKeyIndexes.SettingControlValue, controlId,
+                Debug.WriteLine(CommonKeyIndexes.SettingControlValue, controlId,
                     controlId.Equals(CommonKeyIndexes.Password,
                         StringComparison.CurrentCultureIgnoreCase) ?
                         CommonKeyIndexes.PasswordMask : controlValue);
@@ -346,7 +347,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             // ?SetComboIndex
             foreach (var item in itms)
             {
-                Console.WriteLine(
+                Debug.WriteLine(
                     CommonKeyIndexes.WebNavInstructionMessage,
                     item.Name,
                     item.FriendlyName,

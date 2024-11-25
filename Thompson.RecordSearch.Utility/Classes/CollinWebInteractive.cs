@@ -119,12 +119,13 @@ namespace Thompson.RecordSearch.Utility.Classes
                         caseList = action.OuterHtml;
                     }
                 }
+                var dtstring = startingDate.ToString("d", CultureInfo.CurrentCulture);
                 var subset = cases.FindAll(c => string.IsNullOrEmpty(c.Address));
                 var count = subset.Count;
                 subset.ForEach(c =>
                     {
                         var idx = subset.IndexOf(c) + 1;
-                        Console.WriteLine($"Reading record {idx} of {count}");
+                        Console.WriteLine($"Date {dtstring}: Reading record {idx} of {count}");
                         GetAddressInformation(driver, this, c);
                     }
                     );

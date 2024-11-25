@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace Thompson.RecordSearch.Utility.Web
@@ -44,7 +45,7 @@ namespace Thompson.RecordSearch.Utility.Web
             }
             else
             {
-                Console.WriteLine("Expected element count {0} matched. Expected {1}, Actual {2}",
+                Debug.WriteLine("Expected element count {0} matched. Expected {1}, Actual {2}",
                     item.DisplayName,
                     number,
                     matches.Count);
