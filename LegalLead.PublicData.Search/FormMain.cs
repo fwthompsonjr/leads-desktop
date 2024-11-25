@@ -618,13 +618,30 @@ namespace LegalLead.PublicData.Search
         private void ShowProgress(int min, int max, int current)
         {
             labelProgress.Visible = true;
+            ControlExtensions.Suspend(progressBar1);
             tableLayoutPanel1.RowStyles[8].Height = 40;
             progressBar1.Visible = false;
             progressBar1.Minimum = min;
             progressBar1.Maximum = max;
             progressBar1.Value = current;
             progressBar1.Visible = true;
+            ControlExtensions.Resume();
         }
+        private static class ControlExtensions
+        {
+            [System.Runtime.InteropServices.DllImport("user32.dll")]
+            public static extern bool LockWindowUpdate(IntPtr hWndLock);
 
+            public static void Suspend(Control control)
+            {
+                LockWindowUpdate(control.Handle);
+            }
+
+            public static void Resume()
+            {
+                LockWindowUpdate(IntPtr.Zero);
+            }
+
+        }
     }
 }
