@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -90,14 +91,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                 people.ForEach(d =>
                 {
                     var indx = people.IndexOf(d) + 1;
-                    Console.WriteLine($"Fetching address details for item {indx} of {mx}.");
-                    if (indx > 0 && indx % 10 == 0)
-                    {
-                        var pct = Math.Round(Convert.ToDecimal(indx + 1) / Convert.ToDecimal(mx), 2) * 100;
-                        Console.WriteLine($" Percent complete: {pct}");
-                    }
+                    data.EchoProgess(0, mx, indx, $"Fetching address details for item {indx} of {mx}.", true);
                     Find(driver, d);
                 });
+                data.CompleteProgess();
                 _ = people.Count(p => !string.IsNullOrEmpty(p.Defendant));
             }
 

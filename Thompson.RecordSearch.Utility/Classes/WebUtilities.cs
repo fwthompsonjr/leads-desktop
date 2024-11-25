@@ -7,6 +7,7 @@ using System.Linq;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 using Thompson.RecordSearch.Utility.Tools;
 
@@ -43,8 +44,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             IWebElement tbResult;
             helper.Navigate(navTo);
             // this is where denton county does it's data fetching..... i think
-            // todo: allow criminal hyperlink click modification...
-            var parameter = GetParameter(data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
+            // allow criminal hyperlink click modification...
+            var parameter = GetParameter(data, CommonKeyIndexes.IsCriminalSearch);
             var isCriminalSearch = parameter != null &&
                 parameter.Value.Equals(CommonKeyIndexes.NumberOne, StringComparison.CurrentCultureIgnoreCase);
             tbResult = helper.Process(data, isCriminalSearch);
@@ -54,12 +55,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             foreach (var rw in rows)
             {
                 var indx = rows.IndexOf(rw) + 1;
-                Console.WriteLine($"Reading item {indx} of {mx}.");
-                if (indx > 0 && indx % 10 == 0)
-                {
-                    var pct = Math.Round(Convert.ToDecimal(indx + 1) / Convert.ToDecimal(mx), 2) * 100;
-                    Console.WriteLine($" Percent complete: {pct}");
-                }
+                data.EchoProgess(0, mx, indx, $"Reading item {indx} of {mx}.", true);
                 var html = JsLibrary.GetAttribute(driver, rw, "outerHTML");
                 var link = TryFindElement(rw, By.TagName("a"));
                 var tdCaseStyle = TryFindElement(rw, By.XPath("td[2]"));
@@ -73,7 +69,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
                 cases.Add(new HLinkDataRow { Data = html, WebAddress = address });
             }
-
+            data.CompleteProgess();
             return tbResult;
         }
 
