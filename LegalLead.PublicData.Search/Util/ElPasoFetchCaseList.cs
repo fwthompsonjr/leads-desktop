@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -29,12 +30,18 @@ namespace LegalLead.PublicData.Search.Util
                 var tx = a.InnerHtml;
                 return !tx.Contains("<th");
             });
+
+            var mx = links.Count;
+            var currentDate = Parameters.StartDate;
             links.ForEach(lnk =>
             {
+                var indx = links.IndexOf(lnk);
+                var message = $"Date: {currentDate} Reading item: {indx + 1} of {mx}";
+                Interactive?.EchoProgess(0, mx, indx + 1, message, true);
                 var itm = GetRowItem(lnk);
                 if (IsValid(itm)) alldata.Add(itm);
             });
-
+            Interactive?.CompleteProgess();
             if (!string.IsNullOrEmpty(RecordFoundMesage))
                 Console.WriteLine(RecordFoundMesage, alldata.Count);
 
