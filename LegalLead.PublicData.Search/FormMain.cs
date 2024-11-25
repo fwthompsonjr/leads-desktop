@@ -51,8 +51,8 @@ namespace LegalLead.PublicData.Search
                 case DialogResult.OK:
                 case DialogResult.Yes:
                     Debug.WriteLine("Login success");
-                    SetInteraction(true);
                     FilterWebSiteByAccount();
+                    SetInteraction(true);
                     UsageReader.WriteUserRecord();
                     ApplySavedSettings();
                     CboWebsite_SelectedValueChanged(null, null);
@@ -75,38 +75,45 @@ namespace LegalLead.PublicData.Search
         }
         private void FilterWebSiteByAccount()
         {
-            var webdetail = GetAccountIndexes();
-            SetUserName();
-            if (string.IsNullOrEmpty(webdetail))
+            try
             {
-                // remove all websites from cboWebsite
-                // and disable the controls
-                SetInteraction(false);
-                cboWebsite.Items.Clear();
-                return;
-            }
-            if (webdetail.Equals("-1")) return;
-            var webid = webdetail.Split(',')
-                .Where(w => { return int.TryParse(w, out var _); })
-                .Select(s => int.Parse(s, CultureInfo.CurrentCulture))
-                .ToList();
-            if (!webid.Any())
-            {
-                // remove all websites from cboWebsite
-                // and disable the controls
-                SetInteraction(false);
-                cboWebsite.Items.Clear();
-                return;
-            }
+                var webdetail = GetAccountIndexes();
+                SetUserName();
+                if (string.IsNullOrEmpty(webdetail))
+                {
+                    // remove all websites from cboWebsite
+                    // and disable the controls
+                    SetInteraction(false);
+                    cboWebsite.Items.Clear();
+                    return;
+                }
+                if (webdetail.Equals("-1")) return;
+                var webid = webdetail.Split(',')
+                    .Where(w => { return int.TryParse(w, out var _); })
+                    .Select(s => int.Parse(s, CultureInfo.CurrentCulture))
+                    .ToList();
+                if (!webid.Any())
+                {
+                    // remove all websites from cboWebsite
+                    // and disable the controls
+                    SetInteraction(false);
+                    cboWebsite.Items.Clear();
+                    return;
+                }
 
-            var websites = SettingsManager.GetNavigation()
-                .FindAll(x => webid.Contains(x.Id));
-            cboWebsite.SelectedValueChanged -= CboWebsite_SelectedValueChanged;
-            cboWebsite.DataSource = websites;
-            cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
-            cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
-            cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
-            cboWebsite.SelectedIndex = 0;
+                var websites = SettingsManager.GetNavigation()
+                    .FindAll(x => webid.Contains(x.Id));
+                cboWebsite.SelectedValueChanged -= CboWebsite_SelectedValueChanged;
+                cboWebsite.DataSource = websites;
+                cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
+                cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
+                cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
+                cboWebsite.SelectedIndex = 0;
+            }
+            finally
+            {
+                SortWebsites();
+            }
         }
 
         private static string GetUserName()
@@ -135,6 +142,7 @@ namespace LegalLead.PublicData.Search
         {
             cboWebsite.Enabled = isEnabled;
             button1.Enabled = isEnabled;
+            tsSettingMenuButton.Visible = isEnabled;
             dteEnding.Enabled = isEnabled;
             dteStart.Enabled = isEnabled;
         }
@@ -354,6 +362,22 @@ namespace LegalLead.PublicData.Search
             {
                 await ProcessAsync(webmgr, siteData, searchItem);
             }).ConfigureAwait(true);
+        }
+
+
+        private void SortWebsites()
+        {
+            if (cboWebsite.DataSource is not List<WebNavigationParameter> dlist) return;
+            if (dlist.Count == 0) return;
+            dlist.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
+            var itemIndex = cboWebsite.SelectedItem is not WebNavigationParameter item ? 0 : dlist.IndexOf(item);
+            cboWebsite.SelectedValueChanged -= CboWebsite_SelectedValueChanged;
+            cboWebsite.DataSource = null;
+            cboWebsite.DataSource = dlist;
+            cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
+            cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
+            cboWebsite.SelectedIndex = itemIndex;
         }
 
         private void ExportDataToolStripMenuItem_Click(object sender, EventArgs e)

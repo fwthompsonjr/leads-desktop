@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LegalLead.PublicData.Search.Common;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,7 +22,11 @@ namespace LegalLead.PublicData.Search.Helpers
             bo.User.CountyData = counties.ToJsonString();
             return JsonConvert.SerializeObject(bo);
         }
-
+        public static void UpdateSettings()
+        {
+            var change = new UserSettingChangeViewModel { Category = "browser", Name = "Open Headless:", Value = "false" };
+            SettingsWriter.Change(change);
+        }
         private static string GetToken()
         {
             var dto = GetDto();
@@ -117,5 +122,9 @@ namespace LegalLead.PublicData.Search.Helpers
             "'token': [" + Environment.NewLine + accountToken + Environment.NewLine + "]" + Environment.NewLine +
             "}";
 
+        private static readonly SessionSettingPersistence SettingsWriter =
+            SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionSettingPersistence>();
     }
 }
