@@ -16,7 +16,7 @@ namespace LegalLead.PublicData.Search.Util
         protected virtual TimeSpan PageWaitPoolingInterval => TimeSpan.FromSeconds(5);
         public IWebDriver Driver { get; set; }
         public DallasSearchProcess Parameters { get; set; }
-
+        public IWebInteractive Interactive { get; set; }
         public virtual object Execute() { return null; }
 
         public virtual IJavaScriptExecutor GetJavaScriptExecutor()

@@ -31,7 +31,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 new CriminalCaseFetch(data)
             };
             var cases = new List<HLinkDataRow>();
-            fetchers.ForEach(f => cases.AddRange(f.GetCases()));
+            fetchers.ForEach(f => cases.AddRange(f.GetListCaseDataRows()));
             return cases;
         }
 
@@ -116,7 +116,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         public static IWebDriver GetWebDriver(bool headless = true)
         {
             var wdriver = (new WebDriverDto().Get()).WebDrivers;
-            var driver = wdriver.Drivers.Where(d => d.Id == wdriver.SelectedIndex).FirstOrDefault();
+            var driver = wdriver.Drivers.FirstOrDefault(d => d.Id == wdriver.SelectedIndex);
             var container = WebDriverContainer.GetContainer;
             var provider = container.GetInstance<IWebDriverProvider>(driver.Name);
             return provider.GetWebDriver(headless);
@@ -149,10 +149,6 @@ namespace Thompson.RecordSearch.Utility.Classes
         }
 
 
-        // private const int SW_HIDE = 0;
-        // private const int SW_SHOW = 5;
-
-
         private static string _chromeBinaryName;
         private static string ChromeBinaryFileName()
         {
@@ -168,7 +164,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 .ToList().FindAll(x => File.Exists(x));
             if (settings.Any())
             {
-                _chromeBinaryName = settings.First();
+                _chromeBinaryName = settings[0];
                 return _chromeBinaryName;
             }
 
@@ -177,14 +173,14 @@ namespace Thompson.RecordSearch.Utility.Classes
             var found = search.FileList;
             if (found.Any())
             {
-                _chromeBinaryName = found.First();
+                _chromeBinaryName = found[0];
                 return _chromeBinaryName;
             }
             search = new DirectorySearch(di, "*chrome.exe");
             found = search.FileList;
             if (found.Any())
             {
-                _chromeBinaryName = found.First();
+                _chromeBinaryName = found[0];
                 return _chromeBinaryName;
             }
             _chromeBinaryName = string.Empty;

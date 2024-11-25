@@ -12,7 +12,7 @@ namespace Thompson.RecordSearch.Utility.Classes
     {
         protected interface ICaseFetch
         {
-            List<HLinkDataRow> GetCases();
+            List<HLinkDataRow> GetListCaseDataRows();
         }
 
         protected class NonCriminalCaseFetch : ICaseFetch
@@ -23,7 +23,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 Data = data;
             }
 
-            public virtual List<HLinkDataRow> GetCases()
+            public virtual List<HLinkDataRow> GetListCaseDataRows()
             {
                 if (DataRows == null)
                 {
@@ -152,12 +152,12 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             private WebNavigationKey GetBaseUri()
             {
-                return GetParameter(Data, CommonKeyIndexes.BaseUri); // "baseUri");
+                return GetParameter(Data, CommonKeyIndexes.BaseUri);
             }
 
             private WebNavigationKey GetQuery()
             {
-                return GetParameter(Data, CommonKeyIndexes.Query); // "query");
+                return GetParameter(Data, CommonKeyIndexes.Query);
             }
 
             protected string GetNavigationAddress()
@@ -197,7 +197,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             }
 
-            public override List<HLinkDataRow> GetCases()
+            public override List<HLinkDataRow> GetListCaseDataRows()
             {
                 if (DataRows == null)
                 {
@@ -208,12 +208,12 @@ namespace Thompson.RecordSearch.Utility.Classes
                     return new List<HLinkDataRow>();
                 }
 
-                var parameter = GetParameter(Data, CommonKeyIndexes.IsCriminalSearch); // "isCriminalSearch");
+                var parameter = GetParameter(Data, CommonKeyIndexes.IsCriminalSearch);
                 if (parameter != null)
                 {
-                    parameter.Value = CommonKeyIndexes.NumberOne; // "1";
+                    parameter.Value = CommonKeyIndexes.NumberOne;
                 }
-                ModifyInstructions(CommonKeyIndexes.CriminalLinkQuery); //"criminalLinkQuery");
+                ModifyInstructions(CommonKeyIndexes.CriminalLinkQuery);
                 var cases = Search(GetNavigationAddress(), DataRows);
                 cases.ForEach(c => c.IsCriminal = true);
                 return cases;
@@ -249,7 +249,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             const StringComparison ccic = StringComparison.CurrentCultureIgnoreCase;
             var keys = data.Parameters.Keys;
-            return keys.FirstOrDefault(k => k.Name.Equals(parameterName, ccic));
+            return keys.Find(k => k.Name.Equals(parameterName, ccic));
 
         }
 
