@@ -8,6 +8,7 @@ using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
+using Thompson.RecordSearch.Utility.Tools;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -35,7 +36,9 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private static IWebElement GetCaseData(WebInteractive data,
             ref List<HLinkDataRow> cases,
-            string navTo, ElementAssertion helper)
+            string navTo,
+            ElementAssertion helper,
+            IWebDriver driver = null)
         {
             IWebElement tbResult;
             helper.Navigate(navTo);
@@ -46,9 +49,18 @@ namespace Thompson.RecordSearch.Utility.Classes
                 parameter.Value.Equals(CommonKeyIndexes.NumberOne, StringComparison.CurrentCultureIgnoreCase);
             tbResult = helper.Process(data, isCriminalSearch);
             var rows = tbResult.FindElements(By.TagName("tr"));
+            var mx = rows.Count;
+            Console.WriteLine($"Search has found {mx} records.");
             foreach (var rw in rows)
             {
-                var html = rw.GetAttribute("outerHTML");
+                var indx = rows.IndexOf(rw) + 1;
+                Console.WriteLine($"Reading item {indx} of {mx}.");
+                if (indx > 0 && indx % 10 == 0)
+                {
+                    var pct = Math.Round(Convert.ToDecimal(indx + 1) / Convert.ToDecimal(mx), 2) * 100;
+                    Console.WriteLine($" Percent complete: {pct}");
+                }
+                var html = JsLibrary.GetAttribute(driver, rw, "outerHTML");
                 var link = TryFindElement(rw, By.TagName("a"));
                 var tdCaseStyle = TryFindElement(rw, By.XPath("td[2]"));
                 var caseStyle = tdCaseStyle == null ? string.Empty : tdCaseStyle.Text;

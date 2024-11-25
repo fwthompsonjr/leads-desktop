@@ -46,7 +46,7 @@ namespace LegalLead.PublicData.Search.Helpers
             public string[] Token { get; set; } = Array.Empty<string>();
         }
 
-        private static readonly string accountToken = 
+        private static readonly string accountToken =
             "'MjAyNC0xMS0yM1QxNzo1MjowNHsiS2V5IjoiNmI5M2M2MjQtYTNmZC00ZWQ5',"
              + Environment.NewLine + "'LWFmZjktOTRkYzM1MzdjNWIyIiwiVXNlciI6eyJJZCI6ImZlZjI5NTMyLWE0',"
              + Environment.NewLine + "'ODctMTFlZi05OWNlLTBhZjdhMDFmNTJlOSIsIlVzZXJOYW1lIjoibGVhZC5h',"

@@ -59,10 +59,20 @@ namespace Thompson.RecordSearch.Utility.Classes
             var data = WebUtilities.GetCases(this);
 
             Result = results.FileName;
+            var mx = data.Count;
             foreach (var dta in data)
             {
+                var indx = data.IndexOf(dta) + 1;
+                Console.WriteLine($"Standardizing address details {indx} of {mx}.");
+                if (indx > 0 && indx % 10 == 0)
+                {
+                    var pct = Math.Round(Convert.ToDecimal(indx + 1) / Convert.ToDecimal(mx), 2) * 100;
+                    Console.WriteLine($" Percent complete: {pct}");
+                }
                 AppendExtraCaseInfo(dta);
-                var caseStyle = dta[CommonKeyIndexes.CaseStyle]; // "CaseStyle"];
+                // calling this indexer method formats
+                // and standardizes address properties
+                _ = dta[CommonKeyIndexes.CaseStyle];
                 results.Append(dta);
             }
             // change output of this item.

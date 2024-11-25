@@ -99,9 +99,11 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         {
             var processes = Process.GetProcessesByName(processName)?.ToList();
             if (processes == null || processes.Count == 0) return;
-            processes.ForEach(prc => {
-                try { ShowWindow(prc.MainWindowHandle, SW_HIDE); } 
-                catch { 
+            processes.ForEach(prc =>
+            {
+                try { ShowWindow(prc.MainWindowHandle, SW_HIDE); }
+                catch
+                {
                     // intentionally blank
                 }
             });

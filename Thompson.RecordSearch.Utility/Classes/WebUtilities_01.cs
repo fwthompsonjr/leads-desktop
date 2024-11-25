@@ -1,6 +1,4 @@
-﻿
-
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -41,7 +39,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             protected List<HLinkDataRow> Search(string navTo, List<HLinkDataRow> cases)
             {
-                using (var driver = GetWebDriver())
+                using (var driver = GetWebDriver(Data.DriverReadHeadless))
                 {
                     try
                     {
@@ -51,10 +49,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                         }
 
                         var data = Data;
-                        IWebElement tbResult = null;
                         var helper = new ElementAssertion(driver);
-                        // 
-                        tbResult = GetCaseData(data, ref cases, navTo, helper);
+                        _ = GetCaseData(data, ref cases, navTo, helper, driver);
                         GetPersonData(cases, driver, data);
 
                     }
@@ -90,8 +86,19 @@ namespace Thompson.RecordSearch.Utility.Classes
                 }
 
                 var people = cases.FindAll(x => !string.IsNullOrEmpty(x.WebAddress));
-                people.ForEach(d => Find(driver, d));
-                var found = people.Count(p => !string.IsNullOrEmpty(p.Defendant));
+                var mx = people.Count;
+                people.ForEach(d =>
+                {
+                    var indx = people.IndexOf(d) + 1;
+                    Console.WriteLine($"Fetching address details for item {indx} of {mx}.");
+                    if (indx > 0 && indx % 10 == 0)
+                    {
+                        var pct = Math.Round(Convert.ToDecimal(indx + 1) / Convert.ToDecimal(mx), 2) * 100;
+                        Console.WriteLine($" Percent complete: {pct}");
+                    }
+                    Find(driver, d);
+                });
+                _ = people.Count(p => !string.IsNullOrEmpty(p.Defendant));
             }
 
             protected List<HLinkDataRow> DataRows

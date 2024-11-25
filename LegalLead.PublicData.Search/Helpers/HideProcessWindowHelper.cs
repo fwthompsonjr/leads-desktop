@@ -22,11 +22,11 @@ namespace LegalLead.PublicData.Search.Helpers
             Debug.WriteLine("this implementation removed for process performance issue");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube", 
-            "S1144:Unused private types or members should be removed", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube",
+            "S1144:Unused private types or members should be removed",
             Justification = "Researching if this method can be safely removed")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", 
-            "IDE0051:Remove unused private members", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
+            "IDE0051:Remove unused private members",
             Justification = "Researching if this method can be safely removed")]
         private void Execute()
         {
