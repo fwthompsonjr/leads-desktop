@@ -11,13 +11,24 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             _timer = new System.Timers.Timer
             {
-                Interval = 500
+                Interval = 5000
             };
             _timer.Elapsed += Timer_Elapsed;
             _timer.Start();
         }
 
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private static void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Debug.WriteLine("this implementation removed for process performance issue");
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube", 
+            "S1144:Unused private types or members should be removed", 
+            Justification = "Researching if this method can be safely removed")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", 
+            "IDE0051:Remove unused private members", 
+            Justification = "Researching if this method can be safely removed")]
+        private void Execute()
         {
             lock (_timerLock)
             {
@@ -28,7 +39,7 @@ namespace LegalLead.PublicData.Search.Helpers
                     while (p.MainWindowHandle == IntPtr.Zero)
                     {
                         p.Refresh();
-                        Thread.Sleep(100);
+                        Thread.Sleep(500);
                     }
                     ShowWindow(p.MainWindowHandle, SW_HIDE);
                 }
