@@ -12,7 +12,9 @@ namespace Thompson.RecordSearch.Utility.Web
     using OpenQA.Selenium;
     using System.Threading;
     using Thompson.RecordSearch.Utility.Dto;
+    using Thompson.RecordSearch.Utility.Extensions;
     using Thompson.RecordSearch.Utility.Models;
+    using static System.Windows.Forms.LinkLabel;
     using Byy = OpenQA.Selenium.By;
 
     public class HarrisCivilReadTable : ElementActionBase
@@ -61,9 +63,14 @@ namespace Thompson.RecordSearch.Utility.Web
                     rowData.Add(empty);
                     break;
                 }
+
                 var rows = driver.FindElements(Byy.CssSelector(rowSelector)).ToList();
+                var mx = rows.Count;
                 rows.ForEach(row =>
                 {
+                    var indx = rows.IndexOf(row);
+                    var message = $"Reading item: {indx + 1} of {mx}";
+                    Interactive?.EchoProgess(0, mx, indx + 1, message, true);
                     var caseData = new CaseRowData();
                     var cells = row.FindElements(Byy.TagName("td")).ToList();
                     for (var i = 1; i <= 8; i++)
@@ -109,6 +116,7 @@ namespace Thompson.RecordSearch.Utility.Web
                         }
                     }
                 });
+                Interactive?.CompleteProgess();
                 if (!HasNextPage())
                 {
                     break;
@@ -136,8 +144,8 @@ namespace Thompson.RecordSearch.Utility.Web
                 return false;
             }
 
-            var list = paging.Cast<IWebElement>().ToList();
-            var next = list.FirstOrDefault(a => a.Text.Contains("Next"));
+            var list = paging.ToList();
+            var next = list.Find(a => a.Text.Contains("Next"));
             if (next == null)
             {
                 return false;
@@ -163,7 +171,11 @@ namespace Thompson.RecordSearch.Utility.Web
             {
                 return dateMin;
             }
-            if (DateTime.TryParse(found.Text, out DateTime dtFrom))
+            if (DateTime.TryParse(
+                found.Text, 
+                CultureInfo.CurrentCulture.DateTimeFormat,
+                DateTimeStyles.AssumeLocal,
+                out DateTime dtFrom))
             {
                 return dtFrom.ToString(dte, CultureInfo.CurrentCulture);
             }
@@ -235,8 +247,8 @@ namespace Thompson.RecordSearch.Utility.Web
                     return false;
                 }
 
-                var list = paging.Cast<IWebElement>().ToList();
-                var next = list.FirstOrDefault(a => a.Text.Contains("Next"));
+                var list = paging.ToList();
+                var next = list.Find(a => a.Text.Contains("Next"));
                 if (next == null)
                 {
                     return false;

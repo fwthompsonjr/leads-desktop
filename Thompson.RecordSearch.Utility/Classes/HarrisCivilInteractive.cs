@@ -1,7 +1,9 @@
 ﻿
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Addressing;
@@ -14,11 +16,6 @@ namespace Thompson.RecordSearch.Utility.Classes
 {
     public class HarrisCivilInteractive : TarrantWebInteractive
     {
-        private class AddressCondition
-        {
-            public string Name { get; set; }
-            public bool IsViolation { get; set; }
-        }
         public HarrisCivilInteractive(WebNavigationParameter parameters) : base(parameters)
         {
         }
@@ -32,7 +29,14 @@ namespace Thompson.RecordSearch.Utility.Classes
         public HarrisCivilInteractive()
         {
         }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Sonar Qube",
+            "S4158:For loop in steps array",
+            Justification = "False positive collection is not empty")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Sonar Qube",
+            "S1854:Remove unneeded variable assignment",
+            Justification = "False positive extension method is returning changed value")]
         public override WebFetchResult Fetch()
         {
             // settings have been retrieved from the constructor
@@ -45,6 +49,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             WebFetchResult webFetch = null;
             while (startingDate.CompareTo(endingDate) <= 0)
             {
+                var mssg = $"Date {startingDate:d}. Fetching data";
+                Console.WriteLine(mssg);
 
                 var results = new SettingsManager().GetOutput(this);
 
@@ -53,12 +59,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var navigationFile = GetParameterValue<string>(CommonKeyIndexes.NavigationControlFile);
                 var sources = navigationFile.Split(',').ToList();
                 var cases = new List<HLinkDataRow>();
-                var people = new List<PersonAddress>();
+                
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
-                var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType); // "collinCountyCaseType");
-                var caseTypeId = GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex); // "caseTypeSelectedIndex");
-                var searchTypeId = GetParameterValue<int>(CommonKeyIndexes.SearchTypeSelectedIndex); // "searchTypeSelectedIndex");
-                var selectedCase = caseTypes.DropDowns[caseTypeId];
                 // set special item values
                 var caseTypeSelect = steps.First(x =>
                     x.ActionName.Equals("jquery-set-selected-index", StringComparison.CurrentCultureIgnoreCase) &
@@ -80,9 +82,9 @@ namespace Thompson.RecordSearch.Utility.Classes
                     x.ActionName.Equals("jquery-set-text", StringComparison.CurrentCultureIgnoreCase) &
                     x.DisplayName.Equals("endDate", StringComparison.CurrentCultureIgnoreCase))
                     .ExpectedValue = startingDate.ToString("MM/dd/yyyy");
-
+                steps.ForEach(s => { s.Wait = 0; });
                 webFetch = SearchWeb(results, steps, startingDate, startingDate,
-                    ref cases, out people);
+                    ref cases, out var people);
                 peopleList.AddRange(people);
                 peopleList.ForEach(p =>
                 {
@@ -135,7 +137,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 return cases;
             }
-            // if (string.IsNullOrEmpty(action.OuterHtml)) return cases;
+            
             var htmlAction = (HarrisCivilReadTable)action;
             var data = htmlAction.DataRows;
             if (data != null && data.Any())
@@ -149,7 +151,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private WebFetchResult SearchWeb(XmlContentHolder results, List<NavigationStep> steps, DateTime startingDate, DateTime endingDate, ref List<HLinkDataRow> cases, out List<PersonAddress> people)
         {
-            IWebDriver driver = WebUtilities.GetWebDriver();
+            IWebDriver driver = WebUtilities.GetWebDriver(DriverReadHeadless);
 
             try
             {
@@ -158,21 +160,24 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var caseList = string.Empty;
                 ElementActions.ForEach(x => x.GetAssertion = assertion);
                 ElementActions.ForEach(x => x.GetWeb = driver);
+                ElementActions.ForEach(x => x.Interactive = this);
                 var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
                 AssignStartAndEndDate(startingDate, endingDate, formatDate, steps);
                 foreach (var item in steps)
                 {
                     var actionName = item.ActionName;
                     var action = ElementActions
-                        .FirstOrDefault(x =>
+                        .Find(x =>
                             x.ActionName.Equals(item.ActionName,
                             StringComparison.CurrentCultureIgnoreCase));
-                    if (action == null)
-                    {
-                        continue;
-                    }
-
+                    if (action == null) continue;
                     action.Act(item);
+                    if (item.DisplayName == "open-website-base-uri") WaitForSearchGrid(driver);
+                    if (item.DisplayName == "login-submit")
+                    {
+                        var tableIndex = WaitForTable(driver);
+                        if (tableIndex == 0) continue;
+                    }
                     cases = ExtractCaseData(results, cases, actionName, action);
                     if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
                     {
@@ -205,7 +210,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             finally
             {
                 driver.Quit();
-                driver.Dispose();
             }
         }
 
@@ -250,7 +254,11 @@ namespace Thompson.RecordSearch.Utility.Classes
 
 
 
-        private string CleanUpAddress(string uncleanAddress)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Sonar Qube", 
+            "S2692:\"IndexOf\" checks should not be for positive numbers", 
+            Justification = "In both cases the item should not be in position 0.")]
+        private static string CleanUpAddress(string uncleanAddress)
         {
             const string driverLicense = @"DL: ";
             const string secondLicense = @"SID: ";
@@ -318,13 +326,10 @@ namespace Thompson.RecordSearch.Utility.Classes
 
             var criminalLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.CriminalLinkXpath));
             var elementCaseName = TryFindElement(driver, By.XPath(CommonKeyIndexes.CaseStlyeBoldXpath));
-            if (criminalLink != null)
+            if (criminalLink != null && elementCaseName != null)
             {
-                if (elementCaseName != null)
-                {
-                    linkData.CriminalCaseStyle = elementCaseName.Text;
-                    linkData.IsCriminal = true;
-                }
+                linkData.CriminalCaseStyle = elementCaseName.Text;
+                linkData.IsCriminal = true;
             }
             var probateLink = TryFindElement(driver, By.XPath(CommonKeyIndexes.ProbateLinkXpath));
             if (probateLink != null)
@@ -401,5 +406,59 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
+        private static int WaitForTable(IWebDriver driver)
+        {
+            int index = 0;
+            var finders = new string[] {
+                "ctl00_ContentPlaceHolder1_lblListViewCasesEmptyMsg",
+                "itemPlaceholderContainer" };
+            try
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(100))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(500)
+                };
+                wait.Until(d =>
+                {
+                    var isfound = false;
+                    for (int i = 0; i < finders.Length; i++) {
+                        var locator = By.Id(finders[i]);
+                        var element = driver.TryFindElement(locator);
+                        if (element != null)
+                        {
+                            index = i + 1;
+                            isfound = true;
+                            break;
+                        }
+                    }
+                    return isfound;
+                });
+                return index;
+            }
+            catch (Exception)
+            {
+                return index;
+            }
+        }
+        private static void WaitForSearchGrid(IWebDriver driver)
+        {
+            var locator = By.Id("ctl00_ContentPlaceHolder1_ddlCourt");
+            try
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(100))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(500)
+                };
+                wait.Until(d =>
+                {
+                    var element = driver.TryFindElement(locator);
+                    return element != null;
+                });
+            }
+            catch (Exception)
+            {
+                // intentionally left blank
+            }
+        }
     }
 }
