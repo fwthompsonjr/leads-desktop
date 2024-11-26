@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using OpenQA.Selenium;
+using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Interfaces
 {
@@ -9,6 +10,7 @@ namespace LegalLead.PublicData.Search.Interfaces
         bool IsPostSearch { get; }
         IWebDriver Driver { get; set; }
         TravisSearchProcess Parameters { get; set; }
+        IWebInteractive Interactive { get; set; }
         object Execute();
     }
 }

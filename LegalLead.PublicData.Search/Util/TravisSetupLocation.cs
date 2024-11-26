@@ -1,11 +1,12 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.PublicData.Search.Common;
+using OpenQA.Selenium;
 using System;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
-    public class TravisSetupLocation : BaseTravisSearchAction
+    public class TravisSetupLocation : TravisSetupOptions
     {
         public override int OrderId => 15;
 
@@ -17,7 +18,13 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 
             var element = Driver.TryFindElement(By.XPath(xpath)) ?? throw new NullReferenceException();
-            element.Click();
+            var executor = Driver.GetJsExecutor();
+            if (executor != null) element.Click();
+            else
+            {
+                executor.ExecuteScript("arguments[0].click()", element);
+            }
+            WaitForControls(Driver);
             return true;
         }
 
