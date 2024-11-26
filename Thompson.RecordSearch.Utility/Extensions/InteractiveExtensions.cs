@@ -8,7 +8,7 @@ namespace Thompson.RecordSearch.Utility.Extensions
         public static void CompleteProgess(
             this IWebInteractive web)
         {
-            web.ReportProgessComplete?.Invoke();
+            web?.ReportProgessComplete?.Invoke();
         }
 
         public static void EchoProgess(
@@ -22,7 +22,7 @@ namespace Thompson.RecordSearch.Utility.Extensions
         {
             if (string.IsNullOrEmpty(message)) message = $"Item {current} of {max}";
             Console.WriteLine(message);
-            web.ReportProgress?.Invoke(min, max, current);
+            web?.ReportProgress?.Invoke(min, max, current);
             if (!calcPercentage) return;
             if (!string.IsNullOrEmpty(percentageMessage)) Console.WriteLine(percentageMessage);
             var interval = GetProgressInterval(max);
