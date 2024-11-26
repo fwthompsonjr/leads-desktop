@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -40,6 +41,7 @@ namespace LegalLead.PublicData.Search.Util
                 var itm = GetRowItem(lnk);
                 if (itm != null && !string.IsNullOrEmpty(itm.Href)) alldata.Add(itm);
             });
+            Interactive.CompleteProgess();
             var message = AppMessages.GetMessage("STATUS_MSG_SEARCH_FOUND_RECORDS");
             Console.WriteLine(message, alldata.Count);
             return JsonConvert.SerializeObject(alldata);
