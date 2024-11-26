@@ -16,8 +16,8 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// </summary>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Sonar Qube", 
-            "S1006:Method overrides should not change parameter defaults", 
+            "Sonar Qube",
+            "S1006:Method overrides should not change parameter defaults",
             Justification = "FireFox implementation is reversed for default behavior")]
         public IWebDriver GetWebDriver(bool headless = true)
         {

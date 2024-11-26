@@ -3,7 +3,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Addressing;
@@ -59,7 +58,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var navigationFile = GetParameterValue<string>(CommonKeyIndexes.NavigationControlFile);
                 var sources = navigationFile.Split(',').ToList();
                 var cases = new List<HLinkDataRow>();
-                
+
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
                 // set special item values
                 var caseTypeSelect = steps.First(x =>
@@ -137,7 +136,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 return cases;
             }
-            
+
             var htmlAction = (HarrisCivilReadTable)action;
             var data = htmlAction.DataRows;
             if (data != null && data.Any())
@@ -255,8 +254,8 @@ namespace Thompson.RecordSearch.Utility.Classes
 
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Sonar Qube", 
-            "S2692:\"IndexOf\" checks should not be for positive numbers", 
+            "Sonar Qube",
+            "S2692:\"IndexOf\" checks should not be for positive numbers",
             Justification = "In both cases the item should not be in position 0.")]
         private static string CleanUpAddress(string uncleanAddress)
         {
@@ -421,7 +420,8 @@ namespace Thompson.RecordSearch.Utility.Classes
                 wait.Until(d =>
                 {
                     var isfound = false;
-                    for (int i = 0; i < finders.Length; i++) {
+                    for (int i = 0; i < finders.Length; i++)
+                    {
                         var locator = By.Id(finders[i]);
                         var element = driver.TryFindElement(locator);
                         if (element != null)

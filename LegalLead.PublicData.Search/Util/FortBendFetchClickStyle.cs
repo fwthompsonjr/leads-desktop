@@ -23,7 +23,7 @@ namespace LegalLead.PublicData.Search.Util
             if (links == null || links.Count == 0) return JsonConvert.SerializeObject(alldata);
             var dataset = this.GetCaseItems(links, GetDto, js);
             if (dataset == null || dataset.Count == 0) return JsonConvert.SerializeObject(alldata);
-            
+
             dataset.ForEach(d =>
             {
                 if (d != null) alldata.Add(d);

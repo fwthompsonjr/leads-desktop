@@ -14,7 +14,6 @@ namespace Thompson.RecordSearch.Utility.Web
     using Thompson.RecordSearch.Utility.Dto;
     using Thompson.RecordSearch.Utility.Extensions;
     using Thompson.RecordSearch.Utility.Models;
-    using static System.Windows.Forms.LinkLabel;
     using Byy = OpenQA.Selenium.By;
 
     public class HarrisCivilReadTable : ElementActionBase
@@ -172,7 +171,7 @@ namespace Thompson.RecordSearch.Utility.Web
                 return dateMin;
             }
             if (DateTime.TryParse(
-                found.Text, 
+                found.Text,
                 CultureInfo.CurrentCulture.DateTimeFormat,
                 DateTimeStyles.AssumeLocal,
                 out DateTime dtFrom))
