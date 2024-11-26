@@ -21,3 +21,8 @@ as well as api tests to validate remote access.
 ### Component Checks
 - Check behavior [Bexar]
 - Check behavior [Collin]
+- Check behavior [Dallas]
+- Check behavior [Denton]
+- Check behavior [ElPaso]
+- Check behavior [FortBend]
+- Check behavior [Harris]

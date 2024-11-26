@@ -1,6 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
-using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -27,7 +26,7 @@ namespace LegalLead.PublicData.Search.Util
         public override WebFetchResult Fetch()
         {
             const string countyName = "FortBend";
-            
+
             var postsearchtypes = new List<Type> { typeof(NonActionSearch) };
             var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();
