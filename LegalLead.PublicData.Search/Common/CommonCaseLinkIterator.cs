@@ -3,12 +3,15 @@ using LegalLead.PublicData.Search.Util;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using StructureMap.Building;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Common
 {
@@ -92,8 +95,13 @@ namespace LegalLead.PublicData.Search.Common
                 ExternalExecutor = executor,
                 Parameters = search.Parameters
             };
+            var mx = links.Count;
+            var currentDate = search.Parameters.StartDate;
             links.ForEach(link =>
             {
+                var indx = links.IndexOf(link);
+                var message = $"Date: {currentDate} Reading item: {indx + 1} of {mx}";
+                search.Interactive?.EchoProgess(0, mx, indx + 1, message, true);
                 if (!blnError)
                 {
                     var id = links.IndexOf(link);
@@ -120,6 +128,7 @@ namespace LegalLead.PublicData.Search.Common
                     search.Driver.Navigate().Back();
                 }
             });
+            search.Interactive?.ReportProgessComplete?.Invoke();
             return alldata;
         }
         private static bool ElementWait(By locator, IWebDriver driver)

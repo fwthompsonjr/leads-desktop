@@ -24,7 +24,7 @@ namespace LegalLead.PublicData.Search.Helpers
         }
         public static void UpdateSettings()
         {
-            var change = new UserSettingChangeViewModel { Category = "browser", Name = "Open Headless:", Value = "false" };
+            var change = new UserSettingChangeViewModel { Category = "browser", Name = "Open Headless:", Value = "true" };
             SettingsWriter.Change(change);
         }
         private static string GetToken()

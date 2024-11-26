@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Dto;
-
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
@@ -24,11 +23,11 @@ namespace LegalLead.PublicData.Search.Util
             if (links == null || links.Count == 0) return JsonConvert.SerializeObject(alldata);
             var dataset = this.GetCaseItems(links, GetDto, js);
             if (dataset == null || dataset.Count == 0) return JsonConvert.SerializeObject(alldata);
+            
             dataset.ForEach(d =>
             {
                 if (d != null) alldata.Add(d);
             });
-
             return JsonConvert.SerializeObject(alldata);
         }
 
