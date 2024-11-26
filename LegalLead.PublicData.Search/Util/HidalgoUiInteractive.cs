@@ -21,12 +21,12 @@ namespace LegalLead.PublicData.Search.Util
             var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
+            ActionItems.ForEach(a => a.Interactive = this);
         }
 
         public override WebFetchResult Fetch()
         {
             const string countyName = "HIDALGO";
-            using var hider = new HideProcessWindowHelper();
             var postsearchtypes = new List<Type> { typeof(NonActionSearch) };
             var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();
@@ -82,6 +82,7 @@ namespace LegalLead.PublicData.Search.Util
 
             dates.ForEach(d =>
             {
+                Console.WriteLine($"Date {d:d}. Reading records");
                 IsDateRangeComplete = false;
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
