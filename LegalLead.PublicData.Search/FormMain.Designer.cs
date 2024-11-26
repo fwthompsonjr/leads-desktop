@@ -40,7 +40,7 @@
             toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             tsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             tsUserName = new System.Windows.Forms.ToolStripStatusLabel();
-            toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            tsSettingMenuButton = new System.Windows.Forms.ToolStripSplitButton();
             cboWebsite = new Classes.ComboBoxEx();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -52,6 +52,8 @@
             cboCaseType = new Classes.ComboBoxEx();
             label6 = new System.Windows.Forms.Label();
             cboCourts = new Classes.ComboBoxEx();
+            labelProgress = new System.Windows.Forms.Label();
+            progressBar1 = new System.Windows.Forms.ProgressBar();
             tableLayoutPanel1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -65,7 +67,7 @@
             tableLayoutPanel1.Controls.Add(dteStart, 1, 1);
             tableLayoutPanel1.Controls.Add(dteEnding, 1, 2);
             tableLayoutPanel1.Controls.Add(button1, 1, 6);
-            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 8);
+            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 9);
             tableLayoutPanel1.Controls.Add(cboWebsite, 1, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(label2, 0, 1);
@@ -77,11 +79,13 @@
             tableLayoutPanel1.Controls.Add(cboCaseType, 1, 4);
             tableLayoutPanel1.Controls.Add(label6, 0, 5);
             tableLayoutPanel1.Controls.Add(cboCourts, 1, 5);
+            tableLayoutPanel1.Controls.Add(labelProgress, 0, 8);
+            tableLayoutPanel1.Controls.Add(progressBar1, 1, 8);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 10;
+            tableLayoutPanel1.RowCount = 11;
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
@@ -90,6 +94,7 @@
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             tableLayoutPanel1.Size = new System.Drawing.Size(760, 550);
@@ -142,7 +147,7 @@
             tableLayoutPanel1.SetColumnSpan(statusStrip1, 2);
             statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsWebDriver, tsDropFileList, toolStripStatus, tsStatusLabel, tsUserName, toolStripSplitButton1 });
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsWebDriver, tsDropFileList, toolStripStatus, tsStatusLabel, tsUserName, tsSettingMenuButton });
             statusStrip1.Location = new System.Drawing.Point(0, 497);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
@@ -186,16 +191,16 @@
             tsUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             tsUserName.Visible = false;
             // 
-            // toolStripSplitButton1
+            // tsSettingMenuButton
             // 
-            toolStripSplitButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripSplitButton1.Image = (System.Drawing.Image)resources.GetObject("toolStripSplitButton1.Image");
-            toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripSplitButton1.Name = "toolStripSplitButton1";
-            toolStripSplitButton1.Size = new System.Drawing.Size(36, 32);
-            toolStripSplitButton1.Text = "toolStripSplitButton1";
-            toolStripSplitButton1.ButtonClick += ToolStripSplitButton1_ButtonClick;
+            tsSettingMenuButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            tsSettingMenuButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            tsSettingMenuButton.Image = (System.Drawing.Image)resources.GetObject("tsSettingMenuButton.Image");
+            tsSettingMenuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tsSettingMenuButton.Name = "tsSettingMenuButton";
+            tsSettingMenuButton.Size = new System.Drawing.Size(36, 32);
+            tsSettingMenuButton.Text = "toolStripSplitButton1";
+            tsSettingMenuButton.ButtonClick += ToolStripSplitButton1_ButtonClick;
             // 
             // cboWebsite
             // 
@@ -248,7 +253,7 @@
             txConsole.Multiline = true;
             txConsole.Name = "txConsole";
             txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            txConsole.Size = new System.Drawing.Size(752, 167);
+            txConsole.Size = new System.Drawing.Size(752, 121);
             txConsole.TabIndex = 8;
             // 
             // label4
@@ -317,6 +322,25 @@
             cboCourts.Size = new System.Drawing.Size(612, 24);
             cboCourts.TabIndex = 13;
             // 
+            // labelProgress
+            // 
+            labelProgress.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            labelProgress.AutoSize = true;
+            labelProgress.Location = new System.Drawing.Point(3, 466);
+            labelProgress.Name = "labelProgress";
+            labelProgress.Size = new System.Drawing.Size(134, 15);
+            labelProgress.TabIndex = 15;
+            labelProgress.Text = "Progress:";
+            // 
+            // progressBar1
+            // 
+            progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            progressBar1.Location = new System.Drawing.Point(146, 462);
+            progressBar1.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new System.Drawing.Size(608, 23);
+            progressBar1.TabIndex = 16;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -359,7 +383,9 @@
         private System.Windows.Forms.ToolStripDropDownButton tsDropFileList;
         private System.Windows.Forms.ToolStripDropDownButton tsWebDriver;
         private System.Windows.Forms.ToolStripStatusLabel tsUserName;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripSplitButton tsSettingMenuButton;
+        private System.Windows.Forms.Label labelProgress;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

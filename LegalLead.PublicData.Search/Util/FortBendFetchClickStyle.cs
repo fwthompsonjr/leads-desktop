@@ -1,12 +1,8 @@
 ﻿using LegalLead.PublicData.Search.Common;
 using Newtonsoft.Json;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
-
 namespace LegalLead.PublicData.Search.Util
 {
     using Rx = Properties.Resources;
@@ -27,29 +23,12 @@ namespace LegalLead.PublicData.Search.Util
             if (links == null || links.Count == 0) return JsonConvert.SerializeObject(alldata);
             var dataset = this.GetCaseItems(links, GetDto, js);
             if (dataset == null || dataset.Count == 0) return JsonConvert.SerializeObject(alldata);
+
             dataset.ForEach(d =>
             {
                 if (d != null) alldata.Add(d);
             });
-
             return JsonConvert.SerializeObject(alldata);
-        }
-
-        private bool ElementWait(By locator)
-        {
-            try
-            {
-                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(300) };
-                wait.Until(w =>
-                {
-                    return w.TryFindElement(locator) != null;
-                });
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         protected override string ScriptName { get; } = "get person address";

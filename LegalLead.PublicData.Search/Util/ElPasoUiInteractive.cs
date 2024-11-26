@@ -26,20 +26,26 @@ namespace LegalLead.PublicData.Search.Util
         public override WebFetchResult Fetch()
         {
             const string countyName = "ElPaso";
-            using var hider = new HideProcessWindowHelper();
-            var postsearchtypes = new List<Type> { typeof(NonActionSearch) };
-            var driver = GetDriver(DriverReadHeadless);
-            var parameters = new DallasSearchProcess();
-            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
-            var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
-            var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
-            var result = new WebFetchResult();
-            Iterate(driver, parameters, dates, common, postcommon);
-            if (People.Count == 0) return result;
-            result.PeopleList = People;
-            result.Result = GenerateExcelFile(countyName, 90);
-            result.CaseList = JsonConvert.SerializeObject(People);
-            return result;
+            try
+            {
+                var postsearchtypes = new List<Type> { typeof(NonActionSearch) };
+                var driver = GetDriver(DriverReadHeadless);
+                var parameters = new DallasSearchProcess();
+                var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
+                var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
+                var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
+                var result = new WebFetchResult();
+                Iterate(driver, parameters, dates, common, postcommon);
+                if (People.Count == 0) return result;
+                result.PeopleList = People;
+                result.Result = GenerateExcelFile(countyName, 90);
+                result.CaseList = JsonConvert.SerializeObject(People);
+                return result;
+            }
+            finally
+            {
+                ReportProgessComplete?.Invoke();
+            }
         }
 
         protected override string GetCourtAddress(string courtType, string court)

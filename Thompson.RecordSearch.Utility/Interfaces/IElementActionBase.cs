@@ -44,5 +44,6 @@ namespace Thompson.RecordSearch.Utility.Interfaces
         string OuterHtml { get; set; }
 
         WebNavigationParameter GetSettings(int index);
+        IWebInteractive Interactive { get; set; }
     }
 }

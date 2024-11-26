@@ -3,6 +3,7 @@ using OpenQA.Selenium.Firefox;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Thompson.RecordSearch.Utility.DriverFactory
@@ -14,16 +15,28 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
         /// Gets the web driver.
         /// </summary>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Sonar Qube",
+            "S1006:Method overrides should not change parameter defaults",
+            Justification = "FireFox implementation is reversed for default behavior")]
         public IWebDriver GetWebDriver(bool headless = true)
         {
-            // make sure all instances of geckodriver are gone
-            KillProcess("geckodriver");
-            var driver = GetDefaultDriver(headless);
-            if (driver != null)
+            const string processName = "geckodriver";
+            try
             {
-                return driver;
+                // make sure all instances of geckodriver are gone
+                KillProcess(processName);
+                var driver = GetDefaultDriver(headless);
+                if (driver != null)
+                {
+                    return driver;
+                }
+                return new FirefoxDriver(GetDriverFileName());
             }
-            return new FirefoxDriver(GetDriverFileName());
+            finally
+            {
+                HideProcesses(processName);
+            }
         }
 
         private static string _driverFileName;
@@ -85,5 +98,22 @@ namespace Thompson.RecordSearch.Utility.DriverFactory
                 process.Kill();
             }
         }
+
+        private static void HideProcesses(string processName)
+        {
+            var processes = Process.GetProcessesByName(processName)?.ToList();
+            if (processes == null || processes.Count == 0) return;
+            processes.ForEach(prc =>
+            {
+                try { ShowWindow(prc.MainWindowHandle, SW_HIDE); }
+                catch
+                {
+                    // intentionally blank
+                }
+            });
+        }
+        private const int SW_HIDE = 0;
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
     }
 }

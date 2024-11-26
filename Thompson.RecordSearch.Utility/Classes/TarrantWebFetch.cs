@@ -38,7 +38,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             public virtual void Fetch(DateTime startingDate, out WebFetchResult webFetch, out List<PersonAddress> people, int? caseOverrideId = null)
             {
                 var steps = new List<NavigationStep>();
-                var navigationFile = Web.GetParameterValue<string>(CommonKeyIndexes.NavigationControlFile); // "navigation.control.file");
+                var navigationFile = Web.GetParameterValue<string>(CommonKeyIndexes.NavigationControlFile);
                 var sources = navigationFile.Split(',').ToList();
                 if (caseOverrideId == null)
                 {
@@ -61,7 +61,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 cases = new List<HLinkDataRow>();
                 people = new List<PersonAddress>();
 
-                var caseTypeId = caseTypeOverrideId ?? Web.GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex); // "caseTypeSelectedIndex");
+                var caseTypeId = caseTypeOverrideId ?? Web.GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex);
                 // set special item values
                 var caseTypeSelect = steps.First(x => x.ActionName.Equals(CommonKeyIndexes.SetSelectValue, StringComparison.CurrentCultureIgnoreCase));
                 caseTypeSelect.ExpectedValue = caseTypeId.ToString(CultureInfo.CurrentCulture);

@@ -6,12 +6,15 @@ using System.Linq;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
     public class CollinWebInteractive : TarrantWebInteractive
     {
+        public string Credential { get; set; }
+
         private class AddressCondition
         {
             public string Name { get; set; }
@@ -35,6 +38,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             // settings have been retrieved from the constructor
             // get any output file to store data from extract
+            const StringComparison ccic = StringComparison.OrdinalIgnoreCase;
             var startingDate = GetParameterValue<DateTime>(CommonKeyIndexes.StartDate);
             var endingDate = GetParameterValue<DateTime>(CommonKeyIndexes.EndDate);
             var peopleList = new List<PersonAddress>();
@@ -49,23 +53,27 @@ namespace Thompson.RecordSearch.Utility.Classes
                 var navigationFile = GetParameterValue<string>(CommonKeyIndexes.NavigationControlFile);
                 var sources = navigationFile.Split(',').ToList();
                 var cases = new List<HLinkDataRow>();
-                var people = new List<PersonAddress>();
                 sources.ForEach(s => steps.AddRange(GetAppSteps(s).Steps));
-                var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType); // "collinCountyCaseType");
-                var caseTypeId = GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex); // "caseTypeSelectedIndex");
-                var searchTypeId = GetParameterValue<int>(CommonKeyIndexes.SearchTypeSelectedIndex); // "searchTypeSelectedIndex");
+                var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
+                var caseTypeId = GetParameterValue<int>(CommonKeyIndexes.CaseTypeSelectedIndex);
+                var searchTypeId = GetParameterValue<int>(CommonKeyIndexes.SearchTypeSelectedIndex);
                 var selectedCase = caseTypes.DropDowns[caseTypeId];
+                if (!string.IsNullOrEmpty(Credential))
+                {
+
+                    var loginActions = steps.FindAll(x =>
+                        (x.ExpectedValue ?? "").Equals("collinCountyUserMap", ccic));
+                    loginActions.ForEach(x => x.ExpectedValue = Credential);
+                }
                 // set special item values
                 var caseTypeSelect = steps.First(x =>
-                    x.ActionName.Equals(CommonKeyIndexes.SetSelectValue, // "set-select-value", 
-                        StringComparison.CurrentCultureIgnoreCase));
+                    x.ActionName.Equals(CommonKeyIndexes.SetSelectValue, ccic));
                 caseTypeSelect.ExpectedValue = caseTypeId.ToString(CultureInfo.CurrentCulture.NumberFormat);
                 var searchSelect = steps.First(x =>
-                    x.DisplayName.Equals(CommonKeyIndexes.SearchTypeHyperlink, // "search-type-hyperlink", 
-                        StringComparison.CurrentCultureIgnoreCase));
+                    x.DisplayName.Equals(CommonKeyIndexes.SearchTypeHyperlink, ccic));
                 searchSelect.Locator.Query = selectedCase.Options[searchTypeId].Query;
                 webFetch = SearchWeb(results, steps, startingDate, startingDate,
-                    ref cases, out people);
+                    ref cases, out var people);
                 peopleList.AddRange(people);
                 webFetch.PeopleList = peopleList;
                 startingDate = startingDate.AddDays(1);
@@ -75,7 +83,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         private WebFetchResult SearchWeb(XmlContentHolder results, List<NavigationStep> steps, DateTime startingDate, DateTime endingDate, ref List<HLinkDataRow> cases, out List<PersonAddress> people)
         {
-            IWebDriver driver = WebUtilities.GetWebDriver();
+            IWebDriver driver = WebUtilities.GetWebDriver(DriverReadHeadless);
 
             try
             {
@@ -90,7 +98,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 {
                     var actionName = item.ActionName;
                     var action = ElementActions
-                        .FirstOrDefault(x =>
+                        .Find(x =>
                             x.ActionName.Equals(item.ActionName,
                             StringComparison.CurrentCultureIgnoreCase));
                     if (action == null)
@@ -112,8 +120,17 @@ namespace Thompson.RecordSearch.Utility.Classes
                         caseList = action.OuterHtml;
                     }
                 }
-                cases.FindAll(c => string.IsNullOrEmpty(c.Address))
-                    .ForEach(c => GetAddressInformation(driver, this, c));
+                var dtstring = startingDate.ToString("d", CultureInfo.CurrentCulture);
+                var subset = cases.FindAll(c => string.IsNullOrEmpty(c.Address));
+                var count = subset.Count;
+                subset.ForEach(c =>
+                    {
+                        var idx = subset.IndexOf(c) + 1;
+                        var mssg = $"Date: {dtstring}. Reading record {idx} of {count}";
+                        this.EchoProgess(0, count, idx, mssg);
+                        GetAddressInformation(driver, this, c);
+                    }
+                    );
 
                 cases.FindAll(c => c.IsCriminal && !string.IsNullOrEmpty(c.CriminalCaseStyle))
                     .ForEach(d => d.CaseStyle = d.CriminalCaseStyle);

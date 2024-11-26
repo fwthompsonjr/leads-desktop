@@ -1,6 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
-using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -21,12 +20,13 @@ namespace LegalLead.PublicData.Search.Util
             var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
+            ActionItems.ForEach(a => { a.Interactive = this; });
         }
 
         public override WebFetchResult Fetch()
         {
             const string countyName = "FortBend";
-            using var hider = new HideProcessWindowHelper();
+
             var postsearchtypes = new List<Type> { typeof(NonActionSearch) };
             var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();

@@ -29,6 +29,7 @@ namespace Thompson.RecordSearch.Utility.Web
             var siteData = websites.First(x => x.Id == index);
             return siteData;
         }
+        public IWebInteractive Interactive { get; set; }
 
         protected static By GetSelector(NavigationStep item)
         {

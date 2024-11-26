@@ -226,7 +226,7 @@ namespace LegalLead.PublicData.Search
             cboSearchType.SelectedIndex = Zero;
             cboCourts.SelectedIndex = Zero;
             var menuOptions = SessionUtil.GetMenuOptions;
-            var dropDownItem = toolStripSplitButton1.DropDownItems;
+            var dropDownItem = tsSettingMenuButton.DropDownItems;
             dropDownItem.Clear();
             menuOptions.ForEach(item =>
             {

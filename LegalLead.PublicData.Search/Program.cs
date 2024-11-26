@@ -98,17 +98,37 @@ namespace LegalLead.PublicData.Search
             try
             {
                 var textBox = mainForm.txConsole;
+                ControlExtensions.Suspend(textBox);
                 textBox.Text = sb.ToString();
                 textBox.Refresh();
                 if (textBox.Text.Length == 0) return;
                 textBox.SelectionStart = textBox.Text.Length;
                 textBox.ScrollToCaret();
+                ControlExtensions.Resume();
             }
             catch (Exception ex)
             {
                 if (throwError) throw;
                 else Debug.WriteLine(ex.Message);
             }
+        }
+
+
+        private static class ControlExtensions
+        {
+            [System.Runtime.InteropServices.DllImport("user32.dll")]
+            public static extern bool LockWindowUpdate(IntPtr hWndLock);
+
+            public static void Suspend(Control control)
+            {
+                LockWindowUpdate(control.Handle);
+            }
+
+            public static void Resume()
+            {
+                LockWindowUpdate(IntPtr.Zero);
+            }
+
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Tools;
 // using Thompson.RecordSearch.Utility.Classes.WebElementExtensions;
 namespace Thompson.RecordSearch.Utility.Web
 {
@@ -20,7 +21,7 @@ namespace Thompson.RecordSearch.Utility.Web
             var helper = new CollinWebInteractive();
             var selector = GetSelector(item);
             var element = WaitForElementExisting(GetWeb, selector);
-            var outerHtml = element.GetAttribute("outerHTML");
+            var outerHtml = JsLibrary.GetAttribute(GetWeb, element, "outerHTML");
             outerHtml = helper.RemoveElement(outerHtml, "<img");
             // remove colspan? <colgroup>
             outerHtml = helper.RemoveTag(outerHtml, "colgroup");

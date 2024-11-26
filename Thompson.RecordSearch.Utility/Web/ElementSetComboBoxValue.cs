@@ -2,6 +2,7 @@
 {
     using OpenQA.Selenium;
     using System;
+    using System.Diagnostics;
     using System.Threading;
     using Thompson.RecordSearch.Utility.Dto;
     using Byy = OpenQA.Selenium.By;
@@ -39,7 +40,7 @@
             jse.ExecuteScript(jv.setIndex);
             jse.ExecuteScript(jv.change);
             var objText = Convert.ToString(jse.ExecuteScript(jv.optionText));
-            Console.WriteLine($"Object {id} option value set to: {objText}");
+            Debug.WriteLine($"Object {id} option value set to: {objText}");
             if (item.Wait > 0) { Thread.Sleep(item.Wait); }
         }
     }

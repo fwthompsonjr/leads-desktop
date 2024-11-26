@@ -1,6 +1,32 @@
 [
 	{
 		"id": "2.8.7",
+		"date": "2024-11-26 10:45",
+		"title": "Enhance user search experience",
+		"description": [
+			"## Problem:",
+			"",
+			"When performing search, ",
+			"expectation is that the search will echo status messages ",
+			"back to the caller and that messaging has value ",
+			"to represent progress of the search process.",
+			"",
+			"## Notes:",
+			"- browser window should be hidden",
+			"- override should allow admin to toggle window visibility",
+			"- process should report percent completion during execution",
+			"",
+			"### Counties addressed:",
+			"- Bexar county",
+			"- Collin county",
+			"- Harris Civil",
+			"- Dallas county",
+			"- El Paso county",
+			"- Fort Bend county"
+		]
+	},
+	{
+		"id": "2.8.7",
 		"date": "2024-11-22 17:45",
 		"title": "Build custom screens for authenicated user",
 		"description": [

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
@@ -59,10 +60,15 @@ namespace Thompson.RecordSearch.Utility.Classes
             var data = WebUtilities.GetCases(this);
 
             Result = results.FileName;
+            var mx = data.Count;
             foreach (var dta in data)
             {
+                var indx = data.IndexOf(dta) + 1;
+                this.EchoProgess(0, mx, indx, $"Standardizing address details for item {indx} of {mx}.", true);
                 AppendExtraCaseInfo(dta);
-                var caseStyle = dta[CommonKeyIndexes.CaseStyle]; // "CaseStyle"];
+                // calling this indexer method formats
+                // and standardizes address properties
+                _ = dta[CommonKeyIndexes.CaseStyle];
                 results.Append(dta);
             }
             // change output of this item.
@@ -84,7 +90,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             };
         }
 
-        private List<PersonAddress> CleanUp(List<PersonAddress> personAddresses)
+        private static List<PersonAddress> CleanUp(List<PersonAddress> personAddresses)
         {
             var found = personAddresses
                 .FindAll(f =>
@@ -93,10 +99,10 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 foreach (var item in found)
                 {
-                    item.Zip = CommonKeyIndexes.NonAddressZipCode; // "00000";
-                    item.Address1 = CommonKeyIndexes.NonAddressLine1;// "No Address Found";
+                    item.Zip = CommonKeyIndexes.NonAddressZipCode;
+                    item.Address1 = CommonKeyIndexes.NonAddressLine1;
                     item.Address2 = string.Empty;
-                    item.Address3 = CommonKeyIndexes.NonAddressLine2; //"Not, Available 00000";
+                    item.Address3 = CommonKeyIndexes.NonAddressLine2;
                 }
             }
             found = personAddresses
@@ -119,7 +125,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// <param name="data">The data.</param>
         /// <param name="personAddresses">The person addresses.</param>
         /// <returns></returns>
-        private List<PersonAddress> MapCaseStyle(List<HLinkDataRow> data,
+        private static List<PersonAddress> MapCaseStyle(List<HLinkDataRow> data,
             List<PersonAddress> personAddresses)
         {
             if (personAddresses == null)

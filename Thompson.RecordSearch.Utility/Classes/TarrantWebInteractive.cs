@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
 using Thompson.RecordSearch.Utility.Web;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -54,7 +56,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
             while (startingDate.CompareTo(endingDate) <= 0)
             {
-
+                Console.WriteLine($"Date {startingDate:d}. Reading data.");
                 SetParameterValue(CommonKeyIndexes.StartDate,
                     startingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
                 SetParameterValue(CommonKeyIndexes.EndDate,
@@ -79,7 +81,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             ref List<HLinkDataRow> cases,
             out List<PersonAddress> people)
         {
-            IWebDriver driver = WebUtilities.GetWebDriver();
+            IWebDriver driver = WebUtilities.GetWebDriver(DriverReadHeadless);
 
             try
             {
@@ -95,7 +97,6 @@ namespace Thompson.RecordSearch.Utility.Classes
             finally
             {
                 driver.Quit();
-                driver.Dispose();
             }
         }
 
@@ -122,7 +123,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 people = fetched.PeopleList;
                 people.ForEach(p =>
                 {
-                    var source = caseList.FirstOrDefault(c => c.Case.Equals(p.CaseNumber, StringComparison.CurrentCultureIgnoreCase));
+                    var source = caseList.Find(c => c.Case.Equals(p.CaseNumber, StringComparison.CurrentCultureIgnoreCase));
                     if (source == null)
                     {
                         return;
@@ -176,7 +177,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
             ElementActions.ForEach(x => x.GetAssertion = assertion);
             ElementActions.ForEach(x => x.GetWeb = driver);
-
+            ElementActions.ForEach(x => x.Interactive = this);
             foreach (var item in steps)
             {
                 // if item action-name = 'set-text'
@@ -199,14 +200,10 @@ namespace Thompson.RecordSearch.Utility.Classes
                     }
                 }
                 var action = ElementActions
-                    .FirstOrDefault(x =>
+                    .Find(x =>
                     x.ActionName.Equals(item.ActionName,
                     StringComparison.CurrentCultureIgnoreCase));
-                if (action == null)
-                {
-                    continue;
-                }
-
+                if (action == null) continue;
                 action.Act(item);
                 cases = ExtractCaseData(results, cases, actionName, action);
                 if (string.IsNullOrEmpty(caseList) && !string.IsNullOrEmpty(action.OuterHtml))
@@ -214,8 +211,15 @@ namespace Thompson.RecordSearch.Utility.Classes
                     caseList = action.OuterHtml;
                 }
             }
-            cases.FindAll(c => string.IsNullOrEmpty(c.Address))
-                .ForEach(c => GetAddressInformation(driver, this, c));
+            var subset = cases.FindAll(c => string.IsNullOrEmpty(c.Address));
+            var mx = subset.Count;
+            subset.ForEach(c =>
+            {
+                var indx = subset.IndexOf(c) + 1;
+                this.EchoProgess(0, mx, indx, $"Reading address details {indx} of {mx}", true);
+                GetAddressInformation(driver, this, c);
+            });
+            this.CompleteProgess();
             people = ExtractPeople(cases);
 
 
@@ -521,7 +525,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                 item[keyName] = string.Empty;
                 if (node == null)
                 {
-                    Console.WriteLine("Unable to locate element {0} with selector - {1}",
+                    Debug.WriteLine("Unable to locate element {0} with selector - {1}",
                         search.Attributes.GetNamedItem("name").InnerText,
                         search.InnerText);
                     return false;

@@ -51,8 +51,8 @@ namespace LegalLead.PublicData.Search
                 case DialogResult.OK:
                 case DialogResult.Yes:
                     Debug.WriteLine("Login success");
-                    SetInteraction(true);
                     FilterWebSiteByAccount();
+                    SetInteraction(true);
                     UsageReader.WriteUserRecord();
                     ApplySavedSettings();
                     CboWebsite_SelectedValueChanged(null, null);
@@ -75,38 +75,45 @@ namespace LegalLead.PublicData.Search
         }
         private void FilterWebSiteByAccount()
         {
-            var webdetail = GetAccountIndexes();
-            SetUserName();
-            if (string.IsNullOrEmpty(webdetail))
+            try
             {
-                // remove all websites from cboWebsite
-                // and disable the controls
-                SetInteraction(false);
-                cboWebsite.Items.Clear();
-                return;
-            }
-            if (webdetail.Equals("-1")) return;
-            var webid = webdetail.Split(',')
-                .Where(w => { return int.TryParse(w, out var _); })
-                .Select(s => int.Parse(s, CultureInfo.CurrentCulture))
-                .ToList();
-            if (!webid.Any())
-            {
-                // remove all websites from cboWebsite
-                // and disable the controls
-                SetInteraction(false);
-                cboWebsite.Items.Clear();
-                return;
-            }
+                var webdetail = GetAccountIndexes();
+                SetUserName();
+                if (string.IsNullOrEmpty(webdetail))
+                {
+                    // remove all websites from cboWebsite
+                    // and disable the controls
+                    SetInteraction(false);
+                    cboWebsite.Items.Clear();
+                    return;
+                }
+                if (webdetail.Equals("-1")) return;
+                var webid = webdetail.Split(',')
+                    .Where(w => { return int.TryParse(w, out var _); })
+                    .Select(s => int.Parse(s, CultureInfo.CurrentCulture))
+                    .ToList();
+                if (!webid.Any())
+                {
+                    // remove all websites from cboWebsite
+                    // and disable the controls
+                    SetInteraction(false);
+                    cboWebsite.Items.Clear();
+                    return;
+                }
 
-            var websites = SettingsManager.GetNavigation()
-                .FindAll(x => webid.Contains(x.Id));
-            cboWebsite.SelectedValueChanged -= CboWebsite_SelectedValueChanged;
-            cboWebsite.DataSource = websites;
-            cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
-            cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
-            cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
-            cboWebsite.SelectedIndex = 0;
+                var websites = SettingsManager.GetNavigation()
+                    .FindAll(x => webid.Contains(x.Id));
+                cboWebsite.SelectedValueChanged -= CboWebsite_SelectedValueChanged;
+                cboWebsite.DataSource = websites;
+                cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
+                cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
+                cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
+                cboWebsite.SelectedIndex = 0;
+            }
+            finally
+            {
+                SortWebsites();
+            }
         }
 
         private static string GetUserName()
@@ -133,8 +140,10 @@ namespace LegalLead.PublicData.Search
         }
         private void SetInteraction(bool isEnabled)
         {
+            if (!isEnabled) TryHideProgress();
             cboWebsite.Enabled = isEnabled;
             button1.Enabled = isEnabled;
+            tsSettingMenuButton.Visible = isEnabled;
             dteEnding.Enabled = isEnabled;
             dteStart.Enabled = isEnabled;
         }
@@ -187,6 +196,7 @@ namespace LegalLead.PublicData.Search
             {
                 KillProcess(driverNames);
                 SetStatus(StatusType.Running);
+                using var hider = new HideProcessWindowHelper();
                 if (!ValidateCustom())
                 {
                     SetStatus(StatusType.Ready);
@@ -338,14 +348,37 @@ namespace LegalLead.PublicData.Search
             {
                 criminalToggle.Value = CommonKeyIndexes.NumberOne;
             }
-
+            var collinIndex = (int)SourceType.CollinCounty;
+            if (siteData.Id == collinIndex)
+            {
+                siteData.Keys.Add(new() { Name = "StartDate", Value = $"{startDate:d}" });
+                siteData.Keys.Add(new() { Name = "EndDate", Value = $"{endingDate:d}" });
+                siteData.Keys.Add(new() { Name = "CourtType", Value = "Civil" });
+            }
             IWebInteractive webmgr =
-            WebFetchingProvider.
-                GetInteractive(siteData, startDate, endingDate);
+            siteData.Id == collinIndex ?
+            new CollinUiInterative(siteData, startDate, endingDate) :
+            WebFetchingProvider.GetInteractive(siteData, startDate, endingDate);
             _ = Task.Run(async () =>
             {
                 await ProcessAsync(webmgr, siteData, searchItem);
             }).ConfigureAwait(true);
+        }
+
+
+        private void SortWebsites()
+        {
+            if (cboWebsite.DataSource is not List<WebNavigationParameter> dlist) return;
+            if (dlist.Count == 0) return;
+            dlist.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
+            var itemIndex = cboWebsite.SelectedItem is not WebNavigationParameter item ? 0 : dlist.IndexOf(item);
+            cboWebsite.SelectedValueChanged -= CboWebsite_SelectedValueChanged;
+            cboWebsite.DataSource = null;
+            cboWebsite.DataSource = dlist;
+            cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
+            cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
+            cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
+            cboWebsite.SelectedIndex = itemIndex;
         }
 
         private void ExportDataToolStripMenuItem_Click(object sender, EventArgs e)
@@ -443,6 +476,8 @@ namespace LegalLead.PublicData.Search
                     var displayMode = SettingsWriter.GetSettingOrDefault("browser", "Open Headless:", true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
+                webmgr.ReportProgress = TryShowProgress;
+                webmgr.ReportProgessComplete = TryHideProgress;
                 CaseData = await Task.Run(() =>
                 {
                     return webmgr.Fetch();
@@ -521,6 +556,7 @@ namespace LegalLead.PublicData.Search
             {
 
                 KillProcess(CommonKeyIndexes.ChromeDriver);
+                TryHideProgress();
             }
         }
 
@@ -547,6 +583,65 @@ namespace LegalLead.PublicData.Search
         {
             var settings = new FormSettings() { StartPosition = FormStartPosition.CenterParent };
             settings.ShowDialog();
+        }
+
+        private void TryHideProgress()
+        {
+            try
+            {
+                HideProgress();
+            }
+            catch
+            {
+                Invoke(HideProgress);
+            }
+        }
+
+        private void TryShowProgress(int min, int max, int current)
+        {
+            try
+            {
+                ShowProgress(min, max, current);
+            }
+            catch
+            {
+                Invoke(() => { ShowProgress(min, max, current); });
+            }
+        }
+
+        private void HideProgress()
+        {
+            progressBar1.Visible = false;
+            labelProgress.Visible = false;
+            tableLayoutPanel1.RowStyles[8].Height = 0;
+        }
+        private void ShowProgress(int min, int max, int current)
+        {
+            labelProgress.Visible = true;
+            ControlExtensions.Suspend(progressBar1);
+            tableLayoutPanel1.RowStyles[8].Height = 40;
+            progressBar1.Visible = false;
+            progressBar1.Minimum = min;
+            progressBar1.Maximum = max;
+            progressBar1.Value = current;
+            progressBar1.Visible = true;
+            ControlExtensions.Resume();
+        }
+        private static class ControlExtensions
+        {
+            [System.Runtime.InteropServices.DllImport("user32.dll")]
+            public static extern bool LockWindowUpdate(IntPtr hWndLock);
+
+            public static void Suspend(Control control)
+            {
+                LockWindowUpdate(control.Handle);
+            }
+
+            public static void Resume()
+            {
+                LockWindowUpdate(IntPtr.Zero);
+            }
+
         }
     }
 }
