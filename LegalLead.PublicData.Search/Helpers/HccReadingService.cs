@@ -5,7 +5,6 @@ using System.Net.Http;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
@@ -66,7 +65,7 @@ namespace LegalLead.PublicData.Search.Helpers
             public string DefendantCity { get; set; } = string.Empty;
             public string DefendantState { get; set; } = string.Empty;
             public string DefendantZip { get; set; } = string.Empty;
-            public DateTime? CreateDate { get; set; }
+            public DateTime? CreateDate { get; set; } = null;
         }
 
     }

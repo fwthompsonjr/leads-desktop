@@ -384,10 +384,52 @@ namespace Thompson.RecordSearch.Utility.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///{ 
+        ///	&quot;id&quot;: 1,
+        ///	&quot;code&quot;: &quot;001&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 8th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 2,
+        ///	&quot;code&quot;: &quot;002&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 8th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 3,
+        ///	&quot;code&quot;: &quot;003&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 8th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 4,
+        ///	&quot;code&quot;: &quot;004&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 8th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 5,
+        ///	&quot;code&quot;: &quot;005&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 9th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 6,
+        ///	&quot;co [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hcc_court_list {
+            get {
+                return ResourceManager.GetString("hcc_court_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///  &quot;url&quot;: &quot;https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx&quot;,
         ///  &quot;settings&quot;: &quot;CrimFilingsWithFutureSettings_withHeadings&quot;,
-        ///  &quot;monthly&quot;: &quot;CrimFilingsMonthly_withHeadings&quot;
+        ///  &quot;monthly&quot;: &quot;CrimFilingsMonthly_withHeadings&quot;,
+        ///  &quot;remote&quot;: {
+        ///	&quot;uri&quot;: &quot;http://api.legallead.co/&quot;,
+        ///	&quot;post&quot;: &quot;app/load-hcc-data&quot;,
+        ///	&quot;get&quot;: &quot;app/find-hcc-data&quot;
+        ///  }
         ///}.
         /// </summary>
         internal static string hcc_scripts {
