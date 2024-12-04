@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Thompson.RecordSearch.Utility.Dto;
@@ -8,16 +9,16 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
-    public class HccReadingService
+    public class HccReadingService : IHccReadingService
     {
         public HccReadingService(IHttpService http)
         {
             httpService = http;
         }
         private readonly IHttpService httpService;
-        public List<PersonAddress> Find(DateTime date)
+        public List<CaseItemDto> Find(DateTime date)
         {
-            var found = new List<PersonAddress>();
+            var found = new List<CaseItemDto>();
             var payload = new { FilingDate = date };
             using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
             var data = httpService.PostAsJson<object, object>(client, RemoteAddress, payload);

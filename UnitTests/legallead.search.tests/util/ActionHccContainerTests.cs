@@ -35,12 +35,29 @@ namespace legallead.search.tests.util
         [InlineData(typeof(IHttpService))]
         [InlineData(typeof(ICountyCodeService))]
         [InlineData(typeof(ICountyCodeReader))]
+        [InlineData(typeof(IHccReadingService))]
+        [InlineData(typeof(IHccWritingService))]
         public void ServiceCanGetTypedInstance(Type type)
         {
             var error = Record.Exception(() =>
             {
                 var item = ActionHccContainer.GetContainer;
                 var actual = item.GetInstance(type);
+                Assert.NotNull(actual);
+            });
+            Assert.Null(error);
+        }
+
+        [Theory]
+        [InlineData("begin")]
+        [InlineData("download-monthly")]
+        [InlineData("download-summary")]
+        public void ServiceCanGetNamedInstance(string keyword)
+        {
+            var error = Record.Exception(() =>
+            {
+                var item = ActionHccContainer.GetContainer;
+                var actual = item.GetInstance<ICountySearchAction>(keyword);
                 Assert.NotNull(actual);
             });
             Assert.Null(error);

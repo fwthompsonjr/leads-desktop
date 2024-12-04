@@ -1,4 +1,3 @@
-/*
 using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Helpers;
@@ -16,11 +15,26 @@ namespace LegalLead.PublicData.Search.Util
 {
     internal class HccUiInteractive : BaseUiInteractive
     {
-        public HccUiInteractive(WebNavigationParameter parameters) : base(parameters)
+        public HccUiInteractive(
+            WebNavigationParameter parameters,
+            bool allowDownload = true,
+            bool isTestMode = false) : base(parameters)
         {
             var container = ActionHccContainer.GetContainer;
+            var writer = allowDownload ? container.GetInstance<IHccWritingService>() : null;
+            var reader = isTestMode ? null : container.GetInstance<IHccReadingService>();
             var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
+            collection.ForEach(c =>
+            {
+                if (c is HccDownloadMonthly hccDownload)
+                {
+                    hccDownload.IsDownloadRequested = allowDownload;
+                    hccDownload.IsTestMode = isTestMode;
+                    hccDownload.HccService = writer;
+                }
+                if (c is HccFetchCaseList fetch) fetch.HccService = reader;
+            });
             ActionItems.AddRange(collection);
         }
 
@@ -132,4 +146,3 @@ namespace LegalLead.PublicData.Search.Util
         }
     }
 }
-*/

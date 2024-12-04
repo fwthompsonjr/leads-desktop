@@ -1,6 +1,9 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Interfaces;
+using OpenQA.Selenium;
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Dto;
 
@@ -12,7 +15,8 @@ namespace LegalLead.PublicData.Search.Util
         public override int OrderId => 15;
         public bool IsTestMode { get; set; }
         public bool IsDownloadRequested { get; set; }
-
+        public IHccWritingService HccService { get; set; } = null;
+        protected string DownloadShortName = string.Empty;
         protected string DownloadFileName = string.Empty;
         public override object Execute()
         {
@@ -20,31 +24,48 @@ namespace LegalLead.PublicData.Search.Util
             var model = HccConfigurationModel.GetModel();
             var js = FindRecordJs(model.Monthly);
             var executor = GetJavaScriptExecutor();
-            DownloadFileName = $"{model.Monthly}.txt";
+            DownloadShortName = $"{model.Monthly}.txt";
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-
-            var rsp = executor.ExecuteScript(js);
-            if (rsp is bool success && !success) return false;
-            WaitForDownload();
-            return true;
+            return RequestDownload(js, executor);
         }
 
-        protected void WaitForDownload()
+        protected object RequestDownload(string js, IJavaScriptExecutor executor)
+        {
+            try
+            {
+                var rsp = executor.ExecuteScript(js);
+                if (rsp is bool success && !success) return false;
+                DownloadFileName = WaitForDownload();
+                if (HccService == null) return true;
+                var csv = File.ReadAllText(DownloadFileName);
+                HccService.Write(csv);
+                return true;
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(DownloadFileName) && File.Exists(DownloadFileName))
+                    File.Delete(DownloadFileName);
+            }
+        }
+
+        protected string WaitForDownload()
         {
             const int initialWait = 60;
             const int secondWait = 90;
-            if (IsTestMode) return;
-            if (string.IsNullOrEmpty(DownloadFileName)) return;
+            if (IsTestMode) return string.Empty;
+            if (string.IsNullOrEmpty(DownloadShortName)) return string.Empty;
             var downloadsPath = Environment.GetEnvironmentVariable("USERPROFILE") + @"\Downloads\";
-            if (!Directory.Exists(downloadsPath)) return;
-            var fullPath = Path.Combine(downloadsPath, DownloadFileName);
+            if (!Directory.Exists(downloadsPath)) return string.Empty;
+            var minimumDt = DateTime.UtcNow.AddSeconds(-10);
+            var fullPath = FindFile(downloadsPath, DownloadShortName, minimumDt);
             for (var i = 0; i < initialWait; i++)
             {
-                if (File.Exists(fullPath)) { break; }
+                if (fullPath != null) { break; }
                 Thread.Sleep(1000);
+                fullPath = FindFile(downloadsPath, DownloadShortName, minimumDt);
             }
-            if (!File.Exists(fullPath)) return;
+            if (!File.Exists(fullPath)) return string.Empty;
             var sw = new Stopwatch();
             sw.Start();
             var length = new FileInfo(fullPath).Length;
@@ -57,6 +78,7 @@ namespace LegalLead.PublicData.Search.Util
                 length = newLength;
             }
             sw.Stop();
+            return fullPath;
         }
 
         protected static string FindRecordJs(string keyword)
@@ -75,5 +97,15 @@ namespace LegalLead.PublicData.Search.Util
             return string.Join(Environment.NewLine, data);
         }
 
+        private static string FindFile(string parentDir, string fileName, DateTime minDate)
+        {
+            if (!Directory.Exists(parentDir)) return null;
+            var pattern = $"*{fileName}*";
+            var info = new DirectoryInfo(parentDir);
+            var files = info.GetFiles(pattern).ToList();
+            if (files.Count == 0) return null;
+            var found = files.Find(f => f.CreationTimeUtc > minDate);
+            return found?.FullName ?? null;
+        }
     }
 }

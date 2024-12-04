@@ -13,14 +13,10 @@ namespace LegalLead.PublicData.Search.Util
             var model = HccConfigurationModel.GetModel();
             var js = FindRecordJs(model.Settings);
             var executor = GetJavaScriptExecutor();
-            DownloadFileName = $"{model.Settings}.txt";
+            DownloadShortName = $"{model.Settings}.txt";
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-
-            var rsp = executor.ExecuteScript(js);
-            if (rsp is bool success && !success) return false;
-            WaitForDownload();
-            return true;
+            return RequestDownload(js, executor);
         }
     }
 }

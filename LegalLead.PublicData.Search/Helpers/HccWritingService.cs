@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Interfaces;
+using System;
 using System.Net.Http;
 using System.Text;
 using Thompson.RecordSearch.Utility.Dto;
@@ -6,7 +7,7 @@ using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
-    public class HccWritingService
+    public class HccWritingService : IHccWritingService
     {
         public HccWritingService(IHttpService http)
         {
