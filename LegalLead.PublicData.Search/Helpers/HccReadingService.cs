@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
@@ -22,7 +19,7 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             var found = new List<PersonAddress>();
             var payload = new { FilingDate = date };
-            using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
+            using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
             var data = httpService.PostAsJson<object, object>(client, RemoteAddress, payload);
             if (data == null) return found;
             var people = data.ToJsonString().ToInstance<List<RemotePersonDto>>();

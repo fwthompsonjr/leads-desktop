@@ -4,7 +4,7 @@
   "monthly": "CrimFilingsMonthly_withHeadings",
   "remote": {
 	"uri": "http://api.legallead.co/",
-	"post": "app/hcc-upload",
-	"get": "app/hcc-query"
+	"post": "app/load-hcc-data",
+	"get": "app/find-hcc-data"
   }
 }

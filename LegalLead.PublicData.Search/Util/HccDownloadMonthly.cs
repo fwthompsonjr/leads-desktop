@@ -16,7 +16,7 @@ namespace LegalLead.PublicData.Search.Util
         protected string DownloadFileName = string.Empty;
         public override object Execute()
         {
-            if (!IsDownloadRequested) { return true; } 
+            if (!IsDownloadRequested) { return true; }
             var model = HccConfigurationModel.GetModel();
             var js = FindRecordJs(model.Monthly);
             var executor = GetJavaScriptExecutor();

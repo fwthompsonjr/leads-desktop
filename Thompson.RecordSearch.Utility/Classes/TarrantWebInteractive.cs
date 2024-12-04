@@ -9,10 +9,10 @@ using System.Text;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
 using Thompson.RecordSearch.Utility.Web;
-using Thompson.RecordSearch.Utility.Extensions;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {

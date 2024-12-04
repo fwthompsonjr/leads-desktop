@@ -1,6 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
-using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
