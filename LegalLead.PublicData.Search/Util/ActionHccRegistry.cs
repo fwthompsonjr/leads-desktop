@@ -15,10 +15,13 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountyCodeReader>().Add<CountyCodeReaderService>().Singleton();
             For<IHccReadingService>().Add<HccReadingService>().Singleton();
             For<IHccWritingService>().Add<HccWritingService>().Singleton();
+            For<IHccCountingService>().Add<HccCountingService>().Singleton();
 
+            For<ICountySearchAction>().Add<HccCountDatabase>().Named("count");
             For<ICountySearchAction>().Add<HccBeginNavigation>().Named("begin");
             For<ICountySearchAction>().Add<HccDownloadMonthly>().Named("download-monthly");
             For<ICountySearchAction>().Add<HccDownloadSummary>().Named("download-summary");
+            For<ICountySearchAction>().Add<HccFetchCaseList>().Named("get-case-list");
         }
     }
 }

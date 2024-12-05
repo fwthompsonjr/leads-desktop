@@ -24,5 +24,6 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("uri")] public string Url { get; set; }
         [JsonProperty("post")] public string PostUrl { get; set; }
         [JsonProperty("get")] public string FetchUrl { get; set; }
+        [JsonProperty("count")] public string CountUrl { get; set; }
     }
 }

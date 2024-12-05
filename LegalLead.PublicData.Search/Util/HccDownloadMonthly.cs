@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -30,6 +31,23 @@ namespace LegalLead.PublicData.Search.Util
             return RequestDownload(js, executor);
         }
 
+        protected static string FindRecordJs(string keyword)
+        {
+            var data = new string[]{
+                "var find = '~0';".Replace("~0", keyword),
+                "var tds = Array.prototype.slice.call( document.getElementsByTagName('td'), 0)",
+                ".filter(x => x.innerText != null && x.innerText.indexOf(find) >= 0);",
+                "if (tds.length <= 0 ) return false;",
+                "var row = tds[0].closest('tr');",
+                "if (!row.children || row.children.length < 2) return false;",
+                "var links = row.children[2].getElementsByTagName('a');",
+                "if (links == null || links.length < 1) return false;",
+                "links[0].click();"
+            };
+            return string.Join(Environment.NewLine, data);
+        }
+
+        [ExcludeFromCodeCoverage(Justification = "Interacts with file system.")]
         protected object RequestDownload(string js, IJavaScriptExecutor executor)
         {
             try
@@ -48,7 +66,7 @@ namespace LegalLead.PublicData.Search.Util
                     File.Delete(DownloadFileName);
             }
         }
-
+        [ExcludeFromCodeCoverage(Justification = "Interacts with file system.")]
         protected string WaitForDownload()
         {
             const int initialWait = 60;
@@ -81,22 +99,7 @@ namespace LegalLead.PublicData.Search.Util
             return fullPath;
         }
 
-        protected static string FindRecordJs(string keyword)
-        {
-            var data = new string[]{
-                "var find = '~0';".Replace("~0", keyword),
-                "var tds = Array.prototype.slice.call( document.getElementsByTagName('td'), 0)",
-                ".filter(x => x.innerText != null && x.innerText.indexOf(find) >= 0);",
-                "if (tds.length <= 0 ) return false;",
-                "var row = tds[0].closest('tr');",
-                "if (!row.children || row.children.length < 2) return false;",
-                "var links = row.children[2].getElementsByTagName('a');",
-                "if (links == null || links.length < 1) return false;",
-                "links[0].click();"
-            };
-            return string.Join(Environment.NewLine, data);
-        }
-
+        [ExcludeFromCodeCoverage(Justification = "Interacts with file system.")]
         private static string FindFile(string parentDir, string fileName, DateTime minDate)
         {
             if (!Directory.Exists(parentDir)) return null;

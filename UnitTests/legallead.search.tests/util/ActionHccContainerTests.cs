@@ -27,7 +27,7 @@ namespace legallead.search.tests.util
                 var item = ActionHccContainer.GetContainer;
                 var children = item.GetAllInstances<ICountySearchAction>();
                 Assert.NotNull(children);
-                Assert.Equal(3, children.Count());
+                Assert.Equal(5, children.Count());
             });
             Assert.Null(error);
         }
@@ -37,6 +37,7 @@ namespace legallead.search.tests.util
         [InlineData(typeof(ICountyCodeReader))]
         [InlineData(typeof(IHccReadingService))]
         [InlineData(typeof(IHccWritingService))]
+        [InlineData(typeof(IHccCountingService))]
         public void ServiceCanGetTypedInstance(Type type)
         {
             var error = Record.Exception(() =>
@@ -49,9 +50,11 @@ namespace legallead.search.tests.util
         }
 
         [Theory]
+        [InlineData("count")]
         [InlineData("begin")]
         [InlineData("download-monthly")]
         [InlineData("download-summary")]
+        [InlineData("get-case-list")]
         public void ServiceCanGetNamedInstance(string keyword)
         {
             var error = Record.Exception(() =>

@@ -1,26 +1,27 @@
 ﻿using LegalLead.PublicData.Search.Interfaces;
 using System;
 using System.Net.Http;
-using System.Text;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
-    public class HccWritingService : IHccWritingService
+    public class HccCountingService : IHccCountingService
     {
-        public HccWritingService(IHttpService http)
+        public HccCountingService(IHttpService http)
         {
             httpService = http;
         }
         private readonly IHttpService httpService;
-        public void Write(string csvdata)
+        public int Count(DateTime date)
         {
-            var dat = Encoding.UTF8.GetBytes(csvdata);
-            var conversion = Convert.ToBase64String(dat);
-            var payload = new { Content = conversion };
+            var payload = new { FilingDate = date };
             using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
-            _ = httpService.PostAsJson<object, object>(client, RemoteAddress, payload);
+            var data = httpService.PostAsJson<object, object>(client, RemoteAddress, payload);
+            if (data == null) return 0;
+            var people = data.ToJsonString().ToInstance<RemoteCountDto>();
+            return people?.RecordCount.GetValueOrDefault() ?? 0;
         }
         private static string RemoteAddress
         {
@@ -36,9 +37,16 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             var model = HccConfigurationModel.GetModel().RemoteModel;
             if (string.IsNullOrEmpty(model.Url) ||
-                string.IsNullOrEmpty(model.PostUrl))
+                string.IsNullOrEmpty(model.CountUrl))
                 throw new NullReferenceException();
-            return string.Concat(model.Url, model.PostUrl);
+            return string.Concat(model.Url, model.CountUrl);
         }
+
+        private sealed class RemoteCountDto
+        {
+            public string Id { get; set; } = string.Empty;
+            public int? RecordCount { get; set; } = null;
+        }
+
     }
 }

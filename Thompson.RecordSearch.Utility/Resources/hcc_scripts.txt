@@ -5,6 +5,7 @@
   "remote": {
 	"uri": "http://api.legallead.co/",
 	"post": "app/load-hcc-data",
-	"get": "app/find-hcc-data"
+	"get": "app/find-hcc-data",
+	"count": "app/count-hcc-data"
   }
 }

@@ -13,7 +13,7 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    internal class HccUiInteractive : BaseUiInteractive
+    public class HccUiInteractive : BaseUiInteractive
     {
         public HccUiInteractive(
             WebNavigationParameter parameters,
@@ -59,7 +59,7 @@ namespace LegalLead.PublicData.Search.Util
 
         protected override string GetCourtAddress(string courtType, string court)
         {
-            return HccCourtLookupService.GetAddress(courtType, court);
+            return HccCourtLookupService.GetAddress(court);
         }
 
         protected virtual void Iterate(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
@@ -96,6 +96,7 @@ namespace LegalLead.PublicData.Search.Util
             bool isCaptchaNeeded = true;
             dates.ForEach(d =>
             {
+                Console.WriteLine("Searching for records on date: {0:d}", d);
                 IsDateRangeComplete = false;
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
