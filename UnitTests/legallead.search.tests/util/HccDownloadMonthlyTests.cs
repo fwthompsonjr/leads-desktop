@@ -50,16 +50,35 @@ namespace legallead.search.tests.util
             service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtLeast(1));
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        public void ComponentValidatesParameters(int testId)
+        {
+            var driver = testId == 0 ? null : new Mock<IWebDriver>();
+            var parameters = testId == 1 ? null : new DallasSearchProcess();
+            var allowJsExec = (testId != 2);
+            var service = new MockHccDownloadMonthly(allowJsExec)
+            {
+                Parameters = parameters,
+                Driver = driver?.Object
+            };
+            Assert.Throws<NullReferenceException>(() => { _ = service.Execute(); });
+        }
         private sealed class MockHccDownloadMonthly : HccDownloadMonthly
         {
-            public MockHccDownloadMonthly()
+            public MockHccDownloadMonthly(bool allowJs = true)
             {
                 IsDownloadRequested = true;
                 IsTestMode = true;
+                allowJsExecution = allowJs;
             }
+            private readonly bool allowJsExecution;
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override IJavaScriptExecutor GetJavaScriptExecutor()
             {
+                if (!allowJsExecution) return null;
                 const string request = "return document.readyState";
                 const string response = "complete";
                 MqExecutor.SetupSequence(x => x.ExecuteScript(It.Is<string>(s => !s.Equals(request))))

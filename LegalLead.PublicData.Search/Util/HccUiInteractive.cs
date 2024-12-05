@@ -23,6 +23,7 @@ namespace LegalLead.PublicData.Search.Util
             var container = ActionHccContainer.GetContainer;
             var writer = allowDownload ? container.GetInstance<IHccWritingService>() : null;
             var reader = isTestMode ? null : container.GetInstance<IHccReadingService>();
+            var counter = isTestMode ? null : container.GetInstance<IHccCountingService>();
             var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             collection.ForEach(c =>
@@ -34,6 +35,7 @@ namespace LegalLead.PublicData.Search.Util
                     hccDownload.HccService = writer;
                 }
                 if (c is HccFetchCaseList fetch) fetch.HccService = reader;
+                if (c is HccCountDatabase count) count.HccService = counter;
             });
             ActionItems.AddRange(collection);
         }
@@ -42,7 +44,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             const string countyName = "Hcc";
             using var hider = new HideProcessWindowHelper();
-            var postsearchtypes = new List<Type> { typeof(NonActionSearch) };
+            var postsearchtypes = new List<Type> { typeof(HccFetchCaseList) };
             var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
@@ -137,6 +139,7 @@ namespace LegalLead.PublicData.Search.Util
             var count = common.Count - 1;
             Populate(a, driver, parameters);
             var response = a.Execute();
+            if (a is HccCountDatabase _ && response is int number && number > 0) IsDateRangeComplete = true;
             if (a is HccFetchCaseList _ && response is string cases) Items.AddRange(GetData(cases));
             if (a is HidalgoNoCountVerification _ && response is bool hasNoCount && hasNoCount)
             {
