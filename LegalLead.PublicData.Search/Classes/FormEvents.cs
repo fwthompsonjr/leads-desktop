@@ -78,6 +78,33 @@ namespace LegalLead.PublicData.Search
 
             changeHandler.Change();
             WebSiteUsageValidation();
+            CustomWebsiteChangeHandler();
+        }
+
+        private void CustomWebsiteChangeHandler()
+        {
+            if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
+            var collinId = (int)SourceType.CollinCounty;
+            var harrisId = (int)SourceType.HarrisCivil;
+            if (nav.Id == collinId)
+            {
+                CboSearchType_SelectedIndexChanged(this, EventArgs.Empty);
+                return;
+            }
+            if (nav.Id != harrisId) return;
+            if (cboCaseType.DataSource is not List<Option> list) return;
+            var db = new List<Option>();
+            var items = list.FindAll(x =>
+            {
+                if (x.Name.Contains("criminal")) return true;
+                if (x.Name.Contains("civil")) return true;
+                return false;
+            });
+            db.AddRange(items);
+            cboCaseType.DataSource = db;
+            cboCaseType.Refresh();
+            cboCaseType.SelectedIndex = db.Count - 1;
+            cboCaseType.Visible = true;
         }
 
         private void WebSiteUsageValidation()

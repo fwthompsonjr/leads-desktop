@@ -25,7 +25,8 @@ namespace LegalLead.PublicData.Search
             var customList = new List<int>
             {
                 (int)SourceType.CollinCounty,
-                (int)SourceType.TarrantCounty
+                (int)SourceType.TarrantCounty,
+                (int)SourceType.HarrisCivil,
             };
 
             CboCaseType.Visible = customList.Contains(source.Id);
