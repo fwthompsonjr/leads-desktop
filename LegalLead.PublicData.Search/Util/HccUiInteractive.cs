@@ -4,6 +4,7 @@ using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
+using OpenQA.Selenium.BiDi.Communication;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -75,7 +76,7 @@ namespace LegalLead.PublicData.Search.Util
                 if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
 
                 IterateDateRange(driver, parameters, dates, common);
-                IterateItems(driver, parameters, postcommon);
+                IterateItems(driver, parameters, dates, postcommon);
             }
             catch (Exception ex)
             {
@@ -106,8 +107,6 @@ namespace LegalLead.PublicData.Search.Util
                     if (!IsDateRangeComplete)
                     {
                         isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
-                        var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
-                        unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); });
                     }
                 });
                 IsDateRangeComplete = false;
@@ -115,11 +114,23 @@ namespace LegalLead.PublicData.Search.Util
             parameters.Search(dates[0], dates[^1], CourtType);
         }
 
-        protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
+        protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> postcommon)
         {
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
+            if (!dates.Any()) return;
+            dates.ForEach(d =>
+            {
+                Console.WriteLine("Fetching records on date: {0:d}", d);
+                parameters.Search(d, d, CourtType);
+                postcommon.ForEach(a =>
+                {
+                    IterateCommonActions(false, driver, parameters, postcommon, a);
+                    var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
+                    unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); });
+                });
+            });
             var nonames = Items.FindAll(x => string.IsNullOrWhiteSpace(x.PartyName) && !string.IsNullOrWhiteSpace(x.CaseStyle));
             nonames.ForEach(n => n.SetPartyNameFromCaseStyle());
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
@@ -145,7 +156,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 IsDateRangeComplete = true;
             }
-            if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
+            if (common.IndexOf(a) != count) Thread.Sleep(250); // add pause to be more human in interaction
             return isCaptchaNeeded;
         }
     }
