@@ -77,10 +77,40 @@ namespace LegalLead.PublicData.Search
             }
 
             changeHandler.Change();
+            DentonSettingHandler();
+            CustomNoteHandler();
             WebSiteUsageValidation();
             CustomWebsiteChangeHandler();
         }
-
+        private void DentonSettingHandler()
+        {
+            if (!ButtonDentonSetting.Visible) return;
+            if (cboWebsite.SelectedItem is not WebNavigationParameter webitem) return;
+            if (webitem.Id == (int)SourceType.DentonCounty) return;
+            ButtonDentonSetting.Visible = false;
+        }
+        private void CustomNoteHandler()
+        {
+            var messages = CustomCountyDto.GetNotes();
+            var style = tableLayoutPanel1.RowStyles[9];
+            if (cboWebsite.SelectedItem is not WebNavigationParameter webitem ||
+                !messages.Exists(x => x.Id == webitem.Id))
+            {
+                // hide panel
+                style.SizeType = SizeType.Absolute;
+                style.Height = 0;
+                label5.Visible = false;
+                lbNotes.Visible = false;
+                lbNotes.Text = string.Empty;
+                return;
+            }
+            var item = messages.Find(x => x.Id == webitem.Id);
+            style.SizeType = SizeType.Absolute;
+            style.Height = 40;
+            label5.Visible = true;
+            lbNotes.Visible = true;
+            lbNotes.Text = string.Join(Environment.NewLine, item.Notes);
+        }
         private void CustomWebsiteChangeHandler()
         {
             if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
@@ -606,5 +636,7 @@ namespace LegalLead.PublicData.Search
             = SessionPersistenceContainer
             .GetContainer
             .GetInstance<SessionApiFilePersistence>();
+        // private static readonly string customMessages = 
+            
     }
 }

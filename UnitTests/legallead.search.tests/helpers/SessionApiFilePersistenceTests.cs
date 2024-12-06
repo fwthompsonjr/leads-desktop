@@ -155,7 +155,7 @@ namespace legallead.search.tests.helpers
         [InlineData("dallas")]
         [InlineData("tarrant")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Sonar Qube", 
+            "Sonar Qube",
             "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<Pending>")]
         public void ServiceCanGetAccountCredential(string county)
         {
@@ -176,7 +176,7 @@ namespace legallead.search.tests.helpers
                         service.Initialize();
                         // thread sleep justification:
                         // avoids file access issue from unit tests in parallel
-                        Thread.Sleep(50); 
+                        Thread.Sleep(50);
                     }
                 }
             });

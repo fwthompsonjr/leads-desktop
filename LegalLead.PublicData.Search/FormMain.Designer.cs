@@ -54,6 +54,8 @@
             cboCourts = new Classes.ComboBoxEx();
             labelProgress = new System.Windows.Forms.Label();
             progressBar1 = new System.Windows.Forms.ProgressBar();
+            label5 = new System.Windows.Forms.Label();
+            lbNotes = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -67,7 +69,7 @@
             tableLayoutPanel1.Controls.Add(dteStart, 1, 1);
             tableLayoutPanel1.Controls.Add(dteEnding, 1, 2);
             tableLayoutPanel1.Controls.Add(button1, 1, 6);
-            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 9);
+            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 10);
             tableLayoutPanel1.Controls.Add(cboWebsite, 1, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(label2, 0, 1);
@@ -81,6 +83,8 @@
             tableLayoutPanel1.Controls.Add(cboCourts, 1, 5);
             tableLayoutPanel1.Controls.Add(labelProgress, 0, 8);
             tableLayoutPanel1.Controls.Add(progressBar1, 1, 8);
+            tableLayoutPanel1.Controls.Add(label5, 0, 9);
+            tableLayoutPanel1.Controls.Add(lbNotes, 1, 9);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
@@ -95,8 +99,9 @@
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new System.Drawing.Size(760, 550);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -148,10 +153,10 @@
             statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsWebDriver, tsDropFileList, toolStripStatus, tsStatusLabel, tsUserName, tsSettingMenuButton });
-            statusStrip1.Location = new System.Drawing.Point(0, 497);
+            statusStrip1.Location = new System.Drawing.Point(0, 510);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
-            statusStrip1.Size = new System.Drawing.Size(760, 34);
+            statusStrip1.Size = new System.Drawing.Size(760, 40);
             statusStrip1.TabIndex = 5;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -159,7 +164,7 @@
             // 
             tsWebDriver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             tsWebDriver.Name = "tsWebDriver";
-            tsWebDriver.Size = new System.Drawing.Size(44, 32);
+            tsWebDriver.Size = new System.Drawing.Size(44, 38);
             tsWebDriver.Text = "Web";
             tsWebDriver.ToolTipText = "Select Browser";
             // 
@@ -169,24 +174,24 @@
             tsDropFileList.Image = (System.Drawing.Image)resources.GetObject("tsDropFileList.Image");
             tsDropFileList.ImageTransparentColor = System.Drawing.Color.Magenta;
             tsDropFileList.Name = "tsDropFileList";
-            tsDropFileList.Size = new System.Drawing.Size(126, 32);
+            tsDropFileList.Size = new System.Drawing.Size(126, 38);
             tsDropFileList.Text = "Previous File Results";
             // 
             // toolStripStatus
             // 
             toolStripStatus.Name = "toolStripStatus";
-            toolStripStatus.Size = new System.Drawing.Size(39, 29);
+            toolStripStatus.Size = new System.Drawing.Size(39, 35);
             toolStripStatus.Text = "Ready";
             // 
             // tsStatusLabel
             // 
             tsStatusLabel.Name = "tsStatusLabel";
-            tsStatusLabel.Size = new System.Drawing.Size(0, 29);
+            tsStatusLabel.Size = new System.Drawing.Size(0, 35);
             // 
             // tsUserName
             // 
             tsUserName.Name = "tsUserName";
-            tsUserName.Size = new System.Drawing.Size(497, 29);
+            tsUserName.Size = new System.Drawing.Size(497, 35);
             tsUserName.Spring = true;
             tsUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             tsUserName.Visible = false;
@@ -198,7 +203,7 @@
             tsSettingMenuButton.Image = (System.Drawing.Image)resources.GetObject("tsSettingMenuButton.Image");
             tsSettingMenuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             tsSettingMenuButton.Name = "tsSettingMenuButton";
-            tsSettingMenuButton.Size = new System.Drawing.Size(36, 32);
+            tsSettingMenuButton.Size = new System.Drawing.Size(36, 38);
             tsSettingMenuButton.Text = "toolStripSplitButton1";
             tsSettingMenuButton.ButtonClick += ToolStripSplitButton1_ButtonClick;
             // 
@@ -253,7 +258,7 @@
             txConsole.Multiline = true;
             txConsole.Name = "txConsole";
             txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            txConsole.Size = new System.Drawing.Size(752, 121);
+            txConsole.Size = new System.Drawing.Size(752, 81);
             txConsole.TabIndex = 8;
             // 
             // label4
@@ -326,7 +331,7 @@
             // 
             labelProgress.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             labelProgress.AutoSize = true;
-            labelProgress.Location = new System.Drawing.Point(3, 466);
+            labelProgress.Location = new System.Drawing.Point(3, 426);
             labelProgress.Name = "labelProgress";
             labelProgress.Size = new System.Drawing.Size(134, 15);
             labelProgress.TabIndex = 15;
@@ -335,11 +340,32 @@
             // progressBar1
             // 
             progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            progressBar1.Location = new System.Drawing.Point(146, 462);
+            progressBar1.Location = new System.Drawing.Point(146, 422);
             progressBar1.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new System.Drawing.Size(608, 23);
             progressBar1.TabIndex = 16;
+            // 
+            // label5
+            // 
+            label5.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(3, 476);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(134, 15);
+            label5.TabIndex = 15;
+            label5.Text = "Notes:";
+            // 
+            // lbNotes
+            // 
+            lbNotes.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lbNotes.AutoSize = true;
+            lbNotes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            lbNotes.ForeColor = System.Drawing.SystemColors.GrayText;
+            lbNotes.Location = new System.Drawing.Point(143, 476);
+            lbNotes.Name = "lbNotes";
+            lbNotes.Size = new System.Drawing.Size(614, 15);
+            lbNotes.TabIndex = 15;
             // 
             // FormMain
             // 
@@ -386,6 +412,8 @@
         private System.Windows.Forms.ToolStripSplitButton tsSettingMenuButton;
         private System.Windows.Forms.Label labelProgress;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lbNotes;
     }
 }
 

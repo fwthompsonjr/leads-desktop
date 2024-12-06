@@ -4,7 +4,6 @@ using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.Communication;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

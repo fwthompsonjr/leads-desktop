@@ -175,6 +175,15 @@ namespace LegalLead.PublicData.Search.Util
             var count = common.Count - 1;
             Populate(a, driver, parameters);
             var response = a.Execute();
+            if (a is BexarAuthenicateActor && response is string loginPage)
+            {
+                common.FindAll(c => c.GetType() == typeof(BexarAuthenicateBegin))
+                    .ForEach(ab =>
+                    {
+                        if (ab is BexarAuthenicateBegin bb &&
+                        string.IsNullOrEmpty(bb.LoginAddress)) bb.LoginAddress = loginPage;
+                    });
+            }
             if (a is BexarFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
             if (a is BexarFetchFilingDetail _ && response is string details) CaseStyles.AddRange(GetData(details));
             if (a is BexarSetNoCountVerification _ && response is bool hasNoCount && hasNoCount)

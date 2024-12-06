@@ -3,6 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Globalization;
 using System.Linq;
+using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -22,7 +23,11 @@ namespace LegalLead.PublicData.Search.Util
                 results grid:  by - id hearingResultsGrid
                 results pager: by - css .k-pager-info
              */
-            var selections = new[] { By.Id("hearingResultsGrid"), By.CssSelector(".k-pager-info") }.ToList();
+            var selections = new[] {
+                By.Id("hearingResultsGrid"),
+                By.CssSelector(".k-pager-info"),
+                By.CssSelector("a[data-url]")
+            }.ToList();
             selections.ForEach(selection => { _ = WaitForElement(selection); });
             js = VerifyScript(js);
             var content = executor.ExecuteScript(js);
@@ -35,7 +40,7 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromSeconds(1) };
-                wait.Until(w => w.FindElement(selection) != null);
+                wait.Until(w => w.TryFindElement(selection) != null);
                 return true;
             }
             catch (Exception e) when (e is NoSuchElementException || e is WebDriverTimeoutException)

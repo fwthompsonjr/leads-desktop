@@ -288,9 +288,10 @@ namespace LegalLead.PublicData.Search
                 100 => new ElPasoUiInteractive(wb),
                 _ => new HidalgoUiInteractive(wb)
             };
+            var indx = siteData.Id == 30 ? 1 : 0;
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dweb, siteData, searchItem);
+                await ProcessAsync(dweb, siteData, searchItem, indx);
             }).ConfigureAwait(true);
         }
 
@@ -330,7 +331,7 @@ namespace LegalLead.PublicData.Search
 
         private void TravisButtonExecution(WebNavigationParameter siteData, SearchResult searchItem, DateTime startDate, DateTime endingDate)
         {
-            var dto = (Thompson.RecordSearch.Utility.Dto.DropDown)cboSearchType.SelectedItem;
+            var dto = (DropDown)cboSearchType.SelectedItem;
             var txt = dto.Name.Split(' ')[0];
             var searchType = txt.ToUpper(CultureInfo.CurrentCulture).Trim();
             var search = new TravisSearchProcess();
@@ -483,7 +484,8 @@ namespace LegalLead.PublicData.Search
         private async Task ProcessAsync(
             IWebInteractive webmgr,
             WebNavigationParameter siteData,
-            SearchResult searchItem)
+            SearchResult searchItem,
+            int caseSelectionIndex = 0)
         {
             try
             {
@@ -537,8 +539,8 @@ namespace LegalLead.PublicData.Search
                     UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count, searchRange);
                     UsageReader.WriteUserRecord();
                 }
-                var cbindx = GetCaseSelectionIndex(cboSearchType.SelectedItem);
-                var isHarrisCriminal = cbindx == 1 && siteData.Id == (int)SourceType.HarrisCivil;
+
+                var isHarrisCriminal = caseSelectionIndex == 1 && siteData.Id == (int)SourceType.HarrisCivil;
                 if (!isHarrisCriminal && !nonactors.Contains(siteData.Id))
                 {
                     ExcelWriter.WriteToExcel(CaseData);

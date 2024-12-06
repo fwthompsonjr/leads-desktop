@@ -22,7 +22,7 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_START_DATE_MISSING);
             if (HccService == null) return "[]";
             var dataset = HccService.Find(dateStart);
-            if (dataset.Count > 0) 
+            if (dataset.Count > 0)
                 Console.WriteLine($" .. {Parameters.StartDate}: found {dataset.Count} records");
             return dataset.ToJsonString();
         }
