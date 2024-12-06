@@ -90,10 +90,10 @@ namespace LegalLead.PublicData.Search.Util
             for (var i = 0; i < secondWait; i++)
             {
                 Thread.Sleep(1500);
-                Console.WriteLine($"Wait {sw.Elapsed}. Downloading data in progress.");
-                var newLength = new FileInfo(downloadsPath).Length;
+                var newLength = new FileInfo(fullPath).Length;
                 if (newLength == length && length != 0) { break; }
                 length = newLength;
+                Console.WriteLine($"Wait {sw.Elapsed}. Downloading data in progress.");
             }
             sw.Stop();
             return fullPath;
@@ -107,8 +107,9 @@ namespace LegalLead.PublicData.Search.Util
             var info = new DirectoryInfo(parentDir);
             var files = info.GetFiles(pattern).ToList();
             if (files.Count == 0) return null;
-            var found = files.Find(f => f.CreationTimeUtc > minDate);
-            return found?.FullName ?? null;
+            // sort files by name desc
+            files.Sort((a, b) => b.Name.CompareTo(a.Name));
+            return files[0].FullName;
         }
     }
 }
