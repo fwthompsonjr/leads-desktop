@@ -103,7 +103,8 @@ namespace LegalLead.PublicData.Search.Util
         private static string FindFile(string parentDir, string fileName, DateTime minDate)
         {
             if (!Directory.Exists(parentDir)) return null;
-            var pattern = $"*{fileName}*";
+            var shortName = Path.GetFileNameWithoutExtension(fileName);
+            var pattern = $"*{shortName}*";
             var info = new DirectoryInfo(parentDir);
             var files = info.GetFiles(pattern).ToList();
             if (files.Count == 0) return null;

@@ -50,7 +50,7 @@ namespace LegalLead.PublicData.Search.Helpers
         }
         private static string ParseAddress(RemotePersonDto source)
         {
-            var city = string.IsNullOrWhiteSpace(source.DefendantCity) ? "" : $"{source.DefendantCity},";
+            var city = string.IsNullOrWhiteSpace(source.DefendantCity) ? "" : $"| {source.DefendantCity},";
             var items = new[]
             {
                 source.DefendantStreetNumber,

@@ -54,7 +54,7 @@ namespace legallead.search.tests.helpers
         private static readonly Faker<MockCsvRecordDto> recfaker =
             new Faker<MockCsvRecordDto>()
             .RuleFor(x => x.CaseNumber, y => y.Random.AlphaNumeric(12))
-            .RuleFor(x => x.FilingDate, y => y.Date.Recent().ToString("yyyyMMdd"))
+            .RuleFor(x => x.FilingDate, y => y.Date.Past().ToString("yyyyMMdd"))
             .RuleFor(x => x.Name, y => y.Person.FullName)
             .RuleFor(x => x.StreetNumber, y => y.Random.Int(1, 9999).ToString())
             .RuleFor(x => x.StreetName, y => y.Address.StreetName())
@@ -74,7 +74,7 @@ namespace legallead.search.tests.helpers
                 {
                     string.Join("\t", names.Split(','))
                 };
-                var dta = recfaker.Generate(10);
+                var dta = recfaker.Generate(300);
                 dta.ForEach(d =>
                 {
                     var tmp = new[]

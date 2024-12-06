@@ -18,11 +18,6 @@ namespace LegalLead.PublicData.Search.Helpers
         private readonly IHttpService httpService;
         public void Write(string csvdata)
         {
-            /*
-             * this csv collection needs to get parsed into readable string
-             * and columns need to match the csv spec
-             * and unneded data should be purged
-            */
             var revised = GetRevisedList(csvdata);
             if (string.IsNullOrEmpty(revised)) return;
             var dat = Encoding.UTF8.GetBytes(revised);
@@ -62,11 +57,40 @@ namespace LegalLead.PublicData.Search.Helpers
                 }
                 final.content.Add(line);
             });
+            final.content.RemoveAll(CheckDateRange);
             var dataset = new StringBuilder();
             dataset.AppendLine(string.Join(tab, final.header));
             final.content.ForEach(x => dataset.AppendLine(string.Join(tab, x)));
             return dataset.ToString();
         }
+
+        private static bool CheckDateRange(List<string> obj)
+        {
+            var id = FieldList.FindIndex(x => x.Equals("fda"));
+            if (id == -1) return false; // allow record
+            var nw = DateTime.Now;
+            var prefixes = new[]
+            {
+                nw.AddMonths(-3).ToString("yyyyMM"),
+                nw.AddMonths(-2).ToString("yyyyMM"),
+                nw.AddMonths(-1).ToString("yyyyMM"),
+                DateTime.Now.AddMonths(0).ToString("yyyyMM"),
+                DateTime.Now.AddMonths(1).ToString("yyyyMM"),
+            };
+            var current = TryGetValue(obj, id);
+            if (string.IsNullOrEmpty(current)) return true;
+            var ismatched = false;
+            foreach (var prefix in prefixes) 
+            {
+                if (current.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    ismatched = true;
+                    break;
+                }
+            }
+            return !ismatched;
+        }
+
         private static string TryGetValue(List<string> list, int index)
         {
             if (index < 0) return string.Empty;

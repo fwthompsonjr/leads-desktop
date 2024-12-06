@@ -55,7 +55,7 @@ namespace LegalLead.PublicData.Search.Util
             Iterate(driver, parameters, dates, common, postcommon);
             if (People.Count == 0) return result;
             result.PeopleList = People;
-            result.Result = GenerateExcelFile(countyName.ToUpper(), 120);
+            result.Result = GenerateExcelFile(countyName.ToUpper(), 40);
             result.CaseList = JsonConvert.SerializeObject(People);
             return result;
         }
