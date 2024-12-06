@@ -31,7 +31,8 @@ namespace LegalLead.PublicData.Search
             var fives = new List<int>
             {
                 (int)SourceType.CollinCounty,
-                (int)SourceType.TarrantCounty
+                (int)SourceType.TarrantCounty,
+                (int)SourceType.HarrisCivil,
             };
             var styles = GetMain.tableLayoutPanel1.RowStyles;
             for (int i = Three; i <= Five; i++)

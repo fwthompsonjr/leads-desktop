@@ -1,8 +1,10 @@
-﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
+using OpenQA.Selenium.BiDi.Communication;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,21 +14,38 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    internal class HidalgoUiInteractive : BaseUiInteractive
+    public class HccUiInteractive : BaseUiInteractive
     {
-        public HidalgoUiInteractive(WebNavigationParameter parameters) : base(parameters)
+        public HccUiInteractive(
+            WebNavigationParameter parameters,
+            bool allowDownload = true,
+            bool isTestMode = false) : base(parameters)
         {
-            var container = ActionHidalgoContainer.GetContainer;
+            var container = ActionHccContainer.GetContainer;
+            var writer = allowDownload ? container.GetInstance<IHccWritingService>() : null;
+            var reader = isTestMode ? null : container.GetInstance<IHccReadingService>();
+            var counter = isTestMode ? null : container.GetInstance<IHccCountingService>();
             var collection = container.GetAllInstances<ICountySearchAction>().ToList();
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
+            collection.ForEach(c =>
+            {
+                if (c is HccDownloadMonthly hccDownload)
+                {
+                    hccDownload.IsDownloadRequested = allowDownload;
+                    hccDownload.IsTestMode = isTestMode;
+                    hccDownload.HccService = writer;
+                }
+                if (c is HccFetchCaseList fetch) fetch.HccService = reader;
+                if (c is HccCountDatabase count) count.HccService = counter;
+            });
             ActionItems.AddRange(collection);
-            ActionItems.ForEach(a => a.Interactive = this);
         }
 
         public override WebFetchResult Fetch()
         {
-            const string countyName = "HIDALGO";
-            var postsearchtypes = new List<Type> { typeof(NonActionSearch) };
+            const string countyName = "Hcc";
+            using var hider = new HideProcessWindowHelper();
+            var postsearchtypes = new List<Type> { typeof(HccFetchCaseList) };
             var driver = GetDriver(DriverReadHeadless);
             var parameters = new DallasSearchProcess();
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
@@ -36,14 +55,14 @@ namespace LegalLead.PublicData.Search.Util
             Iterate(driver, parameters, dates, common, postcommon);
             if (People.Count == 0) return result;
             result.PeopleList = People;
-            result.Result = GenerateExcelFile(countyName, 90);
+            result.Result = GenerateExcelFile(countyName.ToUpper(), 40);
             result.CaseList = JsonConvert.SerializeObject(People);
             return result;
         }
 
         protected override string GetCourtAddress(string courtType, string court)
         {
-            return HidalgoCourtLookupService.GetAddress(courtType, court);
+            return HccCourtLookupService.GetAddress(court);
         }
 
         protected virtual void Iterate(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
@@ -57,7 +76,7 @@ namespace LegalLead.PublicData.Search.Util
                 if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
 
                 IterateDateRange(driver, parameters, dates, common);
-                IterateItems(driver, parameters, postcommon);
+                IterateItems(driver, parameters, dates, postcommon);
             }
             catch (Exception ex)
             {
@@ -78,10 +97,9 @@ namespace LegalLead.PublicData.Search.Util
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
             bool isCaptchaNeeded = true;
-
             dates.ForEach(d =>
             {
-                Console.WriteLine($"Date {d:d}. Reading records");
+                Console.WriteLine("Searching for records on date: {0:d}", d);
                 IsDateRangeComplete = false;
                 parameters.Search(d, d, CourtType);
                 common.ForEach(a =>
@@ -89,20 +107,30 @@ namespace LegalLead.PublicData.Search.Util
                     if (!IsDateRangeComplete)
                     {
                         isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
-                        var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
-                        unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); });
                     }
                 });
+                IsDateRangeComplete = false;
             });
-            IsDateRangeComplete = false;
             parameters.Search(dates[0], dates[^1], CourtType);
         }
 
-        protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
+        protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> postcommon)
         {
             if (driver == null) throw new ArgumentNullException(nameof(driver));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
+            if (!dates.Any()) return;
+            dates.ForEach(d =>
+            {
+                Console.WriteLine("Fetching records on date: {0:d}", d);
+                parameters.Search(d, d, CourtType);
+                postcommon.ForEach(a =>
+                {
+                    IterateCommonActions(false, driver, parameters, postcommon, a);
+                    var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
+                    unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); });
+                });
+            });
             var nonames = Items.FindAll(x => string.IsNullOrWhiteSpace(x.PartyName) && !string.IsNullOrWhiteSpace(x.CaseStyle));
             nonames.ForEach(n => n.SetPartyNameFromCaseStyle());
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
@@ -122,12 +150,13 @@ namespace LegalLead.PublicData.Search.Util
             var count = common.Count - 1;
             Populate(a, driver, parameters);
             var response = a.Execute();
-            if (a is HidalgoFetchCaseList _ && response is string cases) Items.AddRange(GetData(cases));
+            if (a is HccCountDatabase _ && response is int number && number > 0) IsDateRangeComplete = true;
+            if (a is HccFetchCaseList _ && response is string cases) Items.AddRange(GetData(cases));
             if (a is HidalgoNoCountVerification _ && response is bool hasNoCount && hasNoCount)
             {
                 IsDateRangeComplete = true;
             }
-            if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
+            if (common.IndexOf(a) != count) Thread.Sleep(250); // add pause to be more human in interaction
             return isCaptchaNeeded;
         }
     }

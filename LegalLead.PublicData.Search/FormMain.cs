@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
@@ -227,6 +228,11 @@ namespace LegalLead.PublicData.Search
                     case (int)SourceType.TravisCounty:
                         TravisButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
+                    case (int)SourceType.HarrisCivil:
+                        var cbindx = GetCaseSelectionIndex(cboSearchType.SelectedItem);
+                        if (cbindx == 0) NonDallasButtonExecution(siteData, searchItem, startDate, endingDate);
+                        else CommonButtonExecution(siteData, searchItem);
+                        break;
                     case (int)SourceType.HidalgoCounty:
                     case (int)SourceType.ElPasoCounty:
                     case (int)SourceType.FortBendCounty:
@@ -254,6 +260,15 @@ namespace LegalLead.PublicData.Search
             }
         }
 
+        private static int GetCaseSelectionIndex(object selectedItem)
+        {
+            var fallback = 0;
+            if (selectedItem == null) return fallback;
+            if (selectedItem is not DropDown ddp) return fallback;
+            if (!ddp.Name.Contains("criminal")) return fallback;
+            return 1;
+        }
+
         private void CommonButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
         {
             var index = cboSearchType.SelectedIndex;
@@ -266,6 +281,7 @@ namespace LegalLead.PublicData.Search
             var wb = new WebNavigationParameter { Keys = keys };
             IWebInteractive dweb = siteData.Id switch
             {
+                30 => new HccUiInteractive(wb),
                 130 => new GraysonUiInteractive(wb),
                 120 => new WilliamsonUiInteractive(wb),
                 110 => new FortBendUiInteractive(wb),
@@ -521,7 +537,9 @@ namespace LegalLead.PublicData.Search
                     UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count, searchRange);
                     UsageReader.WriteUserRecord();
                 }
-                if (!nonactors.Contains(siteData.Id))
+                var cbindx = GetCaseSelectionIndex(cboSearchType.SelectedItem);
+                var isHarrisCriminal = cbindx == 1 && siteData.Id == (int)SourceType.HarrisCivil;
+                if (!isHarrisCriminal && !nonactors.Contains(siteData.Id))
                 {
                     ExcelWriter.WriteToExcel(CaseData);
                 }

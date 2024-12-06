@@ -9,10 +9,10 @@ namespace LegalLead.PublicData.Search.Classes
 {
     public class DallasSearchProcess
     {
-        public string StartDate { get; private set; }
-        public string EndingDate { get; private set; }
-        public string CourtLocator { get; private set; }
-        public string CourtType { get; private set; }
+        public string StartDate { get; protected set; }
+        public string EndingDate { get; protected set; }
+        public string CourtLocator { get; protected set; }
+        public string CourtType { get; protected set; }
 
         public void Search(DateTime? startDate, DateTime? endDate, string courtType)
         {

@@ -1,0 +1,11 @@
+{
+  "url": "https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx",
+  "settings": "CrimFilingsWithFutureSettings_withHeadings",
+  "monthly": "CrimFilingsMonthly_withHeadings",
+  "remote": {
+	"uri": "http://api.legallead.co/",
+	"post": "app/load-hcc-data",
+	"get": "app/find-hcc-data",
+	"count": "app/count-hcc-data"
+  }
+}
