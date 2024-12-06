@@ -3,8 +3,8 @@
 		"id": 80,
 		"county": "Bexar",
 		"notes": [
-			"Bexar county search uses court date.",
-			"It is advised to use future dates to find cases."
+			"Bexar county search uses court date instead of filing date.",
+			"It is advised to use future dates to find most recently filed cases."
 		]
 	}
 ]
