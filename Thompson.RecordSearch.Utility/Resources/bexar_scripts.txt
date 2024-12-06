@@ -80,21 +80,27 @@ liitem[liitem.length - 1].click();
 
 ~ get list of case items
 var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
-links = links.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr.indexOf('caseLink') >= 0; });
+links = links.filter(a => { 
+	let attr = a.getAttribute('class'); 
+	if (attr == null) { return false; } 
+	return attr.indexOf('caseLink') >= 0; });
 var alldata = [];
 links.forEach((lnk) => {
 	var linkurl = lnk.getAttribute('data-url');
-	datarow = Array.prototype.slice.call( lnk.closest('tr').getElementsByTagName('td'), 0 ) 
-	var data = {
-		"uri": linkurl,
-		"caseNumber": datarow[0].innerText,
-		"caseStyle": datarow[1].innerText,
-		"casetype": datarow[2].innerText,
-		"courtDate": datarow[3].innerText,
-		"hearingType": datarow[4].innerText,
-		"location": datarow[6].innerText
+	let parent_row = lnk.closest('tr');
+	if (parent_row != null ) {
+		datarow = Array.prototype.slice.call( parent_row.getElementsByTagName('td'), 0 ) 
+		var data = {
+			"uri": linkurl,
+			"caseNumber": datarow[0].innerText,
+			"caseStyle": datarow[1].innerText,
+			"casetype": datarow[2].innerText,
+			"courtDate": datarow[3].innerText,
+			"hearingType": datarow[4].innerText,
+			"location": datarow[6].innerText
+		}
+		alldata.push(data);
 	}
-	alldata.push(data);
 });
 return JSON.stringify(alldata);
 
