@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
-using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace legallead.search.tests.helpers

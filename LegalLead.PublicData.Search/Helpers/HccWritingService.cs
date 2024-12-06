@@ -80,7 +80,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var current = TryGetValue(obj, id);
             if (string.IsNullOrEmpty(current)) return true;
             var ismatched = false;
-            foreach (var prefix in prefixes) 
+            foreach (var prefix in prefixes)
             {
                 if (current.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                 {

@@ -197,6 +197,24 @@ namespace Thompson.RecordSearch.Utility.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///	{
+        ///		&quot;id&quot;: 80,
+        ///		&quot;county&quot;: &quot;Bexar&quot;,
+        ///		&quot;notes&quot;: [
+        ///			&quot;Bexar county search uses court date.&quot;,
+        ///			&quot;It is advised to use future dates to find cases.&quot;
+        ///		]
+        ///	}
+        ///].
+        /// </summary>
+        internal static string custom_county_notes {
+            get {
+                return ResourceManager.GetString("custom_county_notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
         ///		&quot;name&quot;: &quot;county&quot;,
         ///		&quot;items&quot;: [
         ///			{
@@ -428,7 +446,8 @@ namespace Thompson.RecordSearch.Utility.Properties {
         ///  &quot;remote&quot;: {
         ///	&quot;uri&quot;: &quot;http://api.legallead.co/&quot;,
         ///	&quot;post&quot;: &quot;app/load-hcc-data&quot;,
-        ///	&quot;get&quot;: &quot;app/find-hcc-data&quot;
+        ///	&quot;get&quot;: &quot;app/find-hcc-data&quot;,
+        ///	&quot;count&quot;: &quot;app/count-hcc-data&quot;
         ///  }
         ///}.
         /// </summary>

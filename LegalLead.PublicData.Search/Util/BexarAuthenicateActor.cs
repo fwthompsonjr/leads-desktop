@@ -17,6 +17,7 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             var executor = ExternalExecutor ?? Driver.GetJsExecutor();
             var destination = NavigationUri(executor);
+            if (string.IsNullOrEmpty(destination)) return null;
             _ = GetUri(destination);
             return destination;
         }

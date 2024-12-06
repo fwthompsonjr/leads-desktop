@@ -23,8 +23,8 @@ namespace LegalLead.PublicData.Search.Util
                 results grid:  by - id hearingResultsGrid
                 results pager: by - css .k-pager-info
              */
-            var selections = new[] { 
-                By.Id("hearingResultsGrid"), 
+            var selections = new[] {
+                By.Id("hearingResultsGrid"),
                 By.CssSelector(".k-pager-info"),
                 By.CssSelector("a[data-url]")
             }.ToList();

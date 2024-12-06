@@ -187,4 +187,7 @@
   <data name="hcc_court_list" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hcc_court_list.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="custom_county_notes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\custom_county_notes.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

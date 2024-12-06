@@ -539,7 +539,7 @@ namespace LegalLead.PublicData.Search
                     UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count, searchRange);
                     UsageReader.WriteUserRecord();
                 }
-                
+
                 var isHarrisCriminal = caseSelectionIndex == 1 && siteData.Id == (int)SourceType.HarrisCivil;
                 if (!isHarrisCriminal && !nonactors.Contains(siteData.Id))
                 {
