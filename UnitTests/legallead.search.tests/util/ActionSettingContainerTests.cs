@@ -33,7 +33,7 @@ namespace legallead.search.tests.util
         }
 
         [Theory]
-        [InlineData("Boolean")]
+        [InlineData("Bool")]
         [InlineData("DateTime")]
         [InlineData("Numeric")]
         [InlineData("Text")]

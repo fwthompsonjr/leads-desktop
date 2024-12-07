@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
+using LegalLead.PublicData.Search.Util;
+using LegalLead.PublicData.Search.Extensions;
 
 namespace LegalLead.PublicData.Search
 {
@@ -153,6 +155,23 @@ namespace LegalLead.PublicData.Search
             var errorColor = Color.Red;
             lbStatus.Text = _initalText;
             lbStatus.ForeColor = _initalColor;
+            if (string.IsNullOrEmpty(DataFilterMode))
+            {
+
+                lbStatus.ForeColor = errorColor;
+                lbStatus.Text = "An error occurred processing change.";
+                return;
+            }
+            var validator = ActionSettingContainer.GetContainer
+                .GetInstance<ISettingChangeModel>(DataFilterMode);
+            validator.Text = _model.Value;
+            var collection = validator.Validate(out var isValid);
+            if (!isValid) {
+                var err = string.Join(Environment.NewLine, collection.Select(s => s.ErrorMessage));
+                lbStatus.ForeColor = errorColor;
+                lbStatus.Text = err;
+                return;
+            }
             var success = UserDataReader.Change(_model);
             if (!success)
             {

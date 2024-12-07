@@ -5,7 +5,7 @@ namespace LegalLead.PublicData.Search.Models
 {
     internal class ChangeBooleanModel : ISettingChangeModel
     {
-        [BooleanRequest]
+        [BooleanRequest(ErrorMessage = "Invalid value. Should be either 'true' or 'false'")]
         public string Text { get; set; }
     }
 }

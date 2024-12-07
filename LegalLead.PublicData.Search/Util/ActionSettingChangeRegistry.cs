@@ -8,7 +8,7 @@ namespace LegalLead.PublicData.Search.Util
     {
         public ActionSettingChangeRegistry()
         {
-            For<ISettingChangeModel>().Add<ChangeBooleanModel>().Named("Boolean");
+            For<ISettingChangeModel>().Add<ChangeBooleanModel>().Named("Bool");
             For<ISettingChangeModel>().Add<ChangeDateModel>().Named("DateTime");
             For<ISettingChangeModel>().Add<ChangeNumericModel>().Named("Numeric");
             For<ISettingChangeModel>().Add<ChangeTextModel>().Named("Text");

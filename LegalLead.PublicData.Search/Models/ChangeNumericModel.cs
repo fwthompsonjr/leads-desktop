@@ -5,7 +5,8 @@ namespace LegalLead.PublicData.Search.Models
 {
     public class ChangeNumericModel : ISettingChangeModel
     {
-        [NumericRequest]
+        [NumericRequest(
+            ErrorMessage = "Invalid value. Please enter a valid number")]
         public string Text { get; set; }
     }
 }
