@@ -11,7 +11,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
@@ -117,6 +121,8 @@ namespace LegalLead.PublicData.Search.Util
                 }
                 uploadNeeded = false;
                 // break dates
+                var startDt = StartDate;
+                var endinDt = EndingDate;
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
                 dates.ForEach(d => 
                 {
@@ -142,6 +148,13 @@ namespace LegalLead.PublicData.Search.Util
                         if (File.Exists(tmp.Result)) File.Delete(tmp.Result);
                     }
                 });
+                var nameService = new FileNameService(WebRequest, startDt, endinDt);
+                var builder = new FileContentBuilder(
+                    WebRequest.CountyId,
+                    nameService.GetFileName(),
+                    nameService.GetCourtTypeName(),
+                    result.PeopleList);
+                result.Result = builder.Generate();
                 return result;
             }
             finally
@@ -262,5 +275,148 @@ namespace LegalLead.PublicData.Search.Util
             .GetInstance<SessionSettingPersistence>();
         private readonly List<UserSettingChangeModel> sourceData =
             UserDataReader.GetList<UserSettingChangeModel>();
+
+        private class FileNameService
+        {
+            private readonly int CountyId;
+            private readonly int CaseTypeId;
+            private readonly DateTime startDate;
+            private readonly DateTime endDate;
+            public FileNameService(
+                FindDbRequest dbRequest,
+                DateTime startingDate,
+                DateTime endingDate)
+            {
+                CountyId = dbRequest.CountyId;
+                CaseTypeId = dbRequest.CaseTypeId;
+                startDate = startingDate;
+                endDate = endingDate;
+            }
+            public string GetFileName()
+            {
+                var folder = ExcelDirectoyName();
+                var county = GetCountyName();
+                var fmt = $"{county}_{GetDateString(startDate)}_{GetDateString(endDate)}";
+                var fullName = Path.Combine(folder, $"{fmt}.xlsx");
+                var idx = 1;
+                while (File.Exists(fullName))
+                {
+                    fullName = Path.Combine(folder, $"{fmt}_{idx:D4}.xlsx");
+                    idx++;
+                }
+                return fullName;
+            }
+
+            public string GetCourtTypeName()
+            {
+                return CountyId switch
+                {
+                    1 => "Denton",
+                    10 => "Tarrant",
+                    20 => "Collin",
+                    30 => "Harris",
+                    40 => "Harris",
+                    60 => "JUSTICE",
+                    70 => "Travis",
+                    80 => "Bexar",
+                    90 => "Hidalgo",
+                    100 => "El_Paso",
+                    110 => "Fort_Bend",
+                    120 => "Williamson",
+                    130 => "Grayson",
+                    _ => "",
+                };
+            }
+            private string GetCountyName()
+            {
+                return CountyId switch
+                {
+                    1 => "Denton",
+                    10 => "Tarrant",
+                    20 => "Collin",
+                    30 => "Harris",
+                    40 => "Harris",
+                    60 => "Dallas",
+                    70 => "Travis",
+                    80 => "Bexar",
+                    90 => "Hidalgo",
+                    100 => "El_Paso",
+                    110 => "Fort_Bend",
+                    120 => "Williamson",
+                    130 => "Grayson",
+                    _ => "Extract",
+                };
+            }
+
+            private static string GetDateString(DateTime date)
+            {
+                const string fmt = "yyMMdd";
+                return date.ToString(fmt, Culture);
+            }
+
+            private static string ExcelDirectoyName()
+            {
+                var appFolder =
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var xmlFolder = Path.Combine(appFolder, "data");
+                if (!Directory.Exists(xmlFolder)) Directory.CreateDirectory(xmlFolder);
+                return xmlFolder;
+            }
+            private static readonly CultureInfo Culture = CultureInfo.CurrentCulture;
+        }
+
+        private class FileContentBuilder
+        {
+            private readonly string excelFileName;
+            private readonly string courtTypeName;
+            private readonly int countyId;
+            private readonly List<PersonAddress> People;
+            public FileContentBuilder(
+                int countyIndex,
+                string fileName,
+                string courtType,
+                List<PersonAddress> people)
+            {
+                excelFileName = fileName;
+                courtTypeName = courtType;
+                countyId = countyIndex;
+                People = people;
+            }
+
+            public string Generate()
+            {
+                var writer = new ExcelWriter();
+                var content = writer.ConvertToPersonTable(
+                    addressList: People,
+                    worksheetName: "addresses",
+                    websiteId: countyId);
+                var courtlist = People.Select(p =>
+                {
+                    if (string.IsNullOrEmpty(p.Court)) return string.Empty;
+                    var find = GetAddress(countyId, courtTypeName, p.Court);
+                    if (string.IsNullOrEmpty(find)) return string.Empty;
+                    return find;
+                }).ToList();
+                content.TransferColumn("County", "fname");
+                content.TransferColumn("CourtAddress", "lname");
+                content.PopulateColumn("CourtAddress", courtlist);
+                using (var ms = new MemoryStream())
+                {
+                    content.SaveAs(ms);
+                    var data = ms.ToArray();
+                    File.WriteAllBytes(excelFileName, data);
+                }
+                return excelFileName;
+            }
+
+            private static string GetAddress(int courtId, string name, string court)
+            {
+                return courtId switch
+                {
+                    60 => DallasCourtLookupService.GetAddress(name, court),
+                    _ => string.Empty
+			};
+            }
+        }
     }
 }
