@@ -273,8 +273,9 @@ namespace LegalLead.PublicData.Search
             .GetContainer
             .GetInstance<SessionSettingPersistence>();
 
-        private static readonly List<UserSettingChangeModel> sourceData =
+        private readonly List<UserSettingChangeModel> sourceData =
             UserDataReader.GetList<UserSettingChangeModel>();
+
         private static readonly Dictionary<string, int> DisplayMap 
             = new()
             {
