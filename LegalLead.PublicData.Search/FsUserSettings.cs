@@ -1,15 +1,15 @@
 ﻿using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Util;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
-using LegalLead.PublicData.Search.Util;
-using LegalLead.PublicData.Search.Extensions;
 
 namespace LegalLead.PublicData.Search
 {
@@ -47,17 +47,17 @@ namespace LegalLead.PublicData.Search
                 txKeyValue3
             };
             keyvaluelist.ForEach(x => { x.TextChanged += TxKeyValue_TextChanged; });
-                var controls = tableLayoutPanel1.Controls;
-            foreach (var control in controls) 
+            var controls = tableLayoutPanel1.Controls;
+            foreach (var control in controls)
             {
-                if (control is Button button) 
+                if (control is Button button)
                 {
                     button.Click += BtnSubmit_Click;
                 }
             }
             ToggleRow(DisplayMap.Keys.First());
         }
-        private string DataFilterMode {  get; set; } = string.Empty;
+        private string DataFilterMode { get; set; } = string.Empty;
         private void ToggleRow(string displayMode)
         {
             DataFilterMode = displayMode;
@@ -82,7 +82,7 @@ namespace LegalLead.PublicData.Search
             {
                 var rowHeight = item.Key.Equals(displayMode) ? 50 : 0;
                 var style = rowStyles[item.Value];
-                style.Height = rowHeight;                
+                style.Height = rowHeight;
             }
         }
 
@@ -166,7 +166,8 @@ namespace LegalLead.PublicData.Search
                 .GetInstance<ISettingChangeModel>(DataFilterMode);
             validator.Text = _model.Value;
             var collection = validator.Validate(out var isValid);
-            if (!isValid) {
+            if (!isValid)
+            {
                 var err = string.Join(Environment.NewLine, collection.Select(s => s.ErrorMessage));
                 lbStatus.ForeColor = errorColor;
                 lbStatus.Text = err;
@@ -276,7 +277,7 @@ namespace LegalLead.PublicData.Search
         private readonly List<UserSettingChangeModel> sourceData =
             UserDataReader.GetList<UserSettingChangeModel>();
 
-        private static readonly Dictionary<string, int> DisplayMap 
+        private static readonly Dictionary<string, int> DisplayMap
             = new()
             {
                 { "Text", 2 },

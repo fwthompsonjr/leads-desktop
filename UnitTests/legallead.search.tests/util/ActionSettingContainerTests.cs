@@ -1,8 +1,6 @@
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Util;
-using System;
 using System.Linq;
-using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace legallead.search.tests.util
 {

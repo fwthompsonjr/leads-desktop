@@ -58,25 +58,25 @@ namespace LegalLead.PublicData.Search.Helpers
         private static readonly List<UserSettingChangeModel> settings =
             new()
             {
-                new(){ 
-                    Category = "search", 
+                new(){
+                    Category = "search",
                     Name = "Last County:",
                     DataType = "DateTime",
                     Index = 0},
-                new(){ 
-                    Category = "search", 
+                new(){
+                    Category = "search",
                     Name = "Start Date:",
                     DataType = "DateTime",
                     Index = 1},
-                new(){ 
-                    Category = "search", 
-                    Name = "End Date:", 
+                new(){
+                    Category = "search",
+                    Name = "End Date:",
                     Index = 2},
-                new(){ 
-                    Category = "browser", 
-                    Name = "Open Headless:", 
-                    Index = 10, 
-                    IsSecured = true, 
+                new(){
+                    Category = "browser",
+                    Name = "Open Headless:",
+                    Index = 10,
+                    IsSecured = true,
                     DataType = "Bool",
                     Value = "true"},
                 new(){

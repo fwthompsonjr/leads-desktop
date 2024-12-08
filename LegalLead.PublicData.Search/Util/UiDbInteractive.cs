@@ -3,17 +3,12 @@ using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -38,12 +33,12 @@ namespace LegalLead.PublicData.Search.Util
                 SearchDate = _web.StartDate,
                 SearchTypeId = searchTypeId,
                 CaseTypeId = caseTypeId,
-                DistrictCourtId= districtCourtId,
+                DistrictCourtId = districtCourtId,
                 DistrictSearchTypeId = districtSearchTypeId
             };
             var list = sourceData.FindAll(x => x.Category == "browser");
             var lookups = new[] {
-                new SettingLookupDto { 
+                new SettingLookupDto {
                     Name = "Database Search:",
                     DefaultValue = "true"
                 },
@@ -52,7 +47,7 @@ namespace LegalLead.PublicData.Search.Util
                     DefaultValue = "15"
                 },
             }.ToList();
-            foreach (var lookup in lookups) 
+            foreach (var lookup in lookups)
             {
                 var src = list.Find(x => x.Name == lookup.Name);
                 lookup.Value = src?.Value ?? string.Empty;
@@ -124,7 +119,7 @@ namespace LegalLead.PublicData.Search.Util
                 var startDt = StartDate;
                 var endinDt = EndingDate;
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
-                dates.ForEach(d => 
+                dates.ForEach(d =>
                 {
 
                     WebRequest.SearchDate = d.Date;
@@ -175,9 +170,9 @@ namespace LegalLead.PublicData.Search.Util
                 .Select(x => x.DateFiled)
                 .Distinct()
                 .ToList();
-            foreach ( var filingDate in filingDates)
+            foreach (var filingDate in filingDates)
             {
-                if (!DateTime.TryParse(filingDate, 
+                if (!DateTime.TryParse(filingDate,
                     CultureInfo.CurrentCulture.DateTimeFormat,
                     DateTimeStyles.AssumeLocal,
                     out var dte)) continue;
@@ -251,10 +246,10 @@ namespace LegalLead.PublicData.Search.Util
             return list;
         }
 
-        private static T GetValueOrDefault<T>(bool canParse, T current, T defaultValue) 
+        private static T GetValueOrDefault<T>(bool canParse, T current, T defaultValue)
         {
             if (!canParse) return defaultValue;
-            return current ?? defaultValue;            
+            return current ?? defaultValue;
         }
 
         private sealed class SettingLookupDto
@@ -415,7 +410,7 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     60 => DallasCourtLookupService.GetAddress(name, court),
                     _ => string.Empty
-			};
+                };
             }
         }
     }
