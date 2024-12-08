@@ -314,6 +314,7 @@ namespace LegalLead.PublicData.Search
 
         private void DallasButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
         {
+            var container = ActionSettingContainer.GetContainer;
             var index = cboSearchType.SelectedIndex;
             var searchType = DallasSearchProcess.GetCourtName(index);
             var keys = new List<WebNavigationKey> {
@@ -323,9 +324,15 @@ namespace LegalLead.PublicData.Search
             };
             var wb = new WebNavigationParameter { Keys = keys };
             var dweb = new DallasUiInteractive(wb);
+            var dbweb = new UiDbInteractive(
+                dweb,
+                container.GetInstance<IRemoteDbHelper>(),
+                index,
+                cboCaseType.SelectedIndex
+                );
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dweb, siteData, searchItem);
+                await ProcessAsync(dbweb, siteData, searchItem);
             }).ConfigureAwait(true);
         }
 
