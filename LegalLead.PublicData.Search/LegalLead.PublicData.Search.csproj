@@ -105,12 +105,6 @@
 		<Compile Update="FormDentonSetting.Designer.cs">
 			<DependentUpon>FormDentonSetting.cs</DependentUpon>
 		</Compile>
-		<Compile Update="FormHcc.cs">
-			<SubType>Form</SubType>
-		</Compile>
-		<Compile Update="FormHcc.Designer.cs">
-			<DependentUpon>FormHcc.cs</DependentUpon>
-		</Compile>
 		<Compile Update="FormMain.cs">
 			<SubType>Form</SubType>
 		</Compile>
@@ -128,9 +122,6 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="FormDentonSetting.resx">
 			<DependentUpon>FormDentonSetting.cs</DependentUpon>
-		</EmbeddedResource>
-		<EmbeddedResource Update="FormHcc.resx">
-			<DependentUpon>FormHcc.cs</DependentUpon>
 		</EmbeddedResource>
 		<EmbeddedResource Update="FormMain.resx">
 			<DependentUpon>FormMain.cs</DependentUpon>
@@ -154,7 +145,6 @@
 		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Harris.Criminal.Db\Harris.Criminal.Db.csproj" />
 		<ProjectReference Include="..\Thompson.RecordSearch.Utility\Thompson.RecordSearch.Utility.csproj" />
 	</ItemGroup>
 	<ItemGroup>

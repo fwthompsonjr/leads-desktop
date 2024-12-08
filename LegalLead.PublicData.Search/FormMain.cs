@@ -438,13 +438,6 @@ namespace LegalLead.PublicData.Search
                         SetDentonStatusLabelFromSetting();
                     }
                     break;
-                case (int)SourceType.HarrisCriminal:
-                    using (var hcc = new FormHcc())
-                    {
-                        hcc.Icon = Icon;
-                        hcc.ShowDialog(this);
-                    }
-                    break;
                 default:
                     using (var result = new FormCredential())
                     {
