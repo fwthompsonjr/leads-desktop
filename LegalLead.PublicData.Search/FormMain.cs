@@ -327,6 +327,7 @@ namespace LegalLead.PublicData.Search
             var dbweb = new UiDbInteractive(
                 dweb,
                 container.GetInstance<IRemoteDbHelper>(),
+                (int)SourceType.DallasCounty,
                 index,
                 cboCaseType.SelectedIndex
                 );

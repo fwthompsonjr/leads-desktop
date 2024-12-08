@@ -20,6 +20,7 @@ namespace LegalLead.PublicData.Search.Util
         public UiDbInteractive(
             IWebInteractive interactive,
             IRemoteDbHelper db,
+            int countyId = 0,
             int searchTypeId = 0,
             int caseTypeId = 0,
             int districtCourtId = 0,
@@ -29,7 +30,7 @@ namespace LegalLead.PublicData.Search.Util
             _dbsvc = db;
             WebRequest = new FindDbRequest
             {
-                CountyId = _web.Parameters.Id,
+                CountyId = countyId,
                 SearchDate = _web.StartDate,
                 SearchTypeId = searchTypeId,
                 CaseTypeId = caseTypeId,
