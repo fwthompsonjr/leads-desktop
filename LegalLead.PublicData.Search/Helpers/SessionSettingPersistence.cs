@@ -92,7 +92,7 @@ namespace LegalLead.PublicData.Search.Helpers
                     Index = 12,
                     IsSecured = true,
                     DataType = "Numeric",
-                    Value = "15"},
+                    Value = "5"},
             };
         private static readonly object locker = new();
     }

@@ -210,7 +210,7 @@ namespace LegalLead.PublicData.Search
                 var endingDate = dteEnding.Value.Date;
                 var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
                 var sourceMember = (SourceType)siteData.Id;
-                CurrentRequest = sourceMember.GetDbRequest(this);
+                CurrentRequest = sourceMember.GetDbRequest(this, startDate);
                 var searchItem = new SearchResult
                 {
                     Id = GetObject<List<SearchResult>>(Tag).Count + 1,
@@ -331,10 +331,7 @@ namespace LegalLead.PublicData.Search
             var dbweb = new UiDbInteractive(
                 dweb,
                 container.GetInstance<IRemoteDbHelper>(),
-                (int)SourceType.DallasCounty,
-                index,
-                cboCaseType.SelectedIndex
-                );
+                CurrentRequest);
             _ = Task.Run(async () =>
             {
                 await ProcessAsync(dbweb, siteData, searchItem);
@@ -501,9 +498,10 @@ namespace LegalLead.PublicData.Search
                 }
                 webmgr.ReportProgress = TryShowProgress;
                 webmgr.ReportProgessComplete = TryHideProgress;
+                var interactive = GetDbInteractive(webmgr);
                 CaseData = await Task.Run(() =>
                 {
-                    return webmgr.Fetch();
+                    return interactive.Fetch();
                 }).ConfigureAwait(true);
 
                 var nonactors = new List<int> {
@@ -653,6 +651,17 @@ namespace LegalLead.PublicData.Search
             progressBar1.Visible = true;
             ControlExtensions.Resume();
         }
+
+        private UiDbInteractive GetDbInteractive(IWebInteractive interactive)
+        {
+            if (interactive is UiDbInteractive db) return db;
+            var container = ActionSettingContainer.GetContainer;
+            return new UiDbInteractive(
+                interactive,
+                container.GetInstance<IRemoteDbHelper>(),
+                CurrentRequest);
+        }
+
         private static class ControlExtensions
         {
             [System.Runtime.InteropServices.DllImport("user32.dll")]

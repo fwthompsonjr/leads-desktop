@@ -1,6 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Models;
 using System;
+using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Extensions
@@ -20,18 +21,39 @@ namespace LegalLead.PublicData.Search.Extensions
 
         public static FindDbRequest GetDbRequest(
             this SourceType source,
-            FormMain form)
+            FormMain form,
+            DateTime startDate)
         {
-            var cboCT = form.cboCaseType;
+            var cboST = form.cboSearchType;
             var model = new FindDbRequest
             {
                 CountyId = (int)source,
+                SearchDate = startDate,
                 CountyName = GetCountyName(source),
-                CourtTypeName = GetCaseTypeName(cboCT),
-                SearchTypeId = cboCT.SelectedIndex,
-                CaseTypeId = cboCT.SelectedIndex
-
+                CourtTypeName = GetCaseTypeName(cboST),
+                SearchTypeId = cboST.SelectedIndex
             };
+            if (Common.Contains(source)) return model;
+            if (source == SourceType.CollinCounty)
+            {
+                model.CaseTypeId = form.cboCourts.SelectedIndex;
+                return model;
+            }
+            if (source == SourceType.DentonCounty)
+            {
+                var settings = SearchSettingDto.GetDto();
+                model.SearchTypeId = settings.CountySearchTypeId;
+                model.CaseTypeId = settings.CountyCourtId;
+                model.DistrictCourtId = settings.DistrictCourtId;
+                model.DistrictSearchTypeId = settings.DistrictSearchTypeId;
+                return model;
+            }
+            if (source == SourceType.HarrisCivil)
+            {
+                model.CaseTypeId = form.cboCaseType.SelectedIndex;
+                model.CourtTypeName = model.CaseTypeId == 0 ? "CRIMINAL" : "CIVIL";
+                return model;
+            }
             return model;
         }
 
@@ -51,5 +73,16 @@ namespace LegalLead.PublicData.Search.Extensions
             if (displayText.Contains("MAGISTRATE", oic)) return "MAGISTRATE";
             return string.Empty;
         }
+        private static readonly List<SourceType> Common = new()
+        {
+            SourceType.BexarCounty,
+            SourceType.DallasCounty,
+            SourceType.ElPasoCounty,
+            SourceType.FortBendCounty,
+            SourceType.GraysonCounty,
+            SourceType.HidalgoCounty,
+            SourceType.TravisCounty,
+            SourceType.WilliamsonCounty,
+        };
     }
 }

@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -20,50 +21,19 @@ namespace LegalLead.PublicData.Search.Util
         public UiDbInteractive(
             IWebInteractive interactive,
             IRemoteDbHelper db,
-            int countyId = 0,
-            int searchTypeId = 0,
-            int caseTypeId = 0,
-            int districtCourtId = 0,
-            int districtSearchTypeId = 0)
+            FindDbRequest request)
         {
             _web = interactive;
             _dbsvc = db;
-            WebRequest = new FindDbRequest
-            {
-                CountyId = countyId,
-                SearchDate = _web.StartDate,
-                SearchTypeId = searchTypeId,
-                CaseTypeId = caseTypeId,
-                DistrictCourtId = districtCourtId,
-                DistrictSearchTypeId = districtSearchTypeId
-            };
-            var list = sourceData.FindAll(x => x.Category == "browser");
-            var lookups = new[] {
-                new SettingLookupDto {
-                    Name = "Database Search:",
-                    DefaultValue = "true"
-                },
-                new SettingLookupDto {
-                    Name = "Database Minimun Persistence:",
-                    DefaultValue = "15"
-                },
-            }.ToList();
-            foreach (var lookup in lookups)
-            {
-                var src = list.Find(x => x.Name == lookup.Name);
-                lookup.Value = src?.Value ?? string.Empty;
-            }
-            var useDb = lookups[0].GetValue();
-            var minDayInterval = lookups[1].GetValue();
-            var bUseDb = bool.TryParse(useDb, out var bUse);
-            var bMinDays = int.TryParse(minDayInterval, out var minInterval);
-            UseRemoteDb = GetValueOrDefault(bUseDb, bUse, true);
-            RemoteMinDayInterval = GetValueOrDefault(bMinDays, minInterval, 15);
-
+            DataSearchParameters = request;
+            var settings = MapDbSettings();
+            UseRemoteDb = settings.UseRemoteDb;
+            RemoteMinDayInterval = settings.RemoteMinDayInterval;
         }
+
         private readonly bool UseRemoteDb;
         private readonly int RemoteMinDayInterval;
-        private readonly FindDbRequest WebRequest;
+        private readonly FindDbRequest DataSearchParameters;
         private readonly IRemoteDbHelper _dbsvc;
         private readonly IWebInteractive _web;
         public DateTime EndingDate
@@ -105,12 +75,15 @@ namespace LegalLead.PublicData.Search.Util
         public WebFetchResult Fetch()
         {
             var uploadNeeded = true;
-            var result = new WebFetchResult();
+            var result = new WebFetchResult
+            {
+                PeopleList = new List<PersonAddress>(),
+                WebsiteId = DataSearchParameters.CountyId,
+                CaseList = string.Empty
+            };
             try
             {
-                var now = DateTime.UtcNow;
-                var days = Convert.ToInt32(Math.Round(now.Subtract(StartDate).TotalDays, 0));
-                if (!UseRemoteDb || days < RemoteMinDayInterval)
+                if (UseNormalInteration())
                 {
                     result = _web.Fetch();
                     return result;
@@ -118,39 +91,30 @@ namespace LegalLead.PublicData.Search.Util
                 uploadNeeded = false;
                 // break dates
                 var startDt = StartDate;
-                var endinDt = EndingDate;
+                var endingDt = EndingDate;
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
                 dates.ForEach(d =>
                 {
 
-                    WebRequest.SearchDate = d.Date;
-                    var begin = _dbsvc.Begin(WebRequest);
+                    DataSearchParameters.SearchDate = d.Date;
+                    var begin = _dbsvc.Begin(DataSearchParameters);
                     if (begin.RecordCount > 0 && begin.CompleteDate.HasValue)
                     {
-                        var found = _dbsvc.Query(new QueryDbRequest { Id = begin.Id });
-                        var people = ConvertFrom(found);
-                        result.PeopleList.AddRange(people);
+                        ReadResultFromDataBase(result, begin);
                     }
                     else
                     {
-                        _web.StartDate = d;
-                        _web.EndingDate = d;
-                        var tmp = _web.Fetch();
-                        if (tmp.PeopleList.Count > 0)
-                        {
-                            PostResult(tmp);
-                            result.PeopleList.AddRange(tmp.PeopleList);
-                        }
-                        DeleteTempFiles(tmp.Result);
+                        ReadResultFromWebSite(d, result);
                     }
                 });
-                var nameService = new FileNameService(WebRequest, startDt, endinDt);
+                var nameService = new FileNameService(DataSearchParameters, startDt, endingDt);
                 var builder = new FileContentBuilder(
-                    WebRequest.CountyId,
+                    DataSearchParameters.CountyId,
                     nameService.GetFileName(),
                     nameService.GetCourtTypeName(),
                     result.PeopleList);
                 result.Result = builder.Generate();
+                result.CaseList = JsonConvert.SerializeObject(result.PeopleList);
                 return result;
             }
             finally
@@ -160,6 +124,29 @@ namespace LegalLead.PublicData.Search.Util
                     PostResult(result);
                 }
             }
+        }
+
+        private void ReadResultFromDataBase(WebFetchResult result, FindDbResponse begin)
+        {
+            var found = _dbsvc.Query(new QueryDbRequest { Id = begin.Id });
+            var people = ConvertFrom(found);
+            people.RemoveAll(IsEmpty);
+            result.PeopleList.AddRange(people);
+        }
+
+        private void ReadResultFromWebSite(DateTime d, WebFetchResult result)
+        {
+            _web.StartDate = d;
+            _web.EndingDate = d;
+            var tmp = _web.Fetch();
+            tmp.PeopleList?.RemoveAll(IsEmpty);
+            if (tmp.PeopleList != null && tmp.PeopleList.Count > 0)
+            {
+                tmp.WebsiteId = DataSearchParameters.CountyId;
+                PostResult(tmp, d);
+                result.PeopleList.AddRange(tmp.PeopleList);
+            }
+            DeleteTempFiles(tmp.Result);
         }
 
         public string ReadFromFile(string result)
@@ -177,23 +164,83 @@ namespace LegalLead.PublicData.Search.Util
             throw new NotImplementedException();
         }
 
-        private void PostResult(WebFetchResult result)
+        private DataSetting MapDbSettings()
         {
-            if (result.PeopleList.Count == 0) return;
-            var people = result.PeopleList;
+            var list = sourceData.FindAll(x => x.Category == "browser");
+            var lookups = new[] {
+                new SettingLookupDto {
+                    Name = "Database Search:",
+                    DefaultValue = "true"
+                },
+                new SettingLookupDto {
+                    Name = "Database Minimun Persistence:",
+                    DefaultValue = "5"
+                },
+            }.ToList();
+            foreach (var lookup in lookups)
+            {
+                var src = list.Find(x => x.Name == lookup.Name);
+                lookup.Value = src?.Value ?? string.Empty;
+            }
+            var useDb = lookups[0].GetValue();
+            var minDayInterval = lookups[1].GetValue();
+            var bUseDb = bool.TryParse(useDb, out var bUse);
+            var bMinDays = int.TryParse(minDayInterval, out var minInterval);
+            var remoteDb = GetValueOrDefault(bUseDb, bUse, true);
+            var remoteMinDayInterval = GetValueOrDefault(bMinDays, minInterval, 15);
+            return new DataSetting
+            {
+                RemoteMinDayInterval = remoteMinDayInterval,
+                UseRemoteDb = remoteDb
+            };
+        }
+        private bool UseNormalInteration()
+        {
+            if (DataSearchParameters.CountyId == 30 && DataSearchParameters.CourtTypeName == "CRIMINAL") return true;
+            if (!UseRemoteDb) return true;
+            var now = DateTime.UtcNow;
+            var days = Convert.ToInt32(Math.Round(now.Subtract(StartDate).TotalDays, 0));
+            if (days < RemoteMinDayInterval) return true;
+            return false;
+        }
+
+        private void PostResult(WebFetchResult result, DateTime? searchDate = null)
+        {
+            try
+            {
+                if (result.PeopleList == null || result.PeopleList.Count == 0) return;
+                var people = result.PeopleList;
+                people.RemoveAll(IsEmpty);
+                if (people.Count == 0) return;
+                if (result.WebsiteId == (int)SourceType.BexarCounty)
+                {
+                    PostBexarDataResult(searchDate, people);
+                    return;
+                }
+                PostDataResult(people);
+            }
+            catch (Exception)
+            {
+                // intented blank
+                // future version can log exception to remote db
+            }
+        }
+
+        private void PostDataResult(List<PersonAddress> people)
+        {
             var filingDates = people
-                .Where(w => !string.IsNullOrEmpty(w.DateFiled))
-                .Select(x => x.DateFiled)
-                .Distinct()
-                .ToList();
+                                .Where(w => !string.IsNullOrEmpty(w.DateFiled))
+                                .Select(x => x.DateFiled)
+                                .Distinct()
+                                .ToList();
             foreach (var filingDate in filingDates)
             {
                 if (!DateTime.TryParse(filingDate,
                     CultureInfo.CurrentCulture.DateTimeFormat,
                     DateTimeStyles.AssumeLocal,
                     out var dte)) continue;
-                WebRequest.SearchDate = dte.Date;
-                var begin = _dbsvc.Begin(WebRequest);
+                DataSearchParameters.SearchDate = dte.Date;
+                var begin = _dbsvc.Begin(DataSearchParameters);
                 var found = people.FindAll(x => x.DateFiled == filingDate);
                 var payload = ConvertFrom(found);
                 var request = new UploadDbRequest
@@ -202,10 +249,25 @@ namespace LegalLead.PublicData.Search.Util
                     Contents = payload
                 };
                 var uploadResponse = _dbsvc.Upload(request);
-                if (uploadResponse.Key) _dbsvc.Complete(WebRequest);
-
+                if (uploadResponse.Key) _dbsvc.Complete(DataSearchParameters);
             }
         }
+
+        private void PostBexarDataResult(DateTime? searchDate, List<PersonAddress> people)
+        {
+            if (searchDate == null) return;
+            DataSearchParameters.SearchDate = searchDate.Value.Date;
+            var bxbegin = _dbsvc.Begin(DataSearchParameters);
+            var bxpayload = ConvertFrom(people);
+            var bxrequest = new UploadDbRequest
+            {
+                Id = bxbegin.Id,
+                Contents = bxpayload
+            };
+            var uploadResponse = _dbsvc.Upload(bxrequest);
+            if (uploadResponse.Key) _dbsvc.Complete(DataSearchParameters);
+        }
+
         private static void DeleteTempFiles(string tempFile)
         {
             if (string.IsNullOrEmpty(tempFile)) return;
@@ -226,17 +288,17 @@ namespace LegalLead.PublicData.Search.Util
             if (addresses == null) return list;
             addresses.ForEach(a => list.Add(new PersonAddress
             {
-                Name = a.Name,
-                Zip = a.Zip,
-                Address1 = a.Address1,
-                Address2 = a.Address2,
-                Address3 = a.Address3,
-                CaseNumber = a.CaseNumber,
-                DateFiled = a.DateFiled,
-                Court = a.Court,
-                CaseType = a.CaseType,
-                CaseStyle = a.CaseStyle,
-                Plantiff = a.Plaintiff,
+                Name = a.Name ?? string.Empty,
+                Zip = a.Zip ?? string.Empty,
+                Address1 = a.Address1 ?? string.Empty,
+                Address2 = a.Address2 ?? string.Empty,
+                Address3 = a.Address3 ?? string.Empty,
+                CaseNumber = a.CaseNumber ?? string.Empty,
+                DateFiled = a.DateFiled ?? string.Empty,
+                Court = a.Court ?? string.Empty,
+                CaseType = a.CaseType ?? string.Empty,
+                CaseStyle = a.CaseStyle ?? string.Empty,
+                Plantiff = a.Plaintiff ?? string.Empty,
             }));
             return list;
         }
@@ -246,21 +308,26 @@ namespace LegalLead.PublicData.Search.Util
             if (addresses == null) return list;
             addresses.ForEach(a => list.Add(new QueryDbResponse
             {
-                Name = a.Name,
-                Zip = a.Zip,
-                Address1 = a.Address1,
-                Address2 = a.Address2,
-                Address3 = a.Address3,
-                CaseNumber = a.CaseNumber,
-                DateFiled = a.DateFiled,
-                Court = a.Court,
-                CaseType = a.CaseType,
-                CaseStyle = a.CaseStyle,
-                Plaintiff = a.Plantiff,
+                Name = a.Name ?? string.Empty,
+                Zip = a.Zip ?? string.Empty,
+                Address1 = a.Address1 ?? string.Empty,
+                Address2 = a.Address2 ?? string.Empty,
+                Address3 = a.Address3 ?? string.Empty,
+                CaseNumber = a.CaseNumber ?? string.Empty,
+                DateFiled = a.DateFiled ?? string.Empty,
+                Court = a.Court ?? string.Empty,
+                CaseType = a.CaseType ?? string.Empty,
+                CaseStyle = a.CaseStyle ?? string.Empty,
+                Plaintiff = a.Plantiff ?? string.Empty,
             }));
             return list;
         }
-
+        private static bool IsEmpty(PersonAddress a)
+        {
+            if (string.IsNullOrWhiteSpace(a.CaseNumber)) return true;
+            if (string.IsNullOrWhiteSpace(a.Zip)) return true;
+            return false;
+        }
         private static T GetValueOrDefault<T>(bool canParse, T current, T defaultValue)
         {
             if (!canParse) return defaultValue;
@@ -288,8 +355,8 @@ namespace LegalLead.PublicData.Search.Util
 
         private class FileNameService
         {
-            private readonly int CountyId;
-            private readonly int CaseTypeId;
+            private readonly string CountyName;
+            private readonly string CourtTypeName;
             private readonly DateTime startDate;
             private readonly DateTime endDate;
             public FileNameService(
@@ -297,15 +364,18 @@ namespace LegalLead.PublicData.Search.Util
                 DateTime startingDate,
                 DateTime endingDate)
             {
-                CountyId = dbRequest.CountyId;
-                CaseTypeId = dbRequest.CaseTypeId;
+                CountyName = dbRequest.CountyName;
+                CourtTypeName = dbRequest.CourtTypeName;
                 startDate = startingDate;
                 endDate = endingDate;
             }
             public string GetFileName()
             {
-                var folder = ExcelDirectoyName();
-                var county = GetCountyName();
+                var folder = ExcelDirectoryName();
+                var county = CountyName;
+                if (!string.IsNullOrEmpty(CourtTypeName)) {
+                    county = string.Concat(county, "_", CourtTypeName);
+                }
                 var fmt = $"{county}_{GetDateString(startDate)}_{GetDateString(endDate)}";
                 var fullName = Path.Combine(folder, $"{fmt}.xlsx");
                 var idx = 1;
@@ -319,43 +389,7 @@ namespace LegalLead.PublicData.Search.Util
 
             public string GetCourtTypeName()
             {
-                return CountyId switch
-                {
-                    1 => "Denton",
-                    10 => "Tarrant",
-                    20 => "Collin",
-                    30 => "Harris",
-                    40 => "Harris",
-                    60 => "JUSTICE",
-                    70 => "Travis",
-                    80 => "Bexar",
-                    90 => "Hidalgo",
-                    100 => "El_Paso",
-                    110 => "Fort_Bend",
-                    120 => "Williamson",
-                    130 => "Grayson",
-                    _ => "",
-                };
-            }
-            private string GetCountyName()
-            {
-                return CountyId switch
-                {
-                    1 => "Denton",
-                    10 => "Tarrant",
-                    20 => "Collin",
-                    30 => "Harris",
-                    40 => "Harris",
-                    60 => "Dallas",
-                    70 => "Travis",
-                    80 => "Bexar",
-                    90 => "Hidalgo",
-                    100 => "El_Paso",
-                    110 => "Fort_Bend",
-                    120 => "Williamson",
-                    130 => "Grayson",
-                    _ => "Extract",
-                };
+                return CourtTypeName;
             }
 
             private static string GetDateString(DateTime date)
@@ -364,7 +398,7 @@ namespace LegalLead.PublicData.Search.Util
                 return date.ToString(fmt, Culture);
             }
 
-            private static string ExcelDirectoyName()
+            private static string ExcelDirectoryName()
             {
                 var appFolder =
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -424,9 +458,22 @@ namespace LegalLead.PublicData.Search.Util
                 return courtId switch
                 {
                     60 => DallasCourtLookupService.GetAddress(name, court),
-                    _ => string.Empty
+                    80 => BexarCourtLookupService.GetAddress(name, court),
+                    100 => ElPasoCourtLookupService.GetAddress(name, court),
+                    110 => FortBendCourtLookupService.GetAddress(name, court),
+                    130 => GraysonCourtLookupService.GetAddress(name, court),
+                    90 => HidalgoCourtLookupService.GetAddress(name, court),
+                    70 => TravisCourtLookupService.GetAddress(name, court),
+                    120 => WilliamsonCourtLookupService.GetAddress(name, court),
+                    _ => AlternateCourtLookupService.GetAddress(courtId, court)
                 };
             }
+        }
+
+        private class DataSetting
+        {
+            public bool UseRemoteDb { get; set; }
+            public int RemoteMinDayInterval { get; set; }
         }
     }
 }
