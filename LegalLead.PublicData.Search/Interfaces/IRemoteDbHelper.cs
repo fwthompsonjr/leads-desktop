@@ -8,6 +8,6 @@ namespace LegalLead.PublicData.Search.Interfaces
         FindDbResponse Begin(FindDbRequest findDb);
         FindDbResponse Complete(FindDbRequest findDb);
         List<QueryDbResponse> Query(QueryDbRequest queryDb);
-        bool Upload(UploadDbRequest uploadDb);
+        KeyValuePair<bool, string> Upload(UploadDbRequest uploadDb);
     }
 }

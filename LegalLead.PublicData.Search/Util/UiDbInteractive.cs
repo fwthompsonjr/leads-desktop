@@ -141,7 +141,7 @@ namespace LegalLead.PublicData.Search.Util
                             PostResult(tmp);
                             result.PeopleList.AddRange(tmp.PeopleList);
                         }
-                        if (File.Exists(tmp.Result)) File.Delete(tmp.Result);
+                        DeleteTempFiles(tmp.Result);
                     }
                 });
                 var nameService = new FileNameService(WebRequest, startDt, endinDt);
@@ -160,6 +160,21 @@ namespace LegalLead.PublicData.Search.Util
                     PostResult(result);
                 }
             }
+        }
+
+        public string ReadFromFile(string result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveElement(string tableHtml, string tagName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveTag(string tableHtml, string tagName)
+        {
+            throw new NotImplementedException();
         }
 
         private void PostResult(WebFetchResult result)
@@ -186,26 +201,25 @@ namespace LegalLead.PublicData.Search.Util
                     Id = begin.Id,
                     Contents = payload
                 };
-                if (_dbsvc.Upload(request)) _dbsvc.Complete(WebRequest);
+                var uploadResponse = _dbsvc.Upload(request);
+                if (uploadResponse.Key) _dbsvc.Complete(WebRequest);
 
             }
         }
-
-        public string ReadFromFile(string result)
+        private static void DeleteTempFiles(string tempFile)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(tempFile)) return;
+            var parentDir = Path.GetDirectoryName(tempFile);
+            var childFiles = new[] {
+                Path.GetFileName(tempFile),
+                $"{Path.GetFileNameWithoutExtension(tempFile)}.xlsx"
+                };
+            foreach (var shortName in childFiles)
+            {
+                var fullName = Path.Combine(parentDir, shortName);
+                if (File.Exists(fullName)) File.Delete(fullName);
+            }
         }
-
-        public string RemoveElement(string tableHtml, string tagName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string RemoveTag(string tableHtml, string tagName)
-        {
-            throw new NotImplementedException();
-        }
-
         private static List<PersonAddress> ConvertFrom(List<QueryDbResponse> addresses)
         {
             var list = new List<PersonAddress>();

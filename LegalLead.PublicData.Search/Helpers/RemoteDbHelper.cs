@@ -48,28 +48,31 @@ namespace LegalLead.PublicData.Search.Helpers
             return response;
         }
 
-        public bool Upload(UploadDbRequest uploadDb)
+        public KeyValuePair<bool, string> Upload(UploadDbRequest uploadDb)
         {
             var uri = GetAddress("upload");
             var token = GetToken();
-            if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(token)) return false;
+            if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(token))
+                return new KeyValuePair<bool, string>(false, "data validation error"); 
             var payload = new UploadDbRequest
             {
                 Id = uploadDb.Id,
                 Contents = new List<QueryDbResponse>()
             };
-            var responses = new List<bool>();
+            var responses = new List<KeyValuePair<bool, string>>();
             var children = SplitList(uploadDb.Contents, 500);
             children.ForEach(x =>
             {
                 payload.Contents.Clear();
                 payload.Contents.AddRange(x);
                 using var client = GetClient(token);
-                var response = httpService.PostAsJson<UploadDbRequest, bool>(client, uri, payload);
+                var response = httpService.PostAsJson<UploadDbRequest, KeyValuePair<bool, string>>(client, uri, payload);
                 responses.Add(response);
             });
-            var hasError = responses.Exists(x => !x);
-            return !hasError;
+            var hasError = responses.Exists(x => !x.Key);
+            return hasError ?
+                responses.Find(x => !x.Key)
+                : new KeyValuePair<bool, string>(true, "");
         }
 
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)

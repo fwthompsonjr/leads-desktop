@@ -2,6 +2,7 @@
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Models;
 using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
@@ -208,6 +209,8 @@ namespace LegalLead.PublicData.Search
                 var startDate = dteStart.Value.Date;
                 var endingDate = dteEnding.Value.Date;
                 var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
+                var sourceMember = (SourceType)siteData.Id;
+                CurrentRequest = sourceMember.GetDbRequest(this);
                 var searchItem = new SearchResult
                 {
                     Id = GetObject<List<SearchResult>>(Tag).Count + 1,
@@ -257,6 +260,7 @@ namespace LegalLead.PublicData.Search
             finally
             {
                 KillProcess(driverNames);
+                CurrentRequest = null;
             }
         }
 
@@ -592,6 +596,7 @@ namespace LegalLead.PublicData.Search
                 Refresh();
             }));
         }
+        private FindDbRequest CurrentRequest { get; set; } = null;
         private static readonly SessionUsagePersistence UsageIncrementer
             = SessionPersistenceContainer.GetContainer
             .GetInstance<SessionUsagePersistence>();
