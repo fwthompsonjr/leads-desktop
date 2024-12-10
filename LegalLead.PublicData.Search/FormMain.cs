@@ -509,6 +509,7 @@ namespace LegalLead.PublicData.Search
                     (int)SourceType.CollinCounty,
                     (int)SourceType.DallasCounty,
                     (int)SourceType.TravisCounty,
+                    (int)SourceType.TarrantCounty,
                     (int)SourceType.BexarCounty,
                     (int)SourceType.HarrisCivil,
                     (int)SourceType.HidalgoCounty,
@@ -580,8 +581,9 @@ namespace LegalLead.PublicData.Search
             }
             finally
             {
-
                 KillProcess(CommonKeyIndexes.ChromeDriver);
+                KillProcess("geckodriver");
+                ClearProgressDate();
                 TryHideProgress();
             }
         }
@@ -624,27 +626,50 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        private void TryShowProgress(int min, int max, int current)
+        private void ClearProgressDate()
         {
             try
             {
-                ShowProgress(min, max, current);
+                lbProgressDate.Text = string.Empty;
             }
             catch
             {
-                Invoke(() => { ShowProgress(min, max, current); });
+                Invoke(() => { lbProgressDate.Text = string.Empty; });
+            }
+        }
+        private void TryShowProgress(int min, int max, int current, string dateIndication)
+        {
+            try
+            {
+                ShowProgress(min, max, current, dateIndication);
+            }
+            catch
+            {
+                Invoke(() => { ShowProgress(min, max, current, dateIndication); });
             }
         }
 
         private void HideProgress()
         {
+            if (!string.IsNullOrEmpty(lbProgressDate.Text)) return;
             progressBar1.Visible = false;
             labelProgress.Visible = false;
             tableLayoutPanel1.RowStyles[8].Height = 0;
         }
-        private void ShowProgress(int min, int max, int current)
+        private void ShowProgress(int min, int max, int current, string dateIndication = "")
         {
             labelProgress.Visible = true;
+            lbProgressDate.Visible = 
+                !string.IsNullOrEmpty(lbProgressDate.Text) || 
+                !string.IsNullOrEmpty(dateIndication);
+            if (dateIndication == "hide")
+            {
+                lbProgressDate.Text = string.Empty;
+                lbProgressDate.Visible = false;
+                TryHideProgress();
+                return;
+            }
+            if (!string.IsNullOrEmpty(dateIndication)) lbProgressDate.Text = dateIndication;
             ControlExtensions.Suspend(progressBar1);
             tableLayoutPanel1.RowStyles[8].Height = 40;
             progressBar1.Visible = false;
@@ -665,10 +690,15 @@ namespace LegalLead.PublicData.Search
                 var member = (SourceType)siteId;
                 CurrentRequest = member.GetDbRequest(this, DateTime.Now.Date);
             }
-            return new UiDbInteractive(
+            var response = new UiDbInteractive(
                 interactive,
                 container.GetInstance<IRemoteDbHelper>(),
-                CurrentRequest);
+                CurrentRequest)
+            {
+                ReportProgress = TryShowProgress,
+                ReportProgessComplete = TryHideProgress
+            };
+            return response;
         }
 
         private static class ControlExtensions

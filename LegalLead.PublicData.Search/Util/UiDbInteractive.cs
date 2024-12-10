@@ -57,7 +57,7 @@ namespace LegalLead.PublicData.Search.Util
             get => _web.StartDate;
             set { _web.StartDate = value; }
         }
-        public Action<int, int, int> ReportProgress
+        public Action<int, int, int, string> ReportProgress
         {
             get => _web.ReportProgress;
             set { _web.ReportProgress = value; }
@@ -95,9 +95,17 @@ namespace LegalLead.PublicData.Search.Util
                 var startDt = StartDate;
                 var endingDt = EndingDate;
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
+                var currentDt = 1;
+                var maximumDt = dates.Count;
                 dates.ForEach(d =>
                 {
-
+                    var notification = $"{d:d}";
+                    this.EchoProgess(0, 
+                        maximumDt, 
+                        currentDt++, 
+                        message: $"Processing date: {d:d}",
+                        calcPercentage: false,
+                        dateNotification: notification);
                     DataSearchParameters.SearchDate = d.Date;
                     var begin = _dbsvc.Begin(DataSearchParameters);
                     if (begin.RecordCount > 0 && begin.CompleteDate.HasValue)
@@ -111,6 +119,7 @@ namespace LegalLead.PublicData.Search.Util
                         ReadResultFromWebSite(d, result);
                     }
                 });
+                this.EchoProgess(0, 0, 0, dateNotification: "hide");
                 var nameService = new FileNameService(DataSearchParameters, startDt, endingDt);
                 var builder = new FileContentBuilder(
                     DataSearchParameters.CountyId,
