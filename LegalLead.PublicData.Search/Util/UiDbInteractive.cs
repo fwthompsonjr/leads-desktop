@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -86,6 +87,7 @@ namespace LegalLead.PublicData.Search.Util
                 if (UseNormalInteration())
                 {
                     result = _web.Fetch();
+                    result.WebsiteId = DataSearchParameters.CountyId;
                     return result;
                 }
                 uploadNeeded = false;
@@ -100,6 +102,8 @@ namespace LegalLead.PublicData.Search.Util
                     var begin = _dbsvc.Begin(DataSearchParameters);
                     if (begin.RecordCount > 0 && begin.CompleteDate.HasValue)
                     {
+                        var recordmessage = $"{d:d} .. Remote data lookup found {begin.RecordCount} records";
+                        Console.WriteLine(recordmessage);
                         ReadResultFromDataBase(result, begin);
                     }
                     else
@@ -138,6 +142,8 @@ namespace LegalLead.PublicData.Search.Util
         {
             _web.StartDate = d;
             _web.EndingDate = d;
+            ParameterHelper.AddOrUpdate(ParameterName.StartDate, d, _web.Parameters);
+            ParameterHelper.AddOrUpdate(ParameterName.EndDate, d, _web.Parameters);
             var tmp = _web.Fetch();
             tmp.PeopleList?.RemoveAll(IsEmpty);
             if (tmp.PeopleList != null && tmp.PeopleList.Count > 0)
@@ -196,7 +202,9 @@ namespace LegalLead.PublicData.Search.Util
         }
         private bool UseNormalInteration()
         {
+            if (DataSearchParameters.CountyId == 1) return true;
             if (DataSearchParameters.CountyId == 30 && DataSearchParameters.CourtTypeName == "CRIMINAL") return true;
+            
             if (!UseRemoteDb) return true;
             var now = DateTime.UtcNow;
             var days = Convert.ToInt32(Math.Round(now.Subtract(StartDate).TotalDays, 0));
@@ -353,6 +361,8 @@ namespace LegalLead.PublicData.Search.Util
         private readonly List<UserSettingChangeModel> sourceData =
             UserDataReader.GetList<UserSettingChangeModel>();
 
+
+
         private class FileNameService
         {
             private readonly string CountyName;
@@ -384,7 +394,7 @@ namespace LegalLead.PublicData.Search.Util
                     fullName = Path.Combine(folder, $"{fmt}_{idx:D4}.xlsx");
                     idx++;
                 }
-                return fullName;
+                return fullName.ToUpper();
             }
 
             public string GetCourtTypeName()
@@ -474,6 +484,32 @@ namespace LegalLead.PublicData.Search.Util
         {
             public bool UseRemoteDb { get; set; }
             public int RemoteMinDayInterval { get; set; }
+        }
+
+        private static class ParameterHelper
+        {
+            public static void AddOrUpdate(ParameterName field, DateTime value, WebNavigationParameter parameter)
+            {
+                if (parameter == null) return;
+                const StringComparison oic = StringComparison.OrdinalIgnoreCase;
+                var keyName = field == ParameterName.StartDate ?
+                    CommonKeyIndexes.StartDate : CommonKeyIndexes.EndDate;
+                var dtvalue = value.ToString("d", CultureInfo.CurrentCulture.DateTimeFormat);
+                parameter.Keys ??= new List<WebNavigationKey>();
+                var key = parameter.Keys.Find(x => x.Name.Equals(keyName, oic));
+                if (key != null)
+                {
+                    key.Value = dtvalue;
+                    return;
+                }
+                parameter.Keys.Add(new WebNavigationKey { Name = keyName, Value = dtvalue });
+            }
+        }
+
+        private enum ParameterName
+        {
+            StartDate,
+            EndDate
         }
     }
 }

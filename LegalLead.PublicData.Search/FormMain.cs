@@ -232,7 +232,7 @@ namespace LegalLead.PublicData.Search
                         TravisButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
                     case (int)SourceType.HarrisCivil:
-                        var cbindx = GetCaseSelectionIndex(cboSearchType.SelectedItem);
+                        var cbindx = GetCaseSelectionIndex(cboCaseType.SelectedItem);
                         if (cbindx == 0) NonDallasButtonExecution(siteData, searchItem, startDate, endingDate);
                         else CommonButtonExecution(siteData, searchItem);
                         break;
@@ -268,7 +268,7 @@ namespace LegalLead.PublicData.Search
         {
             var fallback = 0;
             if (selectedItem == null) return fallback;
-            if (selectedItem is not DropDown ddp) return fallback;
+            if (selectedItem is not Option ddp) return fallback;
             if (!ddp.Name.Contains("criminal")) return fallback;
             return 1;
         }
@@ -385,9 +385,10 @@ namespace LegalLead.PublicData.Search
             siteData.Id == collinIndex ?
             new CollinUiInterative(siteData, startDate, endingDate) :
             WebFetchingProvider.GetInteractive(siteData, startDate, endingDate);
+            var cbindx = siteData.Id != 30 ? 0 : GetCaseSelectionIndex(cboCaseType.SelectedItem);
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(webmgr, siteData, searchItem);
+                await ProcessAsync(webmgr, siteData, searchItem, cbindx);
             }).ConfigureAwait(true);
         }
 
@@ -498,16 +499,18 @@ namespace LegalLead.PublicData.Search
                 }
                 webmgr.ReportProgress = TryShowProgress;
                 webmgr.ReportProgessComplete = TryHideProgress;
-                var interactive = GetDbInteractive(webmgr);
+                var interactive = GetDbInteractive(webmgr, siteData.Id);
                 CaseData = await Task.Run(() =>
                 {
                     return interactive.Fetch();
                 }).ConfigureAwait(true);
 
                 var nonactors = new List<int> {
+                    (int)SourceType.CollinCounty,
                     (int)SourceType.DallasCounty,
                     (int)SourceType.TravisCounty,
                     (int)SourceType.BexarCounty,
+                    (int)SourceType.HarrisCivil,
                     (int)SourceType.HidalgoCounty,
                     (int)SourceType.ElPasoCounty,
                     (int)SourceType.FortBendCounty,
@@ -652,10 +655,16 @@ namespace LegalLead.PublicData.Search
             ControlExtensions.Resume();
         }
 
-        private UiDbInteractive GetDbInteractive(IWebInteractive interactive)
+        private IWebInteractive GetDbInteractive(IWebInteractive interactive, int siteId)
         {
             if (interactive is UiDbInteractive db) return db;
+            if (interactive is HccUiInteractive hcc) return hcc;
             var container = ActionSettingContainer.GetContainer;
+            if (CurrentRequest == null)
+            {
+                var member = (SourceType)siteId;
+                CurrentRequest = member.GetDbRequest(this, DateTime.Now.Date);
+            }
             return new UiDbInteractive(
                 interactive,
                 container.GetInstance<IRemoteDbHelper>(),
