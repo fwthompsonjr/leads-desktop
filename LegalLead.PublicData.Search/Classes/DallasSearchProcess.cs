@@ -81,9 +81,12 @@ namespace LegalLead.PublicData.Search.Classes
             var weekends = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
             while (begin <= endingDate.Date)
             {
-                if (!weekends.Contains(begin.DayOfWeek) &&
-                    !holidates.Contains(begin.Date)) list.Add(begin);
+                if (!weekends.Contains(begin.DayOfWeek)) list.Add(begin);
                 begin = begin.AddDays(1);
+            }
+            if (holidates.Count > 0 && list.Count > 0)
+            {
+                list.RemoveAll(x => holidates.Contains(x.Date));
             }
             return list.Distinct().ToList();
         }
