@@ -15,7 +15,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         #region Properties
         public bool DriverReadHeadless { get; set; } = true;
 
-        public Action<int, int, int> ReportProgress { get; set; } = null;
+        public Action<int, int, int, string> ReportProgress { get; set; } = null;
         public Action ReportProgessComplete { get; set; } = null;
 
         protected const StringComparison comparisonIngore = StringComparison.CurrentCultureIgnoreCase;

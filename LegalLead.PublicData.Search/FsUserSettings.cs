@@ -1,10 +1,13 @@
 ﻿using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 
@@ -35,14 +38,141 @@ namespace LegalLead.PublicData.Search
             dataGridView1.DataSource = _vwlist;
             AppendSelectButton(dataGridView1);
             dataGridView1.CellContentClick += DataGridView1_CellContentClick;
-            btnSubmit.Click += BtnSubmit_Click;
-            txKeyValue.TextChanged += TxKeyValue_TextChanged;
+
+            var keyvaluelist = new List<Control>()
+            {
+                txKeyValue,
+                txKeyValue1,
+                txKeyValue2,
+                txKeyValue3
+            };
+            keyvaluelist.ForEach(x => { x.TextChanged += TxKeyValue_TextChanged; });
+            var controls = tableLayoutPanel1.Controls;
+            foreach (var control in controls)
+            {
+                if (control is Button button)
+                {
+                    button.Click += BtnSubmit_Click;
+                }
+            }
+            ToggleRow(DisplayMap.Keys.First());
+        }
+        private string DataFilterMode { get; set; } = string.Empty;
+        private void ToggleRow(string displayMode)
+        {
+            DataFilterMode = displayMode;
+            var list = new List<Control>();
+            var rowStyles = tableLayoutPanel1.RowStyles;
+            var controls = tableLayoutPanel1.Controls;
+            var names = DisplayMap.Keys.ToList();
+            foreach (Control control in controls)
+            {
+                if (control.Tag is string tagName
+                    && names.Contains(tagName)) list.Add(control);
+            }
+            // hide any controls where name isnt displayName
+            list.ForEach(ctl =>
+            {
+                var tagName = Convert.ToString(ctl.Tag) ?? string.Empty;
+                var isVisible = displayMode.Equals(tagName);
+                ctl.Visible = isVisible;
+                if (!isVisible) ctl.Enabled = false;
+            });
+            foreach (var item in DisplayMap)
+            {
+                var rowHeight = item.Key.Equals(displayMode) ? 50 : 0;
+                var style = rowStyles[item.Value];
+                style.Height = rowHeight;
+            }
+        }
+
+        private void ToggleTextBox(bool isEnabled)
+        {
+            var list = new List<Control>();
+            var controls = tableLayoutPanel1.Controls;
+            var names = DisplayMap.Keys.ToList();
+            foreach (Control control in controls)
+            {
+                if (control.Tag is string tagName
+                    && names.Contains(tagName)
+                    && control is TextBox textBox) list.Add(textBox);
+            }
+            // hide any controls where name isnt displayName
+            list.ForEach(ctl =>
+            {
+                if (ctl.Visible) ctl.Enabled = isEnabled;
+            });
+        }
+        private void ToggleButton(bool isEnabled)
+        {
+            var list = new List<Control>();
+            var controls = tableLayoutPanel1.Controls;
+            var names = DisplayMap.Keys.ToList();
+            foreach (Control control in controls)
+            {
+                if (control.Tag is string tagName
+                    && names.Contains(tagName)
+                    && control is Button bttn) list.Add(bttn);
+            }
+            // hide any controls where name isnt displayName
+            list.ForEach(ctl =>
+            {
+                if (ctl.Visible) ctl.Enabled = isEnabled;
+            });
+        }
+
+        private void SetKeyName(string text)
+        {
+            var list = new List<Control>()
+            {
+                txKeyName,
+                txKeyName1,
+                txKeyName2,
+                txKeyName3
+            };
+            list.ForEach(ctl =>
+            {
+                ctl.Text = text;
+            });
+        }
+
+        private void SetKeyValue(string text)
+        {
+            var list = new List<Control>()
+            {
+                txKeyValue,
+                txKeyValue1,
+                txKeyValue2,
+                txKeyValue3
+            };
+            list.ForEach(ctl =>
+            {
+                ctl.Text = text;
+            });
         }
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
             var errorColor = Color.Red;
             lbStatus.Text = _initalText;
             lbStatus.ForeColor = _initalColor;
+            if (string.IsNullOrEmpty(DataFilterMode))
+            {
+
+                lbStatus.ForeColor = errorColor;
+                lbStatus.Text = "An error occurred processing change.";
+                return;
+            }
+            var validator = ActionSettingContainer.GetContainer
+                .GetInstance<ISettingChangeModel>(DataFilterMode);
+            validator.Text = _model.Value;
+            var collection = validator.Validate(out var isValid);
+            if (!isValid)
+            {
+                var err = string.Join(Environment.NewLine, collection.Select(s => s.ErrorMessage));
+                lbStatus.ForeColor = errorColor;
+                lbStatus.Text = err;
+                return;
+            }
             var success = UserDataReader.Change(_model);
             if (!success)
             {
@@ -55,10 +185,12 @@ namespace LegalLead.PublicData.Search
             if (item == null) return;
             item.Value = _model.Value;
             dataGridView1.Refresh();
+            lbStatus.Text = "Change completed successfully.";
         }
         private void TxKeyValue_TextChanged(object sender, EventArgs e)
         {
-            var actual = txKeyValue.Text;
+            if (sender is not TextBox tbox) return;
+            var actual = tbox.Text;
             if (actual == null) return;
             _model.Value = actual;
         }
@@ -72,25 +204,30 @@ namespace LegalLead.PublicData.Search
                 _model.Category = string.Empty;
                 _model.Name = string.Empty;
                 _model.Value = string.Empty;
-                txKeyValue.Enabled = isEnabled;
+                ToggleTextBox(isEnabled);
                 if (e.RowIndex < 0) return;
                 var senderGrid = (DataGridView)sender;
                 if (senderGrid.Columns[e.ColumnIndex] is not DataGridViewButtonColumn) return;
                 var item = _vwlist[e.RowIndex];
                 if (item == null) return;
+                var src = sourceData.Find(x =>
+                x.Category == item.Category &&
+                x.Name == item.Name);
+                var target = src?.DataType ?? DisplayMap.Keys.First();
+                ToggleRow(target);
 
                 _model.Category = item.Category;
                 _model.Name = item.Name;
                 _model.Value = item.Value;
 
                 isEnabled = true;
-                txKeyName.Text = _model.Name;
-                txKeyValue.Text = _model.Value;
+                SetKeyName(_model.Name);
+                SetKeyValue(_model.Value);
             }
             finally
             {
-                btnSubmit.Enabled = isEnabled;
-                txKeyValue.Enabled = isEnabled;
+                ToggleTextBox(isEnabled);
+                ToggleButton(isEnabled);
             }
 
         }
@@ -137,9 +274,17 @@ namespace LegalLead.PublicData.Search
             .GetContainer
             .GetInstance<SessionSettingPersistence>();
 
-        private static readonly List<UserSettingChangeModel> sourceData =
+        private readonly List<UserSettingChangeModel> sourceData =
             UserDataReader.GetList<UserSettingChangeModel>();
 
+        private static readonly Dictionary<string, int> DisplayMap
+            = new()
+            {
+                { "Text", 2 },
+                { "Bool", 3 },
+                { "DateTime", 4 },
+                { "Numeric", 5 },
+            };
 
     }
 }

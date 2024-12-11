@@ -9,6 +9,9 @@ namespace Thompson.RecordSearch.Utility.Dto
         public string Settings { get; set; } = string.Empty;
 
         [JsonProperty("remote")] public HccRemoteUriModel RemoteModel { get; set; } = new HccRemoteUriModel();
+
+        [JsonProperty("db")] public DbUriModel DbModel { get; set; } = new DbUriModel();
+
         public static HccConfigurationModel GetModel()
         {
             if (model != null) return model;
@@ -25,5 +28,14 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("post")] public string PostUrl { get; set; }
         [JsonProperty("get")] public string FetchUrl { get; set; }
         [JsonProperty("count")] public string CountUrl { get; set; }
+    }
+    public class DbUriModel
+    {
+        [JsonProperty("uri")] public string Url { get; set; }
+        [JsonProperty("begin")] public string BeginUrl { get; set; }
+        [JsonProperty("complete")] public string CompleteUrl { get; set; }
+        [JsonProperty("query")] public string QueryUrl { get; set; }
+        [JsonProperty("upload")] public string UploadUrl { get; set; }
+        [JsonProperty("holiday")] public string HolidayUrl { get; set; }
     }
 }

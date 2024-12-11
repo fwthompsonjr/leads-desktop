@@ -7,5 +7,13 @@
 	"post": "app/load-hcc-data",
 	"get": "app/find-hcc-data",
 	"count": "app/count-hcc-data"
+  },
+  "db": {
+	"uri": "http://api.legallead.co/",
+	"begin": "db/begin",
+	"complete": "db/complete",
+	"query": "db/find",
+	"upload": "db/upload",
+	"holiday": "db/get-holiday-list"
   }
 }

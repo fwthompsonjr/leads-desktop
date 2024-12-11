@@ -1,6 +1,4 @@
-﻿using LegalLead.PublicData.Search.Classes;
-using LegalLead.PublicData.Search.Command;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -64,10 +62,6 @@ namespace LegalLead.PublicData.Search
             loginForm.DebugMode = true;
 #endif
             mainForm = new FormMain();
-
-            var hcconfig = HccConfiguration.Load().Background;
-            if (hcconfig.Loader) { HarrisCriminalUpdate.Update(); }
-
             command.Execute(mainForm);
         }
 

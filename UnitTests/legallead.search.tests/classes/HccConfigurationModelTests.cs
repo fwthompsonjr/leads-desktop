@@ -28,5 +28,16 @@ namespace legallead.search.tests.classes
             Assert.False(string.IsNullOrEmpty(sut.PostUrl));
             Assert.False(string.IsNullOrEmpty(sut.FetchUrl));
         }
+        [Fact]
+        public void ModelContainsDbAttributes()
+        {
+            var sut = HccConfigurationModel.GetModel().DbModel;
+            Assert.False(string.IsNullOrEmpty(sut.Url));
+            Assert.False(string.IsNullOrEmpty(sut.BeginUrl));
+            Assert.False(string.IsNullOrEmpty(sut.CompleteUrl));
+            Assert.False(string.IsNullOrEmpty(sut.QueryUrl));
+            Assert.False(string.IsNullOrEmpty(sut.UploadUrl));
+            Assert.False(string.IsNullOrEmpty(sut.HolidayUrl));
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LegalLead.PublicData.Search.Util;
+﻿using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -74,9 +75,7 @@ namespace LegalLead.PublicData.Search.Classes
         }
         public static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate)
         {
-            /*
-             * Note: add method to remove holidays from date range
-            */
+            var holidates = GetHolidayList();
             var list = new List<DateTime>();
             var begin = startDate.Date;
             var weekends = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
@@ -85,7 +84,30 @@ namespace LegalLead.PublicData.Search.Classes
                 if (!weekends.Contains(begin.DayOfWeek)) list.Add(begin);
                 begin = begin.AddDays(1);
             }
+            if (holidates.Count > 0 && list.Count > 0)
+            {
+                list.RemoveAll(x => holidates.Contains(x.Date));
+            }
             return list.Distinct().ToList();
+        }
+
+
+        private static List<DateTime> GetHolidayList()
+        {
+            if (holidayQueries.Count > 0) return holidayQueries;
+            var container = ActionSettingContainer.GetContainer;
+            var instance = container.GetInstance<IRemoteDbHelper>();
+            var response = instance.Holidays();
+            if (response.Count == 0) return new();
+            var temp = response
+                .Select(x => x.HoliDate)
+                .Where(x => x.HasValue)
+                .Select(x => x.GetValueOrDefault().Date)
+                .Distinct()
+                .ToList();
+            temp.Sort((a, b) => a.CompareTo(b));
+            holidayQueries.AddRange(temp);
+            return holidayQueries;
         }
 
         private WebNavigationParameter GetNavigationParameter()
@@ -134,5 +156,6 @@ namespace LegalLead.PublicData.Search.Classes
         }
         private static readonly CultureInfo culture = CultureInfo.InvariantCulture;
         private static readonly List<string> CourtNames = new() { "COUNTY", "DISTRICT", "JUSTICE" };
+        private static readonly List<DateTime> holidayQueries = new();
     }
 }

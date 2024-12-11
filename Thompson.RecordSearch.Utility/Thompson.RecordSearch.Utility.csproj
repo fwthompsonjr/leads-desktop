@@ -252,7 +252,6 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Harris.Criminal.Db\Harris.Criminal.Db.csproj" />
 		<ProjectReference Include="..\LegalLead.Resources\LegalLead.Resources.csproj" />
 	</ItemGroup>
 	<ItemGroup>
