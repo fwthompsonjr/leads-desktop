@@ -34,8 +34,7 @@ namespace Thompson.RecordSearch.Utility.Helpers
         public bool GetAddressInformation()
         {
             var fmt = twInteractive.GetParameterValue<string>(CommonKeyIndexes.HlinkUri);
-            var xpath = twInteractive.GetParameterValue<string>(CommonKeyIndexes.PersonNodeXpath);
-            var condition = By.XPath(xpath);
+            var condition = By.XPath("/html/body/table[3]/tbody/tr/td[1]/b");
             var helper = new ElementAssertion(driver);
             helper.Navigate(string.Format(CultureInfo.CurrentCulture, fmt, dataRow.WebAddress));
             var tdName = WaitForElement(condition);
