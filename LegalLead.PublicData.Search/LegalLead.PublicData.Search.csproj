@@ -78,19 +78,19 @@
 		<PackageReference Include="Selenium.WebDriver" Version="4.25.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Update="Classes\BackgroundProcessor.cs">
+		<Compile Update="FormMain.BackgroundProcessor.cs">
 			<SubType>Form</SubType>
 		</Compile>
 		<Compile Update="Classes\ComboBoxEx.cs">
 			<SubType>Component</SubType>
 		</Compile>
-		<Compile Update="Classes\CredentialEvents.cs">
+		<Compile Update="CredentialEvents.cs">
 			<SubType>Form</SubType>
 		</Compile>
-		<Compile Update="Classes\FormEvents.cs">
+		<Compile Update="FormMain.FormEvents.cs">
 			<SubType>Form</SubType>
 		</Compile>
-		<Compile Update="Classes\FormValidation.cs">
+		<Compile Update="FormMain.FormValidation.cs">
 			<SubType>Form</SubType>
 		</Compile>
 		<Compile Update="FormCredential.cs">
@@ -196,4 +196,30 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
+	
+	<!-- Partial Classes -->
+	<ItemGroup>
+		<Content Include="FormMain.ButtonClick.cs">
+			<DependentUpon>FormMain.cs</DependentUpon>
+		</Content>
+		<Content Include="FormMain.RememberMe.cs">
+			<DependentUpon>FormMain.cs</DependentUpon>
+		</Content>
+		<Content Include="FormMain.BackgroundProcessor.cs">
+			<DependentUpon>FormMain.cs</DependentUpon>
+		</Content>
+		<Content Include="FormMain.FormValidation.cs">
+			<DependentUpon>FormMain.cs</DependentUpon>
+		</Content>
+		<Content Include="FormMain.FormEvents.cs">
+			<DependentUpon>FormMain.cs</DependentUpon>
+		</Content>
+
+
+		<Content Include="CredentialEvents.cs">
+			<DependentUpon>FormCredential.cs</DependentUpon>
+		</Content>
+		
+	</ItemGroup>
+	
 </Project>
