@@ -36,5 +36,6 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("complete")] public string CompleteUrl { get; set; }
         [JsonProperty("query")] public string QueryUrl { get; set; }
         [JsonProperty("upload")] public string UploadUrl { get; set; }
+        [JsonProperty("holiday")] public string HolidayUrl { get; set; }
     }
 }

@@ -7,6 +7,7 @@ namespace LegalLead.PublicData.Search.Interfaces
     {
         FindDbResponse Begin(FindDbRequest findDb);
         FindDbResponse Complete(FindDbRequest findDb);
+        List<HolidayQueryResponse> Holidays();
         List<QueryDbResponse> Query(QueryDbRequest queryDb);
         KeyValuePair<bool, string> Upload(UploadDbRequest uploadDb);
     }

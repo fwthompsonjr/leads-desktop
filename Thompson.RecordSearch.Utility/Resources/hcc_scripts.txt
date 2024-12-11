@@ -13,6 +13,7 @@
 	"begin": "db/begin",
 	"complete": "db/complete",
 	"query": "db/find",
-	"upload": "db/upload"
+	"upload": "db/upload",
+	"holiday": "db/get-holiday-list"
   }
 }

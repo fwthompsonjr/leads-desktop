@@ -1,9 +1,7 @@
-﻿using LegalLead.PublicData.Search.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Thompson.RecordSearch.Utility.Db;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
@@ -28,8 +26,8 @@ namespace LegalLead.PublicData.Search.Util
 
         private static List<CourtLocation> UpdateEmptyValues(IList<CourtLocation> courts)
         {
-            courts.ToList().ForEach(c => 
-            { 
+            courts.ToList().ForEach(c =>
+            {
                 c.Courts.Where(a => string.IsNullOrEmpty(a.FullName))
                 .ToList()
                 .ForEach(b => b.FullName = string.Empty);

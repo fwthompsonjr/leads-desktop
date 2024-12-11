@@ -19,6 +19,8 @@ namespace LegalLead.PublicData.Search.Util
 {
     public class UiDbInteractive : IWebInteractive
     {
+        #region Constructors
+
         public UiDbInteractive(
             IWebInteractive interactive,
             IRemoteDbHelper db,
@@ -32,11 +34,20 @@ namespace LegalLead.PublicData.Search.Util
             RemoteMinDayInterval = settings.RemoteMinDayInterval;
         }
 
+        #endregion
+
+        #region Private Fields
+
         private readonly bool UseRemoteDb;
         private readonly int RemoteMinDayInterval;
         private readonly FindDbRequest DataSearchParameters;
         private readonly IRemoteDbHelper _dbsvc;
         private readonly IWebInteractive _web;
+
+        #endregion
+
+        #region Public Fields
+
         public DateTime EndingDate
         {
             get => _web.EndingDate;
@@ -73,6 +84,10 @@ namespace LegalLead.PublicData.Search.Util
             set { _web.DriverReadHeadless = value; }
         }
 
+        #endregion
+
+        #region Public Methods
+
         public WebFetchResult Fetch()
         {
             var uploadNeeded = true;
@@ -84,67 +99,93 @@ namespace LegalLead.PublicData.Search.Util
             };
             try
             {
-                if (UseNormalInteration())
-                {
-                    result = _web.Fetch();
-                    result.WebsiteId = DataSearchParameters.CountyId;
-                    return result;
-                }
-                uploadNeeded = false;
-                // break dates
                 var startDt = StartDate;
                 var endingDt = EndingDate;
-                var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
-                var currentDt = 1;
-                var maximumDt = dates.Count;
-                dates.ForEach(d =>
+                ParameterHelper.AddOrUpdate(ParameterName.StartDate, startDt, Parameters);
+                ParameterHelper.AddOrUpdate(ParameterName.EndDate, endingDt, Parameters);
+                if (UseDataBaseInteration())
                 {
-                    var notification = $"{d:d}";
-                    this.EchoProgess(0, 
-                        maximumDt, 
-                        currentDt++, 
-                        message: $"Processing date: {d:d}",
-                        calcPercentage: false,
-                        dateNotification: notification);
-                    DataSearchParameters.SearchDate = d.Date;
-                    var begin = _dbsvc.Begin(DataSearchParameters);
-                    if (begin.RecordCount > 0 && begin.CompleteDate.HasValue)
-                    {
-                        var recordmessage = $"{d:d} .. Remote data lookup found {begin.RecordCount} records";
-                        Console.WriteLine(recordmessage);
-                        ReadResultFromDataBase(result, begin);
-                    }
-                    else
-                    {
-                        ReadResultFromWebSite(d, result);
-                    }
-                });
-                this.EchoProgess(0, 0, 0, dateNotification: "hide");
-                var nameService = new FileNameService(DataSearchParameters, startDt, endingDt);
-                var builder = new FileContentBuilder(
-                    DataSearchParameters.CountyId,
-                    nameService.GetFileName(),
-                    nameService.GetCourtTypeName(),
-                    result.PeopleList);
-                result.Result = builder.Generate();
-                result.CaseList = JsonConvert.SerializeObject(result.PeopleList);
+                    uploadNeeded = false;
+                    IterateDateRange(result);
+                    GenerateExcelFile(result, startDt, endingDt);
+                    return result;
+                }
+
+                result = _web.Fetch();
+                result.WebsiteId = DataSearchParameters.CountyId;
                 return result;
             }
             finally
             {
-                if (uploadNeeded)
-                {
-                    PostResult(result);
-                }
+                if (uploadNeeded) PostResult(result);
             }
         }
 
-        private void ReadResultFromDataBase(WebFetchResult result, FindDbResponse begin)
+        public string ReadFromFile(string result)
         {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveElement(string tableHtml, string tagName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveTag(string tableHtml, string tagName)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void GenerateExcelFile(
+            WebFetchResult result,
+            DateTime startDt,
+            DateTime endingDt)
+        {
+            var nameService = new FileNameService(DataSearchParameters, startDt, endingDt);
+            var builder = new FileContentBuilder(
+                DataSearchParameters.CountyId,
+                nameService.GetFileName(),
+                nameService.GetCourtTypeName(),
+                result.PeopleList);
+            result.Result = builder.Generate();
+            result.CaseList = JsonConvert.SerializeObject(result.PeopleList);
+        }
+
+        private void IterateDateRange(WebFetchResult result)
+        {
+            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
+            var currentDt = 1;
+            var maximumDt = dates.Count;
+            dates.ForEach(d =>
+            {
+                var notification = $"{d:d}";
+                this.EchoProgess(0, maximumDt, currentDt++, message: $"Processing date: {d:d}", calcPercentage: false, dateNotification: notification);
+                DataSearchParameters.SearchDate = d.Date;
+                if (!ReadResultFromDataBase(result, DataSearchParameters))
+                {
+                    ReadResultFromWebSite(d, result);
+                }
+            });
+            this.EchoProgess(0, 0, 0, dateNotification: "hide");
+        }
+
+        private bool ReadResultFromDataBase(WebFetchResult result, FindDbRequest request)
+        {
+            var begin = _dbsvc.Begin(request);
+            if (begin == null) return false;
+            if (begin.RecordCount <= 0 || !begin.CompleteDate.HasValue) return false;
             var found = _dbsvc.Query(new QueryDbRequest { Id = begin.Id });
+            if (found == null || found.Count == 0) return false;
             var people = ConvertFrom(found);
             people.RemoveAll(IsEmpty);
+            if (people.Count == 0) return false;
+            result.PeopleList ??= new();
             result.PeopleList.AddRange(people);
+            return true;
         }
 
         private void ReadResultFromWebSite(DateTime d, WebFetchResult result)
@@ -162,21 +203,6 @@ namespace LegalLead.PublicData.Search.Util
                 result.PeopleList.AddRange(tmp.PeopleList);
             }
             DeleteTempFiles(tmp.Result);
-        }
-
-        public string ReadFromFile(string result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string RemoveElement(string tableHtml, string tagName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string RemoveTag(string tableHtml, string tagName)
-        {
-            throw new NotImplementedException();
         }
 
         private DataSetting MapDbSettings()
@@ -209,16 +235,17 @@ namespace LegalLead.PublicData.Search.Util
                 UseRemoteDb = remoteDb
             };
         }
-        private bool UseNormalInteration()
+
+        private bool UseDataBaseInteration()
         {
-            if (DataSearchParameters.CountyId == 1) return true;
-            if (DataSearchParameters.CountyId == 30 && DataSearchParameters.CourtTypeName == "CRIMINAL") return true;
-            
-            if (!UseRemoteDb) return true;
+            if (DataSearchParameters.CountyId == 1) return false;
+            if (DataSearchParameters.CountyId == 30 && DataSearchParameters.CourtTypeName == "CRIMINAL") return false;
+
+            if (!UseRemoteDb) return false;
             var now = DateTime.UtcNow;
             var days = Convert.ToInt32(Math.Round(now.Subtract(StartDate).TotalDays, 0));
-            if (days < RemoteMinDayInterval) return true;
-            return false;
+            if (days <= RemoteMinDayInterval) return false;
+            return true;
         }
 
         private void PostResult(WebFetchResult result, DateTime? searchDate = null)
@@ -284,6 +311,11 @@ namespace LegalLead.PublicData.Search.Util
             var uploadResponse = _dbsvc.Upload(bxrequest);
             if (uploadResponse.Key) _dbsvc.Complete(DataSearchParameters);
         }
+
+
+        #endregion
+
+        #region Private Static Methods
 
         private static void DeleteTempFiles(string tempFile)
         {
@@ -351,6 +383,10 @@ namespace LegalLead.PublicData.Search.Util
             return current ?? defaultValue;
         }
 
+        #endregion
+
+        #region Private Classes
+
         private sealed class SettingLookupDto
         {
             public string Name { get; set; }
@@ -362,15 +398,6 @@ namespace LegalLead.PublicData.Search.Util
                 return Value;
             }
         }
-
-        private static readonly SessionSettingPersistence UserDataReader =
-            SessionPersistenceContainer
-            .GetContainer
-            .GetInstance<SessionSettingPersistence>();
-        private readonly List<UserSettingChangeModel> sourceData =
-            UserDataReader.GetList<UserSettingChangeModel>();
-
-
 
         private class FileNameService
         {
@@ -392,7 +419,8 @@ namespace LegalLead.PublicData.Search.Util
             {
                 var folder = ExcelDirectoryName();
                 var county = CountyName;
-                if (!string.IsNullOrEmpty(CourtTypeName)) {
+                if (!string.IsNullOrEmpty(CourtTypeName))
+                {
                     county = string.Concat(county, "_", CourtTypeName);
                 }
                 var fmt = $"{county}_{GetDateString(startDate)}_{GetDateString(endDate)}";
@@ -515,10 +543,27 @@ namespace LegalLead.PublicData.Search.Util
             }
         }
 
+        #endregion
+
+        #region Private Static Fields
+
+        private static readonly SessionSettingPersistence UserDataReader =
+            SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionSettingPersistence>();
+        private readonly List<UserSettingChangeModel> sourceData =
+            UserDataReader.GetList<UserSettingChangeModel>();
+
+        #endregion
+
+        #region Private Enum
+
         private enum ParameterName
         {
             StartDate,
             EndDate
         }
+
+        #endregion
     }
 }

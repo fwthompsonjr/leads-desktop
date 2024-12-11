@@ -543,7 +543,8 @@ namespace LegalLead.PublicData.Search
                     var userName = GetUserName();
                     var searchRange = $"{webmgr.StartDate:d} to {webmgr.EndingDate:d}";
                     if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
-                    UsageIncrementer.IncrementUsage(userName, member.GetCountyName(), count, searchRange);
+                    var countyName = member.GetCountyName();
+                    UsageIncrementer.IncrementUsage(userName, countyName, count, searchRange);
                     UsageReader.WriteUserRecord();
                 }
 
@@ -659,8 +660,8 @@ namespace LegalLead.PublicData.Search
         private void ShowProgress(int min, int max, int current, string dateIndication = "")
         {
             labelProgress.Visible = true;
-            lbProgressDate.Visible = 
-                !string.IsNullOrEmpty(lbProgressDate.Text) || 
+            lbProgressDate.Visible =
+                !string.IsNullOrEmpty(lbProgressDate.Text) ||
                 !string.IsNullOrEmpty(dateIndication);
             if (dateIndication == "hide")
             {
@@ -696,8 +697,11 @@ namespace LegalLead.PublicData.Search
                 CurrentRequest)
             {
                 ReportProgress = TryShowProgress,
-                ReportProgessComplete = TryHideProgress
+                ReportProgessComplete = TryHideProgress,
+                StartDate = dteStart.Value.Date,
+                EndingDate = dteEnding.Value.Date
             };
+            response.Parameters = interactive.Parameters ?? new();
             return response;
         }
 

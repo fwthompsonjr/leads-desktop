@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Classes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -36,9 +37,8 @@ namespace LegalLead.PublicData.Search
             if (dateRange != null)
             {
                 int maxDayInterval = Convert.ToInt32(dateRange.Value, CultureInfo.CurrentCulture.NumberFormat);
-                var dayInterval = Math.Abs(Convert.ToInt32(dteStart.Value.Date.Subtract(
-                    dteEnding.Value.Date).TotalDays));
-                if (dayInterval > maxDayInterval)
+                var businessDays = DallasSearchProcess.GetBusinessDays(dteStart.Value.Date, dteEnding.Value.Date).Count; ;
+                if (businessDays > maxDayInterval)
                 {
                     MessageBox.Show(CommonKeyIndexes.PleaseCheckStartEndRange +
                         Environment.NewLine +

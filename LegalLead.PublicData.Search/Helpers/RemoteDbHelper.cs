@@ -53,7 +53,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var uri = GetAddress("upload");
             var token = GetToken();
             if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(token))
-                return new KeyValuePair<bool, string>(false, "data validation error"); 
+                return new KeyValuePair<bool, string>(false, "data validation error");
             var payload = new UploadDbRequest
             {
                 Id = uploadDb.Id,
@@ -75,6 +75,19 @@ namespace LegalLead.PublicData.Search.Helpers
                 : new KeyValuePair<bool, string>(true, "");
         }
 
+        public List<HolidayQueryResponse> Holidays()
+        {
+            if (holidayQueries.Count > 0) return holidayQueries;
+            var fallback = new List<HolidayQueryResponse>();
+            var uri = GetAddress("holiday");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(token)) return fallback;
+            var payload = new { HolidayDate = string.Empty };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, List<HolidayQueryResponse>>(client, uri, payload) ?? fallback;
+            if (response.Count > 0) holidayQueries.AddRange(response);
+            return response;
+        }
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
             var list = new List<List<T>>();
@@ -107,9 +120,11 @@ namespace LegalLead.PublicData.Search.Helpers
                 "complete" => $"{uri}{provider.CompleteUrl}",
                 "query" => $"{uri}{provider.QueryUrl}",
                 "upload" => $"{uri}{provider.UploadUrl}",
+                "holiday" => $"{uri}{provider.HolidayUrl}",
                 _ => string.Empty
             };
         }
         private static readonly HccConfigurationModel AddressBuilder = HccConfigurationModel.GetModel();
+        private static readonly List<HolidayQueryResponse> holidayQueries = new();
     }
 }

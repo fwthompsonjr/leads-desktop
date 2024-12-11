@@ -422,10 +422,14 @@ namespace LegalLead.PublicData.Search
             var endDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormEndDate];
             if (!string.IsNullOrEmpty(configIndex))
             {
-                cboWebsite.SelectedIndex = Convert.ToInt32(
+                var cfidx = Convert.ToInt32(
                     configIndex,
                     CultureInfo.CurrentCulture);
-                CboWebsite_SelectedValueChanged(null, null);
+                if (cfidx < cboWebsite.Items.Count)
+                {
+                    cboWebsite.SelectedIndex = cfidx;
+                    CboWebsite_SelectedValueChanged(null, null);
+                }
             }
             if (!string.IsNullOrEmpty(startDate))
             {

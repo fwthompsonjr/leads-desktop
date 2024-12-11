@@ -1,16 +1,13 @@
-﻿using OpenQA.Selenium;
+﻿using Newtonsoft.Json;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HtmlAgilityPack;
 using Thompson.RecordSearch.Utility.Classes;
-using Thompson.RecordSearch.Utility.Models;
 using Thompson.RecordSearch.Utility.Dto;
-using Newtonsoft.Json;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Helpers
 {
