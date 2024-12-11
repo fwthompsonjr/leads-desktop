@@ -119,13 +119,13 @@ namespace LegalLead.PublicData.Search.Util
             dates.ForEach(d =>
             {
                 Console.WriteLine("Searching for records on date: {0:d}", d);
-                parameters.Search(d, d, CourtType);
+                parameters.SetSearchParameters(d, d, CourtType);
                 common.ForEach(a =>
                 {
                     isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
                 });
             });
-            parameters.Search(dates[0], dates[^1], CourtType);
+            parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
         }
 
         private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)

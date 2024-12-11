@@ -15,7 +15,7 @@ namespace LegalLead.PublicData.Search.Classes
         public string CourtLocator { get; protected set; }
         public string CourtType { get; protected set; }
 
-        public void Search(DateTime? startDate, DateTime? endDate, string courtType)
+        public void SetSearchParameters(DateTime? startDate, DateTime? endDate, string courtType)
         {
             const string fmt = "MM/dd/yyyy";
             var name = CourtNames.Find(x => x.Equals(courtType, StringComparison.OrdinalIgnoreCase));

@@ -34,7 +34,7 @@ namespace legallead.search.tests.util
             var element = new Mock<IWebElement>();
             var startDt = DateTime.Now;
             var endingDt = DateTime.Now.AddDays(3);
-            parameters.Search(startDt, endingDt, "CRIMINAL");
+            parameters.SetSearchParameters(startDt, endingDt, "CRIMINAL");
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
