@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Enumerations;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
@@ -47,6 +48,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
+                
                 using var hider = new HideProcessWindowHelper();
                 var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
                 var driver = GetDriver(DriverReadHeadless);
@@ -55,6 +57,7 @@ namespace LegalLead.PublicData.Search.Util
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 var result = new WebFetchResult();
+                
                 Iterate(driver, parameters, dates, common, postcommon);
                 if (ExecutionCancelled || People.Count == 0) return result;
                 result.PeopleList = People;
@@ -116,14 +119,28 @@ namespace LegalLead.PublicData.Search.Util
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
             bool isCaptchaNeeded = true;
+            var exec = (IJavaScriptExecutor)driver;
+            var iterator = IterationProvider.GetIterator(
+                CourtType, 
+                driver,
+                exec);
             dates.ForEach(d =>
             {
                 Console.WriteLine("Searching for records on date: {0:d}", d);
                 parameters.SetSearchParameters(d, d, CourtType);
-                common.ForEach(a =>
+                iterator.SearchIndex = 0;
+                do
                 {
-                    isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
-                });
+                    common.ForEach(a =>
+                    {
+                        isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
+                        if (a is DallasSetupParameters)
+                        {
+                            iterator.SetSearchParameter();
+                        }
+                    }); 
+                    iterator.SearchIndex++;
+                } while (iterator.SearchIndex < iterator.SearchLimit);
             });
             parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
         }
@@ -337,6 +354,35 @@ namespace LegalLead.PublicData.Search.Util
             if (!Directory.Exists(xmlFolder)) Directory.CreateDirectory(xmlFolder);
             return xmlFolder;
         }
+
+        private static class IterationProvider
+        {
+            public static ICaseTypeIterator GetIterator(string name,
+            IWebDriver web,
+            IJavaScriptExecutor executor)
+            {
+                const StringComparison oic = StringComparison.OrdinalIgnoreCase;
+                if (!name.Equals("JUSTICE", oic)) return new FallbackIterator();
+                return new DallasJusticeHelper(web, executor);
+            }
+        }
         private static readonly CultureInfo Culture = CultureInfo.CurrentCulture;
+
+        private sealed class FallbackIterator : ICaseTypeIterator
+        {
+            public string Name => "Fallback";
+
+            public IWebDriver Driver { get; set; }
+            public IJavaScriptExecutor JsExecutor { get; set; }
+
+            public int SearchIndex { get; set; } = 0;
+
+            public int SearchLimit => 0;
+
+            public ExecutionResponseType SetSearchParameter()
+            {
+                return ExecutionResponseType.None;
+            }
+        }
     }
 }

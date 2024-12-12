@@ -1,0 +1,716 @@
+
+<!doctype html>
+<html class="no-js asp-no-fluid-layout" dir="ltr" lang="en-US">
+
+<head>
+  <meta charset="UTF-8" />
+  
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1" />
+
+
+    <title>Smart Search - DALLAS COUNTY, TEXAS COURTS PORTAL</title>
+
+  <!-- mobile optimized -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <!-- allow pinned sites -->
+  <meta name="application-name" content="Odyssey Portal" />
+
+  <!-- Favicon -->
+  <link href="/DALLASPROD/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/DALLASPROD/Content/tylerui/images/apple-touch-icon-144x144-precomposed.png">
+  
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/DALLASPROD/Content/tylerui/images/apple-touch-icon-114x114-precomposed.png">
+  
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/DALLASPROD/Content/tylerui/images/apple-touch-icon-72x72-precomposed.png">
+  
+  <link rel="apple-touch-icon-precomposed" href="/DALLASPROD/Content/tylerui/images/apple-touch-icon-precomposed.png">
+
+  <script>
+    window.odyPortal = window.odyPortal || {};
+    window.odyPortal.sessionInfo = {
+      pageLoadTime: (new Date()).getTime() 
+    };
+    var usePersonaCaseSummary = "False" == "True" ? true : false;
+  </script>
+
+  <!-- Plugin Styles -->
+  
+
+  
+  <link href="/DALLASPROD/Content/PortalReset.css?v=HD3euui7n1lxavx56-Rd62SNCgtVTbp1sCISDUiiG1Y1" rel="stylesheet"/>
+
+
+  
+  <link rel="stylesheet" href="/DALLASPROD/Content/tylerui/tylerui-browser-requirements.css">
+  <!-- Bundled Content -->
+
+  <!-- ModernizrDefunctr JS -->
+  <script src="/DALLASPROD/bundles/ModernizrDefunctr?v=3BC6zM2_o9Xw5CKmkDTIn-sTFHSO-9JROdFmqORHGbg1"></script>
+
+
+  <!-- TylerUI CSS -->
+  <link href="/DALLASPROD/bundles/TylerUiCss?v=u1s4PJVK0AXYSx8AoHkoi2tPX_V5aHazpbn1sG-5rcg1" rel="stylesheet"/>
+
+  <!-- Kendo CSS -->
+  <link href="/DALLASPROD/Content/external/telerik/kendo/kendo.css?v=bzDcF29RRoChnTfBlWURSAWwZYCnKtnPd1nO9Jfp5ec1" rel="stylesheet"/>
+
+  <!-- Main CSS -->
+  <link href="/DALLASPROD/Content/main.css?v=wzzc9mk4YWVj8r2hiep8mhcj8eE1lcWCP6Ye55qMtz01" rel="stylesheet"/>
+
+  <!-- Print CSS -->
+  <link href="/DALLASPROD/Content/print.css?v=_hW1boXuxZ3OXNXlcQ9b5v2BQnQwFjXcNWRG53y8mds1" rel="stylesheet" type="text/css" media="print" />
+
+
+  
+
+  <script src="/DALLASPROD/bundles/TylerUiJs?v=INAW8YK3Ll-gwPl67-zOt0LcCuahWQUMOGE0j8o03Es1"></script>
+
+
+  
+
+  <script src="/DALLASPROD/Scripts/ePortal/main.js?v=DJDUONmrXO7TKBXzTCnygvmv4h1CwOa5snrXMxzH4hs1"></script>
+
+  <script src="/DALLASPROD/Scripts/ePortal/ePortal.js?v=NVWkfvyy5YDmkK3HuwzEsRYmt3A5sRIKIfZPeR66Mq81"></script>
+
+
+    <script type="text/javascript">
+    //The base URL of Portal
+    window.applicationBaseUrl = "http://courtsportal.dallascounty.org/DALLASPROD/";
+    window.userIsAuthenticated = 'True' === 'True' ? true : false;
+    window.virtualDirectory = '/DALLASPROD';
+    window.resolveWebIntentDirectoryURI = '/DALLASPROD/ResolveWebIntent/GetIntentList';
+  </script>
+
+
+</head>
+
+<body data-spy="scroll" data-target="#mysidebar" >
+  <!-- center for IE9 since it ignores bootstrap 3 -->
+<center>
+
+    <!-- use noscript and also keep outside of controller to avoid flash in Safari and IE (can't use ng-cloak because there is no js it won't uncloak-->
+    <noscript>
+        <div class="nojs-content">
+            <h2>JavaScript must be enabled in order for you to use this application.</h2>
+            <p>However, it seems JavaScript is either disabled or not supported by your browser.</p>
+            <p>To use this application, enable JavaScript by changing your browser options, then try again.</p>
+        </div>
+    </noscript>
+
+    <div class="nocookies-content">
+        <h2>Cookies must be allowed.</h2>
+        <p>Your browser is currently set to block cookies. Your browser must allow cookies before you can use this application.</p>
+        <p>Cookies are small text files stored on your computer that tell this application when you're signed in. To learn how to allow cookies, see online help in your web browser.</p>
+    </div>
+
+    <div class="unsupported-browser center-block">
+        
+        <h2>You are using a web browser which this application no longer supports.</h2>
+
+        <p>
+            We support the current and previous major releases of Google Chrome, Firefox, Internet Explorer, and Safari on a rolling basis.
+            Each time a new version is released, we begin supporting that version and stop supporting the third most recent version.
+        </p>
+
+        <h2>Supported Browsers</h2>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 text-center">
+                <div>
+                    Chrome for Business
+                </div>
+                <div>
+                    <a href="http://www.google.com/intl/en/chrome/business/browser/">
+                        <img src="/DALLASPROD/Content/tylerui/images/browsers/chrome_64x64.png" alt="Google Chrome"/>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center">
+                <div>
+                    Firefox
+                </div>
+                <div>
+                    <a href="http://www.getfirefox.com/">
+                        <img src="/DALLASPROD/Content/tylerui/images/browsers/firefox_64x64.png" alt="Mozilla Firefox" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center">
+                <div>
+                    Internet Explorer
+                </div>
+                <div>
+                    <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                        <img src="/DALLASPROD/Content/tylerui/images/browsers/internet-explorer_64x64.png" alt="Microsoft Internet Explorer"/>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center">
+                <div>
+                    Apple Safari
+                </div>
+                <div>
+                    <a href="http://www.apple.com/safari/">
+                        <img src="/DALLASPROD/Content/tylerui/images/browsers/safari_64x64.png" alt="Apple Safari"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <p>
+            <b> Internet Explorer 9 Users </b>
+            Internet Explorer 11 launched on October 17, 2013, and as a result, we've discontinued support for Internet Explorer 9.
+
+        <p>
+            Organizations that depend on old versions of Internet Explorer may want to consider a dual browser strategy.
+    </div>
+
+
+</center>
+
+  <omnibar id="omnibar" class="">
+    
+
+    <div class="row" style="background-color: transparent;
+          height: 60px;
+         background-image: url(/DALLASPROD/theme/images/header-bg.png?v=638481635797427024);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: left;
+          width: 1920px;">
+      <div class="col-md-12">
+      </div>
+    </div>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          
+          <brand class="navbar-brand">
+            <a href="/DALLASPROD/">
+                <img src="/DALLASPROD/Theme/images/logo.png?v=638481635796435878" alt="site logo" class="pull-left" style="height: 36px; width:36px;" />
+              <div style="width: 100%; padding-left: 4.5rem; margin-top: 7px;">
+                <div class="product">DALLAS COUNTY, TEXAS COURTS PORTAL</div>
+              </div>
+            </a>
+          </brand>
+        </div>
+        <div id="navbar" class="hidden-xs pull-right">
+  <div class="dropdown" style="margin-top:15px;">
+    <button class="dropdown-toggle btn btn-default login-btn" data-toggle="dropdown" aria-expandable="false" id="dropdownMenu1" style="cursor: pointer;">
+        <span style="vertical-align:middle;">Welcome, Kerri&nbsp;</span>
+        <img src="/DALLASPROD/Content/images/dashboard/Person.png" alt="person"/>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation"><a href="/DALLASPROD/Account/ProfileAdministration" target="_self">Profile</a></li>
+          <li role="presentation"><a href="/DALLASPROD/Security/UserAccess/RequestAccess">Request Access</a></li>
+          <li role="presentation"><a href="/DALLASPROD/Account/AccountHistory">Account History</a></li>
+          <li role="presentation"><a href="/DALLASPROD/Account/PaymentAccountsAdministration">Payment Accounts</a></li>
+              <li role="presentation"><a href="/DALLASPROD/Account/LogOff">Sign Out</a></li>
+    </ul>
+
+  </div>
+
+          
+        </div><!--/.nav-collapse -->
+        <div id="navbar" class="hidden-lg hidden-md hidden-sm">
+  <div class="dropdown" style="margin-top:15px;">
+    <button class="dropdown-toggle btn btn-default login-btn" data-toggle="dropdown" aria-expandable="false" id="dropdownMenu1" style="cursor: pointer;">
+        <span style="vertical-align:middle;">Welcome, Kerri&nbsp;</span>
+        <img src="/DALLASPROD/Content/images/dashboard/Person.png" alt="person"/>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation"><a href="/DALLASPROD/Account/ProfileAdministration" target="_self">Profile</a></li>
+          <li role="presentation"><a href="/DALLASPROD/Security/UserAccess/RequestAccess">Request Access</a></li>
+          <li role="presentation"><a href="/DALLASPROD/Account/AccountHistory">Account History</a></li>
+          <li role="presentation"><a href="/DALLASPROD/Account/PaymentAccountsAdministration">Payment Accounts</a></li>
+              <li role="presentation"><a href="/DALLASPROD/Account/LogOff">Sign Out</a></li>
+    </ul>
+
+  </div>
+
+        </div>
+      </div><!--/.container-fluid -->
+    </nav>
+    <div class="row" style="
+    background-color: #40528F;
+    height: 30px;
+    margin-top:  -20px;
+    margin-bottom: 20px;">
+      <div class="col-md-12">
+      </div>
+    </div>
+  </omnibar>
+
+
+  <div id="main" class="container page" style="min-height: 850px; margin-top: 120px;">
+    <div class="hidden-lg hidden-md hidden-sm" style="height:55px;"></div>
+    
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+<!-- BEGIN _PortletZone\Index.cshtml BEGIN -->
+    <div class="section">
+      
+  <!-- /end div.portlet-header -->
+
+<div class="portlet-body">
+
+
+<head>
+  <title></title>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<style type="text/css">
+    .btn:focus,
+    a:focus
+    {
+      outline: 1px dotted black;
+      outline-offset: 2px;
+    }
+</style>
+<script src="/DALLASPROD/Scripts/ePortal/portlets/smartSearchPortlet.js?v=eeDKaIYdalVpVUkdf0bCUufm5J_DfpDf2BSW61hv3IA1"></script>
+
+
+
+
+
+<script id="nameSuffixViewModelJSON" type="application/json">
+  [{"Selected":false,"Text":"DC","Value":"DC "},{"Selected":false,"Text":"DDS","Value":"DDS"},{"Selected":false,"Text":"DO","Value":"DO "},{"Selected":false,"Text":"ESQ","Value":"ESQ"},{"Selected":false,"Text":"II","Value":"II "},{"Selected":false,"Text":"III","Value":"III"},{"Selected":false,"Text":"IV","Value":"IV "},{"Selected":false,"Text":"Jr","Value":"Jr "},{"Selected":false,"Text":"Jr.","Value":"JR."},{"Selected":false,"Text":"LVN","Value":"LVN"},{"Selected":false,"Text":"MD","Value":"MD "},{"Selected":false,"Text":"PhD","Value":"PhD"},{"Selected":false,"Text":"RN","Value":"RN "},{"Selected":false,"Text":"Sr.","Value":"Sr "},{"Selected":false,"Text":"V","Value":"V  "},{"Selected":false,"Text":"VI","Value":"VI "}]
+</script>
+<script type="text/javascript">
+  var performSoundsLikeSearchByDefault='False' == "True" ? true : false;
+</script>
+<script id="settingsViewModelJSON" type="application/json">
+  {"CaptchaEnabled":true,"CaptchaDisabledForAuthenticated":true,"DefaultLocation":"All Locations","SearchCasesEnabled":true,"SearchJudgmentsEnabled":false,"SearchWarrantsEnabled":true,"SearchProtectionOrdersEnabled":false,"DisableAnonymousWildcardSearches":false,"DisableWildcardCaseOrCitationNum":false,"PerformSoundsLikeSearchByDefault":false,"SearchMultipleLocationsEnabled":false,"DisableJudicialOfficerSearch":false}
+</script>
+
+<script>
+  var smartSearchObj = odyPortal.smartSearchPortlet;
+  $(function () {
+    smartSearchObj.init([{"ParentItem":"All Locations","Id":-1,"Selected":false,"Text":"All Case Types","Value":"All Case Types"},{"ParentItem":"County Courts - Criminal","Id":-1,"Selected":false,"Text":"Misdemeanor Cases ","Value":"Misdemeanor Cases "},{"ParentItem":"County Courts - Probate","Id":-1,"Selected":false,"Text":"All Available Probate Case Types","Value":"All Available Probate Case Types"},{"ParentItem":"Criminal Courts - District & County","Id":-1,"Selected":false,"Text":"Felony & Misdemeanor Cases ","Value":"Felony & Misdemeanor Cases "},{"ParentItem":"District Courts - Criminal","Id":-1,"Selected":false,"Text":"All Available Civil Case Types","Value":"All Available Civil Case Types"},{"ParentItem":"District Courts - Criminal","Id":-1,"Selected":false,"Text":"All Available Civil Case Types","Value":"All Available Civil Case Types"},{"ParentItem":"District Courts - Criminal","Id":-1,"Selected":false,"Text":"Felony Cases ","Value":"Felony Cases "},{"ParentItem":"District Courts - Family","Id":-1,"Selected":false,"Text":"All Available Family Case Types","Value":"All Available Family Case Types"},{"ParentItem":"Justice of the Peace Courts","Id":-1,"Selected":false,"Text":"JP Case","Value":"JP Case"}], "All Locations");
+    TabControl.TabRenderComplete($("#frmSS"), true);
+
+  });
+
+  
+  $(document).ready(function () {
+    var advOptionsNav = function () {
+
+      /*This line makes sure that the state of the advanced options (open/closed) persists in the model*/
+      $("#caseCriteria_AdvancedSearchOptionsOpen").click();
+
+      if ($('#AdvOptionsMask').hasClass('tyler-hide')) {
+        $('#AdvOptionsMask').removeClass('tyler-hide');
+        $('#SideNav').removeClass('tyler-hide');
+        $('#SideNavPadding').removeClass('tyler-hide');
+        $('#SSColumn').removeClass('col-md-12');
+        $('#SSColumn').addClass('col-md-9');
+      }
+      else {
+        $('#AdvOptionsMask').addClass('tyler-hide');
+        $('#SideNav').addClass('tyler-hide');
+        $('#SideNavPadding').addClass('tyler-hide');
+        $('#SSColumn').removeClass('col-md-9');
+        $('#SSColumn').addClass('col-md-12');
+      }
+    }
+
+    //OWA-1896: Ensure floating labels don't "sink" (even if AdvancedSearchOptions is closed.)
+    var ensureFloatingLabel = function (selector) {
+      if (selector && selector.val() && selector.val().length > 0) {
+        selector.parent().parent().next().next().addClass("stay");
+      }
+    }
+    $(function () {
+      //Party Search Criteria
+      ensureFloatingLabel($("input[name='caseCriteria.Gender_input']"));
+      ensureFloatingLabel($("input[name='caseCriteria.Race_input']"));
+      ensureFloatingLabel($("input[name='caseCriteria.DLState_input']"));
+
+      //Case Search Criteria
+      ensureFloatingLabel($("input[name='caseCriteria.CaseType_input']"));
+      ensureFloatingLabel($("input[name='caseCriteria.CaseStatus_input']"));
+      ensureFloatingLabel($("input[name='caseCriteria.JudicialOfficer_input']"));
+
+      //Judgment Search Criteria
+      ensureFloatingLabel($("input[name='caseCriteria.JudgmentType_input']"));
+
+      //Warrant Search Criteria
+      ensureFloatingLabel($("input[name='caseCriteria.WarrantType_input']"));
+      ensureFloatingLabel($("input[name='caseCriteria.WarrantStatus_input']"));
+
+      //Protection Order Filters
+      ensureFloatingLabel($("input[name='caseCriteria.ProtectionOrderType_input']"));
+      ensureFloatingLabel($("input[name='caseCriteria.ProtectionOrderStatus_input']"));
+    });
+
+    $('#AdvOptions').click(advOptionsNav);
+  })
+</script>
+
+
+<form action="/DALLASPROD/SmartSearch/SmartSearch/SmartSearch" id="frmSS" method="post"><input data-val="true" data-val-required="The Captcha Enabled field is required." id="Settings_CaptchaEnabled" name="Settings.CaptchaEnabled" type="hidden" value="True" /><input data-val="true" data-val-required="The Captcha Disabled For Authenticated field is required." id="Settings_CaptchaDisabledForAuthenticated" name="Settings.CaptchaDisabledForAuthenticated" type="hidden" value="True" />    <div class="row">
+      <div id="SSColumn" class="col-md-12">
+
+        <div class="section">
+          <a id="SmartSearchSS" class="anchor"></a>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="row">
+                <h1 class="col-sm-6">Smart Search</h1>
+                <h3 class="col-sm-6" style="text-align: right;">*Required</h3>
+              </div>
+
+              <div class="row"><div class="validation-summary-valid col-md-12" data-valmsg-summary="true"><span>One or more fields was completed incorrectly:</span><ul style="text-indent: 2.5em;"></ul></div></div>
+              <div class="row">
+                <h2 class="col-sm-12">
+                  <span id="SearchCriteriaLabel">Search Criteria</span>
+                  <a href="javascript:void(0)" class="help fa fa-question click-icon pull-right" style="color:black;" id="sshelpicon"></a>
+                </h2>
+              </div>
+              <script type='text/javascript'>$(function () {SiteHelper.activateHelpTextIcon('SSHelpIcon', 'SmartSearchHelpText','false', '/DALLASPROD/Base/StoreHelpInSession');});</script>
+<div class="SmartSearchHelpText tyler-nodisplay tyler-helpText tyler-rounded-5">Type the record number in the search criteria field.<br><br>To perform a wildcard search using a case number, enter at least four characters.<br>You can also type a name in Last, First Middle Suffix format. To perform a wildcard search, type a minimum of three characters followed by an asterisk for the last name, and a minimum of one character followed by an asterisk for the first name.<br><br>For a precision search, click Advanced Filtering Options to expand additional search fields.<br><br>To search for a case by a business name, click Advanced Filtering Options, navigate to the General Options section, and select "Business Name" from the Filter by Search Type drop-down list. Type the business name in the search field above, and click Submit. Or use the Smart Search; if the business name includes a comma use a wildcard search by adding an * in place of the comma. Do not add anything after the *.</div><p></p>
+              <div class="row row-buff">
+                <div id="SearchCriteriaContainer" class="col-md-12">
+                  <fieldset><input autofocus="" class="form-control" data-val="true" data-val-length="Please enter a value for search criteria 100 characters or less." data-val-length-max="100" data-val-required="Please enter a value for search criteria." id="caseCriteria_SearchCriteria" maxLength="100" name="caseCriteria.SearchCriteria" placeholder="" type="text" value="" /><label for="caseCriteria_SearchCriteria">* Enter a Record Number or Name in Last, First Middle Suffix Format</label></fieldset>
+                </div>
+              </div>
+              <div class="row row-buff">
+                <div id="JudicialOfficerSearchByContainer" style="display:none; margin-bottom: 20px;" class="col-md-12">
+                  <p>
+                    <input data-val-kendocombobox="Please select a valid Judicial Officer." data-val-kendocombobox-required="True" id="caseCriteria_JudicialOfficerSearchBy" name="caseCriteria.JudicialOfficerSearchBy" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_JudicialOfficerSearchBy").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"194TH, JUDICIAL DISTRICT COURT","Value":"194JDC"},{"Text":"195TH, JUDICIAL DISTRICT COURT","Value":"195JDC"},{"Text":"203RD, JUDICIAL DISTRICT COURT","Value":"203JDC"},{"Text":"204TH, JUDICIAL DISTRICT COURT","Value":"204JDC"},{"Text":"265TH, JUDICIAL DISTRICT COURT","Value":"265JDC"},{"Text":"282ND, JUDICIAL DISTRICT COURT","Value":"282JDC"},{"Text":"283RD, JUDICIAL DISTRICT COURT","Value":"283JDC"},{"Text":"291ST, JUDICIAL DISTRICT COURT","Value":"291JDC"},{"Text":"292ND JUDICIAL DISTRICT COURT, PROTECTIVE ORDER","Value":"292"},{"Text":"292ND, JUDICIAL DISTRICT COURT","Value":"292JDC"},{"Text":"363RD, JUDICIAL  DISTRICT COURT","Value":"363JDC"},{"Text":"ABEL, CHRIS","Value":"CHA"},{"Text":"ABENDROTH, TAMIKA JONES","Value":"TJA"},{"Text":"ACEVES, MARIA","Value":"MRA"},{"Text":"ACKERSON, DAVID E.","Value":"DEA"},{"Text":"ADAMS, DON","Value":"DAS"},{"Text":"ADAMS, DON","Value":"DA"},{"Text":"ADAMSON, JOHN","Value":"AMJ"},{"Text":"ADEOSUN, TOPE","Value":"TAU"},{"Text":"ADKINS, LADEITRA","Value":"LDA"},{"Text":"AGUILAR, MAURICE","Value":"MA"},{"Text":"ALAVAREZ, MANNY","Value":"MAY"},{"Text":"ALKIRE, LINDA","Value":"JLA"},{"Text":"ALLEN, JAMES","Value":"JJA"},{"Text":"AMADOR, VICTOR","Value":"VIA"},{"Text":"AMADOR, VICTOR","Value":"VA"},{"Text":"ANDERSON, KEITH","Value":"KEA"},{"Text":"ANDERSON, KEN","Value":"JKA"},{"Text":"ANDERSON, MARIE","Value":"MAJ"},{"Text":"ANDREWS, A","Value":"AND"},{"Text":"ANDREWS, HG","Value":"HGA"},{"Text":"ANDREWS, HG","Value":"HAN"},{"Text":"ANYIAM, CHIKA","Value":"CA"},{"Text":"ARMSTONG, HOYET","Value":"JHA"},{"Text":"ASHWORTH, GLEN","Value":"JAG"},{"Text":"ATER, GENE","Value":"GAT"},{"Text":"ATER, JAMES","Value":"AJJ"},{"Text":"AUSTIN, CURTIS","Value":"CAJ"},{"Text":"AUTRY, STEVEN","Value":"SA"},{"Text":"AUTRY, STEVEN","Value":"STA"},{"Text":"AWTHON, UKNOWN","Value":"UAWT"},{"Text":"AYITEY-ADJIN, ANTHONETTE","Value":"ANA"},{"Text":"BACHUS, BILL","Value":"BAB"},{"Text":"BACHUS, WILLIAM E","Value":"JBS"},{"Text":"BACKUS, W E","Value":"WB"},{"Text":"BAILEY, VONDA","Value":"VB"},{"Text":"BAIRD, W","Value":"JWB"},{"Text":"BAIRD, WEBB","Value":"WEJ"},{"Text":"BAKER, K","Value":"KBA"},{"Text":"BALIDO, JENNIFER","Value":"JNB"},{"Text":"BANNER, PAUL","Value":"PB"},{"Text":"BANNER, UKNOWN","Value":"UBNR"},{"Text":"BARAKA, BELINDA","Value":"JBK"},{"Text":"BARAKA, WEBB","Value":"BAJ"},{"Text":"BARKER, ANDREW","Value":"JBA"},{"Text":"BARKER, PAUL","Value":"PBR"},{"Text":"BARKLOW, JOHN","Value":"JBJ"},{"Text":"BARLOW, PHIL","Value":"PBW"},{"Text":"BARNES, DOUGLAS","Value":"DB"},{"Text":"BEAUCHAMP, SCOTT","Value":"SB"},{"Text":"BEDARD, LORNA","Value":"ALB"},{"Text":"BEHELER, SHANTEL","Value":"JSB"},{"Text":"BELINDA, MARTIN","Value":"MR4"},{"Text":"BELLAN, MELISSA","Value":"MEB"},{"Text":"BELTON, MARY","Value":"MB1"},{"Text":"BENNETT, JENNIFER","Value":"JB"},{"Text":"BENSON, D\u0027METRIA","Value":"DMB"},{"Text":"BENTLEY, BASCUM","Value":"JBT"},{"Text":"BIERY, FRED","Value":"JFB"},{"Text":"BIRDWELL, JERRY","Value":"JWL"},{"Text":"BIRMINGHAM, BRANDON","Value":"BB"},{"Text":"BLACK, HORACE D","Value":"HBJ"},{"Text":"BLACK, WILLIAM","Value":"WLJ"},{"Text":"BLACKBURN, M","Value":"MBL"},{"Text":"BLACKBURN, MARVIN","Value":"MAB"},{"Text":"BLACKINGTON, KEN","Value":"JKB"},{"Text":"BOARDMAN, UNKNOWN","Value":"UKBR"},{"Text":"BOLES, BENNIE","Value":"JBL"},{"Text":"BOLES, BONNIE","Value":"BLJ"},{"Text":"BOLIDO, JENNIFER","Value":"JBD"},{"Text":"BOSWORTH, RICHARD","Value":"JBR"},{"Text":"BOWER, LENNOX","Value":"JLB"},{"Text":"BOYEA, JUDGE","Value":"JBY"},{"Text":"BOYER, MAX","Value":"MB2"},{"Text":"BRADSHAW, JOHN","Value":"JOB"},{"Text":"BRASHEAR, BERLAIND","Value":"BBR"},{"Text":"BRASHEAR, BL","Value":"BLB"},{"Text":"BRATTON, BILL","Value":"JBI"},{"Text":"BRAUCHLE, UNKNOWN","Value":"UKBEU"},{"Text":"BRONCHETT, LISA","Value":"LBRT"},{"Text":"BROOKE, BARR","Value":"JBB"},{"Text":"BROWN, ADA","Value":"JAB"},{"Text":"BROWN, KIM","Value":"KB"},{"Text":"BROWN, MARY","Value":"MB"},{"Text":"BROWN, SHASTA","Value":"SHB"},{"Text":"BUCHANAN, VICKIE","Value":"JVB"},{"Text":"BURDOCK, BILL","Value":"BBJ"},{"Text":"BURNETT, JOE B","Value":"JJB"},{"Text":"BURNS, ROBERT","Value":"RB"},{"Text":"BURSON, LYNN","Value":"LYB"},{"Text":"BUSH, PHILIP D.","Value":"PDB"},{"Text":"BUTRUS, JOHN","Value":"JHB"},{"Text":"BYRD, DONALD","Value":"DBY"},{"Text":"CALLAHAN, TENA","Value":"TC"},{"Text":"CAMPBELL, CHARLES","Value":"CHC"},{"Text":"CAMPOS, AL","Value":"ACP"},{"Text":"CANAS, ROBERTO","Value":"JRC"},{"Text":"CARLSEN, CANDACE","Value":"CAC"},{"Text":"CARROLL, DONALD","Value":"DCJ"},{"Text":"CARROLL, UNKNOWN","Value":"UKCR"},{"Text":"CAVE, DAVID","Value":"DCA"},{"Text":"CAWTHON, WILMA","Value":"WCW"},{"Text":"CERCONE, ALBERT","Value":"JAC"},{"Text":"CHANNELL, STAN","Value":"SC"},{"Text":"CHAPMAN, CHARLES","Value":"CCH"},{"Text":"CHAPMAN, FARREL","Value":"FAC"},{"Text":"CHAPMAN, JOE","Value":"JJC"},{"Text":"CHAPMAN, RON","Value":"RCH"},{"Text":"CHARLES, LINDSEY","Value":"LCJ"},{"Text":"CHARLES, SANDOVAL","Value":"JSC"},{"Text":"CHARON, EVANS","Value":"JEC"},{"Text":"CHATHAM, ANDREW","Value":"ACH"},{"Text":"CHATHAM, ANDY","Value":"AYC"},{"Text":"CHAVEZ, DARLA","Value":"DCH"},{"Text":"CHAVEZ, REY","Value":"RCDN"},{"Text":"CHAVEZ, UNKNOWN","Value":"UKCZ"},{"Text":"CHEN, LINDA","Value":"JLC"},{"Text":"CHITTY, MIKE","Value":"MIC"},{"Text":"CHRISMAN, OSWIN","Value":"OC"},{"Text":"CLANCY, DANIEL","Value":"DCY"},{"Text":"CLANCY, JOHN","Value":"BJJ"},{"Text":"CLAYTON, J","Value":"JCL"},{"Text":"CLEMENTS, JR","Value":"CLT"},{"Text":"CLINTON, TINA","Value":"TY"},{"Text":"COFFEY, DARYL","Value":"JDC"},{"Text":"COFFEY, PAUL","Value":"PLC"},{"Text":"COLLIE, CHRISTINE","Value":"CC"},{"Text":"COLLIER, RICHARD","Value":"RC"},{"Text":"COLLINS, DOMINIQUE","Value":"DC"},{"Text":"COLLINS, GEORGE","Value":"GC"},{"Text":"COLSTON, SEAN","Value":"SEC"},{"Text":"CONCHE, UNKNOWN","Value":"UKCNH"},{"Text":"COOPER, GERRY","Value":"GCJ"},{"Text":"COUNTISS, RICHARD","Value":"RCJ"},{"Text":"COUNTY CRIMINAL  COURT APPEALS, 1","Value":"CCCA1"},{"Text":"COUNTY CRIMINAL COURT APPEALS, 2","Value":"CCCA2"},{"Text":"COUNTY CRIMINAL COURT, 1","Value":"CCC1"},{"Text":"COUNTY CRIMINAL COURT, 10","Value":"CCC10"},{"Text":"COUNTY CRIMINAL COURT, 11","Value":"CCC11"},{"Text":"COUNTY CRIMINAL COURT, 2","Value":"CCC2"},{"Text":"COUNTY CRIMINAL COURT, 3","Value":"CCC3"},{"Text":"COUNTY CRIMINAL COURT, 4","Value":"CCC4"},{"Text":"COUNTY CRIMINAL COURT, 5","Value":"CCC5"},{"Text":"COUNTY CRIMINAL COURT, 6","Value":"CCC6"},{"Text":"COUNTY CRIMINAL COURT, 7","Value":"CCC7"},{"Text":"COUNTY CRIMINAL COURT, 8","Value":"CCC8"},{"Text":"COUNTY CRIMINAL COURT, 9","Value":"CCC9"},{"Text":"Court, Judicial Officer","Value":"COURT"},{"Text":"COX, LISA","Value":"JCX"},{"Text":"COX, LYNN","Value":"JLN"},{"Text":"CRAIG, RACHEL","Value":"RAC"},{"Text":"CREUZOT, JOHN","Value":"JCZ"},{"Text":"CRIMINAL DISTRICT COURT, 1","Value":"CDC1"},{"Text":"CRIMINAL DISTRICT COURT, 2","Value":"CDC2"},{"Text":"CRIMINAL DISTRICT COURT, 3","Value":"CDC3"},{"Text":"CRIMINAL DISTRICT COURT, 4","Value":"CDC4"},{"Text":"CRIMINAL DISTRICT COURT, 5","Value":"CDC5"},{"Text":"CRIMINAL DISTRICT COURT, 6","Value":"CDC6"},{"Text":"CRIMINAL DISTRICT COURT, 7","Value":"CDC7"},{"Text":"CROFTS, THOMAS","Value":"TCR"},{"Text":"CROFTS, THOMAS","Value":"THC"},{"Text":"CROSIER, BYRON","Value":"BC"},{"Text":"CROSIER, BYRON","Value":"BEC"},{"Text":"CROSIER, UNKNOWN","Value":"UNKC"},{"Text":"CROWDER, ELIZABETH","Value":"ELC"},{"Text":"CROWE, WALTER","Value":"JWC"},{"Text":"CROZIER, UNKNOWN","Value":"UKCZR"},{"Text":"CRUM, TOM","Value":"JTC"},{"Text":"CRUZ, ISABEL","Value":"ISC"},{"Text":"CUNNINGHA, VICKERS","Value":"VCU"},{"Text":"DANIELS, NEIL J","Value":"NJD"},{"Text":"DAVIS, CHARLIE","Value":"CLD"},{"Text":"DAVIS, CLIFFORD","Value":"CDA"},{"Text":"DAVIS, DANNY","Value":"DDJ"},{"Text":"DAVIS, RICHARD","Value":"RD"},{"Text":"DAVIS, ROBERT","Value":"JDR"},{"Text":"DAVIS, ROMONA","Value":"JRD"},{"Text":"DAWSON, GAIL","Value":"JGD"},{"Text":"DEAN, KEITH","Value":"KHD"},{"Text":"DEWITT, LISA","Value":"JLD"},{"Text":"DIAZ, DANIELLE","Value":"DD"},{"Text":"DIBRELL, JOE","Value":"DJJ"},{"Text":"DIRVER, TEMPLE","Value":"JTD"},{"Text":"DIXON, BEVERLY","Value":"JDB"},{"Text":"DOHONEY, ROBERT","Value":"RDR"},{"Text":"DOUTHIT, FRANK PHILLIPS","Value":"FPD"},{"Text":"DUNLAP, CAS","Value":"CDU"},{"Text":"DUNLAP, CAS","Value":"CDL"},{"Text":"EDDY, DAN","Value":"DNY"},{"Text":"EDWARDS, REMEKO","Value":"RE"},{"Text":"EILAND, ANTHONY","Value":"AE"},{"Text":"ELLIOT, WILLIAM","Value":"JWE"},{"Text":"ELLIS, BRAIN","Value":"BEJ"},{"Text":"ELLIS, JAY","Value":"EJJ"},{"Text":"ELLIS, JOE","Value":"JEL"},{"Text":"ELLIS, PAUL","Value":"PEL"},{"Text":"ENTZ, HAROLD","Value":"HEZ"},{"Text":"ENTZ, UNKNOWN","Value":"UKTZ"},{"Text":"EVANS, CATHERINE","Value":"JCE"},{"Text":"EVANS, CATHERINE","Value":"CEJ"},{"Text":"EVANS, MAYA","Value":"MHE"},{"Text":"EVETTS, JAS K","Value":"JJE"},{"Text":"EXUM, LISA","Value":"LEJ"},{"Text":"FAGGET, VEARNCASE","Value":"JVF"},{"Text":"FARGO, STEPHANIE","Value":"SFG"},{"Text":"FARRIS, DEBORAH","Value":"DF"},{"Text":"FEIL, STEPHEN","Value":"STF"},{"Text":"FIFER, KING","Value":"KF"},{"Text":"FINN, DAVID","Value":"JDF"},{"Text":"FITZGERALD, KENNY","Value":"JKF"},{"Text":"FITZGERALD, KERRY","Value":"KFJ"},{"Text":"FITZMARTIN, GLENN","Value":"JGF"},{"Text":"FLEEKER, JUDGE","Value":"JFK"},{"Text":"FORBES, MELINDA","Value":"MF"},{"Text":"FORBIS, JOH","Value":"JFJ"},{"Text":"FORBIS, JOHN","Value":"FJJ"},{"Text":"FOWLER, CRIAG","Value":"CFJ"},{"Text":"FOX, LISA","Value":"LIF"},{"Text":"FRANCIS, BOBBY","Value":"JBF"},{"Text":"FRANCIS, MOLLY","Value":"MFR"},{"Text":"FRANCIS, MOLLY","Value":"MOF"},{"Text":"FRANCIS, ROBERT","Value":"RFR"},{"Text":"FRAZIER, VERETTA","Value":"VF"},{"Text":"FRENSLEY, UNKNOWN","Value":"UKFRY"},{"Text":"FRIZELL, ELIZABETH","Value":"EFZ"},{"Text":"FRY, JAMES","Value":"JF"},{"Text":"FULLER, PAUL","Value":"PFU"},{"Text":"FULLER, TOM","Value":"TFR"},{"Text":"GALLARDO, JUAN","Value":"JJG"},{"Text":"GALLOWAY, CALHOUN","Value":"CGA"},{"Text":"GANDY, MARSHAL M","Value":"JMG"},{"Text":"GARCIA, DENNISE","Value":"DG"},{"Text":"GARMON, HOLLIS","Value":"JHG"},{"Text":"GARRISON, F L","Value":"FLG"},{"Text":"GARZA, HECTOR","Value":"HG"},{"Text":"GEHL, DONNA","Value":"JDG"},{"Text":"GETUM, JOHNNY","Value":"JG"},{"Text":"GIBLIN, LEONARD","Value":"JGL"},{"Text":"GINSBERG, CARL","Value":"CG"},{"Text":"GIVENS, AMBER","Value":"AG"},{"Text":"GOMEZ, BENITO","Value":"JBG"},{"Text":"GONZALES, DELIA","Value":"DAG"},{"Text":"GOSSET, ED","Value":"JED"},{"Text":"GOSSETT, ED","Value":"EG"},{"Text":"GRAHAM, PETER","Value":"PEG"},{"Text":"GRANT, BEN Z","Value":"BZG"},{"Text":"GRANT, UNKNOWN","Value":"UKGT"},{"Text":"GREEN, LISA","Value":"LG"},{"Text":"GREEN, UNKNOWN","Value":"UKGR"},{"Text":"GREENBERG, MARK","Value":"MG"},{"Text":"GREENE, KAREN","Value":"KGN"},{"Text":"GRIGGS, DAVID","Value":"DVG"},{"Text":"GRISHAM, R","Value":"RGR"},{"Text":"GULICK, JOHN","Value":"GJJ"},{"Text":"HACK, LINDA","Value":"LHJ"},{"Text":"HALSEY, STEVE L","Value":"SLH"},{"Text":"HAMPTON, JACK","Value":"JAH"},{"Text":"HARLAN, LADONNA","Value":"LAH"},{"Text":"HAWK, SUSAN","Value":"SHK"},{"Text":"HAWTHORNE, TERESA","Value":"TW"},{"Text":"HAYES, JULIA","Value":"JH"},{"Text":"HEMPHILL, JAN","Value":"JHE"},{"Text":"HENDERSON, KURT","Value":"JKH"},{"Text":"HENDRICKS, JOHN","Value":"JJH"},{"Text":"HENSON, UNKNOWN","Value":"UNHNS"},{"Text":"HILBURN, CARY","Value":"CHJ"},{"Text":"HILL, KATRINA","Value":"KRH"},{"Text":"HILLS, UNKNOWN","Value":"UNHL"},{"Text":"HINES, JOHN","Value":"JHN"},{"Text":"HINSHAW, UNKNOWN","Value":"UNHW"},{"Text":"HOCKETT, LORI CHRISMAN","Value":"LCH"},{"Text":"HOFFMAN, MARTIN","Value":"MHO"},{"Text":"HOFFMAN, PEGGY","Value":"PH"},{"Text":"HOLLAND, JACK","Value":"HJJ"},{"Text":"HOLLAND, LOUIS","Value":"JLH"},{"Text":"HOLMES, TRACY","Value":"TH"},{"Text":"HOPKINS, HARRY","Value":"HAH"},{"Text":"HOUSTON, SAM","Value":"JSH"},{"Text":"HUBENER, KATY","Value":"KH"},{"Text":"HUFF, MONIQUE","Value":"MOH"},{"Text":"HUFF, STEPHANIE","Value":"SH"},{"Text":"HUMPHREY, CHARLIE","Value":"JCH"},{"Text":"HURDLE, RONALD","Value":"RHU"},{"Text":"HURRINGTON, JUDGE","Value":"UH"},{"Text":"ISENBERG, RANDY","Value":"RIB"},{"Text":"JACKLON, UNKNOWN","Value":"UNJKN"},{"Text":"JACKSON, HARRY","Value":"JHJ"},{"Text":"JACKSON, SANDRA","Value":"SJA"},{"Text":"JARVIS, DON","Value":"JDJ"},{"Text":"JASSO, JUAN","Value":"JJS"},{"Text":"JENDZREY, UNKNOWN","Value":"UNJZ"},{"Text":"JENKINS, CLAY","Value":"CJ"},{"Text":"JOHN, MEAD","Value":"MJ1"},{"Text":"JOHN, OVARD","Value":"OJ"},{"Text":"JOHNSON, FAITH","Value":"FJN"},{"Text":"JOHNSON, JAMES","Value":"JJJ"},{"Text":"JOHNSON, MARGARET JONES","Value":"MJJ"},{"Text":"JONES, B","Value":"BJO"},{"Text":"JONES, BOB","Value":"BJ"},{"Text":"JONES, DIANNE","Value":"DJS"},{"Text":"JONES, DIANNE","Value":"DJ"},{"Text":"JONES, GUY","Value":"JGJ"},{"Text":"JONES, KAREN","Value":"KJJ"},{"Text":"JONES, MICHAEL, Jr","Value":"MIJJ"},{"Text":"JONES, RAQUEL ROCKY","Value":"RRJ"},{"Text":"JONES, ROBERT","Value":"RJO"},{"Text":"JONES, THOMAS G.","Value":"TJ"},{"Text":"JUD, TE","Value":"PEGO"},{"Text":"JUDG, TEST","Value":"STFO"},{"Text":"JUDGE, TST","Value":"SECO"},{"Text":"JUDGE, VISITING","Value":"VJ"},{"Text":"JUDGE, VISITING","Value":"CCVJ"},{"Text":"JUGE, TESAN","Value":"ANAO"},{"Text":"JUSTEST, TJUD","Value":"JOVO"},{"Text":"KAMUCHE, TIFFANY","Value":"TIK"},{"Text":"KARREN, JONES","Value":"JJK"},{"Text":"KEASLER, MICHAEL","Value":"MKR"},{"Text":"KELLY, SHEQUITTA","Value":"SK"},{"Text":"KEMP, TAMMY","Value":"TK"},{"Text":"KEMP, WILLIAM M","Value":"WLK"},{"Text":"KENDALL, T","Value":"TL"},{"Text":"KERBOW, BECKY","Value":"BK"},{"Text":"KHOURY, ALIVIN","Value":"JAK"},{"Text":"KING, ANGELA","Value":"AK"},{"Text":"KING, DARLENE","Value":"DKJ"},{"Text":"KING, EDWIN","Value":"EKG"},{"Text":"KING, HENRY","Value":"JHK"},{"Text":"KINKEADE, ED","Value":"EK"},{"Text":"KOCH, J. J.","Value":"JK"},{"Text":"KREDELL, G","Value":"GKR"},{"Text":"KRIBY, VANCE","Value":"JVK"},{"Text":"KUPPER, ANDREW","Value":"ANK"},{"Text":"KUPPER, ANDREW","Value":"AWK"},{"Text":"KUPPER, TOM","Value":"JTK"},{"Text":"LABASTIDA, LUZ E","Value":"LEL"},{"Text":"LANDER, VICTOR","Value":"VL"},{"Text":"LANDWEHR, TERRY","Value":"TEL"},{"Text":"LANE, D","Value":"DLA"},{"Text":"LANE, HEBERT","Value":"HLI"},{"Text":"LANE, WARLOW","Value":"JLW"},{"Text":"LANFORD, NORMAN","Value":"NRL"},{"Text":"LANG, J","Value":"JLG"},{"Text":"LAVALLE, ROSE","Value":"JRL"},{"Text":"LEE, JEAN","Value":"JLEE"},{"Text":"LEEK SUTTON, MICHELLE","Value":"MLS"},{"Text":"LEE-SHANNON, CHERYL","Value":"CLS"},{"Text":"LEIGH, JOHN","Value":"JJL"},{"Text":"LENOIR, MOLLY","Value":"MLR"},{"Text":"LEVARIO, LENA","Value":"LLVR"},{"Text":"LEWIS, GRACIE","Value":"GL"},{"Text":"LEWIS, JUDGE","Value":"JLE"},{"Text":"LINDSEY, CHARLES","Value":"CLJ"},{"Text":"LINDSEY, LOONEY","Value":"LLJ"},{"Text":"LINE, HERBERT","Value":"JHL"},{"Text":"LISTER-BROWN, PHYLLIS","Value":"PYB"},{"Text":"LITTLE, JANE","Value":"JLT"},{"Text":"LIU, JUDGE","Value":"JLL"},{"Text":"LOCHRY, JUDGE","Value":"JLY"},{"Text":"LOCHRY, THOMAS","Value":"JTL"},{"Text":"LOLLAR, NAN","Value":"NL"},{"Text":"LOVING, KELLY","Value":"KL"},{"Text":"LUEDTKE, CHARLES","Value":"JCK"},{"Text":"LUSK, JANET","Value":"JAL"},{"Text":"LUTHER, PAMELA","Value":"PL"},{"Text":"MAG, MARY","Value":"MM2"},{"Text":"MAG, YOUNG","Value":"YMJ"},{"Text":"MAGISTRATE, JAIL","Value":"MAG"},{"Text":"MAGNIS, RICHARD","Value":"RMN"},{"Text":"MAGNIS, RICK","Value":"JMS"},{"Text":"MALONEY, FRANCIS","Value":"FML"},{"Text":"MALVEAUX, JULIA","Value":"JMV"},{"Text":"MARSHAL, JOHN M","Value":"MMJ"},{"Text":"MARSHAL, MARVIN","Value":"MM1"},{"Text":"MARSHALL, GANDY","Value":"JGM"},{"Text":"MARTIN, ANDREA","Value":"ANMA"},{"Text":"MARTIN, BELINDA","Value":"JMB"},{"Text":"MARTIN, RITCHTER","Value":"JRM"},{"Text":"MARTINEZ, BEN","Value":"BMA"},{"Text":"MARTINEZ, JAIME","Value":"JMZ"},{"Text":"MARTINEZ, SARA","Value":"SAM"},{"Text":"MARVIN, MARSHALL","Value":"JMM"},{"Text":"MATOVICH, JEFF","Value":"JJF"},{"Text":"MAULTSBY, BETH","Value":"JBH"},{"Text":"MAYES, RICHARD","Value":"RJM"},{"Text":"MAYS, LELA LAWRENCE","Value":"LLM"},{"Text":"MAYS, RICHARD","Value":"RMA"},{"Text":"MAYSE, MARILYNN","Value":"MAM"},{"Text":"MCCAIN, TATE","Value":"JMT"},{"Text":"MCCAIN, TOM","Value":"JTM"},{"Text":"MCCALL, JOHN","Value":"JOM"},{"Text":"MCCALL, M","Value":"MMC"},{"Text":"MCCLELLAN, JUDGE","Value":"JMD"},{"Text":"MCCLUNG, PAT","Value":"PMG"},{"Text":"MCCLURE, ROBERT","Value":"RMR"},{"Text":"MCCONNELL, UNKNOWN","Value":"UKML"},{"Text":"MCCORD, UNKNOWN","Value":"UKMR"},{"Text":"MCCORMICK, MICHAEL","Value":"MMM"},{"Text":"MCCOY, JOHN","Value":"MCY"},{"Text":"MCCRAW, JOHN L","Value":"JLM"},{"Text":"MCDANIEL, LANA","Value":"LME"},{"Text":"MCDOWELL, PAT","Value":"PMCL"},{"Text":"MCDOWELL, PATRICK","Value":"PMC"},{"Text":"MCDOWELL, ROBERT","Value":"JMC"},{"Text":"MCDOWELL, SCOT","Value":"SMJ"},{"Text":"MCDOWELL, WILLIAM","Value":"JWM"},{"Text":"MCFARLIN, SHERYL","Value":"SM"},{"Text":"MCGREGOR, F B","Value":"FBM"},{"Text":"MCNEIL, MARY JAYNE","Value":"MJM"},{"Text":"MCQUEEN, ANDREW","Value":"JAM"},{"Text":"MCVEA, TERRI","Value":"TMV"},{"Text":"MEAD, JOHN","Value":"JJM"},{"Text":"MERITH, ANNA","Value":"JMA"},{"Text":"MERRITT, TAHIRA","Value":"TM"},{"Text":"METCALFE, DON","Value":"DML"},{"Text":"MILLER, C","Value":"CMI"},{"Text":"MILLER, CHARLES","Value":"CMJ"},{"Text":"MILLER, CHUCK","Value":"CHM"},{"Text":"MILLER, JOSEPH","Value":"MJ"},{"Text":"MILLER, MARY E","Value":"JML"},{"Text":"MILLER, MIKE","Value":"MKM"},{"Text":"MILLER, RICHARD","Value":"JRI"},{"Text":"MILLER, STEPHEN","Value":"JMI"},{"Text":"MIRACLE, UKNOWN","Value":"UKMRL"},{"Text":"MITCHELL, LARRY","Value":"LMLL"},{"Text":"MONROE, LINCOLN","Value":"LM"},{"Text":"MONTGOMERY, ROBERT","Value":"MRJ"},{"Text":"MONTGOMERY, SALLY","Value":"SMO"},{"Text":"MOON, DAVID","Value":"JDM"},{"Text":"MOORE, DAVID","Value":"DMJ"},{"Text":"MOORE, REGINA","Value":"RM"},{"Text":"MOOREHEAD, AUDREY","Value":"AUM"},{"Text":"MORENO, SASHA","Value":"SSM"},{"Text":"MORRIS, RALSTON","Value":"MOJ"},{"Text":"MORRISON, DERRICK","Value":"DEM"},{"Text":"MOSS, ROBERT","Value":"JMR"},{"Text":"MOYE, BILL","Value":"JBM"},{"Text":"MOYE\u0027, ERIC","Value":"EM"},{"Text":"MULANAX, VIRGIL","Value":"JVM"},{"Text":"MULDER, NANCY","Value":"NMR"},{"Text":"MULLER, UNKNOWN","Value":"UMLR"},{"Text":"MULLIN, JAMES","Value":"JMJ"},{"Text":"MUNOZ, NICOLE","Value":"JNM"},{"Text":"MURDOCK, BILL","Value":"BMJJ"},{"Text":"MURPHY, MARY","Value":"MM"},{"Text":"MURRAY, JORDAN","Value":"MJO"},{"Text":"MYERS, LANA","Value":"LYM"},{"Text":"NANCARROW, MARK","Value":"MNW"},{"Text":"NASH, VALENCIA","Value":"VN"},{"Text":"NELMS, JOHN","Value":"JON"},{"Text":"NELMS, UNKNOWN","Value":"UKNL"},{"Text":"NIEDERER, DIANA","Value":"JDN"},{"Text":"NOES, NICK","Value":"NKZ"},{"Text":"NORTHAM, JOSHUA","Value":"JN"},{"Text":"O\u0027BRIEN, MARGARET","Value":"MOB"},{"Text":"OLVERA, GRACIELA","Value":"GO"},{"Text":"ONEIL, MICHAEL","Value":"JMO"},{"Text":"ONION, JOHN","Value":"JJO"},{"Text":"OVARD, JOHN","Value":"OJJ"},{"Text":"PARKER, BOYD M","Value":"MBP"},{"Text":"PARKER, PHIL","Value":"PHP"},{"Text":"PARKER, QUAY F","Value":"QFP"},{"Text":"PARKER, TONYA","Value":"TP"},{"Text":"PARVIN, CHRISTOPHER","Value":"CP"},{"Text":"PASK, NEAL","Value":"NLP"},{"Text":"PATTERSON, DAN","Value":"DP"},{"Text":"PATTERSON, M BOYD","Value":"PMJ"},{"Text":"PATZIG, GEORGE","Value":"JGP"},{"Text":"PAULY, WYNNE","Value":"WRJ"},{"Text":"PERKINS, LLOYD","Value":"LLP"},{"Text":"PERKINS, THOMAS","Value":"PTJ"},{"Text":"PETERS, LORI","Value":"LP"},{"Text":"PETTY, MICHAEL","Value":"JMP"},{"Text":"PETTY, MIKE","Value":"MPY"},{"Text":"PEURIFOY, PAUL","Value":"JPP"},{"Text":"PEYTON, JOHN","Value":"JPE"},{"Text":"PHILLIPS, JOE","Value":"JPH"},{"Text":"PIERCE, JACK","Value":"JJP"},{"Text":"PIRANIO, AJ","Value":"JAP"},{"Text":"PLUMLEE, ANDREA D","Value":"AP"},{"Text":"POE, TED","Value":"JTP"},{"Text":"POLVI, KELLY","Value":"JKP"},{"Text":"PRICE, TOM","Value":"TR"},{"Text":"PRIMEAUX, TARA","Value":"TAP"},{"Text":"PRUETT, ALBERT","Value":"JPA"},{"Text":"PRUITT, JAMES","Value":"PRU"},{"Text":"PURCELL, GRAHAM","Value":"GPJ"},{"Text":"PURDY, MONICA","Value":"MP"},{"Text":"RAMSEY, CHARLES","Value":"CRJ"},{"Text":"RANDALL, ANTHONY","Value":"ANR"},{"Text":"RANKIN, SUSAN","Value":"SR"},{"Text":"RAWLINS, WYLIE","Value":"WJJ"},{"Text":"RAYBAN, NAUF M","Value":"NFR"},{"Text":"RAYBURN, NALL","Value":"NRY"},{"Text":"REDMOND, AIESHA","Value":"ARD"},{"Text":"REDMOND, NIGEL","Value":"NIR"},{"Text":"RENTERIA, JUAN","Value":"JRE"},{"Text":"REYES, JAMES","Value":"JRS"},{"Text":"REYES, SUSANA","Value":"SUR"},{"Text":"RICHBURG, JUDGE","Value":"JRB"},{"Text":"RICHTAR, MARTIN","Value":"MR5"},{"Text":"RICHTER, ANDREW","Value":"JRA"},{"Text":"RICHTER, MARK","Value":"MR1"},{"Text":"RICHTER, MARTIN","Value":"MR"},{"Text":"RICK, MAGNIS","Value":"MJS"},{"Text":"RIDEAUX, NORRIS","Value":"NRD"},{"Text":"RIDGEWAY, UNKNOWN","Value":"URWY"},{"Text":"RILEY, AUDRA","Value":"AUR"},{"Text":"RISCHTER, MARTIN","Value":"MR6"},{"Text":"RITTER, MARTHA","Value":"MR3"},{"Text":"RIVERA WORLEY, CARMEN","Value":"CRW"},{"Text":"ROACH, JOHN","Value":"JJR"},{"Text":"ROBERT, MAHONEY","Value":"MYJ"},{"Text":"ROBINSON, JOHN","Value":"JRJ"},{"Text":"RODEN, JANE","Value":"JR"},{"Text":"RODEN, JANE","Value":"JAR"},{"Text":"RODEN, JANE","Value":"JD"},{"Text":"RODEN, RUSSELL","Value":"RR"},{"Text":"RODRIGUEZ, ALICE","Value":"ALR"},{"Text":"ROMUALDO, UKNOWN","Value":"URM"},{"Text":"ROSALES, PAULA","Value":"PR"},{"Text":"ROSE, ROBERT","Value":"JRR"},{"Text":"ROSENFIELD, JEFF","Value":"JRO"},{"Text":"ROSENFIELD, JEFF","Value":"JRF"},{"Text":"ROSS, DON","Value":"DRO"},{"Text":"RUSSO, MARK","Value":"VJMR"},{"Text":"RUST, ANN","Value":"ARU"},{"Text":"RYAN, MARK","Value":"MR2"},{"Text":"RYAN, TOM","Value":"JTR"},{"Text":"SANDOVAL, CHARLES","Value":"CSJ"},{"Text":"SCALES, R T","Value":"RTS"},{"Text":"SCHWILLE, MIK","Value":"MSC"},{"Text":"SCOFIELD, BOB","Value":"JBSD"},{"Text":"SCOTT, BILL","Value":"BIS"},{"Text":"SCOTT, KENDALL","Value":"KSJ"},{"Text":"SCOTT, MCCDOWELL","Value":"MS2"},{"Text":"SEIDER, STEVEN","Value":"SS"},{"Text":"SEPULVEDA, LUIS","Value":"JLS"},{"Text":"SHALAN, GREGG","Value":"VJGS"},{"Text":"SHANKLE, LADONNA","Value":"LDS"},{"Text":"SHEAD, DOROTHY","Value":"DRS"},{"Text":"SHEEHAN, BILL","Value":"BSH"},{"Text":"SHEENAN, BILL","Value":"BSJ"},{"Text":"SHEHAN, TOMI","Value":"TSH"},{"Text":"SHEHAN, TOMI","Value":"ST"},{"Text":"SHERRILL, CHARLES","Value":"CSH"},{"Text":"SHOLDEN, JOHN","Value":"JSG"},{"Text":"SHOLDEN, JOHN","Value":"SJJ"},{"Text":"SHOOK, GLADYS","Value":"JGS"},{"Text":"SIMS, M. KENT","Value":"MS"},{"Text":"SKEMP, DOUG","Value":"JDS"},{"Text":"SKINNER, COLLEEN","Value":"CDS"},{"Text":"SLAUGHTER, GENA","Value":"GS"},{"Text":"SMITH, CRAIG","Value":"CSM"},{"Text":"SMITH, EARL","Value":"JES"},{"Text":"SMITH, TILLMAN","Value":"JTS"},{"Text":"SNIPES, MICHAEL","Value":"MSN"},{"Text":"SNIPES, MIKE","Value":"MSP"},{"Text":"SOMMERS, TIMOTHY","Value":"SRM"},{"Text":"SPINHOUR, KELLY","Value":"JKS"},{"Text":"SPRINKLE, KATHLEEN","Value":"KAS"},{"Text":"STANLEY, KIRK","Value":"SKJ"},{"Text":"STARR, L","Value":"LST"},{"Text":"STEELE, CLEOPHUS","Value":"CLO"},{"Text":"STEPHENS, BILL","Value":"BS"},{"Text":"STEPHENS, BILL","Value":"BST"},{"Text":"STEPHENS, GARY","Value":"GST"},{"Text":"STEVENS, BILL","Value":"BLSJ"},{"Text":"STEWART, ANNETTE","Value":"ATS"},{"Text":"STEWART, JERRY","Value":"JST"},{"Text":"STOCKES, MARK","Value":"MSJ"},{"Text":"STOLTZ, MARK","Value":"MZ"},{"Text":"STOLZ, MARK","Value":"MS1"},{"Text":"STREETE, SANDRE","Value":"SAST"},{"Text":"STRICKLIN, CLIFFORD","Value":"CFK"},{"Text":"SWARTZ, ADAM M","Value":"AS"},{"Text":"TAITE, JOHN","Value":"TJJ"},{"Text":"TAITE, RALPH","Value":"RTI"},{"Text":"TAITE, RALPH","Value":"RAT"},{"Text":"TAPSCOTT, KEN","Value":"KT"},{"Text":"TAYLOR, J BRITE","Value":"JTB"},{"Text":"TAYLOR, NICOLE","Value":"NIT"},{"Text":"TBD, TBD","Value":"TBD"},{"Text":"TEAGUE, JUDGE","Value":"JTG"},{"Text":"TEN EYCK, C. ANDREW","Value":"CAT"},{"Text":"TERRY, JIM","Value":"JTY"},{"Text":"TETER, JOHN","Value":"JJT"},{"Text":"THOMAS, LINDA","Value":"LT"},{"Text":"THOMPSON, BRENDA H","Value":"BHT"},{"Text":"THOMPSON, CARTER","Value":"CT"},{"Text":"THORNTON, R E","Value":"RET"},{"Text":"THORPE, THOMAS B","Value":"TBT"},{"Text":"THORPE, TOM","Value":"JTT"},{"Text":"TILLERY, DALE","Value":"DT"},{"Text":"TINSLEY, FRED","Value":"FTY"},{"Text":"TIPPS, ARTHUR","Value":"JAT"},{"Text":"TITTLE, DON","Value":"JDT"},{"Text":"TOBOLOWSKY, EMILY","Value":"ET"},{"Text":"TOLBERT, CASSANDRA","Value":"CTJ"},{"Text":"TOLLE, MARK","Value":"MTE"},{"Text":"TOLLE, TERESA","Value":"TOT"},{"Text":"TOLLE, TERSEA","Value":"TSTL"},{"Text":"TORRES-WILLIAMS, DOMINIQUE","Value":"DOW"},{"Text":"TRAMMEL, RITA","Value":"RT"},{"Text":"TRIBLETT, UNKNOWN","Value":"UTRB"},{"Text":"TROBEE, RYAN","Value":"RYTR"},{"Text":"TUCKER, ANDREW","Value":"JTA"},{"Text":"TURLEY, HAL","Value":"HAT"},{"Text":"TURNER, DON","Value":"DTR"},{"Text":"USED, NOT","Value":"SHCR"},{"Text":"VANCE, BRANDON","Value":"BV"},{"Text":"VANCE, JOHN","Value":"JJV"},{"Text":"VANCE, KIRBY","Value":"JKV"},{"Text":"VANEGAS, SUZY","Value":"SUV"},{"Text":"VASCOE, MARCUS","Value":"MV1"},{"Text":"VAUGHAN, RC","Value":"JRV"},{"Text":"VICKERY, JONATHAN","Value":"JOV"},{"Text":"VIDAURRI, CELSO","Value":"CEV"},{"Text":"VIDAURRI, JUDGE","Value":"JVD"},{"Text":"VIRGIL, MALANAX","Value":"MVJ"},{"Text":"WADE, HENRY","Value":"HW"},{"Text":"WADE, KENNETH","Value":"JKW"},{"Text":"WADE, KRISTIN","Value":"KRW"},{"Text":"WALKER, DEE BROWN","Value":"JDW"},{"Text":"WALKER, J","Value":"JWA"},{"Text":"WALKER, ROBERT","Value":"WAJ"},{"Text":"WALTER, KANDACE","Value":"KNW"},{"Text":"WARDER, UNKNOWN","Value":"WRD"},{"Text":"WARREN, INGRID","Value":"IW"},{"Text":"WARREN, JAMES F","Value":"JJW"},{"Text":"WASHINGTON, NOVA","Value":"NW"},{"Text":"WEBB, BIARD","Value":"BWE"},{"Text":"WELDON, KIRK","Value":"KWJ"},{"Text":"WEST, ROYCE, Jr","Value":"RWJ"},{"Text":"WHITAKER, MELVIN","Value":"MWH"},{"Text":"WHITE, BILL","Value":"JBW"},{"Text":"WHITE, CARMEN","Value":"CAW"},{"Text":"WHITE, CAROLYN","Value":"CWJ"},{"Text":"WHITE, ERNEST","Value":"EW"},{"Text":"WHITESIDE, CLYDE","Value":"CWH"},{"Text":"WHITFIELD, KATINA","Value":"KAW"},{"Text":"WHITMORE, BRIDGETT","Value":"BWH"},{"Text":"WHITNEY, ROBERT A","Value":"JRW"},{"Text":"WILEY, UNKNOWN","Value":"UWLE"},{"Text":"WILLIAMS, CLAUDE","Value":"JCW"},{"Text":"WILLIAMS, STACI","Value":"SW"},{"Text":"WILSON, UKNOWN","Value":"UWLS"},{"Text":"WINFIELD, DONNA","Value":"DWJ"},{"Text":"WOLFF, JANICE","Value":"JAW"},{"Text":"WOODRUFF, DAVID","Value":"DAW"},{"Text":"WOODY, BRUCE","Value":"BW"},{"Text":"WRIGHT, ROBERT","Value":"RWR"},{"Text":"WYDE, DAN","Value":"DYE"},{"Text":"WYNNE, PAULY","Value":"JWP"},{"Text":"WYSOCKI, ASHLEY","Value":"AW"},{"Text":"YOUNG, JACK D","Value":"JJY"},{"Text":"YOUNG, KAREN","Value":"JKY"},{"Text":"YOUNG, MANYLLU","Value":"MY1"},{"Text":"YOUNG, MARY","Value":"JMY"},{"Text":"YOUNG, UNKNOWN","Value":"UYG"},{"Text":"ZANE, LAURINI","Value":"JLZ"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains","placeholder":" * Select a Judicial Officer"});});
+</script>
+                  </p>
+                </div>
+              </div>
+              <div id="SearchByNameContainer" style="display:none; margin-bottom:20px;">
+                <div class="row row-buff">
+                  <div class="col-md-6"><fieldset><input class="form-control" data-val="true" data-val-length="Please enter a Last Name that is 100 characters or less." data-val-length-max="100" data-val-required="Please enter a last name." disabled="disabled" id="caseCriteria_NameLast" maxLength="100" name="caseCriteria.NameLast" placeholder="" type="text" value="" /><label for="caseCriteria_NameLast">* Enter a Last Name</label></fieldset></div>
+                  <div class="col-md-6"><fieldset><input class="form-control" data-val="true" data-val-length="Please enter a First Name that is 100 characters or less." data-val-length-max="100" data-val-required="Please enter a first name." disabled="disabled" id="caseCriteria_NameFirst" maxLength="100" name="caseCriteria.NameFirst" placeholder="" type="text" value="" /><label for="caseCriteria_NameFirst">* Enter a First Name</label></fieldset></div>
+                </div>
+
+                <div class="row row-buff">
+                  <div class="col-md-6" style="margin-top:4px;">
+                    <fieldset><input class="form-control" data-val="true" data-val-length="Please enter a Middle Name that is 100 characters or less." data-val-length-max="100" id="caseCriteria_NameMiddle" maxLength="100" name="caseCriteria.NameMiddle" placeholder="" type="text" value="" /><label for="caseCriteria_NameMiddle">Enter a Middle Name</label></fieldset>
+                  </div>
+
+                  <div class="col-md-6">
+                    <fieldset><input data-val-kendocombobox="" disabled="disabled" id="caseCriteria_NameSuffix" name="caseCriteria.NameSuffix" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_NameSuffix").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"DC","Value":"DC "},{"Text":"DDS","Value":"DDS"},{"Text":"DO","Value":"DO "},{"Text":"ESQ","Value":"ESQ"},{"Text":"II","Value":"II "},{"Text":"III","Value":"III"},{"Text":"IV","Value":"IV "},{"Text":"Jr","Value":"Jr "},{"Text":"Jr.","Value":"JR."},{"Text":"LVN","Value":"LVN"},{"Text":"MD","Value":"MD "},{"Text":"PhD","Value":"PhD"},{"Text":"RN","Value":"RN "},{"Text":"Sr.","Value":"Sr "},{"Text":"V","Value":"V  "},{"Text":"VI","Value":"VI "}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_NameSuffix_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_NameSuffix_listbox" style="position: absolute;">Please select a valid name Suffix</label></fieldset>
+                  </div>
+                </div>
+              </div>
+
+
+
+              
+              <input class="tyler-hide" data-val="true" data-val-required="The AdvancedSearchOptionsOpen field is required." id="caseCriteria_AdvancedSearchOptionsOpen" name="caseCriteria.AdvancedSearchOptionsOpen" type="checkbox" value="true" /><input name="caseCriteria.AdvancedSearchOptionsOpen" type="hidden" value="false" />
+              <p class="col-sm-12" style="margin-bottom: 40px">
+                <input class="btn btn-primary pull-left"
+                       id="btnSSClear"
+                       name="Clear"
+                       type="button"
+                       value="Clear"
+                       data-refresh-uri="/DALLASPROD/Home/Dashboard/29"
+                       />
+                <input name="Search" id="btnSSSubmit" class="btn btn-primary pull-right" value="Submit" type="submit" />
+              </p>
+              <p class="col-sm-12">
+                <a href="#" id="AdvOptions">Advanced Filtering Options</a><span class="caret"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="AdvOptionsMask" class="tyler-toggle-container tyler-padding-15 tyler-hide">
+
+          <div class="section">
+            <a class="anchor" id="GeneralOptionsSS"></a>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h1>General Options</h1>
+
+
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <h2>Filter by Location</h2>
+                      <input data-val-kendocombobox="Please select a valid Court Location" data-val-kendocombobox-required="True" id="caseCriteria_CourtLocation" name="caseCriteria.CourtLocation" type="text" value="All Locations" /><script>
+	jQuery(function(){jQuery("#caseCriteria_CourtLocation").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"change":smartSearchObj.LocationChange,"dataSource":[{"Text":"All Locations","Value":"All Locations"},{"Text":"County Courts - Civil","Value":"County Courts - Civil"},{"Text":"County Courts - Criminal","Value":"County Courts - Criminal"},{"Text":"County Courts - Probate","Value":"County Courts - Probate"},{"Text":"Criminal Courts - District \u0026 County","Value":"Criminal Courts - District \u0026 County"},{"Text":"District Courts - Civil","Value":"District Courts - Civil"},{"Text":"District Courts - Criminal","Value":"District Courts - Criminal"},{"Text":"District Courts - Family","Value":"District Courts - Family"},{"Text":"Justice of the Peace Courts","Value":"Justice of the Peace Courts"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script>
+                    </div>
+                  </div>
+
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h2>Filter by Search Type</h2>
+                    <input data-val="true" data-val-barNumberWildcard="Wildcards can not be used with Attorney Bar Number" data-val-kendocombobox="Please select a valid Search By option" data-val-kendocombobox-required="True" data-val-required="The SearchBy field is required." id="caseCriteria_SearchBy" name="caseCriteria.SearchBy" type="text" value="SmartSearch" /><script>
+	jQuery(function(){jQuery("#caseCriteria_SearchBy").kendoComboBox({"change":smartSearchObj.SearchByChange,"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"Smart Search","Value":"SmartSearch"},{"Text":"Attorney Bar Number","Value":"AttorneyBarNumber"},{"Text":"Attorney Name","Value":"AttorneyName"},{"Text":"Business Name","Value":"BusinessName"},{"Text":"Case Cross-Reference Number","Value":"CaseCrossReferenceNumber"},{"Text":"Case Number","Value":"CaseNumber"},{"Text":"Citation Number","Value":"CitationNumber"},{"Text":"Judicial Officer","Value":"JudicialOfficer"},{"Text":"Nickname","Value":"Nickname"},{"Text":"Party Name","Value":"PartyName"},{"Text":"Warrant Number","Value":"WarrantNumber"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h2>Include</h2>
+                    <ul class="list-unstyled">
+                        <li>
+                          <div class="form-check-box"><input checked="checked" class="SearchTypeSelector" data-title="Enable or disable Searching for Cases" data-val="true" data-val-required="The SearchCases field is required." id="caseCriteria_SearchCases" name="caseCriteria.SearchCases" type="checkbox" value="true" /><input name="caseCriteria.SearchCases" type="hidden" value="false" /><span class="ClickThroughIE"></span><label class="ClickThroughIE">Cases</label></div>
+                        </li>
+
+                    </ul>
+                  </div>
+                  <div class="col-sm-6">
+                    <h2>&nbsp;</h2>
+                    <ul class="list-unstyled">
+                        <li>
+                          <div class="form-check-box"><input checked="checked" class="SearchTypeSelector" data-title="Enable or disable Searching for Warrants" data-val="true" data-val-required="The SearchWarrants field is required." id="caseCriteria_SearchWarrants" name="caseCriteria.SearchWarrants" type="checkbox" value="true" /><input name="caseCriteria.SearchWarrants" type="hidden" value="false" /><span class="ClickThroughIE"></span><label class="ClickThroughIE">Warrants</label></div>
+                        </li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+          <div class="section">
+            <a class="anchor" id="PartySearchCriteriaSS"></a>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div id="partysearchcriteria" class="tab-pane active">
+                  <h1>Party Search Criteria</h1>
+                  <h2>Search  by</h2>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <ul class="list-unstyled">
+                        <div class="form-check-box"><input class="PartySearchTypeSelector" data-val="true" data-val-required="The SearchByPartyName field is required." id="caseCriteria_SearchByPartyName" name="caseCriteria.SearchByPartyName" type="checkbox" value="true" /><input name="caseCriteria.SearchByPartyName" type="hidden" value="false" /><span class="ClickThroughIE"></span><label class="ClickThroughIE">Party Name</label></div>
+                        <div class="form-check-box"><input class="PartySearchTypeSelector" data-val="true" data-val-required="The SearchByNickName field is required." id="caseCriteria_SearchByNickName" name="caseCriteria.SearchByNickName" type="checkbox" value="true" /><input name="caseCriteria.SearchByNickName" type="hidden" value="false" /><span class="ClickThroughIE"></span><label class="ClickThroughIE">Nickname</label></div>
+                      </ul>
+                    </div>
+                    <div class="col-sm-6">
+                      <ul class="list-unstyled">
+                        <div class="form-check-box"><input class="PartySearchTypeSelector" data-val="true" data-val-required="The SearchByBusinessName field is required." id="caseCriteria_SearchByBusinessName" name="caseCriteria.SearchByBusinessName" type="checkbox" value="true" /><input name="caseCriteria.SearchByBusinessName" type="hidden" value="false" /><span class="ClickThroughIE"></span><label class="ClickThroughIE">Business Name</label></div>
+                        
+                        
+                      </ul>
+                    </div>
+                    <div class="col-sm-12">
+                      <ul class="list-unstyled">
+                        <div class="form-check-box"><input class="" data-val="true" data-val-required="The UseSoundex field is required." data-val-soundexwildcards="Wildcards can not be used with Sounds Like selected" id="caseCriteria_UseSoundex" name="caseCriteria.UseSoundex" type="checkbox" value="true" /><input name="caseCriteria.UseSoundex" type="hidden" value="false" /><span class="ClickThroughIE"></span><label class="ClickThroughIE">Sounds Like </label></div>
+                        <span class="field-validation-valid" data-valmsg-for="caseCriteria.UseSoundex" data-valmsg-replace="true"></span>
+                      </ul>
+                    </div>
+                  </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <fieldset><input type="text" id="caseCriteria.DOBFrom" name="caseCriteria.DOBFrom" value="" class="tyler-datepicker form-control" autocomplete="off" data-val="true" data-val-regex="Please select a valid date. (MM/DD/YYYY)" data-val-regex-pattern="(((10|12|0?[13578])([/])(3[01]|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((11|0?[469])([/])(30|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(2[0-8]|1[0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(29)([/])([2468][048]00))|((0?2)([/])(29)([/])([3579][26]00))|((0?2)([/])(29)([/])([1][89][0][48]))|((0?2)([/])(29)([/])([2-9][0-9][0][48]))|((0?2)([/])(29)([/])([1][89][2468][048]))|((0?2)([/])(29)([/])([2-9][0-9][2468][048]))|((0?2)([/])(29)([/])([1][89][13579][26]))|((0?2)([/])(29)([/])([2-9][0-9][13579][26])))" < /><label for="caseCriteria.DOBFrom">Filter by Date of Birth From</label></fieldset>
+                      </div>
+                      <div class="col-md-6">
+                        <fieldset><input type="text" id="caseCriteria.DOBTo" name="caseCriteria.DOBTo" value="" class="tyler-datepicker form-control" autocomplete="off" data-val="true" data-val-regex="Please select a valid date. (MM/DD/YYYY)" data-val-regex-pattern="(((10|12|0?[13578])([/])(3[01]|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((11|0?[469])([/])(30|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(2[0-8]|1[0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(29)([/])([2468][048]00))|((0?2)([/])(29)([/])([3579][26]00))|((0?2)([/])(29)([/])([1][89][0][48]))|((0?2)([/])(29)([/])([2-9][0-9][0][48]))|((0?2)([/])(29)([/])([1][89][2468][048]))|((0?2)([/])(29)([/])([2-9][0-9][2468][048]))|((0?2)([/])(29)([/])([1][89][13579][26]))|((0?2)([/])(29)([/])([2-9][0-9][13579][26])))" < /><label for="caseCriteria.DOBTo">Filter by Date of Birth To</label></fieldset>
+                      </div>
+                    </div>
+
+<fieldset><input data-val-kendocombobox="Please select a valid gender." id="caseCriteria_Gender" name="caseCriteria.Gender" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_Gender").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"Female","Value":"F"},{"Text":"Male","Value":"M"},{"Text":"Nonbinary","Value":"X"},{"Text":"Unknown","Value":"U"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_Gender_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_Gender_listbox" style="position: absolute;">Filter by Gender</label></fieldset><fieldset><input data-val-kendocombobox="Please select a valid race." id="caseCriteria_Race" name="caseCriteria.Race" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_Race").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"Asian","Value":"A"},{"Text":"Black","Value":"B"},{"Text":"Hispanic","Value":"S"},{"Text":"Indian","Value":"I"},{"Text":"Middle Eastern","Value":"E"},{"Text":"Multiracial","Value":"M"},{"Text":"Native Hawaiian or Other Pacific Islander","Value":"H"},{"Text":"Other","Value":"O"},{"Text":"Refused","Value":"R"},{"Text":"Unavailable","Value":"U"},{"Text":"White","Value":"W"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_Race_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_Race_listbox" style="position: absolute;">Filter by Ethnicity</label></fieldset>
+                  <fieldset class="telephone-field">
+                    <input class="form-control"
+                           id="caseCriteria_PhoneNumber"
+                           maxlength="20"
+                           name="caseCriteria.PhoneNumber"
+                           tabindex="-1"
+                           type="text"
+                           />
+                    <label for="caseCriteria_PhoneNumber">Filter by Phone Number</label>
+                  </fieldset>
+
+<fieldset><input data-val-kendocombobox="Please select a valid driver&#39;s license state." id="caseCriteria_DLState" name="caseCriteria.DLState" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_DLState").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"Alabama","Value":"AL"},{"Text":"Alaska","Value":"AK"},{"Text":"American Samoa","Value":"AS"},{"Text":"Arizona","Value":"AZ"},{"Text":"Arkansas","Value":"AR"},{"Text":"Armed Forces Europe","Value":"AE"},{"Text":"Armed Forces Pacific","Value":"AP"},{"Text":"Armed Forces the Americas","Value":"AA"},{"Text":"California","Value":"CA"},{"Text":"Canada","Value":"CD"},{"Text":"Colorado","Value":"CO"},{"Text":"Connecticut","Value":"CT"},{"Text":"Delaware","Value":"DE"},{"Text":"District of Columbia","Value":"DC"},{"Text":"Federated States of Micronesia","Value":"FM"},{"Text":"Florida","Value":"FL"},{"Text":"Georgia","Value":"GA"},{"Text":"Guam","Value":"GU"},{"Text":"Hawaii","Value":"HI"},{"Text":"Idaho","Value":"ID"},{"Text":"Illinois","Value":"IL"},{"Text":"Indiana","Value":"IN"},{"Text":"Iowa","Value":"IA"},{"Text":"Kansas","Value":"KS"},{"Text":"Kentucky","Value":"KY"},{"Text":"Louisiana","Value":"LA"},{"Text":"Maine","Value":"ME"},{"Text":"Marshall Islands","Value":"MH"},{"Text":"Maryland","Value":"MD"},{"Text":"Massachusetts","Value":"MA"},{"Text":"Mexico","Value":"MM"},{"Text":"Michigan","Value":"MI"},{"Text":"Minnesota","Value":"MN"},{"Text":"Mississippi","Value":"MS"},{"Text":"Missouri","Value":"MO"},{"Text":"Montana","Value":"MT"},{"Text":"Nebraska","Value":"NE"},{"Text":"Nevada","Value":"NV"},{"Text":"New Hampshire","Value":"NH"},{"Text":"New Jersey","Value":"NJ"},{"Text":"New Mexico","Value":"NM"},{"Text":"New York","Value":"NY"},{"Text":"North Carolina","Value":"NC"},{"Text":"North Dakota","Value":"ND"},{"Text":"Northern Mariana Islands","Value":"MP"},{"Text":"Ohio","Value":"OH"},{"Text":"Oklahoma","Value":"OK"},{"Text":"Oregon","Value":"OR"},{"Text":"Other","Value":"OA"},{"Text":"Pennsylvania","Value":"PA"},{"Text":"Puerto Rico","Value":"PR"},{"Text":"Rhode Island","Value":"RI"},{"Text":"South Carolina","Value":"SC"},{"Text":"South Dakota","Value":"SD"},{"Text":"Tennessee","Value":"TN"},{"Text":"Texas","Value":"TX"},{"Text":"US Government","Value":"US"},{"Text":"Utah","Value":"UT"},{"Text":"Vermont","Value":"VT"},{"Text":"Virgin Islands, U.S.","Value":"VI"},{"Text":"Virginia","Value":"VA"},{"Text":"Washington","Value":"WA"},{"Text":"West Virginia","Value":"WV"},{"Text":"Wisconsin","Value":"WI"},{"Text":"Wyoming","Value":"WY"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_DLState_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_DLState_listbox" style="position: absolute;">Filter by Driver's License State</label></fieldset><fieldset><input class="form-control" data-val="true" data-val-length="Please enter a Driver&#39;s License Number that is 30 characters or less." data-val-length-max="30" id="caseCriteria_DriversLicenseNumber" maxLength="30" name="caseCriteria.DriversLicenseNumber" type="text" value="" /><label for="caseCriteria_DriversLicenseNumber">Filter by Driver's License Number</label></fieldset>                  
+                  <fieldset><input class="form-control" data-val="true" data-val-length="Please enter an FBI Number that is 10 characters or less." data-val-length-max="10" id="caseCriteria_FBINumber" maxLength="10" name="caseCriteria.FBINumber" placeholder="" type="text" value="" /><label for="caseCriteria_FBINumber">Filter by FBI Number</label></fieldset>
+
+                  <fieldset><input class="form-control" data-val="true" data-val-length="Please enter an SO Number that is 20 characters or less." data-val-length-max="20" id="caseCriteria_SONumber" maxLength="20" name="caseCriteria.SONumber" placeholder="" type="text" value="" /><label for="caseCriteria_SONumber">Filter by SO Number</label></fieldset>
+
+<fieldset><input class="form-control" data-val="true" data-val-length="Please enter an State ID value that is 20 characters or less." data-val-length-max="20" id="caseCriteria_StateIdNumber" maxLength="20" name="caseCriteria.StateIdNumber" placeholder="" type="text" value="" /><label for="caseCriteria_StateIdNumber">Filter by State ID Number</label></fieldset>
+                  <fieldset><input class="form-control" data-val="true" data-val-length="Please enter an Booking Number value that is 20 characters or less." data-val-length-max="20" id="caseCriteria_BookingNumber" maxLength="20" name="caseCriteria.BookingNumber" placeholder="" type="text" value="" /><label for="caseCriteria_BookingNumber">Filter by Booking Number</label></fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="section">
+              <a class="anchor" id="SearchCasesSS"></a>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="tab-pane" id="caseCriteria_SearchCases_Section">
+                    <h1 id="caseCriteria_SearchCases_Title">Case Search Criteria</h1>
+                    <fieldset><input data-val-kendocombobox="Please select a valid Case Type." id="caseCriteria_CaseType" name="caseCriteria.CaseType" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_CaseType").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"All Case Types","Value":"All Case Types"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_CaseType_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_CaseType_listbox" style="position: absolute;">Filter by Case Type</label></fieldset>
+                    <fieldset><input data-val-kendocombobox="Please select a valid Case Status." id="caseCriteria_CaseStatus" name="caseCriteria.CaseStatus" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_CaseStatus").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"ACTIVE","Value":"ACTIV"},{"Text":"ACTIVE","Value":"ACTIVE"},{"Text":"ACTIVE","Value":"A"},{"Text":"ACTIVE ESTATE","Value":"ACT"},{"Text":"APPEALED","Value":"APP"},{"Text":"CLOSED","Value":"CL"},{"Text":"CONVERSION - STATUS","Value":"CONS"},{"Text":"DECEASED","Value":"D"},{"Text":"DISMISSAL","Value":"DIS"},{"Text":"DISMISSED","Value":"DISM"},{"Text":"DISPOSED","Value":"DISP"},{"Text":"EXTENDED","Value":"EX"},{"Text":"FILED","Value":"F"},{"Text":"FINAL JUDGMENT","Value":"FJ"},{"Text":"GJ DISPOSITIONS","Value":"GJP"},{"Text":"GUARDIAN OF ESTATE CLOSED","Value":"GUEST"},{"Text":"GUARDIAN OR PERSON CLOSED","Value":"GUPER"},{"Text":"INACTIVE","Value":"INACT"},{"Text":"INACTIVE","Value":"IN"},{"Text":"INACTIVE","Value":"INA"},{"Text":"INACTIVE","Value":"I"},{"Text":"INDEXED","Value":"INDEXED"},{"Text":"INIDICTED AS A MISDEMEANOR","Value":"RM"},{"Text":"INTERIM JUDGMENT","Value":"JPIJ"},{"Text":"INTERIM JUDGMENT","Value":"JPIJD"},{"Text":"JP CONVERTED STATUS","Value":"JPCONV"},{"Text":"JUDGMENT","Value":"JDGMT"},{"Text":"JUDGMENT","Value":"CRJDGMT"},{"Text":"JUDGMENT RELEASE","Value":"JDRL"},{"Text":"NO BILLED","Value":"NB"},{"Text":"NONSUIT","Value":"NONS"},{"Text":"ON PROBATION","Value":"FPR"},{"Text":"ON PROBATION","Value":"OPR"},{"Text":"OPEN","Value":"O"},{"Text":"OPEN - NOTICE OF VIOLATION SENT","Value":"JPONOV"},{"Text":"OPEN - NOTICE PRIOR TO ISSUANCE OF WARRANT SENT","Value":"JPONPW"},{"Text":"OPEN / MISSING FILING DOCUMENTS","Value":"MP"},{"Text":"PRE-FILE","Value":"PF"},{"Text":"PRE-FILE (DO NOT USE)","Value":"PRF"},{"Text":"RECOMMIT (90 DAY)","Value":"RE"},{"Text":"REINDICTMENT","Value":"RI"},{"Text":"REJECTED BY DA","Value":"RJDA"},{"Text":"RE-OPENED","Value":"REO"},{"Text":"RESTORED","Value":"RS"},{"Text":"SEALED","Value":"S"},{"Text":"SUCCESSOR GUARDIAN","Value":"SUCC-GRD"},{"Text":"TEMPORARY","Value":"TP"},{"Text":"TEMPORARY","Value":"TEMP"},{"Text":"TEMPORARY ADMINISTRATION CLOSED","Value":"TEMPADMIN"},{"Text":"TEMPORARY CLOSED","Value":"TEMCL"},{"Text":"TRANSFERRED","Value":"TR"},{"Text":"TRANSFERRED","Value":"TRFD"},{"Text":"TRUE BILLED","Value":"TB"},{"Text":"WAIVER OF INDICTMENT","Value":"WVR"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_CaseStatus_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_CaseStatus_listbox" style="position: absolute;">Filter by Case Status</label></fieldset>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <fieldset><input type="text" id="caseCriteria.FileDateStart" name="caseCriteria.FileDateStart" value="" class="tyler-datepicker form-control" autocomplete="off" data-val="true" data-val-regex="Please select a valid date. (MM/DD/YYYY)" data-val-regex-pattern="(((10|12|0?[13578])([/])(3[01]|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((11|0?[469])([/])(30|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(2[0-8]|1[0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(29)([/])([2468][048]00))|((0?2)([/])(29)([/])([3579][26]00))|((0?2)([/])(29)([/])([1][89][0][48]))|((0?2)([/])(29)([/])([2-9][0-9][0][48]))|((0?2)([/])(29)([/])([1][89][2468][048]))|((0?2)([/])(29)([/])([2-9][0-9][2468][048]))|((0?2)([/])(29)([/])([1][89][13579][26]))|((0?2)([/])(29)([/])([2-9][0-9][13579][26])))" < /><label for="caseCriteria.FileDateStart">Filter by File Date Start</label></fieldset>
+                      </div>
+                      <div class="col-md-6">
+                        <fieldset><input type="text" id="caseCriteria.FileDateEnd" name="caseCriteria.FileDateEnd" value="" class="tyler-datepicker form-control" autocomplete="off" data-val="true" data-val-regex="Please select a valid date. (MM/DD/YYYY)" data-val-regex-pattern="(((10|12|0?[13578])([/])(3[01]|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((11|0?[469])([/])(30|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(2[0-8]|1[0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(29)([/])([2468][048]00))|((0?2)([/])(29)([/])([3579][26]00))|((0?2)([/])(29)([/])([1][89][0][48]))|((0?2)([/])(29)([/])([2-9][0-9][0][48]))|((0?2)([/])(29)([/])([1][89][2468][048]))|((0?2)([/])(29)([/])([2-9][0-9][2468][048]))|((0?2)([/])(29)([/])([1][89][13579][26]))|((0?2)([/])(29)([/])([2-9][0-9][13579][26])))" < /><label for="caseCriteria.FileDateEnd">Filter by File Date End</label></fieldset>
+                      </div>
+                    </div>
+                    <div id="SearchCaseJudicialOfficerContainer">
+                      
+<fieldset><input data-val-kendocombobox="Please select a valid Judicial Officer." id="caseCriteria_JudicialOfficer" name="caseCriteria.JudicialOfficer" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_JudicialOfficer").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"194TH, JUDICIAL DISTRICT COURT","Value":"194JDC"},{"Text":"195TH, JUDICIAL DISTRICT COURT","Value":"195JDC"},{"Text":"203RD, JUDICIAL DISTRICT COURT","Value":"203JDC"},{"Text":"204TH, JUDICIAL DISTRICT COURT","Value":"204JDC"},{"Text":"265TH, JUDICIAL DISTRICT COURT","Value":"265JDC"},{"Text":"282ND, JUDICIAL DISTRICT COURT","Value":"282JDC"},{"Text":"283RD, JUDICIAL DISTRICT COURT","Value":"283JDC"},{"Text":"291ST, JUDICIAL DISTRICT COURT","Value":"291JDC"},{"Text":"292ND JUDICIAL DISTRICT COURT, PROTECTIVE ORDER","Value":"292"},{"Text":"292ND, JUDICIAL DISTRICT COURT","Value":"292JDC"},{"Text":"363RD, JUDICIAL  DISTRICT COURT","Value":"363JDC"},{"Text":"ABEL, CHRIS","Value":"CHA"},{"Text":"ABENDROTH, TAMIKA JONES","Value":"TJA"},{"Text":"ACEVES, MARIA","Value":"MRA"},{"Text":"ACKERSON, DAVID E.","Value":"DEA"},{"Text":"ADAMS, DON","Value":"DAS"},{"Text":"ADAMS, DON","Value":"DA"},{"Text":"ADAMSON, JOHN","Value":"AMJ"},{"Text":"ADEOSUN, TOPE","Value":"TAU"},{"Text":"ADKINS, LADEITRA","Value":"LDA"},{"Text":"AGUILAR, MAURICE","Value":"MA"},{"Text":"ALAVAREZ, MANNY","Value":"MAY"},{"Text":"ALKIRE, LINDA","Value":"JLA"},{"Text":"ALLEN, JAMES","Value":"JJA"},{"Text":"AMADOR, VICTOR","Value":"VIA"},{"Text":"AMADOR, VICTOR","Value":"VA"},{"Text":"ANDERSON, KEITH","Value":"KEA"},{"Text":"ANDERSON, KEN","Value":"JKA"},{"Text":"ANDERSON, MARIE","Value":"MAJ"},{"Text":"ANDREWS, A","Value":"AND"},{"Text":"ANDREWS, HG","Value":"HGA"},{"Text":"ANDREWS, HG","Value":"HAN"},{"Text":"ANYIAM, CHIKA","Value":"CA"},{"Text":"ARMSTONG, HOYET","Value":"JHA"},{"Text":"ASHWORTH, GLEN","Value":"JAG"},{"Text":"ATER, GENE","Value":"GAT"},{"Text":"ATER, JAMES","Value":"AJJ"},{"Text":"AUSTIN, CURTIS","Value":"CAJ"},{"Text":"AUTRY, STEVEN","Value":"SA"},{"Text":"AUTRY, STEVEN","Value":"STA"},{"Text":"AWTHON, UKNOWN","Value":"UAWT"},{"Text":"AYITEY-ADJIN, ANTHONETTE","Value":"ANA"},{"Text":"BACHUS, BILL","Value":"BAB"},{"Text":"BACHUS, WILLIAM E","Value":"JBS"},{"Text":"BACKUS, W E","Value":"WB"},{"Text":"BAILEY, VONDA","Value":"VB"},{"Text":"BAIRD, W","Value":"JWB"},{"Text":"BAIRD, WEBB","Value":"WEJ"},{"Text":"BAKER, K","Value":"KBA"},{"Text":"BALIDO, JENNIFER","Value":"JNB"},{"Text":"BANNER, PAUL","Value":"PB"},{"Text":"BANNER, UKNOWN","Value":"UBNR"},{"Text":"BARAKA, BELINDA","Value":"JBK"},{"Text":"BARAKA, WEBB","Value":"BAJ"},{"Text":"BARKER, ANDREW","Value":"JBA"},{"Text":"BARKER, PAUL","Value":"PBR"},{"Text":"BARKLOW, JOHN","Value":"JBJ"},{"Text":"BARLOW, PHIL","Value":"PBW"},{"Text":"BARNES, DOUGLAS","Value":"DB"},{"Text":"BEAUCHAMP, SCOTT","Value":"SB"},{"Text":"BEDARD, LORNA","Value":"ALB"},{"Text":"BEHELER, SHANTEL","Value":"JSB"},{"Text":"BELINDA, MARTIN","Value":"MR4"},{"Text":"BELLAN, MELISSA","Value":"MEB"},{"Text":"BELTON, MARY","Value":"MB1"},{"Text":"BENNETT, JENNIFER","Value":"JB"},{"Text":"BENSON, D\u0027METRIA","Value":"DMB"},{"Text":"BENTLEY, BASCUM","Value":"JBT"},{"Text":"BIERY, FRED","Value":"JFB"},{"Text":"BIRDWELL, JERRY","Value":"JWL"},{"Text":"BIRMINGHAM, BRANDON","Value":"BB"},{"Text":"BLACK, HORACE D","Value":"HBJ"},{"Text":"BLACK, WILLIAM","Value":"WLJ"},{"Text":"BLACKBURN, M","Value":"MBL"},{"Text":"BLACKBURN, MARVIN","Value":"MAB"},{"Text":"BLACKINGTON, KEN","Value":"JKB"},{"Text":"BOARDMAN, UNKNOWN","Value":"UKBR"},{"Text":"BOLES, BENNIE","Value":"JBL"},{"Text":"BOLES, BONNIE","Value":"BLJ"},{"Text":"BOLIDO, JENNIFER","Value":"JBD"},{"Text":"BOSWORTH, RICHARD","Value":"JBR"},{"Text":"BOWER, LENNOX","Value":"JLB"},{"Text":"BOYEA, JUDGE","Value":"JBY"},{"Text":"BOYER, MAX","Value":"MB2"},{"Text":"BRADSHAW, JOHN","Value":"JOB"},{"Text":"BRASHEAR, BERLAIND","Value":"BBR"},{"Text":"BRASHEAR, BL","Value":"BLB"},{"Text":"BRATTON, BILL","Value":"JBI"},{"Text":"BRAUCHLE, UNKNOWN","Value":"UKBEU"},{"Text":"BRONCHETT, LISA","Value":"LBRT"},{"Text":"BROOKE, BARR","Value":"JBB"},{"Text":"BROWN, ADA","Value":"JAB"},{"Text":"BROWN, KIM","Value":"KB"},{"Text":"BROWN, MARY","Value":"MB"},{"Text":"BROWN, SHASTA","Value":"SHB"},{"Text":"BUCHANAN, VICKIE","Value":"JVB"},{"Text":"BURDOCK, BILL","Value":"BBJ"},{"Text":"BURNETT, JOE B","Value":"JJB"},{"Text":"BURNS, ROBERT","Value":"RB"},{"Text":"BURSON, LYNN","Value":"LYB"},{"Text":"BUSH, PHILIP D.","Value":"PDB"},{"Text":"BUTRUS, JOHN","Value":"JHB"},{"Text":"BYRD, DONALD","Value":"DBY"},{"Text":"CALLAHAN, TENA","Value":"TC"},{"Text":"CAMPBELL, CHARLES","Value":"CHC"},{"Text":"CAMPOS, AL","Value":"ACP"},{"Text":"CANAS, ROBERTO","Value":"JRC"},{"Text":"CARLSEN, CANDACE","Value":"CAC"},{"Text":"CARROLL, DONALD","Value":"DCJ"},{"Text":"CARROLL, UNKNOWN","Value":"UKCR"},{"Text":"CAVE, DAVID","Value":"DCA"},{"Text":"CAWTHON, WILMA","Value":"WCW"},{"Text":"CERCONE, ALBERT","Value":"JAC"},{"Text":"CHANNELL, STAN","Value":"SC"},{"Text":"CHAPMAN, CHARLES","Value":"CCH"},{"Text":"CHAPMAN, FARREL","Value":"FAC"},{"Text":"CHAPMAN, JOE","Value":"JJC"},{"Text":"CHAPMAN, RON","Value":"RCH"},{"Text":"CHARLES, LINDSEY","Value":"LCJ"},{"Text":"CHARLES, SANDOVAL","Value":"JSC"},{"Text":"CHARON, EVANS","Value":"JEC"},{"Text":"CHATHAM, ANDREW","Value":"ACH"},{"Text":"CHATHAM, ANDY","Value":"AYC"},{"Text":"CHAVEZ, DARLA","Value":"DCH"},{"Text":"CHAVEZ, REY","Value":"RCDN"},{"Text":"CHAVEZ, UNKNOWN","Value":"UKCZ"},{"Text":"CHEN, LINDA","Value":"JLC"},{"Text":"CHITTY, MIKE","Value":"MIC"},{"Text":"CHRISMAN, OSWIN","Value":"OC"},{"Text":"CLANCY, DANIEL","Value":"DCY"},{"Text":"CLANCY, JOHN","Value":"BJJ"},{"Text":"CLAYTON, J","Value":"JCL"},{"Text":"CLEMENTS, JR","Value":"CLT"},{"Text":"CLINTON, TINA","Value":"TY"},{"Text":"COFFEY, DARYL","Value":"JDC"},{"Text":"COFFEY, PAUL","Value":"PLC"},{"Text":"COLLIE, CHRISTINE","Value":"CC"},{"Text":"COLLIER, RICHARD","Value":"RC"},{"Text":"COLLINS, DOMINIQUE","Value":"DC"},{"Text":"COLLINS, GEORGE","Value":"GC"},{"Text":"COLSTON, SEAN","Value":"SEC"},{"Text":"CONCHE, UNKNOWN","Value":"UKCNH"},{"Text":"COOPER, GERRY","Value":"GCJ"},{"Text":"COUNTISS, RICHARD","Value":"RCJ"},{"Text":"COUNTY CRIMINAL  COURT APPEALS, 1","Value":"CCCA1"},{"Text":"COUNTY CRIMINAL COURT APPEALS, 2","Value":"CCCA2"},{"Text":"COUNTY CRIMINAL COURT, 1","Value":"CCC1"},{"Text":"COUNTY CRIMINAL COURT, 10","Value":"CCC10"},{"Text":"COUNTY CRIMINAL COURT, 11","Value":"CCC11"},{"Text":"COUNTY CRIMINAL COURT, 2","Value":"CCC2"},{"Text":"COUNTY CRIMINAL COURT, 3","Value":"CCC3"},{"Text":"COUNTY CRIMINAL COURT, 4","Value":"CCC4"},{"Text":"COUNTY CRIMINAL COURT, 5","Value":"CCC5"},{"Text":"COUNTY CRIMINAL COURT, 6","Value":"CCC6"},{"Text":"COUNTY CRIMINAL COURT, 7","Value":"CCC7"},{"Text":"COUNTY CRIMINAL COURT, 8","Value":"CCC8"},{"Text":"COUNTY CRIMINAL COURT, 9","Value":"CCC9"},{"Text":"Court, Judicial Officer","Value":"COURT"},{"Text":"COX, LISA","Value":"JCX"},{"Text":"COX, LYNN","Value":"JLN"},{"Text":"CRAIG, RACHEL","Value":"RAC"},{"Text":"CREUZOT, JOHN","Value":"JCZ"},{"Text":"CRIMINAL DISTRICT COURT, 1","Value":"CDC1"},{"Text":"CRIMINAL DISTRICT COURT, 2","Value":"CDC2"},{"Text":"CRIMINAL DISTRICT COURT, 3","Value":"CDC3"},{"Text":"CRIMINAL DISTRICT COURT, 4","Value":"CDC4"},{"Text":"CRIMINAL DISTRICT COURT, 5","Value":"CDC5"},{"Text":"CRIMINAL DISTRICT COURT, 6","Value":"CDC6"},{"Text":"CRIMINAL DISTRICT COURT, 7","Value":"CDC7"},{"Text":"CROFTS, THOMAS","Value":"TCR"},{"Text":"CROFTS, THOMAS","Value":"THC"},{"Text":"CROSIER, BYRON","Value":"BC"},{"Text":"CROSIER, BYRON","Value":"BEC"},{"Text":"CROSIER, UNKNOWN","Value":"UNKC"},{"Text":"CROWDER, ELIZABETH","Value":"ELC"},{"Text":"CROWE, WALTER","Value":"JWC"},{"Text":"CROZIER, UNKNOWN","Value":"UKCZR"},{"Text":"CRUM, TOM","Value":"JTC"},{"Text":"CRUZ, ISABEL","Value":"ISC"},{"Text":"CUNNINGHA, VICKERS","Value":"VCU"},{"Text":"DANIELS, NEIL J","Value":"NJD"},{"Text":"DAVIS, CHARLIE","Value":"CLD"},{"Text":"DAVIS, CLIFFORD","Value":"CDA"},{"Text":"DAVIS, DANNY","Value":"DDJ"},{"Text":"DAVIS, RICHARD","Value":"RD"},{"Text":"DAVIS, ROBERT","Value":"JDR"},{"Text":"DAVIS, ROMONA","Value":"JRD"},{"Text":"DAWSON, GAIL","Value":"JGD"},{"Text":"DEAN, KEITH","Value":"KHD"},{"Text":"DEWITT, LISA","Value":"JLD"},{"Text":"DIAZ, DANIELLE","Value":"DD"},{"Text":"DIBRELL, JOE","Value":"DJJ"},{"Text":"DIRVER, TEMPLE","Value":"JTD"},{"Text":"DIXON, BEVERLY","Value":"JDB"},{"Text":"DOHONEY, ROBERT","Value":"RDR"},{"Text":"DOUTHIT, FRANK PHILLIPS","Value":"FPD"},{"Text":"DUNLAP, CAS","Value":"CDU"},{"Text":"DUNLAP, CAS","Value":"CDL"},{"Text":"EDDY, DAN","Value":"DNY"},{"Text":"EDWARDS, REMEKO","Value":"RE"},{"Text":"EILAND, ANTHONY","Value":"AE"},{"Text":"ELLIOT, WILLIAM","Value":"JWE"},{"Text":"ELLIS, BRAIN","Value":"BEJ"},{"Text":"ELLIS, JAY","Value":"EJJ"},{"Text":"ELLIS, JOE","Value":"JEL"},{"Text":"ELLIS, PAUL","Value":"PEL"},{"Text":"ENTZ, HAROLD","Value":"HEZ"},{"Text":"ENTZ, UNKNOWN","Value":"UKTZ"},{"Text":"EVANS, CATHERINE","Value":"JCE"},{"Text":"EVANS, CATHERINE","Value":"CEJ"},{"Text":"EVANS, MAYA","Value":"MHE"},{"Text":"EVETTS, JAS K","Value":"JJE"},{"Text":"EXUM, LISA","Value":"LEJ"},{"Text":"FAGGET, VEARNCASE","Value":"JVF"},{"Text":"FARGO, STEPHANIE","Value":"SFG"},{"Text":"FARRIS, DEBORAH","Value":"DF"},{"Text":"FEIL, STEPHEN","Value":"STF"},{"Text":"FIFER, KING","Value":"KF"},{"Text":"FINN, DAVID","Value":"JDF"},{"Text":"FITZGERALD, KENNY","Value":"JKF"},{"Text":"FITZGERALD, KERRY","Value":"KFJ"},{"Text":"FITZMARTIN, GLENN","Value":"JGF"},{"Text":"FLEEKER, JUDGE","Value":"JFK"},{"Text":"FORBES, MELINDA","Value":"MF"},{"Text":"FORBIS, JOH","Value":"JFJ"},{"Text":"FORBIS, JOHN","Value":"FJJ"},{"Text":"FOWLER, CRIAG","Value":"CFJ"},{"Text":"FOX, LISA","Value":"LIF"},{"Text":"FRANCIS, BOBBY","Value":"JBF"},{"Text":"FRANCIS, MOLLY","Value":"MFR"},{"Text":"FRANCIS, MOLLY","Value":"MOF"},{"Text":"FRANCIS, ROBERT","Value":"RFR"},{"Text":"FRAZIER, VERETTA","Value":"VF"},{"Text":"FRENSLEY, UNKNOWN","Value":"UKFRY"},{"Text":"FRIZELL, ELIZABETH","Value":"EFZ"},{"Text":"FRY, JAMES","Value":"JF"},{"Text":"FULLER, PAUL","Value":"PFU"},{"Text":"FULLER, TOM","Value":"TFR"},{"Text":"GALLARDO, JUAN","Value":"JJG"},{"Text":"GALLOWAY, CALHOUN","Value":"CGA"},{"Text":"GANDY, MARSHAL M","Value":"JMG"},{"Text":"GARCIA, DENNISE","Value":"DG"},{"Text":"GARMON, HOLLIS","Value":"JHG"},{"Text":"GARRISON, F L","Value":"FLG"},{"Text":"GARZA, HECTOR","Value":"HG"},{"Text":"GEHL, DONNA","Value":"JDG"},{"Text":"GETUM, JOHNNY","Value":"JG"},{"Text":"GIBLIN, LEONARD","Value":"JGL"},{"Text":"GINSBERG, CARL","Value":"CG"},{"Text":"GIVENS, AMBER","Value":"AG"},{"Text":"GOMEZ, BENITO","Value":"JBG"},{"Text":"GONZALES, DELIA","Value":"DAG"},{"Text":"GOSSET, ED","Value":"JED"},{"Text":"GOSSETT, ED","Value":"EG"},{"Text":"GRAHAM, PETER","Value":"PEG"},{"Text":"GRANT, BEN Z","Value":"BZG"},{"Text":"GRANT, UNKNOWN","Value":"UKGT"},{"Text":"GREEN, LISA","Value":"LG"},{"Text":"GREEN, UNKNOWN","Value":"UKGR"},{"Text":"GREENBERG, MARK","Value":"MG"},{"Text":"GREENE, KAREN","Value":"KGN"},{"Text":"GRIGGS, DAVID","Value":"DVG"},{"Text":"GRISHAM, R","Value":"RGR"},{"Text":"GULICK, JOHN","Value":"GJJ"},{"Text":"HACK, LINDA","Value":"LHJ"},{"Text":"HALSEY, STEVE L","Value":"SLH"},{"Text":"HAMPTON, JACK","Value":"JAH"},{"Text":"HARLAN, LADONNA","Value":"LAH"},{"Text":"HAWK, SUSAN","Value":"SHK"},{"Text":"HAWTHORNE, TERESA","Value":"TW"},{"Text":"HAYES, JULIA","Value":"JH"},{"Text":"HEMPHILL, JAN","Value":"JHE"},{"Text":"HENDERSON, KURT","Value":"JKH"},{"Text":"HENDRICKS, JOHN","Value":"JJH"},{"Text":"HENSON, UNKNOWN","Value":"UNHNS"},{"Text":"HILBURN, CARY","Value":"CHJ"},{"Text":"HILL, KATRINA","Value":"KRH"},{"Text":"HILLS, UNKNOWN","Value":"UNHL"},{"Text":"HINES, JOHN","Value":"JHN"},{"Text":"HINSHAW, UNKNOWN","Value":"UNHW"},{"Text":"HOCKETT, LORI CHRISMAN","Value":"LCH"},{"Text":"HOFFMAN, MARTIN","Value":"MHO"},{"Text":"HOFFMAN, PEGGY","Value":"PH"},{"Text":"HOLLAND, JACK","Value":"HJJ"},{"Text":"HOLLAND, LOUIS","Value":"JLH"},{"Text":"HOLMES, TRACY","Value":"TH"},{"Text":"HOPKINS, HARRY","Value":"HAH"},{"Text":"HOUSTON, SAM","Value":"JSH"},{"Text":"HUBENER, KATY","Value":"KH"},{"Text":"HUFF, MONIQUE","Value":"MOH"},{"Text":"HUFF, STEPHANIE","Value":"SH"},{"Text":"HUMPHREY, CHARLIE","Value":"JCH"},{"Text":"HURDLE, RONALD","Value":"RHU"},{"Text":"HURRINGTON, JUDGE","Value":"UH"},{"Text":"ISENBERG, RANDY","Value":"RIB"},{"Text":"JACKLON, UNKNOWN","Value":"UNJKN"},{"Text":"JACKSON, HARRY","Value":"JHJ"},{"Text":"JACKSON, SANDRA","Value":"SJA"},{"Text":"JARVIS, DON","Value":"JDJ"},{"Text":"JASSO, JUAN","Value":"JJS"},{"Text":"JENDZREY, UNKNOWN","Value":"UNJZ"},{"Text":"JENKINS, CLAY","Value":"CJ"},{"Text":"JOHN, MEAD","Value":"MJ1"},{"Text":"JOHN, OVARD","Value":"OJ"},{"Text":"JOHNSON, FAITH","Value":"FJN"},{"Text":"JOHNSON, JAMES","Value":"JJJ"},{"Text":"JOHNSON, MARGARET JONES","Value":"MJJ"},{"Text":"JONES, B","Value":"BJO"},{"Text":"JONES, BOB","Value":"BJ"},{"Text":"JONES, DIANNE","Value":"DJS"},{"Text":"JONES, DIANNE","Value":"DJ"},{"Text":"JONES, GUY","Value":"JGJ"},{"Text":"JONES, KAREN","Value":"KJJ"},{"Text":"JONES, MICHAEL, Jr","Value":"MIJJ"},{"Text":"JONES, RAQUEL ROCKY","Value":"RRJ"},{"Text":"JONES, ROBERT","Value":"RJO"},{"Text":"JONES, THOMAS G.","Value":"TJ"},{"Text":"JUD, TE","Value":"PEGO"},{"Text":"JUDG, TEST","Value":"STFO"},{"Text":"JUDGE, TST","Value":"SECO"},{"Text":"JUDGE, VISITING","Value":"VJ"},{"Text":"JUDGE, VISITING","Value":"CCVJ"},{"Text":"JUGE, TESAN","Value":"ANAO"},{"Text":"JUSTEST, TJUD","Value":"JOVO"},{"Text":"KAMUCHE, TIFFANY","Value":"TIK"},{"Text":"KARREN, JONES","Value":"JJK"},{"Text":"KEASLER, MICHAEL","Value":"MKR"},{"Text":"KELLY, SHEQUITTA","Value":"SK"},{"Text":"KEMP, TAMMY","Value":"TK"},{"Text":"KEMP, WILLIAM M","Value":"WLK"},{"Text":"KENDALL, T","Value":"TL"},{"Text":"KERBOW, BECKY","Value":"BK"},{"Text":"KHOURY, ALIVIN","Value":"JAK"},{"Text":"KING, ANGELA","Value":"AK"},{"Text":"KING, DARLENE","Value":"DKJ"},{"Text":"KING, EDWIN","Value":"EKG"},{"Text":"KING, HENRY","Value":"JHK"},{"Text":"KINKEADE, ED","Value":"EK"},{"Text":"KOCH, J. J.","Value":"JK"},{"Text":"KREDELL, G","Value":"GKR"},{"Text":"KRIBY, VANCE","Value":"JVK"},{"Text":"KUPPER, ANDREW","Value":"ANK"},{"Text":"KUPPER, ANDREW","Value":"AWK"},{"Text":"KUPPER, TOM","Value":"JTK"},{"Text":"LABASTIDA, LUZ E","Value":"LEL"},{"Text":"LANDER, VICTOR","Value":"VL"},{"Text":"LANDWEHR, TERRY","Value":"TEL"},{"Text":"LANE, D","Value":"DLA"},{"Text":"LANE, HEBERT","Value":"HLI"},{"Text":"LANE, WARLOW","Value":"JLW"},{"Text":"LANFORD, NORMAN","Value":"NRL"},{"Text":"LANG, J","Value":"JLG"},{"Text":"LAVALLE, ROSE","Value":"JRL"},{"Text":"LEE, JEAN","Value":"JLEE"},{"Text":"LEEK SUTTON, MICHELLE","Value":"MLS"},{"Text":"LEE-SHANNON, CHERYL","Value":"CLS"},{"Text":"LEIGH, JOHN","Value":"JJL"},{"Text":"LENOIR, MOLLY","Value":"MLR"},{"Text":"LEVARIO, LENA","Value":"LLVR"},{"Text":"LEWIS, GRACIE","Value":"GL"},{"Text":"LEWIS, JUDGE","Value":"JLE"},{"Text":"LINDSEY, CHARLES","Value":"CLJ"},{"Text":"LINDSEY, LOONEY","Value":"LLJ"},{"Text":"LINE, HERBERT","Value":"JHL"},{"Text":"LISTER-BROWN, PHYLLIS","Value":"PYB"},{"Text":"LITTLE, JANE","Value":"JLT"},{"Text":"LIU, JUDGE","Value":"JLL"},{"Text":"LOCHRY, JUDGE","Value":"JLY"},{"Text":"LOCHRY, THOMAS","Value":"JTL"},{"Text":"LOLLAR, NAN","Value":"NL"},{"Text":"LOVING, KELLY","Value":"KL"},{"Text":"LUEDTKE, CHARLES","Value":"JCK"},{"Text":"LUSK, JANET","Value":"JAL"},{"Text":"LUTHER, PAMELA","Value":"PL"},{"Text":"MAG, MARY","Value":"MM2"},{"Text":"MAG, YOUNG","Value":"YMJ"},{"Text":"MAGISTRATE, JAIL","Value":"MAG"},{"Text":"MAGNIS, RICHARD","Value":"RMN"},{"Text":"MAGNIS, RICK","Value":"JMS"},{"Text":"MALONEY, FRANCIS","Value":"FML"},{"Text":"MALVEAUX, JULIA","Value":"JMV"},{"Text":"MARSHAL, JOHN M","Value":"MMJ"},{"Text":"MARSHAL, MARVIN","Value":"MM1"},{"Text":"MARSHALL, GANDY","Value":"JGM"},{"Text":"MARTIN, ANDREA","Value":"ANMA"},{"Text":"MARTIN, BELINDA","Value":"JMB"},{"Text":"MARTIN, RITCHTER","Value":"JRM"},{"Text":"MARTINEZ, BEN","Value":"BMA"},{"Text":"MARTINEZ, JAIME","Value":"JMZ"},{"Text":"MARTINEZ, SARA","Value":"SAM"},{"Text":"MARVIN, MARSHALL","Value":"JMM"},{"Text":"MATOVICH, JEFF","Value":"JJF"},{"Text":"MAULTSBY, BETH","Value":"JBH"},{"Text":"MAYES, RICHARD","Value":"RJM"},{"Text":"MAYS, LELA LAWRENCE","Value":"LLM"},{"Text":"MAYS, RICHARD","Value":"RMA"},{"Text":"MAYSE, MARILYNN","Value":"MAM"},{"Text":"MCCAIN, TATE","Value":"JMT"},{"Text":"MCCAIN, TOM","Value":"JTM"},{"Text":"MCCALL, JOHN","Value":"JOM"},{"Text":"MCCALL, M","Value":"MMC"},{"Text":"MCCLELLAN, JUDGE","Value":"JMD"},{"Text":"MCCLUNG, PAT","Value":"PMG"},{"Text":"MCCLURE, ROBERT","Value":"RMR"},{"Text":"MCCONNELL, UNKNOWN","Value":"UKML"},{"Text":"MCCORD, UNKNOWN","Value":"UKMR"},{"Text":"MCCORMICK, MICHAEL","Value":"MMM"},{"Text":"MCCOY, JOHN","Value":"MCY"},{"Text":"MCCRAW, JOHN L","Value":"JLM"},{"Text":"MCDANIEL, LANA","Value":"LME"},{"Text":"MCDOWELL, PAT","Value":"PMCL"},{"Text":"MCDOWELL, PATRICK","Value":"PMC"},{"Text":"MCDOWELL, ROBERT","Value":"JMC"},{"Text":"MCDOWELL, SCOT","Value":"SMJ"},{"Text":"MCDOWELL, WILLIAM","Value":"JWM"},{"Text":"MCFARLIN, SHERYL","Value":"SM"},{"Text":"MCGREGOR, F B","Value":"FBM"},{"Text":"MCNEIL, MARY JAYNE","Value":"MJM"},{"Text":"MCQUEEN, ANDREW","Value":"JAM"},{"Text":"MCVEA, TERRI","Value":"TMV"},{"Text":"MEAD, JOHN","Value":"JJM"},{"Text":"MERITH, ANNA","Value":"JMA"},{"Text":"MERRITT, TAHIRA","Value":"TM"},{"Text":"METCALFE, DON","Value":"DML"},{"Text":"MILLER, C","Value":"CMI"},{"Text":"MILLER, CHARLES","Value":"CMJ"},{"Text":"MILLER, CHUCK","Value":"CHM"},{"Text":"MILLER, JOSEPH","Value":"MJ"},{"Text":"MILLER, MARY E","Value":"JML"},{"Text":"MILLER, MIKE","Value":"MKM"},{"Text":"MILLER, RICHARD","Value":"JRI"},{"Text":"MILLER, STEPHEN","Value":"JMI"},{"Text":"MIRACLE, UKNOWN","Value":"UKMRL"},{"Text":"MITCHELL, LARRY","Value":"LMLL"},{"Text":"MONROE, LINCOLN","Value":"LM"},{"Text":"MONTGOMERY, ROBERT","Value":"MRJ"},{"Text":"MONTGOMERY, SALLY","Value":"SMO"},{"Text":"MOON, DAVID","Value":"JDM"},{"Text":"MOORE, DAVID","Value":"DMJ"},{"Text":"MOORE, REGINA","Value":"RM"},{"Text":"MOOREHEAD, AUDREY","Value":"AUM"},{"Text":"MORENO, SASHA","Value":"SSM"},{"Text":"MORRIS, RALSTON","Value":"MOJ"},{"Text":"MORRISON, DERRICK","Value":"DEM"},{"Text":"MOSS, ROBERT","Value":"JMR"},{"Text":"MOYE, BILL","Value":"JBM"},{"Text":"MOYE\u0027, ERIC","Value":"EM"},{"Text":"MULANAX, VIRGIL","Value":"JVM"},{"Text":"MULDER, NANCY","Value":"NMR"},{"Text":"MULLER, UNKNOWN","Value":"UMLR"},{"Text":"MULLIN, JAMES","Value":"JMJ"},{"Text":"MUNOZ, NICOLE","Value":"JNM"},{"Text":"MURDOCK, BILL","Value":"BMJJ"},{"Text":"MURPHY, MARY","Value":"MM"},{"Text":"MURRAY, JORDAN","Value":"MJO"},{"Text":"MYERS, LANA","Value":"LYM"},{"Text":"NANCARROW, MARK","Value":"MNW"},{"Text":"NASH, VALENCIA","Value":"VN"},{"Text":"NELMS, JOHN","Value":"JON"},{"Text":"NELMS, UNKNOWN","Value":"UKNL"},{"Text":"NIEDERER, DIANA","Value":"JDN"},{"Text":"NOES, NICK","Value":"NKZ"},{"Text":"NORTHAM, JOSHUA","Value":"JN"},{"Text":"O\u0027BRIEN, MARGARET","Value":"MOB"},{"Text":"OLVERA, GRACIELA","Value":"GO"},{"Text":"ONEIL, MICHAEL","Value":"JMO"},{"Text":"ONION, JOHN","Value":"JJO"},{"Text":"OVARD, JOHN","Value":"OJJ"},{"Text":"PARKER, BOYD M","Value":"MBP"},{"Text":"PARKER, PHIL","Value":"PHP"},{"Text":"PARKER, QUAY F","Value":"QFP"},{"Text":"PARKER, TONYA","Value":"TP"},{"Text":"PARVIN, CHRISTOPHER","Value":"CP"},{"Text":"PASK, NEAL","Value":"NLP"},{"Text":"PATTERSON, DAN","Value":"DP"},{"Text":"PATTERSON, M BOYD","Value":"PMJ"},{"Text":"PATZIG, GEORGE","Value":"JGP"},{"Text":"PAULY, WYNNE","Value":"WRJ"},{"Text":"PERKINS, LLOYD","Value":"LLP"},{"Text":"PERKINS, THOMAS","Value":"PTJ"},{"Text":"PETERS, LORI","Value":"LP"},{"Text":"PETTY, MICHAEL","Value":"JMP"},{"Text":"PETTY, MIKE","Value":"MPY"},{"Text":"PEURIFOY, PAUL","Value":"JPP"},{"Text":"PEYTON, JOHN","Value":"JPE"},{"Text":"PHILLIPS, JOE","Value":"JPH"},{"Text":"PIERCE, JACK","Value":"JJP"},{"Text":"PIRANIO, AJ","Value":"JAP"},{"Text":"PLUMLEE, ANDREA D","Value":"AP"},{"Text":"POE, TED","Value":"JTP"},{"Text":"POLVI, KELLY","Value":"JKP"},{"Text":"PRICE, TOM","Value":"TR"},{"Text":"PRIMEAUX, TARA","Value":"TAP"},{"Text":"PRUETT, ALBERT","Value":"JPA"},{"Text":"PRUITT, JAMES","Value":"PRU"},{"Text":"PURCELL, GRAHAM","Value":"GPJ"},{"Text":"PURDY, MONICA","Value":"MP"},{"Text":"RAMSEY, CHARLES","Value":"CRJ"},{"Text":"RANDALL, ANTHONY","Value":"ANR"},{"Text":"RANKIN, SUSAN","Value":"SR"},{"Text":"RAWLINS, WYLIE","Value":"WJJ"},{"Text":"RAYBAN, NAUF M","Value":"NFR"},{"Text":"RAYBURN, NALL","Value":"NRY"},{"Text":"REDMOND, AIESHA","Value":"ARD"},{"Text":"REDMOND, NIGEL","Value":"NIR"},{"Text":"RENTERIA, JUAN","Value":"JRE"},{"Text":"REYES, JAMES","Value":"JRS"},{"Text":"REYES, SUSANA","Value":"SUR"},{"Text":"RICHBURG, JUDGE","Value":"JRB"},{"Text":"RICHTAR, MARTIN","Value":"MR5"},{"Text":"RICHTER, ANDREW","Value":"JRA"},{"Text":"RICHTER, MARK","Value":"MR1"},{"Text":"RICHTER, MARTIN","Value":"MR"},{"Text":"RICK, MAGNIS","Value":"MJS"},{"Text":"RIDEAUX, NORRIS","Value":"NRD"},{"Text":"RIDGEWAY, UNKNOWN","Value":"URWY"},{"Text":"RILEY, AUDRA","Value":"AUR"},{"Text":"RISCHTER, MARTIN","Value":"MR6"},{"Text":"RITTER, MARTHA","Value":"MR3"},{"Text":"RIVERA WORLEY, CARMEN","Value":"CRW"},{"Text":"ROACH, JOHN","Value":"JJR"},{"Text":"ROBERT, MAHONEY","Value":"MYJ"},{"Text":"ROBINSON, JOHN","Value":"JRJ"},{"Text":"RODEN, JANE","Value":"JR"},{"Text":"RODEN, JANE","Value":"JAR"},{"Text":"RODEN, JANE","Value":"JD"},{"Text":"RODEN, RUSSELL","Value":"RR"},{"Text":"RODRIGUEZ, ALICE","Value":"ALR"},{"Text":"ROMUALDO, UKNOWN","Value":"URM"},{"Text":"ROSALES, PAULA","Value":"PR"},{"Text":"ROSE, ROBERT","Value":"JRR"},{"Text":"ROSENFIELD, JEFF","Value":"JRO"},{"Text":"ROSENFIELD, JEFF","Value":"JRF"},{"Text":"ROSS, DON","Value":"DRO"},{"Text":"RUSSO, MARK","Value":"VJMR"},{"Text":"RUST, ANN","Value":"ARU"},{"Text":"RYAN, MARK","Value":"MR2"},{"Text":"RYAN, TOM","Value":"JTR"},{"Text":"SANDOVAL, CHARLES","Value":"CSJ"},{"Text":"SCALES, R T","Value":"RTS"},{"Text":"SCHWILLE, MIK","Value":"MSC"},{"Text":"SCOFIELD, BOB","Value":"JBSD"},{"Text":"SCOTT, BILL","Value":"BIS"},{"Text":"SCOTT, KENDALL","Value":"KSJ"},{"Text":"SCOTT, MCCDOWELL","Value":"MS2"},{"Text":"SEIDER, STEVEN","Value":"SS"},{"Text":"SEPULVEDA, LUIS","Value":"JLS"},{"Text":"SHALAN, GREGG","Value":"VJGS"},{"Text":"SHANKLE, LADONNA","Value":"LDS"},{"Text":"SHEAD, DOROTHY","Value":"DRS"},{"Text":"SHEEHAN, BILL","Value":"BSH"},{"Text":"SHEENAN, BILL","Value":"BSJ"},{"Text":"SHEHAN, TOMI","Value":"TSH"},{"Text":"SHEHAN, TOMI","Value":"ST"},{"Text":"SHERRILL, CHARLES","Value":"CSH"},{"Text":"SHOLDEN, JOHN","Value":"JSG"},{"Text":"SHOLDEN, JOHN","Value":"SJJ"},{"Text":"SHOOK, GLADYS","Value":"JGS"},{"Text":"SIMS, M. KENT","Value":"MS"},{"Text":"SKEMP, DOUG","Value":"JDS"},{"Text":"SKINNER, COLLEEN","Value":"CDS"},{"Text":"SLAUGHTER, GENA","Value":"GS"},{"Text":"SMITH, CRAIG","Value":"CSM"},{"Text":"SMITH, EARL","Value":"JES"},{"Text":"SMITH, TILLMAN","Value":"JTS"},{"Text":"SNIPES, MICHAEL","Value":"MSN"},{"Text":"SNIPES, MIKE","Value":"MSP"},{"Text":"SOMMERS, TIMOTHY","Value":"SRM"},{"Text":"SPINHOUR, KELLY","Value":"JKS"},{"Text":"SPRINKLE, KATHLEEN","Value":"KAS"},{"Text":"STANLEY, KIRK","Value":"SKJ"},{"Text":"STARR, L","Value":"LST"},{"Text":"STEELE, CLEOPHUS","Value":"CLO"},{"Text":"STEPHENS, BILL","Value":"BS"},{"Text":"STEPHENS, BILL","Value":"BST"},{"Text":"STEPHENS, GARY","Value":"GST"},{"Text":"STEVENS, BILL","Value":"BLSJ"},{"Text":"STEWART, ANNETTE","Value":"ATS"},{"Text":"STEWART, JERRY","Value":"JST"},{"Text":"STOCKES, MARK","Value":"MSJ"},{"Text":"STOLTZ, MARK","Value":"MZ"},{"Text":"STOLZ, MARK","Value":"MS1"},{"Text":"STREETE, SANDRE","Value":"SAST"},{"Text":"STRICKLIN, CLIFFORD","Value":"CFK"},{"Text":"SWARTZ, ADAM M","Value":"AS"},{"Text":"TAITE, JOHN","Value":"TJJ"},{"Text":"TAITE, RALPH","Value":"RTI"},{"Text":"TAITE, RALPH","Value":"RAT"},{"Text":"TAPSCOTT, KEN","Value":"KT"},{"Text":"TAYLOR, J BRITE","Value":"JTB"},{"Text":"TAYLOR, NICOLE","Value":"NIT"},{"Text":"TBD, TBD","Value":"TBD"},{"Text":"TEAGUE, JUDGE","Value":"JTG"},{"Text":"TEN EYCK, C. ANDREW","Value":"CAT"},{"Text":"TERRY, JIM","Value":"JTY"},{"Text":"TETER, JOHN","Value":"JJT"},{"Text":"THOMAS, LINDA","Value":"LT"},{"Text":"THOMPSON, BRENDA H","Value":"BHT"},{"Text":"THOMPSON, CARTER","Value":"CT"},{"Text":"THORNTON, R E","Value":"RET"},{"Text":"THORPE, THOMAS B","Value":"TBT"},{"Text":"THORPE, TOM","Value":"JTT"},{"Text":"TILLERY, DALE","Value":"DT"},{"Text":"TINSLEY, FRED","Value":"FTY"},{"Text":"TIPPS, ARTHUR","Value":"JAT"},{"Text":"TITTLE, DON","Value":"JDT"},{"Text":"TOBOLOWSKY, EMILY","Value":"ET"},{"Text":"TOLBERT, CASSANDRA","Value":"CTJ"},{"Text":"TOLLE, MARK","Value":"MTE"},{"Text":"TOLLE, TERESA","Value":"TOT"},{"Text":"TOLLE, TERSEA","Value":"TSTL"},{"Text":"TORRES-WILLIAMS, DOMINIQUE","Value":"DOW"},{"Text":"TRAMMEL, RITA","Value":"RT"},{"Text":"TRIBLETT, UNKNOWN","Value":"UTRB"},{"Text":"TROBEE, RYAN","Value":"RYTR"},{"Text":"TUCKER, ANDREW","Value":"JTA"},{"Text":"TURLEY, HAL","Value":"HAT"},{"Text":"TURNER, DON","Value":"DTR"},{"Text":"USED, NOT","Value":"SHCR"},{"Text":"VANCE, BRANDON","Value":"BV"},{"Text":"VANCE, JOHN","Value":"JJV"},{"Text":"VANCE, KIRBY","Value":"JKV"},{"Text":"VANEGAS, SUZY","Value":"SUV"},{"Text":"VASCOE, MARCUS","Value":"MV1"},{"Text":"VAUGHAN, RC","Value":"JRV"},{"Text":"VICKERY, JONATHAN","Value":"JOV"},{"Text":"VIDAURRI, CELSO","Value":"CEV"},{"Text":"VIDAURRI, JUDGE","Value":"JVD"},{"Text":"VIRGIL, MALANAX","Value":"MVJ"},{"Text":"WADE, HENRY","Value":"HW"},{"Text":"WADE, KENNETH","Value":"JKW"},{"Text":"WADE, KRISTIN","Value":"KRW"},{"Text":"WALKER, DEE BROWN","Value":"JDW"},{"Text":"WALKER, J","Value":"JWA"},{"Text":"WALKER, ROBERT","Value":"WAJ"},{"Text":"WALTER, KANDACE","Value":"KNW"},{"Text":"WARDER, UNKNOWN","Value":"WRD"},{"Text":"WARREN, INGRID","Value":"IW"},{"Text":"WARREN, JAMES F","Value":"JJW"},{"Text":"WASHINGTON, NOVA","Value":"NW"},{"Text":"WEBB, BIARD","Value":"BWE"},{"Text":"WELDON, KIRK","Value":"KWJ"},{"Text":"WEST, ROYCE, Jr","Value":"RWJ"},{"Text":"WHITAKER, MELVIN","Value":"MWH"},{"Text":"WHITE, BILL","Value":"JBW"},{"Text":"WHITE, CARMEN","Value":"CAW"},{"Text":"WHITE, CAROLYN","Value":"CWJ"},{"Text":"WHITE, ERNEST","Value":"EW"},{"Text":"WHITESIDE, CLYDE","Value":"CWH"},{"Text":"WHITFIELD, KATINA","Value":"KAW"},{"Text":"WHITMORE, BRIDGETT","Value":"BWH"},{"Text":"WHITNEY, ROBERT A","Value":"JRW"},{"Text":"WILEY, UNKNOWN","Value":"UWLE"},{"Text":"WILLIAMS, CLAUDE","Value":"JCW"},{"Text":"WILLIAMS, STACI","Value":"SW"},{"Text":"WILSON, UKNOWN","Value":"UWLS"},{"Text":"WINFIELD, DONNA","Value":"DWJ"},{"Text":"WOLFF, JANICE","Value":"JAW"},{"Text":"WOODRUFF, DAVID","Value":"DAW"},{"Text":"WOODY, BRUCE","Value":"BW"},{"Text":"WRIGHT, ROBERT","Value":"RWR"},{"Text":"WYDE, DAN","Value":"DYE"},{"Text":"WYNNE, PAULY","Value":"JWP"},{"Text":"WYSOCKI, ASHLEY","Value":"AW"},{"Text":"YOUNG, JACK D","Value":"JJY"},{"Text":"YOUNG, KAREN","Value":"JKY"},{"Text":"YOUNG, MANYLLU","Value":"MY1"},{"Text":"YOUNG, MARY","Value":"JMY"},{"Text":"YOUNG, UNKNOWN","Value":"UYG"},{"Text":"ZANE, LAURINI","Value":"JLZ"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_JudicialOfficer_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_JudicialOfficer_listbox" style="position: absolute;">Filter by Judicial Officer</label></fieldset>                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="section">
+              <a class="anchor" id="SearchWarrantsSS"></a>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <h1 id="caseCriteria_SearchWarrants_Title">Warrant Search Criteria</h1>
+                  <div class="tab-pane" id="caseCriteria_SearchWarrants_Section">
+                    <fieldset><input data-val-kendocombobox="Please select a valid Warrant Type." id="caseCriteria_WarrantType" name="caseCriteria.WarrantType" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_WarrantType").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"AFFIDAVIT TO GO OFF BOND (ATGOB) WARRANT","Value":"ATGOB"},{"Text":"ALIAS ARREST WARRANT","Value":"JPAL"},{"Text":"ARREST WARRANT","Value":"AW"},{"Text":"ARREST WARRANT","Value":"JAW"},{"Text":"BENCH WARRANT","Value":"BENCH"},{"Text":"BENCH WARRANT","Value":"BW"},{"Text":"BOND FORFEITURE","Value":"FORTF"},{"Text":"BOND FORFEITURE  - CAPIAS WARRANT OF ARREST","Value":"BFW"},{"Text":"BOND FORFEITURE WARRANT","Value":"JPBF"},{"Text":"CAPIAS","Value":"CAP"},{"Text":"CAPIAS","Value":"JPCAP"},{"Text":"CAPIAS PRO FINE (CPF)","Value":"CAPF"},{"Text":"CAPIAS PRO FINE WARRANT","Value":"CPF"},{"Text":"CHEMICAL DEPENDENCY EMERGENCY DETENTION WARRANT","Value":"JPC"},{"Text":"DEFAULT_ALIAS","Value":"CONV_DA"},{"Text":"DIRECTIVE TO APPREHEND","Value":"TRDTA"},{"Text":"DISTRESS WARRANT","Value":"DW"},{"Text":"DIVERT COURT","Value":"DVC"},{"Text":"FAILURE TO APPEAR","Value":"FTA"},{"Text":"FUGITIVE","Value":"FUG"},{"Text":"GOVERNORS WARRANT","Value":"GW"},{"Text":"GOVERNOR\u0027S WARRANT","Value":"GOVWT"},{"Text":"INDICTMENT- CAPIAS WARRANT OF ARREST","Value":"INDT"},{"Text":"INSUFFICIENT BOND  - CAPIAS WARRANT OF ARREST","Value":"INSBW"},{"Text":"MANDATE WARRANT - CAPIAS WARRANT OF ARREST","Value":"MAND"},{"Text":"MENTAL ILLNESS EMERGENCY DETENTION WARRANT","Value":"JPMH"},{"Text":"MISCELLANEOUS  - CAPIAS WARRANTOF ARREST","Value":"MIW"},{"Text":"ORIGINAL CAPIAS","Value":"CAPI"},{"Text":"ORIGINAL CAPIAS WARRANT OF ARREST","Value":"OCW"},{"Text":"PROBATION VIOLATION - CAPIAS  WARRANT OF ARREST","Value":"VIOL"},{"Text":"REINDICTMENT - CAPIAS WARRANT OF ARREST","Value":"RINT"},{"Text":"SEARCH WARRANT","Value":"SW"},{"Text":"TRUANCY WRIT OF ATTACHMENT","Value":"JPTW"},{"Text":"WITNESS ATTACHMENT","Value":"WAC"},{"Text":"WRIT OF ATTACHMENT","Value":"WRIT"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_WarrantType_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_WarrantType_listbox" style="position: absolute;">Filter by Warrant Type</label></fieldset>
+
+                    <fieldset><input data-val-kendocombobox="Please select a valid Warrant Status." id="caseCriteria_WarrantStatus" name="caseCriteria.WarrantStatus" type="text" /><script>
+	jQuery(function(){jQuery("#caseCriteria_WarrantStatus").kendoComboBox({"dataBound":smartSearchObj.ComboBoxInit,"dataSource":[{"Text":"ACTIVE","Value":"ACT"},{"Text":"ACTIVE","Value":"A"},{"Text":"ACTIVE - ICL","Value":"AL"},{"Text":"BENCH WARRANT EXECUTED","Value":"BWE"},{"Text":"BENCH WARRANT ISSUED","Value":"BWI"},{"Text":"BOND","Value":"B"},{"Text":"BOND UPDATE","Value":"BU"},{"Text":"CANCEL","Value":"C"},{"Text":"CANCEL - CLEAR SYSTEM ON ALL PRODUCTION WARRANTS","Value":"CCS"},{"Text":"CANCELLED  - CASE TRUE BILLED","Value":"CTL"},{"Text":"CANCELLED - CASE NO BILLED","Value":"CNB"},{"Text":"CANCELLED - CASE TRUE BILLED","Value":"CXTB"},{"Text":"CASE REJECTED BY DA","Value":"CRD"},{"Text":"CASE REJECTED BY DA","Value":"CRDA"},{"Text":"CLOSED BY ARREST","Value":"CBA"},{"Text":"CONVERTED DISPOSED WARRANT STATUS","Value":"CONVDISP"},{"Text":"DEFAULT_AMEND","Value":"CONV_DA"},{"Text":"DELETE WARRANT","Value":"DC-DL"},{"Text":"DISPO COMMENT UPDATE","Value":"DC-DCU"},{"Text":"DISPO COMMENT UPDATE","Value":"DCU"},{"Text":"IN JAIL","Value":"JAIL"},{"Text":"INACTIVE","Value":"INA"},{"Text":"ISSUED","Value":"ISSUED"},{"Text":"ISSUED","Value":"JP-I"},{"Text":"ISSUED -  BOND FORF. WARR. CONST 1","Value":"JPBF1"},{"Text":"ISSUED -  BOND FORF. WARR. CONST 2","Value":"JPBF2"},{"Text":"ISSUED -  BOND FORF. WARR. CONST 3","Value":"JPBF3"},{"Text":"ISSUED -  BOND FORF. WARR. CONST 4","Value":"JPBF4"},{"Text":"ISSUED -  BOND FORF. WARR. CONST 5","Value":"JPBF5"},{"Text":"ISSUED -  BOND FORF. WARR. SHERIFF","Value":"JPBFS"},{"Text":"ISSUED - ALIAS WARR. CONST 1","Value":"JPAWC1"},{"Text":"ISSUED - ALIAS WARR. CONST 2","Value":"JPAWC2"},{"Text":"ISSUED - ALIAS WARR. CONST 3","Value":"JPAWC3"},{"Text":"ISSUED - ALIAS WARR. CONST 4","Value":"JPAWC4"},{"Text":"ISSUED - ALIAS WARR. CONST 5","Value":"JPAWC5"},{"Text":"ISSUED - ALIAS WARR. SHERIFF","Value":"JPAWSH"},{"Text":"ISSUED - ARREST WARR. CONST 1","Value":"JP-I1"},{"Text":"ISSUED - ARREST WARR. CONST 2","Value":"JP-I2"},{"Text":"ISSUED - ARREST WARR. CONST 3","Value":"JP-I3"},{"Text":"ISSUED - ARREST WARR. CONST 4","Value":"JP-I4"},{"Text":"ISSUED - ARREST WARR. CONST 5","Value":"JP-I5"},{"Text":"ISSUED - ARREST WARR. SHERIFF","Value":"JP-IS"},{"Text":"ISSUED - CAPIAS WARR. CONST 1","Value":"JPCWC1"},{"Text":"ISSUED - CAPIAS WARR. CONST 2","Value":"JPCWC2"},{"Text":"ISSUED - CAPIAS WARR. CONST 3","Value":"JPCWC3"},{"Text":"ISSUED - CAPIAS WARR. CONST 4","Value":"JPCWC4"},{"Text":"ISSUED - CAPIAS WARR. CONST 5","Value":"JPCWC5"},{"Text":"ISSUED - CAPIAS WARR. SHERIFF","Value":"JPCWSH"},{"Text":"Issued Active","Value":"ISS"},{"Text":"ISSUED BY COURT","Value":"IBC"},{"Text":"ISSUED IN ERROR","Value":"JPIIE"},{"Text":"JAIL","Value":"J"},{"Text":"JAIL","Value":"I"},{"Text":"OPEN WARRANT","Value":"DC-OP"},{"Text":"ORDERED","Value":"ORD"},{"Text":"ORDERED","Value":"OR"},{"Text":"OTHER INACTIVE","Value":"OI"},{"Text":"POSTED","Value":"POST"},{"Text":"Quashed","Value":"QUASH"},{"Text":"QUASHED","Value":"QUASHED"},{"Text":"RECALLED","Value":"RECALL"},{"Text":"RECALLED","Value":"JP-R"},{"Text":"RECALLED  - CASE ENHANCED TO FELONY","Value":"RCF"},{"Text":"RECALLED - BOND FORFEITURE SET ASIDE","Value":"RBS"},{"Text":"RECALLED - CASE DISMISSED","Value":"RDS"},{"Text":"RECALLED - CASE REDUCED TO MISDEMEANOR","Value":"RRM"},{"Text":"RECALLED - DUPLICATE WARRANT","Value":"RUW"},{"Text":"RECALLED - NAOG","Value":"RNA"},{"Text":"RECALLED - OVER 120 DAYS","Value":"RVO"},{"Text":"RECALLED - OVER TWO YEARS OLD","Value":"RWO"},{"Text":"RECALLED - PGBC","Value":"RPB"},{"Text":"RECALLED - POSTED PR BOND","Value":"RPR"},{"Text":"RECALLED - WRONG PERSON","Value":"RWP"},{"Text":"RECALLED BY COURT","Value":"RBC"},{"Text":"RECALLED DRY WRIT","Value":"RDW"},{"Text":"RECALLED PER AGENCY","Value":"RPA"},{"Text":"RECALLED PER NO FINDING OF FACT","Value":"RFS"},{"Text":"RECALLED TO BE FILED AT A LATER DATE","Value":"R"},{"Text":"RECEIVED","Value":"RCV"},{"Text":"RECEIVED BY SO","Value":"REC"},{"Text":"RELEASED PER DPD SUPPL","Value":"DC-RPS"},{"Text":"RETURN SERVED","Value":"RS"},{"Text":"RETURNED - SOL EXPIRED","Value":"DC-RTS"},{"Text":"RETURNED - SOL EXPIRED","Value":"RSE"},{"Text":"RETURNED NOT SERVED","Value":"RNS"},{"Text":"RETURNED TO AGENCY","Value":"RTA"},{"Text":"RETURNED TO COURT","Value":"DC-RTC"},{"Text":"RETURNED TO COURT","Value":"RTC"},{"Text":"RETURNED UNSERVED","Value":"RET"},{"Text":"Served","Value":"SRV"},{"Text":"SERVED","Value":"SERV"},{"Text":"SERVED","Value":"S"},{"Text":"SERVED - PAID FINE","Value":"SVP"},{"Text":"SERVED IN JAIL","Value":"SIJ"},{"Text":"SERVED ON BOND","Value":"SVB"},{"Text":"TRANSFERRED TO ANOTHER COURT","Value":"T"},{"Text":"TRANSFERRED-CONSTABLE","Value":"TRCT"},{"Text":"Unsigned","Value":"UN"},{"Text":"UNSIGNED","Value":"UNS"},{"Text":"WARRANT CLOSED BY ARREST","Value":"WCBA"},{"Text":"WARRANT RECALLED","Value":"WR"},{"Text":"WARRANT RECALLED CASE DISPOSED","Value":"JPRCD"},{"Text":"WILL NOT CHANGE THE FIRST SCREEN","Value":"X"},{"Text":"WRIT","Value":"W"},{"Text":"WRIT","Value":"WT"}],"dataTextField":"Text","dataValueField":"Value","filter":"contains"});});
+</script><label id="caseCriteria_WarrantStatus_listbox_label" class="comboBoxLabelNoInput ClickThroughIE" for="caseCriteria_WarrantStatus_listbox" style="position: absolute;">Filter by Warrant Status</label></fieldset>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <fieldset><input type="text" id="caseCriteria.WarrantDateIssuedFrom" name="caseCriteria.WarrantDateIssuedFrom" value="" class="tyler-datepicker form-control" autocomplete="off" data-val="true" data-val-regex="Please select a valid date. (MM/DD/YYYY)" data-val-regex-pattern="(((10|12|0?[13578])([/])(3[01]|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((11|0?[469])([/])(30|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(2[0-8]|1[0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(29)([/])([2468][048]00))|((0?2)([/])(29)([/])([3579][26]00))|((0?2)([/])(29)([/])([1][89][0][48]))|((0?2)([/])(29)([/])([2-9][0-9][0][48]))|((0?2)([/])(29)([/])([1][89][2468][048]))|((0?2)([/])(29)([/])([2-9][0-9][2468][048]))|((0?2)([/])(29)([/])([1][89][13579][26]))|((0?2)([/])(29)([/])([2-9][0-9][13579][26])))" < /><label for="caseCriteria.WarrantDateIssuedFrom">Filter by Warrant Issued From</label></fieldset>
+                      </div>
+                      <div class="col-md-6">
+                        <fieldset><input type="text" id="caseCriteria.WarrantDateIssuedTo" name="caseCriteria.WarrantDateIssuedTo" value="" class="tyler-datepicker form-control" autocomplete="off" data-val="true" data-val-regex="Please select a valid date. (MM/DD/YYYY)" data-val-regex-pattern="(((10|12|0?[13578])([/])(3[01]|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((11|0?[469])([/])(30|[12][0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(2[0-8]|1[0-9]|0?[1-9])([/])((1[8-9]\d{2})|([2-9]\d{3})))|((0?2)([/])(29)([/])([2468][048]00))|((0?2)([/])(29)([/])([3579][26]00))|((0?2)([/])(29)([/])([1][89][0][48]))|((0?2)([/])(29)([/])([2-9][0-9][0][48]))|((0?2)([/])(29)([/])([1][89][2468][048]))|((0?2)([/])(29)([/])([2-9][0-9][2468][048]))|((0?2)([/])(29)([/])([1][89][13579][26]))|((0?2)([/])(29)([/])([2-9][0-9][13579][26])))" < /><label for="caseCriteria.WarrantDateIssuedTo">Filter by Warrant Issued To</label></fieldset>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+          <input name="Search" id="btnSSSubmit" class="btn btn-primary pull-right" value="Submit" type="submit" />
+        </div>
+        <p id="SideNavPadding" style="height:500px;" class="tyler-hide"></p>
+      </div>
+      <div id="SideNav" class="col-md-3 hidden-sm hidden-xs tyler-hide">
+        <div class="sidebar affix" style="top: auto;">
+          
+    <nav id="mysidebar" class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+      <div>
+        <ul class="nav bs-docs-sidenav">
+            <li><a href="#SmartSearchSS">Smart Search</a></li>
+            <li><a href="#GeneralOptionsSS">General Options</a></li>
+            <li><a href="#PartySearchCriteriaSS">Party Search Criteria</a></li>
+            <li><a href="#SearchCasesSS">Case Search Criteria</a></li>
+            <li><a href="#SearchWarrantsSS">Warrant Search Criteria</a></li>
+        </ul>
+        <a id="BackToTop" class="back-to-top" href="#top">Back to top</a>
+      </div>
+    </nav>
+
+        </div>
+
+      </div>
+    </div>
+</form>
+<form action="/DALLASPROD/SmartSearch/SmartSearch/ResetSmartSearch" id="resetSmartSearchForm" method="get"></form>
+
+
+</div> <!-- /end div.portlet-body -->
+
+    </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <footer role="contentinfo" class="margin-top center-block" style="width: 95%;">
+  <div class="row visible-xs">
+    <div class="col-xs-12" style="margin:0 0 0.5rem -0.5rem;">
+      <img class="pull-left noprint" src="/DALLASPROD/Content/tylerui/images/empowered.png" alt="Empowered By Tyler Technologies" />
+    </div>
+    <div class="col-xs-12">
+      <small class="pull-left noprint">&copy; 2024 Tyler Technologies, Inc. | All Rights Reserved</small>
+      <br />
+      <small class="pull-left noprint">Version: 2017.1.47.0</small>
+    </div>
+  </div>
+  <div class="row hidden-xs">
+    <div class="col-xs-6 col-md-6">
+      <small class="pull-left noprint">&copy; 2024 Tyler Technologies, Inc. | All Rights Reserved</small>
+      <br />
+      <small class="pull-left noprint">Version: 2017.1.47.0</small>
+    </div>
+    <div class="col-xs-6 col-md-6">
+        <img alt="Empowered By Tyler Technologies" class="pull-right noprint" src="/DALLASPROD/Content/tylerui/images/empowered.png" />
+    </div>
+  </div>
+</footer>
+
+    <div style="display: none">Machine: D16SC1ODPOR1</div>
+
+  <script>
+    (function(config) {
+      Object.keys(config).forEach(function(k) {
+        window.odyPortal.sessionInfo[k] = config[k];
+      });
+    })({"sessionTimeout":15,"isAuthenticated":true,"isKioskMode":false,"isRouteHomeOrIndex":false,"homeUrl":"/DALLASPROD/?clearSession=True","logOffUrl":"/DALLASPROD/Account/LogOff?showLandingPage=True","refreshUrl":"/DALLASPROD/Home/RefreshSession"});
+  </script>
+  <div id="timeout-wrapper" class="lockoutScreen" style="display:none">
+    <div class="hidden-lg hidden-md hidden-sm" style="height:55px;"></div>
+    <div id="page-timeout" class="timeout-container" style="border: 2px solid rgba(100,100,100,0.3); padding: 30px; border-radius: 0; height: 220px;">
+      <h2 style="margin-top:0;">Are you still here?</h2>
+      <hr />
+      <p>
+        Your session will expire in <b><span class="text-primary" id="timeOutTimer">60</span></b> seconds due to inactivity.
+      </p>
+      <p>
+        <input type="button"
+               id="timeoutContinueBtn"
+               class="btn btn-primary pull-right"
+               value="I'm still here."
+               />
+      </p>
+    </div>
+  </div>
+  <div id="sessionTimeoutOverlay"
+       style="display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 2147483646; background-color: #000; opacity: 0.7;">
+  </div>
+
+
+</body>
+</html>
+
+
+
