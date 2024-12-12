@@ -245,7 +245,7 @@ namespace LegalLead.PublicData.Search
             {
                 if (IsAccountAdmin())
                 {
-                    var displayMode = SettingsWriter.GetSettingOrDefault("browser", "Open Headless:", true);
+                    var displayMode = SettingsWriter.GetSettingOrDefault("admin", "Open Headless:", true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
                 webmgr.ReportProgress = TryShowProgress;

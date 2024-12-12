@@ -209,7 +209,9 @@
 		<Content Include="FormMain.FormEvents.cs">
 			<DependentUpon>FormMain.cs</DependentUpon>
 		</Content>
-
+		<Content Include="FormMain.ProgressBar.cs">
+			<DependentUpon>FormMain.cs</DependentUpon>
+		</Content>
 
 		<Content Include="CredentialEvents.cs">
 			<DependentUpon>FormCredential.cs</DependentUpon>
