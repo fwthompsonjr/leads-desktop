@@ -1,11 +1,4 @@
-using LegalLead.PublicData.Search.Classes;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Windows.Forms;
-using Thompson.RecordSearch.Utility;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {

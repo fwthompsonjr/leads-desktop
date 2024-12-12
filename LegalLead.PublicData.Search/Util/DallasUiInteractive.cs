@@ -2,7 +2,6 @@
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -179,7 +178,7 @@ namespace LegalLead.PublicData.Search.Util
             Items.ForEach(i =>
             {
                 var c = Items.IndexOf(i) + 1;
-                EchoIteration(i,c, count);
+                EchoIteration(i, c, count);
                 postcommon.ForEach(a =>
                 {
                     Populate(a, driver, parameters, i.Href);
@@ -195,7 +194,7 @@ namespace LegalLead.PublicData.Search.Util
                             AppendPerson(i);
                         }
                     }
-                });                
+                });
             });
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             casenumbers.ForEach(i =>

@@ -241,7 +241,7 @@ namespace LegalLead.PublicData.Search
             return number;
         }
         private int GetMaxDateFallback()
-        {   
+        {
             const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
             var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
             var dateRange = siteData.Keys.FirstOrDefault(x => x.Name.Equals(
