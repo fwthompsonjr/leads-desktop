@@ -58,10 +58,48 @@ namespace LegalLead.PublicData.Search.Helpers
         private static readonly List<UserSettingChangeModel> settings =
             new()
             {
-                new(){ Category = "search", Name = "Last County:", Index = 0},
-                new(){ Category = "search", Name = "Start Date:", Index = 1},
-                new(){ Category = "search", Name = "End Date:", Index = 2},
-                new(){ Category = "browser", Name = "Open Headless:", Index = 10, IsSecured = true, Value = "true"},
+                new(){
+                    Category = "search",
+                    Name = "Last County:",
+                    DataType = "DateTime",
+                    Index = 0},
+                new(){
+                    Category = "search",
+                    Name = "Start Date:",
+                    DataType = "DateTime",
+                    Index = 1},
+                new(){
+                    Category = "search",
+                    Name = "End Date:",
+                    Index = 2},
+                new(){
+                    Category = "admin",
+                    Name = "Open Headless:",
+                    Index = 10,
+                    IsSecured = true,
+                    DataType = "Bool",
+                    Value = "true"},
+                new(){
+                    Category = "admin",
+                    Name = "Database Search:",
+                    Index = 12,
+                    IsSecured = true,
+                    DataType = "Bool",
+                    Value = "true"},
+                new(){
+                    Category = "admin",
+                    Name = "Database Minimun Persistence:",
+                    Index = 14,
+                    IsSecured = true,
+                    DataType = "Numeric",
+                    Value = "5"},
+                new(){
+                    Category = "admin",
+                    Name = "Extended Date Range:",
+                    Index = 16,
+                    IsSecured = true,
+                    DataType = "Numeric",
+                    Value = "7"},
             };
         private static readonly object locker = new();
     }

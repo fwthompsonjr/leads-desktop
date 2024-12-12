@@ -9,7 +9,7 @@ namespace LegalLead.PublicData.Search.Util
     using Rx = Properties.Resources;
     public class BexarAuthenicateActor : BaseBexarSearchAction
     {
-        public override int OrderId => 2;
+        public override int OrderId => 12;
         public IJavaScriptExecutor ExternalExecutor { get; set; } = null;
         public override object Execute()
         {
@@ -17,6 +17,7 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             var executor = ExternalExecutor ?? Driver.GetJsExecutor();
             var destination = NavigationUri(executor);
+            if (string.IsNullOrEmpty(destination)) return null;
             _ = GetUri(destination);
             return destination;
         }
@@ -61,6 +62,7 @@ namespace LegalLead.PublicData.Search.Util
             "			if (pfx.endsWith('/')) { pfx = pfx.substr(0, pfx.length - 1) }",
             "		}",
             "		address = ''.concat(pfx, sfx);",
+            "		return address;",
             "	}",
             "}"
         };

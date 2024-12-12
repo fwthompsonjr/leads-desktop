@@ -1,6 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
-using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -84,7 +83,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 Console.WriteLine($"Date {d:d}. Reading records");
                 IsDateRangeComplete = false;
-                parameters.Search(d, d, CourtType);
+                parameters.SetSearchParameters(d, d, CourtType);
                 common.ForEach(a =>
                 {
                     if (!IsDateRangeComplete)
@@ -96,7 +95,7 @@ namespace LegalLead.PublicData.Search.Util
                 });
             });
             IsDateRangeComplete = false;
-            parameters.Search(dates[0], dates[^1], CourtType);
+            parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
         }
 
         protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)

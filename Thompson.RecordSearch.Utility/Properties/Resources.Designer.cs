@@ -177,20 +177,38 @@ namespace Thompson.RecordSearch.Utility.Properties {
         ///		&quot;login&quot;: &quot;/app/login&quot;,
         ///		&quot;county&quot;: &quot;/app/get-county-code&quot;
         ///	},
-        ///	&quot;counties&quot;: 
-        ///		[
-        ///			{
-        ///			&quot;id&quot;: 60,
-        ///			&quot;name&quot;: &quot;dallas&quot;,
-        ///			&quot;code&quot;: &quot;legal.lead.dallas.uindex&quot;,
-        ///			&quot;vector&quot;: &quot;04fvxOSLb7yEYgBPQCR0Gw==&quot;
-        ///			}
-        ///		]
-        ///}.
+        ///	&quot;apilandings&quot;:
+        ///	{
+        ///		&quot;login&quot;: &quot;/app/account-login&quot;,
+        ///		&quot;county&quot;: &quot;/app/set-county-login&quot;,
+        ///		&quot;change&quot;: &quot;/app/change-password&quot;,
+        ///		&quot;indexes&quot;: &quot;/app/set-county-permission&quot;,
+        ///		&quot;register&quot;: &quot;/app/create-account&quot;,
+        ///		&quot;usage-set-limit&quot;: &quot;/app/set-county-usage-limit&quot;,
+        ///		&quot;usage-add-record&quot;: &quot;/app/add-county-usage-record&quot;,
+        ///		&quot;usage-list&quot;: &quot;/app/get- [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string credential_services_map {
             get {
                 return ResourceManager.GetString("credential_services_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///	{
+        ///		&quot;id&quot;: 80,
+        ///		&quot;county&quot;: &quot;Bexar&quot;,
+        ///		&quot;notes&quot;: [
+        ///			&quot;Bexar county search uses court date.&quot;,
+        ///			&quot;It is advised to use future dates to find cases.&quot;
+        ///		]
+        ///	}
+        ///].
+        /// </summary>
+        internal static string custom_county_notes {
+            get {
+                return ResourceManager.GetString("custom_county_notes", resourceCulture);
             }
         }
         
@@ -380,6 +398,62 @@ namespace Thompson.RecordSearch.Utility.Properties {
         internal static string grayson_scripts {
             get {
                 return ResourceManager.GetString("grayson_scripts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///{ 
+        ///	&quot;id&quot;: 1,
+        ///	&quot;code&quot;: &quot;001&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 8th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 2,
+        ///	&quot;code&quot;: &quot;002&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 8th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 3,
+        ///	&quot;code&quot;: &quot;003&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 8th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 4,
+        ///	&quot;code&quot;: &quot;004&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 8th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 5,
+        ///	&quot;code&quot;: &quot;005&quot;,
+        ///	&quot;address&quot;: &quot;1201 Franklin 9th Floor Houston, TX 77002-1900&quot;
+        ///},
+        ///{ 
+        ///	&quot;id&quot;: 6,
+        ///	&quot;co [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string hcc_court_list {
+            get {
+                return ResourceManager.GetString("hcc_court_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;url&quot;: &quot;https://www.hcdistrictclerk.com/Common/e-services/PublicDatasets.aspx&quot;,
+        ///  &quot;settings&quot;: &quot;CrimFilingsWithFutureSettings_withHeadings&quot;,
+        ///  &quot;monthly&quot;: &quot;CrimFilingsMonthly_withHeadings&quot;,
+        ///  &quot;remote&quot;: {
+        ///	&quot;uri&quot;: &quot;http://api.legallead.co/&quot;,
+        ///	&quot;post&quot;: &quot;app/load-hcc-data&quot;,
+        ///	&quot;get&quot;: &quot;app/find-hcc-data&quot;,
+        ///	&quot;count&quot;: &quot;app/count-hcc-data&quot;
+        ///  }
+        ///}.
+        /// </summary>
+        internal static string hcc_scripts {
+            get {
+                return ResourceManager.GetString("hcc_scripts", resourceCulture);
             }
         }
         

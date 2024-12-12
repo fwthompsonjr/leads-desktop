@@ -47,6 +47,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
+
                 using var hider = new HideProcessWindowHelper();
                 var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
                 var driver = GetDriver(DriverReadHeadless);
@@ -55,6 +56,7 @@ namespace LegalLead.PublicData.Search.Util
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 var result = new WebFetchResult();
+
                 Iterate(driver, parameters, dates, common, postcommon);
                 if (ExecutionCancelled || People.Count == 0) return result;
                 result.PeopleList = People;
@@ -116,16 +118,34 @@ namespace LegalLead.PublicData.Search.Util
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
             bool isCaptchaNeeded = true;
+            var exec = (IJavaScriptExecutor)driver;
+            var iterator = IterationProvider.GetIterator(
+                CourtType,
+                driver,
+                exec);
             dates.ForEach(d =>
             {
                 Console.WriteLine("Searching for records on date: {0:d}", d);
-                parameters.Search(d, d, CourtType);
-                common.ForEach(a =>
+                parameters.SetSearchParameters(d, d, CourtType);
+                iterator.SearchIndex = 0;
+                this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}");
+                do
                 {
-                    isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
-                });
+                    common.ForEach(a =>
+                    {
+                        isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
+                        if (a is DallasSetupParameters)
+                        {
+                            iterator.SetSearchParameter();
+                        }
+                    });
+                    iterator.SearchIndex++;
+                    this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}-{iterator.SearchIndex}");
+                } while (iterator.SearchIndex < iterator.SearchLimit);
+                this.EchoProgess(0, 0, 0, dateNotification: "hide");
             });
-            parameters.Search(dates[0], dates[^1], CourtType);
+            this.CompleteProgess();
+            parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
         }
 
         private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
@@ -153,10 +173,12 @@ namespace LegalLead.PublicData.Search.Util
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
             if (ExecutionCancelled) return;
             var count = Items.Count;
+            Items.Sort((a, b) => a.FileDate.CompareTo(b.FileDate));
+
             Items.ForEach(i =>
             {
                 var c = Items.IndexOf(i) + 1;
-                this.EchoProgess(0, count, c, $"Reading item {c} of {count}.", true);
+                EchoIteration(i, c, count);
                 postcommon.ForEach(a =>
                 {
                     Populate(a, driver, parameters, i.Href);
@@ -184,8 +206,17 @@ namespace LegalLead.PublicData.Search.Util
                     if (source != null) { AppendPerson(source); }
                 }
             });
+            this.EchoProgess(0, 0, 0, dateNotification: "hide");
+            this.CompleteProgess();
         }
 
+        private void EchoIteration(CaseItemDto dto, int current, int max)
+        {
+            var d1 = dto.FileDate;
+            var dateformat = CultureInfo.CurrentCulture.DateTimeFormat;
+            if (DateTime.TryParse(d1, dateformat, DateTimeStyles.AssumeLocal, out var dte1)) d1 = dte1.ToString("M/d", dateformat);
+            this.EchoProgess(0, max, current, $"{d1} - Reading item {current} of {max}.", true, dateNotification: d1);
+        }
         private void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters, string uri = "")
         {
             a.Driver = driver;
@@ -337,6 +368,25 @@ namespace LegalLead.PublicData.Search.Util
             if (!Directory.Exists(xmlFolder)) Directory.CreateDirectory(xmlFolder);
             return xmlFolder;
         }
+
+        private static class IterationProvider
+        {
+            public static ICaseTypeIterator GetIterator(string name,
+            IWebDriver web,
+            IJavaScriptExecutor executor)
+            {
+                const StringComparison oic = StringComparison.OrdinalIgnoreCase;
+                if (name.Equals("JUSTICE", oic)) return new DallasJusticeHelper(web, executor);
+                if (name.Equals("COUNTY", oic)) return new DallasCountyHelper(web, executor);
+                if (name.Equals("DISTRICT", oic)) return new DallasDistrictHelper(web, executor);
+                return new FallbackIterator();
+            }
+        }
         private static readonly CultureInfo Culture = CultureInfo.CurrentCulture;
+
+        private class FallbackIterator : BaseCaseIterator
+        {
+            public override string Name => "FALLBACK";
+        }
     }
 }

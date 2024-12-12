@@ -115,7 +115,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 IsDateRangeComplete = false;
                 Console.WriteLine("Searching for records on date: {0:d}", d);
-                parameters.Search(d, d, CourtType);
+                parameters.SetSearchParameters(d, d, CourtType);
                 common.ForEach(a =>
                 {
                     if (!IsDateRangeComplete)
@@ -127,7 +127,7 @@ namespace LegalLead.PublicData.Search.Util
                 });
             });
             IsDateRangeComplete = false;
-            parameters.Search(dates[0], dates[^1], CourtType);
+            parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
         }
 
         protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
@@ -145,7 +145,7 @@ namespace LegalLead.PublicData.Search.Util
                 courtDates.ForEach(d =>
                 {
                     Console.WriteLine("Getting case details for: {0:d}", d);
-                    parameters.Search(d, d, CourtType);
+                    parameters.SetSearchParameters(d, d, CourtType);
                     postcommon.ForEach(a =>
                     {
                         IterateCommonActions(false, driver, parameters, postcommon, a);
@@ -175,6 +175,15 @@ namespace LegalLead.PublicData.Search.Util
             var count = common.Count - 1;
             Populate(a, driver, parameters);
             var response = a.Execute();
+            if (a is BexarAuthenicateActor && response is string loginPage)
+            {
+                common.FindAll(c => c.GetType() == typeof(BexarAuthenicateBegin))
+                    .ForEach(ab =>
+                    {
+                        if (ab is BexarAuthenicateBegin bb &&
+                        string.IsNullOrEmpty(bb.LoginAddress)) bb.LoginAddress = loginPage;
+                    });
+            }
             if (a is BexarFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
             if (a is BexarFetchFilingDetail _ && response is string details) CaseStyles.AddRange(GetData(details));
             if (a is BexarSetNoCountVerification _ && response is bool hasNoCount && hasNoCount)

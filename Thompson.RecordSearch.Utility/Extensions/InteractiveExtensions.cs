@@ -18,16 +18,18 @@ namespace Thompson.RecordSearch.Utility.Extensions
             int current,
             string message = "",
             bool calcPercentage = true,
-            string percentageMessage = "")
+            string percentageMessage = "",
+            string dateNotification = "")
         {
-            if (string.IsNullOrEmpty(message)) message = $"Item {current} of {max}";
-            Console.WriteLine(message);
-            web?.ReportProgress?.Invoke(min, max, current);
+            if (string.IsNullOrEmpty(message) && max > 0) message = $"Item {current} of {max}";
+            if (!string.IsNullOrEmpty(message)) Console.WriteLine(message);
+            web?.ReportProgress?.Invoke(min, max, current, dateNotification);
             if (!calcPercentage) return;
             if (!string.IsNullOrEmpty(percentageMessage)) Console.WriteLine(percentageMessage);
             var interval = GetProgressInterval(max);
             if (current % interval != 0) return;
-            var pct = Math.Round(Convert.ToDecimal(current) / Convert.ToDecimal(max), 2) * 100;
+            var pct = Math.Round(Convert.ToDecimal(current) / Convert.ToDecimal(max + 0.0000000001m), 2) * 100;
+            if (pct <= 0) return;
             Console.WriteLine($" Percent complete: {pct}");
         }
 

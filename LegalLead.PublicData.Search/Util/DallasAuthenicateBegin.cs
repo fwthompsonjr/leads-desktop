@@ -62,8 +62,10 @@ namespace LegalLead.PublicData.Search.Util
         protected string _credential;
 
         [ExcludeFromCodeCoverage]
-        private static Uri GetUri(string destination)
+        protected static Uri GetUri(string destination)
         {
+            if (string.IsNullOrWhiteSpace(destination))
+                throw new ArgumentException(Rx.ERR_URI_MISSING);
             if (!Uri.TryCreate(destination, UriKind.Absolute, out var uri))
                 throw new ArgumentException(Rx.ERR_URI_MISSING);
             return uri;

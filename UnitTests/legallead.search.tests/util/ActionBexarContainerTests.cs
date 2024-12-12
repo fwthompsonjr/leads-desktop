@@ -27,7 +27,7 @@ namespace legallead.search.tests.util
                 var item = ActionBexarContainer.GetContainer;
                 var children = item.GetAllInstances<ICountySearchAction>();
                 Assert.NotNull(children);
-                Assert.Equal(7, children.Count());
+                Assert.Equal(9, children.Count());
             });
             Assert.Null(error);
         }

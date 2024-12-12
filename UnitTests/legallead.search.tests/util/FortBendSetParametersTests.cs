@@ -37,7 +37,7 @@ namespace legallead.search.tests.util
             var element = new Mock<IWebElement>();
             var startDt = DateTime.Now;
             var endingDt = DateTime.Now.AddDays(3);
-            parameters.Search(startDt, endingDt, locator);
+            parameters.SetSearchParameters(startDt, endingDt, locator);
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
@@ -64,7 +64,7 @@ namespace legallead.search.tests.util
             var parameters = new DallasSearchProcess();
             DateTime? startDt = hasStartDate ? DateTime.Now : null;
             DateTime? endingDt = hasEndingDate ? DateTime.Now.AddDays(3) : null;
-            parameters.Search(startDt, endingDt, searchType);
+            parameters.SetSearchParameters(startDt, endingDt, searchType);
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new MockFortBendSetParameters

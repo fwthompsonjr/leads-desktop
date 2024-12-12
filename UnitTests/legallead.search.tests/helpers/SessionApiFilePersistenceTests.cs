@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
@@ -153,6 +154,9 @@ namespace legallead.search.tests.helpers
         [InlineData("collin")]
         [InlineData("dallas")]
         [InlineData("tarrant")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Sonar Qube",
+            "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<Pending>")]
         public void ServiceCanGetAccountCredential(string county)
         {
             var error = Record.Exception(() =>
@@ -169,8 +173,10 @@ namespace legallead.search.tests.helpers
                     }
                     finally
                     {
-
                         service.Initialize();
+                        // thread sleep justification:
+                        // avoids file access issue from unit tests in parallel
+                        Thread.Sleep(50);
                     }
                 }
             });

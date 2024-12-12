@@ -1,22 +1,23 @@
-# Release | 2.8.7.x Setup user friendly context menus
+# Release | 2.8.7.x Dallas county justice officer search
 
 ## Problem:
 			
-When performing search, 
-expectation is that the search will echo status messages 
-back to the caller and that messaging has value 
-to represent progress of the search process.
+When performing search in Dallas county, 
+loop through each court judicial officer on per date basis 
+so that maximum record limit of 200 is avoided  
+in the search process.
 
 ## Search Process
-- browser window should be hidden
-- override should allow admin to toggle window visibility
+- admin has control of user settings
+- database storage of previous searches has been integrated
 - process should report percent completion during execution
+- additional progress messages added to search process
 
 ### Testing
 
 Execution of backwards compatibility tests, 
 as well as api tests to validate remote access.
-1. _2.8.7.1_ - Collin county process optimization
+1. _2.8.7.4_ - Dallas county process optimization
 
 ### Component Checks
 - Check behavior [Bexar]
@@ -26,3 +27,5 @@ as well as api tests to validate remote access.
 - Check behavior [ElPaso]
 - Check behavior [FortBend]
 - Check behavior [Harris]
+- Check behavior [Harris - Criminal]
+- Check behavior [Tarrant]

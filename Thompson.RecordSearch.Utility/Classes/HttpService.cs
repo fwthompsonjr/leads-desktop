@@ -39,7 +39,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
             if (string.IsNullOrWhiteSpace(webaddress)) throw new ArgumentNullException(nameof(webaddress));
-            if (!Uri.TryCreate(webaddress, UriKind.Absolute, out var uri)) throw new ArgumentOutOfRangeException(nameof(webaddress));
+            if (!Uri.TryCreate(webaddress, UriKind.Absolute, out var _)) throw new ArgumentOutOfRangeException(nameof(webaddress));
             try
             {
                 client.Timeout = TimeSpan.FromSeconds(30);

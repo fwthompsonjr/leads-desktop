@@ -9,10 +9,11 @@ using System.Text;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
+using Thompson.RecordSearch.Utility.Helpers;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
 using Thompson.RecordSearch.Utility.Web;
-using Thompson.RecordSearch.Utility.Extensions;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -217,7 +218,8 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 var indx = subset.IndexOf(c) + 1;
                 this.EchoProgess(0, mx, indx, $"Reading address details {indx} of {mx}", true);
-                GetAddressInformation(driver, this, c);
+                var addressing = new TarrantAddressHelper(driver, this, c);
+                if (!addressing.GetAddressInformation()) GetAddressInformation(driver, this, c);
             });
             this.CompleteProgess();
             people = ExtractPeople(cases);
