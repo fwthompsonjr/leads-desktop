@@ -1,13 +1,11 @@
 ﻿using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Enumerations;
-using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
@@ -15,14 +13,13 @@ namespace LegalLead.PublicData.Search.Helpers
     {
         public DallasJusticeHelper(
             IWebDriver web,
-            IJavaScriptExecutor executor) 
+            IJavaScriptExecutor executor)
             : base(web, executor)
         {
-            
+
         }
 
         public override string Name => "JUSTICE";
-        public override int SearchIndex { get; set; }
         public override ExecutionResponseType SetSearchParameter()
         {
             try
@@ -31,6 +28,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 if (JusticeOfficers.Count == 0) return ExecutionResponseType.None;
                 if (SearchIndex < 0 || SearchIndex > JusticeOfficers.Count - 1) return ExecutionResponseType.IndexOfOutBounds;
                 var officer = JusticeOfficers[SearchIndex];
+                Console.WriteLine(" - Court location: {0}", officer.Court);
                 var js = JsSearchContent.Replace("~0", officer.Name);
                 var actual = JsExecutor.ExecuteScript(js);
                 if (actual is not bool response) return ExecutionResponseType.ExecutionFailed;
@@ -96,7 +94,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 return jscontent;
             }
         }
-        private static string JsSearchContent
+        protected static string JsSearchContent
         {
             get
             {

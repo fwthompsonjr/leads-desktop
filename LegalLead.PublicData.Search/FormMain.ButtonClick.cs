@@ -6,14 +6,12 @@ using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Thompson.RecordSearch.Utility.Classes;
-using Thompson.RecordSearch.Utility.Models;
-using Thompson.RecordSearch.Utility;
-using Thompson.RecordSearch.Utility.Dto;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility;
+using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {
@@ -178,7 +176,7 @@ namespace LegalLead.PublicData.Search
             var isDentonCounty = siteData.Id == (int)SourceType.DentonCounty;
             var keys = siteData.Keys;
             var isDistrictSearch = keys.Find(x =>
-                x.Name.Equals(CommonKeyIndexes.DistrictSearchType, 
+                x.Name.Equals(CommonKeyIndexes.DistrictSearchType,
                 ccic)) != null;
             var criminalToggle = keys.Find(x =>
                 x.Name.Equals(CommonKeyIndexes.CriminalCaseInclusion,

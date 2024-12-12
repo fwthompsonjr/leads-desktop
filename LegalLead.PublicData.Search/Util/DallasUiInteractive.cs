@@ -1,8 +1,8 @@
 ﻿using LegalLead.PublicData.Search.Classes;
-using LegalLead.PublicData.Search.Enumerations;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -48,7 +48,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
-                
+
                 using var hider = new HideProcessWindowHelper();
                 var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
                 var driver = GetDriver(DriverReadHeadless);
@@ -57,7 +57,7 @@ namespace LegalLead.PublicData.Search.Util
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 var result = new WebFetchResult();
-                
+
                 Iterate(driver, parameters, dates, common, postcommon);
                 if (ExecutionCancelled || People.Count == 0) return result;
                 result.PeopleList = People;
@@ -121,7 +121,7 @@ namespace LegalLead.PublicData.Search.Util
             bool isCaptchaNeeded = true;
             var exec = (IJavaScriptExecutor)driver;
             var iterator = IterationProvider.GetIterator(
-                CourtType, 
+                CourtType,
                 driver,
                 exec);
             dates.ForEach(d =>
@@ -129,6 +129,7 @@ namespace LegalLead.PublicData.Search.Util
                 Console.WriteLine("Searching for records on date: {0:d}", d);
                 parameters.SetSearchParameters(d, d, CourtType);
                 iterator.SearchIndex = 0;
+                this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}");
                 do
                 {
                     common.ForEach(a =>
@@ -138,10 +139,13 @@ namespace LegalLead.PublicData.Search.Util
                         {
                             iterator.SetSearchParameter();
                         }
-                    }); 
+                    });
                     iterator.SearchIndex++;
+                    this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}-{iterator.SearchIndex}");
                 } while (iterator.SearchIndex < iterator.SearchLimit);
+                this.EchoProgess(0, 0, 0, dateNotification: "hide");
             });
+            this.CompleteProgess();
             parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
         }
 
@@ -170,10 +174,12 @@ namespace LegalLead.PublicData.Search.Util
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
             if (ExecutionCancelled) return;
             var count = Items.Count;
+            Items.Sort((a, b) => a.FileDate.CompareTo(b.FileDate));
+
             Items.ForEach(i =>
             {
                 var c = Items.IndexOf(i) + 1;
-                this.EchoProgess(0, count, c, $"Reading item {c} of {count}.", true);
+                EchoIteration(i,c, count);
                 postcommon.ForEach(a =>
                 {
                     Populate(a, driver, parameters, i.Href);
@@ -189,7 +195,7 @@ namespace LegalLead.PublicData.Search.Util
                             AppendPerson(i);
                         }
                     }
-                });
+                });                
             });
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             casenumbers.ForEach(i =>
@@ -201,8 +207,17 @@ namespace LegalLead.PublicData.Search.Util
                     if (source != null) { AppendPerson(source); }
                 }
             });
+            this.EchoProgess(0, 0, 0, dateNotification: "hide");
+            this.CompleteProgess();
         }
 
+        private void EchoIteration(CaseItemDto dto, int current, int max)
+        {
+            var d1 = dto.FileDate;
+            var dateformat = CultureInfo.CurrentCulture.DateTimeFormat;
+            if (DateTime.TryParse(d1, dateformat, DateTimeStyles.AssumeLocal, out var dte1)) d1 = dte1.ToString("M/d", dateformat);
+            this.EchoProgess(0, max, current, $"{d1} - Reading item {current} of {max}.", true, dateNotification: d1);
+        }
         private void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters, string uri = "")
         {
             a.Driver = driver;
@@ -362,27 +377,17 @@ namespace LegalLead.PublicData.Search.Util
             IJavaScriptExecutor executor)
             {
                 const StringComparison oic = StringComparison.OrdinalIgnoreCase;
-                if (!name.Equals("JUSTICE", oic)) return new FallbackIterator();
-                return new DallasJusticeHelper(web, executor);
+                if (name.Equals("JUSTICE", oic)) return new DallasJusticeHelper(web, executor);
+                if (name.Equals("COUNTY", oic)) return new DallasCountyHelper(web, executor);
+                if (name.Equals("DISTRICT", oic)) return new DallasDistrictHelper(web, executor);
+                return new FallbackIterator();
             }
         }
         private static readonly CultureInfo Culture = CultureInfo.CurrentCulture;
 
-        private sealed class FallbackIterator : ICaseTypeIterator
+        private class FallbackIterator : BaseCaseIterator
         {
-            public string Name => "Fallback";
-
-            public IWebDriver Driver { get; set; }
-            public IJavaScriptExecutor JsExecutor { get; set; }
-
-            public int SearchIndex { get; set; } = 0;
-
-            public int SearchLimit => 0;
-
-            public ExecutionResponseType SetSearchParameter()
-            {
-                return ExecutionResponseType.None;
-            }
+            public override string Name => "FALLBACK";
         }
     }
 }

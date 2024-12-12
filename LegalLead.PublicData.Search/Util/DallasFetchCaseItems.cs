@@ -5,7 +5,6 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
@@ -28,7 +27,6 @@ namespace LegalLead.PublicData.Search.Util
                 "party-case-partyname" };
             if (Parameters == null || Driver == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-            if (PauseForPage) Thread.Sleep(2000);
             var alldata = new List<CaseItemDto>();
             var locator = By.Id(elementId);
             WaitForElement(locator);

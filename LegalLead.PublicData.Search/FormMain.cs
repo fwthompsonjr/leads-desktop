@@ -1,16 +1,12 @@
-﻿using LegalLead.PublicData.Search.Classes;
-using LegalLead.PublicData.Search.Extensions;
-using LegalLead.PublicData.Search.Helpers;
+﻿using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
-using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
@@ -36,7 +32,7 @@ namespace LegalLead.PublicData.Search
         private FindDbRequest CurrentRequest { get; set; } = null;
 
         #endregion
-        
+
         #region Constructor
 
         public FormMain()
@@ -421,7 +417,7 @@ namespace LegalLead.PublicData.Search
 
 
         #endregion
-        
+
         #region Classes
 
         private static class ControlExtensions
