@@ -73,26 +73,33 @@ namespace LegalLead.PublicData.Search.Helpers
                     Name = "End Date:",
                     Index = 2},
                 new(){
-                    Category = "browser",
+                    Category = "admin",
                     Name = "Open Headless:",
                     Index = 10,
                     IsSecured = true,
                     DataType = "Bool",
                     Value = "true"},
                 new(){
-                    Category = "browser",
+                    Category = "admin",
                     Name = "Database Search:",
                     Index = 12,
                     IsSecured = true,
                     DataType = "Bool",
                     Value = "true"},
                 new(){
-                    Category = "browser",
+                    Category = "admin",
                     Name = "Database Minimun Persistence:",
-                    Index = 12,
+                    Index = 14,
                     IsSecured = true,
                     DataType = "Numeric",
                     Value = "5"},
+                new(){
+                    Category = "admin",
+                    Name = "Extended Date Range:",
+                    Index = 16,
+                    IsSecured = true,
+                    DataType = "Numeric",
+                    Value = "7"},
             };
         private static readonly object locker = new();
     }

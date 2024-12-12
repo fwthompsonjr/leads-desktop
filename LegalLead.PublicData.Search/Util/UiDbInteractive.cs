@@ -207,7 +207,7 @@ namespace LegalLead.PublicData.Search.Util
 
         private DataSetting MapDbSettings()
         {
-            var list = sourceData.FindAll(x => x.Category == "browser");
+            var list = sourceData.FindAll(x => x.Category == "admin");
             var lookups = new[] {
                 new SettingLookupDto {
                     Name = "Database Search:",

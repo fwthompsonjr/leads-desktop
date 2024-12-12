@@ -115,7 +115,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 IsDateRangeComplete = false;
                 Console.WriteLine("Searching for records on date: {0:d}", d);
-                parameters.Search(d, d, CourtType);
+                parameters.SetSearchParameters(d, d, CourtType);
                 common.ForEach(a =>
                 {
                     if (!IsDateRangeComplete)
@@ -127,7 +127,7 @@ namespace LegalLead.PublicData.Search.Util
                 });
             });
             IsDateRangeComplete = false;
-            parameters.Search(dates[0], dates[^1], CourtType);
+            parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
         }
 
         protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
@@ -145,7 +145,7 @@ namespace LegalLead.PublicData.Search.Util
                 courtDates.ForEach(d =>
                 {
                     Console.WriteLine("Getting case details for: {0:d}", d);
-                    parameters.Search(d, d, CourtType);
+                    parameters.SetSearchParameters(d, d, CourtType);
                     postcommon.ForEach(a =>
                     {
                         IterateCommonActions(false, driver, parameters, postcommon, a);

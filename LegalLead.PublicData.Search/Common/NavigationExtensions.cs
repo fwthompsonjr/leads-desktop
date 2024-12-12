@@ -59,7 +59,7 @@ namespace LegalLead.PublicData.Search.Common
         {
             if (source == null) return null;
             var result = new DallasSearchProcess();
-            result.Search(source.StartDate.ToNullableDate(), source.EndingDate.ToNullableDate(), source.CourtType);
+            result.SetSearchParameters(source.StartDate.ToNullableDate(), source.EndingDate.ToNullableDate(), source.CourtType);
             return result;
         }
 

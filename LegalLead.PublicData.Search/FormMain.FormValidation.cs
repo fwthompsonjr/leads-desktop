@@ -1,4 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -36,7 +38,7 @@ namespace LegalLead.PublicData.Search
                 CommonKeyIndexes.DateRangeMaxDays, comparison));
             if (dateRange != null)
             {
-                int maxDayInterval = Convert.ToInt32(dateRange.Value, CultureInfo.CurrentCulture.NumberFormat);
+                int maxDayInterval = GetMaxDateRangeSetting();
                 var businessDays = DallasSearchProcess.GetBusinessDays(dteStart.Value.Date, dteEnding.Value.Date).Count; ;
                 if (businessDays > maxDayInterval)
                 {
@@ -228,6 +230,25 @@ namespace LegalLead.PublicData.Search
             return true;
         }
 
+        private int GetMaxDateRangeSetting()
+        {
+            var fallbak = GetMaxDateFallback();
+            if (!IsAccountAdmin()) return fallbak;
+            const string findDate = "Extended Date Range:";
+            var changeModel = UserDataReader.GetList<UserSettingChangeModel>();
+            var model = changeModel.Find(x => x.Index == 16 && x.Name == findDate);
+            if (model == null || !int.TryParse(model.Value, out var number)) return fallbak;
+            return number;
+        }
+        private int GetMaxDateFallback()
+        {
+            const StringComparison comparison = StringComparison.CurrentCultureIgnoreCase;
+            var siteData = (WebNavigationParameter)(cboWebsite.SelectedItem);
+            var dateRange = siteData.Keys.FirstOrDefault(x => x.Name.Equals(
+                CommonKeyIndexes.DateRangeMaxDays, comparison));
+            if (dateRange == null || !int.TryParse(dateRange.Value, out var number)) return 7;
+            return number;
+        }
         private static void SetKeyValue(WebNavigationParameter siteData,
             string keyName,
             string keyValue)
@@ -242,6 +263,12 @@ namespace LegalLead.PublicData.Search
             item.Value = keyValue;
 
         }
+
+
+        private static readonly SessionSettingPersistence UserDataReader =
+            SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionSettingPersistence>();
 
     }
 }

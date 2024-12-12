@@ -16,7 +16,7 @@ namespace legallead.search.tests.util
             var parameters = new DallasSearchProcess();
             var startDt = DateTime.Now;
             var endingDt = DateTime.Now.AddDays(3);
-            parameters.Search(startDt, endingDt, "JUSTICE");
+            parameters.SetSearchParameters(startDt, endingDt, "JUSTICE");
             var service = new MockWaitForNavigation
             {
                 Parameters = parameters,

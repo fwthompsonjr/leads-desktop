@@ -69,7 +69,7 @@ namespace legallead.search.tests.classes
                 var startDt = DateTime.Parse(startDate, culture);
                 var endDt = DateTime.Parse(endingDate, culture);
                 var service = new DallasSearchProcess();
-                service.Search(startDt, endDt, caseType);
+                service.SetSearchParameters(startDt, endDt, caseType);
                 var web = service.GetUiInteractive();
                 Assert.NotNull(web);
             });
