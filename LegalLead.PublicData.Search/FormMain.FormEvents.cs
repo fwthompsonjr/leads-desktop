@@ -453,10 +453,11 @@ namespace LegalLead.PublicData.Search
 
             var strStarting = dteStart.Value.Date.ToShortDateString();
             var strEnding = dteEnding.Value.Date.ToShortDateString();
+            var sourceName = GetSourceName(source);
             WriteStartSettings(source.Name, strStarting, strEnding);
             var message = CommonKeyIndexes.StartingFetchRequest
                 + Environment.NewLine + " " +
-                CommonKeyIndexes.WebsiteLabel + source.Name
+                CommonKeyIndexes.WebsiteLabel + sourceName
                 + Environment.NewLine + " " +
                 CommonKeyIndexes.StartDateLabel + strStarting
                 + Environment.NewLine + " " +
@@ -480,7 +481,12 @@ namespace LegalLead.PublicData.Search
             Console.WriteLine(message);
 
         }
-
+        private static string GetSourceName(WebNavigationParameter source)
+        {
+            var fallbak = source.Name;
+            if (source.Id != (int)SourceType.HarrisCivil) return fallbak;
+            return "Harris County";
+        }
         private void TryOpenExcel()
         {
             var xmlFile = CaseData == null ? string.Empty : CaseData.Result;
@@ -552,11 +558,12 @@ namespace LegalLead.PublicData.Search
         }
         private string GetMessage(WebNavigationParameter source)
         {
+            var sourceName = GetSourceName(source);
             try
             {
                 return CommonKeyIndexes.EndingFetchRequest
                 + Environment.NewLine + " " +
-                CommonKeyIndexes.WebsiteLabel + source.Name
+                CommonKeyIndexes.WebsiteLabel + sourceName
                 + Environment.NewLine + " " +
                 CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
                 + Environment.NewLine + " " +
@@ -576,7 +583,7 @@ namespace LegalLead.PublicData.Search
                 {
                     return CommonKeyIndexes.EndingFetchRequest
                     + Environment.NewLine + " " +
-                    CommonKeyIndexes.WebsiteLabel + source.Name
+                    CommonKeyIndexes.WebsiteLabel + sourceName
                     + Environment.NewLine + " " +
                     CommonKeyIndexes.StartDateLabel + dteStart.Value.Date.ToShortDateString()
                     + Environment.NewLine + " " +

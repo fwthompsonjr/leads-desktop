@@ -1,6 +1,31 @@
 [
 	{
 		"id": "2.8.7",
+		"date": "2024-12-12 12:45",
+		"title": "Dallas county justice officer search",
+		"description": [
+			"## Problem:",
+			"",
+			"When performing search in Dallas county, ",
+			"loop through each court judicial officer on per date basis ",
+			"so that maximum record limit of 200 is avoided ",
+			"in the search process.",
+			"",
+			"## Notes:",
+			"- database storage of previous searches has been integrated",
+			"- additional progress messages added to search process",
+			"- process should report percent completion during execution",
+			"",
+			"### Counties addressed or enhanced:",
+			"- Dallas county",
+			"- Collin county",
+			"- Tarrant county",
+			"- Bexar county",
+			"- Harris Criminal"
+		]
+	},
+	{
+		"id": "2.8.7",
 		"date": "2024-11-26 10:45",
 		"title": "Enhance user search experience",
 		"description": [
