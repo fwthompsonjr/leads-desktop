@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.PublicData.Search.Helpers;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics;
@@ -20,9 +21,11 @@ namespace LegalLead.PublicData.Search.Util
 
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-
+            
+            var helper = new DallasSortByStatusHelper(Driver, executor);
             js = VerifyScript(js);
             WaitForSelector();
+            helper.Execute();
             executor.ExecuteScript(js);
             return true;
         }
