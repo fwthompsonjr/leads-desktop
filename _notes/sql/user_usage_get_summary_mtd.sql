@@ -13,4 +13,4 @@ WHERE LeadUserId = @lead_index
 AND SearchMonth = @search_month
 AND SearchYear = @search_year
 ORDER BY
-r.LastSearch;
+r.LastSearchDate;

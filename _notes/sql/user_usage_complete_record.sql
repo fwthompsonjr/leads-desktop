@@ -1,4 +1,5 @@
--- user_usage_complete_record
+-- user_usage_complete_record, js_parameter
+-- UserUsageCompleteRecordModel
 SET @js = '{ 
 "idx": "123-456-789",
 "rc": 0 }';
@@ -6,7 +7,7 @@ DROP TEMPORARY TABLE IF EXISTS tmp_update_usage;
 CREATE TEMPORARY TABLE tmp_update_usage
 SELECT
 	JSON_VALUE( @js, '$.idx') Id
-	, CONVERT( JSON_VALUE( @js, '$.rc'), SIGNED )RecordCount;
+	, CONVERT( JSON_VALUE( @js, '$.rc'), SIGNED ) RecordCount;
     
 -- perform update
 UPDATE DBCOUNTYUSAGEREQUEST D
