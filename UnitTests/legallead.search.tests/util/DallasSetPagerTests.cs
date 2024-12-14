@@ -39,6 +39,7 @@ namespace legallead.search.tests.util
                 element.Object,
             };
             var collection = new ReadOnlyCollection<IWebElement>(items);
+            element.SetupGet(x => x.Text).Returns("Status");
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
             driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element.Object);
             driver.Setup(x => x.FindElements(It.IsAny<By>())).Returns(collection);
@@ -78,7 +79,23 @@ namespace legallead.search.tests.util
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override IJavaScriptExecutor GetJavaScriptExecutor()
             {
-                MqExecutor.SetupSequence(x => x.ExecuteScript(It.IsAny<string>()))
+                const string load = ".filter(x => x.innerText == 'Status');";
+                const string isSorted = "return statusSort.isSorted();";
+                const string clicked = "return statusSort.click();";
+
+                MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains(clicked))))
+                    .Returns(true);
+
+                MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains(load))))
+                    .Returns(true);
+
+                MqExecutor.SetupSequence(x => x.ExecuteScript(It.Is<string>(s => s.Contains(isSorted))))
+                    .Returns("")
+                    .Returns(false)
+                    .Returns(true);
+
+                MqExecutor.SetupSequence(x => x.ExecuteScript(It.Is<string>(s =>
+                !s.Contains(isSorted) && !s.Contains(load) && !s.Contains(clicked))))
                     .Returns(true)
                     .Returns(true)
                     .Returns(false);

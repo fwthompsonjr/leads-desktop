@@ -1,6 +1,19 @@
 [
 	{
 		"id": "2.8.7",
+		"date": "2024-12-14 06:45",
+		"title": "Dallas county justice filter",
+		"description": [
+			"## Problem:",
+			"",
+			"When performing search in Dallas county, ",
+			"filter case status to open records ",
+			"so that maximum record limit of 200 is avoided ",
+			"in the search process."
+		]
+	},
+	{
+		"id": "2.8.7",
 		"date": "2024-12-12 12:45",
 		"title": "Dallas county justice officer search",
 		"description": [
