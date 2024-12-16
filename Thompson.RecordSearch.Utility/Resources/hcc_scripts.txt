@@ -9,11 +9,17 @@
 	"count": "app/count-hcc-data"
   },
   "db": {
-	"uri": "http://api.legallead.co/",
+	"uri": "https://localhost:44345/",
 	"begin": "db/begin",
 	"complete": "db/complete",
 	"query": "db/find",
 	"upload": "db/upload",
-	"holiday": "db/get-holiday-list"
+	"holiday": "db/get-holiday-list",
+	"usage-append": "db/usage-append-record",
+	"usage-complete": "db/usage-complete-record",
+	"usage-get-limits": "db/usage-get-monthly-limit",
+	"usage-get-history": "db/usage-get-history",
+	"usage-get-summary": "db/usage-get-summary",
+	"usage-set-limit": "db/usage-set-monthly-limit"
   }
 }
