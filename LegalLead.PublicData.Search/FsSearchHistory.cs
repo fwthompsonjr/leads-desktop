@@ -91,15 +91,9 @@ namespace LegalLead.PublicData.Search
         private readonly List<UsageHistoryViewModel> _vwlist;
         private static List<UsageHistoryViewModel> GetHistory()
         {
-            var endDate = DateTime.UtcNow.Date.AddHours(1);
-            var startDt = DateTime.UtcNow.Date.AddYears(-1);
+            var data = usageReader.GetUsage();
             var list = new List<UsageHistoryModel>();
-            while (startDt < endDate)
-            {
-                var data = usageReader.GetUsage(startDt);
-                if (data != null && data.Count > 0) { list.AddRange(data); }
-                startDt = startDt.AddMonths(1);
-            }
+            if (data != null && data.Count > 0) { list.AddRange(data); }
             if (list.Count == 0) return new List<UsageHistoryViewModel>();
             list.Sort((a, b) =>
             {

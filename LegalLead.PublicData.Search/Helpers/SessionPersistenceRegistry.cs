@@ -13,6 +13,7 @@ namespace LegalLead.PublicData.Search.Helpers
             For<ISessionPersistance>().Add<SessionApiFilePersistence>().Named("enhanced").Singleton();
             // usage classes
             For<IHttpService>().Add<HttpService>().Singleton();
+            For<IRemoteDbHelper>().Add<RemoteDbHelper>().Singleton();
             For<SessionApiFilePersistence>().Add<SessionApiFilePersistence>().Singleton();
             For<SessionUsageCapPersistence>().Add<SessionUsageCapPersistence>().Singleton();
             For<SessionUsagePersistence>().Add<SessionUsagePersistence>().Singleton();

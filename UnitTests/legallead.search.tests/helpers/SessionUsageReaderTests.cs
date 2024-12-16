@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Interfaces;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -47,9 +48,11 @@ namespace legallead.search.tests.helpers
             public MkPersistence()
             {
                 MqHttp = new Mock<IHttpService>();
-                Service = new SessionUsageReader(MqHttp.Object);
+                MqDb = new Mock<IRemoteDbHelper>();
+                Service = new SessionUsageReader(MqHttp.Object, MqDb.Object);
             }
 
+            public Mock<IRemoteDbHelper> MqDb { get; }
             public Mock<IHttpService> MqHttp { get; }
             public SessionUsageReader Service { get; }
         }
