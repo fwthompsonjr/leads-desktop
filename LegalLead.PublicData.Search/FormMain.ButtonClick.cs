@@ -297,13 +297,14 @@ namespace LegalLead.PublicData.Search
                 var count = CaseData.PeopleList.Count;
                 if (count > 0)
                 {
-                    dbHelper.CompleteUsage(trackingItem.Id, count);
+                    var adjustedCount = CaseData.AdjustedRecordCount == 0 ? count : CaseData.AdjustedRecordCount;
+                    dbHelper.CompleteUsage(trackingItem.Id, adjustedCount);
                     var member = (SourceType)siteData.Id;
                     var userName = GetUserName();
                     var searchRange = $"{webmgr.StartDate:d} to {webmgr.EndingDate:d}";
                     if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
                     var countyName = member.GetCountyName();
-                    UsageIncrementer.IncrementUsage(userName, countyName, count, searchRange);
+                    UsageIncrementer.IncrementUsage(userName, countyName, adjustedCount, searchRange);
                     UsageReader.WriteUserRecord();
                 }
 

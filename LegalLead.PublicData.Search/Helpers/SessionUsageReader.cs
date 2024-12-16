@@ -2,6 +2,7 @@
 using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
@@ -39,6 +40,31 @@ namespace LegalLead.PublicData.Search.Helpers
             return fallback;
         }
 
+        public virtual GetUsageResponseContent GetUsage(int countyId)
+        {
+            var dnow = DateTime.UtcNow;
+            var annual = dbhelper.GetHistory(dnow, true);
+            if (annual == null || string.IsNullOrEmpty(annual.Content)) return default;
+            var imported = annual.Content.ToInstance<List<GetUsageResponseContent>>();
+            var subset = imported.FindAll(x => 
+                x.CountyId == countyId &&
+                x.CompleteDate.HasValue &&
+                x.CreateDate.HasValue &&
+                x.CreateDate.Value.Month == dnow.Month &&
+                x.CreateDate.Value.Year == dnow.Year);
+            if (subset == null || subset.Count == 0) return default;
+            var target = subset[0];
+            var sum = subset.Sum(x => x.RecordCount);
+            target.RecordCount = sum;
+            return target;
+        }
+        public GetMonthlyLimitResponseContent GetUsageLimit(int countyId = 0, bool allCounties = true)
+        {
+            var response = dbhelper.GetLimits(countyId, allCounties);
+            if (response == null || string.IsNullOrEmpty (response.Content)) return null;
+            return response.Content.ToInstance<GetMonthlyLimitResponseContent>();
+
+        }
         private static void TransformData(List<UsageHistoryModel> fallback, List<GetUsageResponseContent> imported)
         {
             imported.ForEach(x =>
