@@ -34,6 +34,7 @@ namespace LegalLead.PublicData.Search
         {
             btnSubmit.Enabled = false;
             dataGridView1.Visible = false;
+            toolStrip1.Visible = false;
             lbStatus.Text = "Getting Search History ...";
             var worker = new BackgroundWorker();
             worker.DoWork += Worker_DoWork;
@@ -58,6 +59,8 @@ namespace LegalLead.PublicData.Search
             btnSubmit.Enabled = true;
             dataGridView1.Visible = true;
             lbStatus.Text = "Ready";
+            TryFormatCounties();
+            toolStrip1.Visible = true;
         }
         /// <summary>
         /// Fetch data from remote data source on store in IList
@@ -88,10 +91,68 @@ namespace LegalLead.PublicData.Search
                 col.DefaultCellStyle.Padding = padding;
             }
         }
+
+
+        private void TryFormatCounties()
+        {
+            try
+            {
+                FormatCounties();
+            }
+            catch (Exception)
+            {
+                Invoke(() => FormatCounties());
+            }
+        }
+        private void FormatCounties()
+        {
+            // add options to counties filter,
+            // setting no filter as default
+            var items = new List<string> { "None" };
+            var collection = _vwlist.Select(x => x.CountyName).Distinct().ToList();
+            collection.Sort();
+            items.AddRange(collection);
+            tssbFilterCounty.DropDownItems.Clear();
+            items.ForEach(i =>
+            {
+                var tsOption = new ToolStripMenuItem(i);
+                tsOption.Checked = items.IndexOf(i) == 0;
+                tsOption.Click += TsOption_Click;
+                tssbFilterCounty.DropDownItems.Add(tsOption);
+            });
+        }
+
+        private void TsOption_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm) return;
+            if (itm.Checked)
+            {
+                SelectFilterOption("None");
+                dataGridView1.DataSource = _vwlist;
+                dataGridView1.Refresh();
+                return;
+            }
+            var subset = _vwlist.FindAll(x => x.CountyName == itm.Text);
+            dataGridView1.DataSource = subset;
+            dataGridView1.Refresh();
+            SelectFilterOption(itm.Text);
+        }
+
+        private void SelectFilterOption(string selection)
+        {
+            var items = tssbFilterCounty.DropDownItems;
+            foreach (var item in items)
+            {
+                if (item is ToolStripMenuItem mnu) {
+                    mnu.Checked = mnu.Text == selection;
+                }
+            }
+            
+        }
         private readonly List<UsageHistoryViewModel> _vwlist;
         private static List<UsageHistoryViewModel> GetHistory()
         {
-            var data = usageReader.GetUsage();
+            var data = usageReader.GetUsage(DateTime.UtcNow);
             var list = new List<UsageHistoryModel>();
             if (data != null && data.Count > 0) { list.AddRange(data); }
             if (list.Count == 0) return new List<UsageHistoryViewModel>();

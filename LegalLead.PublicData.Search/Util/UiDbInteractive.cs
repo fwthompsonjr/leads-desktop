@@ -541,7 +541,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 var people = Current.PeopleList;
                 if (people == null || people.Count == 0) return Current;
-                var limits = UsagePersistence.GetUsageLimit(Current.WebsiteId, false);
+                var limits = UsagePersistence.GetUsageLimit(Current.WebsiteId);
                 if (limits == null || limits.MaxRecords == -1) return Current;
                 var setting = UsagePersistence.GetUsage(Current.WebsiteId);
                 if (setting == null) return Current;
