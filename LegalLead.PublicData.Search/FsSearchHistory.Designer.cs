@@ -39,6 +39,7 @@
             tssbSort = new System.Windows.Forms.ToolStripSplitButton();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             tslbDataStatus = new System.Windows.Forms.ToolStripLabel();
+            lbRecordCount = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             toolStrip1.SuspendLayout();
@@ -56,6 +57,7 @@
             tableLayoutPanel1.Controls.Add(lbStatus, 0, 4);
             tableLayoutPanel1.Controls.Add(dataGridView1, 0, 2);
             tableLayoutPanel1.Controls.Add(toolStrip1, 0, 1);
+            tableLayoutPanel1.Controls.Add(lbRecordCount, 3, 3);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -100,6 +102,7 @@
             tableLayoutPanel1.SetColumnSpan(dataGridView1, 5);
             dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             dataGridView1.Location = new System.Drawing.Point(3, 63);
+            dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new System.Drawing.Size(794, 264);
@@ -153,6 +156,17 @@
             tslbDataStatus.Size = new System.Drawing.Size(50, 22);
             tslbDataStatus.Text = "Loading";
             // 
+            // lbRecordCount
+            // 
+            lbRecordCount.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lbRecordCount.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(lbRecordCount, 2);
+            lbRecordCount.Location = new System.Drawing.Point(543, 345);
+            lbRecordCount.Name = "lbRecordCount";
+            lbRecordCount.Size = new System.Drawing.Size(254, 15);
+            lbRecordCount.TabIndex = 47;
+            lbRecordCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // FsSearchHistory
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -181,5 +195,6 @@
         private System.Windows.Forms.ToolStripSplitButton tssbSort;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel tslbDataStatus;
+        private System.Windows.Forms.Label lbRecordCount;
     }
 }

@@ -19,6 +19,14 @@ namespace LegalLead.PublicData.Search
             FormatGrid(dataGridView1);
             btnSubmit.Click += BtnSubmit_Click;
             Shown += FsSearchHistory_Shown;
+            dataGridView1.RowEnter += DataGridView1_RowEnter;
+        }
+
+        private void DataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            var rowCount = dataGridView1.RowCount;
+            lbRecordCount.Text = $"Item {e.RowIndex + 1} of {rowCount}";
         }
 
         private void FsSearchHistory_Shown(object sender, EventArgs e)
@@ -41,6 +49,7 @@ namespace LegalLead.PublicData.Search
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             worker.RunWorkerAsync();
         }
+
         /// <summary>
         /// Handles data-binding and user interface state after data completion.
         /// </summary>
@@ -59,7 +68,15 @@ namespace LegalLead.PublicData.Search
             btnSubmit.Enabled = true;
             dataGridView1.Visible = true;
             lbStatus.Text = "Ready";
+            lbRecordCount.Text = $"Item 1 of {_vwlist.Count}";
             TryFormatCounties();
+            var summary = new GridSummary
+            {
+                CountyName = "All counties",
+                RecordCount = _vwlist.Count,
+                SearchCount = _vwlist.Sum(x => x.RecordCount),
+            };
+            tslbDataStatus.Text = summary.GetSummary();
             toolStrip1.Visible = true;
         }
         /// <summary>
@@ -79,8 +96,8 @@ namespace LegalLead.PublicData.Search
             padding.Right = 3;
             var columns = dataGrid.Columns;
             if (columns.Count == 0) return;
-            columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
             columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             columns[0].Resizable = DataGridViewTriState.False;
             columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -124,18 +141,34 @@ namespace LegalLead.PublicData.Search
 
         private void TsOption_Click(object sender, EventArgs e)
         {
+            const string none = "None";
             if (sender is not ToolStripMenuItem itm) return;
-            if (itm.Checked)
+            if (itm.Checked || itm.Text.Equals(none))
             {
-                SelectFilterOption("None");
+                SelectFilterOption(none);
                 dataGridView1.DataSource = _vwlist;
                 dataGridView1.Refresh();
+                var summary = new GridSummary
+                {
+                    CountyName = "All counties",
+                    RecordCount = _vwlist.Count,
+                    SearchCount = _vwlist.Sum(x => x.RecordCount),
+                };
+                tslbDataStatus.Text = summary.GetSummary();
                 return;
             }
             var subset = _vwlist.FindAll(x => x.CountyName == itm.Text);
             dataGridView1.DataSource = subset;
             dataGridView1.Refresh();
             SelectFilterOption(itm.Text);
+            var subsummary = new GridSummary
+            {
+                CountyName = itm.Text,
+                RecordCount = subset.Count,
+                SearchCount = subset.Sum(x => x.RecordCount),
+            };
+            tslbDataStatus.Text = subsummary.GetSummary(); 
+            lbRecordCount.Text = $"Item 1 of {subset.Count}";
         }
 
         private void SelectFilterOption(string selection)
@@ -149,6 +182,17 @@ namespace LegalLead.PublicData.Search
             }
             
         }
+        private class GridSummary
+        {
+            public int RecordCount { get; set; }
+            public int SearchCount { get; set; }
+            public string CountyName {  get; set; }
+            public string GetSummary()
+            {
+                return $"{CountyName} | Found {RecordCount:N0} Entries. {SearchCount:N0} Total Leads.";
+            }
+        }
+
         private readonly List<UsageHistoryViewModel> _vwlist;
         private static List<UsageHistoryViewModel> GetHistory()
         {
