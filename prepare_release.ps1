@@ -228,6 +228,34 @@ function setVersionNumber($project, $tag) {
 	return $conversionComplete;
 }
 
+function vbsUpdateScriptFile($target, $tag){
+	if ([System.IO.File]::Exists( $target ) -eq $false) { return $false; }
+	try {
+		$q ='"'
+		$tarr = $tag.Split(".");
+		$trversion = [string]::Join(".", @( $tarr[0], $tarr[1]);
+		$find = "versionTag = ";
+		$replacment = [string]::Concat($find, $q, $trversion, $q );
+		$arrout = @();
+		$arrlines = Get-Content -Path $target
+		foreach ($line in $arrlines){
+			$txt = [string]$line;
+			if ($txt.StartsWith($find)) {
+				$arrout += $replacment
+			} else {
+				$arrout += $txt
+			}
+		}
+		$nwtext = [string]::Join( $nl, $arrout);
+		[System.IO.File]::Delete( $target ) | Out-Null
+		[System.IO.File]::WriteAllText( $target, $nwtext );
+		return $true;
+	} catch {
+		return $false;
+	}
+
+}
+
 function buildSolution(){
 	$proj = $projectFile
 	$sln = "<full path to solution file>"
@@ -353,3 +381,15 @@ if ($updateReleaseNotes -eq $true)
 		throw "Failed to update change log."
 	}
 }
+
+## Section: Update installer scripts
+vbsUpdateScriptFile -target $launchExeFile -tag $tagNumber
+vbsUpdateScriptFile -target $uninstallExeFile -tag $tagNumber
+
+## Setup: Update installer project
+<#
+	Title, Version, Upgrade code and DefaultLocation
+	Title: find line containing '"Title"' and 'Legal Lead Installer'
+	Version: find '"ProductVersion"'
+	UpgradeCode: find '"UpgradeCode"'
+#>
