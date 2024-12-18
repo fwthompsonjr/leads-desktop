@@ -6,6 +6,28 @@
 		b. Generate release number and echo back to screen
 #>
 
+# Get the path of the current script
+$scriptFile = $MyInvocation.MyCommand.Path
+$scriptDir = [System.IO.Path]::GetDirectoryName($scriptFile)
+
+$projectName = "LegalLead.PublicData.Search";
+$changeLog = "CHANGELOG"
+$versionLog = "setup-version"
+$launchExe = "launch-exe"
+$uninstallExe = "uninstall"
+$setupProject = "setup"
+$installZip = "installation"
+
+$projectFile = [System.IO.Path]::Combine("$scriptDir\$projectName", "$projectName.csproj");
+$changeLogFile = [System.IO.Path]::Combine("$scriptDir", "$changeLog.md");
+$versionLogFile = [System.IO.Path]::Combine("$scriptDir\setup", "$versionLog.txt");
+$launchExeFile = [System.IO.Path]::Combine("$scriptDir\Shared", "$launchExe.vbs");
+$uninstallExeFile = [System.IO.Path]::Combine("$scriptDir\Shared", "$uninstallExe.vbs");
+$setupProjectFile = [System.IO.Path]::Combine("$scriptDir\setup", "$setupProject.vdproj");
+$installZipFile = [System.IO.Path]::Combine("$scriptDir", "$installZip.zip");
+$rollbackScript = [System.IO.Path]::Combine("$scriptDir", "git_rollback.ps1");
+$commitScript = [System.IO.Path]::Combine("$scriptDir", "git_commit.ps1");
+
 # function(s)
 function doesFileExist($item) {
 	$key = $item.name
@@ -92,29 +114,17 @@ function setVersionNumber($project, $tag) {
 		$content.Save( $project );
 	}
 	return $conversionComplete;
-
 }
 
-# Get the path of the current script
-$scriptFile = $MyInvocation.MyCommand.Path
-$scriptDir = [System.IO.Path]::GetDirectoryName($scriptFile)
+function rollbackChanges()
+{
+	& $rollbackScript		
+}
 
-$projectName = "LegalLead.PublicData.Search";
-$changeLog = "CHANGELOG"
-$versionLog = "setup-version"
-$launchExe = "launch-exe"
-$uninstallExe = "uninstall"
-$setupProject = "setup"
-$installZip = "installation"
-
-$projectFile = [System.IO.Path]::Combine("$scriptDir\$projectName", "$projectName.csproj");
-$changeLogFile = [System.IO.Path]::Combine("$scriptDir", "$changeLog.md");
-$versionLogFile = [System.IO.Path]::Combine("$scriptDir\setup", "$versionLog.txt");
-$launchExeFile = [System.IO.Path]::Combine("$scriptDir\Shared", "$launchExe.vbs");
-$uninstallExeFile = [System.IO.Path]::Combine("$scriptDir\Shared", "$uninstallExe.vbs");
-$setupProjectFile = [System.IO.Path]::Combine("$scriptDir\setup", "$setupProject.vdproj");
-$installZipFile = [System.IO.Path]::Combine("$scriptDir", "$installZip.zip");
-
+function commitChanges($text)
+{
+	& $commitScript -type 'fix' -message $text		
+}
 $expected = @(
 	@{ 
 		name = "project"
@@ -183,3 +193,10 @@ $project_list | ForEach-Object {
 	if ($converted -eq $true) { $project_converted_count++ }
 }
 $project_converted_count
+if ($project_converted_count -ne $project_list.Count) {
+	rollbackChanges
+	throw "failure updating project files."
+}
+else {
+	Write-Host "Saving project number updates."
+}
