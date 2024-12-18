@@ -5,8 +5,10 @@
 		a. Prompt user for release type (major, minor, revision)
 		b. Generate release number and echo back to screen
 #>
-
+param(
+	[bool]$includeProjectUpdates = $true)
 # Get the path of the current script
+$delimiter = "~"
 $scriptFile = $MyInvocation.MyCommand.Path
 $scriptDir = [System.IO.Path]::GetDirectoryName($scriptFile)
 
@@ -29,6 +31,30 @@ $rollbackScript = [System.IO.Path]::Combine("$scriptDir", "git_rollback.ps1");
 $commitScript = [System.IO.Path]::Combine("$scriptDir", "git_commit.ps1");
 
 # function(s)
+function promptForList($typeName)
+{
+	$stp = "stop";
+	$promptText = "Enter value for $typeName. (stop) when complete: "
+	$arr = @();
+	$lne = Read-Host -Prompt $promptText
+	while ($lne -ne $stp) {
+		$arr += $lne
+		$lne = Read-Host -Prompt $promptText
+	}
+	return [string]::Join( [System.Environment]::NewLine, $arr );
+}
+function getChangeLogText($tag){
+	$title =  Read-Host -Prompt "Enter release title: "
+	$changes = (promptForList -typeName "Problem Statement")
+	$checks = (promptForList -typeName "Component Checks");
+	$chgs = @(
+		[string]::Concat("Release | $tag - $title", [System.Environment]::NewLine)
+		[string]::Concat("Problem Statement:", [System.Environment]::NewLine, $changes, [System.Environment]::NewLine)
+		[string]::Concat("Problem Statement:", [System.Environment]::NewLine, $checks)
+	);
+	return [string]::Join( $delimiter, $chgs );
+}
+
 function doesFileExist($item) {
 	$key = $item.name
 	$path = $item.value
@@ -112,6 +138,7 @@ function setVersionNumber($project, $tag) {
 	}
 	if ($conversionComplete -eq $true) {
 		$content.Save( $project );
+		dotnet build $project -c Release
 	}
 	return $conversionComplete;
 }
@@ -156,6 +183,8 @@ $expected = @(
 	}
 );
 $canExecute = $true;
+
+## Section: Input Valiadtion
 Write-Host "Begining input validations:"
 foreach($expectation in $expected) {
 	$isfound = doesFileExist -item $expectation
@@ -171,9 +200,17 @@ if ($canExecute -eq $false) {
 	return;
 }
 Write-Host "Completed input validations:"
+
+## Section: Get Release Version Numbers
 Write-Host "Begining release creation process:"
 $project_list = (getProjectList -directory $scriptDir)
 $project_version = (getProjectVersion -project $projectFile)
+$tagNumber = $project_version;
+
+## Section: Update *.csproj files and get new tag
+if ($includeProjectUpdates -eq $true)
+{
+	
 if ($null -eq $project_list) {
 	throw "Unable to find project list in target directory"
 }
@@ -185,6 +222,7 @@ Write-Host " .. Current version $project_version"
 $revisionType = getNextProjectVersion -current $project_version
 $tagNumber = $revisionType.tag;
 Write-Host " .. $($revisionType.change) $($revisionType.tag)"
+
 $project_converted_count = 0;
 $project_list | ForEach-Object {
 	$target_file = $_.FullName;
@@ -192,11 +230,17 @@ $project_list | ForEach-Object {
 	$converted = (setVersionNumber -project $target_file -tag $tagNumber);
 	if ($converted -eq $true) { $project_converted_count++ }
 }
-$project_converted_count
 if ($project_converted_count -ne $project_list.Count) {
 	rollbackChanges
 	throw "failure updating project files."
 }
 else {
 	Write-Host "Saving project number updates."
+	## commitChanges -text "$tagNumber : updating project to prepare release"
 }
+}
+
+## Section: Get Change text
+	Write-Host "Generating release notes."
+$changetext = getChangeLogText -tag $tagNumber
+Write-Host $changetext
