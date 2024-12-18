@@ -7,7 +7,9 @@
 #>
 param(
 	[bool]$includeProjectUpdates = $true,
-	[bool]$updateReleaseNotes = $true)
+	[bool]$updateReleaseNotes = $true,
+	[bool]$updateVersionFile = $true,
+	[bool]$updateMarkDownFile = $true)
 # Get the path of the current script
 $nl = [System.Environment]::NewLine;
 $delimiter = "~"
@@ -47,6 +49,7 @@ function promptForList($typeName)
 	}
 	return [string]::Join( $nl, $arr );
 }
+
 function getChangeLogText($tag){
 	$title =  Read-Host -Prompt "Enter release title: "
 	$changes = (promptForList -typeName "Problem Statement")
@@ -58,6 +61,7 @@ function getChangeLogText($tag){
 	);
 	return [string]::Join( $delimiter, $chgs );
 }
+
 function generateMarkDown($block){
 	$blck = [string]$block;
 	$parts = $blck.Split($delimiter);
@@ -68,19 +72,73 @@ function generateMarkDown($block){
 	return [string]::Join( $nl, $parts );
 }
 
+function updateVersionFile($target, $itm){
+	if ($updateVersionFile -eq $false) { return $true; }
+	if ([System.IO.File]::Exists( $target ) -eq $false) { return $null; }
+	try {
+		$targettxt = [System.IO.File]::ReadAllText( $target );
+		$js = $targettxt | ConvertFrom-Json
+        for($dd = 0; $dd -lt $itm.description.Count; $dd++)
+        {
+            $dditm = $itm.description[$dd].Replace($delimiter, "").Trim();
+            $itm.description[$dd] = $dditm
+        }
+        $arr = @(
+                @{
+                    id = $itm.id
+                    date = $itm.date
+                    title = $itm.title
+                    description = $itm.description
+                }
+            );
+        foreach( $j in $js )
+        {
+            $nwi = @{
+                    id = $j.id
+                    date = $j.date
+                    title = $j.title
+                    description = $j.description
+                }
+            $arr += $nwi
+        }
+		$rewritten = $arr | ConvertTo-Json
+        [System.IO.File]::WriteAllText( $target, $rewritten);
+		return $true;
+	} catch {
+		return $false;
+	}
+}
+
+function updateMarkDownFile($target, $text){
+	if ($updateMarkDownFile -eq $false) { return $true; }
+	if ([System.IO.File]::Exists( $target ) -eq $false) { return $false; }
+	try {
+		$targettxt = [System.IO.File]::ReadAllText( $target );
+		[System.IO.File]::Delete( $target ) | Out-Null;
+        [System.IO.File]::WriteAllText( $target, $text);
+		return $true;
+	} catch {
+		return $false;
+	}
+}
+
 function generateChangeJson($block, $tag){
 	$blck = [string]$block;
 	$parts = $blck.Split($nl);
 	$vrsn = $tag.Split('.');
+	$ttl = $parts[0].Trim();
 	$vindex = [string]::Join( ".", @( $vrsn[0], $vrsn[1], $vrsn[2] ));
 	$dte = (Get-Date -f "s").Replace("T", " ");
 	$obj = @{
 		"id" = $vindex
+		"title" = $ttl
 		"date" = $dte
 		"description" = $parts
 	}
 	return $obj
 }
+
+
 
 function doesFileExist($item) {
 	$key = $item.name
@@ -169,11 +227,13 @@ function setVersionNumber($project, $tag) {
 	}
 	return $conversionComplete;
 }
+
 function buildSolution(){
 	$proj = $projectFile
 	$sln = "<full path to solution file>"
 	devenv.com $sln /build "Release" /project $proj
 }
+
 function rollbackChanges()
 {
 	& $rollbackScript		
@@ -183,6 +243,7 @@ function commitChanges($text)
 {
 	& $commitScript -type 'fix' -message $text		
 }
+
 $expected = @(
 	@{ 
 		name = "project"
@@ -217,6 +278,7 @@ $expected = @(
 		value = $solutionFile
 	}
 );
+
 $canExecute = $true;
 
 ## Section: Input Valiadtion
@@ -276,8 +338,18 @@ else {
 }
 
 ## Section: Get Change text
-Write-Host "Generating release notes."
-$changetext = getChangeLogText -tag $tagNumber
-$markdown = generateMarkDown -block $changetext
-$jsonitem = generateChangeJson -block $changetext -tag $tagNumber
-$jsonitem | ConvertTo-Json
+if ($updateReleaseNotes -eq $true)
+{
+	Write-Host "Generating release notes."
+	$changetext = getChangeLogText -tag $tagNumber
+	$markdown = generateMarkDown -block $changetext
+	$jsonitem = generateChangeJson -block $changetext -tag $tagNumber
+	$jsupdated = updateVersionFile -target $versionLogFile -itm $jsonitem
+	if ($jsupdated -eq $false ) {
+		throw "Failed to update setup version notes."
+	}
+	$mdupdated = updateMarkDownFile -target $changeLogFile -text $markdown
+	if ($mdupdated -eq $false ) {
+		throw "Failed to update change log."
+	}
+}
