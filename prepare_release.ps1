@@ -6,8 +6,10 @@
 		b. Generate release number and echo back to screen
 #>
 param(
-	[bool]$includeProjectUpdates = $true)
+	[bool]$includeProjectUpdates = $true,
+	[bool]$updateReleaseNotes = $true)
 # Get the path of the current script
+$nl = [System.Environment]::NewLine;
 $delimiter = "~"
 $scriptFile = $MyInvocation.MyCommand.Path
 $scriptDir = [System.IO.Path]::GetDirectoryName($scriptFile)
@@ -19,6 +21,7 @@ $launchExe = "launch-exe"
 $uninstallExe = "uninstall"
 $setupProject = "setup"
 $installZip = "installation"
+$solution = "Thompson.RecordSearch.sln"
 
 $projectFile = [System.IO.Path]::Combine("$scriptDir\$projectName", "$projectName.csproj");
 $changeLogFile = [System.IO.Path]::Combine("$scriptDir", "$changeLog.md");
@@ -29,6 +32,7 @@ $setupProjectFile = [System.IO.Path]::Combine("$scriptDir\setup", "$setupProject
 $installZipFile = [System.IO.Path]::Combine("$scriptDir", "$installZip.zip");
 $rollbackScript = [System.IO.Path]::Combine("$scriptDir", "git_rollback.ps1");
 $commitScript = [System.IO.Path]::Combine("$scriptDir", "git_commit.ps1");
+$solutionFile = [System.IO.Path]::Combine("$scriptDir", $solution);
 
 # function(s)
 function promptForList($typeName)
@@ -41,18 +45,41 @@ function promptForList($typeName)
 		$arr += $lne
 		$lne = Read-Host -Prompt $promptText
 	}
-	return [string]::Join( [System.Environment]::NewLine, $arr );
+	return [string]::Join( $nl, $arr );
 }
 function getChangeLogText($tag){
 	$title =  Read-Host -Prompt "Enter release title: "
 	$changes = (promptForList -typeName "Problem Statement")
 	$checks = (promptForList -typeName "Component Checks");
 	$chgs = @(
-		[string]::Concat("Release | $tag - $title", [System.Environment]::NewLine)
-		[string]::Concat("Problem Statement:", [System.Environment]::NewLine, $changes, [System.Environment]::NewLine)
-		[string]::Concat("Problem Statement:", [System.Environment]::NewLine, $checks)
+		[string]::Concat("Release | $tag - $title", $nl)
+		[string]::Concat("Problem Statement:", $nl, $changes, $nl)
+		[string]::Concat("Component Checks:", $nl, $checks)
 	);
 	return [string]::Join( $delimiter, $chgs );
+}
+function generateMarkDown($block){
+	$blck = [string]$block;
+	$parts = $blck.Split($delimiter);
+	$parts[0] = [string]::Concat( "# ", $parts[0].Trim() )
+	$parts[1] = [string]::Concat( "## ", $parts[1].Trim() )
+	$parts[2] = [string]::Concat( "### ", $parts[2].Trim() )
+	
+	return [string]::Join( $nl, $parts );
+}
+
+function generateChangeJson($block, $tag){
+	$blck = [string]$block;
+	$parts = $blck.Split($nl);
+	$vrsn = $tag.Split('.');
+	$vindex = [string]::Join( ".", @( $vrsn[0], $vrsn[1], $vrsn[2] ));
+	$dte = (Get-Date -f "s").Replace("T", " ");
+	$obj = @{
+		"id" = $vindex
+		"date" = $dte
+		"description" = $parts
+	}
+	return $obj
 }
 
 function doesFileExist($item) {
@@ -142,7 +169,11 @@ function setVersionNumber($project, $tag) {
 	}
 	return $conversionComplete;
 }
-
+function buildSolution(){
+	$proj = $projectFile
+	$sln = "<full path to solution file>"
+	devenv.com $sln /build "Release" /project $proj
+}
 function rollbackChanges()
 {
 	& $rollbackScript		
@@ -180,6 +211,10 @@ $expected = @(
 	@{ 
 		name ="installation package"
 		value = $installZipFile
+	},
+	@{ 
+		name ="solution file"
+		value = $solutionFile
 	}
 );
 $canExecute = $true;
@@ -241,6 +276,8 @@ else {
 }
 
 ## Section: Get Change text
-	Write-Host "Generating release notes."
+Write-Host "Generating release notes."
 $changetext = getChangeLogText -tag $tagNumber
-Write-Host $changetext
+$markdown = generateMarkDown -block $changetext
+$jsonitem = generateChangeJson -block $changetext -tag $tagNumber
+$jsonitem | ConvertTo-Json
