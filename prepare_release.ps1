@@ -67,8 +67,8 @@ function generateMarkDown($block){
 	$blck = [string]$block;
 	$parts = $blck.Split($delimiter);
 	$parts[0] = [string]::Concat( "# ", $parts[0].Trim() )
-	$parts[1] = [string]::Concat( "## ", $parts[1].Trim() )
-	$parts[2] = [string]::Concat( "### ", $parts[2].Trim() )
+	$parts[1] = [string]::Concat( $nl, "## ", $parts[1].Trim() )
+	$parts[2] = [string]::Concat( $nl, "### ", $parts[2].Trim() )
 	
 	return [string]::Join( $nl, $parts );
 }
