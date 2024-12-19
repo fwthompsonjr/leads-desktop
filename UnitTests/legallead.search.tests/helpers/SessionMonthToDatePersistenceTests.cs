@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Interfaces;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -101,7 +102,8 @@ namespace legallead.search.tests.helpers
             public MocPersistence()
             {
                 var http = new Mock<IHttpService>();
-                var mock = new Mock<SessionUsageReader>(http.Object);
+                var helper = new Mock<IRemoteDbHelper>();
+                var mock = new Mock<SessionUsageReader>(http.Object, helper.Object);
                 var list = GetHistory(DateTime.Now, "dallas", 5);
                 mock.Setup(m => m.GetUsage(
                     It.IsAny<DateTime>())).Returns(list);

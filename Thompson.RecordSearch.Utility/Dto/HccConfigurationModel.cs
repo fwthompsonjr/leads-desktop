@@ -37,5 +37,11 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("query")] public string QueryUrl { get; set; }
         [JsonProperty("upload")] public string UploadUrl { get; set; }
         [JsonProperty("holiday")] public string HolidayUrl { get; set; }
+        [JsonProperty("usage-append")] public string UsageAppendRecordUrl { get; set; } = string.Empty;
+        [JsonProperty("usage-complete")] public string UsageCompleteRecordUrl { get; set; } = string.Empty;
+        [JsonProperty("usage-get-limits")] public string UsageGetLimitsUrl { get; set; } = string.Empty;
+        [JsonProperty("usage-get-history")] public string UsageGetHistoryUrl { get; set; } = string.Empty;
+        [JsonProperty("usage-get-summary")] public string UsageGetSummaryUrl { get; set; } = string.Empty;
+        [JsonProperty("usage-set-limit")] public string UsageSetLimitUrl { get; set; } = string.Empty;
     }
 }

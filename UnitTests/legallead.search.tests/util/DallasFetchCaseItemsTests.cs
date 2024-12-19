@@ -17,8 +17,10 @@ namespace legallead.search.tests.util
             var service = new DallasFetchCaseItems();
             Assert.Equal(index, service.OrderId);
         }
-        [Fact]
-        public void ComponentCanExecute()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ComponentCanExecute(bool noDataResponse)
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
@@ -28,13 +30,20 @@ namespace legallead.search.tests.util
             driver.Setup(x => x.FindElement(It.IsAny<By>())).Returns(element.Object);
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             element.Setup(m => m.GetAttribute(It.IsAny<string>())).Returns(Rex.dallas_case_items);
-            var service = new MockDallasFetchCaseItems
+            var service = new MockDallasFetchCaseItems(noDataResponse)
             {
                 Parameters = parameters,
                 Driver = driver.Object
             };
             _ = service.Execute();
-            element.Verify(m => m.GetAttribute(It.IsAny<string>()), Times.Once);
+            if (noDataResponse)
+            {
+                element.Verify(m => m.GetAttribute(It.IsAny<string>()), Times.Never);
+            }
+            else
+            {
+                element.Verify(m => m.GetAttribute(It.IsAny<string>()), Times.Once);
+            }
         }
         [Fact]
         public void ComponentCanExecuteWhenElementNotFound()
@@ -78,10 +87,19 @@ namespace legallead.search.tests.util
 
         private sealed class MockDallasFetchCaseItems : DallasFetchCaseItems
         {
+            private readonly bool bNoCaseResponse;
+            public MockDallasFetchCaseItems(bool noCaseResponse = false)
+            {
+                bNoCaseResponse = noCaseResponse;
+            }
             public Mock<IJavaScriptExecutor> MqExecutor { get; private set; } = new Mock<IJavaScriptExecutor>();
             public override IJavaScriptExecutor GetJavaScriptExecutor()
             {
-                MqExecutor.SetupSequence(x => x.ExecuteScript(It.IsAny<string>()))
+                const string find = "no cases match your search";
+                MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains(find))))
+                    .Returns(bNoCaseResponse);
+
+                MqExecutor.SetupSequence(x => x.ExecuteScript(It.Is<string>(s => !s.Contains(find))))
                     .Returns(true)
                     .Returns(true)
                     .Returns(false);

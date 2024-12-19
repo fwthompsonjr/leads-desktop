@@ -121,9 +121,10 @@ while (signin.getAttribute('disabled') !== null ) { chekBox.click(); }
 signin.click();
 
 ~ get alternate case list
+var alldata = [];
 var links = Array.prototype.slice.call( document.getElementsByTagName('a'), 0 );
 links = links.filter(a => { let attr = a.getAttribute('class'); if (attr == null) { return false;} return attr == 'caseLink' });
-
+if (links == null || links.count == 0) { return JSON.stringify(alldata); }
 var columns = [ 
 	"party-case-caseid", 
 	"party-case-filedate", 
@@ -131,7 +132,6 @@ var columns = [
 	"party-case-status", 
 	"party-case-location", 
 	"party-case-partyname" ];
-var alldata = [];
 links.forEach((lnk) => {
 	var linkurl = lnk.getAttribute('data-url');
 	datarow = Array.prototype.slice.call( lnk.closest('tr').getElementsByTagName('td'), 0 ) 

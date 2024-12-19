@@ -229,7 +229,8 @@ namespace LegalLead.PublicData.Search
                 ReportProgress = TryShowProgress,
                 ReportProgessComplete = TryHideProgress,
                 StartDate = dteStart.Value.Date,
-                EndingDate = dteEnding.Value.Date
+                EndingDate = dteEnding.Value.Date,
+                TrackingIndex = interactive.TrackingIndex
             };
             response.Parameters = interactive.Parameters ?? new();
             return response;
@@ -241,6 +242,13 @@ namespace LegalLead.PublicData.Search
             SearchResult searchItem,
             int caseSelectionIndex = 0)
         {
+            var tracking = new
+            {
+                CountyId = siteData.Id,
+                StartDate = dteStart.Value.Date,
+                EndDate = dteEnding.Value.Date
+            };
+            var trackingItem = dbHelper.AppendUsage(tracking.CountyId, tracking.StartDate, tracking.EndDate);
             try
             {
                 if (IsAccountAdmin())
@@ -248,6 +256,7 @@ namespace LegalLead.PublicData.Search
                     var displayMode = SettingsWriter.GetSettingOrDefault("admin", "Open Headless:", true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
+                webmgr.TrackingIndex = trackingItem.Id;
                 webmgr.ReportProgress = TryShowProgress;
                 webmgr.ReportProgessComplete = TryHideProgress;
                 var interactive = GetDbInteractive(webmgr, siteData.Id);
@@ -290,12 +299,14 @@ namespace LegalLead.PublicData.Search
                 var count = CaseData.PeopleList.Count;
                 if (count > 0)
                 {
+                    var adjustedCount = CaseData.AdjustedRecordCount == 0 ? count : CaseData.AdjustedRecordCount;
+                    dbHelper.CompleteUsage(trackingItem.Id, adjustedCount);
                     var member = (SourceType)siteData.Id;
                     var userName = GetUserName();
                     var searchRange = $"{webmgr.StartDate:d} to {webmgr.EndingDate:d}";
                     if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
                     var countyName = member.GetCountyName();
-                    UsageIncrementer.IncrementUsage(userName, countyName, count, searchRange);
+                    UsageIncrementer.IncrementUsage(userName, countyName, adjustedCount, searchRange);
                     UsageReader.WriteUserRecord();
                 }
 
@@ -340,5 +351,7 @@ namespace LegalLead.PublicData.Search
             }
         }
 
+        private static readonly IRemoteDbHelper dbHelper
+            = ActionSettingContainer.GetContainer.GetInstance<IRemoteDbHelper>();
     }
 }

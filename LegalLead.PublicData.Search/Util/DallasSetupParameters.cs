@@ -27,10 +27,38 @@ namespace LegalLead.PublicData.Search.Util
             var script = js.Replace("{0}", Parameters.StartDate)
                 .Replace("{1}", Parameters.EndingDate)
                 .Replace("{2}", Parameters.CourtLocator);
-            executor.ExecuteScript(script);
+            var arr = new string[] { StatusScript, script };
+            var cmmd = string.Join(Environment.NewLine, arr);
+            executor.ExecuteScript(cmmd);
             return true;
         }
 
         protected override string ScriptName { get; } = "set start and end date";
+        private static string StatusScript
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(setStatusScript)) return setStatusScript;
+                setStatusScript = string.Join(Environment.NewLine, setStatusBlock);
+                return setStatusScript;
+            }
+        }
+
+        private static string setStatusScript = null;
+
+        private static readonly string[] setStatusBlock = new string[] {
+            "",
+            "var sts = { ",
+            " 'set_status': function() { ",
+            "	try { ",
+            "		var combobox = $('#caseCriteria_CaseStatus').data('kendoComboBox'); ",
+            "		combobox.value('OPEN'); ",
+            "	} catch { ",
+            "	  // intentionally left blank ",
+            "	} ",
+            " } ",
+            "}",
+            "sts.set_status();"
+        };
     }
 }

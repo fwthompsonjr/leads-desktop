@@ -73,12 +73,17 @@ namespace LegalLead.PublicData.Search.Classes
             var id = CourtNames.FindIndex(x => x.Equals(courtName, oic));
             return GetCourtName(id);
         }
-        public static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate)
+        public static List<DateTime> GetBusinessDays(DateTime startDate, DateTime endingDate,
+            bool includeWeekend = false,
+            bool includeHolidays = false)
         {
             var holidates = GetHolidayList();
             var list = new List<DateTime>();
             var begin = startDate.Date;
-            var weekends = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
+            var weekends =
+                includeWeekend ? new() :
+                new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
+            if (includeHolidays) holidates.RemoveAll(x => true);
             while (begin <= endingDate.Date)
             {
                 if (!weekends.Contains(begin.DayOfWeek)) list.Add(begin);

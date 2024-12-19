@@ -9,5 +9,6 @@ namespace Thompson.RecordSearch.Utility.Models
         public List<PersonAddress> PeopleList { get; set; }
         public string CaseList { get; set; }
         public string Result { get; set; }
+        public int AdjustedRecordCount { get; set; }
     }
 }

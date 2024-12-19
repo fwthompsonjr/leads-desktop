@@ -36,7 +36,6 @@ namespace legallead.search.tests.util
                 element.Object,
                 element.Object,
                 element.Object,
-                element.Object,
             };
             var collection = new ReadOnlyCollection<IWebElement>(items);
             element.SetupGet(x => x.Text).Returns("Status");
@@ -82,6 +81,9 @@ namespace legallead.search.tests.util
                 const string load = ".filter(x => x.innerText == 'Status');";
                 const string isSorted = "return statusSort.isSorted();";
                 const string clicked = "return statusSort.click();";
+                const string csLoad = ".filter(x => x.innerText == 'Type');";
+                const string csIsSorted = "return typeSort.isSorted();";
+                const string csClicked = "return typeSort.click();";
 
                 MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains(clicked))))
                     .Returns(true);
@@ -90,6 +92,18 @@ namespace legallead.search.tests.util
                     .Returns(true);
 
                 MqExecutor.SetupSequence(x => x.ExecuteScript(It.Is<string>(s => s.Contains(isSorted))))
+                    .Returns("")
+                    .Returns(false)
+                    .Returns(true);
+
+
+                MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains(csClicked))))
+                    .Returns(true);
+
+                MqExecutor.Setup(x => x.ExecuteScript(It.Is<string>(s => s.Contains(csLoad))))
+                    .Returns(true);
+
+                MqExecutor.SetupSequence(x => x.ExecuteScript(It.Is<string>(s => s.Contains(csIsSorted))))
                     .Returns("")
                     .Returns(false)
                     .Returns(true);

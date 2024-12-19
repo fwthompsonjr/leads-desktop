@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
@@ -83,7 +84,7 @@ namespace LegalLead.PublicData.Search.Util
             get => _web.DriverReadHeadless;
             set { _web.DriverReadHeadless = value; }
         }
-
+        public string TrackingIndex { get; set; }
         #endregion
 
         #region Public Methods
@@ -107,12 +108,16 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     uploadNeeded = false;
                     IterateDateRange(result);
+                    var filter = new PeopleFilterService(result);
+                    result = filter.Filter();
                     GenerateExcelFile(result, startDt, endingDt);
                     return result;
                 }
 
                 result = _web.Fetch();
                 result.WebsiteId = DataSearchParameters.CountyId;
+                var filter1 = new PeopleFilterService(result);
+                result = filter1.Filter();
                 return result;
             }
             finally
@@ -150,14 +155,16 @@ namespace LegalLead.PublicData.Search.Util
                 DataSearchParameters.CountyId,
                 nameService.GetFileName(),
                 nameService.GetCourtTypeName(),
-                result.PeopleList);
+                result.PeopleList,
+                TrackingIndex);
             result.Result = builder.Generate();
             result.CaseList = JsonConvert.SerializeObject(result.PeopleList);
         }
 
         private void IterateDateRange(WebFetchResult result)
         {
-            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
+            var includeWeekends = result.WebsiteId == (int)SourceType.DallasCounty;
+            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, includeWeekends);
             var currentDt = 1;
             var maximumDt = dates.Count;
             dates.ForEach(d =>
@@ -462,16 +469,20 @@ namespace LegalLead.PublicData.Search.Util
             private readonly string courtTypeName;
             private readonly int countyId;
             private readonly List<PersonAddress> People;
+            private readonly string trakingIndex;
+
             public FileContentBuilder(
                 int countyIndex,
                 string fileName,
                 string courtType,
-                List<PersonAddress> people)
+                List<PersonAddress> people,
+                string trackingIndex)
             {
                 excelFileName = fileName;
                 courtTypeName = courtType;
                 countyId = countyIndex;
                 People = people;
+                trakingIndex = trackingIndex;
             }
 
             public string Generate()
@@ -491,6 +502,7 @@ namespace LegalLead.PublicData.Search.Util
                 content.TransferColumn("County", "fname");
                 content.TransferColumn("CourtAddress", "lname");
                 content.PopulateColumn("CourtAddress", courtlist);
+                content.SecureContent(trakingIndex);
                 using (var ms = new MemoryStream())
                 {
                     content.SaveAs(ms);
@@ -521,6 +533,60 @@ namespace LegalLead.PublicData.Search.Util
         {
             public bool UseRemoteDb { get; set; }
             public int RemoteMinDayInterval { get; set; }
+        }
+
+
+        private class PeopleFilterService
+        {
+            private readonly WebFetchResult Current;
+            public PeopleFilterService(WebFetchResult source)
+            {
+                Current = source;
+            }
+
+            public WebFetchResult Filter()
+            {
+                var people = Current.PeopleList;
+                if (people == null || people.Count == 0) return Current;
+                var limits = UsagePersistence.GetUsageLimit(Current.WebsiteId);
+                if (limits == null || limits.MaxRecords == -1) return Current;
+                var setting = UsagePersistence.GetUsage(Current.WebsiteId);
+                if (setting == null) return Current;
+                var maximum = limits.MaxRecords;
+                var current = setting.RecordCount + people.Count;
+                if (current <= maximum) return Current;
+                var difference = current - maximum;
+                Console.WriteLine($"Monthly limit exceeded. Limit: {maximum}. MTD: {setting.RecordCount}. Overage: {difference}");
+                for (int i = people.Count - 1; i >= 0; i--)
+                {
+                    var removed = people.Count(x => x.Zip == "00001");
+                    if (removed == difference) break;
+                    var row = people[i];
+                    InvalidateData(row);
+                }
+                Current.AdjustedRecordCount = people.Count(x => x.Zip != "00001");
+                return Current;
+            }
+
+            private static void InvalidateData(PersonAddress row)
+            {
+                row.Plantiff = "Removed";
+                row.Address1 = "010 Limit Exceeded";
+                row.Address2 = string.Empty;
+                row.Address3 = "Exceeded, TX 00001";
+                row.CaseNumber = "00-00-00-00";
+                row.CaseStyle = "Redacted vs State of Texas";
+                row.Name = "Lname, Fname";
+                row.Zip = "00001";
+                _ = row.FirstName;
+                _ = row.LastName;
+            }
+
+            private static SessionUsageReader UsagePersistence
+                = SessionPersistenceContainer
+                        .GetContainer
+                        .GetInstance<SessionUsageReader>();
+
         }
 
         private static class ParameterHelper

@@ -38,6 +38,13 @@ namespace legallead.search.tests.classes
             Assert.False(string.IsNullOrEmpty(sut.QueryUrl));
             Assert.False(string.IsNullOrEmpty(sut.UploadUrl));
             Assert.False(string.IsNullOrEmpty(sut.HolidayUrl));
+
+            Assert.False(string.IsNullOrEmpty(sut.UsageAppendRecordUrl));
+            Assert.False(string.IsNullOrEmpty(sut.UsageCompleteRecordUrl));
+            Assert.False(string.IsNullOrEmpty(sut.UsageGetLimitsUrl));
+            Assert.False(string.IsNullOrEmpty(sut.UsageGetHistoryUrl));
+            Assert.False(string.IsNullOrEmpty(sut.UsageGetSummaryUrl));
+            Assert.False(string.IsNullOrEmpty(sut.UsageSetLimitUrl));
         }
     }
 }

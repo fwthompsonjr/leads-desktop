@@ -4,7 +4,6 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util
@@ -21,31 +20,56 @@ namespace LegalLead.PublicData.Search.Util
 
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-            
+
+            const string noElementId = "ui-tabs-1";
+            WaitForTabs(noElementId);
+            if (IsNoCount(executor)) return true;
             var helper = new DallasSortByStatusHelper(Driver, executor);
+            var casehelper = new DallasSortByCaseTypeHelper(Driver, executor);
             js = VerifyScript(js);
-            WaitForSelector();
+            if (!WaitForSelector()) return true;
             helper.Execute();
+            casehelper.Execute();
+            WaitForTabs(noElementId);
+            if (IsNoCount(executor)) return true;
             executor.ExecuteScript(js);
             return true;
         }
-        private void WaitForSelector()
+
+        private void WaitForTabs(string elementId)
         {
             try
             {
-
-                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromMilliseconds(400) };
-                wait.Until(w => { return w.TryFindElements(By.XPath(_caseLink)) != null; });
-                if (!IsTesting) Thread.Sleep(3000);
-                var caseNumbers = Driver.TryFindElements(By.XPath(_caseLink)).ToList();
-                if (caseNumbers.Count < 10) { return; }
-
-                wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(45)) { PollingInterval = TimeSpan.FromMilliseconds(400) };
-                wait.Until(w => { return w.TryFindElement(By.XPath(_selector)) != null; });
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(20))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(800)
+                };
+                wait.Until(w => { return w.TryFindElements(By.Id(elementId)) != null; });
             }
             catch
             {
                 Debug.WriteLine("Failed to find selector");
+            }
+        }
+        private bool WaitForSelector()
+        {
+            try
+            {
+                Console.WriteLine(" - Waiting for records load to complete");
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(20)) { PollingInterval = TimeSpan.FromMilliseconds(400) };
+                wait.Until(w => { return w.TryFindElements(By.XPath(_caseLink)) != null; });
+
+                var caseNumbers = Driver.TryFindElements(By.XPath(_caseLink)).ToList();
+                if (caseNumbers.Count < 10) { return false; }
+
+                wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromMilliseconds(400) };
+                wait.Until(w => { return w.TryFindElement(By.XPath(_selector)) != null; });
+                return true;
+            }
+            catch
+            {
+                Debug.WriteLine("Failed to find selector");
+                return false;
             }
         }
         protected override string ScriptName { get; } = "select max rows per page";

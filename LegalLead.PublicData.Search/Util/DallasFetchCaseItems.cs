@@ -18,6 +18,7 @@ namespace LegalLead.PublicData.Search.Util
         public override object Execute()
         {
             const string elementId = "CasesGrid";
+            const string noElementId = "ui-tabs-1";
             var columns = new List<string> {
                 "party-case-caseid",
                 "party-case-filedate",
@@ -25,59 +26,75 @@ namespace LegalLead.PublicData.Search.Util
                 "party-case-status",
                 "party-case-location",
                 "party-case-partyname" };
-            if (Parameters == null || Driver == null)
+
+            var executor = GetJavaScriptExecutor();
+            if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             var alldata = new List<CaseItemDto>();
-            var locator = By.Id(elementId);
-            WaitForElement(locator);
-            var element = TryGetElement(Driver, locator);
-            if (element == null) return string.Empty;
-
-            // run script to reveal max-rows
-
-            var content = element.GetAttribute("outerHTML");
-            var doc = GetHtml(content);
-            var node = doc.DocumentNode;
-            var links = node.SelectNodes("//a").ToList().FindAll(a =>
+            try
             {
-                var attr = a.Attributes.FirstOrDefault(aa => aa.Name == "class");
-                if (attr == null) return false;
-                return attr.Value == "caseLink";
-            });
-            var mx = links.Count;
-            links.ForEach(lnk =>
-            {
-                Console.WriteLine($"Fetching address detail: {links.IndexOf(lnk) + 1} of {mx}");
-                var linkurl = lnk.GetAttributeValue("data-url", "");
-                var parentRow = GetClosest("tr", lnk);
-                if (parentRow != null)
+
+                var locator1 = By.Id(noElementId);
+                WaitForElement(locator1);
+                if (IsNoCount(executor)) return string.Empty;
+                var locator = By.Id(elementId);
+                WaitForElement(locator);
+                var element = TryGetElement(Driver, locator);
+                if (element == null) return string.Empty;
+
+                // run script to reveal max-rows
+
+                var content = element.GetAttribute("outerHTML");
+                var doc = GetHtml(content);
+                var node = doc.DocumentNode;
+                var links = node.SelectNodes("//a").ToList().FindAll(a =>
                 {
-                    var datarow = parentRow.SelectNodes("td").ToList().FindAll(d =>
-                    {
-                        var attr = d.Attributes.FirstOrDefault(aa => aa.Name == "class");
-                        if (attr == null) return false;
-                        var found = false;
-                        var classlist = attr.Value;
-                        columns.ForEach((c) => { if (classlist.Contains(c)) { found = true; } });
-                        return found;
-                    });
-                    var data = new CaseItemDto
-                    {
-                        Href = linkurl,
-                        CaseNumber = datarow[0].InnerText,
-                        FileDate = datarow[1].InnerText,
-                        CaseType = datarow[2].InnerText,
-                        CaseStatus = datarow[3].InnerText,
-                        Court = datarow[4].InnerText,
-                        PartyName = datarow[5].InnerText
-                    };
-                    if (data.CaseStatus == "OPEN") { alldata.Add(data); }
-                }
-            });
-            Console.WriteLine("Search found {0} records", alldata.Count);
-            return JsonConvert.SerializeObject(alldata);
-        }
+                    var attr = a.Attributes.FirstOrDefault(aa => aa.Name == "class");
+                    if (attr == null) return false;
+                    return attr.Value == "caseLink";
+                });
 
+                if (links == null || links.Count == 0)
+                    return JsonConvert.SerializeObject(alldata);
+
+                var mx = links.Count;
+                links.ForEach(lnk =>
+                {
+                    Console.WriteLine($"Fetching address detail: {links.IndexOf(lnk) + 1} of {mx}");
+                    var linkurl = lnk.GetAttributeValue("data-url", "");
+                    var parentRow = GetClosest("tr", lnk);
+                    if (parentRow != null)
+                    {
+                        var datarow = parentRow.SelectNodes("td").ToList().FindAll(d =>
+                        {
+                            var attr = d.Attributes.FirstOrDefault(aa => aa.Name == "class");
+                            if (attr == null) return false;
+                            var found = false;
+                            var classlist = attr.Value;
+                            columns.ForEach((c) => { if (classlist.Contains(c)) { found = true; } });
+                            return found;
+                        });
+                        var data = new CaseItemDto
+                        {
+                            Href = linkurl,
+                            CaseNumber = datarow[0].InnerText,
+                            FileDate = datarow[1].InnerText,
+                            CaseType = datarow[2].InnerText,
+                            CaseStatus = datarow[3].InnerText,
+                            Court = datarow[4].InnerText,
+                            PartyName = datarow[5].InnerText
+                        };
+                        if (data.CaseStatus == "OPEN") { alldata.Add(data); }
+                    }
+                });
+                Console.WriteLine("Search found {0} records", alldata.Count);
+                return JsonConvert.SerializeObject(alldata);
+            }
+            catch (Exception)
+            {
+                return JsonConvert.SerializeObject(alldata);
+            }
+        }
 
         private void WaitForElement(By locator)
         {
@@ -144,5 +161,6 @@ namespace LegalLead.PublicData.Search.Util
                 return null;
             }
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.PublicData.Search.Util;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics;
@@ -10,8 +11,8 @@ namespace LegalLead.PublicData.Search.Helpers
 {
     public class DallasSortByStatusHelper
     {
-        private readonly IWebDriver Driver;
-        private readonly IJavaScriptExecutor JsExecutor;
+        protected readonly IWebDriver Driver;
+        protected readonly IJavaScriptExecutor JsExecutor;
         public DallasSortByStatusHelper(
             IWebDriver driver,
             IJavaScriptExecutor executor)
@@ -20,9 +21,10 @@ namespace LegalLead.PublicData.Search.Helpers
             JsExecutor = executor;
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
-            WaitForSelector();
+            if (NoCountHelper.IsNoCountData(JsExecutor)) return;
+            if (!WaitForSelector()) return;
             var retries = 5;
             while (!IsSorted())
             {
@@ -61,22 +63,24 @@ namespace LegalLead.PublicData.Search.Helpers
             JsExecutor.ExecuteScript(js);
         }
 
-        private void WaitForSelector()
+        private bool WaitForSelector()
         {
             try
             {
 
-                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromMilliseconds(400) };
-                wait.Until(w => 
-                { 
-                    var collection = w.TryFindElements(By.XPath(_sortLink)); 
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(15)) { PollingInterval = TimeSpan.FromMilliseconds(400) };
+                wait.Until(w =>
+                {
+                    var collection = w.TryFindElements(By.XPath(_sortLink));
                     if (collection == null) return false;
                     return collection.Any(x => x.Text == "Status");
                 });
+                return true;
             }
             catch
             {
                 Debug.WriteLine("Failed to find selector");
+                return false;
             }
         }
 
@@ -116,5 +120,14 @@ namespace LegalLead.PublicData.Search.Helpers
             "} "
         };
         private const string _sortLink = "//a[@class = 'k-link']";
+
+        protected class NoCountHelper : BaseDallasSearchAction
+        {
+            public static bool IsNoCountData(IJavaScriptExecutor executor)
+            {
+                return IsNoCount(executor);
+            }
+        }
+
     }
 }
