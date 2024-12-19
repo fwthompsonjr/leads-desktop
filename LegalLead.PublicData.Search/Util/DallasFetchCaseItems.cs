@@ -18,6 +18,7 @@ namespace LegalLead.PublicData.Search.Util
         public override object Execute()
         {
             const string elementId = "CasesGrid";
+            const string noElementId = "ui-tabs-1";
             var columns = new List<string> {
                 "party-case-caseid",
                 "party-case-filedate",
@@ -25,11 +26,23 @@ namespace LegalLead.PublicData.Search.Util
                 "party-case-status",
                 "party-case-location",
                 "party-case-partyname" };
-            if (Parameters == null || Driver == null)
+
+            var executor = GetJavaScriptExecutor();
+            if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             var alldata = new List<CaseItemDto>();
-            var locator = By.Id(elementId);
-            WaitForElement(locator);
+            // check for element no-data
+            var locators = new[] { noElementId, elementId };
+            for ( var i = 0; i < locators.Length; i++)
+            {
+                var selector = By.Id(locators[i]);
+                WaitForElement(selector);
+                if (i == 0 && IsNoCount(executor))
+                {
+                    return JsonConvert.SerializeObject(alldata);
+                }
+            }
+            var locator = By.Id(locators[1]);
             var element = TryGetElement(Driver, locator);
             if (element == null) return string.Empty;
 
@@ -78,6 +91,13 @@ namespace LegalLead.PublicData.Search.Util
             return JsonConvert.SerializeObject(alldata);
         }
 
+        protected static bool IsNoCount(IJavaScriptExecutor jsexec)
+        {
+            if (jsexec == null) return false;
+            var obj = jsexec.ExecuteScript(GetNoCountJs);
+            if (obj is not bool bNoCount) return false;
+            return bNoCount;
+        }
 
         private void WaitForElement(By locator)
         {
@@ -144,5 +164,28 @@ namespace LegalLead.PublicData.Search.Util
                 return null;
             }
         }
+
+        private static string GetNoCountJs
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(nocountjs)) return nocountjs;
+                nocountjs = string.Join(Environment.NewLine, nocountscript);
+                return nocountjs;
+            }
+        }
+        private static string nocountjs = null;
+        private static readonly string[] nocountscript = new[]
+        {
+            "try { ",
+            "	const no_case_text = 'no cases match your search'; ",
+            "	var ultabs = document.getElementById('ui-tabs-1'); ",
+            "	if (undefined == ultabs || null == ultabs) { return false; } ",
+            "	var tabtext = ultabs.innerText.trim().toLowerCase(); ",
+            "	return tabtext.indexOf(no_case_text) >= 0;	 ",
+            "} catch { ",
+            "	return false; ",
+            "} "
+        };
     }
 }
