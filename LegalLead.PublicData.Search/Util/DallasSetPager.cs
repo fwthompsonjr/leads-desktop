@@ -21,15 +21,36 @@ namespace LegalLead.PublicData.Search.Util
 
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
-            
+
+            const string noElementId = "ui-tabs-1";
+            WaitForTabs(noElementId);
+            if (IsNoCount(executor)) return true;
             var helper = new DallasSortByStatusHelper(Driver, executor);
             var casehelper = new DallasSortByCaseTypeHelper(Driver, executor);
             js = VerifyScript(js);
             WaitForSelector();
             helper.Execute();
             casehelper.Execute();
+            WaitForTabs(noElementId);
+            if (IsNoCount(executor)) return true;
             executor.ExecuteScript(js);
             return true;
+        }
+
+        private void WaitForTabs(string elementId)
+        {
+            try
+            {
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(800)
+                };
+                wait.Until(w => { return w.TryFindElements(By.Id(elementId)) != null; });
+            }
+            catch
+            {
+                Debug.WriteLine("Failed to find selector");
+            }
         }
         private void WaitForSelector()
         {

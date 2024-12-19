@@ -8,20 +8,17 @@ using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
-    public class DallasSortByCaseTypeHelper
+    public class DallasSortByCaseTypeHelper : DallasSortByStatusHelper
     {
-        private readonly IWebDriver Driver;
-        private readonly IJavaScriptExecutor JsExecutor;
         public DallasSortByCaseTypeHelper(
             IWebDriver driver,
-            IJavaScriptExecutor executor)
+            IJavaScriptExecutor executor) : base(driver, executor)
         {
-            Driver = driver;
-            JsExecutor = executor;
         }
 
-        public void Execute()
+        public override void Execute()
         {
+            if (NoCountHelper.IsNoCountData(JsExecutor)) return;
             WaitForSelector();
             var retries = 5;
             while (!IsSorted())

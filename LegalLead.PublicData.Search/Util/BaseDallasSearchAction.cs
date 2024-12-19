@@ -83,5 +83,36 @@ namespace LegalLead.PublicData.Search.Util
                 "if ( null != spn) { spn.innerText = 'Welcome, User'}",
                 "}"
         };
+
+        protected static bool IsNoCount(IJavaScriptExecutor jsexec)
+        {
+            if (jsexec == null) return false;
+            var obj = jsexec.ExecuteScript(GetNoCountJs);
+            if (obj is not bool bNoCount) return false;
+            return bNoCount;
+        }
+
+        protected static string GetNoCountJs
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(nocountjs)) return nocountjs;
+                nocountjs = string.Join(Environment.NewLine, nocountscript);
+                return nocountjs;
+            }
+        }
+        private static string nocountjs = null;
+        private static readonly string[] nocountscript = new[]
+        {
+            "try { ",
+            "	const no_case_text = 'no cases match your search'; ",
+            "	var ultabs = document.getElementById('ui-tabs-1'); ",
+            "	if (undefined == ultabs || null == ultabs) { return false; } ",
+            "	var tabtext = ultabs.innerText.trim().toLowerCase(); ",
+            "	return tabtext.indexOf(no_case_text) >= 0;	 ",
+            "} catch { ",
+            "	return false; ",
+            "} "
+        };
     }
 }

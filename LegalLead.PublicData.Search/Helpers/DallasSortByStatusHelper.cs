@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.PublicData.Search.Util;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics;
@@ -10,8 +11,8 @@ namespace LegalLead.PublicData.Search.Helpers
 {
     public class DallasSortByStatusHelper
     {
-        private readonly IWebDriver Driver;
-        private readonly IJavaScriptExecutor JsExecutor;
+        protected readonly IWebDriver Driver;
+        protected readonly IJavaScriptExecutor JsExecutor;
         public DallasSortByStatusHelper(
             IWebDriver driver,
             IJavaScriptExecutor executor)
@@ -20,8 +21,10 @@ namespace LegalLead.PublicData.Search.Helpers
             JsExecutor = executor;
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
+            if (NoCountHelper.IsNoCountData(JsExecutor)) return;
+
             WaitForSelector();
             var retries = 5;
             while (!IsSorted())
@@ -116,5 +119,14 @@ namespace LegalLead.PublicData.Search.Helpers
             "} "
         };
         private const string _sortLink = "//a[@class = 'k-link']";
+
+        protected class NoCountHelper : BaseDallasSearchAction
+        {
+            public static bool IsNoCountData(IJavaScriptExecutor executor)
+            {
+                return IsNoCount(executor);
+            }
+        }
+
     }
 }

@@ -199,6 +199,7 @@ function doesFileExist($item) {
 
 function getProjectList($directory)
 {
+    $importance = "LegalLead.Changed.csproj", "LegalLead.Resources.csproj", "Thompson.RecordSearch.Utility.csproj", "LegalLead.PublicData.Search.csproj"
 	$exists = [System.IO.Directory]::Exists( $directory );
 	if ($exists -eq $false) { return $null; }
 	$files = [System.IO.DirectoryInfo]::new( $directory ).GetFiles( "*.csproj", [System.IO.SearchOption]::AllDirectories);
@@ -214,7 +215,7 @@ function getProjectList($directory)
 		$nm = $_.Name;
 		return $nm.IndexOf( "permissions.api", [System.StringComparison]::OrdinalIgnoreCase ) -lt 0
 	}
-	return $files;
+	return $files | Sort-Object { $importance.IndexOf($_.Name) }
 }
 
 function getProjectVersion($project)
