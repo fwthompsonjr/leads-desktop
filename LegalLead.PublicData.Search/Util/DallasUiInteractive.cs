@@ -52,7 +52,7 @@ namespace LegalLead.PublicData.Search.Util
                 var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
                 var driver = GetDriver(DriverReadHeadless);
                 var parameters = new DallasSearchProcess();
-                var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
+                var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, true, true);
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 var result = new WebFetchResult();
@@ -157,13 +157,30 @@ namespace LegalLead.PublicData.Search.Util
             var count = common.Count - 1;
             Populate(a, driver, parameters);
             if (a is BaseDallasSearchAction preaction) { preaction.MaskUserName(); }
-            var response = a.Execute();
+            object response = ExecuteAction(a);
             if (a is BaseDallasSearchAction postaction) { postaction.MaskUserName(); }
             if (a is DallasAuthenicateSubmit _ && response is bool captchaCompleted && captchaCompleted) isCaptchaNeeded = false;
             if (a is DallasFetchCaseDetail _ && response is string cases) Items.AddRange(GetData(cases));
             if (a is DallasRequestCaptcha _ && response is bool canExecute && !canExecute) ExecutionCancelled = true;
             if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
             return isCaptchaNeeded;
+        }
+
+        private static object ExecuteAction(ICountySearchAction a)
+        {
+            try
+            {
+                return a.Execute();
+            }
+            catch (Exception e)
+            {
+#if DEBUG
+                Console.WriteLine(e.ToString());
+                return null;
+#else
+                return null;
+#endif
+            }
         }
 
         protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
@@ -182,7 +199,7 @@ namespace LegalLead.PublicData.Search.Util
                 postcommon.ForEach(a =>
                 {
                     Populate(a, driver, parameters, i.Href);
-                    var response = a.Execute();
+                    var response = ExecuteAction(a);
                     if (a is DallasFetchCaseStyle _ && response is string cases)
                     {
                         var info = GetStyle(cases);
@@ -311,12 +328,12 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 var data = JsonConvert.DeserializeObject<DallasCaseStyleDto>(json);
-                if (data == null) return new DallasCaseStyleDto();
+                if (data == null) return null;
                 return data;
             }
             catch (Exception)
             {
-                return new DallasCaseStyleDto();
+                return null;
             }
         }
 

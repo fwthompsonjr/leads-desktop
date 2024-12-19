@@ -42,7 +42,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             if (!Uri.TryCreate(webaddress, UriKind.Absolute, out var _)) throw new ArgumentOutOfRangeException(nameof(webaddress));
             try
             {
-                client.Timeout = TimeSpan.FromSeconds(30);
+                client.Timeout = TimeSpan.FromSeconds(90);
                 using (var payload = GetContent(value))
                 {
                     var response = client.PostAsync(webaddress, payload).GetAwaiter().GetResult();

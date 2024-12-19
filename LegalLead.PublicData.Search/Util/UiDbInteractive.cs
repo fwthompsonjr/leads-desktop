@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -107,12 +108,16 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     uploadNeeded = false;
                     IterateDateRange(result);
+                    var filter = new PeopleFilterService(result);
+                    result = filter.Filter();
                     GenerateExcelFile(result, startDt, endingDt);
                     return result;
                 }
 
                 result = _web.Fetch();
                 result.WebsiteId = DataSearchParameters.CountyId;
+                var filter1 = new PeopleFilterService(result);
+                result = filter1.Filter();
                 return result;
             }
             finally
@@ -521,6 +526,60 @@ namespace LegalLead.PublicData.Search.Util
         {
             public bool UseRemoteDb { get; set; }
             public int RemoteMinDayInterval { get; set; }
+        }
+
+
+        private class PeopleFilterService
+        {
+            private readonly WebFetchResult Current;
+            public PeopleFilterService(WebFetchResult source)
+            {
+                Current = source;
+            }
+
+            public WebFetchResult Filter()
+            {
+                var people = Current.PeopleList;
+                if (people == null || people.Count == 0) return Current;
+                var limits = UsagePersistence.GetUsageLimit(Current.WebsiteId);
+                if (limits == null || limits.MaxRecords == -1) return Current;
+                var setting = UsagePersistence.GetUsage(Current.WebsiteId);
+                if (setting == null) return Current;
+                var maximum = limits.MaxRecords;
+                var current = setting.RecordCount + people.Count;
+                if (current <= maximum) return Current;
+                var difference = current - maximum;
+                Console.WriteLine($"Monthly limit exceeded. Limit: {maximum}. MTD: {setting.RecordCount}. Overage: {difference}");
+                for (int i = people.Count - 1; i >= 0; i--)
+                {
+                    var removed = people.Count(x => x.Zip == "00001");
+                    if (removed == difference) break;
+                    var row = people[i];
+                    InvalidateData(row);
+                }
+                Current.AdjustedRecordCount = people.Count(x => x.Zip != "00001");
+                return Current;
+            }
+
+            private static void InvalidateData(PersonAddress row)
+            {
+                row.Plantiff = "Removed";
+                row.Address1 = "010 Limit Exceeded";
+                row.Address2 = string.Empty;
+                row.Address3 = "Exceeded, TX 00001";
+                row.CaseNumber = "00-00-00-00";
+                row.CaseStyle = "Redacted vs State of Texas";
+                row.Name = "Lname, Fname";
+                row.Zip = "00001";
+                _ = row.FirstName;
+                _ = row.LastName;
+            }
+
+            private static SessionUsageReader UsagePersistence
+                = SessionPersistenceContainer
+                        .GetContainer
+                        .GetInstance<SessionUsageReader>();
+
         }
 
         private static class ParameterHelper

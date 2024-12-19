@@ -88,6 +88,101 @@ namespace LegalLead.PublicData.Search.Helpers
             if (response.Count > 0) holidayQueries.AddRange(response);
             return response;
         }
+
+        public AppendUsageRecordResponse AppendUsage(int countyId, DateTime startDate, DateTime endDate)
+        {
+            var fallback = new AppendUsageRecordResponse();
+            var uri = GetAddress("usage-append");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri)) return fallback;
+            var request = new AppendUsageRecordRequest
+            {
+                LeadUserId = GetLeadId(),
+                CountyId = countyId,
+                CountyName = GetCountyName(countyId),
+                StartDate = startDate,
+                EndDate = endDate,
+                RecordCount = 0
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<AppendUsageRecordRequest, AppendUsageRecordResponse>(client, uri, request)
+                ?? fallback;
+            return response;
+        }
+
+        public CompleteUsageRecordResponse CompleteUsage(string recordId, int recordCount)
+        {
+            var fallback = new CompleteUsageRecordResponse();
+            if (string.IsNullOrEmpty(recordId)) return fallback;
+            var uri = GetAddress("usage-complete");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri)) return fallback;
+            var request = new
+            {
+                UsageRecordId = recordId,
+                RecordCount = recordCount
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, CompleteUsageRecordResponse>(client, uri, request)
+                ?? fallback;
+            return response;
+        }
+
+        public GetMonthlyLimitResponse GetLimits(int countyId, bool getAllCounties)
+        {
+            var fallback = new GetMonthlyLimitResponse();
+            var uri = GetAddress("usage-get-limits");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri)) return fallback;
+            var request = new GetMonthlyLimitRequest
+            {
+                LeadId = GetLeadId(),
+                CountyId = countyId,
+                GetAllCounties = getAllCounties
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<GetMonthlyLimitRequest, GetMonthlyLimitResponse>(client, uri, request)
+                ?? fallback;
+            return response;
+        }
+
+
+        public GetUsageResponse GetSummary(DateTime searchDate, bool getAllCounties)
+        {
+            var fallback = new GetUsageResponse();
+            var uri = GetAddress("usage-get-summary");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri)) return fallback;
+            var request = new GetUsageRequest
+            {
+                LeadId = GetLeadId(),
+                SearchDate = searchDate,
+                GetAllCounties = getAllCounties
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<GetUsageRequest, GetUsageResponse>(client, uri, request)
+                ?? fallback;
+            return response;
+        }
+
+        public GetUsageResponse GetHistory(DateTime searchDate, bool getAllCounties)
+        {
+            var fallback = new GetUsageResponse();
+            var uri = GetAddress("usage-get-history");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri)) return fallback;
+            var request = new GetUsageRequest
+            {
+                LeadId = GetLeadId(),
+                SearchDate = searchDate,
+                GetAllCounties = getAllCounties
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<GetUsageRequest, GetUsageResponse>(client, uri, request)
+                ?? fallback;
+            return response;
+        }
+
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
             var list = new List<List<T>>();
@@ -102,12 +197,43 @@ namespace LegalLead.PublicData.Search.Helpers
             client.DefaultRequestHeaders.Add("LEAD_IDENTITY", token);
             return client;
         }
+        private static string GetCountyName(int countyId)
+        {
+            return countyId switch
+            {
+                1 => "Denton",
+                10 => "Tarrant",
+                20 => "Collin",
+                30 => "Harris",
+                40 => "Harris",
+                60 => "Dallas",
+                70 => "Travis",
+                80 => "Bexar",
+                90 => "Hidalgo",
+                100 => "ElPaso",
+                110 => "FortBend",
+                120 => "Williamson",
+                130 => "Grayson",
+                _ => "Unmapped"
+            };
+        }
+        private static LeadUserSecurityBo GetUser()
+        {
+            var serialized = SessionUtil.Read();
+            if (string.IsNullOrEmpty(serialized)) return default;
+            return serialized.ToInstance<LeadUserSecurityBo>();
+        }
+
+        private static string GetLeadId()
+        {
+            return GetUser()?.User.Id ?? string.Empty;
+        }
 
         private static string GetToken()
         {
             var serialized = SessionUtil.Read();
             if (string.IsNullOrEmpty(serialized)) return default;
-            var obj = serialized.ToInstance<LeadUserSecurityBo>();
+            var obj = GetUser();
             return obj?.AuthenicationToken ?? string.Empty;
         }
         private static string GetAddress(string name)
@@ -121,6 +247,12 @@ namespace LegalLead.PublicData.Search.Helpers
                 "query" => $"{uri}{provider.QueryUrl}",
                 "upload" => $"{uri}{provider.UploadUrl}",
                 "holiday" => $"{uri}{provider.HolidayUrl}",
+                "usage-append" => $"{uri}{provider.UsageAppendRecordUrl}",
+                "usage-complete" => $"{uri}{provider.UsageCompleteRecordUrl}",
+                "usage-get-limits" => $"{uri}{provider.UsageGetLimitsUrl}",
+                "usage-get-history" => $"{uri}{provider.UsageGetHistoryUrl}",
+                "usage-get-summary" => $"{uri}{provider.UsageGetSummaryUrl}",
+                "usage-set-limit" => $"{uri}{provider.UsageSetLimitUrl}",
                 _ => string.Empty
             };
         }

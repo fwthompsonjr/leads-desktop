@@ -23,6 +23,7 @@ namespace legallead.search.tests.classes
         [InlineData("2024-09-01", "2024-09-30", 21)]
         [InlineData("2024-09-01", "2024-10-30", 43)]
         [InlineData("2024-09-01", "2024-11-15", 55)]
+        [InlineData("2024-12-15", "2024-12-31", 12)]
         public void GetBusinessDaysTest(string startDate, string endingDate, int expected)
         {
             var culture = CultureInfo.CurrentCulture;
@@ -31,6 +32,22 @@ namespace legallead.search.tests.classes
             var result = DallasSearchProcess.GetBusinessDays(startDt, endDt);
             Assert.Equal(expected, result.Count);
         }
+
+        [Theory]
+        [InlineData("2024-09-01", "2024-09-30", 21)]
+        [InlineData("2024-09-01", "2024-10-30", 43)]
+        [InlineData("2024-09-01", "2024-11-15", 55)]
+        [InlineData("2024-12-15", "2024-12-31", 12)]
+        public void GetBusinessDaysWithWeekendTest(string startDate, string endingDate, int expected)
+        {
+            var culture = CultureInfo.CurrentCulture;
+            var startDt = DateTime.Parse(startDate, culture);
+            var endDt = DateTime.Parse(endingDate, culture);
+            var result = DallasSearchProcess.GetBusinessDays(startDt, endDt, true);
+            Assert.NotEqual(expected, result.Count);
+            Assert.True(expected < result.Count);
+        }
+
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]

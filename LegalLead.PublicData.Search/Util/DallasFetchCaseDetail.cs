@@ -15,9 +15,18 @@ namespace LegalLead.PublicData.Search.Util
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 
-            js = VerifyScript(js);
-            var content = executor.ExecuteScript(js);
-            return Convert.ToString(content, CultureInfo.CurrentCulture);
+            if (IsNoCount(executor)) return null;
+            try
+            {
+
+                js = VerifyScript(js);
+                var content = executor.ExecuteScript(js);
+                return Convert.ToString(content, CultureInfo.CurrentCulture);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         protected override string ScriptName { get; } = "get case list";
