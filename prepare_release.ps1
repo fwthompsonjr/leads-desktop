@@ -151,11 +151,11 @@ function updateSetupProjectFile($target, $tag){
 	$arrlines = Get-Content -Path $target
 	foreach ($line in $arrlines){
 		$txt = [string]$line;
-		for ($ll = 0; $ll -lt $find.Count, $ll++) {
-			$search = $find[$ll];
+		for ($n = 0; $n -lt $find.Count; $n++) {
+			$search = $find[$n];
 			if ($txt.IndexOf($search) -eq -1) { continue; }
-			$replace = $replacements[$ll];
-			$txt = $substutions[$ll] -f $replace
+			$replace = $replacements[$n];
+			$txt = $substutions[$n] -f $replace
 			break;
 		}
 		$arrout += $txt;
@@ -278,7 +278,7 @@ function vbsUpdateScriptFile($target, $tag){
 	try {
 		$q ='"'
 		$tarr = $tag.Split(".");
-		$trversion = [string]::Join(".", @( $tarr[0], $tarr[1]);
+		$trversion = [string]::Join(".", @( $tarr[0], $tarr[1]));
 		$find = "versionTag = ";
 		$replacment = [string]::Concat($find, $q, $trversion, $q );
 		$arrout = @();
@@ -463,6 +463,8 @@ if ($canExecute -ne $true) {
 	throw "Failed to update setup project file script."
 }
 
+exit
+
 ## Section: Delete installation.zip
 $canExecute = (deleteInstaller -target $installZipFile);
 if ($canExecute -ne $true) {
@@ -477,4 +479,5 @@ commitChanges -text $message
 
 buildRelease
 $message = "$tagNumber | Publish artifacts for $tagNumber release"
+commitChanges -text $message
 
