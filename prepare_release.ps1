@@ -319,7 +319,7 @@ function buildRelease() {
 
 function buildSolution(){
 	$proj = $projectFile
-	$sln = "<full path to solution file>"
+	$sln = $solutionFile
 	devenv.com $sln /build "Release" /project $proj
 }
 
