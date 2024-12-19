@@ -1,4 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -341,6 +342,7 @@ namespace LegalLead.PublicData.Search.Util
             content.TransferColumn("County", "fname");
             content.TransferColumn("CourtAddress", "lname");
             content.PopulateColumn("CourtAddress", courtlist);
+            content.SecureContent(TrackingIndex);
             using (var ms = new MemoryStream())
             {
                 content.SaveAs(ms);

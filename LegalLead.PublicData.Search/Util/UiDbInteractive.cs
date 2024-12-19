@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
@@ -10,7 +11,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -84,7 +84,7 @@ namespace LegalLead.PublicData.Search.Util
             get => _web.DriverReadHeadless;
             set { _web.DriverReadHeadless = value; }
         }
-
+        public string TrackingIndex { get; set; }
         #endregion
 
         #region Public Methods
@@ -155,14 +155,16 @@ namespace LegalLead.PublicData.Search.Util
                 DataSearchParameters.CountyId,
                 nameService.GetFileName(),
                 nameService.GetCourtTypeName(),
-                result.PeopleList);
+                result.PeopleList,
+                TrackingIndex);
             result.Result = builder.Generate();
             result.CaseList = JsonConvert.SerializeObject(result.PeopleList);
         }
 
         private void IterateDateRange(WebFetchResult result)
         {
-            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
+            var includeWeekends = result.WebsiteId == (int)SourceType.DallasCounty;
+            var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, includeWeekends);
             var currentDt = 1;
             var maximumDt = dates.Count;
             dates.ForEach(d =>
@@ -467,16 +469,20 @@ namespace LegalLead.PublicData.Search.Util
             private readonly string courtTypeName;
             private readonly int countyId;
             private readonly List<PersonAddress> People;
+            private readonly string trakingIndex;
+
             public FileContentBuilder(
                 int countyIndex,
                 string fileName,
                 string courtType,
-                List<PersonAddress> people)
+                List<PersonAddress> people,
+                string trackingIndex)
             {
                 excelFileName = fileName;
                 courtTypeName = courtType;
                 countyId = countyIndex;
                 People = people;
+                trakingIndex = trackingIndex;
             }
 
             public string Generate()
@@ -496,6 +502,7 @@ namespace LegalLead.PublicData.Search.Util
                 content.TransferColumn("County", "fname");
                 content.TransferColumn("CourtAddress", "lname");
                 content.PopulateColumn("CourtAddress", courtlist);
+                content.SecureContent(trakingIndex);
                 using (var ms = new MemoryStream())
                 {
                     content.SaveAs(ms);

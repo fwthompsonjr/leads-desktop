@@ -27,7 +27,7 @@ namespace LegalLead.PublicData.Search.Util
             var script = js.Replace("{0}", Parameters.StartDate)
                 .Replace("{1}", Parameters.EndingDate)
                 .Replace("{2}", Parameters.CourtLocator);
-            var arr = new string[] { StatusScript, script  };
+            var arr = new string[] { StatusScript, script };
             var cmmd = string.Join(Environment.NewLine, arr);
             executor.ExecuteScript(cmmd);
             return true;

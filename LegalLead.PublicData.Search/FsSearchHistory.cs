@@ -167,7 +167,7 @@ namespace LegalLead.PublicData.Search
                 RecordCount = subset.Count,
                 SearchCount = subset.Sum(x => x.RecordCount),
             };
-            tslbDataStatus.Text = subsummary.GetSummary(); 
+            tslbDataStatus.Text = subsummary.GetSummary();
             lbRecordCount.Text = $"Item 1 of {subset.Count}";
         }
 
@@ -176,17 +176,18 @@ namespace LegalLead.PublicData.Search
             var items = tssbFilterCounty.DropDownItems;
             foreach (var item in items)
             {
-                if (item is ToolStripMenuItem mnu) {
+                if (item is ToolStripMenuItem mnu)
+                {
                     mnu.Checked = mnu.Text == selection;
                 }
             }
-            
+
         }
         private class GridSummary
         {
             public int RecordCount { get; set; }
             public int SearchCount { get; set; }
-            public string CountyName {  get; set; }
+            public string CountyName { get; set; }
             public string GetSummary()
             {
                 return $"{CountyName} | Found {RecordCount:N0} Entries. {SearchCount:N0} Total Leads.";

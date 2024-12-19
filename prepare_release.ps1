@@ -6,10 +6,10 @@
 		b. Generate release number and echo back to screen
 #>
 param(
-	[bool]$includeProjectUpdates = $false,
-	[bool]$updateReleaseNotes = $false,
-	[bool]$updateVersionFile = $false,
-	[bool]$updateMarkDownFile = $false)
+	[bool]$includeProjectUpdates = $true,
+	[bool]$updateReleaseNotes = $true,
+	[bool]$updateVersionFile = $true,
+	[bool]$updateMarkDownFile = $true)
 # Get the path of the current script
 $nl = [System.Environment]::NewLine;
 $delimiter = "~"
