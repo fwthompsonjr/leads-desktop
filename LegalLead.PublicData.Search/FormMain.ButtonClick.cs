@@ -229,7 +229,8 @@ namespace LegalLead.PublicData.Search
                 ReportProgress = TryShowProgress,
                 ReportProgessComplete = TryHideProgress,
                 StartDate = dteStart.Value.Date,
-                EndingDate = dteEnding.Value.Date
+                EndingDate = dteEnding.Value.Date,
+                TrackingIndex = interactive.TrackingIndex
             };
             response.Parameters = interactive.Parameters ?? new();
             return response;
@@ -255,6 +256,7 @@ namespace LegalLead.PublicData.Search
                     var displayMode = SettingsWriter.GetSettingOrDefault("admin", "Open Headless:", true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
+                webmgr.TrackingIndex = trackingItem.Id;
                 webmgr.ReportProgress = TryShowProgress;
                 webmgr.ReportProgessComplete = TryHideProgress;
                 var interactive = GetDbInteractive(webmgr, siteData.Id);

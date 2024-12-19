@@ -52,13 +52,13 @@ namespace LegalLead.PublicData.Search.Helpers
             var usageLimit = GetUsageLimit(countyId);
             var mxRecords = usageLimit?.MaxRecords ?? 15000;
             imported.ForEach(x =>
-            {                
+            {
                 var cdate = x.CreateDate.GetValueOrDefault();
                 x.SearchMonth = cdate.Month;
                 x.SearchYear = cdate.Year;
                 x.MonthlyLimit = mxRecords;
             });
-            var subset = imported.FindAll(x => 
+            var subset = imported.FindAll(x =>
                 x.CountyId == countyId &&
                 x.CompleteDate.HasValue &&
                 x.CreateDate.HasValue &&
@@ -73,7 +73,7 @@ namespace LegalLead.PublicData.Search.Helpers
         public virtual GetMonthlyLimitResponseContent GetUsageLimit(int countyId = 0)
         {
             var response = dbhelper.GetLimits(countyId, false);
-            if (response == null || string.IsNullOrEmpty (response.Content)) return null;
+            if (response == null || string.IsNullOrEmpty(response.Content)) return null;
             return response.Content.ToInstance<GetMonthlyLimitResponseContent>();
         }
 

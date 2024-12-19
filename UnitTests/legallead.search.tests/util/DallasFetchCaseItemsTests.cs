@@ -39,7 +39,7 @@ namespace legallead.search.tests.util
             if (noDataResponse)
             {
                 element.Verify(m => m.GetAttribute(It.IsAny<string>()), Times.Never);
-            } 
+            }
             else
             {
                 element.Verify(m => m.GetAttribute(It.IsAny<string>()), Times.Once);

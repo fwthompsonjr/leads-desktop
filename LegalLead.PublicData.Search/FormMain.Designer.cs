@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ButtonDentonSetting = new System.Windows.Forms.Button();
@@ -57,6 +58,7 @@
             label5 = new System.Windows.Forms.Label();
             lbNotes = new System.Windows.Forms.Label();
             lbProgressDate = new System.Windows.Forms.Label();
+            imageList1 = new System.Windows.Forms.ImageList(components);
             tableLayoutPanel1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -71,7 +73,7 @@
             tableLayoutPanel1.Controls.Add(dteStart, 2, 1);
             tableLayoutPanel1.Controls.Add(dteEnding, 2, 2);
             tableLayoutPanel1.Controls.Add(button1, 2, 6);
-            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 10);
+            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 11);
             tableLayoutPanel1.Controls.Add(cboWebsite, 2, 0);
             tableLayoutPanel1.Controls.Add(txConsole, 0, 7);
             tableLayoutPanel1.Controls.Add(cboSearchType, 2, 3);
@@ -92,7 +94,7 @@
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 11;
+            tableLayoutPanel1.RowCount = 12;
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
@@ -103,8 +105,9 @@
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            tableLayoutPanel1.Size = new System.Drawing.Size(760, 550);
+            tableLayoutPanel1.Size = new System.Drawing.Size(910, 607);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // ButtonDentonSetting
@@ -126,7 +129,7 @@
             dteStart.Location = new System.Drawing.Point(149, 55);
             dteStart.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             dteStart.Name = "dteStart";
-            dteStart.Size = new System.Drawing.Size(607, 23);
+            dteStart.Size = new System.Drawing.Size(757, 23);
             dteStart.TabIndex = 2;
             // 
             // dteEnding
@@ -135,7 +138,7 @@
             dteEnding.Location = new System.Drawing.Point(149, 101);
             dteEnding.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             dteEnding.Name = "dteEnding";
-            dteEnding.Size = new System.Drawing.Size(607, 23);
+            dteEnding.Size = new System.Drawing.Size(757, 23);
             dteEnding.TabIndex = 3;
             // 
             // button1
@@ -144,7 +147,7 @@
             button1.Location = new System.Drawing.Point(149, 280);
             button1.Margin = new System.Windows.Forms.Padding(4);
             button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(607, 38);
+            button1.Size = new System.Drawing.Size(757, 38);
             button1.TabIndex = 4;
             button1.Text = "Get Data";
             button1.UseVisualStyleBackColor = true;
@@ -156,10 +159,10 @@
             statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsWebDriver, tsDropFileList, toolStripStatus, tsStatusLabel, tsUserName, tsSettingMenuButton });
-            statusStrip1.Location = new System.Drawing.Point(0, 510);
+            statusStrip1.Location = new System.Drawing.Point(0, 567);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
-            statusStrip1.Size = new System.Drawing.Size(760, 40);
+            statusStrip1.Size = new System.Drawing.Size(910, 40);
             statusStrip1.TabIndex = 5;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -194,7 +197,7 @@
             // tsUserName
             // 
             tsUserName.Name = "tsUserName";
-            tsUserName.Size = new System.Drawing.Size(497, 35);
+            tsUserName.Size = new System.Drawing.Size(647, 35);
             tsUserName.Spring = true;
             tsUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             tsUserName.Visible = false;
@@ -219,7 +222,7 @@
             cboWebsite.Location = new System.Drawing.Point(149, 9);
             cboWebsite.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboWebsite.Name = "cboWebsite";
-            cboWebsite.Size = new System.Drawing.Size(607, 24);
+            cboWebsite.Size = new System.Drawing.Size(757, 24);
             cboWebsite.TabIndex = 6;
             // 
             // txConsole
@@ -231,7 +234,7 @@
             txConsole.Multiline = true;
             txConsole.Name = "txConsole";
             txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            txConsole.Size = new System.Drawing.Size(752, 81);
+            txConsole.Size = new System.Drawing.Size(902, 128);
             txConsole.TabIndex = 8;
             // 
             // cboSearchType
@@ -243,7 +246,7 @@
             cboSearchType.Location = new System.Drawing.Point(149, 147);
             cboSearchType.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboSearchType.Name = "cboSearchType";
-            cboSearchType.Size = new System.Drawing.Size(607, 24);
+            cboSearchType.Size = new System.Drawing.Size(757, 24);
             cboSearchType.TabIndex = 10;
             // 
             // cboCaseType
@@ -255,7 +258,7 @@
             cboCaseType.Location = new System.Drawing.Point(149, 193);
             cboCaseType.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboCaseType.Name = "cboCaseType";
-            cboCaseType.Size = new System.Drawing.Size(607, 24);
+            cboCaseType.Size = new System.Drawing.Size(757, 24);
             cboCaseType.TabIndex = 12;
             // 
             // cboCourts
@@ -267,16 +270,16 @@
             cboCourts.Location = new System.Drawing.Point(149, 239);
             cboCourts.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboCourts.Name = "cboCourts";
-            cboCourts.Size = new System.Drawing.Size(607, 24);
+            cboCourts.Size = new System.Drawing.Size(757, 24);
             cboCourts.TabIndex = 13;
             // 
             // progressBar1
             // 
             progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            progressBar1.Location = new System.Drawing.Point(151, 422);
+            progressBar1.Location = new System.Drawing.Point(151, 469);
             progressBar1.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new System.Drawing.Size(603, 23);
+            progressBar1.Size = new System.Drawing.Size(753, 23);
             progressBar1.TabIndex = 16;
             // 
             // label1
@@ -349,7 +352,7 @@
             // 
             labelProgress.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             labelProgress.AutoSize = true;
-            labelProgress.Location = new System.Drawing.Point(3, 426);
+            labelProgress.Location = new System.Drawing.Point(3, 473);
             labelProgress.Name = "labelProgress";
             labelProgress.Size = new System.Drawing.Size(59, 15);
             labelProgress.TabIndex = 15;
@@ -359,7 +362,7 @@
             // 
             label5.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(3, 476);
+            label5.Location = new System.Drawing.Point(3, 523);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(59, 15);
             label5.TabIndex = 15;
@@ -371,7 +374,7 @@
             lbNotes.AutoSize = true;
             lbNotes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
             lbNotes.ForeColor = System.Drawing.SystemColors.GrayText;
-            lbNotes.Location = new System.Drawing.Point(68, 476);
+            lbNotes.Location = new System.Drawing.Point(68, 523);
             lbNotes.Name = "lbNotes";
             lbNotes.Size = new System.Drawing.Size(74, 15);
             lbNotes.TabIndex = 15;
@@ -380,16 +383,26 @@
             // 
             lbProgressDate.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lbProgressDate.AutoSize = true;
-            lbProgressDate.Location = new System.Drawing.Point(68, 426);
+            lbProgressDate.Location = new System.Drawing.Point(68, 473);
             lbProgressDate.Name = "lbProgressDate";
             lbProgressDate.Size = new System.Drawing.Size(74, 15);
             lbProgressDate.TabIndex = 17;
+            // 
+            // imageList1
+            // 
+            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            imageList1.ImageStream = (System.Windows.Forms.ImageListStreamer)resources.GetObject("imageList1.ImageStream");
+            imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            imageList1.Images.SetKeyName(0, "search-history-icon.png");
+            imageList1.Images.SetKeyName(1, "user-settings-icon.png");
+            imageList1.Images.SetKeyName(2, "user-permissions-icon.png");
+            imageList1.Images.SetKeyName(3, "change-password-icon.png");
             // 
             // FormMain
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(760, 550);
+            ClientSize = new System.Drawing.Size(910, 607);
             Controls.Add(tableLayoutPanel1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4);
@@ -433,6 +446,7 @@
         internal System.Windows.Forms.ToolStripStatusLabel tsStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel tsUserName;
         private System.Windows.Forms.ToolStripSplitButton tsSettingMenuButton;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 

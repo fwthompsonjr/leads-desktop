@@ -19,7 +19,7 @@ namespace LegalLead.PublicData.Search.Helpers
         public override void Execute()
         {
             if (NoCountHelper.IsNoCountData(JsExecutor)) return;
-            WaitForSelector();
+            if (!WaitForSelector()) return;
             var retries = 5;
             while (!IsSorted())
             {
@@ -48,22 +48,27 @@ namespace LegalLead.PublicData.Search.Helpers
             JsExecutor.ExecuteScript(js);
         }
 
-        private void WaitForSelector()
+        private bool WaitForSelector()
         {
             try
             {
 
-                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromMilliseconds(400) };
+                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(15))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(500)
+                };
                 wait.Until(w =>
                 {
                     var collection = w.TryFindElements(By.XPath(_sortLink));
                     if (collection == null) return false;
                     return collection.Any(x => x.Text == "Type");
                 });
+                return true;
             }
             catch
             {
                 Debug.WriteLine("Failed to find selector");
+                return false;
             }
         }
 

@@ -134,6 +134,7 @@
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator1.Visible = false;
             // 
             // tssbSort
             // 
@@ -143,6 +144,7 @@
             tssbSort.Name = "tssbSort";
             tssbSort.Size = new System.Drawing.Size(32, 22);
             tssbSort.Text = "Sort";
+            tssbSort.Visible = false;
             // 
             // toolStripSeparator2
             // 
