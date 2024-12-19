@@ -6,10 +6,10 @@
 		b. Generate release number and echo back to screen
 #>
 param(
-	[bool]$includeProjectUpdates = $true,
-	[bool]$updateReleaseNotes = $true,
-	[bool]$updateVersionFile = $true,
-	[bool]$updateMarkDownFile = $true)
+	[bool]$includeProjectUpdates = $false,
+	[bool]$updateReleaseNotes = $false,
+	[bool]$updateVersionFile = $false,
+	[bool]$updateMarkDownFile = $false)
 # Get the path of the current script
 $nl = [System.Environment]::NewLine;
 $delimiter = "~"
@@ -129,6 +129,7 @@ function updateSetupProjectFile($target, $tag){
 	$tagIndex = $tagString.Substring(0,3);
 	$tagBuild = $tagString.Substring(0,5);
 	$upgradeCode = [System.Guid]::NewGuid().ToString("D").ToUpper();
+	$upgradeCode = "{$upgradeCode}"
 	$find = @(
 		'"Title" = "8:Legal Lead Installer',
 		'"ProductVersion" = "8:',
@@ -145,7 +146,7 @@ function updateSetupProjectFile($target, $tag){
 	'        "Title" = "8:Legal Lead Installer v {0}"',
 	'        "ProductVersion" = "8:{0}"',
 	'            "DefaultLocation" = "8:[LocalAppDataFolder]\\LegalLead\\{0}"',
-	'        "UpgradeCode" = "8:{5E0070ED-E5C0-4FE7-AE40-E8715A6FCE11}"'
+	'        "UpgradeCode" = "8:{0}"'
 	);
 	$arrout = @();
 	$arrlines = Get-Content -Path $target
@@ -462,8 +463,6 @@ if ($canExecute -ne $true) {
 	rollbackChanges
 	throw "Failed to update setup project file script."
 }
-
-exit
 
 ## Section: Delete installation.zip
 $canExecute = (deleteInstaller -target $installZipFile);
