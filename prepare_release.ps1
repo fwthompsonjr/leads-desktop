@@ -35,6 +35,7 @@ $installZipFile = [System.IO.Path]::Combine("$scriptDir", "$installZip.zip");
 $rollbackScript = [System.IO.Path]::Combine("$scriptDir", "git_rollback.ps1");
 $commitScript = [System.IO.Path]::Combine("$scriptDir", "git_commit.ps1");
 $solutionFile = [System.IO.Path]::Combine("$scriptDir", $solution);
+$createZipFile = [System.IO.Path]::Combine("$scriptDir", "build-release.ps1");
 
 # function(s)
 function promptForList($typeName)
@@ -121,6 +122,50 @@ function updateMarkDownFile($target, $text){
 		return $false;
 	}
 }
+
+function updateSetupProjectFile($target, $tag){
+	if ([System.IO.File]::Exists( $target ) -eq $false) { return $false; }
+	$tagString = [string]$tag;
+	$tagIndex = $tagString.Substring(0,3);
+	$tagBuild = $tagString.Substring(0,5);
+	$upgradeCode = [System.Guid]::NewGuid().ToString("D").ToUpper();
+	$find = @(
+		'"Title" = "8:Legal Lead Installer',
+		'"ProductVersion" = "8:',
+		'"DefaultLocation" = "8:[LocalAppDataFolder]',
+		'"UpgradeCode" = "8:'
+	)
+	$replacements = @(
+		$tagNumber,
+		$tagBuild,
+		$tagIndex,
+		$upgradeCode
+	)
+	$substutions = @(
+	'        "Title" = "8:Legal Lead Installer v {0}"',
+	'        "ProductVersion" = "8:{0}"',
+	'            "DefaultLocation" = "8:[LocalAppDataFolder]\\LegalLead\\{0}"',
+	'        "UpgradeCode" = "8:{5E0070ED-E5C0-4FE7-AE40-E8715A6FCE11}"'
+	);
+	$arrout = @();
+	$arrlines = Get-Content -Path $target
+	foreach ($line in $arrlines){
+		$txt = [string]$line;
+		for ($ll = 0; $ll -lt $find.Count, $ll++) {
+			$search = $find[$ll];
+			if ($txt.IndexOf($search) -eq -1) { continue; }
+			$replace = $replacements[$ll];
+			$txt = $substutions[$ll] -f $replace
+			break;
+		}
+		$arrout += $txt;
+	}
+	$vstxt = [string]::Join( $nl, $arrout );
+	[System.IO.File]::Delete( $target ) | Out-Null
+	[System.IO.File]::WriteAllText( $target, $vstxt );
+	return $true;
+}
+
 
 function generateChangeJson($block, $tag){
 	$blck = [string]$block;
@@ -256,6 +301,21 @@ function vbsUpdateScriptFile($target, $tag){
 
 }
 
+function deleteInstaller($target) {
+	if ([System.IO.File]::Exists( $target ) -eq $false) { return $true; }
+	try {
+		[System.IO.File]::Delete( $target ) | Out-Null
+		return $true;
+	}
+	catch {
+		return $false
+	}
+}
+
+function buildRelease() {
+	& $createZipFile
+}
+
 function buildSolution(){
 	$proj = $projectFile
 	$sln = "<full path to solution file>"
@@ -264,7 +324,7 @@ function buildSolution(){
 
 function rollbackChanges()
 {
-	& $rollbackScript		
+	& $rollbackScript
 }
 
 function commitChanges($text)
@@ -336,33 +396,33 @@ $tagNumber = $project_version;
 if ($includeProjectUpdates -eq $true)
 {
 	
-if ($null -eq $project_list) {
-	throw "Unable to find project list in target directory"
-}
-Write-Host " . Found ( $($project_list.Count) project files to convert ):" -ForegroundColor Green
-if ($null -eq $project_version) {
-	throw "Unable to find project version number"
-}
-Write-Host " .. Current version $project_version"
-$revisionType = getNextProjectVersion -current $project_version
-$tagNumber = $revisionType.tag;
-Write-Host " .. $($revisionType.change) $($revisionType.tag)"
+	if ($null -eq $project_list) {
+		throw "Unable to find project list in target directory"
+	}
+	Write-Host " . Found ( $($project_list.Count) project files to convert ):" -ForegroundColor Green
+	if ($null -eq $project_version) {
+		throw "Unable to find project version number"
+	}
+	Write-Host " .. Current version $project_version"
+	$revisionType = getNextProjectVersion -current $project_version
+	$tagNumber = $revisionType.tag;
+	Write-Host " .. $($revisionType.change) $($revisionType.tag)"
 
-$project_converted_count = 0;
-$project_list | ForEach-Object {
-	$target_file = $_.FullName;
-	Write-Host " .. setting tag for $($_.Name)"
-	$converted = (setVersionNumber -project $target_file -tag $tagNumber);
-	if ($converted -eq $true) { $project_converted_count++ }
-}
-if ($project_converted_count -ne $project_list.Count) {
-	rollbackChanges
-	throw "failure updating project files."
-}
-else {
-	Write-Host "Saving project number updates."
-	## commitChanges -text "$tagNumber : updating project to prepare release"
-}
+	$project_converted_count = 0;
+	$project_list | ForEach-Object {
+		$target_file = $_.FullName;
+		Write-Host " .. setting tag for $($_.Name)"
+		$converted = (setVersionNumber -project $target_file -tag $tagNumber);
+		if ($converted -eq $true) { $project_converted_count++ }
+	}
+	if ($project_converted_count -ne $project_list.Count) {
+		rollbackChanges
+		throw "failure updating project files."
+	}
+	else {
+		Write-Host "Saving project number updates."
+		## commitChanges -text "$tagNumber : updating project to prepare release"
+	}
 }
 
 ## Section: Get Change text
@@ -374,22 +434,47 @@ if ($updateReleaseNotes -eq $true)
 	$jsonitem = generateChangeJson -block $changetext -tag $tagNumber
 	$jsupdated = updateVersionFile -target $versionLogFile -itm $jsonitem
 	if ($jsupdated -eq $false ) {
+		rollbackChanges
 		throw "Failed to update setup version notes."
 	}
 	$mdupdated = updateMarkDownFile -target $changeLogFile -text $markdown
 	if ($mdupdated -eq $false ) {
+		rollbackChanges
 		throw "Failed to update change log."
 	}
 }
 
 ## Section: Update installer scripts
-vbsUpdateScriptFile -target $launchExeFile -tag $tagNumber
-vbsUpdateScriptFile -target $uninstallExeFile -tag $tagNumber
+$canExecute = (vbsUpdateScriptFile -target $launchExeFile -tag $tagNumber)
+if ($canExecute -ne $true) {
+	rollbackChanges
+	throw "Failed to update launch file script."
+}
+$canExecute = (vbsUpdateScriptFile -target $uninstallExeFile -tag $tagNumber);
+if ($canExecute -ne $true) {
+	rollbackChanges
+	throw "Failed to update uninstall file script."
+}
 
-## Setup: Update installer project
-<#
-	Title, Version, Upgrade code and DefaultLocation
-	Title: find line containing '"Title"' and 'Legal Lead Installer'
-	Version: find '"ProductVersion"'
-	UpgradeCode: find '"UpgradeCode"'
-#>
+## Section: Update installer project
+$canExecute = (updateSetupProjectFile -target $setupProjectFile -tag $tagNumber);
+if ($canExecute -ne $true) {
+	rollbackChanges
+	throw "Failed to update setup project file script."
+}
+
+## Section: Delete installation.zip
+$canExecute = (deleteInstaller -target $installZipFile);
+if ($canExecute -ne $true) {
+	rollbackChanges
+	throw "Failed to remove installation artifacts."
+}
+
+## Section: Build setup project
+buildSolution
+$message = "$tagNumber | Prepare artifacts for $tagNumber release"
+commitChanges -text $message
+
+buildRelease
+$message = "$tagNumber | Publish artifacts for $tagNumber release"
+
