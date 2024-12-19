@@ -23,9 +23,11 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             
             var helper = new DallasSortByStatusHelper(Driver, executor);
+            var casehelper = new DallasSortByCaseTypeHelper(Driver, executor);
             js = VerifyScript(js);
             WaitForSelector();
             helper.Execute();
+            casehelper.Execute();
             executor.ExecuteScript(js);
             return true;
         }
