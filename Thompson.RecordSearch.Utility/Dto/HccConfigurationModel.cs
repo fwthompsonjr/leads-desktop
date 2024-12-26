@@ -11,7 +11,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("remote")] public HccRemoteUriModel RemoteModel { get; set; } = new HccRemoteUriModel();
 
         [JsonProperty("db")] public DbUriModel DbModel { get; set; } = new DbUriModel();
-
+        [JsonProperty("invoice")] public InvoiceUriModel InvoiceModel { get; set; } = new InvoiceUriModel();
         public static HccConfigurationModel GetModel()
         {
             if (model != null) return model;
@@ -43,5 +43,12 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("usage-get-history")] public string UsageGetHistoryUrl { get; set; } = string.Empty;
         [JsonProperty("usage-get-summary")] public string UsageGetSummaryUrl { get; set; } = string.Empty;
         [JsonProperty("usage-set-limit")] public string UsageSetLimitUrl { get; set; } = string.Empty;
+    }
+
+    public class InvoiceUriModel
+    {
+        [JsonProperty("uri")] public string Url { get; set; }
+        [JsonProperty("fetch")] public string FetchUrl { get; set; }
+        [JsonProperty("complete")] public string CompleteUrl { get; set; }
     }
 }
