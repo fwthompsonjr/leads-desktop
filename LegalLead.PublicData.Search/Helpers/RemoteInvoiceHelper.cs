@@ -1,9 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
