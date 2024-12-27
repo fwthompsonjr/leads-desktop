@@ -300,7 +300,7 @@ namespace LegalLead.PublicData.Search
                 if (count > 0)
                 {
                     var adjustedCount = CaseData.AdjustedRecordCount == 0 ? count : CaseData.AdjustedRecordCount;
-                    dbHelper.CompleteUsage(trackingItem.Id, adjustedCount);
+                    dbHelper.CompleteUsage(trackingItem.Id, adjustedCount, GetShortName(CaseData));
                     var member = (SourceType)siteData.Id;
                     var userName = GetUserName();
                     var searchRange = $"{webmgr.StartDate:d} to {webmgr.EndingDate:d}";
@@ -349,6 +349,17 @@ namespace LegalLead.PublicData.Search
                 ClearProgressDate();
                 TryHideProgress();
             }
+        }
+
+        private static string GetShortName(WebFetchResult web)
+        {
+            var result = web.Result;
+            if (string.IsNullOrWhiteSpace(result)) return string.Empty;
+            var fileName = System.IO.Path.GetFileNameWithoutExtension(result);
+            var extn = System.IO.Path.GetExtension(result);
+            if (string.IsNullOrWhiteSpace(fileName)) return result;
+            if (string.IsNullOrWhiteSpace(extn)) extn = string.Empty;
+            return string.Concat(fileName, extn);
         }
 
         private static readonly IRemoteDbHelper dbHelper

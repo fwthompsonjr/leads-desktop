@@ -56,7 +56,7 @@
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
+            tableLayoutPanel1.Size = new System.Drawing.Size(784, 561);
             tableLayoutPanel1.TabIndex = 2;
             tableLayoutPanel1.Tag = "UserName";
             // 
@@ -69,7 +69,7 @@
             cboSelection.Location = new System.Drawing.Point(104, 9);
             cboSelection.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboSelection.Name = "cboSelection";
-            cboSelection.Size = new System.Drawing.Size(612, 24);
+            cboSelection.Size = new System.Drawing.Size(596, 24);
             cboSelection.TabIndex = 15;
             // 
             // label1
@@ -88,14 +88,14 @@
             panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             panel1.Location = new System.Drawing.Point(3, 58);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(714, 359);
+            panel1.Size = new System.Drawing.Size(698, 470);
             panel1.TabIndex = 16;
             // 
             // FormSettings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(800, 450);
+            ClientSize = new System.Drawing.Size(784, 561);
             Controls.Add(tableLayoutPanel1);
             Name = "FormSettings";
             Text = "User Settings";

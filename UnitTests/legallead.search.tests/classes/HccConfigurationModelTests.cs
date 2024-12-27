@@ -52,8 +52,10 @@ namespace legallead.search.tests.classes
         {
             var sut = HccConfigurationModel.GetModel().InvoiceModel;
             Assert.False(string.IsNullOrEmpty(sut.Url));
-            Assert.False(string.IsNullOrEmpty(sut.CompleteUrl));
+            Assert.False(string.IsNullOrEmpty(sut.InvoiceGenerationUrl));
             Assert.False(string.IsNullOrEmpty(sut.FetchUrl));
+            Assert.False(string.IsNullOrEmpty(sut.PreviewUrl));
+            Assert.False(string.IsNullOrEmpty(sut.StatusUrl));
         }
     }
 }

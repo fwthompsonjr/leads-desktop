@@ -9,7 +9,7 @@ namespace LegalLead.PublicData.Search.Interfaces
         AppendUsageRecordResponse AppendUsage(int countyId, DateTime startDate, DateTime endDate);
         FindDbResponse Begin(FindDbRequest findDb);
         FindDbResponse Complete(FindDbRequest findDb);
-        CompleteUsageRecordResponse CompleteUsage(string recordId, int recordCount);
+        CompleteUsageRecordResponse CompleteUsage(string recordId, int recordCount, string excelName = "");
         GetUsageResponse GetHistory(DateTime searchDate, bool getAllCounties);
         GetMonthlyLimitResponse GetLimits(int countyId, bool getAllCounties);
         GetUsageResponse GetSummary(DateTime searchDate, bool getAllCounties);

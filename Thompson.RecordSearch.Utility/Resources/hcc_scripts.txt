@@ -23,8 +23,10 @@
 	"usage-set-limit": "db/usage-set-monthly-limit"
   },
   "invoice": {
-	"uri": "http://api.legallead.co/db-invoice",
+	"uri": "http://api.legallead.co/db-invoice/",
 	"fetch": "get-invoice-list",
-	"complete": "create-customer-invoice"
+	"invoice-creation": "create-customer-invoice",
+	"preview": "preview-invoice",
+	"status": "get-invoice-status"
   }
 }

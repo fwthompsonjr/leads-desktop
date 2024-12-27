@@ -49,6 +49,8 @@ namespace Thompson.RecordSearch.Utility.Dto
     {
         [JsonProperty("uri")] public string Url { get; set; }
         [JsonProperty("fetch")] public string FetchUrl { get; set; }
-        [JsonProperty("complete")] public string CompleteUrl { get; set; }
+        [JsonProperty("invoice-creation")] public string InvoiceGenerationUrl { get; set; }
+        [JsonProperty("preview")] public string PreviewUrl { get; set; }
+        [JsonProperty("status")] public string StatusUrl { get; set; }
     }
 }
