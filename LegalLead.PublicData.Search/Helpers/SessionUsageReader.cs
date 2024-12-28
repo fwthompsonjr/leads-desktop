@@ -78,6 +78,28 @@ namespace LegalLead.PublicData.Search.Helpers
         }
 
 
+        public virtual List<GetUsageResponseContent> GetUsageRawData(DateTime? usageDate = null)
+        {
+            var fallback = new List<GetUsageResponseContent>();
+            if (usageDate == null)
+            {
+                var annual = dbhelper.GetHistory(DateTime.Now, true);
+                if (annual == null || string.IsNullOrEmpty(annual.Content)) return fallback;
+                var imported = annual.Content.ToInstance<List<GetUsageResponseContent>>();
+                return imported ?? new();
+            }
+            // loop backward 12 months
+            for (var i = 0; i < 12; i++)
+            {
+                var searchDate = usageDate.Value.AddMonths(-i);
+                var current = dbhelper.GetHistory(searchDate, true);
+                if (current == null || string.IsNullOrEmpty(current.Content)) continue;
+                var dataset = current.Content.ToInstance<List<GetUsageResponseContent>>();
+                if (dataset != null) fallback.AddRange(dataset);
+            }
+            return fallback;
+        }
+
 
         private static void TransformData(List<UsageHistoryModel> fallback, List<GetUsageResponseContent> imported)
         {
