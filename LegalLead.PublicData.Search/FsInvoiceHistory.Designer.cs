@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FsInvoiceHistory));
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             btnSubmit = new System.Windows.Forms.Button();
@@ -40,6 +41,7 @@
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             tslbDataStatus = new System.Windows.Forms.ToolStripLabel();
             lbRecordCount = new System.Windows.Forms.Label();
+            imageList1 = new System.Windows.Forms.ImageList(components);
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             toolStrip1.SuspendLayout();
@@ -49,23 +51,24 @@
             // 
             tableLayoutPanel1.ColumnCount = 5;
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            tableLayoutPanel1.Controls.Add(btnSubmit, 0, 3);
-            tableLayoutPanel1.Controls.Add(lbStatus, 0, 4);
+            tableLayoutPanel1.Controls.Add(btnSubmit, 0, 4);
+            tableLayoutPanel1.Controls.Add(lbStatus, 0, 5);
             tableLayoutPanel1.Controls.Add(dataGridView1, 0, 2);
-            tableLayoutPanel1.Controls.Add(toolStrip1, 0, 1);
-            tableLayoutPanel1.Controls.Add(lbRecordCount, 3, 3);
+            tableLayoutPanel1.Controls.Add(toolStrip1, 0, 0);
+            tableLayoutPanel1.Controls.Add(lbRecordCount, 3, 4);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 6;
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowCount = 7;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -101,11 +104,11 @@
             dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableLayoutPanel1.SetColumnSpan(dataGridView1, 5);
             dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            dataGridView1.Location = new System.Drawing.Point(3, 63);
+            dataGridView1.Location = new System.Drawing.Point(3, 38);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new System.Drawing.Size(794, 264);
+            dataGridView1.Size = new System.Drawing.Size(794, 269);
             dataGridView1.TabIndex = 45;
             // 
             // toolStrip1
@@ -115,7 +118,7 @@
             toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tssbFilterCounty, toolStripSeparator1, tssbSort, toolStripSeparator2, tslbDataStatus });
-            toolStrip1.Location = new System.Drawing.Point(0, 27);
+            toolStrip1.Location = new System.Drawing.Point(0, 2);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new System.Drawing.Size(800, 25);
             toolStrip1.TabIndex = 46;
@@ -149,13 +152,13 @@
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 10);
             // 
             // tslbDataStatus
             // 
             tslbDataStatus.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
             tslbDataStatus.Name = "tslbDataStatus";
-            tslbDataStatus.Size = new System.Drawing.Size(50, 22);
+            tslbDataStatus.Size = new System.Drawing.Size(50, 7);
             tslbDataStatus.Text = "Loading";
             // 
             // lbRecordCount
@@ -163,11 +166,17 @@
             lbRecordCount.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lbRecordCount.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(lbRecordCount, 2);
-            lbRecordCount.Location = new System.Drawing.Point(543, 345);
+            lbRecordCount.Location = new System.Drawing.Point(483, 345);
             lbRecordCount.Name = "lbRecordCount";
-            lbRecordCount.Size = new System.Drawing.Size(254, 15);
+            lbRecordCount.Size = new System.Drawing.Size(314, 15);
             lbRecordCount.TabIndex = 47;
             lbRecordCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // imageList1
+            // 
+            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // FsInvoiceHistory
             // 
@@ -198,5 +207,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel tslbDataStatus;
         private System.Windows.Forms.Label lbRecordCount;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
