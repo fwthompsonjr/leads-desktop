@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 
@@ -50,8 +51,9 @@ namespace LegalLead.PublicData.Search
             var target = new List<InvoiceHtmlModel>();
             var list = new List<InvoiceHistoryModel>();
             list.AddRange(masterData);
-            list.ForEach(m =>
-            {
+            Parallel.ForEach(list, 
+                new ParallelOptions() { MaxDegreeOfParallelism = 5 },
+                m => {
                 var invoiceData = m.Model.ToJsonString();
                 var html = invoiceReader.PreviewInvoice(invoiceData);
                 var item = new InvoiceHtmlModel
