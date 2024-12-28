@@ -75,6 +75,11 @@ namespace LegalLead.PublicData.Search.Helpers
             return html;
         }
 
+        public void UpdateExcelStatus(string json)
+        {
+
+        }
+
         private static string GetLeadId()
         {
             return GetUser()?.User.Id ?? string.Empty;

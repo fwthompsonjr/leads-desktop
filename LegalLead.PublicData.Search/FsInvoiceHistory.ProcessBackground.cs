@@ -1,46 +1,36 @@
-﻿using LegalLead.PublicData.Search.Models;
+﻿using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {
     public partial class FsInvoiceHistory : Form
     {
-
         /// <summary>
-        /// Handles data-binding and user interface state after data completion.
+        /// Verify excel file status
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void ExcelData_DoWork(object sender, DoWorkEventArgs e)
         {
-            try
+            var indexes = rawData.Select(s =>
             {
-                if (e.Result is List<InvoiceHeaderViewModel> users)
+                return new UsageExcelIndex
                 {
-                    _vwlist.Clear();
-                    _vwlist.AddRange(users);
-                }
-                dataGridView1.DataSource = _vwlist;
-                dataGridView1.Refresh();
-                FormatGrid(dataGridView1);
-                FormatCounties();
-                SetDataCaption(all_counties, _vwlist);
-                var count = _vwlist.Count;
-                lbRecordCount.Text = GetRowCountLabel(1, count);
-                SetDisplay(DisplayModes.Normal);
-            }
-            finally
-            {
-                var bw = new BackgroundWorker();
-                bw.DoWork += MasterData_DoWork;
-                bw.RunWorkerCompleted += MasterData_RunWorkerCompleted;
-                bw.RunWorkerAsync();
-            }
+                    Id = s.Id,
+                    LeadUserId = s.LeadUserId,
+                    RecordCount = s.RecordCount,
+                    ExcelName = s.ExcelName,
+                };
+            }).ToList();
+            if (indexes.Count == 0) return;
+            indexes = indexes.FindAll(x => x.RecordCount > 0 && !string.IsNullOrEmpty(x.ExcelName));
+            if (indexes.Count == 0) return;
+            new ExcelFileUnlockService(invoiceReader, indexes).Process();
         }
 
         /// <summary>
@@ -95,16 +85,6 @@ namespace LegalLead.PublicData.Search
                 SetDisplay(DisplayModes.Normal);
             }
         }
-
-        /// <summary>
-        /// Fetch data from remote data source on store in IList
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result = GetHistory();
-        }
         /// <summary>
         /// Fetch data from remote data source on store in IList
         /// </summary>
@@ -112,6 +92,11 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void RawData_DoWork(object sender, DoWorkEventArgs e)
         {
+            if (AllowExcelRevision)
+            {
+                e.Result = null;
+                return;
+            }
             e.Result = GetRawData();
         }
 
@@ -122,23 +107,33 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void RawData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            lock (sync)
+            try
             {
-                if (e.Result is not List<GetUsageResponseContent> models) return;
-                rawData.Clear();
-                rawData.AddRange(models);
-                AllowExcelRevision = true;
+                lock (sync)
+                {
+                    if (e.Result is not List<GetUsageResponseContent> models) return;
+                    rawData.Clear();
+                    rawData.AddRange(models);
+                    AllowExcelRevision = true;
+                }
+            }
+            finally
+            {
+                var worker = new BackgroundWorker();
+                worker.DoWork += ExcelData_DoWork;
+                worker.RunWorkerAsync();
             }
         }
+
 
         /// <summary>
         /// Fetch data from remote data source on store in IList
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Summary_DoWork(object sender, DoWorkEventArgs e)
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            e.Result = GetSummary();
+            e.Result = GetHistory();
         }
 
         /// <summary>
@@ -146,14 +141,32 @@ namespace LegalLead.PublicData.Search
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Summary_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            lock (sync)
+            try
             {
-                if (e.Result is not List<UsageHistoryModel> models) return;
-                usageData.Clear();
-                usageData.AddRange(models);
+                if (e.Result is List<InvoiceHeaderViewModel> users)
+                {
+                    _vwlist.Clear();
+                    _vwlist.AddRange(users);
+                }
+                dataGridView1.DataSource = _vwlist;
+                dataGridView1.Refresh();
+                FormatGrid(dataGridView1);
+                FormatCounties();
+                SetDataCaption(all_counties, _vwlist);
+                var count = _vwlist.Count;
+                lbRecordCount.Text = GetRowCountLabel(1, count);
+                SetDisplay(DisplayModes.Normal);
+            }
+            finally
+            {
+                var bw = new BackgroundWorker();
+                bw.DoWork += MasterData_DoWork;
+                bw.RunWorkerCompleted += MasterData_RunWorkerCompleted;
+                bw.RunWorkerAsync();
             }
         }
+
     }
 }

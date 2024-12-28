@@ -105,20 +105,6 @@ namespace LegalLead.PublicData.Search
                 return models.ToList();
             }
         }
-        private static List<UsageHistoryModel> GetSummary()
-        {
-            var data = usageReader.GetUsage(DateTime.UtcNow.AddMonths(1));
-            var list = new List<UsageHistoryModel>();
-            if (data != null && data.Count > 0) { list.AddRange(data); }
-            if (list.Count == 0) return list;
-            list.Sort((a, b) =>
-            {
-                var aa = a.CountyName.CompareTo(b.CountyName);
-                if (aa != 0) return aa;
-                return b.CreateDate.CompareTo(a.CreateDate);
-            });
-            return list;
-        }
 
         private static List<GetUsageResponseContent> GetRawData()
         {
@@ -168,13 +154,13 @@ namespace LegalLead.PublicData.Search
             }
 
         }
-        
+
         private sealed class InvoiceHtmlModel
         {
             public string CountyName { get; set; } = string.Empty;
             public string Description { get; set; } = string.Empty;
-            public int RecordCount { get; set; } 
-            public DateTime InvoiceDate { get; set; } 
+            public int RecordCount { get; set; }
+            public DateTime InvoiceDate { get; set; }
             public string Price { get; set; } = string.Empty;
             public string Html { get; set; } = string.Empty;
 
@@ -191,7 +177,6 @@ namespace LegalLead.PublicData.Search
 
         private readonly List<InvoiceHeaderViewModel> _vwlist;
         private static readonly List<InvoiceHistoryModel> masterData = new();
-        private static readonly List<UsageHistoryModel> usageData = new();
         private static readonly List<GetUsageResponseContent> rawData = new();
         private static readonly List<InvoiceHtmlModel> htmlData = new();
 

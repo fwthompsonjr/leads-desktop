@@ -69,7 +69,7 @@ namespace LegalLead.PublicData.Search
                 btnSubmit.Enabled = uiEnabled && AllowDataRefresh;
                 dataGridView1.Visible = uiEnabled;
                 toolStrip1.Visible = uiEnabled;
-                lbStatus.Text = text; 
+                lbStatus.Text = text;
             }
         }
 

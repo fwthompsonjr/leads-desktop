@@ -41,11 +41,17 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void FsInvoiceHistory_Shown(object sender, EventArgs e)
         {
-            var worker = new BackgroundWorker();
-            worker.DoWork += Summary_DoWork;
-            worker.RunWorkerCompleted += Summary_RunWorkerCompleted;
-            worker.RunWorkerAsync();
-            BtnSubmit_Click(null, null);
+            try
+            {
+                BtnSubmit_Click(null, null);
+            }
+            finally
+            {
+                var worker = new BackgroundWorker();
+                worker.DoWork += RawData_DoWork;
+                worker.RunWorkerCompleted += RawData_RunWorkerCompleted;
+                worker.RunWorkerAsync();
+            }
         }
 
         /// <summary>
