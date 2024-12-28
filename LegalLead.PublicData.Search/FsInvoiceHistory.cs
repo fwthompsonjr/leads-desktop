@@ -18,15 +18,20 @@ namespace LegalLead.PublicData.Search
         public FsInvoiceHistory()
         {
             InitializeComponent();
+            AllowExcelRevision = false;
+            AllowPreviewInvoice = false;
+            AllowDataRefresh = false;
             _vwlist = new();
             FormatGrid(dataGridView1);
             btnSubmit.Click += BtnSubmit_Click;
             Shown += FsInvoiceHistory_Shown;
             dataGridView1.RowEnter += DataGridView1_RowEnter;
         }
+        private DisplayModes CurrentDisplay { get; set; } = DisplayModes.None;
 
         private bool AllowExcelRevision { get; set; }
-
+        private bool AllowPreviewInvoice { get; set; }
+        private bool AllowDataRefresh { get; set; }
 
         private static List<InvoiceHeaderViewModel> GetHistory()
         {

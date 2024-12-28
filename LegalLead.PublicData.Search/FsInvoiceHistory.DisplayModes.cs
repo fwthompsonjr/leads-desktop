@@ -57,15 +57,20 @@ namespace LegalLead.PublicData.Search
         /// <param name="mode"></param>
         private void TrySetDisplay(DisplayModes mode)
         {
-            var uiEnabled = mode != DisplayModes.Loading;
-            var text = (mode) switch  { 
-                DisplayModes.Loading => messageLoading,
-                _ => messageNormal
-            };
-            btnSubmit.Enabled = uiEnabled;
-            dataGridView1.Visible = uiEnabled;
-            toolStrip1.Visible = uiEnabled;
-            lbStatus.Text = text;
+            lock (sync)
+            {
+                CurrentDisplay = mode;
+                var uiEnabled = mode != DisplayModes.Loading;
+                var text = (mode) switch
+                {
+                    DisplayModes.Loading => messageLoading,
+                    _ => messageNormal
+                };
+                btnSubmit.Enabled = uiEnabled && AllowDataRefresh;
+                dataGridView1.Visible = uiEnabled;
+                toolStrip1.Visible = uiEnabled;
+                lbStatus.Text = text; 
+            }
         }
 
 

@@ -48,7 +48,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 InvoiceId = ""
             };
             using var client = GetClient(token);
-            var response = httpService.PostAsJson<object, string>(client, uri, request);
+            var response = httpService.PostAsJson<object, object>(client, uri, request);
             if (response == null) return fallback;
             return response.ToJsonString();
         }
@@ -69,9 +69,10 @@ namespace LegalLead.PublicData.Search.Helpers
                 InvoiceId = payload.Id,
             };
             using var client = GetClient(token);
-            var response = httpService.PostJson<object>(client, uri, request);
+            var response = httpService.GetFromJsonPost<object>(client, uri, request);
             if (response == null) return fallback;
-            return response;
+            if (response is not string html) return fallback;
+            return html;
         }
 
         private static string GetLeadId()

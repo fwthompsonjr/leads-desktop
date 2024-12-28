@@ -18,23 +18,29 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Result is List<InvoiceHeaderViewModel> users)
+            try
             {
-                _vwlist.Clear();
-                _vwlist.AddRange(users);
+                if (e.Result is List<InvoiceHeaderViewModel> users)
+                {
+                    _vwlist.Clear();
+                    _vwlist.AddRange(users);
+                }
+                dataGridView1.DataSource = _vwlist;
+                dataGridView1.Refresh();
+                FormatGrid(dataGridView1);
+                FormatCounties();
+                SetDataCaption(all_counties, _vwlist);
+                var count = _vwlist.Count;
+                lbRecordCount.Text = GetRowCountLabel(1, count);
+                SetDisplay(DisplayModes.Normal);
             }
-            dataGridView1.DataSource = _vwlist;
-            dataGridView1.Refresh();
-            FormatGrid(dataGridView1);
-            FormatCounties();
-            SetDataCaption(all_counties, _vwlist);
-            var count = _vwlist.Count;
-            lbRecordCount.Text = GetRowCountLabel(1, count);
-            SetDisplay(DisplayModes.Normal);
-            var bw = new BackgroundWorker();
-            bw.DoWork += MasterData_DoWork;
-            bw.RunWorkerCompleted += MasterData_RunWorkerCompleted;
-            bw.RunWorkerAsync();
+            finally
+            {
+                var bw = new BackgroundWorker();
+                bw.DoWork += MasterData_DoWork;
+                bw.RunWorkerCompleted += MasterData_RunWorkerCompleted;
+                bw.RunWorkerAsync();
+            }
         }
 
         /// <summary>
@@ -44,6 +50,12 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void MasterData_DoWork(object sender, DoWorkEventArgs e)
         {
+            if (AllowPreviewInvoice)
+            {
+                // only going to fetch invoice content once in lifetime of form
+                e.Result = null;
+                return;
+            }
             // get invoice html from service
             var target = new List<InvoiceHtmlModel>();
             var list = new List<InvoiceHistoryModel>();
@@ -78,6 +90,9 @@ namespace LegalLead.PublicData.Search
                 if (e.Result is not List<InvoiceHtmlModel> models) return;
                 htmlData.Clear();
                 htmlData.AddRange(models);
+                AllowPreviewInvoice = true;
+                AllowDataRefresh = true;
+                SetDisplay(DisplayModes.Normal);
             }
         }
 
@@ -112,6 +127,7 @@ namespace LegalLead.PublicData.Search
                 if (e.Result is not List<GetUsageResponseContent> models) return;
                 rawData.Clear();
                 rawData.AddRange(models);
+                AllowExcelRevision = true;
             }
         }
 
@@ -122,7 +138,6 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void Summary_DoWork(object sender, DoWorkEventArgs e)
         {
-            AllowExcelRevision = false;
             e.Result = GetSummary();
         }
 
@@ -138,7 +153,6 @@ namespace LegalLead.PublicData.Search
                 if (e.Result is not List<UsageHistoryModel> models) return;
                 usageData.Clear();
                 usageData.AddRange(models);
-                AllowExcelRevision = true;
             }
         }
     }
