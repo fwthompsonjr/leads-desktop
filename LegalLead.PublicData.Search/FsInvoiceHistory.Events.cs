@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
@@ -29,9 +30,28 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void DataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-            var rowCount = dataGridView1.RowCount;
-            lbRecordCount.Text = GetRowCountLabel(e, rowCount);
+            InvoiceHtmlModel model = null;
+            try
+            {
+                var indx = e.RowIndex;
+                if (indx < 0) return;
+                var rowCount = dataGridView1.RowCount;
+                lbRecordCount.Text = GetRowCountLabel(e, rowCount);
+                if (htmlData.Count == 0) return;
+                if (dataGridView1.DataSource is not List<InvoiceHeaderViewModel> list) return;
+                var selection = list[indx];
+                model = htmlData.Find(x =>
+                {
+                    return x.CountyName == selection.CountyName &&
+                        x.InvoiceDate == selection.InvoiceDate &&
+                        x.Description == selection.Description;
+                });
+            }
+            finally
+            {
+                SetInvoicingMode(model);
+            }
+
         }
 
         /// <summary>
@@ -150,6 +170,28 @@ namespace LegalLead.PublicData.Search
             });
         }
 
+        private void SetInvoicingMode(InvoiceHtmlModel model)
+        {
+            try
+            {
+                TrySetInvoicingMode(model);
+            }
+            catch (Exception)
+            {
+                Invoke(() => TrySetInvoicingMode(model));
+            }
+        }
+
+        private void TrySetInvoicingMode(InvoiceHtmlModel model)
+        {
+            var enabled = !string.IsNullOrWhiteSpace(model?.Html);
+            var content = model?.Html ?? string.Empty;
+            WebContent = content;
+            if (!btnViewInvoice.Visible) btnViewInvoice.Visible = enabled;
+            btnViewInvoice.Enabled = enabled;
+            btnViewInvoice.Tag = model;
+        }
+
         /// <summary>
         /// Creates the row count indicator text based on grid row selection
         /// </summary>
@@ -169,6 +211,7 @@ namespace LegalLead.PublicData.Search
             return $"Item {index} of {rowCount}";
         }
 
+        private static readonly string blankHtmlContent = Properties.Resources.invoice_no_data;
 
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -25,13 +26,56 @@ namespace LegalLead.PublicData.Search
             FormatGrid(dataGridView1);
             btnSubmit.Click += BtnSubmit_Click;
             Shown += FsInvoiceHistory_Shown;
+            
             dataGridView1.RowEnter += DataGridView1_RowEnter;
+            wbViewer.CoreWebView2InitializationCompleted += WbViewer_CoreWebView2InitializationCompleted;
+
+            wbViewer.EnsureCoreWebView2Async().ConfigureAwait(true);
+            wbViewer.NavigationStarting += WbViewer_NavigationStarting;
+            wbViewer.NavigationCompleted += WbViewer_NavigationCompleted;
+        }
+
+        private void WbViewer_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            if (wbViewer.Tag is not bool isVisible) { return; }
+            wbViewer.Visible = isVisible;
+        }
+
+        private void WbViewer_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
+        {
+            var isVisible = wbViewer.Visible;
+            wbViewer.Tag = isVisible;
+            wbViewer.Visible = false;
+        }
+
+        private string webContent;
+        private string WebContent
+        {
+            get => webContent;
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    webContent = value;
+                }
+                else
+                {
+                    webContent = blankHtmlContent;
+                }
+            }
         }
         private DisplayModes CurrentDisplay { get; set; } = DisplayModes.None;
 
         private bool AllowExcelRevision { get; set; }
         private bool AllowPreviewInvoice { get; set; }
         private bool AllowDataRefresh { get; set; }
+
+        private void WbViewer_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
+        {
+            if (!e.IsSuccess) return;
+            WebContent = string.Empty;
+            wbViewer.NavigateToString(WebContent);
+        }
 
         private static List<InvoiceHeaderViewModel> GetHistory()
         {
@@ -163,6 +207,8 @@ namespace LegalLead.PublicData.Search
             public DateTime InvoiceDate { get; set; }
             public string Price { get; set; } = string.Empty;
             public string Html { get; set; } = string.Empty;
+            public string Status { get; set; } = string.Empty;
+            public string PaymentUrl { get; set; } = string.Empty;
 
         }
 
@@ -186,5 +232,27 @@ namespace LegalLead.PublicData.Search
         private const string all_counties = "All counties";
         private const string messageNormal = "Ready";
         private const string messageLoading = "Getting Invoices ...";
+        private const string viewNormal = "Return";
+        private const string viewInvoice = "View Invoice";
+
+        private void BtnViewInvoice_Click(object sender, EventArgs e)
+        {
+            if (sender is not Button btn) return;
+
+            lock (sync)
+            {
+                if (btn.Text.Equals(viewNormal))
+                {
+                    SetDisplay(DisplayModes.Normal);
+                    btn.Text = viewInvoice;
+                    return;
+                }
+                btn.Text = viewNormal;
+                var html = WebContent;
+                wbViewer.NavigateToString(html);
+                SetDisplay(DisplayModes.Invoicing);
+                wbViewer.NavigateToString(html);
+            }
+        }
     }
 }

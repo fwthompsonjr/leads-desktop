@@ -41,8 +41,9 @@
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             tslbDataStatus = new System.Windows.Forms.ToolStripLabel();
             lbRecordCount = new System.Windows.Forms.Label();
-            imageList1 = new System.Windows.Forms.ImageList(components);
             wbViewer = new Microsoft.Web.WebView2.WinForms.WebView2();
+            imageList1 = new System.Windows.Forms.ImageList(components);
+            btnViewInvoice = new System.Windows.Forms.Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             toolStrip1.SuspendLayout();
@@ -63,6 +64,7 @@
             tableLayoutPanel1.Controls.Add(toolStrip1, 0, 0);
             tableLayoutPanel1.Controls.Add(lbRecordCount, 3, 4);
             tableLayoutPanel1.Controls.Add(wbViewer, 0, 3);
+            tableLayoutPanel1.Controls.Add(btnViewInvoice, 1, 4);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -175,12 +177,6 @@
             lbRecordCount.TabIndex = 47;
             lbRecordCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // imageList1
-            // 
-            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // wbViewer
             // 
             wbViewer.AllowExternalDrop = true;
@@ -194,6 +190,26 @@
             wbViewer.TabIndex = 48;
             wbViewer.Visible = false;
             wbViewer.ZoomFactor = 1D;
+            // 
+            // imageList1
+            // 
+            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // btnViewInvoice
+            // 
+            btnViewInvoice.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            btnViewInvoice.Enabled = false;
+            btnViewInvoice.Location = new System.Drawing.Point(150, 341);
+            btnViewInvoice.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            btnViewInvoice.Name = "btnViewInvoice";
+            btnViewInvoice.Size = new System.Drawing.Size(120, 23);
+            btnViewInvoice.TabIndex = 49;
+            btnViewInvoice.Text = "View Invoices";
+            btnViewInvoice.UseVisualStyleBackColor = true;
+            btnViewInvoice.Visible = false;
+            btnViewInvoice.Click += BtnViewInvoice_Click;
             // 
             // FsInvoiceHistory
             // 
@@ -227,5 +243,6 @@
         private System.Windows.Forms.Label lbRecordCount;
         private System.Windows.Forms.ImageList imageList1;
         private Microsoft.Web.WebView2.WinForms.WebView2 wbViewer;
+        private System.Windows.Forms.Button btnViewInvoice;
     }
 }

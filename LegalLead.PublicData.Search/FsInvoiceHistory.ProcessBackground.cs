@@ -1,5 +1,8 @@
-﻿using LegalLead.PublicData.Search.Helpers;
+﻿
+using HtmlAgilityPack;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,6 +12,7 @@ using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search
 {
+    using AG = HtmlAgilityPack;
     public partial class FsInvoiceHistory : Form
     {
         /// <summary>
@@ -51,22 +55,28 @@ namespace LegalLead.PublicData.Search
             var target = new List<InvoiceHtmlModel>();
             var list = new List<InvoiceHistoryModel>();
             list.AddRange(masterData);
-            Parallel.ForEach(list, 
+            Parallel.ForEach(list,
                 new ParallelOptions() { MaxDegreeOfParallelism = 5 },
-                m => {
-                var invoiceData = m.Model.ToJsonString();
-                var html = invoiceReader.PreviewInvoice(invoiceData);
-                var item = new InvoiceHtmlModel
+                m =>
                 {
-                    CountyName = m.CountyName,
-                    Description = m.Description,
-                    RecordCount = m.RecordCount,
-                    InvoiceDate = m.InvoiceDate,
-                    Price = m.Price,
-                    Html = html ?? string.Empty
-                };
-                target.Add(item);
-            });
+                    var invoiceData = m.Model.ToJsonString();
+                    var html = invoiceReader.PreviewInvoice(invoiceData);
+                    var item = new InvoiceHtmlModel
+                    {
+                        CountyName = m.CountyName,
+                        Description = m.Description,
+                        RecordCount = m.RecordCount,
+                        InvoiceDate = m.InvoiceDate,
+                        Price = m.Price,
+                        Html = html ?? string.Empty
+                    };
+                    if (!string.IsNullOrEmpty(html))
+                    {
+                        RemovePaymentButton(item);
+                        AppendHtmlAttributes(item);
+                    }
+                    target.Add(item);
+                });
             e.Result = target;
         }
 
@@ -170,5 +180,55 @@ namespace LegalLead.PublicData.Search
             }
         }
 
+
+
+        private static void AppendHtmlAttributes(InvoiceHtmlModel item)
+        {
+            var selectors = new[]
+            {
+                "//span[@name = 'invoice-status']",
+                "//*[@id = 'spn-payment-address']"
+            }.ToList();
+            var doc = new AG.HtmlDocument();
+            doc.LoadHtml(item.Html);
+            var docNode = doc.DocumentNode;
+            selectors.ForEach(selector =>
+            {
+                var indx = selectors.IndexOf(selector);
+                var sourceNode = docNode.SelectSingleNode(selector);
+                if (sourceNode != null)
+                {
+                    var txt = sourceNode.InnerText.Trim();
+                    AppendHtmlAttributes(item, indx, txt);
+                }
+            });
+        }
+
+        private static void AppendHtmlAttributes(InvoiceHtmlModel item, int fieldId, string fieldValue)
+        {
+            const string paymentToken = "stripe.com";
+            if (string.IsNullOrWhiteSpace(fieldValue)) return;
+            if (fieldId == 0)
+            {
+                item.Status = fieldValue;
+                return;
+            }
+            if (!fieldValue.Contains(paymentToken, StringComparison.OrdinalIgnoreCase)) return;
+            item.PaymentUrl = fieldValue;
+        }
+
+        private static void RemovePaymentButton(InvoiceHtmlModel item)
+        {
+            const string selector = "//*[@id = 'spn-payment-address']";
+            var doc = new AG.HtmlDocument();
+            doc.LoadHtml(item.Html);
+            var docNode = doc.DocumentNode;
+            var sourceNode = docNode.SelectSingleNode(selector);
+            if (sourceNode == null) return;
+            var parent = sourceNode.ParentNode;
+            if (parent == null) return;
+            parent.RemoveChild(sourceNode);
+            item.Html = docNode.OuterHtml;
+        }
     }
 }
