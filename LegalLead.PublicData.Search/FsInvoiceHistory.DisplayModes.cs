@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
 {
@@ -66,13 +67,45 @@ namespace LegalLead.PublicData.Search
                     DisplayModes.Loading => messageLoading,
                     _ => messageNormal
                 };
+
                 btnSubmit.Enabled = uiEnabled && AllowDataRefresh;
                 dataGridView1.Visible = uiEnabled;
                 toolStrip1.Visible = uiEnabled;
                 lbStatus.Text = text;
+
+                ToggleTableRows(mode == DisplayModes.Invoicing);
             }
         }
 
+        private void ToggleTableRows(bool isInvoicing)
+        {
+            List<Control> controls = new()
+            {
+                dataGridView1,
+                wbViewer
+            };
+            controls.ForEach(c => { 
+                var currentId = controls.IndexOf(c);
+                var rowIndex = tableLayoutPanel1.GetRow(c);
+                var style = tableLayoutPanel1.RowStyles[rowIndex];
+                var isVisible = 
+                    (currentId == RowDataId && !isInvoicing) ||
+                    (currentId == RowViewerId && isInvoicing);
+                if (currentId == RowViewerId) { c.Visible = isVisible; }
+                SetRowStyle(isVisible, style);
+            });
+        }
+
+        private static void SetRowStyle(bool isVisible, RowStyle style)
+        {
+            if (isVisible) { 
+                style.SizeType = SizeType.Percent;
+                style.Height = 100;
+                return;
+            }
+            style.SizeType = SizeType.Absolute;
+            style.Height = 0;
+        }
 
         private enum DisplayModes
         {
@@ -81,5 +114,7 @@ namespace LegalLead.PublicData.Search
             Loading,
             Invoicing
         }
+        private const int RowDataId = 0;
+        private const int RowViewerId = 1;
     }
 }

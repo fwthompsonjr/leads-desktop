@@ -42,9 +42,11 @@
             tslbDataStatus = new System.Windows.Forms.ToolStripLabel();
             lbRecordCount = new System.Windows.Forms.Label();
             imageList1 = new System.Windows.Forms.ImageList(components);
+            wbViewer = new Microsoft.Web.WebView2.WinForms.WebView2();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)wbViewer).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -60,6 +62,7 @@
             tableLayoutPanel1.Controls.Add(dataGridView1, 0, 2);
             tableLayoutPanel1.Controls.Add(toolStrip1, 0, 0);
             tableLayoutPanel1.Controls.Add(lbRecordCount, 3, 4);
+            tableLayoutPanel1.Controls.Add(wbViewer, 0, 3);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -152,13 +155,13 @@
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(6, 10);
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // tslbDataStatus
             // 
             tslbDataStatus.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
             tslbDataStatus.Name = "tslbDataStatus";
-            tslbDataStatus.Size = new System.Drawing.Size(50, 7);
+            tslbDataStatus.Size = new System.Drawing.Size(50, 22);
             tslbDataStatus.Text = "Loading";
             // 
             // lbRecordCount
@@ -178,6 +181,20 @@
             imageList1.ImageSize = new System.Drawing.Size(16, 16);
             imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // wbViewer
+            // 
+            wbViewer.AllowExternalDrop = true;
+            tableLayoutPanel1.SetColumnSpan(wbViewer, 5);
+            wbViewer.CreationProperties = null;
+            wbViewer.DefaultBackgroundColor = System.Drawing.SystemColors.ControlLight;
+            wbViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            wbViewer.Location = new System.Drawing.Point(3, 313);
+            wbViewer.Name = "wbViewer";
+            wbViewer.Size = new System.Drawing.Size(794, 14);
+            wbViewer.TabIndex = 48;
+            wbViewer.Visible = false;
+            wbViewer.ZoomFactor = 1D;
+            // 
             // FsInvoiceHistory
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -191,6 +208,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)wbViewer).EndInit();
             ResumeLayout(false);
         }
 
@@ -208,5 +226,6 @@
         private System.Windows.Forms.ToolStripLabel tslbDataStatus;
         private System.Windows.Forms.Label lbRecordCount;
         private System.Windows.Forms.ImageList imageList1;
+        private Microsoft.Web.WebView2.WinForms.WebView2 wbViewer;
     }
 }
