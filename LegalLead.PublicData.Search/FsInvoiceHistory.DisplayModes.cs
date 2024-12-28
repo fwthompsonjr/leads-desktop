@@ -92,11 +92,11 @@ namespace LegalLead.PublicData.Search
                     (currentId == RowDataId && !isInvoicing) ||
                     (currentId == RowViewerId && isInvoicing);
                 if (currentId == RowViewerId) { c.Visible = isVisible; }
-                SetRowStyle(isVisible, style);
+                SetRowStyle(isVisible, currentId, style);
             });
         }
 
-        private static void SetRowStyle(bool isVisible, RowStyle style)
+        private static void SetRowStyle(bool isVisible, int targetIndex, RowStyle style)
         {
             if (isVisible) { 
                 style.SizeType = SizeType.Percent;
@@ -104,7 +104,7 @@ namespace LegalLead.PublicData.Search
                 return;
             }
             style.SizeType = SizeType.Absolute;
-            style.Height = 0;
+            style.Height = targetIndex == 0 ? 120 : 0;
         }
 
         private enum DisplayModes

@@ -247,7 +247,6 @@ namespace LegalLead.PublicData.Search
                     btn.Text = viewInvoice;
                     return;
                 }
-                btn.Text = viewNormal;
                 var html = WebContent;
                 wbViewer.NavigateToString(html);
                 SetDisplay(DisplayModes.Invoicing);
