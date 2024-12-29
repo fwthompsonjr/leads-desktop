@@ -21,5 +21,12 @@
 	"usage-get-history": "db/usage-get-history",
 	"usage-get-summary": "db/usage-get-summary",
 	"usage-set-limit": "db/usage-set-monthly-limit"
+  },
+  "invoice": {
+	"uri": "http://api.legallead.co/db-invoice/",
+	"fetch": "get-invoice-list",
+	"invoice-creation": "create-customer-invoice",
+	"preview": "preview-invoice",
+	"status": "get-invoice-status"
   }
 }

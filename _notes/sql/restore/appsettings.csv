@@ -1,0 +1,7 @@
+"Id";"KeyName";"KeyValue";"Version";"CreateDate"
+"1178c50f-5bdd-11ef-99ce-0af7a01f52e9";"HTTP_REDIRECT_ENABLED";"TRUE";1.1;"2024-08-16 14:37:31"
+"d5b0f091-5bd2-11ef-99ce-0af7a01f52e9";"AWS_PROD_LOAD_BALANCER_IP";"18.118.182.232";1.1;"2024-08-16 13:24:15"
+"d5b0f302-5bd2-11ef-99ce-0af7a01f52e9";"AWS_PROD_INTERNAL_URL";"oxfordleads.us-east-2.elasticbeanstalk.com";1.1;"2024-08-16 13:24:15"
+"d5b0f433-5bd2-11ef-99ce-0af7a01f52e9";"AWS_PROD_EXTERNAL_URL";"oxfordleads.com";1.1;"2024-08-16 13:24:15"
+"d5b0f4a9-5bd2-11ef-99ce-0af7a01f52e9";"GODADDY_ACCESS_ID";"gHzhRYbCgRh1_XexZgtVJE4r1NL5sqZc5rp";1.1;"2024-08-16 13:24:15"
+"d5b0f520-5bd2-11ef-99ce-0af7a01f52e9";"GODADDY_ACCESS_SECRET";"8fSSpNmqaooV5mtfvYxrZ5";1.1;"2024-08-16 13:24:15"

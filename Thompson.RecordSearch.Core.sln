@@ -71,6 +71,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_ChangeLog", "_ChangeLog", "{6EB0A66F-8CF8-49D2-9932-67BFC016B733}"
 	ProjectSection(SolutionItems) = preProject
 		changeLog.json = changeLog.json
+		CHANGELOG.md = CHANGELOG.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{9F89D6F5-4D55-4CD2-A9A4-A83ED8F922B4}"
@@ -148,7 +149,7 @@ Global
 		{F2941B1B-F45A-4BB8-B93D-52E6C11AEE08} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
+		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 	EndGlobalSection
 EndGlobal

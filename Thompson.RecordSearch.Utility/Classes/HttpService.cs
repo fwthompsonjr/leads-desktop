@@ -14,25 +14,11 @@ namespace Thompson.RecordSearch.Utility.Classes
     {
         public async Task<TItem> PostAsJsonAsync<T, TItem>(HttpClient client, string webaddress, T value, CancellationToken cancellationToken = default)
         {
-            if (client == null) throw new ArgumentNullException(nameof(client));
-            if (string.IsNullOrWhiteSpace(webaddress)) throw new ArgumentNullException(nameof(webaddress));
-            if (!Uri.TryCreate(webaddress, UriKind.Absolute, out var uri)) throw new ArgumentOutOfRangeException(nameof(webaddress));
-            try
+            var response = await Task.Run(() =>
             {
-                client.Timeout = TimeSpan.FromSeconds(90);
-                using (var payload = GetContent(value))
-                {
-                    var response = await client.PostAsync(uri, payload).ConfigureAwait(false);
-                    if (!response.IsSuccessStatusCode) return default;
-                    var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    return JsonConvert.DeserializeObject<TItem>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return default;
-            }
+                return PostAsJson<T, TItem>(client, webaddress, value, cancellationToken);
+            });
+            return response;
         }
 
         public TItem PostAsJson<T, TItem>(HttpClient client, string webaddress, T value, CancellationToken cancellationToken = default)
@@ -58,6 +44,28 @@ namespace Thompson.RecordSearch.Utility.Classes
             }
         }
 
+        public string GetFromJsonPost<T>(HttpClient client, string webaddress, T value, CancellationToken cancellationToken = default)
+        {
+            if (client == null) throw new ArgumentNullException(nameof(client));
+            if (string.IsNullOrWhiteSpace(webaddress)) throw new ArgumentNullException(nameof(webaddress));
+            if (!Uri.TryCreate(webaddress, UriKind.Absolute, out var _)) throw new ArgumentOutOfRangeException(nameof(webaddress));
+            try
+            {
+                client.Timeout = TimeSpan.FromSeconds(90);
+                using (var payload = GetContent(value))
+                {
+                    var response = client.PostAsync(webaddress, payload).GetAwaiter().GetResult();
+                    if (!response.IsSuccessStatusCode) return string.Empty;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    return content;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return string.Empty;
+            }
+        }
 
         private static ByteArrayContent GetContent(object payload)
         {

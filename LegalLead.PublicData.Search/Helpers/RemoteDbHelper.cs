@@ -110,7 +110,7 @@ namespace LegalLead.PublicData.Search.Helpers
             return response;
         }
 
-        public CompleteUsageRecordResponse CompleteUsage(string recordId, int recordCount)
+        public CompleteUsageRecordResponse CompleteUsage(string recordId, int recordCount, string excelName = "")
         {
             var fallback = new CompleteUsageRecordResponse();
             if (string.IsNullOrEmpty(recordId)) return fallback;
@@ -120,7 +120,8 @@ namespace LegalLead.PublicData.Search.Helpers
             var request = new
             {
                 UsageRecordId = recordId,
-                RecordCount = recordCount
+                RecordCount = recordCount,
+                ExcelName = excelName,
             };
             using var client = GetClient(token);
             var response = httpService.PostAsJson<object, CompleteUsageRecordResponse>(client, uri, request)
