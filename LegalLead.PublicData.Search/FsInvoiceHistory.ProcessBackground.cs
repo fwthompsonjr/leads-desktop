@@ -292,6 +292,13 @@ namespace LegalLead.PublicData.Search
                 var data = string.IsNullOrWhiteSpace(txt) ? " - " : txt;
                 titles.Add(data);
             }
+            if (titles[1].Equals("PAID") &&
+                titles[2].Equals("$0.01") &&
+                titles[0].Equals(" - "))
+            {
+                item.Caption = "PAID | Non billable search";
+                return;
+            }
             item.Caption = string.Join(" | ", titles);
         }
 

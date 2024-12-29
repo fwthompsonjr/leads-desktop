@@ -41,12 +41,12 @@ namespace LegalLead.PublicData.Search
                 var selections = dataGridView1.SelectedCells.Cast<DataGridViewCell>().ToList();
                 var rowIndex = selections.Min(x => x.RowIndex);
                 var rows = dataGridView1.Rows.Cast<DataGridViewRow>().ToList();
+                dataGridView1.FirstDisplayedScrollingRowIndex = rowIndex;
                 rows.ForEach(rw =>
                 {
                     var backColor = rw.Index == rowIndex ? System.Drawing.Color.Yellow : System.Drawing.Color.White;
                     rw.DefaultCellStyle.BackColor = backColor;
                 });
-                dataGridView1.FirstDisplayedScrollingRowIndex = rowIndex;
 
                 lbInvoiceName.Text = string.Empty;
                 btnPayInvoice.Enabled = false;
@@ -273,7 +273,16 @@ namespace LegalLead.PublicData.Search
             var content = model?.Html ?? string.Empty;
             WebContent = content;
             if (!btnViewInvoice.Visible) btnViewInvoice.Visible = enabled;
+            if (btnViewInvoice.Visible) btnPayInvoice.Visible = true;
             btnViewInvoice.Enabled = enabled;
+            // get selected row idex
+            if (dataGridView1.SelectedCells.Count <= 0) return;
+            var cells = dataGridView1.SelectedCells.Cast<DataGridViewCell>().ToList();
+            var indx = cells.Min(x => x.RowIndex);
+            var statusReader = new InvoicePaymentStatusResponse(
+                dataGridView1,
+                dataGridView1.Rows[indx]);
+            lbInvoiceName.Text = statusReader.Text;
         }
 
         /// <summary>
