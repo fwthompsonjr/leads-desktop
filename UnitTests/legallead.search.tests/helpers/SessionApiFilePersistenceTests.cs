@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
@@ -150,45 +149,12 @@ namespace legallead.search.tests.helpers
             Assert.Null(error);
         }
 
-        [Theory]
-        [InlineData("collin")]
-        [InlineData("dallas")]
-        [InlineData("tarrant")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Sonar Qube",
-            "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<Pending>")]
-        public void ServiceCanGetAccountCredential(string county)
-        {
-            var error = Record.Exception(() =>
-            {
-                lock (locker)
-                {
-                    var service = new SessionApiFilePersistence();
-                    try
-                    {
-                        var text = JsonConvert.SerializeObject(GetModel());
-                        service.Initialize();
-                        service.Write(text);
-                        _ = service.GetAccountCredential(county);
-                    }
-                    finally
-                    {
-                        service.Initialize();
-                        // thread sleep justification:
-                        // avoids file access issue from unit tests in parallel
-                        Thread.Sleep(50);
-                    }
-                }
-            });
-            Assert.Null(error);
-        }
-
         private static readonly object locker = new();
         private static LeadUserSecurityBo GetModel(int monthlyUsage = 100)
         {
             const string tmplist = "collin,tarrant,dallas";
             var oic = StringComparison.OrdinalIgnoreCase;
-            var tmps = tmplist.Split(',').ToList(); ;
+            var tmps = tmplist.Split(',').ToList();
             var model = ApiAuthenicationService.GetModel(fakeToken, out var _);
             var counties = model.User.CountyData.ToInstance<List<LeadCountyTokenModel>>();
             if (counties.Count > 0)

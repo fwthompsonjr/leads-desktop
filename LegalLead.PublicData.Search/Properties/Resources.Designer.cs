@@ -133,6 +133,26 @@ namespace LegalLead.PublicData.Search.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;&lt;head&gt;
+        ///		&lt;meta charset=&quot;utf-8&quot;&gt;
+        ///		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+        ///		&lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///		&lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
+        ///		&lt;title&gt;records request: no data found&lt;/title&gt;
+        ///		
+        ///		&lt;!-- googleapis : fonts --&gt;
+        ///		&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+        ///		
+        ///		&lt;!-- bootstrap --&gt;
+        ///		&lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string invoice_no_data {
+            get {
+                return ResourceManager.GetString("invoice-no-data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to var obj = {
         ///	&apos;defendant&apos;: &apos;&apos;,
         ///	&apos;casestyle&apos;: &apos;&apos;,

@@ -13,6 +13,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             For<IHttpService>().Add<HttpService>().Singleton();
             For<IRemoteDbHelper>().Add<RemoteDbHelper>().Singleton();
+            For<IRemoteInvoiceHelper>().Add<RemoteInvoiceHelper>().Singleton();
 
             For<ISettingChangeModel>().Add<ChangeBooleanModel>().Named("Bool");
             For<ISettingChangeModel>().Add<ChangeDateModel>().Named("DateTime");

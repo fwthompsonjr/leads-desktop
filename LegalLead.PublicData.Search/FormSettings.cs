@@ -40,6 +40,7 @@ namespace LegalLead.PublicData.Search
                 1 => new FsCountySetting { TopLevel = false },
                 2 => new FsUserSettings { TopLevel = false },
                 3 => new FsSearchHistory { TopLevel = false },
+                4 => new FsInvoiceHistory { TopLevel = false },
                 _ => null
             };
             if (form == null) return;

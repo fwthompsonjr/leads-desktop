@@ -22,7 +22,7 @@ foreach($s in $sources)
     $src = [System.IO.Path]::Combine( $basefolder, $s ); 
     $sname = [System.IO.Path]::GetFileName( $src );
     $dest = [System.IO.Path]::Combine( $destination, $sname ); 
-    if ( [System.IO.File]::Exists( $src ) -eq $true -and [System.IO.File]::Exists( $dest ) -eq $false ) {
+    if ( [System.IO.File]::Exists( $src ) -eq $true ) {
         [System.IO.File]::Copy( $src, $dest, $true ) | Out-Null
     }
     if ( [System.IO.File]::Exists( $dest ) -eq $true ) {

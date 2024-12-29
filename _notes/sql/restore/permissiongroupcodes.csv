@@ -1,0 +1,125 @@
+"Id";"PermissionGroupId";"KeyName";"ProductCode";"PriceCodeAnnual";"PriceCodeMonthly";"KeyJs";"IsActive";"CreateDate"
+"00854cf6-37a3-4bca-b9b3-0649245235d8";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Tarrant.Tx";"prod_PiSMtaQ87iZVn3";"price_1Ot1RkDhgP60CL9xAPJzPA3k";"price_1Ot1RkDhgP60CL9xLBZnROjE";"{""product"":{""name"":""Tarrant County, TX Discount"",""description"":""Tarrant County discount program for record searches"",""code"":""prod_PiSMtaQ87iZVn3""},""pricecode"":{""monthly"":""price_1Ot1RkDhgP60CL9xLBZnROjE"",""annual"":""price_1Ot1RkDhgP60CL9xAPJzPA3k""},""priceamount"":{""monthly"":1,""annual"":12}}";"1";"2024-03-11 05:47:04"
+"0bd95ad0-265f-48d2-9933-da096018c8a5";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Collin.Tx";"prod_PiSM9yOJh1633V";"price_1Ot1RiDhgP60CL9xgMUYyvLV";"price_1Ot1RhDhgP60CL9xJs8UswkN";"{""product"":{""name"":""Collin County, TX Discount"",""description"":""Collin County discount program for record searches"",""code"":""prod_PiSM9yOJh1633V""},""pricecode"":{""monthly"":""price_1Ot1RhDhgP60CL9xJs8UswkN"",""annual"":""price_1Ot1RiDhgP60CL9xgMUYyvLV""},""priceamount"":{""monthly"":1,""annual"":12}}";"0";"2024-03-11 05:31:47"
+"27061cce-5606-479d-a770-47836cc78a31";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Collin.Tx";"prod_PiSM9yOJh1633V";"price_1Ot1RiDhgP60CL9xgMUYyvLV";"price_1Ot1RhDhgP60CL9xJs8UswkN";"{""product"":{""name"":""Collin County, TX Discount"",""description"":""Collin County discount program for record searches"",""code"":""prod_PiSM9yOJh1633V""},""pricecode"":{""monthly"":""price_1Ot1RhDhgP60CL9xJs8UswkN"",""annual"":""price_1Ot1RiDhgP60CL9xgMUYyvLV""},""priceamount"":{""monthly"":1,""annual"":12}}";"1";"2024-03-11 05:47:01"
+"3ee71052-09e9-4a0e-9cf8-f7135dd6e6b5";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Denton.Tx";"prod_PiSMYIdTCQKOfh";"price_1Ot1RiDhgP60CL9xFU8azDHr";"price_1Ot1RiDhgP60CL9xd1w60ZsC";"{""product"":{""name"":""Denton County, TX Discount"",""description"":""Denton County discount program for record searches"",""code"":""prod_PiSMYIdTCQKOfh""},""pricecode"":{""monthly"":""price_1Ot1RiDhgP60CL9xd1w60ZsC"",""annual"":""price_1Ot1RiDhgP60CL9xFU8azDHr""},""priceamount"":{""monthly"":1,""annual"":12}}";"0";"2024-03-11 05:31:53"
+"47957032-141a-4250-bff6-862043d76a69";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Collin.Tx";"prod_PiSM9yOJh1633V";"price_1Ot1RiDhgP60CL9xgMUYyvLV";"price_1Ot1RhDhgP60CL9xJs8UswkN";"{""product"":{""name"":""Collin County, TX Discount"",""description"":""Collin County discount program for record searches"",""code"":""prod_PiSM9yOJh1633V""},""pricecode"":{""monthly"":""price_1Ot1RhDhgP60CL9xJs8UswkN"",""annual"":""price_1Ot1RiDhgP60CL9xgMUYyvLV""},""priceamount"":{""monthly"":1,""annual"":12}}";"0";"2024-03-11 05:33:59"
+"49971fd4-f05b-4378-96fc-5660b0502b71";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Harris.Tx";"prod_PiSMzGZRQVcuQn";"price_1Ot1RjDhgP60CL9xyfNtbatu";"price_1Ot1RjDhgP60CL9xESqQttDx";"{""product"":{""name"":""Harris County, TX Discount"",""description"":""Harris County discount program for record searches"",""code"":""prod_PiSMzGZRQVcuQn""},""pricecode"":{""monthly"":""price_1Ot1RjDhgP60CL9xESqQttDx"",""annual"":""price_1Ot1RjDhgP60CL9xyfNtbatu""},""priceamount"":{""monthly"":1,""annual"":12}}";"1";"2024-03-11 05:34:09"
+"4d04378e-df43-11ee-b616-0af7a01f52e9";"be20e6e7-5e73-44e5-b785-37a592c57268";"Gold.Pricing";"prod_PiMmktRTYNiEIa";"price_1Osw3vDhgP60CL9xrJZUrNJc";"price_1Osw3lDhgP60CL9xtGX1JwpV";"{
+	""product"": {
+		""name"": ""Gold Account"",
+        ""code"": ""prod_PiMmktRTYNiEIa"",
+		""description"": ""Gold billing plan for record search.""		
+	},
+	""priceamount"": {
+		""monthly"": 20,
+		""annual"": 225
+	},
+	""pricecode"": {
+		""monthly"": ""price_1Osw3lDhgP60CL9xtGX1JwpV"",
+		""annual"": ""price_1Osw3vDhgP60CL9xrJZUrNJc""
+	}
+}";"1";"2024-03-11 01:04:25"
+"54f4755a-df42-11ee-b616-0af7a01f52e9";"be20e6e7-5e73-44e5-b785-37a592c57268";"Gold.Pricing";"prod_PiMmktRTYNiEIa";"price_1Osw3vDhgP60CL9xrJZUrNJc";"price_1Osw3lDhgP60CL9xtGX1JwpV";"{
+	""product"": {
+		""name"": ""Gold Account"",
+        ""code"": ""prod_PiMmktRTYNiEIa"",
+		""description"": ""Gold billing plan for record search.""		
+	},
+	""priceamount"": {
+		""monthly"": 20,
+		""annual"": 225
+	},
+	""pricecode"": {
+		""monthly"": ""price_1Osw3lDhgP60CL9xtGX1JwpV"",
+		""annual"": ""price_1Osw3vDhgP60CL9xrJZUrNJc""
+	}
+}";"0";"2024-03-11 00:57:28"
+"591fe749-7364-44eb-b49b-50ec6c1afee7";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Denton.Tx";"prod_PiSMYIdTCQKOfh";"price_1Ot1RiDhgP60CL9xFU8azDHr";"price_1Ot1RiDhgP60CL9xd1w60ZsC";"{""product"":{""name"":""Denton County, TX Discount"",""description"":""Denton County discount program for record searches"",""code"":""prod_PiSMYIdTCQKOfh""},""pricecode"":{""monthly"":""price_1Ot1RiDhgP60CL9xd1w60ZsC"",""annual"":""price_1Ot1RiDhgP60CL9xFU8azDHr""},""priceamount"":{""monthly"":1,""annual"":12}}";"1";"2024-03-11 05:47:02"
+"5bbd5199-df68-11ee-b616-0af7a01f52e9";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Collin.Tx";"";"";"";"{
+	""product"": {
+		""name"": ""Collin County, TX Discount"",
+		""description"": ""Collin County discount program for record searches""		
+	},
+	""priceamount"": {
+		""monthly"": 1,
+		""annual"": 12
+	}
+}";"0";"2024-03-11 05:29:40"
+"5bbd5505-df68-11ee-b616-0af7a01f52e9";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Denton.Tx";"";"";"";"{
+	""product"": {
+		""name"": ""Denton County, TX Discount"",
+		""description"": ""Denton County discount program for record searches""		
+	},
+	""priceamount"": {
+		""monthly"": 1,
+		""annual"": 12
+	}
+}";"0";"2024-03-11 05:29:40"
+"5bbd569e-df68-11ee-b616-0af7a01f52e9";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Harris.Tx";"";"";"";"{
+	""product"": {
+		""name"": ""Harris County, TX Discount"",
+		""description"": ""Harris County discount program for record searches""		
+	},
+	""priceamount"": {
+		""monthly"": 1,
+		""annual"": 12
+	}
+}";"0";"2024-03-11 05:29:40"
+"5bbd579e-df68-11ee-b616-0af7a01f52e9";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Tarrant.Tx";"";"";"";"{
+	""product"": {
+		""name"": ""Tarrant County, TX Discount"",
+		""description"": ""Tarrant County discount program for record searches""		
+	},
+	""priceamount"": {
+		""monthly"": 1,
+		""annual"": 12
+	}
+}";"0";"2024-03-11 05:29:40"
+"5e2031a4-de48-11ee-b616-0af7a01f52e9";"1a19da59-cfa0-45e7-b24d-3248dbb313ac";"Silver.Pricing";"";"";"";"{
+	""product"": {
+		""name"": ""Silver Account"",
+		""description"": ""Silver billing plan for record search.""		
+	},
+	""priceamount"": {
+		""monthly"": 12,
+		""annual"": 100
+	}
+}";"0";"2024-03-09 19:08:09"
+"5e2034c4-de48-11ee-b616-0af7a01f52e9";"be20e6e7-5e73-44e5-b785-37a592c57268";"Gold.Pricing";"";"";"";"{
+	""product"": {
+		""name"": ""Gold Account"",
+		""description"": ""Gold billing plan for record search.""		
+	},
+	""priceamount"": {
+		""monthly"": 20,
+		""annual"": 225
+	}
+}";"0";"2024-03-09 19:08:09"
+"5e203617-de48-11ee-b616-0af7a01f52e9";"dd081565-de42-46df-bb27-dcd1dd9a7481";"Platinum.Pricing";"";"";"";"{
+	""product"": {
+		""name"": ""Platinum Account"",
+		""description"": ""Platinum billing plan for record search.""		
+	},
+	""priceamount"": {
+		""monthly"": 30,
+		""annual"": 300
+	}
+}";"0";"2024-03-09 19:08:09"
+"795abbdb-ab1a-48fa-9ae5-e10476dc0235";"92862d78-2d4a-43b7-8b0c-0dde7babe92d";"State.Discount.Pricing.Tx";"prod_PlBhPdumPBUjCf";"price_1OvfK7DhgP60CL9x0wmJcmxi";"price_1OvfK7DhgP60CL9xlL9DcGYr";"{""product"":{""name"":""Texas - State - TX Discount"",""description"":""Texas state discount program for record searches"",""code"":""prod_PlBhPdumPBUjCf""},""pricecode"":{""monthly"":""price_1OvfK7DhgP60CL9xlL9DcGYr"",""annual"":""price_1OvfK7DhgP60CL9x0wmJcmxi""},""priceamount"":{""monthly"":2,""annual"":24}}";"1";"2024-03-18 12:40:41"
+"8edbd6bb-ea3d-4e69-9e71-1124e0356fda";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Harris.Tx";"prod_PiSMzGZRQVcuQn";"price_1Ot1RjDhgP60CL9xyfNtbatu";"price_1Ot1RjDhgP60CL9xESqQttDx";"{""product"":{""name"":""Harris County, TX Discount"",""description"":""Harris County discount program for record searches"",""code"":""prod_PiSMzGZRQVcuQn""},""pricecode"":{""monthly"":""price_1Ot1RjDhgP60CL9xESqQttDx"",""annual"":""price_1Ot1RjDhgP60CL9xyfNtbatu""},""priceamount"":{""monthly"":1,""annual"":12}}";"0";"2024-03-11 05:31:57"
+"a1c0ee86-71d0-4360-a764-427ed6a1acda";"dd081565-de42-46df-bb27-dcd1dd9a7481";"Platinum.Pricing";"prod_PiPuGFBM7aPo1z";"price_1Osz4UDhgP60CL9xGvxbzWEO";"price_1Osz4UDhgP60CL9xgvbxkJTH";"{""product"":{""name"":""Platinum Account"",""description"":""Platinum billing plan for record search."",""code"":""prod_PiPuGFBM7aPo1z""},""pricecode"":{""monthly"":""price_1Osz4UDhgP60CL9xgvbxkJTH"",""annual"":""price_1Osz4UDhgP60CL9xGvxbzWEO""},""priceamount"":{""monthly"":30,""annual"":300}}";"1";"2024-03-11 04:41:21"
+"aa782421-6105-46ac-b6d6-cf2404abd547";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Tarrant.Tx";"prod_PiSMtaQ87iZVn3";"price_1Ot1RkDhgP60CL9xAPJzPA3k";"price_1Ot1RkDhgP60CL9xLBZnROjE";"{""product"":{""name"":""Tarrant County, TX Discount"",""description"":""Tarrant County discount program for record searches"",""code"":""prod_PiSMtaQ87iZVn3""},""pricecode"":{""monthly"":""price_1Ot1RkDhgP60CL9xLBZnROjE"",""annual"":""price_1Ot1RkDhgP60CL9xAPJzPA3k""},""priceamount"":{""monthly"":1,""annual"":12}}";"0";"2024-03-11 05:32:02"
+"adb3b042-b224-481b-a44e-a9958ff9e80d";"8250570b-d263-403f-be65-7a595cd8a64f";"County.Discount.Pricing.Denton.Tx";"prod_PiSMYIdTCQKOfh";"price_1Ot1RiDhgP60CL9xFU8azDHr";"price_1Ot1RiDhgP60CL9xd1w60ZsC";"{""product"":{""name"":""Denton County, TX Discount"",""description"":""Denton County discount program for record searches"",""code"":""prod_PiSMYIdTCQKOfh""},""pricecode"":{""monthly"":""price_1Ot1RiDhgP60CL9xd1w60ZsC"",""annual"":""price_1Ot1RiDhgP60CL9xFU8azDHr""},""priceamount"":{""monthly"":1,""annual"":12}}";"0";"2024-03-11 05:34:05"
+"bd443438-e526-11ee-b616-0af7a01f52e9";"92862d78-2d4a-43b7-8b0c-0dde7babe92d";"State.Discount.Pricing.Tx";"prod_PlBhPdumPBUjCf";"price_1OvfK7DhgP60CL9x0wmJcmxi";"price_1OvfK7DhgP60CL9xlL9DcGYr";"{""product"":{""name"":""Texas - State - TX Discount"",""description"":""Texas state discount program for record searches""},""pricecode"":{""monthly"":""price_1OvfK7DhgP60CL9xlL9DcGYr"",""annual"":""price_1OvfK7DhgP60CL9x0wmJcmxi""},""priceamount"":{""monthly"":2,""annual"":24}}";"1";"2024-03-18 12:55:04"
+"e6577b0b-e522-11ee-b616-0af7a01f52e9";"92862d78-2d4a-43b7-8b0c-0dde7babe92d";"State.Discount.Pricing.Tx";"";"";"";"{
+	""product"": {
+		""name"": ""Texas - State - TX Discount"",
+		""description"": ""Texas state discount program for record searches""		
+	},
+	""priceamount"": {
+		""monthly"": 2,
+		""annual"": 24
+	}
+}";"0";"2024-03-18 12:27:35"
+"ed6e7797-ad49-4a41-bc9a-1e3f976aa6b4";"1a19da59-cfa0-45e7-b24d-3248dbb313ac";"Silver.Pricing";"prod_PiPuAA7dIyL5Ax";"price_1Osz4VDhgP60CL9xqub0j2ax";"price_1Osz4VDhgP60CL9xyvFnsPAf";"{""product"":{""name"":""Silver Account"",""description"":""Silver billing plan for record search."",""code"":""prod_PiPuAA7dIyL5Ax""},""pricecode"":{""monthly"":""price_1Osz4VDhgP60CL9xyvFnsPAf"",""annual"":""price_1Osz4VDhgP60CL9xqub0j2ax""},""priceamount"":{""monthly"":12,""annual"":100}}";"1";"2024-03-11 04:41:32"

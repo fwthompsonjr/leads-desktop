@@ -197,7 +197,7 @@ namespace LegalLead.PublicData.Search
         private readonly List<UsageHistoryViewModel> _vwlist;
         private static List<UsageHistoryViewModel> GetHistory()
         {
-            var data = usageReader.GetUsage(DateTime.UtcNow);
+            var data = usageReader.GetUsage(DateTime.UtcNow.AddMonths(1));
             var list = new List<UsageHistoryModel>();
             if (data != null && data.Count > 0) { list.AddRange(data); }
             if (list.Count == 0) return new List<UsageHistoryViewModel>();
