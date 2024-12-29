@@ -1,28 +1,17 @@
-# Release | 2.8.8.1 - Dallas case type sort + User interaction to track searches
+# Release | 2.8.9.0 - Add billing to record search
 
 ## Problem Statement:
+Objective - Enable billing for record searches
 
-### Objective 1 - Dallas Case Type Filter
 As an application
-I want to filter case types in Dallas county
-So that search finds the maximum amount of eligible cases.
-
-### Objective 2 - User interaction to track searches
-As an application
-I want to track user search behavior
-So that :
-- I have a count of the number of searches performed
-- I can enforce limits on monthly searches
-- I can bill for records downloaded accurately
+I want to create an invoice for records searched
+So that I can monetize user activities.
 
 ### Component Checks:
-
-1. Dallas county end-to-end testing
-2. Dallas county add filter for OPEN cases
-3. Dallas county add logic for no-records found condition
-4. Dallas county add logic to include weekends in searches
-5. Search tracking - update behavior of search history screen
-6. Search tracking - allow user to filter result by county
-7. Search tracking - set fetch records to 1 year
-8. Search limit - apply limit to record return result
-9. Search limit - post records downloaded to max returned after filter is applied
+1. Create invoice on search completed
+2. Create $0.01 PAID invoice for administrators
+3. Apply sales tax to search when applicable
+4. Allow user a method to pay for invoice with credit card
+5. Allow user to view all invoices in system
+6. Lock downloaded content until invoice is paid
+7. Compatibility Test search behavior Dallas Justice
