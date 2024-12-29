@@ -42,8 +42,9 @@
             tslbDataStatus = new System.Windows.Forms.ToolStripLabel();
             lbRecordCount = new System.Windows.Forms.Label();
             wbViewer = new Microsoft.Web.WebView2.WinForms.WebView2();
-            imageList1 = new System.Windows.Forms.ImageList(components);
             btnViewInvoice = new System.Windows.Forms.Button();
+            lbInvoiceName = new System.Windows.Forms.Label();
+            imageList1 = new System.Windows.Forms.ImageList(components);
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             toolStrip1.SuspendLayout();
@@ -65,6 +66,7 @@
             tableLayoutPanel1.Controls.Add(lbRecordCount, 3, 4);
             tableLayoutPanel1.Controls.Add(wbViewer, 0, 3);
             tableLayoutPanel1.Controls.Add(btnViewInvoice, 1, 4);
+            tableLayoutPanel1.Controls.Add(lbInvoiceName, 2, 4);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -106,13 +108,17 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableLayoutPanel1.SetColumnSpan(dataGridView1, 5);
             dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             dataGridView1.Location = new System.Drawing.Point(3, 38);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             dataGridView1.Size = new System.Drawing.Size(794, 269);
             dataGridView1.TabIndex = 45;
             // 
@@ -191,25 +197,34 @@
             wbViewer.Visible = false;
             wbViewer.ZoomFactor = 1D;
             // 
-            // imageList1
-            // 
-            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // btnViewInvoice
             // 
-            btnViewInvoice.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            btnViewInvoice.Dock = System.Windows.Forms.DockStyle.Fill;
             btnViewInvoice.Enabled = false;
-            btnViewInvoice.Location = new System.Drawing.Point(150, 341);
+            btnViewInvoice.Location = new System.Drawing.Point(150, 339);
             btnViewInvoice.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             btnViewInvoice.Name = "btnViewInvoice";
-            btnViewInvoice.Size = new System.Drawing.Size(120, 23);
+            btnViewInvoice.Size = new System.Drawing.Size(120, 27);
             btnViewInvoice.TabIndex = 49;
             btnViewInvoice.Text = "View Invoices";
             btnViewInvoice.UseVisualStyleBackColor = true;
             btnViewInvoice.Visible = false;
             btnViewInvoice.Click += BtnViewInvoice_Click;
+            // 
+            // lbInvoiceName
+            // 
+            lbInvoiceName.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lbInvoiceName.AutoSize = true;
+            lbInvoiceName.Location = new System.Drawing.Point(283, 345);
+            lbInvoiceName.Name = "lbInvoiceName";
+            lbInvoiceName.Size = new System.Drawing.Size(194, 15);
+            lbInvoiceName.TabIndex = 50;
+            // 
+            // imageList1
+            // 
+            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // FsInvoiceHistory
             // 
@@ -244,5 +259,6 @@
         private System.Windows.Forms.ImageList imageList1;
         private Microsoft.Web.WebView2.WinForms.WebView2 wbViewer;
         private System.Windows.Forms.Button btnViewInvoice;
+        private System.Windows.Forms.Label lbInvoiceName;
     }
 }

@@ -17,15 +17,29 @@ namespace LegalLead.PublicData.Search
             var columns = dataGrid.Columns;
             if (columns.Count == 0) return;
             dataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            columns[0].Resizable = DataGridViewTriState.False;
-            columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            columns[1].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            for (var i = 0; i < columns.Count; i++)
+
+            const int columnUuid = 0;
+            const int columnCountyName = 1;
+            const int columnTitle = 2;
+            const int columnRecordCount = 3;
+            const int columnInvoiceDate = 4;
+            const int columnInvoicePrice = 5;
+
+            columns[columnUuid].Visible = false;
+
+            columns[columnCountyName].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            columns[columnCountyName].Resizable = DataGridViewTriState.False;
+
+            columns[columnTitle].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            columns[columnTitle].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            columns[columnRecordCount].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            columns[columnInvoiceDate].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            
+            columns[columnInvoicePrice].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            columns[columnInvoicePrice].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            
+            for (var i = 1; i < columns.Count; i++)
             {
                 var col = columns[i];
                 col.ReadOnly = true;
@@ -69,10 +83,11 @@ namespace LegalLead.PublicData.Search
                 };
 
                 btnSubmit.Enabled = uiEnabled && AllowDataRefresh;
+                btnViewInvoice.Visible = uiEnabled && AllowPreviewInvoice;
                 dataGridView1.Visible = uiEnabled;
                 toolStrip1.Visible = uiEnabled;
                 lbStatus.Text = text;
-
+                lbInvoiceName.Text = string.Empty;
                 ToggleTableRows(mode == DisplayModes.Invoicing);
             }
         }
@@ -104,7 +119,7 @@ namespace LegalLead.PublicData.Search
                 return;
             }
             style.SizeType = SizeType.Absolute;
-            style.Height = targetIndex == 0 ? 120 : 0;
+            style.Height = targetIndex == RowDataId ? 160 : 0;
         }
 
         private enum DisplayModes

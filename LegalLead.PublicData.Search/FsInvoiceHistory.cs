@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -26,26 +25,13 @@ namespace LegalLead.PublicData.Search
             FormatGrid(dataGridView1);
             btnSubmit.Click += BtnSubmit_Click;
             Shown += FsInvoiceHistory_Shown;
-            
+
             dataGridView1.RowEnter += DataGridView1_RowEnter;
             wbViewer.CoreWebView2InitializationCompleted += WbViewer_CoreWebView2InitializationCompleted;
 
-            wbViewer.EnsureCoreWebView2Async().ConfigureAwait(true);
+            _ = wbViewer.EnsureCoreWebView2Async().ConfigureAwait(true);
             wbViewer.NavigationStarting += WbViewer_NavigationStarting;
             wbViewer.NavigationCompleted += WbViewer_NavigationCompleted;
-        }
-
-        private void WbViewer_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
-        {
-            if (wbViewer.Tag is not bool isVisible) { return; }
-            wbViewer.Visible = isVisible;
-        }
-
-        private void WbViewer_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
-        {
-            var isVisible = wbViewer.Visible;
-            wbViewer.Tag = isVisible;
-            wbViewer.Visible = false;
         }
 
         private string webContent;
@@ -70,12 +56,6 @@ namespace LegalLead.PublicData.Search
         private bool AllowPreviewInvoice { get; set; }
         private bool AllowDataRefresh { get; set; }
 
-        private void WbViewer_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
-        {
-            if (!e.IsSuccess) return;
-            WebContent = string.Empty;
-            wbViewer.NavigateToString(WebContent);
-        }
 
         private static List<InvoiceHeaderViewModel> GetHistory()
         {
@@ -90,14 +70,6 @@ namespace LegalLead.PublicData.Search
                 if (model == null || model.Headers.Count == 0) return fallback;
 
                 var list = new List<InvoiceHistoryModel>();
-                var replacements = new Dictionary<string, string>()
-                {
-                    { "2024/2020", "2024" },
-                    { "2025/2020", "2025" },
-                    { "2026/2020", "2026" },
-                    { "2027/2020", "2027" },
-                    { " from ? to ?/1900", "" },
-                };
                 var countymap = new Dictionary<string, string>()
                 {
                     { "El", "El Paso" },
@@ -109,7 +81,7 @@ namespace LegalLead.PublicData.Search
                     if (line != null)
                     {
                         var description = line.Description;
-                        foreach (var kvp in replacements)
+                        foreach (var kvp in descriptionReplacements)
                         {
                             var find = kvp.Key;
                             var value = kvp.Value;
@@ -127,6 +99,7 @@ namespace LegalLead.PublicData.Search
                         if (price < 0.50m) price = 0;
                         var addme = new InvoiceHistoryModel
                         {
+                            Id = h.Id,
                             CountyName = countyName,
                             InvoiceDate = createDt,
                             Description = description,
@@ -178,6 +151,7 @@ namespace LegalLead.PublicData.Search
 
         private sealed class InvoiceHeaderViewModel
         {
+            public string Id { get; set; } = string.Empty;
             public string CountyName { get; set; }
             public string Description { get; set; }
             public int RecordCount { get; set; }
@@ -189,6 +163,7 @@ namespace LegalLead.PublicData.Search
                 if (source == null) return new();
                 return new()
                 {
+                    Id = source.Id,
                     CountyName = source.CountyName,
                     Description = source.Description,
                     RecordCount = source.RecordCount,
@@ -209,7 +184,8 @@ namespace LegalLead.PublicData.Search
             public string Html { get; set; } = string.Empty;
             public string Status { get; set; } = string.Empty;
             public string PaymentUrl { get; set; } = string.Empty;
-
+            public string Caption { get; set; } = string.Empty;
+            public string Id { get; internal set; }
         }
 
         private static readonly IRemoteInvoiceHelper invoiceReader = ActionSettingContainer
@@ -225,6 +201,14 @@ namespace LegalLead.PublicData.Search
         private static readonly List<InvoiceHistoryModel> masterData = new();
         private static readonly List<GetUsageResponseContent> rawData = new();
         private static readonly List<InvoiceHtmlModel> htmlData = new();
+        private static readonly Dictionary<string, string> descriptionReplacements = new Dictionary<string, string>()
+                {
+                    { "2024/2020", "2024" },
+                    { "2025/2020", "2025" },
+                    { "2026/2020", "2026" },
+                    { "2027/2020", "2027" },
+                    { " from ? to ?/1900", "" },
+                };
 
         private static readonly object sync = new();
 
@@ -235,23 +219,5 @@ namespace LegalLead.PublicData.Search
         private const string viewNormal = "Return";
         private const string viewInvoice = "View Invoice";
 
-        private void BtnViewInvoice_Click(object sender, EventArgs e)
-        {
-            if (sender is not Button btn) return;
-
-            lock (sync)
-            {
-                if (btn.Text.Equals(viewNormal))
-                {
-                    SetDisplay(DisplayModes.Normal);
-                    btn.Text = viewInvoice;
-                    return;
-                }
-                var html = WebContent;
-                wbViewer.NavigateToString(html);
-                SetDisplay(DisplayModes.Invoicing);
-                wbViewer.NavigateToString(html);
-            }
-        }
     }
 }

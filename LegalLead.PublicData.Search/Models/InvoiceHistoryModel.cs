@@ -23,5 +23,6 @@ namespace LegalLead.PublicData.Search.Models
         public string Price { get; set; }
 
         public InvoiceHeaderModel Model { get; set; }
+        public string Id { get; internal set; }
     }
 }

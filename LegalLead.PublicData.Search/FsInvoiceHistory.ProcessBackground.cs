@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -55,28 +56,43 @@ namespace LegalLead.PublicData.Search
             var target = new List<InvoiceHtmlModel>();
             var list = new List<InvoiceHistoryModel>();
             list.AddRange(masterData);
+#if DEBUG
+            var tmp = list.Find(x => x.Model.Id.Equals("36cad15a-c0b7-11ef-b422-0af36f7c981d"));
+            Assert.IsNotNull(tmp);
+#endif
             Parallel.ForEach(list,
                 new ParallelOptions() { MaxDegreeOfParallelism = 5 },
                 m =>
                 {
                     var invoiceData = m.Model.ToJsonString();
                     var html = invoiceReader.PreviewInvoice(invoiceData);
+                    html = RemovePaymentButton(html);
+                    html = StandarizeDescriptions(html);
                     var item = new InvoiceHtmlModel
                     {
+                        Id = m.Model.Id,
                         CountyName = m.CountyName,
                         Description = m.Description,
                         RecordCount = m.RecordCount,
                         InvoiceDate = m.InvoiceDate,
                         Price = m.Price,
-                        Html = html ?? string.Empty
+                        Html = html
                     };
                     if (!string.IsNullOrEmpty(html))
-                    {
-                        RemovePaymentButton(item);
+                    {   
                         AppendHtmlAttributes(item);
                     }
                     target.Add(item);
                 });
+            // find all elements where status == SENT
+            var paymentneeded = target.FindAll(x => x.Status.Equals("SENT"));
+            if (paymentneeded.Count == 0)
+            {
+                e.Result = target;
+                return;
+            }
+            // call create invoice method to get latest status?
+
             e.Result = target;
         }
 
@@ -202,6 +218,25 @@ namespace LegalLead.PublicData.Search
                     AppendHtmlAttributes(item, indx, txt);
                 }
             });
+            var titleItems = new List<string>
+            {
+                "//h5[@class = 'card-title text-start']",
+                "//span[@name = 'invoice-status']",
+                "//span[@name = 'invoice-total']",
+            };
+            var titles = new List<string>();
+            foreach (var title in titleItems)
+            {
+                var sourceNode = docNode.SelectSingleNode(title);
+                if (sourceNode == null) { titles.Add(" - "); continue; }
+                var txt = sourceNode.InnerText
+                    .Replace("Invoice:", "")
+                    .Replace("&nbsp;", "")
+                    .Replace("nbsp;", "").Trim();
+                var data = string.IsNullOrWhiteSpace(txt) ? " - " : txt;
+                titles.Add(data);
+            }
+            item.Caption = string.Join(" | ", titles);
         }
 
         private static void AppendHtmlAttributes(InvoiceHtmlModel item, int fieldId, string fieldValue)
@@ -217,18 +252,32 @@ namespace LegalLead.PublicData.Search
             item.PaymentUrl = fieldValue;
         }
 
-        private static void RemovePaymentButton(InvoiceHtmlModel item)
+        private static string RemovePaymentButton(string html)
         {
-            const string selector = "//*[@id = 'spn-payment-address']";
+            if (string.IsNullOrWhiteSpace(html)) return string.Empty;
+
+            const string selector = "//*[@id = 'frm-invoice-submit-button']";
             var doc = new AG.HtmlDocument();
-            doc.LoadHtml(item.Html);
+            doc.LoadHtml(html);
             var docNode = doc.DocumentNode;
             var sourceNode = docNode.SelectSingleNode(selector);
-            if (sourceNode == null) return;
-            var parent = sourceNode.ParentNode;
-            if (parent == null) return;
-            parent.RemoveChild(sourceNode);
-            item.Html = docNode.OuterHtml;
+            if (sourceNode == null) return html;
+            var txt = sourceNode.OuterHtml;
+            html = html.Replace(txt, string.Empty);
+            return html;
+        }
+
+        private static string StandarizeDescriptions(string html)
+        {
+            if (string.IsNullOrWhiteSpace(html)) return string.Empty;
+            foreach (var kvp in descriptionReplacements)
+            {
+                if (html.Contains(kvp.Key))
+                {
+                    html = html.Replace(kvp.Key, kvp.Value);
+                }
+            }
+            return html;
         }
     }
 }
