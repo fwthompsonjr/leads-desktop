@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
@@ -48,30 +47,31 @@ namespace LegalLead.PublicData.Search
                     rw.DefaultCellStyle.BackColor = backColor;
                 });
                 dataGridView1.FirstDisplayedScrollingRowIndex = rowIndex;
-                var rowTag = dataGridView1.Rows[rowIndex].Tag;
+
                 lbInvoiceName.Text = string.Empty;
-                if (rowTag is InvoiceHtmlModel model && !string.IsNullOrEmpty(model.Caption))
+                btnPayInvoice.Enabled = false;
+                btnPayInvoice.Visible = true;
+                btnPayInvoice.Tag = null;
+                var statusReader = new InvoicePaymentStatusResponse(
+                    dataGridView1,
+                    dataGridView1.Rows[rowIndex]);
+
+                lbInvoiceName.Text = statusReader.Text;
+                btnPayInvoice.Enabled = statusReader.IsEnabled;
+                if (statusReader.IsEnabled && !string.IsNullOrEmpty(statusReader.PaymentUrl))
                 {
-                    lbInvoiceName.Text = model.Caption;
-                    return;
+                    btnPayInvoice.Tag = statusReader.PaymentUrl;
+                    if (statusReader.InvoiceItem is not null) AppendStatusCheck(statusReader.InvoiceItem);
                 }
-                lbInvoiceName.Text = GetInvoiceTextFromIndex(rowIndex);
             }
         }
 
-        private string GetInvoiceTextFromIndex(int rowIndex)
+        private void BtnPayInvoice_Click(object sender, EventArgs e)
         {
-            var fallback = $"( getting details: {rowIndex} )";
-            if (dataGridView1.DataSource is not List<InvoiceHeaderViewModel> list) return fallback;
-            if (htmlData.Count == 0) return fallback;
-            if (rowIndex < 0 || rowIndex > list.Count - 1) return fallback;
-            var current = list[rowIndex];
-            var target = htmlData.Find(x =>
-            {
-                return x.Id == current.Id;
-            });
-            if (target == null || string.IsNullOrWhiteSpace(target.Caption)) return fallback;
-            return target.Caption;
+            if (sender is not Button btn) return;
+            if (btn.Tag is not string navTo) return;
+            if (!Uri.TryCreate(navTo, UriKind.Absolute, out var _)) return;
+            wbViewer.CoreWebView2.Navigate(navTo);
         }
 
         /// <summary>
@@ -296,6 +296,53 @@ namespace LegalLead.PublicData.Search
         }
 
         private static readonly string blankHtmlContent = Properties.Resources.invoice_no_data;
+
+        private sealed class InvoicePaymentStatusResponse
+        {
+            private readonly DataGridView grid;
+            public InvoicePaymentStatusResponse(
+                DataGridView source,
+                DataGridViewRow sender)
+            {
+                grid = source;
+                GetInvoiceTextFromIndex(sender.Index);
+            }
+            public string Text { get; private set; } = string.Empty;
+            public string Status { get; private set; } = string.Empty;
+            public string PaymentUrl { get; private set; } = string.Empty;
+            public InvoiceHtmlModel InvoiceItem { get; private set; } = null;
+            public bool IsEnabled
+            {
+                get
+                {
+                    if (string.IsNullOrEmpty(PaymentUrl)) return false;
+                    if (string.IsNullOrEmpty(Status)) return false;
+                    return Status.Equals("SENT");
+                }
+            }
+
+            private void GetInvoiceTextFromIndex(int rowIndex)
+            {
+                var fallback = $"( getting details: {rowIndex} )";
+                try
+                {
+                    if (grid.DataSource is not List<InvoiceHeaderViewModel> list) return;
+                    if (htmlData.Count == 0) return;
+                    if (rowIndex < 0 || rowIndex > list.Count - 1) return;
+                    var current = list[rowIndex];
+                    var target = htmlData.Find(x => x.Id == current.Id);
+                    if (target == null || string.IsNullOrWhiteSpace(target.Caption)) return;
+                    InvoiceItem = target;
+                    fallback = target.Caption;
+                    Status = target.Status;
+                    PaymentUrl = target.PaymentUrl;
+                }
+                finally
+                {
+                    Text = fallback;
+                }
+            }
+        }
 
     }
 }

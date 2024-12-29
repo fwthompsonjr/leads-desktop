@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -32,6 +33,8 @@ namespace LegalLead.PublicData.Search
             _ = wbViewer.EnsureCoreWebView2Async().ConfigureAwait(true);
             wbViewer.NavigationStarting += WbViewer_NavigationStarting;
             wbViewer.NavigationCompleted += WbViewer_NavigationCompleted;
+
+            btnPayInvoice.Click += BtnPayInvoice_Click;
         }
 
         private string webContent;
@@ -118,8 +121,9 @@ namespace LegalLead.PublicData.Search
                     return b.InvoiceDate.CompareTo(a.InvoiceDate);
                 });
                 masterData.AddRange(list);
-                var models = list.Select(s => InvoiceHeaderViewModel.ConvertFrom(s));
-                return models.ToList();
+                
+                var models = list.Select(s => InvoiceHeaderViewModel.ConvertFrom(s)).ToList();
+                return models;
             }
         }
 
@@ -157,7 +161,7 @@ namespace LegalLead.PublicData.Search
             public int RecordCount { get; set; }
             public DateTime InvoiceDate { get; set; }
             public string Price { get; set; }
-
+            public string Status { get; set; } = string.Empty;
             public static InvoiceHeaderViewModel ConvertFrom(InvoiceHistoryModel source)
             {
                 if (source == null) return new();
@@ -188,6 +192,12 @@ namespace LegalLead.PublicData.Search
             public string Id { get; internal set; }
         }
 
+        private class InvoiceStatusResponse
+        {
+            public string Id { get; set; } = string.Empty;
+            public string Status { get; set; } = string.Empty;
+        }
+
         private static readonly IRemoteInvoiceHelper invoiceReader = ActionSettingContainer
         .GetContainer
         .GetInstance<IRemoteInvoiceHelper>();
@@ -198,9 +208,10 @@ namespace LegalLead.PublicData.Search
 
 
         private readonly List<InvoiceHeaderViewModel> _vwlist;
-        private static readonly List<InvoiceHistoryModel> masterData = new();
         private static readonly List<GetUsageResponseContent> rawData = new();
+        private static readonly List<InvoiceHistoryModel> masterData = new();
         private static readonly List<InvoiceHtmlModel> htmlData = new();
+        private static readonly List<InvoiceHtmlModel> statusData = new();
         private static readonly Dictionary<string, string> descriptionReplacements = new Dictionary<string, string>()
                 {
                     { "2024/2020", "2024" },

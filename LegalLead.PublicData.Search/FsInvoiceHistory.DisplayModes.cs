@@ -24,21 +24,24 @@ namespace LegalLead.PublicData.Search
             const int columnRecordCount = 3;
             const int columnInvoiceDate = 4;
             const int columnInvoicePrice = 5;
+            const int columnInvoiceStatus = 6;
 
             columns[columnUuid].Visible = false;
 
-            columns[columnCountyName].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            columns[columnCountyName].Resizable = DataGridViewTriState.False;
+            columns[columnTitle].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            columns[columnTitle].Resizable = DataGridViewTriState.False;
 
-            columns[columnTitle].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            columns[columnTitle].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            columns[columnCountyName].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            columns[columnCountyName].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             columns[columnRecordCount].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             columns[columnInvoiceDate].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            
+
             columns[columnInvoicePrice].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
             columns[columnInvoicePrice].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            
+
+            columns[columnInvoiceStatus].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
             for (var i = 1; i < columns.Count; i++)
             {
                 var col = columns[i];
@@ -99,11 +102,12 @@ namespace LegalLead.PublicData.Search
                 dataGridView1,
                 wbViewer
             };
-            controls.ForEach(c => { 
+            controls.ForEach(c =>
+            {
                 var currentId = controls.IndexOf(c);
                 var rowIndex = tableLayoutPanel1.GetRow(c);
                 var style = tableLayoutPanel1.RowStyles[rowIndex];
-                var isVisible = 
+                var isVisible =
                     (currentId == RowDataId && !isInvoicing) ||
                     (currentId == RowViewerId && isInvoicing);
                 if (currentId == RowViewerId) { c.Visible = isVisible; }
@@ -113,7 +117,8 @@ namespace LegalLead.PublicData.Search
 
         private static void SetRowStyle(bool isVisible, int targetIndex, RowStyle style)
         {
-            if (isVisible) { 
+            if (isVisible)
+            {
                 style.SizeType = SizeType.Percent;
                 style.Height = 100;
                 return;

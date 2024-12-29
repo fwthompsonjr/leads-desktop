@@ -15,6 +15,27 @@ namespace LegalLead.PublicData.Search.Helpers
             httpService = http;
         }
 
+
+        public string GetInvoiceStatus(string invoiceData)
+        {
+            var fallback = string.Empty;
+            var payload = invoiceData.ToInstance<InvoiceHeaderModel>();
+            if (payload == null) return fallback;
+            var uri = GetAddress("status");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri)) return fallback;
+            var request = new
+            {
+                CustomerId = GetLeadId(),
+                RequestType = "Invoice",
+                InvoiceId = payload.Id,
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, object>(client, uri, request);
+            if (response == null) return fallback;
+            return response.ToJsonString();
+        }
+
         public string CreateInvoice(string invoiceData)
         {
             var fallback = string.Empty;

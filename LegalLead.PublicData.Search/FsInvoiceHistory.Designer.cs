@@ -44,6 +44,7 @@
             wbViewer = new Microsoft.Web.WebView2.WinForms.WebView2();
             btnViewInvoice = new System.Windows.Forms.Button();
             lbInvoiceName = new System.Windows.Forms.Label();
+            btnPayInvoice = new System.Windows.Forms.Button();
             imageList1 = new System.Windows.Forms.ImageList(components);
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -53,20 +54,22 @@
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 5;
+            tableLayoutPanel1.ColumnCount = 6;
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             tableLayoutPanel1.Controls.Add(btnSubmit, 0, 4);
             tableLayoutPanel1.Controls.Add(lbStatus, 0, 5);
             tableLayoutPanel1.Controls.Add(dataGridView1, 0, 2);
             tableLayoutPanel1.Controls.Add(toolStrip1, 0, 0);
-            tableLayoutPanel1.Controls.Add(lbRecordCount, 3, 4);
+            tableLayoutPanel1.Controls.Add(lbRecordCount, 4, 4);
             tableLayoutPanel1.Controls.Add(wbViewer, 0, 3);
             tableLayoutPanel1.Controls.Add(btnViewInvoice, 1, 4);
-            tableLayoutPanel1.Controls.Add(lbInvoiceName, 2, 4);
+            tableLayoutPanel1.Controls.Add(lbInvoiceName, 3, 4);
+            tableLayoutPanel1.Controls.Add(btnPayInvoice, 2, 4);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -97,7 +100,7 @@
             // lbStatus
             // 
             lbStatus.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan(lbStatus, 5);
+            tableLayoutPanel1.SetColumnSpan(lbStatus, 6);
             lbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             lbStatus.Location = new System.Drawing.Point(10, 384);
             lbStatus.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
@@ -111,7 +114,7 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLayoutPanel1.SetColumnSpan(dataGridView1, 5);
+            tableLayoutPanel1.SetColumnSpan(dataGridView1, 6);
             dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             dataGridView1.Location = new System.Drawing.Point(3, 38);
             dataGridView1.MultiSelect = false;
@@ -125,7 +128,7 @@
             // toolStrip1
             // 
             toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            tableLayoutPanel1.SetColumnSpan(toolStrip1, 5);
+            tableLayoutPanel1.SetColumnSpan(toolStrip1, 6);
             toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tssbFilterCounty, toolStripSeparator1, tssbSort, toolStripSeparator2, tslbDataStatus });
@@ -177,16 +180,16 @@
             lbRecordCount.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lbRecordCount.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(lbRecordCount, 2);
-            lbRecordCount.Location = new System.Drawing.Point(423, 345);
+            lbRecordCount.Location = new System.Drawing.Point(603, 345);
             lbRecordCount.Name = "lbRecordCount";
-            lbRecordCount.Size = new System.Drawing.Size(374, 15);
+            lbRecordCount.Size = new System.Drawing.Size(194, 15);
             lbRecordCount.TabIndex = 47;
             lbRecordCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // wbViewer
             // 
             wbViewer.AllowExternalDrop = true;
-            tableLayoutPanel1.SetColumnSpan(wbViewer, 5);
+            tableLayoutPanel1.SetColumnSpan(wbViewer, 6);
             wbViewer.CreationProperties = null;
             wbViewer.DefaultBackgroundColor = System.Drawing.SystemColors.ControlLight;
             wbViewer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -206,7 +209,7 @@
             btnViewInvoice.Name = "btnViewInvoice";
             btnViewInvoice.Size = new System.Drawing.Size(120, 27);
             btnViewInvoice.TabIndex = 49;
-            btnViewInvoice.Text = "View Invoices";
+            btnViewInvoice.Text = "View Invoice";
             btnViewInvoice.UseVisualStyleBackColor = true;
             btnViewInvoice.Visible = false;
             btnViewInvoice.Click += BtnViewInvoice_Click;
@@ -215,10 +218,23 @@
             // 
             lbInvoiceName.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lbInvoiceName.AutoSize = true;
-            lbInvoiceName.Location = new System.Drawing.Point(283, 345);
+            lbInvoiceName.Location = new System.Drawing.Point(423, 345);
             lbInvoiceName.Name = "lbInvoiceName";
-            lbInvoiceName.Size = new System.Drawing.Size(134, 15);
+            lbInvoiceName.Size = new System.Drawing.Size(174, 15);
             lbInvoiceName.TabIndex = 50;
+            // 
+            // btnPayInvoice
+            // 
+            btnPayInvoice.Dock = System.Windows.Forms.DockStyle.Fill;
+            btnPayInvoice.Enabled = false;
+            btnPayInvoice.Location = new System.Drawing.Point(290, 339);
+            btnPayInvoice.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            btnPayInvoice.Name = "btnPayInvoice";
+            btnPayInvoice.Size = new System.Drawing.Size(120, 27);
+            btnPayInvoice.TabIndex = 51;
+            btnPayInvoice.Text = "Pay Invoice";
+            btnPayInvoice.UseVisualStyleBackColor = true;
+            btnPayInvoice.Visible = false;
             // 
             // imageList1
             // 
@@ -260,5 +276,6 @@
         private Microsoft.Web.WebView2.WinForms.WebView2 wbViewer;
         private System.Windows.Forms.Button btnViewInvoice;
         private System.Windows.Forms.Label lbInvoiceName;
+        private System.Windows.Forms.Button btnPayInvoice;
     }
 }
