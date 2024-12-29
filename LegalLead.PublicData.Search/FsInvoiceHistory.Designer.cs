@@ -56,7 +56,7 @@
             tableLayoutPanel1.ColumnCount = 5;
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             tableLayoutPanel1.Controls.Add(btnSubmit, 0, 4);
@@ -177,9 +177,9 @@
             lbRecordCount.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lbRecordCount.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(lbRecordCount, 2);
-            lbRecordCount.Location = new System.Drawing.Point(483, 345);
+            lbRecordCount.Location = new System.Drawing.Point(423, 345);
             lbRecordCount.Name = "lbRecordCount";
-            lbRecordCount.Size = new System.Drawing.Size(314, 15);
+            lbRecordCount.Size = new System.Drawing.Size(374, 15);
             lbRecordCount.TabIndex = 47;
             lbRecordCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
@@ -217,7 +217,7 @@
             lbInvoiceName.AutoSize = true;
             lbInvoiceName.Location = new System.Drawing.Point(283, 345);
             lbInvoiceName.Name = "lbInvoiceName";
-            lbInvoiceName.Size = new System.Drawing.Size(194, 15);
+            lbInvoiceName.Size = new System.Drawing.Size(134, 15);
             lbInvoiceName.TabIndex = 50;
             // 
             // imageList1
