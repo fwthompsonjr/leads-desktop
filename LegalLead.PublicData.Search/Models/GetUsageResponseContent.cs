@@ -19,5 +19,7 @@ namespace LegalLead.PublicData.Search.Models
         public DateTime? CompleteDate { get; set; }
         public DateTime? CreateDate { get; set; }
         public string ExcelName { get; set; } = string.Empty;
+        public DateTime? FileCompletedDate { get; set; }
+        public bool IsCompleted => FileCompletedDate.HasValue;
     }
 }

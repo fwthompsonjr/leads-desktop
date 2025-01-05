@@ -1,6 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Interfaces
 {
@@ -10,6 +11,7 @@ namespace LegalLead.PublicData.Search.Interfaces
         FindDbResponse Begin(FindDbRequest findDb);
         FindDbResponse Complete(FindDbRequest findDb);
         CompleteUsageRecordResponse CompleteUsage(string recordId, int recordCount, string excelName = "");
+        GetExcelDetailResponse GetExcelDetail(string id);
         GetUsageResponse GetHistory(DateTime searchDate, bool getAllCounties);
         GetMonthlyLimitResponse GetLimits(int countyId, bool getAllCounties);
         GetUsageResponse GetSummary(DateTime searchDate, bool getAllCounties);

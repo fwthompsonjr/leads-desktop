@@ -21,7 +21,7 @@ namespace LegalLead.PublicData.Search.Classes
             return fullName;
         }
 
-        private static string CommonFolder
+        public static string CommonFolder
         {
             get
             {

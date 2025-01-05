@@ -1,6 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,8 +20,15 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void ExcelData_DoWork(object sender, DoWorkEventArgs e)
         {
-            rawData.RemoveAll(x => string.IsNullOrWhiteSpace(x.ExcelName));
+            /* 
+                change filter to fetch invoice status from remote
+                the ExcelName field is always empty
+                we might be able to pass the list of request indexes
+            */
             rawData.RemoveAll(x => x.RecordCount == 0);
+            rawData.RemoveAll(x => string.IsNullOrWhiteSpace(x.ExcelName));
+            rawData.RemoveAll(x => !x.IsCompleted);
+
             var indexes = rawData.Select(s =>
             {
                 var src = _vwlist.Find(x => x.Id == s.Id);
@@ -32,7 +38,8 @@ namespace LegalLead.PublicData.Search
                     LeadUserId = s.LeadUserId,
                     RecordCount = s.RecordCount,
                     ExcelName = s.ExcelName,
-                    Status = src?.Status ?? "UNKNOWN"
+                    Status = src?.Status ?? "UNKNOWN",
+                    IsCompleted = s.IsCompleted
                 };
             }).ToList();
             if (indexes.Count == 0) return;
@@ -103,7 +110,7 @@ namespace LegalLead.PublicData.Search
                 items.ForEach(i =>
                 {
                     if (!statusData.Exists(x => x.Id == i.Id)) statusData.Add(i);
-                }); 
+                });
             }
         }
 

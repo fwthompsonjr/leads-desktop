@@ -183,6 +183,21 @@ namespace LegalLead.PublicData.Search.Helpers
                 ?? fallback;
             return response;
         }
+        public GetExcelDetailResponse GetExcelDetail(string id)
+        {
+            var fallback = new GetExcelDetailResponse();
+            var uri = GetAddress("excel-detail");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri)) return fallback;
+            var request = new
+            {
+                UsageRecordId = id
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, GetExcelDetailResponse>(client, uri, request)
+                ?? fallback;
+            return response;
+        }
 
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
@@ -247,6 +262,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "complete" => $"{uri}{provider.CompleteUrl}",
                 "query" => $"{uri}{provider.QueryUrl}",
                 "upload" => $"{uri}{provider.UploadUrl}",
+                "excel-detail" => $"{uri}{provider.GetExcelDetailUrl}",
                 "holiday" => $"{uri}{provider.HolidayUrl}",
                 "usage-append" => $"{uri}{provider.UsageAppendRecordUrl}",
                 "usage-complete" => $"{uri}{provider.UsageCompleteRecordUrl}",

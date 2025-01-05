@@ -12,6 +12,7 @@
 	"uri": "http://api.legallead.co/",
 	"begin": "db/begin",
 	"complete": "db/complete",
+	"excel-detail": "db/usage-get-excel-file-detail",
 	"query": "db/find",
 	"upload": "db/upload",
 	"holiday": "db/get-holiday-list",
