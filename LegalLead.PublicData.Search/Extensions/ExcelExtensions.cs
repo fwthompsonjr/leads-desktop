@@ -28,6 +28,7 @@ namespace LegalLead.PublicData.Search.Extensions
             }
             worksheet.Cells[rows + 1, 1].Value = LockDataMessage;
             var pword = !string.IsNullOrEmpty(token) ? token : itemId;
+            if (string.IsNullOrEmpty(pword)) return;
             // protect worksheet with password
             worksheet.Protection.SetPassword(pword);
             worksheet.Protection.IsProtected = true;
@@ -97,6 +98,7 @@ namespace LegalLead.PublicData.Search.Extensions
         {
             try
             {
+                if(string.IsNullOrEmpty(itemId)) return false;
                 var js =
                     Convert.ToBase64String(
                     Encoding.UTF8.GetBytes(new ExcelTrackingObject { Id = itemId, IsComplete = isComplete }.ToJsonString()));
