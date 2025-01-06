@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
-
+using Ag = HtmlAgilityPack;
 namespace LegalLead.PublicData.Search
 {
     public partial class FsInvoiceHistory : Form
@@ -45,7 +46,9 @@ namespace LegalLead.PublicData.Search
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    webContent = value;
+                    // restyle html
+                    var html = HtmlUiFormatter.Format(value);
+                    webContent = html;
                 }
                 else
                 {
@@ -165,6 +168,8 @@ namespace LegalLead.PublicData.Search
             public static InvoiceHeaderViewModel ConvertFrom(InvoiceHistoryModel source)
             {
                 if (source == null) return new();
+                var statusTmp = source.Model.InvoiceNbr;
+                var status = statusTmp.Equals("PAID") ? "PAID" : "-";
                 return new()
                 {
                     Id = source.Id,
@@ -173,6 +178,7 @@ namespace LegalLead.PublicData.Search
                     RecordCount = source.RecordCount,
                     InvoiceDate = source.InvoiceDate,
                     Price = source.Price,
+                    Status = status
                 };
             }
 
@@ -196,6 +202,131 @@ namespace LegalLead.PublicData.Search
         {
             public string Id { get; set; } = string.Empty;
             public string Status { get; set; } = string.Empty;
+        }
+
+        private static class HtmlUiFormatter
+        {
+            public static string Format(string html)
+            {
+                if (string.IsNullOrEmpty(html)) return string.Empty;
+                if (html.IndexOf("base-css") < 0) return html;
+                if (html.IndexOf("subcontent-css") < 0) return html;
+                if (html.IndexOf("view-invoice-overrides") > 0) return html;
+                var doc = new Ag.HtmlDocument();
+                doc.LoadHtml(html);
+                var nde = doc.DocumentNode;
+                var head = nde.SelectSingleNode("//head");
+                if (head == null) return html;
+                var newStyle = doc.CreateElement("style");
+                newStyle.Attributes.Append("name", "view-invoice-overrides");
+                newStyle.InnerHtml = GetStyle;
+                head.AppendChild(newStyle);
+                var remove = new[]{
+                    "//link[@name='cover-css']",
+                    "//style[@name='base-css']",
+                    "//style[@name='subcontent-css']"
+                };
+                foreach (var item in remove) { 
+                    var element = nde.SelectSingleNode(item);
+                    if (element == null) continue;
+                    element.ParentNode.RemoveChild(element);
+                }
+                html = doc.DocumentNode.OuterHtml;
+                var bdy = nde.SelectSingleNode("//body/script");
+                if (bdy == null) return html;
+                var lines = new[] {
+                    bdy.InnerHtml,
+                    "",
+                    "\t\t\tdocument.addEventListener('contextmenu', (event) => {",
+                    "\t\t\t  event.preventDefault();",
+                    "\t\t\t});",
+                    ""
+                     };
+                var btext = string.Join("\n", lines);
+                bdy.InnerHtml = btext;
+                return doc.DocumentNode.OuterHtml;
+            }
+            private static string GetStyle
+            {
+                get
+                {
+                    if (!string.IsNullOrEmpty(style)) return style;
+                    var innerText = string.Join(Environment.NewLine, styleblock);
+                    var builder = new StringBuilder();
+                    builder.AppendLine(innerText);
+                    style = builder.ToString();
+                    return style;
+                }
+            }
+            private static string style;
+            private static readonly string[] styleblock = new[]
+            {
+                "header { display: none }",
+            "body,",
+            "div,",
+            "div.cover-container,",
+            "div.main-content,",
+            "main",
+            "{",
+            "background: #fff !important;",
+            "}",
+            "",
+            ".card { ",
+            "background-color: transparent; ",
+            "border-color: transparent; ",
+            "color: #fff; ",
+            "} ",
+            ".card .card-body .card-title { ",
+            "border-bottom: transparent solid 1px; ",
+            "padding-bottom: 5px; ",
+            "} ",
+            ".card .card-footer { ",
+            "border-top: transparent solid 1px; ",
+            "}",
+            "",
+            "ul[name='invoice-line-items'] {",
+            "margin-left: 15px !important;",
+            "}",
+            "",
+            "li.list-group-item,",
+            "li.text-white,",
+            "li.list-group-item.text-white, ",
+            "span[name='invoice'], ",
+            "span[name='invoice-date'], ",
+            "span[name='invoice-description'], ",
+            "span[name='invoice-label'], ",
+            "span[name='invoice-total'] {",
+            "color: #111 !important;",
+            "}",
+            "",
+            "div[name='main-content'] { ",
+            "width: 70%; ",
+            "min-width: 800px; ",
+            "max-width: 1200px; ",
+            "} ",
+            "",
+            "#dv-subcontent-invoice {",
+            "position: absolute;",
+            "top: 25px;",
+            "left: 50px;",
+            "width: 850;",
+            "}",
+            "",
+            "span.text-primary {",
+            "display: inline-block;",
+            "width: 130px;",
+            "padding-left: 2px;",
+            "color: #111;",
+            "}",
+            "",
+            "",
+            "@media screen and (max-width: 500px) { ",
+            ".card { ",
+            "width: 300px; ",
+            "margin-left: 40px; ",
+            "} ",
+            "}",
+            };
         }
 
         private static readonly IRemoteInvoiceHelper invoiceReader = ActionSettingContainer

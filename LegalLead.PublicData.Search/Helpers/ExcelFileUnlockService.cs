@@ -3,7 +3,6 @@ using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -48,14 +47,14 @@ namespace LegalLead.PublicData.Search.Helpers
                 var json = x.ToJsonString();
                 x.IsCorrected = x.FullName.UnlockContent(null, json);
             });
-            
-            var corrections = fileNames.FindAll(x => 
+
+            var corrections = fileNames.FindAll(x =>
                 x.IsCorrected &&
                 !string.IsNullOrEmpty(x.InvoiceId) &&
                 !string.IsNullOrEmpty(x.CustomerId));
 
             if (corrections.Count == 0) return;
-            
+
             corrections.ForEach(c =>
             {
                 var payload = new

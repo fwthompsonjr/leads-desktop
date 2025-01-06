@@ -81,7 +81,7 @@ namespace LegalLead.PublicData.Search
                         RecordCount = m.RecordCount,
                         InvoiceDate = m.InvoiceDate,
                         Price = m.Price,
-                        Html = html
+                        Html = HtmlUiFormatter.Format(html)
                     };
                     if (!string.IsNullOrEmpty(html))
                     {
@@ -179,6 +179,7 @@ namespace LegalLead.PublicData.Search
         /// <param name="e"></param>
         private void StatusData_DoWork(object sender, DoWorkEventArgs e)
         {
+            const StringComparison comparison = StringComparison.OrdinalIgnoreCase;
             var list = new List<InvoiceHistoryModel>();
             var statusList = new List<InvoiceStatusResponse>();
             list.AddRange(masterData);
@@ -187,9 +188,16 @@ namespace LegalLead.PublicData.Search
                 m =>
                 {
                     var js = m.Model.ToJsonString();
-                    var dta = invoiceReader.GetInvoiceStatus(js);
-                    var converted = dta.ToInstance<InvoiceStatusResponse>();
-                    if (converted != null) statusList.Add(converted);
+                    if (m.Model.InvoiceNbr.Equals("PAID", comparison))
+                    {
+                        statusList.Add(new() { Id = m.Id, Status = m.Model.InvoiceNbr });
+                    }
+                    else
+                    {
+                        var dta = invoiceReader.GetInvoiceStatus(js);
+                        var converted = dta.ToInstance<InvoiceStatusResponse>();
+                        if (converted != null) statusList.Add(converted);
+                    }
                 });
             e.Result = statusList;
         }
