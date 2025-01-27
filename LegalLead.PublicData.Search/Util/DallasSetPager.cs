@@ -26,6 +26,7 @@ namespace LegalLead.PublicData.Search.Util
             if (IsNoCount(executor)) return true;
             var helper = new DallasSortByStatusHelper(Driver, executor);
             var casehelper = new DallasSortByCaseTypeHelper(Driver, executor);
+            var rowcounter = new DallasGetRecordCountHelper(Driver, executor, js);
             js = VerifyScript(js);
             if (!WaitForSelector()) return true;
             helper.Execute();
@@ -33,6 +34,7 @@ namespace LegalLead.PublicData.Search.Util
             WaitForTabs(noElementId);
             if (IsNoCount(executor)) return true;
             executor.ExecuteScript(js);
+            rowcounter.Execute();
             return true;
         }
 

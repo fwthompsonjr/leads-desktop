@@ -133,9 +133,9 @@ signin.click();
 ~ get record status
 
 var rc_counter = {
-	"get_row_count_label" : function() {
-	const findClassName = "k-pager-info k-label"
-	var list = document.getElementsByTagName("span");
+	'get_row_count_label' : function() {
+	const findClassName = 'k-pager-info k-label'
+	var list = document.getElementsByTagName('span');
 	var arr = Array.prototype.slice.call( list, 0 );
 	var find = arr.filter(a => { 
 		let attr = a.getAttribute('class'); 
@@ -146,9 +146,9 @@ var rc_counter = {
 	} 
 	return find[0];
 	},
-	"get_records_table" : function() {
-	const findClassName = "kgrid-card-table"
-	var list = document.getElementsByTagName("table");
+	'get_records_table' : function() {
+	const findClassName = 'kgrid-card-table'
+	var list = document.getElementsByTagName('table');
 	var arr = Array.prototype.slice.call( list, 0 );
 	var find = arr.filter(a => { 
 		let attr = a.getAttribute('class'); 
@@ -159,7 +159,7 @@ var rc_counter = {
 	} 
 	return find[0];
 	},
-	"get_record_elements" : function() {
+	'get_record_elements' : function() {
 	let tbl = rc_counter.get_records_table()
 	if ( null == tbl ) { return null; }
 	let rws = tbl.getElementsByTagName('a');
@@ -170,12 +170,12 @@ var rc_counter = {
 		return attr == 'caseLink' });
 	return arrows;
 	},
-	"get_record_count" : function() {
+	'get_record_count' : function() {
 	let items = rc_counter.get_record_elements()
 	if ( null == items ) { return 0; }
 	return items.length;
 	},
-	"get_expected_count" : function() {
+	'get_expected_count' : function() {
 		const spc = ' '
 		let spn = rc_counter.get_row_count_label();
 		if (spn == null) { return 0; }
@@ -189,12 +189,12 @@ var rc_counter = {
 		if (isNaN(nbr)) { return 0 }
 		return nbr
 	},
-	"get_status" : function() {
+	'get_status' : function() {
 		let actual = rc_counter.get_record_count()
 		let expected = rc_counter.get_expected_count();
 		let obj = {
-			"actual": actual,
-			"expected": expected
+			'actual': actual,
+			'expected': expected
 		}
 		return JSON.stringify(obj)
 	}
