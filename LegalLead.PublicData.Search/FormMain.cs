@@ -62,9 +62,7 @@ namespace LegalLead.PublicData.Search
             var rsp = form.DialogResult;
             if (rsp == DialogResult.None)
             {
-                Hide();
                 rsp = form.ShowDialog();
-                Show();
             }
             switch (rsp)
             {

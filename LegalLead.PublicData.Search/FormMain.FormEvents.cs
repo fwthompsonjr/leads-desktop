@@ -92,7 +92,7 @@ namespace LegalLead.PublicData.Search
         private void CustomNoteHandler()
         {
             var messages = CustomCountyDto.GetNotes();
-            var style = tableLayoutPanel1.RowStyles[9];
+            var style = tableLayoutPanel1.RowStyles[RowsIndexes.NotesRowId];
             if (cboWebsite.SelectedItem is not WebNavigationParameter webitem ||
                 !messages.Exists(x => x.Id == webitem.Id))
             {
@@ -270,7 +270,7 @@ namespace LegalLead.PublicData.Search
             cboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
 
-            for (int i = 3; i <= 5; i++)
+            for (int i = RowsIndexes.SearchTypeId; i <= RowsIndexes.CaseTypeAdditionaId; i++)
             {
                 tableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
                 tableLayoutPanel1.RowStyles[i].Height = Zero;

@@ -15,8 +15,8 @@ namespace LegalLead.PublicData.Search
         {
             const int FortyNine = 49;
             const int Zero = 0;
-            const int Three = 3;
-            const int Five = 5;
+            const int Three = RowsIndexes.SearchTypeId;
+            const int Five = RowsIndexes.CaseTypeAdditionaId;
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             var cbo = GetMain.cboSearchType;
             var customBindingNeeded = boxindicies.Contains(source.Id);
