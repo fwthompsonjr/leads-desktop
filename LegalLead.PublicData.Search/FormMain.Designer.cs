@@ -35,6 +35,9 @@
             dteStart = new System.Windows.Forms.DateTimePicker();
             dteEnding = new System.Windows.Forms.DateTimePicker();
             button1 = new System.Windows.Forms.Button();
+            menuStrip1 = new System.Windows.Forms.MenuStrip();
+            toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             tsWebDriver = new System.Windows.Forms.ToolStripDropDownButton();
             tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
@@ -60,6 +63,7 @@
             lbProgressDate = new System.Windows.Forms.Label();
             imageList1 = new System.Windows.Forms.ImageList(components);
             tableLayoutPanel1.SuspendLayout();
+            menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -73,6 +77,7 @@
             tableLayoutPanel1.Controls.Add(dteStart, 2, 2);
             tableLayoutPanel1.Controls.Add(dteEnding, 2, 3);
             tableLayoutPanel1.Controls.Add(button1, 2, 7);
+            tableLayoutPanel1.Controls.Add(menuStrip1, 0, 0);
             tableLayoutPanel1.Controls.Add(statusStrip1, 0, 12);
             tableLayoutPanel1.Controls.Add(cboWebsite, 2, 1);
             tableLayoutPanel1.Controls.Add(txConsole, 0, 8);
@@ -153,6 +158,30 @@
             button1.Text = "Get Data";
             button1.UseVisualStyleBackColor = true;
             button1.Click += Button1_Click;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1 });
+            menuStrip1.Location = new System.Drawing.Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            menuStrip1.Size = new System.Drawing.Size(65, 24);
+            menuStrip1.TabIndex = 18;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { exitToolStripMenuItem });
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
+            toolStripMenuItem1.Text = "File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            exitToolStripMenuItem.Text = "E&xit";
+            exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
             // statusStrip1
             // 
@@ -406,12 +435,15 @@
             ClientSize = new System.Drawing.Size(910, 607);
             Controls.Add(tableLayoutPanel1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4);
             Name = "FormMain";
             Text = "Document Search";
             Load += FormMain_Load;
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             ResumeLayout(false);
@@ -448,6 +480,9 @@
         private System.Windows.Forms.ToolStripStatusLabel tsUserName;
         private System.Windows.Forms.ToolStripSplitButton tsSettingMenuButton;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 
