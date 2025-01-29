@@ -18,24 +18,27 @@ namespace LegalLead.PublicData.Search.Helpers
             string setPagerScript) : base(driver, executor)
         {
             SetMaxRowsScript = setPagerScript;
+            statusResponse.Actual = 0;
+            statusResponse.Expected = 0;
         }
 
         public override void Execute()
         {
+            const int retryCount = 300;
+            const int waitMilliSeconds = 500;
             if (NoCountHelper.IsNoCountData(JsExecutor)) return;
             if (!WaitForSelector()) return;
-            var retries = 300;
-            while (!IsTableDataLoaded())
+            var retries = retryCount;
+            while (retries > 0)
             {
-                if (retries % 5 == 0)
+                if (retries == retryCount || retries % 10 == 0)
                 {
                     JsExecutor.ExecuteScript(SetMaxRowsScript);
+                    Thread.Sleep(waitMilliSeconds*2);
                 }
-                Thread.Sleep(350);
                 GetRecordCount();
+                if (IsTableDataLoaded()) break;
                 retries--;
-                if (retries == 0) break;
-                Thread.Sleep(350);
             }
         }
 
@@ -69,7 +72,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 };
                 wait.Until(w =>
                 {
-                    var collection = w.TryFindElements(By.XPath(_tableDef));
+                    var collection = w.TryFindElement(By.XPath(_tableDef));
                     return collection != null;
                 });
                 return true;
@@ -153,7 +156,7 @@ namespace LegalLead.PublicData.Search.Helpers
             " ",
             "return rc_counter.get_status() ",
         };
-        private readonly RecordStatusResponse statusResponse = new RecordStatusResponse();
+        private readonly RecordStatusResponse statusResponse = new();
 
         private const string _tableDef = "//a[@class = 'caseLink'][@data-caseid]";
         private sealed class RecordStatusResponse
@@ -162,10 +165,10 @@ namespace LegalLead.PublicData.Search.Helpers
             public int Actual { get; set; }
             public bool IsMatched()
             {
-                return Actual.Equals(Expected) && Actual > 0;
+                return Actual.Equals(Expected) && Actual > 0 || Actual > Expected ;
             }
         }
 
-        private static readonly object locker = new object();
+        private static readonly object locker = new();
     }
 }
