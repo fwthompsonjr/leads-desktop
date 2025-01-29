@@ -60,7 +60,12 @@ namespace LegalLead.PublicData.Search
             SetInteraction(false);
             var form = Program.loginForm;
             var rsp = form.DialogResult;
-            if (rsp == DialogResult.None) rsp = form.ShowDialog();
+            if (rsp == DialogResult.None)
+            {
+                Hide();
+                rsp = form.ShowDialog();
+                Show();
+            }
             switch (rsp)
             {
                 case DialogResult.OK:
