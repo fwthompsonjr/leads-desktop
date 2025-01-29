@@ -69,32 +69,33 @@
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(ButtonDentonSetting, 0, 6);
-            tableLayoutPanel1.Controls.Add(dteStart, 2, 1);
-            tableLayoutPanel1.Controls.Add(dteEnding, 2, 2);
-            tableLayoutPanel1.Controls.Add(button1, 2, 6);
-            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 11);
-            tableLayoutPanel1.Controls.Add(cboWebsite, 2, 0);
-            tableLayoutPanel1.Controls.Add(txConsole, 0, 7);
-            tableLayoutPanel1.Controls.Add(cboSearchType, 2, 3);
-            tableLayoutPanel1.Controls.Add(cboCaseType, 2, 4);
-            tableLayoutPanel1.Controls.Add(cboCourts, 2, 5);
-            tableLayoutPanel1.Controls.Add(progressBar1, 2, 8);
-            tableLayoutPanel1.Controls.Add(label1, 0, 0);
-            tableLayoutPanel1.Controls.Add(label2, 0, 1);
-            tableLayoutPanel1.Controls.Add(label3, 0, 2);
-            tableLayoutPanel1.Controls.Add(label4, 0, 3);
-            tableLayoutPanel1.Controls.Add(labelCboCaseType, 0, 4);
-            tableLayoutPanel1.Controls.Add(label6, 0, 5);
-            tableLayoutPanel1.Controls.Add(labelProgress, 0, 8);
-            tableLayoutPanel1.Controls.Add(label5, 0, 9);
-            tableLayoutPanel1.Controls.Add(lbNotes, 1, 9);
-            tableLayoutPanel1.Controls.Add(lbProgressDate, 1, 8);
+            tableLayoutPanel1.Controls.Add(ButtonDentonSetting, 0, 7);
+            tableLayoutPanel1.Controls.Add(dteStart, 2, 2);
+            tableLayoutPanel1.Controls.Add(dteEnding, 2, 3);
+            tableLayoutPanel1.Controls.Add(button1, 2, 7);
+            tableLayoutPanel1.Controls.Add(statusStrip1, 0, 12);
+            tableLayoutPanel1.Controls.Add(cboWebsite, 2, 1);
+            tableLayoutPanel1.Controls.Add(txConsole, 0, 8);
+            tableLayoutPanel1.Controls.Add(cboSearchType, 2, 4);
+            tableLayoutPanel1.Controls.Add(cboCaseType, 2, 5);
+            tableLayoutPanel1.Controls.Add(cboCourts, 2, 6);
+            tableLayoutPanel1.Controls.Add(progressBar1, 2, 9);
+            tableLayoutPanel1.Controls.Add(label1, 0, 1);
+            tableLayoutPanel1.Controls.Add(label2, 0, 2);
+            tableLayoutPanel1.Controls.Add(label3, 0, 3);
+            tableLayoutPanel1.Controls.Add(label4, 0, 4);
+            tableLayoutPanel1.Controls.Add(labelCboCaseType, 0, 5);
+            tableLayoutPanel1.Controls.Add(label6, 0, 6);
+            tableLayoutPanel1.Controls.Add(labelProgress, 0, 9);
+            tableLayoutPanel1.Controls.Add(label5, 0, 10);
+            tableLayoutPanel1.Controls.Add(lbNotes, 1, 10);
+            tableLayoutPanel1.Controls.Add(lbProgressDate, 1, 9);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 12;
+            tableLayoutPanel1.RowCount = 13;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
@@ -114,7 +115,7 @@
             // 
             tableLayoutPanel1.SetColumnSpan(ButtonDentonSetting, 2);
             ButtonDentonSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            ButtonDentonSetting.Location = new System.Drawing.Point(4, 280);
+            ButtonDentonSetting.Location = new System.Drawing.Point(4, 320);
             ButtonDentonSetting.Margin = new System.Windows.Forms.Padding(4);
             ButtonDentonSetting.Name = "ButtonDentonSetting";
             ButtonDentonSetting.Size = new System.Drawing.Size(137, 38);
@@ -126,7 +127,7 @@
             // dteStart
             // 
             dteStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            dteStart.Location = new System.Drawing.Point(149, 55);
+            dteStart.Location = new System.Drawing.Point(149, 95);
             dteStart.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             dteStart.Name = "dteStart";
             dteStart.Size = new System.Drawing.Size(757, 23);
@@ -135,7 +136,7 @@
             // dteEnding
             // 
             dteEnding.Dock = System.Windows.Forms.DockStyle.Fill;
-            dteEnding.Location = new System.Drawing.Point(149, 101);
+            dteEnding.Location = new System.Drawing.Point(149, 141);
             dteEnding.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             dteEnding.Name = "dteEnding";
             dteEnding.Size = new System.Drawing.Size(757, 23);
@@ -144,7 +145,7 @@
             // button1
             // 
             button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            button1.Location = new System.Drawing.Point(149, 280);
+            button1.Location = new System.Drawing.Point(149, 320);
             button1.Margin = new System.Windows.Forms.Padding(4);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(757, 38);
@@ -219,7 +220,7 @@
             cboWebsite.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             cboWebsite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboWebsite.FormattingEnabled = true;
-            cboWebsite.Location = new System.Drawing.Point(149, 9);
+            cboWebsite.Location = new System.Drawing.Point(149, 49);
             cboWebsite.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboWebsite.Name = "cboWebsite";
             cboWebsite.Size = new System.Drawing.Size(757, 24);
@@ -229,12 +230,12 @@
             // 
             tableLayoutPanel1.SetColumnSpan(txConsole, 3);
             txConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            txConsole.Location = new System.Drawing.Point(4, 326);
+            txConsole.Location = new System.Drawing.Point(4, 366);
             txConsole.Margin = new System.Windows.Forms.Padding(4);
             txConsole.Multiline = true;
             txConsole.Name = "txConsole";
             txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            txConsole.Size = new System.Drawing.Size(902, 128);
+            txConsole.Size = new System.Drawing.Size(902, 88);
             txConsole.TabIndex = 8;
             // 
             // cboSearchType
@@ -243,7 +244,7 @@
             cboSearchType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             cboSearchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboSearchType.FormattingEnabled = true;
-            cboSearchType.Location = new System.Drawing.Point(149, 147);
+            cboSearchType.Location = new System.Drawing.Point(149, 187);
             cboSearchType.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboSearchType.Name = "cboSearchType";
             cboSearchType.Size = new System.Drawing.Size(757, 24);
@@ -255,7 +256,7 @@
             cboCaseType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             cboCaseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboCaseType.FormattingEnabled = true;
-            cboCaseType.Location = new System.Drawing.Point(149, 193);
+            cboCaseType.Location = new System.Drawing.Point(149, 233);
             cboCaseType.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboCaseType.Name = "cboCaseType";
             cboCaseType.Size = new System.Drawing.Size(757, 24);
@@ -267,7 +268,7 @@
             cboCourts.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             cboCourts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboCourts.FormattingEnabled = true;
-            cboCourts.Location = new System.Drawing.Point(149, 239);
+            cboCourts.Location = new System.Drawing.Point(149, 279);
             cboCourts.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboCourts.Name = "cboCourts";
             cboCourts.Size = new System.Drawing.Size(757, 24);
@@ -286,7 +287,7 @@
             // 
             label1.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(label1, 2);
-            label1.Location = new System.Drawing.Point(11, 11);
+            label1.Location = new System.Drawing.Point(11, 51);
             label1.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(49, 15);
@@ -297,7 +298,7 @@
             // 
             label2.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(label2, 2);
-            label2.Location = new System.Drawing.Point(11, 57);
+            label2.Location = new System.Drawing.Point(11, 97);
             label2.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(58, 15);
@@ -308,7 +309,7 @@
             // 
             label3.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(label3, 2);
-            label3.Location = new System.Drawing.Point(11, 103);
+            label3.Location = new System.Drawing.Point(11, 143);
             label3.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(54, 15);
@@ -319,7 +320,7 @@
             // 
             label4.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(label4, 2);
-            label4.Location = new System.Drawing.Point(11, 149);
+            label4.Location = new System.Drawing.Point(11, 189);
             label4.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(69, 15);
@@ -330,7 +331,7 @@
             // 
             labelCboCaseType.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(labelCboCaseType, 2);
-            labelCboCaseType.Location = new System.Drawing.Point(11, 195);
+            labelCboCaseType.Location = new System.Drawing.Point(11, 235);
             labelCboCaseType.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
             labelCboCaseType.Name = "labelCboCaseType";
             labelCboCaseType.Size = new System.Drawing.Size(59, 15);
@@ -341,7 +342,7 @@
             // 
             label6.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(label6, 2);
-            label6.Location = new System.Drawing.Point(11, 241);
+            label6.Location = new System.Drawing.Point(11, 281);
             label6.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(59, 15);
