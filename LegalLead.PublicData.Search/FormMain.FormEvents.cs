@@ -2,6 +2,7 @@
 using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
+using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -135,6 +136,15 @@ namespace LegalLead.PublicData.Search
             cboCaseType.Refresh();
             cboCaseType.SelectedIndex = db.Count - 1;
             cboCaseType.Visible = true;
+            var tableStyles = tableLayoutPanel1.RowStyles;
+            for (int i = 4; i < 6; i++)
+            {
+                var style = tableStyles[i];
+                style.Height = 40f;
+                style.SizeType = SizeType.Absolute;
+            }
+            cboSearchType.Visible = false;
+            
         }
 
         private void WebSiteUsageValidation()

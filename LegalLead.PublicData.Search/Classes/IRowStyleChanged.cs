@@ -1,10 +1,12 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Classes
 {
@@ -196,10 +198,11 @@ namespace LegalLead.PublicData.Search.Classes
         public virtual SizeType Size { get; set; } = SizeType.Absolute;
         public virtual float Height { get; set; } = 46f;
         public void ApplyStyle(TableLayoutRowStyleCollection styles, int index) 
-        { 
+        {
             var count = styles.Count - 1;
             if (index < 0 || index > count) { return; }
             var style = styles[index];
+            
             style.SizeType = Size;
             style.Height = Height;
         }
@@ -222,7 +225,7 @@ namespace LegalLead.PublicData.Search.Classes
     }
     internal class HiddenRowStyleDefinition : RowStyleDefinition
     {
-        public override float Height { get; set; } = 40f;
+        public override float Height { get; set; } = 0f;
     }
     internal class LogStatusRowStyleDefinition : RowStyleDefinition
     {
@@ -248,16 +251,60 @@ namespace LegalLead.PublicData.Search.Classes
     internal class DefaultStyleCollection
     {
         private readonly FormMain Context;
+        private readonly TableLayoutPanel Table;
+        private readonly Dictionary<int, List<Control>> ControlIndexes = new();
         public DefaultStyleCollection(FormMain main)
         {
             Context = main;
+            Table = main.tableLayoutPanel1;
+            
+            foreach (var item in Table.Controls)
+            {
+                if (item is not Control control) continue;
+                if (!int.TryParse(Convert.ToString(control.Tag), out var id)) continue;
+                if (!ControlIndexes.ContainsKey(id))
+                {
+                    ControlIndexes[id] = new();
+                }
+                ControlIndexes[id].Add(control);
+            }
         }
         public void Apply()
         {
+            var selected = Context.cboWebsite.SelectedItem as WebNavigationParameter;
+            var selectedId = selected == null ? -1: selected.Id;
+            var common = new Dictionary<int, RowStyleDefinition>();
+            foreach (var item in defaultStyle)
+            {
+                common.Add(item.Key, item.Value);
+            }
+            if (selectedId == 1) {
+                common[RowsIndexes.SearchTypeId] = new HiddenRowStyleDefinition();
+            }
+            if (selectedId == 20)
+            {
+                common[RowsIndexes.CaseTypeId] = new RowStyleDefinition();
+            }
+            if (selectedId == 30)
+            {
+                common[RowsIndexes.SearchTypeId] = new HiddenRowStyleDefinition();
+                common[RowsIndexes.CaseTypeId] = new HiddenRowStyleDefinition();
+                common[RowsIndexes.CaseTypeAdditionaId] = new HiddenRowStyleDefinition(); // not this one
+            }
             var styles = Context.tableLayoutPanel1.RowStyles;
             for (int i = 0; i < styles.Count; i++) {
-                defaultStyle[i].ApplyStyle(styles, i);
+                var styleExecutor = common[i];
+                var style = styleExecutor.Size;
+                var isVisible = !style.Equals(0f);
+                if (ControlIndexes.ContainsKey(i))
+                {
+                    ControlIndexes[i].ForEach(c => {
+                        c.Visible = isVisible;
+                    });
+                }
+                styleExecutor.ApplyStyle(styles, i);
             }
+
         }
         static readonly Dictionary<int, RowStyleDefinition> defaultStyle = new()
         {
@@ -265,7 +312,7 @@ namespace LegalLead.PublicData.Search.Classes
             {RowsIndexes.WebsiteRowId, new RowStyleDefinition() },
             {RowsIndexes.StartDateId, new RowStyleDefinition() },
             {RowsIndexes.EndDateId, new RowStyleDefinition() },
-            {RowsIndexes.SearchTypeId, new HiddenRowStyleDefinition() },
+            {RowsIndexes.SearchTypeId, new RowStyleDefinition() },
             {RowsIndexes.CaseTypeId, new HiddenRowStyleDefinition() },
             {RowsIndexes.CaseTypeAdditionaId, new HiddenRowStyleDefinition() },
             {RowsIndexes.ButtonRowId, new MenuRowStyleDefinition() },

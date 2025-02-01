@@ -93,7 +93,7 @@
             tableLayoutPanel1.Controls.Add(label6, 0, 6);
             tableLayoutPanel1.Controls.Add(labelProgress, 0, 9);
             tableLayoutPanel1.Controls.Add(label5, 0, 10);
-            tableLayoutPanel1.Controls.Add(lbNotes, 1, 10);
+            tableLayoutPanel1.Controls.Add(lbNotes, 2, 10);
             tableLayoutPanel1.Controls.Add(lbProgressDate, 1, 9);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -125,6 +125,7 @@
             ButtonDentonSetting.Name = "ButtonDentonSetting";
             ButtonDentonSetting.Size = new System.Drawing.Size(137, 38);
             ButtonDentonSetting.TabIndex = 14;
+            ButtonDentonSetting.Tag = "7";
             ButtonDentonSetting.Text = "Settings";
             ButtonDentonSetting.UseVisualStyleBackColor = true;
             ButtonDentonSetting.Click += ButtonDentonSetting_Click;
@@ -137,6 +138,7 @@
             dteStart.Name = "dteStart";
             dteStart.Size = new System.Drawing.Size(757, 23);
             dteStart.TabIndex = 2;
+            dteStart.Tag = "2";
             // 
             // dteEnding
             // 
@@ -146,6 +148,7 @@
             dteEnding.Name = "dteEnding";
             dteEnding.Size = new System.Drawing.Size(757, 23);
             dteEnding.TabIndex = 3;
+            dteEnding.Tag = "3";
             // 
             // button1
             // 
@@ -155,6 +158,7 @@
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(757, 38);
             button1.TabIndex = 4;
+            button1.Tag = "7";
             button1.Text = "Get Data";
             button1.UseVisualStyleBackColor = true;
             button1.Click += Button1_Click;
@@ -254,6 +258,7 @@
             cboWebsite.Name = "cboWebsite";
             cboWebsite.Size = new System.Drawing.Size(757, 24);
             cboWebsite.TabIndex = 6;
+            cboWebsite.Tag = "1";
             // 
             // txConsole
             // 
@@ -266,6 +271,7 @@
             txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             txConsole.Size = new System.Drawing.Size(902, 88);
             txConsole.TabIndex = 8;
+            txConsole.Tag = "8";
             // 
             // cboSearchType
             // 
@@ -278,6 +284,7 @@
             cboSearchType.Name = "cboSearchType";
             cboSearchType.Size = new System.Drawing.Size(757, 24);
             cboSearchType.TabIndex = 10;
+            cboSearchType.Tag = "4";
             // 
             // cboCaseType
             // 
@@ -290,6 +297,7 @@
             cboCaseType.Name = "cboCaseType";
             cboCaseType.Size = new System.Drawing.Size(757, 24);
             cboCaseType.TabIndex = 12;
+            cboCaseType.Tag = "5";
             // 
             // cboCourts
             // 
@@ -302,6 +310,7 @@
             cboCourts.Name = "cboCourts";
             cboCourts.Size = new System.Drawing.Size(757, 24);
             cboCourts.TabIndex = 13;
+            cboCourts.Tag = "6";
             // 
             // progressBar1
             // 
@@ -311,6 +320,7 @@
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new System.Drawing.Size(753, 23);
             progressBar1.TabIndex = 16;
+            progressBar1.Tag = "9";
             // 
             // label1
             // 
@@ -321,6 +331,7 @@
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(49, 15);
             label1.TabIndex = 0;
+            label1.Tag = "1";
             label1.Text = "Website";
             // 
             // label2
@@ -332,6 +343,7 @@
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(58, 15);
             label2.TabIndex = 1;
+            label2.Tag = "2";
             label2.Text = "Start Date";
             // 
             // label3
@@ -343,6 +355,7 @@
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(54, 15);
             label3.TabIndex = 7;
+            label3.Tag = "3";
             label3.Text = "End Date";
             // 
             // label4
@@ -354,6 +367,7 @@
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(69, 15);
             label4.TabIndex = 9;
+            label4.Tag = "4";
             label4.Text = "Search Type";
             // 
             // labelCboCaseType
@@ -365,6 +379,7 @@
             labelCboCaseType.Name = "labelCboCaseType";
             labelCboCaseType.Size = new System.Drawing.Size(59, 15);
             labelCboCaseType.TabIndex = 11;
+            labelCboCaseType.Tag = "5";
             labelCboCaseType.Text = "Case Type";
             // 
             // label6
@@ -376,6 +391,7 @@
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(59, 15);
             label6.TabIndex = 11;
+            label6.Tag = "6";
             label6.Text = "Case Type";
             // 
             // labelProgress
@@ -386,6 +402,7 @@
             labelProgress.Name = "labelProgress";
             labelProgress.Size = new System.Drawing.Size(59, 15);
             labelProgress.TabIndex = 15;
+            labelProgress.Tag = "9";
             labelProgress.Text = "Progress:";
             // 
             // label5
@@ -396,6 +413,7 @@
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(59, 15);
             label5.TabIndex = 15;
+            label5.Tag = "10";
             label5.Text = "Notes:";
             // 
             // lbNotes
@@ -404,10 +422,11 @@
             lbNotes.AutoSize = true;
             lbNotes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
             lbNotes.ForeColor = System.Drawing.SystemColors.GrayText;
-            lbNotes.Location = new System.Drawing.Point(68, 523);
+            lbNotes.Location = new System.Drawing.Point(148, 523);
             lbNotes.Name = "lbNotes";
-            lbNotes.Size = new System.Drawing.Size(74, 15);
+            lbNotes.Size = new System.Drawing.Size(759, 15);
             lbNotes.TabIndex = 15;
+            lbNotes.Tag = "10";
             // 
             // lbProgressDate
             // 
@@ -417,6 +436,7 @@
             lbProgressDate.Name = "lbProgressDate";
             lbProgressDate.Size = new System.Drawing.Size(74, 15);
             lbProgressDate.TabIndex = 17;
+            lbProgressDate.Tag = "9";
             // 
             // imageList1
             // 
