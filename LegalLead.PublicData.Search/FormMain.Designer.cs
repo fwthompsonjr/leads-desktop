@@ -179,7 +179,7 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 

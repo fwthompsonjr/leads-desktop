@@ -20,6 +20,8 @@ namespace LegalLead.PublicData.Search
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             var cbo = GetMain.cboSearchType;
             var customBindingNeeded = boxindicies.Contains(source.Id);
+            var defaultDef = new DefaultStyleCollection(GetMain);
+            defaultDef.Apply();
             GetMain.ButtonDentonSetting.Visible = (
                 source.Id == (int)SourceType.DentonCounty |
                 source.Id == (int)SourceType.CollinCounty |
@@ -101,7 +103,7 @@ namespace LegalLead.PublicData.Search
         protected static void ApplyRowStyles(TableLayoutRowStyleCollection styles, int websiteId)
         {
             var styleProviders = RowStyleChangeProvider.RowChangeProviders;
-            styleProviders.ForEach(p => p.ApplyStyles(styles, websiteId));
+            // styleProviders.ForEach(p => p.ApplyStyles(styles, websiteId));
         }
 
         public void MapLabels(TableLayoutRowStyleCollection styles)

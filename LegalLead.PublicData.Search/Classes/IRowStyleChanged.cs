@@ -8,6 +8,7 @@ using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Classes
 {
+
     internal interface IRowStyleChanged
     {
         int WebsiteIndex { get; }
@@ -190,19 +191,89 @@ namespace LegalLead.PublicData.Search.Classes
     }
 
 
+    internal class RowStyleDefinition
+    {
+        public virtual SizeType Size { get; set; } = SizeType.Absolute;
+        public virtual float Height { get; set; } = 46f;
+        public void ApplyStyle(TableLayoutRowStyleCollection styles, int index) 
+        { 
+            var count = styles.Count - 1;
+            if (index < 0 || index > count) { return; }
+            var style = styles[index];
+            style.SizeType = Size;
+            style.Height = Height;
+        }
+    }
+
+    internal class MessageRowStyleDefinition : RowStyleDefinition
+    {
+        public override SizeType Size { get; set; } = SizeType.Percent;
+        public override float Height { get; set; } = 100f;
+    }
+    internal class SpacerRowStyleDefinition : RowStyleDefinition
+    {
+        public override SizeType Size { get; set; } = SizeType.Absolute;
+        public override float Height { get; set; } = 10f;
+    }
+    internal class MenuRowStyleDefinition : RowStyleDefinition
+    {
+        public override SizeType Size { get; set; } = SizeType.Absolute;
+        public override float Height { get; set; } = 40f;
+    }
+    internal class HiddenRowStyleDefinition : RowStyleDefinition
+    {
+        public override float Height { get; set; } = 40f;
+    }
+    internal class LogStatusRowStyleDefinition : RowStyleDefinition
+    {
+        public override SizeType Size { get; set; } = SizeType.Percent;
+        public override float Height { get; set; } = 100f;
+    }
     internal static class RowsIndexes
     {
         public const int TopMenuId = 0;
-        public const int WebsiteRowId = 0;
-        public const int StartDateId = 1;
-        public const int EndDateId = 2;
-        public const int SearchTypeId = 3;
-        public const int CaseTypeId = 4;
-        public const int CaseTypeAdditionaId = 5;
-        public const int ButtonRowId = 6;
-        public const int MessageRowId = 7;
-        public const int ProgressRowId = 8;
-        public const int NotesRowId = 9;
-        public const int ButtomMenuId = 10;
+        public const int WebsiteRowId = 1;
+        public const int StartDateId = 2;
+        public const int EndDateId = 3;
+        public const int SearchTypeId = 4;
+        public const int CaseTypeId = 5;
+        public const int CaseTypeAdditionaId = 6;
+        public const int ButtonRowId = 7;
+        public const int MessageRowId = 8;
+        public const int ProgressRowId = 9;
+        public const int NotesRowId = 10;
+        public const int SpacerRowId = 11;
+        public const int ButtomMenuId = 12;
+    }
+    internal class DefaultStyleCollection
+    {
+        private readonly FormMain Context;
+        public DefaultStyleCollection(FormMain main)
+        {
+            Context = main;
+        }
+        public void Apply()
+        {
+            var styles = Context.tableLayoutPanel1.RowStyles;
+            for (int i = 0; i < styles.Count; i++) {
+                defaultStyle[i].ApplyStyle(styles, i);
+            }
+        }
+        static readonly Dictionary<int, RowStyleDefinition> defaultStyle = new()
+        {
+            {RowsIndexes.TopMenuId, new MenuRowStyleDefinition() },
+            {RowsIndexes.WebsiteRowId, new RowStyleDefinition() },
+            {RowsIndexes.StartDateId, new RowStyleDefinition() },
+            {RowsIndexes.EndDateId, new RowStyleDefinition() },
+            {RowsIndexes.SearchTypeId, new HiddenRowStyleDefinition() },
+            {RowsIndexes.CaseTypeId, new HiddenRowStyleDefinition() },
+            {RowsIndexes.CaseTypeAdditionaId, new HiddenRowStyleDefinition() },
+            {RowsIndexes.ButtonRowId, new MenuRowStyleDefinition() },
+            {RowsIndexes.MessageRowId, new MessageRowStyleDefinition() },
+            {RowsIndexes.ProgressRowId, new HiddenRowStyleDefinition() },
+            {RowsIndexes.NotesRowId, new HiddenRowStyleDefinition() },
+            {RowsIndexes.SpacerRowId, new SpacerRowStyleDefinition() },
+            {RowsIndexes.ButtomMenuId, new MenuRowStyleDefinition() },
+        };
     }
 }
