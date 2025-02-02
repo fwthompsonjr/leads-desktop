@@ -370,6 +370,7 @@ namespace LegalLead.PublicData.Search
             try
             {
                 tsDropFileList.DropDownItems.Clear();
+                menuRecentFiles.DropDownItems.Clear();
                 var list = GetObject<List<SearchResult>>(Tag);
                 list.ForEach(x =>
                 {
@@ -382,14 +383,17 @@ namespace LegalLead.PublicData.Search
                     };
                     button.Click += Button_Click;
                     tsDropFileList.DropDownItems.Add(button);
+                    menuRecentFiles.DropDownItems.Add(button);
                 });
-
                 tsDropFileList.Enabled = list.Count > 0;
                 tsDropFileList.Visible = tsDropFileList.Enabled;
+                menuRecentFiles.Enabled = list.Count > 0;
+                menuRecentFiles.Visible = menuRecentFiles.Enabled;
+                menuFileSeparator.Visible = menuRecentFiles.Visible;
             }
             catch (Exception)
             {
-                ComboBox_DataSourceChanged_Background();
+                if (e == null) ComboBox_DataSourceChanged_Background();
             }
         }
 
@@ -650,25 +654,8 @@ namespace LegalLead.PublicData.Search
         {
             this.Invoke(new Action(() =>
             {
-                // when data source is changed?
-                // remove all items from the tab strip
-                tsDropFileList.DropDownItems.Clear();
-                var list = GetObject<List<SearchResult>>(Tag);
-                list.ForEach(x =>
-                {
-                    var button = new ToolStripMenuItem
-                    {
-                        Visible = true,
-                        Tag = x,
-                        Text = x.Search,
-                        DisplayStyle = ToolStripItemDisplayStyle.Text
-                    };
-                    button.Click += Button_Click;
-                    tsDropFileList.DropDownItems.Add(button);
-                });
-
-                tsDropFileList.Enabled = list.Count > 0;
-                tsDropFileList.Visible = tsDropFileList.Enabled;
+                var args = new EventArgs{};
+                ComboBox_DataSourceChanged(null, args);
             }));
         }
 

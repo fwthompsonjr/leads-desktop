@@ -37,6 +37,8 @@
             button1 = new System.Windows.Forms.Button();
             menuTopMenu = new System.Windows.Forms.MenuStrip();
             mnuFile = new System.Windows.Forms.ToolStripMenuItem();
+            menuRecentFiles = new System.Windows.Forms.ToolStripMenuItem();
+            menuFileSeparator = new System.Windows.Forms.ToolStripSeparator();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mnuSettings = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -178,15 +180,28 @@
             // 
             // mnuFile
             // 
-            mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { exitToolStripMenuItem });
+            mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuRecentFiles, menuFileSeparator, exitToolStripMenuItem });
             mnuFile.Name = "mnuFile";
             mnuFile.Size = new System.Drawing.Size(46, 24);
             mnuFile.Text = "F&ile";
             // 
+            // menuRecentFiles
+            // 
+            menuRecentFiles.Name = "menuRecentFiles";
+            menuRecentFiles.Size = new System.Drawing.Size(137, 26);
+            menuRecentFiles.Text = "Recent";
+            menuRecentFiles.Visible = false;
+            // 
+            // menuFileSeparator
+            // 
+            menuFileSeparator.Name = "menuFileSeparator";
+            menuFileSeparator.Size = new System.Drawing.Size(134, 6);
+            menuFileSeparator.Visible = false;
+            // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(137, 26);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
@@ -240,7 +255,7 @@
             // tsUserName
             // 
             tsUserName.Name = "tsUserName";
-            tsUserName.Size = new System.Drawing.Size(723, 47);
+            tsUserName.Size = new System.Drawing.Size(684, 47);
             tsUserName.Spring = true;
             tsUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             tsUserName.Visible = false;
@@ -513,6 +528,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuFile;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuSettings;
+        private System.Windows.Forms.ToolStripMenuItem menuRecentFiles;
+        private System.Windows.Forms.ToolStripSeparator menuFileSeparator;
     }
 }
 
