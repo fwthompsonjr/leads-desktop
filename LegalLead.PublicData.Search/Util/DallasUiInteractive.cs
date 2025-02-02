@@ -192,18 +192,21 @@ namespace LegalLead.PublicData.Search.Util
             if (ExecutionCancelled) return;
             var count = Items.Count;
             Items.Sort((a, b) => a.FileDate.CompareTo(b.FileDate));
-
-            Items.ForEach(i =>
+            DalllasBulkCaseReader bulk = new DalllasBulkCaseReader
             {
-                var c = Items.IndexOf(i) + 1;
-                EchoIteration(i, c, count);
-                postcommon.ForEach(a =>
+                Driver = driver,
+                Parameters = parameters,
+                Workload = Items,
+                Interactive = this,
+            };
+            var Response = bulk.Execute();
+            if (Response is Dictionary<int, string> collection) {
+                Items.ForEach(i =>
                 {
-                    Populate(a, driver, parameters, i.Href);
-                    var response = ExecuteAction(a);
-                    if (a is DallasFetchCaseStyle _ && response is string cases)
-                    {
-                        var info = GetStyle(cases);
+                    var c = Items.IndexOf(i) + 1;
+                    EchoIteration(i, c, count);
+                    if (collection.ContainsKey(c)) { 
+                        var info = GetStyle(collection[c]);
                         if (info != null)
                         {
                             i.CaseStyle = info.CaseStyle;
@@ -211,9 +214,29 @@ namespace LegalLead.PublicData.Search.Util
                             if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
                             AppendPerson(i);
                         }
+                        else
+                        {
+                            postcommon.ForEach(a =>
+                            {
+                                Populate(a, driver, parameters, i.Href);
+                                var response = ExecuteAction(a);
+                                if (a is DallasFetchCaseStyle _ && response is string cases)
+                                {
+                                    var info = GetStyle(cases);
+                                    if (info != null)
+                                    {
+                                        i.CaseStyle = info.CaseStyle;
+                                        i.Plaintiff = info.Plaintiff;
+                                        if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
+                                        AppendPerson(i);
+                                    }
+                                }
+                            });
+                        }
                     }
                 });
-            });
+            }
+
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             casenumbers.ForEach(i =>
             {
