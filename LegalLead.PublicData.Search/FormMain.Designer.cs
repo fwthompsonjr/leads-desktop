@@ -54,9 +54,9 @@
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
-            label4 = new System.Windows.Forms.Label();
+            lblSearchType = new System.Windows.Forms.Label();
             labelCboCaseType = new System.Windows.Forms.Label();
-            label6 = new System.Windows.Forms.Label();
+            labelCourts = new System.Windows.Forms.Label();
             labelProgress = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             lbNotes = new System.Windows.Forms.Label();
@@ -88,9 +88,9 @@
             tableLayoutPanel1.Controls.Add(label1, 0, 1);
             tableLayoutPanel1.Controls.Add(label2, 0, 2);
             tableLayoutPanel1.Controls.Add(label3, 0, 3);
-            tableLayoutPanel1.Controls.Add(label4, 0, 4);
+            tableLayoutPanel1.Controls.Add(lblSearchType, 0, 4);
             tableLayoutPanel1.Controls.Add(labelCboCaseType, 0, 5);
-            tableLayoutPanel1.Controls.Add(label6, 0, 6);
+            tableLayoutPanel1.Controls.Add(labelCourts, 0, 6);
             tableLayoutPanel1.Controls.Add(labelProgress, 0, 9);
             tableLayoutPanel1.Controls.Add(label5, 0, 10);
             tableLayoutPanel1.Controls.Add(lbNotes, 2, 10);
@@ -358,17 +358,17 @@
             label3.Tag = "3";
             label3.Text = "End Date";
             // 
-            // label4
+            // lblSearchType
             // 
-            label4.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan(label4, 2);
-            label4.Location = new System.Drawing.Point(11, 189);
-            label4.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(69, 15);
-            label4.TabIndex = 9;
-            label4.Tag = "4";
-            label4.Text = "Search Type";
+            lblSearchType.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(lblSearchType, 2);
+            lblSearchType.Location = new System.Drawing.Point(11, 189);
+            lblSearchType.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
+            lblSearchType.Name = "lblSearchType";
+            lblSearchType.Size = new System.Drawing.Size(69, 15);
+            lblSearchType.TabIndex = 9;
+            lblSearchType.Tag = "4";
+            lblSearchType.Text = "Search Type";
             // 
             // labelCboCaseType
             // 
@@ -382,17 +382,17 @@
             labelCboCaseType.Tag = "5";
             labelCboCaseType.Text = "Case Type";
             // 
-            // label6
+            // labelCourts
             // 
-            label6.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan(label6, 2);
-            label6.Location = new System.Drawing.Point(11, 281);
-            label6.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(59, 15);
-            label6.TabIndex = 11;
-            label6.Tag = "6";
-            label6.Text = "Case Type";
+            labelCourts.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(labelCourts, 2);
+            labelCourts.Location = new System.Drawing.Point(11, 281);
+            labelCourts.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
+            labelCourts.Name = "labelCourts";
+            labelCourts.Size = new System.Drawing.Size(59, 15);
+            labelCourts.TabIndex = 11;
+            labelCourts.Tag = "6";
+            labelCourts.Text = "Case Type";
             // 
             // labelProgress
             // 
@@ -480,11 +480,11 @@
         internal LegalLead.PublicData.Search.Classes.ComboBoxEx cboWebsite;
         internal System.Windows.Forms.Label label3;
         public System.Windows.Forms.TextBox txConsole;
-        internal System.Windows.Forms.Label label4;
+        internal System.Windows.Forms.Label lblSearchType;
         internal LegalLead.PublicData.Search.Classes.ComboBoxEx cboSearchType;
         internal System.Windows.Forms.Label labelCboCaseType;
         internal LegalLead.PublicData.Search.Classes.ComboBoxEx cboCaseType;
-        internal System.Windows.Forms.Label label6;
+        internal System.Windows.Forms.Label labelCourts;
         internal LegalLead.PublicData.Search.Classes.ComboBoxEx cboCourts;
         internal System.Windows.Forms.Button ButtonDentonSetting;
         private System.Windows.Forms.Label labelProgress;

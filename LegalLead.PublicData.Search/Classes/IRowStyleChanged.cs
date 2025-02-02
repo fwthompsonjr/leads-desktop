@@ -64,7 +64,7 @@ namespace LegalLead.PublicData.Search.Classes
 
             var changes = new List<LabelSetting>() {
                 new() { Target = main.labelCboCaseType },
-                new() { Target = main.label4 }
+                new() { Target = main.lblSearchType }
                 };
             changes.ForEach(c =>
             {
@@ -106,7 +106,7 @@ namespace LegalLead.PublicData.Search.Classes
             styles[RowsIndexes.CaseTypeId].Height = 50;
             var changes = new List<LabelSetting>() {
                 new() { OldText = "Case Type", ChangedText = "Courts", Target = main.labelCboCaseType },
-                new() { OldText = "Search Type", ChangedText = "Status", Target = main.label4 }
+                new() { OldText = "Search Type", ChangedText = "Status", Target = main.lblSearchType }
                 };
             changes.ForEach(c =>
             {
@@ -114,7 +114,7 @@ namespace LegalLead.PublicData.Search.Classes
                 c.Target.Text = c.ChangedText;
             });
             main.labelCboCaseType.Text = "Courts";
-            main.label4.Text = "Status";
+            main.lblSearchType.Text = "Status";
             // cboSearchType
 
             var ccCaseName = CommonKeyIndexes.HarrisCivilCaseType;
@@ -280,6 +280,12 @@ namespace LegalLead.PublicData.Search.Classes
             }
             if (selectedId == 1) {
                 common[RowsIndexes.SearchTypeId] = new HiddenRowStyleDefinition();
+            }
+            if (selectedId == 10)
+            {
+                common[RowsIndexes.SearchTypeId] = new RowStyleDefinition();
+                common[RowsIndexes.CaseTypeId] = new RowStyleDefinition();
+                common[RowsIndexes.CaseTypeAdditionaId] = new RowStyleDefinition();
             }
             if (selectedId == 20)
             {

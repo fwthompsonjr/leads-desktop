@@ -117,9 +117,29 @@ namespace LegalLead.PublicData.Search
             if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
             var collinId = (int)SourceType.CollinCounty;
             var harrisId = (int)SourceType.HarrisCivil;
+            var tarrantId = (int)SourceType.TarrantCounty;
+            var tableStyles = tableLayoutPanel1.RowStyles;
             if (nav.Id == collinId)
             {
                 CboSearchType_SelectedIndexChanged(this, EventArgs.Empty);
+                return;
+            }
+            if (nav.Id == tarrantId)
+            {
+                cboSearchType.Visible = false;
+                lblSearchType.Visible = false;
+                cboCaseType.Visible = false;
+                labelCboCaseType.Visible = false;
+                labelCourts.Visible = true;
+                cboCourts.Visible = true;
+
+                for (int i = 4; i < 7; i++)
+                {
+                    var height = i == 6 ? 40f : 0f;
+                    var style = tableStyles[i];
+                    style.Height = height;
+                    style.SizeType = SizeType.Absolute;
+                }
                 return;
             }
             if (nav.Id != harrisId) return;
@@ -136,14 +156,15 @@ namespace LegalLead.PublicData.Search
             cboCaseType.Refresh();
             cboCaseType.SelectedIndex = db.Count - 1;
             cboCaseType.Visible = true;
-            var tableStyles = tableLayoutPanel1.RowStyles;
+            cboSearchType.Visible = false;
+            lblSearchType.Visible = false;
             for (int i = 4; i < 6; i++)
             {
+                var height = i == 4 ? 0 : 40f;
                 var style = tableStyles[i];
-                style.Height = 40f;
+                style.Height = height;
                 style.SizeType = SizeType.Absolute;
             }
-            cboSearchType.Visible = false;
             
         }
 
