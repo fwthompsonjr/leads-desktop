@@ -44,7 +44,7 @@ namespace LegalLead.PublicData.Search.Util
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
         private readonly List<ICountySearchAction> ActionItems = new();
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             try
             {
@@ -57,7 +57,12 @@ namespace LegalLead.PublicData.Search.Util
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 var result = new WebFetchResult();
-
+                var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", "Exclude Weekend From Search:", true);
+                var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday }; 
+                if (excludeWeekend)
+                {
+                    dates.RemoveAll(d => weekends.Contains(d.DayOfWeek));
+                }
                 Iterate(driver, parameters, dates, common, postcommon);
                 if (ExecutionCancelled || People.Count == 0) return result;
                 result.PeopleList = People;
@@ -118,7 +123,7 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
-            bool isCaptchaNeeded = true;
+            bool isCaptchaNeeded = true; 
             var exec = (IJavaScriptExecutor)driver;
             var iterator = IterationProvider.GetIterator(
                 CourtType,
@@ -407,5 +412,10 @@ namespace LegalLead.PublicData.Search.Util
         {
             public override string Name => "FALLBACK";
         }
+
+        private static readonly SessionSettingPersistence SettingsWriter =
+            SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionSettingPersistence>();
     }
 }

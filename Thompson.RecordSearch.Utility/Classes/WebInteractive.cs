@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -54,7 +55,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// Performs web scraping activities to fetches data from web source.
         /// </summary>
         /// <returns></returns>
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             var results = new SettingsManager().GetOutput(this);
             var data = WebUtilities.GetCases(this);

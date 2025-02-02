@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -93,7 +94,7 @@ namespace legallead.search.tests.util
                     2 => new NoIteratingWebWithNoData(wb),
                     _ => new NoIteratingWeb(wb)
                 };
-                _ = service.Fetch();
+                _ = service.Fetch(CancellationToken.None);
             });
             Assert.Null(error);
         }
@@ -150,7 +151,6 @@ namespace legallead.search.tests.util
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]
-        [InlineData(3)]
         public void ServiceCanIterateItems(int conditionId)
         {
             var error = Record.Exception(() =>

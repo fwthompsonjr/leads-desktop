@@ -26,13 +26,11 @@ namespace LegalLead.PublicData.Search.Util
             if (IsNoCount(executor)) return true;
             var helper = new DallasSortByStatusHelper(Driver, executor);
             var casehelper = new DallasSortByCaseTypeHelper(Driver, executor);
-            js = VerifyScript(js);
-            if (!WaitForSelector()) return true;
+            var rowcounter = new DallasGetRecordCountHelper(Driver, executor, js);
+            
             helper.Execute();
             casehelper.Execute();
-            WaitForTabs(noElementId);
-            if (IsNoCount(executor)) return true;
-            executor.ExecuteScript(js);
+            rowcounter.Execute();
             return true;
         }
 
