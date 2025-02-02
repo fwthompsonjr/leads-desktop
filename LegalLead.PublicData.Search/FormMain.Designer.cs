@@ -174,7 +174,7 @@
             menuTopMenu.Location = new System.Drawing.Point(0, 0);
             menuTopMenu.Name = "menuTopMenu";
             menuTopMenu.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-            menuTopMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            menuTopMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             menuTopMenu.Size = new System.Drawing.Size(1040, 30);
             menuTopMenu.TabIndex = 18;
             // 
