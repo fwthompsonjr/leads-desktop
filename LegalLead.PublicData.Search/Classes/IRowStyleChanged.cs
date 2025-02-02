@@ -305,7 +305,10 @@ namespace LegalLead.PublicData.Search.Classes
                 if (ControlIndexes.ContainsKey(i))
                 {
                     ControlIndexes[i].ForEach(c => {
-                        c.Visible = isVisible;
+                        if (c is not Button)
+                        {
+                            c.Visible = isVisible;
+                        }
                     });
                 }
                 styleExecutor.ApplyStyle(styles, i);
@@ -314,7 +317,7 @@ namespace LegalLead.PublicData.Search.Classes
         }
         static readonly Dictionary<int, RowStyleDefinition> defaultStyle = new()
         {
-            {RowsIndexes.TopMenuId, new MenuRowStyleDefinition() },
+            {RowsIndexes.TopMenuId, new MenuRowStyleDefinition{ Height = 25f } },
             {RowsIndexes.WebsiteRowId, new RowStyleDefinition() },
             {RowsIndexes.StartDateId, new RowStyleDefinition() },
             {RowsIndexes.EndDateId, new RowStyleDefinition() },

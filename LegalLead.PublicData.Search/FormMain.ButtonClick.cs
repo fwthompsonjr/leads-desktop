@@ -325,7 +325,14 @@ namespace LegalLead.PublicData.Search
                 searchItem.MoveToCommon();
                 GetObject<List<SearchResult>>(Tag).Add(searchItem);
                 ComboBox_DataSourceChanged(null, null);
-
+                var button = ButtonDentonSetting;
+                var txt = $"{button.Text};Open File";
+                Invoke(() =>
+                {
+                    button.Tag = txt;
+                    button.Visible = true;
+                });
+                /*
                 var result = MessageBox.Show(
                     CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView,
                     CommonKeyIndexes.DataExtractSuccess,
@@ -336,6 +343,7 @@ namespace LegalLead.PublicData.Search
                     SetStatus(StatusType.Ready);
                     return;
                 }
+                */
                 TryOpenExcel();
                 SetStatus(StatusType.Ready);
             }

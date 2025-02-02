@@ -541,9 +541,7 @@ namespace LegalLead.PublicData.Search
         {
             var xmlFile = CaseData == null ? string.Empty : CaseData.Result;
             xmlFile = xmlFile.Replace(CommonKeyIndexes.ExtensionXml, CommonKeyIndexes.ExtensionXlsx);
-            var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
-            if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
-            OpenExcel(ref xmlFile);
+            CommonFolderHelper.MoveToCommon(xmlFile);
         }
 
         private static void OpenExcel(ref string xmlFile)
