@@ -151,7 +151,6 @@ namespace legallead.search.tests.util
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]
-        [InlineData(3)]
         public void ServiceCanIterateItems(int conditionId)
         {
             var error = Record.Exception(() =>

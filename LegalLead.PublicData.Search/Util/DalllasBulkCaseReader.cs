@@ -81,7 +81,7 @@ namespace LegalLead.PublicData.Search.Util
             cookieContainer.Add(baseAddress, cookieCollection);
             var policy = Policy<string>
                 .HandleResult(response => response.Equals("error"))
-                .WaitAndRetryAsync(5, retryAttempt => {
+                .WaitAndRetryAsync(3, retryAttempt => {
                     var ms = 300 * Math.Pow(2, retryAttempt);
                     return TimeSpan.FromMilliseconds(ms);
                     });
@@ -95,7 +95,7 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 using var handler = new HttpClientHandler() { CookieContainer = cookieContainer };
-                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMilliseconds(1200) };
+                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMilliseconds(2400) };
                 var result = await client.GetAsync(baseAddress);
                 if (result.IsSuccessStatusCode)
                 {

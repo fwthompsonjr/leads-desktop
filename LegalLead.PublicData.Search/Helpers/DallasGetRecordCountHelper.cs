@@ -165,7 +165,9 @@ namespace LegalLead.PublicData.Search.Helpers
             public int Actual { get; set; }
             public bool IsMatched()
             {
-                return Actual.Equals(Expected) && Actual > 0 || Actual > Expected ;
+                return Actual.Equals(Expected) && Actual > 0 
+                    || Actual > Expected
+                    || Actual.Equals(Expected) && Expected == 0;
             }
         }
 
