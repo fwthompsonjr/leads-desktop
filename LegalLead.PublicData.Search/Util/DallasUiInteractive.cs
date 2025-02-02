@@ -57,7 +57,12 @@ namespace LegalLead.PublicData.Search.Util
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 var result = new WebFetchResult();
-
+                var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", "Exclude Weekend From Search:", true);
+                var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday }; 
+                if (excludeWeekend)
+                {
+                    dates.RemoveAll(d => weekends.Contains(d.DayOfWeek));
+                }
                 Iterate(driver, parameters, dates, common, postcommon);
                 if (ExecutionCancelled || People.Count == 0) return result;
                 result.PeopleList = People;
@@ -118,7 +123,7 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
-            bool isCaptchaNeeded = true;
+            bool isCaptchaNeeded = true; 
             var exec = (IJavaScriptExecutor)driver;
             var iterator = IterationProvider.GetIterator(
                 CourtType,
@@ -192,21 +197,18 @@ namespace LegalLead.PublicData.Search.Util
             if (ExecutionCancelled) return;
             var count = Items.Count;
             Items.Sort((a, b) => a.FileDate.CompareTo(b.FileDate));
-            DalllasBulkCaseReader bulk = new DalllasBulkCaseReader
+
+            Items.ForEach(i =>
             {
-                Driver = driver,
-                Parameters = parameters,
-                Workload = Items,
-                Interactive = this,
-            };
-            var Response = bulk.Execute();
-            if (Response is Dictionary<int, string> collection) {
-                Items.ForEach(i =>
+                var c = Items.IndexOf(i) + 1;
+                EchoIteration(i, c, count);
+                postcommon.ForEach(a =>
                 {
-                    var c = Items.IndexOf(i) + 1;
-                    EchoIteration(i, c, count);
-                    if (collection.ContainsKey(c)) { 
-                        var info = GetStyle(collection[c]);
+                    Populate(a, driver, parameters, i.Href);
+                    var response = ExecuteAction(a);
+                    if (a is DallasFetchCaseStyle _ && response is string cases)
+                    {
+                        var info = GetStyle(cases);
                         if (info != null)
                         {
                             i.CaseStyle = info.CaseStyle;
@@ -214,29 +216,9 @@ namespace LegalLead.PublicData.Search.Util
                             if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
                             AppendPerson(i);
                         }
-                        else
-                        {
-                            postcommon.ForEach(a =>
-                            {
-                                Populate(a, driver, parameters, i.Href);
-                                var response = ExecuteAction(a);
-                                if (a is DallasFetchCaseStyle _ && response is string cases)
-                                {
-                                    var info = GetStyle(cases);
-                                    if (info != null)
-                                    {
-                                        i.CaseStyle = info.CaseStyle;
-                                        i.Plaintiff = info.Plaintiff;
-                                        if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
-                                        AppendPerson(i);
-                                    }
-                                }
-                            });
-                        }
                     }
                 });
-            }
-
+            });
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             casenumbers.ForEach(i =>
             {
@@ -430,5 +412,10 @@ namespace LegalLead.PublicData.Search.Util
         {
             public override string Name => "FALLBACK";
         }
+
+        private static readonly SessionSettingPersistence SettingsWriter =
+            SessionPersistenceContainer
+            .GetContainer
+            .GetInstance<SessionSettingPersistence>();
     }
 }

@@ -72,6 +72,13 @@ namespace LegalLead.PublicData.Search.Helpers
                     Category = "search",
                     Name = "End Date:",
                     Index = 2},
+
+                new(){
+                    Category = "search",
+                    Name = "Exclude Weekend From Search:",
+                    DataType = "Bool",
+                    Value = "true",
+                    Index = 3},
                 new(){
                     Category = "admin",
                     Name = "Open Headless:",
