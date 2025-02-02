@@ -23,7 +23,7 @@ namespace LegalLead.PublicData.Search.Util
             ActionItems.ForEach(a => { a.Interactive = this; });
         }
 
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             const string countyName = "FortBend";
 

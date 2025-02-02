@@ -6,6 +6,7 @@ using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
@@ -260,10 +261,14 @@ namespace LegalLead.PublicData.Search
                 webmgr.ReportProgress = TryShowProgress;
                 webmgr.ReportProgessComplete = TryHideProgress;
                 var interactive = GetDbInteractive(webmgr, siteData.Id);
+                using var tokenSource = new CancellationTokenSource();
+                var token = tokenSource.Token;
+
                 CaseData = await Task.Run(() =>
                 {
-                    return interactive.Fetch();
-                }).ConfigureAwait(true);
+                    if (token.IsCancellationRequested) return new();
+                    return interactive.Fetch(token);
+                }, token).ConfigureAwait(true);
 
                 var nonactors = new List<int> {
                     (int)SourceType.CollinCounty,
@@ -320,7 +325,14 @@ namespace LegalLead.PublicData.Search
                 searchItem.MoveToCommon();
                 GetObject<List<SearchResult>>(Tag).Add(searchItem);
                 ComboBox_DataSourceChanged(null, null);
-
+                var button = ButtonDentonSetting;
+                var txt = $"{button.Text};Open File";
+                Invoke(() =>
+                {
+                    button.Tag = txt;
+                    button.Visible = true;
+                });
+                /*
                 var result = MessageBox.Show(
                     CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView,
                     CommonKeyIndexes.DataExtractSuccess,
@@ -331,6 +343,7 @@ namespace LegalLead.PublicData.Search
                     SetStatus(StatusType.Ready);
                     return;
                 }
+                */
                 TryOpenExcel();
                 SetStatus(StatusType.Ready);
             }

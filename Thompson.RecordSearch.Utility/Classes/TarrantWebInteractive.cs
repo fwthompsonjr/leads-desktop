@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
@@ -44,7 +45,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
         #endregion
 
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             // settings have been retrieved from the constructor
             // get any output file to store data from extract
@@ -57,6 +58,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             var formatDate = CultureInfo.CurrentCulture.DateTimeFormat;
             while (startingDate.CompareTo(endingDate) <= 0)
             {
+                if (token.IsCancellationRequested) break;
                 Console.WriteLine($"Date {startingDate:d}. Reading data.");
                 SetParameterValue(CommonKeyIndexes.StartDate,
                     startingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
@@ -64,7 +66,7 @@ namespace Thompson.RecordSearch.Utility.Classes
                     startingDate.ToString(CommonKeyIndexes.DateTimeShort, formatDate));
                 foreach (var obj in fetchers)
                 {
-
+                    if (token.IsCancellationRequested) break;
                     obj.Fetch(startingDate, out webFetch, out List<PersonAddress> people);
                     peopleList.AddRange(people);
                     webFetch.PeopleList = peopleList;

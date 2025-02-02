@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -164,7 +165,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// from web source.
         /// </summary>
         /// <returns></returns>
-        public abstract WebFetchResult Fetch();
+        public abstract WebFetchResult Fetch(CancellationToken token);
 
         #endregion
 

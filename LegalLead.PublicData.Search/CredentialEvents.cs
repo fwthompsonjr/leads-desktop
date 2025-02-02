@@ -65,7 +65,7 @@ namespace LegalLead.PublicData.Search
         {
             var source = (WebNavigationParameter)cboWebsite.SelectedItem;
             var isCollinCounty = source.Id == 20;
-            var firstRw = 0;
+            var firstRw = 1;
             var lastRw = tableLayoutPanel1.RowStyles.Count - 1;
             var rows = tableLayoutPanel1.RowStyles;
             for (int i = firstRw; i <= lastRw; i++)

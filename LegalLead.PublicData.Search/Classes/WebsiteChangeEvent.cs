@@ -13,13 +13,10 @@ namespace LegalLead.PublicData.Search
         public FormMain GetMain { get; set; }
         public virtual void Change()
         {
-            const int FortyNine = 49;
-            const int Zero = 0;
-            const int Three = 3;
-            const int Five = 5;
             var source = (WebNavigationParameter)GetMain.cboWebsite.SelectedItem;
             var cbo = GetMain.cboSearchType;
             var customBindingNeeded = boxindicies.Contains(source.Id);
+            var defaultDef = new DefaultStyleCollection(GetMain);
             GetMain.ButtonDentonSetting.Visible = (
                 source.Id == (int)SourceType.DentonCounty |
                 source.Id == (int)SourceType.CollinCounty |
@@ -28,25 +25,6 @@ namespace LegalLead.PublicData.Search
             GetMain.cboCaseType.Visible = source.Id == (int)SourceType.CollinCounty;
             GetMain.cboCourts.Visible = source.Id == (int)SourceType.TarrantCounty;
             ToggleComboBoxBinding(cbo, customBindingNeeded, source.Id);
-            var fives = new List<int>
-            {
-                (int)SourceType.CollinCounty,
-                (int)SourceType.TarrantCounty,
-                (int)SourceType.HarrisCivil,
-            };
-            var styles = GetMain.tableLayoutPanel1.RowStyles;
-            for (int i = Three; i <= Five; i++)
-            {
-                styles[i].SizeType = SizeType.Absolute;
-                styles[i].Height = fives.Contains(source.Id) || i == 3 && customBindingNeeded
-                    ? FortyNine : Zero;
-                if (i == Five)
-                {
-                    styles[i].Height = fives.Contains(source.Id)
-                        ? FortyNine :
-                        Zero;
-                }
-            }
             GetMain.tsStatusLabel.Text = string.Empty;
             // when in Denton County write Settings
             if (source.Id == (int)SourceType.DentonCounty)
@@ -62,7 +40,7 @@ namespace LegalLead.PublicData.Search
             {
                 GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.PasswordLabel;
             }
-            ApplyRowStyles(styles, source.Id);
+            defaultDef.Apply();
         }
 
         private void ToggleComboBoxBinding(ComboBoxEx cbo, bool isCustomBindingNeeded, int countyId = 60)
@@ -101,7 +79,7 @@ namespace LegalLead.PublicData.Search
         protected static void ApplyRowStyles(TableLayoutRowStyleCollection styles, int websiteId)
         {
             var styleProviders = RowStyleChangeProvider.RowChangeProviders;
-            styleProviders.ForEach(p => p.ApplyStyles(styles, websiteId));
+            // styleProviders.ForEach(p => p.ApplyStyles(styles, websiteId));
         }
 
         public void MapLabels(TableLayoutRowStyleCollection styles)

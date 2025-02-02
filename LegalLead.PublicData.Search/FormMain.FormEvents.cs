@@ -2,6 +2,7 @@
 using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
+using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -92,7 +93,7 @@ namespace LegalLead.PublicData.Search
         private void CustomNoteHandler()
         {
             var messages = CustomCountyDto.GetNotes();
-            var style = tableLayoutPanel1.RowStyles[9];
+            var style = tableLayoutPanel1.RowStyles[RowsIndexes.NotesRowId];
             if (cboWebsite.SelectedItem is not WebNavigationParameter webitem ||
                 !messages.Exists(x => x.Id == webitem.Id))
             {
@@ -116,9 +117,29 @@ namespace LegalLead.PublicData.Search
             if (cboWebsite.SelectedItem is not WebNavigationParameter nav) return;
             var collinId = (int)SourceType.CollinCounty;
             var harrisId = (int)SourceType.HarrisCivil;
+            var tarrantId = (int)SourceType.TarrantCounty;
+            var tableStyles = tableLayoutPanel1.RowStyles;
             if (nav.Id == collinId)
             {
                 CboSearchType_SelectedIndexChanged(this, EventArgs.Empty);
+                return;
+            }
+            if (nav.Id == tarrantId)
+            {
+                cboSearchType.Visible = false;
+                lblSearchType.Visible = false;
+                cboCaseType.Visible = false;
+                labelCboCaseType.Visible = false;
+                labelCourts.Visible = true;
+                cboCourts.Visible = true;
+
+                for (int i = 4; i < 7; i++)
+                {
+                    var height = i == 6 ? 40f : 0f;
+                    var style = tableStyles[i];
+                    style.Height = height;
+                    style.SizeType = SizeType.Absolute;
+                }
                 return;
             }
             if (nav.Id != harrisId) return;
@@ -135,6 +156,16 @@ namespace LegalLead.PublicData.Search
             cboCaseType.Refresh();
             cboCaseType.SelectedIndex = db.Count - 1;
             cboCaseType.Visible = true;
+            cboSearchType.Visible = false;
+            lblSearchType.Visible = false;
+            for (int i = 4; i < 6; i++)
+            {
+                var height = i == 4 ? 0 : 40f;
+                var style = tableStyles[i];
+                style.Height = height;
+                style.SizeType = SizeType.Absolute;
+            }
+            
         }
 
         private void WebSiteUsageValidation()
@@ -270,7 +301,7 @@ namespace LegalLead.PublicData.Search
             cboCaseType.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboCaseType.ValueMember = CommonKeyIndexes.IdProperCase;
 
-            for (int i = 3; i <= 5; i++)
+            for (int i = RowsIndexes.SearchTypeId; i <= RowsIndexes.CaseTypeAdditionaId; i++)
             {
                 tableLayoutPanel1.RowStyles[i].SizeType = SizeType.Absolute;
                 tableLayoutPanel1.RowStyles[i].Height = Zero;
@@ -294,7 +325,22 @@ namespace LegalLead.PublicData.Search
 #if DEBUG
             DebugFormLoad();
 #endif
+            SetupTopMenu();
             SetUpTimer();
+        }
+
+        private void SetupTopMenu()
+        {
+            var dropDownItem = tsSettingMenuButton.DropDownItems;
+            var settingsMenu = mnuSettings;
+            for (var i = 0; i < dropDownItem.Count; i++)
+            {
+                var source = dropDownItem[i];
+                if (source.Tag is not SettingMenuModel item) continue;
+                var child = new ToolStripMenuItem { Tag = item, Text = item.Name };
+                child.Click += Child_Click;
+                settingsMenu.DropDownItems.Add(child);
+            }
         }
 
         private void Child_Click(object sender, EventArgs e)
@@ -324,6 +370,7 @@ namespace LegalLead.PublicData.Search
             try
             {
                 tsDropFileList.DropDownItems.Clear();
+                menuRecentFiles.DropDownItems.Clear();
                 var list = GetObject<List<SearchResult>>(Tag);
                 list.ForEach(x =>
                 {
@@ -336,14 +383,17 @@ namespace LegalLead.PublicData.Search
                     };
                     button.Click += Button_Click;
                     tsDropFileList.DropDownItems.Add(button);
+                    menuRecentFiles.DropDownItems.Add(button);
                 });
-
                 tsDropFileList.Enabled = list.Count > 0;
                 tsDropFileList.Visible = tsDropFileList.Enabled;
+                menuRecentFiles.Enabled = list.Count > 0;
+                menuRecentFiles.Visible = menuRecentFiles.Enabled;
+                menuFileSeparator.Visible = menuRecentFiles.Visible;
             }
             catch (Exception)
             {
-                ComboBox_DataSourceChanged_Background();
+                if (e == null) ComboBox_DataSourceChanged_Background();
             }
         }
 
@@ -491,9 +541,7 @@ namespace LegalLead.PublicData.Search
         {
             var xmlFile = CaseData == null ? string.Empty : CaseData.Result;
             xmlFile = xmlFile.Replace(CommonKeyIndexes.ExtensionXml, CommonKeyIndexes.ExtensionXlsx);
-            var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
-            if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
-            OpenExcel(ref xmlFile);
+            CommonFolderHelper.MoveToCommon(xmlFile);
         }
 
         private static void OpenExcel(ref string xmlFile)
@@ -604,25 +652,8 @@ namespace LegalLead.PublicData.Search
         {
             this.Invoke(new Action(() =>
             {
-                // when data source is changed?
-                // remove all items from the tab strip
-                tsDropFileList.DropDownItems.Clear();
-                var list = GetObject<List<SearchResult>>(Tag);
-                list.ForEach(x =>
-                {
-                    var button = new ToolStripMenuItem
-                    {
-                        Visible = true,
-                        Tag = x,
-                        Text = x.Search,
-                        DisplayStyle = ToolStripItemDisplayStyle.Text
-                    };
-                    button.Click += Button_Click;
-                    tsDropFileList.DropDownItems.Add(button);
-                });
-
-                tsDropFileList.Enabled = list.Count > 0;
-                tsDropFileList.Visible = tsDropFileList.Enabled;
+                var args = new EventArgs{};
+                ComboBox_DataSourceChanged(null, args);
             }));
         }
 

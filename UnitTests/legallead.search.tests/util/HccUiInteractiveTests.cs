@@ -2,6 +2,7 @@ using Bogus;
 using LegalLead.PublicData.Search.Util;
 using Moq;
 using System.Collections.Generic;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -40,7 +41,7 @@ namespace legallead.search.tests.util
             var error = Record.Exception(() =>
             {
                 var svc = new MockHccUiInteractive(parameter, allowDownload, isTest, useMockData);
-                _ = svc.Fetch();
+                _ = svc.Fetch(CancellationToken.None);
             });
             Assert.Null(error);
         }

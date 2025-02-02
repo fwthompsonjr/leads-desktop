@@ -1,17 +1,26 @@
-# Release | 2.8.9.0 - Add billing to record search
+# Release | 2.8.10.0 - Dallas county max record search revision
 
 ## Problem Statement:
-Objective - Enable billing for record searches
+As a user,  
+I want to retrieve all available records for a given court  
+So that I have the most complete set of records for marketing
 
-As an application
-I want to create an invoice for records searched
-So that I can monetize user activities.
+### New Behaviors:
+1. *Dallas County*: Alter method to set max rows
+1. *Dallas County*: Add method to wait for table populated before fetching case detail
+1. *Dallas County*: Add setting to exclude weekends from search
+1. *Dallas County*: Add retry logic with pause when fetching address details
+1. *Interface*: Added top level menu navigation
+1. *Interface*: Removed pop-up window when search completes
+1. *Interface*: Added Button to Open Excel after search completes
 
 ### Component Checks:
-1. Create invoice on search completed
-2. Create $0.01 PAID invoice for administrators
-3. Apply sales tax to search when applicable
-4. Allow user a method to pay for invoice with credit card
-5. Allow user to view all invoices in system
-6. Lock downloaded content until invoice is paid
-7. Compatibility Test search behavior Dallas Justice
+1. Test search dallas county - county courts - single date
+1. Test search dallas county - county courts - multiple dates
+1. Test search dallas county - county courts - include weekends
+1. Test search dallas county - district courts - single date
+1. Test search dallas county - district courts - multiple dates
+1. Test search dallas county - district courts - include weekends
+1. Test search dallas county - justice courts - single date
+1. Test search dallas county - justice courts - multiple dates
+1. Test search dallas county - justice courts - include weekends

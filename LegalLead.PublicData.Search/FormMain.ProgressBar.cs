@@ -1,3 +1,4 @@
+using LegalLead.PublicData.Search.Classes;
 using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
@@ -46,7 +47,7 @@ namespace LegalLead.PublicData.Search
             if (!string.IsNullOrEmpty(lbProgressDate.Text)) return;
             progressBar1.Visible = false;
             labelProgress.Visible = false;
-            tableLayoutPanel1.RowStyles[8].Height = 0;
+            tableLayoutPanel1.RowStyles[RowsIndexes.ProgressRowId].Height = 0;
         }
 
         private void ShowProgress(int min, int max, int current, string dateIndication = "")
@@ -64,7 +65,7 @@ namespace LegalLead.PublicData.Search
             }
             if (!string.IsNullOrEmpty(dateIndication)) lbProgressDate.Text = dateIndication;
             ControlExtensions.Suspend(progressBar1);
-            tableLayoutPanel1.RowStyles[8].Height = 40;
+            tableLayoutPanel1.RowStyles[RowsIndexes.ProgressRowId].Height = 40;
             progressBar1.Visible = false;
             progressBar1.Minimum = min;
             progressBar1.Maximum = max;

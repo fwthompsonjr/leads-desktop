@@ -44,7 +44,7 @@ namespace LegalLead.PublicData.Search.Util
         protected string CourtType { get; set; }
         private bool IsDateRangeComplete = false;
         private readonly List<ICountySearchAction> ActionItems = new();
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             using var hider = new HideProcessWindowHelper();
             var postsearchtypes = new List<Type> { typeof(BexarFetchFilingDetail) };

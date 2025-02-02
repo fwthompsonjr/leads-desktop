@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Interfaces;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -45,7 +46,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         /// Fetches this instance.
         /// </summary>
         /// <returns></returns>
-        WebFetchResult Fetch();
+        WebFetchResult Fetch(CancellationToken token);
 
         /// <summary>
         /// Reads from file.

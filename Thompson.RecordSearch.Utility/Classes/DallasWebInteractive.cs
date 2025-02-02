@@ -1,4 +1,5 @@
-﻿using Thompson.RecordSearch.Utility.Models;
+﻿using System.Threading;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace Thompson.RecordSearch.Utility.Classes
 {
@@ -9,7 +10,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             Parameters = parameters;
         }
 
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             return new WebFetchResult();
         }

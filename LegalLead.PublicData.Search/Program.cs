@@ -15,7 +15,7 @@ namespace LegalLead.PublicData.Search
 {
     static class Program
     {
-        static FormMain mainForm;
+        internal static FormMain mainForm;
         static internal FormLogin loginForm;
         private static List<WebNavigationKey> _dentonKeys;
         public static List<WebNavigationKey> DentonCustomKeys

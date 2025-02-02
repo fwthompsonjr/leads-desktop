@@ -4,9 +4,11 @@ using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
@@ -23,6 +25,7 @@ namespace LegalLead.PublicData.Search
         #region Private Members
 
         private readonly string SubmitButtonText;
+        ToolTip toolTip1 = new ToolTip();
 
         #endregion
 
@@ -60,12 +63,16 @@ namespace LegalLead.PublicData.Search
             SetInteraction(false);
             var form = Program.loginForm;
             var rsp = form.DialogResult;
-            if (rsp == DialogResult.None) rsp = form.ShowDialog();
+            if (rsp == DialogResult.None)
+            {
+                rsp = form.ShowDialog();
+            }
             switch (rsp)
             {
                 case DialogResult.OK:
                 case DialogResult.Yes:
                     Debug.WriteLine("Login success");
+                    ButtonDentonSetting.VisibleChanged += ButtonDentonSetting_VisibleChanged;
                     FilterWebSiteByAccount();
                     SetInteraction(true);
                     UsageReader.WriteUserRecord();
@@ -76,6 +83,30 @@ namespace LegalLead.PublicData.Search
                     Close();
                     break;
             }
+        }
+
+        private void ButtonDentonSetting_VisibleChanged(object sender, EventArgs e)
+        {
+            char semicolon = ';';
+            var button = ButtonDentonSetting;
+            if (button.Tag is not string captions) { return; }
+            if (!captions.Contains(semicolon)) return;
+            var labels = captions.Split(semicolon);
+            var text = button.Visible ? labels[^1] : labels[0];
+            button.Text = text;
+            toolTip1.RemoveAll();
+            if (!button.Visible) return;
+            toolTip1 = new ToolTip
+            {
+                IsBalloon = true,
+                AutoPopDelay = 0,
+                InitialDelay = 0,
+                ReshowDelay = 0,
+                ShowAlways = true
+            };
+            toolTip1.SetToolTip(button, CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView);
+            var task = SoftBlinkAsync(button, Color.Green, Color.Red, 2000, false);
+            _ = task.Wait(100);
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -104,6 +135,15 @@ namespace LegalLead.PublicData.Search
 
         private void ButtonDentonSetting_Click(object sender, EventArgs e)
         {
+            var button = ButtonDentonSetting;
+            var items = menuRecentFiles.DropDownItems;
+            if (button.Tag != null && items.Count >0) {
+                items[0].PerformClick();
+                toolTip1.RemoveAll();
+                button.Visible = false;
+                button.Tag = null;
+                return;
+            }
 
             var sourceId = ((WebNavigationParameter)cboWebsite.SelectedItem).Id;
             switch (sourceId)
@@ -369,5 +409,43 @@ namespace LegalLead.PublicData.Search
         }
 
         #endregion
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+
+        private async Task SoftBlinkAsync(Control ctrl, Color c1, Color c2, short CycleTime_ms, bool BkClr)
+        {
+            await Invoke(async () =>
+            {
+                var sw = new Stopwatch(); sw.Start();
+                short halfCycle = (short)Math.Round(CycleTime_ms * 0.5);
+                var mxBlink = TimeSpan.FromSeconds(30).TotalMilliseconds;
+                var originalBackColor = ctrl.BackColor;
+                var originalForeColor = ctrl.ForeColor;
+                var originalText = ctrl.Text;
+
+                while (sw.ElapsedMilliseconds < mxBlink)
+                {
+                    await Task.Delay(1);
+                    var n = sw.ElapsedMilliseconds % CycleTime_ms;
+                    var per = (double)Math.Abs(n - halfCycle) / halfCycle;
+                    var red = (short)Math.Round((c2.R - c1.R) * per) + c1.R;
+                    var grn = (short)Math.Round((c2.G - c1.G) * per) + c1.G;
+                    var blw = (short)Math.Round((c2.B - c1.B) * per) + c1.B;
+                    var clr = Color.FromArgb(red, grn, blw);
+                    if (BkClr) ctrl.BackColor = clr; else ctrl.ForeColor = clr;
+                    if (!originalText.Equals(ctrl.Text) || !ctrl.Visible)
+                    {
+                        toolTip1.RemoveAll();
+                        break;
+                    }
+                }
+                ctrl.BackColor = originalBackColor;
+                ctrl.ForeColor = originalForeColor;
+            });
+        }
     }
 }

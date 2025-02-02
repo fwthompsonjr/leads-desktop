@@ -25,7 +25,7 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             if (NoCountHelper.IsNoCountData(JsExecutor)) return;
             if (!WaitForSelector()) return;
-            var retries = 5;
+            var retries = 60;
             while (!IsSorted())
             {
                 Sort();
