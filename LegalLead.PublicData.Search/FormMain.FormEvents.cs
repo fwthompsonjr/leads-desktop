@@ -325,7 +325,22 @@ namespace LegalLead.PublicData.Search
 #if DEBUG
             DebugFormLoad();
 #endif
+            SetupTopMenu();
             SetUpTimer();
+        }
+
+        private void SetupTopMenu()
+        {
+            var dropDownItem = tsSettingMenuButton.DropDownItems;
+            var settingsMenu = mnuSettings;
+            for (var i = 0; i < dropDownItem.Count; i++)
+            {
+                var source = dropDownItem[i];
+                if (source.Tag is not SettingMenuModel item) continue;
+                var child = new ToolStripMenuItem { Tag = item, Text = item.Name };
+                child.Click += Child_Click;
+                settingsMenu.DropDownItems.Add(child);
+            }
         }
 
         private void Child_Click(object sender, EventArgs e)
