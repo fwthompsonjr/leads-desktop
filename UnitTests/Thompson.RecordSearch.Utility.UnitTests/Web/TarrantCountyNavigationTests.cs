@@ -128,7 +128,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 DateTime.Now.Date.AddDays(-4),
                 DateTime.Now.Date.AddDays(-4));
             var interactive = new TarrantWebInteractive(webParameter);
-            var result = interactive.Fetch();
+            var result = interactive.Fetch(CancellationToken.None);
             Console.WriteLine(DataFileFoundMessage, result.Result);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
@@ -150,7 +150,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 DateTime.Now.Date.AddDays(0),
                 DateTime.Now.Date.AddDays(0));
             var interactive = new TarrantWebInteractive(webParameter);
-            var result = interactive.Fetch();
+            var result = interactive.Fetch(CancellationToken.None);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
 

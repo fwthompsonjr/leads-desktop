@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
@@ -60,7 +61,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 startDate,
                 endDate);
             var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
-            var result = interactive.Fetch();
+            var result = interactive.Fetch(CancellationToken.None);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
         }
@@ -86,7 +87,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 endDate);
             webParameter = CreateOrLoadWebParameter(webParameter, appFile);
             var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
-            var result = interactive.Fetch();
+            var result = interactive.Fetch(CancellationToken.None);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
         }
@@ -113,7 +114,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 endDate);
             webParameter = CreateOrLoadWebParameter(webParameter, appFile);
             var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
-            var result = interactive.Fetch();
+            var result = interactive.Fetch(CancellationToken.None);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
         }
@@ -140,7 +141,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 endDate);
             webParameter = CreateOrLoadWebParameter(webParameter, appFile);
             var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
-            var result = interactive.Fetch();
+            var result = interactive.Fetch(CancellationToken.None);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
         }
@@ -167,7 +168,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 endDate);
             webParameter = CreateOrLoadWebParameter(webParameter, appFile);
             var interactive = new CollinWebInteractive(webParameter, startDate, endDate);
-            var result = interactive.Fetch();
+            var result = interactive.Fetch(CancellationToken.None);
             Assert.IsNotNull(result);
             ExcelWriter.WriteToExcel(result);
         }
