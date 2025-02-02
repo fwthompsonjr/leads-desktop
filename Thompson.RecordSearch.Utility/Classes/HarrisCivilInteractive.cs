@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Addressing;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
@@ -36,7 +37,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             "Sonar Qube",
             "S1854:Remove unneeded variable assignment",
             Justification = "False positive extension method is returning changed value")]
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             // settings have been retrieved from the constructor
             // get any output file to store data from extract
@@ -48,6 +49,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             WebFetchResult webFetch = null;
             while (startingDate.CompareTo(endingDate) <= 0)
             {
+                if (token.IsCancellationRequested) break;
                 var mssg = $"Date {startingDate:d}. Fetching data";
                 Console.WriteLine(mssg);
 

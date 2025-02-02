@@ -315,13 +315,17 @@ namespace LegalLead.PublicData.Search
             cboCourts.SelectedIndex = Zero;
             var menuOptions = SessionUtil.GetMenuOptions;
             var dropDownItem = tsSettingMenuButton.DropDownItems;
+            var settingsItems = menuSettings.DropDownItems;
+            settingsItems.Clear();
             dropDownItem.Clear();
             menuOptions.ForEach(item =>
             {
                 var child = new ToolStripMenuItem { Tag = item, Text = item.Name };
                 child.Click += Child_Click;
                 dropDownItem.Add(child);
+                settingsItems.Add(child);
             });
+            menuSettings.Visible = true;
 #if DEBUG
             DebugFormLoad();
 #endif

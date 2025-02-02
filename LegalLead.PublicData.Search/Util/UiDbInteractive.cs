@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -89,7 +90,7 @@ namespace LegalLead.PublicData.Search.Util
 
         #region Public Methods
 
-        public WebFetchResult Fetch()
+        public WebFetchResult Fetch(CancellationToken token)
         {
             var uploadNeeded = true;
             var result = new WebFetchResult
@@ -107,14 +108,14 @@ namespace LegalLead.PublicData.Search.Util
                 if (UseDataBaseInteration())
                 {
                     uploadNeeded = false;
-                    IterateDateRange(result);
+                    IterateDateRange(result, token);
                     var filter = new PeopleFilterService(result);
                     result = filter.Filter();
                     GenerateExcelFile(result, startDt, endingDt);
                     return result;
                 }
 
-                result = _web.Fetch();
+                result = _web.Fetch(token);
                 result.WebsiteId = DataSearchParameters.CountyId;
                 var filter1 = new PeopleFilterService(result);
                 result = filter1.Filter();
@@ -161,7 +162,7 @@ namespace LegalLead.PublicData.Search.Util
             result.CaseList = JsonConvert.SerializeObject(result.PeopleList);
         }
 
-        private void IterateDateRange(WebFetchResult result)
+        private void IterateDateRange(WebFetchResult result, CancellationToken token)
         {
             var includeWeekends = result.WebsiteId == (int)SourceType.DallasCounty;
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, includeWeekends);
@@ -169,12 +170,13 @@ namespace LegalLead.PublicData.Search.Util
             var maximumDt = dates.Count;
             dates.ForEach(d =>
             {
+                if (token.IsCancellationRequested) return;
                 var notification = $"{d:d}";
                 this.EchoProgess(0, maximumDt, currentDt++, message: $"Processing date: {d:d}", calcPercentage: false, dateNotification: notification);
                 DataSearchParameters.SearchDate = d.Date;
                 if (!ReadResultFromDataBase(result, DataSearchParameters))
                 {
-                    ReadResultFromWebSite(d, result);
+                    ReadResultFromWebSite(d, result, token);
                 }
             });
             this.EchoProgess(0, 0, 0, dateNotification: "hide");
@@ -195,13 +197,13 @@ namespace LegalLead.PublicData.Search.Util
             return true;
         }
 
-        private void ReadResultFromWebSite(DateTime d, WebFetchResult result)
+        private void ReadResultFromWebSite(DateTime d, WebFetchResult result, CancellationToken token)
         {
             _web.StartDate = d;
             _web.EndingDate = d;
             ParameterHelper.AddOrUpdate(ParameterName.StartDate, d, _web.Parameters);
             ParameterHelper.AddOrUpdate(ParameterName.EndDate, d, _web.Parameters);
-            var tmp = _web.Fetch();
+            var tmp = _web.Fetch(token);
             tmp.PeopleList?.RemoveAll(IsEmpty);
             if (tmp.PeopleList != null && tmp.PeopleList.Count > 0)
             {

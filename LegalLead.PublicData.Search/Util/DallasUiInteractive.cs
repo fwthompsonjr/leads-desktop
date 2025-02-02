@@ -44,7 +44,7 @@ namespace LegalLead.PublicData.Search.Util
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
         private readonly List<ICountySearchAction> ActionItems = new();
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             try
             {

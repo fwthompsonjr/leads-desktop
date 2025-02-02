@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -81,7 +82,7 @@ namespace legallead.search.tests.util
                 Items.AddRange(itemFaker.Generate(count));
             }
 
-            public override WebFetchResult Fetch()
+            public override WebFetchResult Fetch(CancellationToken token)
             {
                 throw new NotImplementedException();
             }

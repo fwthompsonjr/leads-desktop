@@ -34,7 +34,7 @@ namespace Thompson.RecordSearch.Utility.Classes
         {
         }
 
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             // settings have been retrieved from the constructor
             // get any output file to store data from extract
@@ -45,7 +45,7 @@ namespace Thompson.RecordSearch.Utility.Classes
             WebFetchResult webFetch = null;
             while (startingDate.CompareTo(endingDate) <= 0)
             {
-
+                if (token.IsCancellationRequested) break;
                 var results = new SettingsManager().GetOutput(this);
 
                 // need to open the navigation file(s)

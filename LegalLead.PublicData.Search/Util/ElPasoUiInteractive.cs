@@ -23,7 +23,7 @@ namespace LegalLead.PublicData.Search.Util
             ActionItems.AddRange(collection);
         }
 
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             const string countyName = "ElPaso";
             try

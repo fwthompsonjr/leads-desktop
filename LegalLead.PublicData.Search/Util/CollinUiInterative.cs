@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
 using System;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -22,12 +23,12 @@ namespace LegalLead.PublicData.Search.Util
 
         }
         private readonly IWebInteractive webmgr;
-        public override WebFetchResult Fetch()
+        public override WebFetchResult Fetch(CancellationToken token)
         {
             webmgr.ReportProgress = ReportProgress;
             webmgr.ReportProgessComplete = ReportProgessComplete;
             webmgr.DriverReadHeadless = DriverReadHeadless;
-            var result = webmgr.Fetch();
+            var result = webmgr.Fetch(token);
             webmgr.ReportProgessComplete?.Invoke();
             return result;
         }
