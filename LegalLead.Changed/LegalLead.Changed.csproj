@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{0A9E83C4-AA86-4F7D-8BAF-FCB8F174D190}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <AssemblyTitle>LegalLead.Changed</AssemblyTitle>

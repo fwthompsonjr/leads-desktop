@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{FDC972D5-85CC-418C-A08B-D2BD940D9A35}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <AssemblyTitle>LegalLead.PublicData.Search</AssemblyTitle>
