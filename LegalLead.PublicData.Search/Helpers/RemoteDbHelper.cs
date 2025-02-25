@@ -2,6 +2,7 @@ using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -182,6 +183,14 @@ namespace LegalLead.PublicData.Search.Helpers
             var response = httpService.PostAsJson<GetUsageRequest, GetUsageResponse>(client, uri, request)
                 ?? fallback;
             return response;
+        }
+
+        public void PostFileDetail(SearchContext context)
+        {
+            Debug.WriteLine("Search context submission with id: {0}", context.Id);
+            Debug.WriteLine("Search context submission with file: {0}", context.LocalFileName);
+            Debug.WriteLine("Search context submission with format: {0}", context.FileFormat);
+            Debug.WriteLine("Search context submission with status: {0}", context.FileStatus);
         }
 
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)

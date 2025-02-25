@@ -58,6 +58,7 @@ Sure, I can help you set up those event handlers in your C# WinForms application
 
    private void MainForm_SearchProcessBegin(object sender, SearchContext e)
    {
+        public string FileStatus { get; set; } = "EXL";
        // Handle the beginning of the search process
        MessageBox.Show($"Search started with ID: {e.Id}");
    }

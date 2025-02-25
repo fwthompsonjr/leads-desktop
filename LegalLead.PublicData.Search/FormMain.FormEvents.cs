@@ -2,6 +2,7 @@
 using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Models;
 using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,9 @@ namespace LegalLead.PublicData.Search
 {
     public partial class FormMain : Form
     {
+
+        public event EventHandler<SearchContext> SearchProcessBegin;
+        public event EventHandler<SearchContext> SearchProcessComplete;
 
         internal void SetDentonStatusLabelFromSetting()
         {
@@ -66,6 +70,22 @@ namespace LegalLead.PublicData.Search
                 CommonKeyIndexes.CriminalCivilAndFamily.Split(',')[subItemId]);
             }
             tsStatusLabel.Text = sb.ToString();
+        }
+
+
+        protected virtual void OnSearchProcessBegin(SearchContext context)
+        {
+            SearchProcessBegin?.Invoke(this, context);
+        }
+
+        protected virtual void OnSearchProcessComplete(SearchContext context)
+        {
+            SearchProcessComplete?.Invoke(this, context);
+        }
+
+        private static void MainForm_PostSearchDetail(object sender, SearchContext e)
+        {
+            dbHelper.PostFileDetail(e);
         }
 
         private void CboWebsite_SelectedValueChanged(object sender, EventArgs e)

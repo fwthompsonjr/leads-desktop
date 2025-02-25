@@ -16,5 +16,6 @@ namespace LegalLead.PublicData.Search.Interfaces
         List<HolidayQueryResponse> Holidays();
         List<QueryDbResponse> Query(QueryDbRequest queryDb);
         KeyValuePair<bool, string> Upload(UploadDbRequest uploadDb);
+        void PostFileDetail(SearchContext context);
     }
 }

@@ -49,6 +49,8 @@ namespace LegalLead.PublicData.Search
             SubmitButtonText = button1.Text;
             FormClosing += FormMain_FormClosing;
             Shown += FormMain_Shown;
+            SearchProcessBegin += MainForm_PostSearchDetail;
+            SearchProcessComplete += MainForm_PostSearchDetail;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);

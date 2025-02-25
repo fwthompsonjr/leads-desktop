@@ -2,6 +2,7 @@
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Models;
 using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
@@ -250,9 +251,12 @@ namespace LegalLead.PublicData.Search
                 EndDate = dteEnding.Value.Date
             };
             var trackingItem = dbHelper.AppendUsage(tracking.CountyId, tracking.StartDate, tracking.EndDate);
+            var context = new SearchContext { Id = trackingItem.Id };
+            var isAdmin = IsAccountAdmin();
+            OnSearchProcessBegin(context);
             try
             {
-                if (IsAccountAdmin())
+                if (isAdmin)
                 {
                     var displayMode = SettingsWriter.GetSettingOrDefault("admin", "Open Headless:", true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
@@ -322,6 +326,9 @@ namespace LegalLead.PublicData.Search
                 }
                 searchItem.ResultFileName = CaseData.Result;
                 searchItem.IsCompleted = true;
+                context.LocalFileName = searchItem.ResultFileName;
+                context.FileStatus = isAdmin ? "DECODED" : "ENCODED";
+                OnSearchProcessComplete(context);
                 searchItem.MoveToCommon();
                 GetObject<List<SearchResult>>(Tag).Add(searchItem);
                 ComboBox_DataSourceChanged(null, null);
@@ -332,18 +339,6 @@ namespace LegalLead.PublicData.Search
                     button.Tag = txt;
                     button.Visible = true;
                 });
-                /*
-                var result = MessageBox.Show(
-                    CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView,
-                    CommonKeyIndexes.DataExtractSuccess,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                if (result != DialogResult.Yes)
-                {
-                    SetStatus(StatusType.Ready);
-                    return;
-                }
-                */
                 TryOpenExcel();
                 SetStatus(StatusType.Ready);
             }
