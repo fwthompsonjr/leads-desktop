@@ -325,6 +325,7 @@ namespace LegalLead.PublicData.Search
                     ExcelWriter.WriteToExcel(CaseData);
                 }
                 searchItem.ResultFileName = CaseData.Result;
+                searchItem.AddressList = CaseData.PeopleList.ConvertFrom();
                 searchItem.IsCompleted = true;
                 context.LocalFileName = searchItem.ResultFileName;
                 context.FileStatus = isAdmin ? "DECODED" : "ENCODED";

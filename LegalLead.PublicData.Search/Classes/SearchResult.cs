@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using LegalLead.PublicData.Search.Models;
+using System.Collections.Generic;
+using System.IO;
 using Thompson.RecordSearch.Utility;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Classes
 {
@@ -18,7 +21,7 @@ namespace LegalLead.PublicData.Search.Classes
 
         public bool IsCompleted { get; set; }
         public int Id { get; internal set; }
-
+        public List<QueryDbResponse> AddressList { get; set; } = [];
         public void MoveToCommon()
         {
             if (string.IsNullOrEmpty(ResultFileName)) return;
