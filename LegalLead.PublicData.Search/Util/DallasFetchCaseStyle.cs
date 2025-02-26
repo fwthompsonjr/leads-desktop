@@ -29,16 +29,18 @@ namespace LegalLead.PublicData.Search.Util
             js = VerifyScript(js);
             var retries = 5;
             var intervals = new int[] { 2000, 2000, 2000, 1500, 1000, 500, 500 };
-            while (retries > 0) {
+            while (retries > 0)
+            {
                 var waitms = intervals[retries];
                 content = ReadCaseDetail(js, executor, uri);
-                if (!string.IsNullOrEmpty(content) && !content.Equals(errtext)) {
+                if (!string.IsNullOrEmpty(content) && !content.Equals(errtext))
+                {
                     break;
                 }
                 Thread.Sleep(waitms);
                 retries--;
             }
-            
+
             return content;
         }
 
@@ -70,7 +72,7 @@ namespace LegalLead.PublicData.Search.Util
                 return errtext;
             }
         }
-private const string errtext = "--error--";
+        private const string errtext = "--error--";
         protected override string ScriptName { get; } = "get case style";
     }
 }

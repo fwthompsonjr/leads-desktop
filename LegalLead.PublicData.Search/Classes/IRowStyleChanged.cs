@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -197,12 +196,12 @@ namespace LegalLead.PublicData.Search.Classes
     {
         public virtual SizeType Size { get; set; } = SizeType.Absolute;
         public virtual float Height { get; set; } = 46f;
-        public void ApplyStyle(TableLayoutRowStyleCollection styles, int index) 
+        public void ApplyStyle(TableLayoutRowStyleCollection styles, int index)
         {
             var count = styles.Count - 1;
             if (index < 0 || index > count) { return; }
             var style = styles[index];
-            
+
             style.SizeType = Size;
             style.Height = Height;
         }
@@ -257,7 +256,7 @@ namespace LegalLead.PublicData.Search.Classes
         {
             Context = main;
             Table = main.tableLayoutPanel1;
-            
+
             foreach (var item in Table.Controls)
             {
                 if (item is not Control control) continue;
@@ -272,13 +271,14 @@ namespace LegalLead.PublicData.Search.Classes
         public void Apply()
         {
             var selected = Context.cboWebsite.SelectedItem as WebNavigationParameter;
-            var selectedId = selected == null ? -1: selected.Id;
+            var selectedId = selected == null ? -1 : selected.Id;
             var common = new Dictionary<int, RowStyleDefinition>();
             foreach (var item in defaultStyle)
             {
                 common.Add(item.Key, item.Value);
             }
-            if (selectedId == 1) {
+            if (selectedId == 1)
+            {
                 common[RowsIndexes.SearchTypeId] = new HiddenRowStyleDefinition();
             }
             if (selectedId == 10)
@@ -298,13 +298,15 @@ namespace LegalLead.PublicData.Search.Classes
                 common[RowsIndexes.CaseTypeAdditionaId] = new HiddenRowStyleDefinition(); // not this one
             }
             var styles = Context.tableLayoutPanel1.RowStyles;
-            for (int i = 0; i < styles.Count; i++) {
+            for (int i = 0; i < styles.Count; i++)
+            {
                 var styleExecutor = common[i];
                 var style = styleExecutor.Size;
                 var isVisible = !style.Equals(0f);
                 if (ControlIndexes.ContainsKey(i))
                 {
-                    ControlIndexes[i].ForEach(c => {
+                    ControlIndexes[i].ForEach(c =>
+                    {
                         if (c is not Button)
                         {
                             c.Visible = isVisible;

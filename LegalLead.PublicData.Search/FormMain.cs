@@ -139,7 +139,8 @@ namespace LegalLead.PublicData.Search
         {
             var button = ButtonDentonSetting;
             var items = menuRecentFiles.DropDownItems;
-            if (button.Tag != null && items.Count >0) {
+            if (button.Tag != null && items.Count > 0)
+            {
                 items[0].PerformClick();
                 toolTip1.RemoveAll();
                 button.Visible = false;

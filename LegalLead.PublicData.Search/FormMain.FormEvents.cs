@@ -3,7 +3,6 @@ using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Models;
-using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -185,7 +184,7 @@ namespace LegalLead.PublicData.Search
                 style.Height = height;
                 style.SizeType = SizeType.Absolute;
             }
-            
+
         }
 
         private void WebSiteUsageValidation()
@@ -672,7 +671,7 @@ namespace LegalLead.PublicData.Search
         {
             this.Invoke(new Action(() =>
             {
-                var args = new EventArgs{};
+                var args = new EventArgs { };
                 ComboBox_DataSourceChanged(null, args);
             }));
         }

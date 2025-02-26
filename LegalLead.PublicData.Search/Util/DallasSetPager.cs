@@ -3,7 +3,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util
@@ -27,7 +26,7 @@ namespace LegalLead.PublicData.Search.Util
             var helper = new DallasSortByStatusHelper(Driver, executor);
             var casehelper = new DallasSortByCaseTypeHelper(Driver, executor);
             var rowcounter = new DallasGetRecordCountHelper(Driver, executor, js);
-            
+
             helper.Execute();
             casehelper.Execute();
             rowcounter.Execute();

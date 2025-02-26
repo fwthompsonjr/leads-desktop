@@ -1,6 +1,5 @@
 using HtmlAgilityPack;
 using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Polly;
 using System;
 using System.Collections.Concurrent;
@@ -92,10 +91,11 @@ namespace LegalLead.PublicData.Search.Util
             cookieContainer.Add(baseAddress, cookieCollection);
             var policy = Policy<string>
                 .HandleResult(response => response.Equals("error"))
-                .WaitAndRetryAsync(2, retryAttempt => {
+                .WaitAndRetryAsync(2, retryAttempt =>
+                {
                     var ms = 250 * Math.Pow(2, retryAttempt);
                     return TimeSpan.FromMilliseconds(ms);
-                    });
+                });
 
             var result = await policy.ExecuteAsync(() => GetRemotePageAsync(baseAddress, cookieContainer));
             return result;

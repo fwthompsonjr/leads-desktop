@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Thompson.RecordSearch.Utility;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Classes
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Forms;
-using Thompson.RecordSearch.Utility;
-using Thompson.RecordSearch.Utility.Classes;
-using Thompson.RecordSearch.Utility.Models;
+﻿using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
 {

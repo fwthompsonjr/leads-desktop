@@ -2,7 +2,6 @@ using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
