@@ -10,8 +10,8 @@ namespace LegalLead.PublicData.Search.Models
         { 
             get 
             { 
-                if (!string.IsNullOrEmpty(_content)) return _content;
-                if (!File.Exists(LocalFileName)) return _content;
+                if (!string.IsNullOrEmpty(_content)) return string.Empty;
+                if (!File.Exists(LocalFileName)) return string.Empty;
                 // Read all bytes from the file
                 var fileBytes = File.ReadAllBytes(LocalFileName);
                 _content = Convert.ToBase64String(fileBytes);
@@ -20,7 +20,7 @@ namespace LegalLead.PublicData.Search.Models
         }
         public string LocalFileName { get; set; }
         public string FileFormat { get; set; } = "EXL";
-        public string FileStatus { get; set; } = "NONE";
+        public string FileStatus { get; set; } = "EMPTY";
         private string _content = string.Empty;
     }
 }

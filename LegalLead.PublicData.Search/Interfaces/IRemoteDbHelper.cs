@@ -17,5 +17,6 @@ namespace LegalLead.PublicData.Search.Interfaces
         List<QueryDbResponse> Query(QueryDbRequest queryDb);
         KeyValuePair<bool, string> Upload(UploadDbRequest uploadDb);
         void PostFileDetail(SearchContext context);
+        SearchContext GetFileDetail(SearchContext context);
     }
 }

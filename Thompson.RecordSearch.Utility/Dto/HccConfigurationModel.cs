@@ -43,6 +43,8 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("usage-get-history")] public string UsageGetHistoryUrl { get; set; } = string.Empty;
         [JsonProperty("usage-get-summary")] public string UsageGetSummaryUrl { get; set; } = string.Empty;
         [JsonProperty("usage-set-limit")] public string UsageSetLimitUrl { get; set; } = string.Empty;
+        [JsonProperty("content-get")] public string ContentGetUrl { get; set; } = string.Empty;
+        [JsonProperty("content-save")] public string ContentSaveUrl { get; set; } = string.Empty;
     }
 
     public class InvoiceUriModel

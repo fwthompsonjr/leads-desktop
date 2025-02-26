@@ -187,12 +187,35 @@ namespace LegalLead.PublicData.Search.Helpers
 
         public void PostFileDetail(SearchContext context)
         {
-            Debug.WriteLine("Search context submission with id: {0}", context.Id);
-            Debug.WriteLine("Search context submission with file: {0}", context.LocalFileName);
-            Debug.WriteLine("Search context submission with format: {0}", context.FileFormat);
-            Debug.WriteLine("Search context submission with status: {0}", context.FileStatus);
+            var payload = new
+            {
+                context.Id,
+                FileType = context.FileFormat,
+                context.FileStatus,
+                FileContent = context.Content,
+            };
+            var uri = GetAddress("content-save");
+            var token = GetToken();
+            using var client = GetClient(token);
+            httpService.PostAsJson<object, KeyValuePair<bool, string>>(client, uri, payload);
         }
 
+        public SearchContext GetFileDetail(SearchContext context)
+        {
+            var payload = new
+            {
+                context.Id,
+                FileType = context.FileFormat,
+                context.FileStatus,
+                FileContent = context.Content,
+            };
+            var uri = GetAddress("content-get");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, SearchContext>(client, uri, payload)
+             ?? context;
+            return response;
+        }
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
             var list = new List<List<T>>();
@@ -263,6 +286,8 @@ namespace LegalLead.PublicData.Search.Helpers
                 "usage-get-history" => $"{uri}{provider.UsageGetHistoryUrl}",
                 "usage-get-summary" => $"{uri}{provider.UsageGetSummaryUrl}",
                 "usage-set-limit" => $"{uri}{provider.UsageSetLimitUrl}",
+                "content-get" => $"{uri}{provider.ContentGetUrl}",
+                "content-save" => $"{uri}{provider.ContentSaveUrl}",
                 _ => string.Empty
             };
         }
