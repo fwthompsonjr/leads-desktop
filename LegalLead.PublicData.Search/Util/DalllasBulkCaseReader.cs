@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Polly;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -32,31 +33,41 @@ namespace LegalLead.PublicData.Search.Util
 
             if (Workload.Count == 0)
                 throw new NullReferenceException(Rx.ERR_URI_MISSING);
+
             var cookies = Driver.Manage().Cookies.AllCookies;
             if (cookies.Count > 0)
             {
                 Debug.WriteLine("Found {0:d} cookies", cookies.Count);
             }
-            var count = Workload.Count;
-            var collection = new Dictionary<int, string>();
-            Parallel.ForEach(Workload,
-                new ParallelOptions() { MaxDegreeOfParallelism = 5 },
-            c =>
-                {
 
-                    var idx = Workload.IndexOf(c);
-                    var current = collection.Count;
-                    EchoIteration(c, current, count);
-                    var content = GetPageAsync(c.Href, cookies).GetAwaiter().GetResult();
-                    collection[idx] = content;
-                    if (!string.IsNullOrEmpty(content))
-                    {
-                        var data = GetPageContent(content);
-                        collection[idx] = data;
-                    }
-                });
-            return collection;
+            var count = Workload.Count;
+            var collection = new ConcurrentDictionary<int, string>();
+
+            var parallelOptions = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = 3,
+                TaskScheduler = TaskScheduler.Default // You can specify a custom TaskScheduler here
+            };
+
+            Parallel.ForEach(Workload, parallelOptions, c =>
+            {
+                var idx = Workload.IndexOf(c);
+                var current = collection.Count;
+                EchoIteration(c, current, count);
+
+                var content = GetPageAsync(c.Href, cookies).GetAwaiter().GetResult();
+                collection[idx] = content;
+                if (!string.IsNullOrEmpty(content))
+                {
+                    var data = GetPageContent(content);
+                    collection[idx] = data;
+                }
+            });
+
+            // Cast ConcurrentDictionary to Dictionary before returning
+            return new Dictionary<int, string>(collection);
         }
+
 
         private void EchoIteration(CaseItemDto dto, int current, int max)
         {
@@ -81,8 +92,8 @@ namespace LegalLead.PublicData.Search.Util
             cookieContainer.Add(baseAddress, cookieCollection);
             var policy = Policy<string>
                 .HandleResult(response => response.Equals("error"))
-                .WaitAndRetryAsync(3, retryAttempt => {
-                    var ms = 300 * Math.Pow(2, retryAttempt);
+                .WaitAndRetryAsync(2, retryAttempt => {
+                    var ms = 250 * Math.Pow(2, retryAttempt);
                     return TimeSpan.FromMilliseconds(ms);
                     });
 
@@ -95,7 +106,7 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 using var handler = new HttpClientHandler() { CookieContainer = cookieContainer };
-                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMilliseconds(2400) };
+                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMilliseconds(3500) };
                 var result = await client.GetAsync(baseAddress);
                 if (result.IsSuccessStatusCode)
                 {
