@@ -549,7 +549,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuSettings;
         private System.Windows.Forms.ToolStripMenuItem menuRecentFiles;
         private System.Windows.Forms.ToolStripSeparator menuFileSeparator;
-        private System.Windows.Forms.ToolStripMenuItem mnuView;
+        internal System.Windows.Forms.ToolStripMenuItem mnuView;
         private System.Windows.Forms.Panel viewPanel;
     }
 }

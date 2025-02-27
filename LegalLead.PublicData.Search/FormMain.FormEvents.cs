@@ -439,18 +439,21 @@ namespace LegalLead.PublicData.Search
             {
                 return;
             }
-            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view")) { 
-                itm.Checked = !itm.Checked;
-                if (!itm.Checked)
-                {
-                    CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
-                    SetStatus(StatusType.Ready);
-                    return;
+            var item = GetObject<SearchResult>(itm.Tag);
+            if (item == null) return;
+            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view")) {
+                var id = mnuView.DropDownItems.IndexOf(itm);
+                if (id != -1) {
+                    for (int i = 0; i < mnuView.DropDownItems.Count; i++) { 
+                        if (i == id) continue;
+                        if (mnuView.DropDownItems[i] is ToolStripMenuItem obj) { obj.Checked = false; }
+                    }
                 }
-                new PreviewSearchRequestedEvent{ GetMain = this }.Change();
+                itm.Checked = !itm.Checked;
+                var handler = new PreviewSearchRequestedEvent { GetMain = this };
+                handler.Toggle(itm.Checked, item);
                 return;
             }
-            var item = GetObject<SearchResult>(itm.Tag);
             var fileName = item.ResultFileName;
             OpenExcel(ref fileName);
         }
