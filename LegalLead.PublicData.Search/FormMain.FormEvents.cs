@@ -388,26 +388,43 @@ namespace LegalLead.PublicData.Search
             // remove all items from the tab strip
             try
             {
-                tsDropFileList.DropDownItems.Clear();
-                menuRecentFiles.DropDownItems.Clear();
+                var targets = new List<ToolStripItem>{
+                    tsDropFileList,
+                    menuRecentFiles,
+                    mnuView
+                };
+                targets.ForEach(t =>
+                {
+                    if (t is ToolStripDropDownItem drop) drop.DropDownItems.Clear();
+                    if (t is ToolStripMenuItem menu) menu.DropDownItems.Clear();
+                });
                 var list = GetObject<List<SearchResult>>(Tag);
                 list.ForEach(x =>
                 {
-                    var button = new ToolStripMenuItem
+                    for (int i = 0; i < targets.Count; i++)
                     {
-                        Visible = true,
-                        Tag = x,
-                        Text = x.Search,
-                        DisplayStyle = ToolStripItemDisplayStyle.Text
-                    };
-                    button.Click += Button_Click;
-                    tsDropFileList.DropDownItems.Add(button);
-                    menuRecentFiles.DropDownItems.Add(button);
+                        var t = targets[i];
+                        var button = new ToolStripMenuItem
+                        {
+                            Visible = true,
+                            Tag = x,
+                            Text = x.Search,
+                            DisplayStyle = ToolStripItemDisplayStyle.Text
+                        };
+                        button.Click += Button_Click;
+                        if (t is ToolStripDropDownItem drop) drop.DropDownItems.Add(button);
+                        if (t is ToolStripMenuItem menu)
+                        {
+                            if (i == 2) { button.Name = $"view_button_{list.IndexOf(x):D2}"; }
+                            menu.DropDownItems.Add(button);
+                        }
+                    }
                 });
-                tsDropFileList.Enabled = list.Count > 0;
-                tsDropFileList.Visible = tsDropFileList.Enabled;
-                menuRecentFiles.Enabled = list.Count > 0;
-                menuRecentFiles.Visible = menuRecentFiles.Enabled;
+                targets.ForEach(t =>
+                {
+                    t.Enabled = list.Count > 0;
+                    t.Visible = t.Enabled;
+                });
                 menuFileSeparator.Visible = menuRecentFiles.Visible;
             }
             catch (Exception)
@@ -418,12 +435,22 @@ namespace LegalLead.PublicData.Search
 
         private void Button_Click(object sender, EventArgs e)
         {
-            if (sender == null)
+            if (sender is not ToolStripMenuItem itm)
             {
                 return;
             }
-
-            var item = GetObject<SearchResult>(((ToolStripMenuItem)sender).Tag);
+            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view")) { 
+                itm.Checked = !itm.Checked;
+                if (!itm.Checked)
+                {
+                    CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
+                    SetStatus(StatusType.Ready);
+                    return;
+                }
+                new PreviewSearchRequestedEvent{ GetMain = this }.Change();
+                return;
+            }
+            var item = GetObject<SearchResult>(itm.Tag);
             var fileName = item.ResultFileName;
             OpenExcel(ref fileName);
         }

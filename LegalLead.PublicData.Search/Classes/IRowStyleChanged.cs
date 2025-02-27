@@ -245,7 +245,8 @@ namespace LegalLead.PublicData.Search.Classes
         public const int ProgressRowId = 9;
         public const int NotesRowId = 10;
         public const int SpacerRowId = 11;
-        public const int ButtomMenuId = 12;
+        public const int BottomMenuId = 12;
+        public const int ViewPanelId = 13;
     }
     internal class DefaultStyleCollection
     {
@@ -315,7 +316,22 @@ namespace LegalLead.PublicData.Search.Classes
                 }
                 styleExecutor.ApplyStyle(styles, i);
             }
-
+        }
+        public void HideRows()
+        {
+            var hidden = new HiddenRowStyleDefinition();
+            var styles = Context.tableLayoutPanel1.RowStyles;
+            for (int i = 1; i < styles.Count - 1; i++)
+            {
+                if (ControlIndexes.ContainsKey(i))
+                {
+                    ControlIndexes[i].ForEach(c =>
+                    {
+                        c.Visible = false;
+                    });
+                }
+                hidden.ApplyStyle(styles, i);
+            }
         }
         static readonly Dictionary<int, RowStyleDefinition> defaultStyle = new()
         {
@@ -331,7 +347,8 @@ namespace LegalLead.PublicData.Search.Classes
             {RowsIndexes.ProgressRowId, new HiddenRowStyleDefinition() },
             {RowsIndexes.NotesRowId, new HiddenRowStyleDefinition() },
             {RowsIndexes.SpacerRowId, new SpacerRowStyleDefinition() },
-            {RowsIndexes.ButtomMenuId, new MenuRowStyleDefinition() },
+            {RowsIndexes.BottomMenuId, new MenuRowStyleDefinition() },
+            {RowsIndexes.ViewPanelId, new HiddenRowStyleDefinition() },
         };
     }
 }

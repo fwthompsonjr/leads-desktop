@@ -76,11 +76,6 @@ namespace LegalLead.PublicData.Search
             cbo.SelectedIndexChanged += GetMain.CboSearchType_SelectedIndexChanged;
         }
 
-        protected static void ApplyRowStyles(TableLayoutRowStyleCollection styles, int websiteId)
-        {
-            var styleProviders = RowStyleChangeProvider.RowChangeProviders;
-            // styleProviders.ForEach(p => p.ApplyStyles(styles, websiteId));
-        }
 
         public void MapLabels(TableLayoutRowStyleCollection styles)
         {
