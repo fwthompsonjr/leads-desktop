@@ -2,13 +2,13 @@
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Models;
 using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
@@ -250,9 +250,12 @@ namespace LegalLead.PublicData.Search
                 EndDate = dteEnding.Value.Date
             };
             var trackingItem = dbHelper.AppendUsage(tracking.CountyId, tracking.StartDate, tracking.EndDate);
+            var context = new SearchContext { Id = trackingItem.Id };
+            var isAdmin = IsAccountAdmin();
+            OnSearchProcessBegin(context);
             try
             {
-                if (IsAccountAdmin())
+                if (isAdmin)
                 {
                     var displayMode = SettingsWriter.GetSettingOrDefault("admin", "Open Headless:", true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
@@ -321,7 +324,11 @@ namespace LegalLead.PublicData.Search
                     ExcelWriter.WriteToExcel(CaseData);
                 }
                 searchItem.ResultFileName = CaseData.Result;
+                searchItem.AddressList = CaseData.PeopleList.ConvertFrom();
                 searchItem.IsCompleted = true;
+                context.LocalFileName = searchItem.ResultFileName;
+                context.FileStatus = isAdmin ? "DECODED" : "ENCODED";
+                OnSearchProcessComplete(context);
                 searchItem.MoveToCommon();
                 GetObject<List<SearchResult>>(Tag).Add(searchItem);
                 ComboBox_DataSourceChanged(null, null);
@@ -332,18 +339,6 @@ namespace LegalLead.PublicData.Search
                     button.Tag = txt;
                     button.Visible = true;
                 });
-                /*
-                var result = MessageBox.Show(
-                    CommonKeyIndexes.CaseExtractCompleteWouldYouLikeToView,
-                    CommonKeyIndexes.DataExtractSuccess,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                if (result != DialogResult.Yes)
-                {
-                    SetStatus(StatusType.Ready);
-                    return;
-                }
-                */
                 TryOpenExcel();
                 SetStatus(StatusType.Ready);
             }

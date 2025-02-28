@@ -2,7 +2,7 @@
 using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
-using OfficeOpenXml.Table;
+using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,6 +22,9 @@ namespace LegalLead.PublicData.Search
 {
     public partial class FormMain : Form
     {
+
+        public event EventHandler<SearchContext> SearchProcessBegin;
+        public event EventHandler<SearchContext> SearchProcessComplete;
 
         internal void SetDentonStatusLabelFromSetting()
         {
@@ -66,6 +69,22 @@ namespace LegalLead.PublicData.Search
                 CommonKeyIndexes.CriminalCivilAndFamily.Split(',')[subItemId]);
             }
             tsStatusLabel.Text = sb.ToString();
+        }
+
+
+        protected virtual void OnSearchProcessBegin(SearchContext context)
+        {
+            SearchProcessBegin?.Invoke(this, context);
+        }
+
+        protected virtual void OnSearchProcessComplete(SearchContext context)
+        {
+            SearchProcessComplete?.Invoke(this, context);
+        }
+
+        private static void MainForm_PostSearchDetail(object sender, SearchContext e)
+        {
+            dbHelper.PostFileDetail(e);
         }
 
         private void CboWebsite_SelectedValueChanged(object sender, EventArgs e)
@@ -165,7 +184,7 @@ namespace LegalLead.PublicData.Search
                 style.Height = height;
                 style.SizeType = SizeType.Absolute;
             }
-            
+
         }
 
         private void WebSiteUsageValidation()
@@ -369,26 +388,43 @@ namespace LegalLead.PublicData.Search
             // remove all items from the tab strip
             try
             {
-                tsDropFileList.DropDownItems.Clear();
-                menuRecentFiles.DropDownItems.Clear();
+                var targets = new List<ToolStripItem>{
+                    tsDropFileList,
+                    menuRecentFiles,
+                    mnuView
+                };
+                targets.ForEach(t =>
+                {
+                    if (t is ToolStripDropDownItem drop) drop.DropDownItems.Clear();
+                    if (t is ToolStripMenuItem menu) menu.DropDownItems.Clear();
+                });
                 var list = GetObject<List<SearchResult>>(Tag);
                 list.ForEach(x =>
                 {
-                    var button = new ToolStripMenuItem
+                    for (int i = 0; i < targets.Count; i++)
                     {
-                        Visible = true,
-                        Tag = x,
-                        Text = x.Search,
-                        DisplayStyle = ToolStripItemDisplayStyle.Text
-                    };
-                    button.Click += Button_Click;
-                    tsDropFileList.DropDownItems.Add(button);
-                    menuRecentFiles.DropDownItems.Add(button);
+                        var t = targets[i];
+                        var button = new ToolStripMenuItem
+                        {
+                            Visible = true,
+                            Tag = x,
+                            Text = x.Search,
+                            DisplayStyle = ToolStripItemDisplayStyle.Text
+                        };
+                        button.Click += Button_Click;
+                        if (t is ToolStripDropDownItem drop) drop.DropDownItems.Add(button);
+                        if (t is ToolStripMenuItem menu)
+                        {
+                            if (i == 2) { button.Name = $"view_button_{list.IndexOf(x):D2}"; }
+                            menu.DropDownItems.Add(button);
+                        }
+                    }
                 });
-                tsDropFileList.Enabled = list.Count > 0;
-                tsDropFileList.Visible = tsDropFileList.Enabled;
-                menuRecentFiles.Enabled = list.Count > 0;
-                menuRecentFiles.Visible = menuRecentFiles.Enabled;
+                targets.ForEach(t =>
+                {
+                    t.Enabled = list.Count > 0;
+                    t.Visible = t.Enabled;
+                });
                 menuFileSeparator.Visible = menuRecentFiles.Visible;
             }
             catch (Exception)
@@ -399,12 +435,25 @@ namespace LegalLead.PublicData.Search
 
         private void Button_Click(object sender, EventArgs e)
         {
-            if (sender == null)
+            if (sender is not ToolStripMenuItem itm)
             {
                 return;
             }
-
-            var item = GetObject<SearchResult>(((ToolStripMenuItem)sender).Tag);
+            var item = GetObject<SearchResult>(itm.Tag);
+            if (item == null) return;
+            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view")) {
+                var id = mnuView.DropDownItems.IndexOf(itm);
+                if (id != -1) {
+                    for (int i = 0; i < mnuView.DropDownItems.Count; i++) { 
+                        if (i == id) continue;
+                        if (mnuView.DropDownItems[i] is ToolStripMenuItem obj) { obj.Checked = false; }
+                    }
+                }
+                itm.Checked = !itm.Checked;
+                var handler = new PreviewSearchRequestedEvent { GetMain = this };
+                handler.Toggle(itm.Checked, item);
+                return;
+            }
             var fileName = item.ResultFileName;
             OpenExcel(ref fileName);
         }
@@ -652,7 +701,7 @@ namespace LegalLead.PublicData.Search
         {
             this.Invoke(new Action(() =>
             {
-                var args = new EventArgs{};
+                var args = new EventArgs { };
                 ComboBox_DataSourceChanged(null, args);
             }));
         }

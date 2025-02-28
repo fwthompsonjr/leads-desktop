@@ -49,6 +49,8 @@ namespace LegalLead.PublicData.Search
             SubmitButtonText = button1.Text;
             FormClosing += FormMain_FormClosing;
             Shown += FormMain_Shown;
+            SearchProcessBegin += MainForm_PostSearchDetail;
+            SearchProcessComplete += MainForm_PostSearchDetail;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
@@ -137,7 +139,8 @@ namespace LegalLead.PublicData.Search
         {
             var button = ButtonDentonSetting;
             var items = menuRecentFiles.DropDownItems;
-            if (button.Tag != null && items.Count >0) {
+            if (button.Tag != null && items.Count > 0)
+            {
                 items[0].PerformClick();
                 toolTip1.RemoveAll();
                 button.Visible = false;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -197,12 +196,12 @@ namespace LegalLead.PublicData.Search.Classes
     {
         public virtual SizeType Size { get; set; } = SizeType.Absolute;
         public virtual float Height { get; set; } = 46f;
-        public void ApplyStyle(TableLayoutRowStyleCollection styles, int index) 
+        public void ApplyStyle(TableLayoutRowStyleCollection styles, int index)
         {
             var count = styles.Count - 1;
             if (index < 0 || index > count) { return; }
             var style = styles[index];
-            
+
             style.SizeType = Size;
             style.Height = Height;
         }
@@ -246,7 +245,8 @@ namespace LegalLead.PublicData.Search.Classes
         public const int ProgressRowId = 9;
         public const int NotesRowId = 10;
         public const int SpacerRowId = 11;
-        public const int ButtomMenuId = 12;
+        public const int BottomMenuId = 12;
+        public const int ViewPanelId = 13;
     }
     internal class DefaultStyleCollection
     {
@@ -257,7 +257,7 @@ namespace LegalLead.PublicData.Search.Classes
         {
             Context = main;
             Table = main.tableLayoutPanel1;
-            
+
             foreach (var item in Table.Controls)
             {
                 if (item is not Control control) continue;
@@ -272,13 +272,14 @@ namespace LegalLead.PublicData.Search.Classes
         public void Apply()
         {
             var selected = Context.cboWebsite.SelectedItem as WebNavigationParameter;
-            var selectedId = selected == null ? -1: selected.Id;
+            var selectedId = selected == null ? -1 : selected.Id;
             var common = new Dictionary<int, RowStyleDefinition>();
             foreach (var item in defaultStyle)
             {
                 common.Add(item.Key, item.Value);
             }
-            if (selectedId == 1) {
+            if (selectedId == 1)
+            {
                 common[RowsIndexes.SearchTypeId] = new HiddenRowStyleDefinition();
             }
             if (selectedId == 10)
@@ -298,13 +299,15 @@ namespace LegalLead.PublicData.Search.Classes
                 common[RowsIndexes.CaseTypeAdditionaId] = new HiddenRowStyleDefinition(); // not this one
             }
             var styles = Context.tableLayoutPanel1.RowStyles;
-            for (int i = 0; i < styles.Count; i++) {
+            for (int i = 0; i < styles.Count; i++)
+            {
                 var styleExecutor = common[i];
                 var style = styleExecutor.Size;
                 var isVisible = !style.Equals(0f);
                 if (ControlIndexes.ContainsKey(i))
                 {
-                    ControlIndexes[i].ForEach(c => {
+                    ControlIndexes[i].ForEach(c =>
+                    {
                         if (c is not Button)
                         {
                             c.Visible = isVisible;
@@ -313,7 +316,22 @@ namespace LegalLead.PublicData.Search.Classes
                 }
                 styleExecutor.ApplyStyle(styles, i);
             }
-
+        }
+        public void HideRows()
+        {
+            var hidden = new HiddenRowStyleDefinition();
+            var styles = Context.tableLayoutPanel1.RowStyles;
+            for (int i = 1; i < styles.Count - 1; i++)
+            {
+                if (ControlIndexes.ContainsKey(i))
+                {
+                    ControlIndexes[i].ForEach(c =>
+                    {
+                        c.Visible = false;
+                    });
+                }
+                hidden.ApplyStyle(styles, i);
+            }
         }
         static readonly Dictionary<int, RowStyleDefinition> defaultStyle = new()
         {
@@ -329,7 +347,8 @@ namespace LegalLead.PublicData.Search.Classes
             {RowsIndexes.ProgressRowId, new HiddenRowStyleDefinition() },
             {RowsIndexes.NotesRowId, new HiddenRowStyleDefinition() },
             {RowsIndexes.SpacerRowId, new SpacerRowStyleDefinition() },
-            {RowsIndexes.ButtomMenuId, new MenuRowStyleDefinition() },
+            {RowsIndexes.BottomMenuId, new MenuRowStyleDefinition() },
+            {RowsIndexes.ViewPanelId, new HiddenRowStyleDefinition() },
         };
     }
 }

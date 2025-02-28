@@ -2,7 +2,6 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -34,7 +33,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 if (retries == retryCount || retries % 10 == 0)
                 {
                     JsExecutor.ExecuteScript(SetMaxRowsScript);
-                    Thread.Sleep(waitMilliSeconds*2);
+                    Thread.Sleep(waitMilliSeconds * 2);
                 }
                 GetRecordCount();
                 if (IsTableDataLoaded()) break;
@@ -165,7 +164,7 @@ namespace LegalLead.PublicData.Search.Helpers
             public int Actual { get; set; }
             public bool IsMatched()
             {
-                return Actual.Equals(Expected) && Actual > 0 
+                return Actual.Equals(Expected) && Actual > 0
                     || Actual > Expected
                     || Actual.Equals(Expected) && Expected == 0;
             }

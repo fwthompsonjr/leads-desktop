@@ -58,7 +58,7 @@ namespace LegalLead.PublicData.Search.Util
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 var result = new WebFetchResult();
                 var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", "Exclude Weekend From Search:", true);
-                var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday }; 
+                var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday };
                 if (excludeWeekend)
                 {
                     dates.RemoveAll(d => weekends.Contains(d.DayOfWeek));
@@ -123,7 +123,7 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (dates == null) throw new ArgumentNullException(nameof(dates));
             if (common == null) throw new ArgumentNullException(nameof(common));
-            bool isCaptchaNeeded = true; 
+            bool isCaptchaNeeded = true;
             var exec = (IJavaScriptExecutor)driver;
             var iterator = IterationProvider.GetIterator(
                 CourtType,

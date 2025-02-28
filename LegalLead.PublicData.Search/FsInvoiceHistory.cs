@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -121,7 +120,7 @@ namespace LegalLead.PublicData.Search
                     return b.InvoiceDate.CompareTo(a.InvoiceDate);
                 });
                 masterData.AddRange(list);
-                
+
                 var models = list.Select(s => InvoiceHeaderViewModel.ConvertFrom(s)).ToList();
                 return models;
             }
