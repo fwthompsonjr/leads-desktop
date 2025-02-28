@@ -95,7 +95,7 @@ namespace LegalLead.PublicData.Search.Helpers
                     Value = "true"},
                 new(){
                     Category = "admin",
-                    Name = "Database Minimun Persistence:",
+                    Name = "Database Minimum Persistence:",
                     Index = 14,
                     IsSecured = true,
                     DataType = "Numeric",

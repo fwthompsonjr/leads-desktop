@@ -514,9 +514,10 @@ namespace LegalLead.PublicData.Search
 #if DEBUG
         private void DebugFormLoad()
         {
-
+            const string subContextId = "form-sub-context-id";
             // change selected index based upon appSetting
             var configIndex = ConfigurationManager.AppSettings[CommonKeyIndexes.FormContextId];
+            var contextIndex = ConfigurationManager.AppSettings[subContextId];
             var startDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartDate];
             var endDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormEndDate];
             if (!string.IsNullOrEmpty(configIndex))
@@ -530,6 +531,10 @@ namespace LegalLead.PublicData.Search
                     CboWebsite_SelectedValueChanged(null, null);
                 }
             }
+            if (!string.IsNullOrEmpty(contextIndex) && int.TryParse(contextIndex, out var subContextIndex))
+            {
+                cboSearchType.SelectedIndex = subContextIndex;
+            }
             if (!string.IsNullOrEmpty(startDate))
             {
                 dteStart.Value = DateTime.Parse(startDate, CultureInfo.CurrentCulture.DateTimeFormat);
@@ -538,6 +543,21 @@ namespace LegalLead.PublicData.Search
             {
                 dteEnding.Value = DateTime.Parse(endDate, CultureInfo.CurrentCulture.DateTimeFormat);
             }
+            WriteAdminOverrides();
+        }
+        private static void WriteAdminOverrides()
+        {
+            const string category = "admin";
+            var settings = new List<UserSettingChangeViewModel>();
+            var map = new[] { "Open Headless:", "Database Search:", "Database Minimum Persistence:" };
+            for (var i = 0; i < map.Length; i++)
+            {
+                var keyName = $"debug-admin-setting-{i}";
+                var keyValue = ConfigurationManager.AppSettings[keyName];
+                if (string.IsNullOrWhiteSpace(keyValue)) continue;
+                settings.Add(new() { Category = category, Name = map[i], Value = keyValue });
+            }
+            settings.ForEach(x => { SettingsWriter.Change(x); });
         }
 #endif
         private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
