@@ -40,7 +40,7 @@ namespace LegalLead.PublicData.Search.Util
             const string response = "complete";
             var driver = Driver;
             var jsexec = GetJavaScriptExecutor();
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30)) { PollingInterval = TimeSpan.FromMilliseconds(500) };
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(25)) { PollingInterval = TimeSpan.FromMilliseconds(500) };
             wait.Until(driver1 => jsexec.ExecuteScript(request).Equals(response));
         }
 

@@ -23,7 +23,7 @@ namespace LegalLead.PublicData.Search.Extensions
         public static object ExecuteScriptWithRetry(this IWebDriver driver, IJavaScriptExecutor executor, TimeSpan timeout, string script)
         {
             var policy = Policy
-                .Handle<WebDriverException>()
+                .Handle<Exception>()
                 .WaitAndRetry(5, retryAttempt =>
                 {
                     var ms = 500 * Math.Pow(2, retryAttempt);
@@ -49,6 +49,52 @@ namespace LegalLead.PublicData.Search.Extensions
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Navigates to destination URI with a custom timeout and retry policy.
+        /// </summary>
+        /// <param name="driver">The WebDriver instance.</param>
+        /// <param name="timeout">The custom timeout for the HTTP client.</param>
+        /// <param name="script">The JavaScript to execute.</param>
+        /// <remarks>
+        /// This method sets a custom HTTP client timeout and retries the JavaScript execution up to 5 times
+        /// with exponential backoff intervals (1, 2, 4 seconds) in case of exceptions.
+        /// The original page-load timeout is restored after the method completes.
+        /// </remarks>
+        public static void NavigateWithRetry(this IWebDriver driver, TimeSpan timeout, Uri uri, Uri fallbackUri = null)
+        {
+            var policy = Policy
+                .Handle<WebDriverTimeoutException>()
+                .WaitAndRetry(3, retryAttempt =>
+                {
+                    var ms = 750 * Math.Pow(2, retryAttempt);
+                    return TimeSpan.FromMilliseconds(ms);
+                }, (exception, timeSpan, retryCount, context) =>
+                {
+                    if (fallbackUri != null)
+                    {
+                        driver.Navigate().GoToUrl(fallbackUri);
+                        // Wait for a short period to ensure the fallback page loads
+                        System.Threading.Thread.Sleep(150);
+                    }
+                });
+
+            var originalTimeout = driver.Manage().Timeouts().PageLoad;
+
+            try
+            {
+                driver.Manage().Timeouts().PageLoad = timeout;
+                policy.Execute(() =>
+                {
+                    driver.Navigate().GoToUrl(uri);
+                });
+            }
+            finally
+            {
+                // Restore the original page-load timeout
+                driver.Manage().Timeouts().PageLoad = originalTimeout;
+            }
         }
     }
 }

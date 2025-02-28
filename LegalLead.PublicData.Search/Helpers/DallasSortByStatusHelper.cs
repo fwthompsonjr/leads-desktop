@@ -25,33 +25,7 @@ namespace LegalLead.PublicData.Search.Helpers
         {
             if (NoCountHelper.IsNoCountData(JsExecutor)) return;
             if (!WaitForSelector()) return;
-            var retries = 60;
-            while (!IsSorted())
-            {
-                Sort();
-                retries--;
-                if (retries == 0) break;
-                Thread.Sleep(150);
-            }
             Filter();
-        }
-
-        private bool IsSorted()
-        {
-            var content = string.Join(Environment.NewLine, sortscript);
-            const string command = "return statusSort.isSorted();";
-            var js = string.Concat(content, Environment.NewLine, command);
-            var response = JsExecutor.ExecuteScript(js);
-            if (response is not bool isSorted) return false;
-            return isSorted;
-        }
-
-        private void Sort()
-        {
-            var content = string.Join(Environment.NewLine, sortscript);
-            const string command = "return statusSort.click();";
-            var js = string.Concat(content, Environment.NewLine, command);
-            JsExecutor.ExecuteScript(js);
         }
 
         private void Filter()
