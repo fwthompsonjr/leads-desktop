@@ -56,6 +56,15 @@ namespace LegalLead.PublicData.Search.Util
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, true, true);
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
+                var bulkReader = new DalllasBulkCaseReader
+                {
+                    Driver = driver,
+                    Interactive = this,
+                    Parameters = parameters,
+                };
+                postcommon.Add(bulkReader);
+
+
                 var result = new WebFetchResult();
                 var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", "Exclude Weekend From Search:", true);
                 var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday };
@@ -103,6 +112,13 @@ namespace LegalLead.PublicData.Search.Util
                 if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
 
                 IterateDateRange(driver, parameters, dates, common);
+                postcommon.ForEach(p =>
+                {
+                    if (p is DalllasBulkCaseReader bulk)
+                    {
+                        bulk.Workload = Items;
+                    }
+                });
                 IterateItems(driver, parameters, postcommon);
             }
             catch (Exception ex)
@@ -203,29 +219,15 @@ namespace LegalLead.PublicData.Search.Util
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
             if (ExecutionCancelled) return;
-            var count = Items.Count;
             Items.Sort((a, b) => a.FileDate.CompareTo(b.FileDate));
-
-            Items.ForEach(i =>
+            postcommon.ForEach(a =>
             {
-                var c = Items.IndexOf(i) + 1;
-                EchoIteration(i, c, count);
-                postcommon.ForEach(a =>
+                var resp = ExecuteAction(a);
+                if (resp is string json)
                 {
-                    Populate(a, driver, parameters, i.Href);
-                    var response = ExecuteAction(a);
-                    if (a is DallasFetchCaseStyle _ && response is string cases)
-                    {
-                        var info = GetStyle(cases);
-                        if (info != null)
-                        {
-                            i.CaseStyle = info.CaseStyle;
-                            i.Plaintiff = info.Plaintiff;
-                            if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
-                            AppendPerson(i);
-                        }
-                    }
-                });
+                    var list = json.ToInstance<List<CaseItemDto>>();
+                    if (list != null) Items = list;
+                }
             });
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             casenumbers.ForEach(i =>
@@ -241,13 +243,6 @@ namespace LegalLead.PublicData.Search.Util
             this.CompleteProgess();
         }
 
-        private void EchoIteration(CaseItemDto dto, int current, int max)
-        {
-            var d1 = dto.FileDate;
-            var dateformat = CultureInfo.CurrentCulture.DateTimeFormat;
-            if (DateTime.TryParse(d1, dateformat, DateTimeStyles.AssumeLocal, out var dte1)) d1 = dte1.ToString("M/d", dateformat);
-            this.EchoProgess(0, max, current, $"{d1} - Reading item {current} of {max}.", true, dateNotification: d1);
-        }
         private void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters, string uri = "")
         {
             a.Driver = driver;
@@ -277,7 +272,19 @@ namespace LegalLead.PublicData.Search.Util
         private void AppendPerson(CaseItemDto dto)
         {
             var person = dto.FromDto();
+            var target = CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase));
+            if (target == null && !string.IsNullOrEmpty(dto.CaseStyle))
+            {
+                CaseStyles.Add(new()
+                {
+                    Address = dto.Address,
+                    CaseStyle = dto.CaseStyle,
+                    Plaintiff = dto.Plaintiff
+                });
+                AppendPerson(dto);
+            }
             var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
+            
             if (address != null && address.Any())
             {
                 var ln = address.Count - 1;

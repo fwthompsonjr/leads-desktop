@@ -46,7 +46,10 @@ namespace LegalLead.PublicData.Search
                 txKeyValue2,
                 txKeyValue3
             };
-            keyvaluelist.ForEach(x => { x.TextChanged += TxKeyValue_TextChanged; });
+            keyvaluelist.ForEach(x => { 
+                x.TextChanged += TxKeyValue_TextChanged; 
+                x.DoubleClick += TxKeyValue_DoubleClick;
+            });
             var controls = tableLayoutPanel1.Controls;
             foreach (var control in controls)
             {
@@ -195,6 +198,18 @@ namespace LegalLead.PublicData.Search
             _model.Value = actual;
         }
 
+        private void TxKeyValue_DoubleClick(object sender, EventArgs e)
+        {
+            var values = new[] { "true", "false" };
+            if (sender is not TextBox tbox) return;
+            var actual = tbox.Text;
+            if (actual == null) return;
+            if (!values.Contains(actual)) return;
+            var id = values.ToList().FindIndex(x => x.Equals(actual, StringComparison.OrdinalIgnoreCase));
+            var toggle = id == 0 ? values[1] : values[0];
+            tbox.Text = toggle;
+            _model.Value = toggle;
+        }
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var isEnabled = false;

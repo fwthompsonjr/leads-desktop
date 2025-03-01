@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Models;
@@ -27,6 +28,10 @@ namespace Thompson.RecordSearch.Utility.Extensions
                 Address1 = "000 No Street",
                 Address3 = "Not, NA"
             };
+            if (!string.IsNullOrEmpty(dto.Address))
+            {
+                mapped.UpdateAddress(dto.Address.Split("|").ToList());
+            }
             return mapped.ToCalculatedNames();
         }
 

@@ -58,10 +58,9 @@ namespace LegalLead.PublicData.Search.Util
                 jse.ExecuteScript("arguments[0].click()", button);
                 return success;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Debug.WriteLine(ex.Message);
-                return failed;
+                throw;
             }
         }
         
