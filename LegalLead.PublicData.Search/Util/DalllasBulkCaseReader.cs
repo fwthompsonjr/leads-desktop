@@ -119,6 +119,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 var uri = new Uri(Driver.Url);
                 _ = Task.Run(() => Driver.NavigateWithRetry(TimeSpan.FromSeconds(5), uri));
+                MaskUserName();
             }
             catch (Exception)
             {

@@ -28,7 +28,7 @@ namespace Thompson.RecordSearch.Utility.Extensions
                 Address1 = "000 No Street",
                 Address3 = "Not, NA"
             };
-            if (!string.IsNullOrEmpty(dto.Address))
+            if (!string.IsNullOrEmpty(dto.Address) && dto.Address.Contains("|"))
             {
                 mapped.UpdateAddress(dto.Address.Split("|").ToList());
             }

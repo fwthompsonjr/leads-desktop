@@ -16,8 +16,14 @@ namespace LegalLead.PublicData.Search.Helpers
             IJavaScriptExecutor executor)
             : base(web, executor)
         {
-
+            GetOfficers();
+            Officers = JusticeOfficers;
+            JsContentScript = JsSearchContent;
+            JsScript = JsContent;
         }
+        public override List<DallasJusticeOfficer> Officers { get; }
+        public override string JsContentScript { get; protected set; }
+        public override string JsScript { get; protected set; }
 
         public override string Name => "JUSTICE";
         public override ExecutionResponseType SetSearchParameter()

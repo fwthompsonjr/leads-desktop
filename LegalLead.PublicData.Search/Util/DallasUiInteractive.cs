@@ -151,8 +151,11 @@ namespace LegalLead.PublicData.Search.Util
                 parameters.SetSearchParameters(d, d, CourtType);
                 iterator.SearchIndex = 0;
                 this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}");
-                do
-                {
+                var collection = iterator.GetCollection();
+                var limit = collection.Count;
+                foreach (var item in collection) {
+                    iterator.SearchIndex = collection.IndexOf(item) + 1;
+                    this.EchoProgess(0, limit, iterator.SearchIndex, "", false, "", $"{d:M/d}-{iterator.SearchIndex}");
                     common.ForEach(a =>
                     {
                         if (a is DallasNavigateSearch navSearch)
@@ -162,12 +165,10 @@ namespace LegalLead.PublicData.Search.Util
                         isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
                         if (a is DallasSetupParameters)
                         {
-                            iterator.SetSearchParameter();
+                            iterator.SetParameter(collection);
                         }
                     });
-                    iterator.SearchIndex++;
-                    this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}-{iterator.SearchIndex}");
-                } while (iterator.SearchIndex < iterator.SearchLimit);
+                }
                 this.EchoProgess(0, 0, 0, dateNotification: "hide");
             });
             this.CompleteProgess();
@@ -426,6 +427,10 @@ namespace LegalLead.PublicData.Search.Util
         private class FallbackIterator : BaseCaseIterator
         {
             public override string Name => "FALLBACK";
+
+            public override List<Common.DallasJusticeOfficer> Officers => throw new NotImplementedException();
+
+            public override string JsContentScript { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
         }
 
         private static readonly SessionSettingPersistence SettingsWriter =
