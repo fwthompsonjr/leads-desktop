@@ -139,6 +139,10 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     common.ForEach(a =>
                     {
+                        if (a is DallasNavigateSearch navSearch)
+                        {
+                            navSearch.CaseTypeIterator = iterator;
+                        }
                         isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
                         if (a is DallasSetupParameters)
                         {
@@ -176,6 +180,10 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
+                if (a is DallasNavigateSearch navigateSearch)
+                {
+                    return SearchActionWrapper.Execute(navigateSearch);
+                }
                 return a.Execute();
             }
             catch (Exception e)

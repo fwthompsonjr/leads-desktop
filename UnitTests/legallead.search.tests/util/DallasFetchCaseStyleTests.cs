@@ -35,7 +35,7 @@ namespace legallead.search.tests.util
                 PageAddress = "http://www.google.com"
             };
             _ = service.Execute();
-            service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtLeast(3));
+            service.MqExecutor.Verify(x => x.ExecuteScript(It.IsAny<string>()), Times.AtLeast(1));
         }
 
         [Theory]

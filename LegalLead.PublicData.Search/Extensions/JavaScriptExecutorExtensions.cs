@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using Polly;
 using System;
+using System.Diagnostics;
 
 namespace LegalLead.PublicData.Search.Extensions
 {
@@ -36,9 +37,11 @@ namespace LegalLead.PublicData.Search.Extensions
 
             try
             {
+                var currentUrl = driver.Url;
+                Debug.WriteLine(currentUrl);
+                driver.Manage().Timeouts().PageLoad = timeout;
                 policy.Execute(() =>
                 {
-                    driver.Manage().Timeouts().PageLoad = timeout;
                     result = executor.ExecuteScript(script);
                 });
             }
