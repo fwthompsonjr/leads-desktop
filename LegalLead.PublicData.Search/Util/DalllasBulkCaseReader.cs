@@ -61,7 +61,7 @@ namespace LegalLead.PublicData.Search.Util
                 var unresloved = items.Count(x => !x.Value.IsMapped());
                 Console.WriteLine("Found {0} items needing review.", unresloved);
                 retries++;
-                var seconds =Math.Min( Math.Pow(2, retries) * 4, 110);
+                var seconds =Math.Min( Math.Pow(2, retries) * 4, 75);
                 Console.WriteLine("Waiting {0:F2} seconds before retry.", seconds);
                 var wait = TimeSpan.FromSeconds(seconds);
                 Thread.Sleep(wait);

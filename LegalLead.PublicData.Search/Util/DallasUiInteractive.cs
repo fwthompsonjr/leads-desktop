@@ -256,14 +256,23 @@ namespace LegalLead.PublicData.Search.Util
                     if (list != null) Items = list;
                 }
             });
+            
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
+            CaseStyles = [];
             casenumbers.ForEach(i =>
             {
+                var sources = Items.FindAll(x => x.CaseNumber.Equals(i));
+                var source = sources[0];
+                if (sources.Count > 1 || sources.Any(x => !string.IsNullOrEmpty(x.Address)))
+                {
+                    source = sources.Find(x => !string.IsNullOrEmpty(x.Address));
+                }
+                CaseStyles.Add(new() { Address = source.Address, CaseStyle = source.CaseStyle, Plaintiff = source.Plaintiff });
                 var p = People.Find(x => x.CaseNumber == i);
                 if (p == null)
                 {
-                    var source = Items.Find(x => x.CaseNumber == i);
-                    if (source != null) { AppendPerson(source); }
+                    var itmDto = Items.Find(x => x.CaseNumber == i);
+                    if (itmDto != null) { AppendPerson(itmDto); }
                 }
             });
             this.EchoProgess(0, 0, 0, dateNotification: "hide");
@@ -309,10 +318,11 @@ namespace LegalLead.PublicData.Search.Util
                     Plaintiff = dto.Plaintiff
                 });
                 AppendPerson(dto);
+                return;
             }
-            var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
+            var address = GetAddress(target);
             
-            if (address != null && address.Any())
+            if (address != null && address.Count != 0)
             {
                 var ln = address.Count - 1;
                 var last = address[ln].Trim();
