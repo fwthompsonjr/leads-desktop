@@ -4,6 +4,7 @@ using LegalLead.PublicData.Search.Interfaces;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
@@ -37,14 +38,14 @@ namespace LegalLead.PublicData.Search.Helpers
         public object SetParameter(List<CaseTypeExecutionTracker> collection)
         {
             var selected = collection.Find(x => !x.IsExecuted && x.Officer != null);
-            if (selected == null) return null;
+            if (selected == null) return (new { Id = -1, Result = false }).ToJsonString();
             var officer = selected.Officer;
             Console.WriteLine(" - Court location: {0}", officer.Court);
             var js = JsContentScript.Replace("~0", officer.Name);
             var actual = JsExecutor.ExecuteScript(js);
-            if (actual is not bool response) return ExecutionResponseType.ExecutionFailed;
+            if (actual is not bool response) return (new { Id = -1, Result = false }).ToJsonString();
             selected.IsExecuted = true;
-            return response ? ExecutionResponseType.Success : ExecutionResponseType.ExecutionFailed;
+            return (new { selected.Id, Result = response}).ToJsonString();
         }
 
         public virtual ExecutionResponseType SetSearchParameter()

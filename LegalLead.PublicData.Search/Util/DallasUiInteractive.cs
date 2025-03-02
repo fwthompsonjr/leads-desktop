@@ -150,10 +150,26 @@ namespace LegalLead.PublicData.Search.Util
                 Console.WriteLine("Searching for records on date: {0:d}", d);
                 parameters.SetSearchParameters(d, d, CourtType);
                 iterator.SearchIndex = 0;
-                this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}");
-                var collection = iterator.GetCollection();
+                var collection = iterator.GetCollection().FindAll(x => !x.IsExecuted);
+                while (collection.Any(a => !a.IsExecuted))
+                {
+                    isCaptchaNeeded = IterateCourtLocations(driver, parameters, common, d, isCaptchaNeeded, iterator, collection);
+                    collection = collection.FindAll(x => !x.IsExecuted);
+                }
+
+                this.EchoProgess(0, 0, 0, dateNotification: "hide");
+            });
+            this.CompleteProgess();
+            parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
+        }
+
+        private bool IterateCourtLocations(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, DateTime d, bool isCaptchaNeeded, ICaseTypeIterator iterator, List<CaseTypeExecutionTracker> collection)
+        {
+            try
+            {
                 var limit = collection.Count;
-                foreach (var item in collection) {
+                foreach (var item in collection)
+                {
                     iterator.SearchIndex = collection.IndexOf(item) + 1;
                     this.EchoProgess(0, limit, iterator.SearchIndex, "", false, "", $"{d:M/d}-{iterator.SearchIndex}");
                     common.ForEach(a =>
@@ -165,14 +181,24 @@ namespace LegalLead.PublicData.Search.Util
                         isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
                         if (a is DallasSetupParameters)
                         {
-                            iterator.SetParameter(collection);
+                            var response = iterator.SetParameter(collection);
+                            if (response is string json)
+                            {
+                                var actual = json.ToInstance<SerParameterResponse>();
+                                if (actual != null && actual.Result) {
+                                    collection[actual.Id].IsExecuted = true;
+                                }
+                            }
                         }
                     });
                 }
-                this.EchoProgess(0, 0, 0, dateNotification: "hide");
-            });
-            this.CompleteProgess();
-            parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
+            }
+            catch (Exception)
+            {
+                // take no action on error here
+            }
+
+            return isCaptchaNeeded;
         }
 
         private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
@@ -432,7 +458,11 @@ namespace LegalLead.PublicData.Search.Util
 
             public override string JsContentScript { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
         }
-
+        private class SerParameterResponse
+        {
+            public int Id { get; set; }
+            public bool Result { get; set; }
+        }
         private static readonly SessionSettingPersistence SettingsWriter =
             SessionPersistenceContainer
             .GetContainer

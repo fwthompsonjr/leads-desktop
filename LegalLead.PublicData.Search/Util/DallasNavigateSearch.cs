@@ -28,15 +28,8 @@ namespace LegalLead.PublicData.Search.Util
             var locator = By.Id(controlName);
             var button = Driver.FindElement(locator);
             GetSettings();
-            var count = 1;
             var requests = TryClickingElement(executor, button);
-            while (count < 10 && requests < 0)
-            {
-                requests = TryClickingElement(executor, button);
-                count++;
-            }
             if (requests < 0) throw new ElementNotInteractableException(errmessage);
-
             return true;
         }
         public void RemediateSearch()

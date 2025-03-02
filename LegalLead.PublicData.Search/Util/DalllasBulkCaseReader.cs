@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
@@ -47,39 +48,40 @@ namespace LegalLead.PublicData.Search.Util
             Workload.ForEach(x => { 
                 items[Workload.IndexOf(x)] = new() { Dto = x };
             });
-#if DEBUG
-            Workload.ForEach(c =>
+            var retries = 0;
+            var mxretries = 3;
+            while (retries < mxretries)
             {
-                IterateWorkLoad(c, cookies, count, collection, items);
-            });
-#else
-            var parallelOptions = new ParallelOptions
-            {
-                MaxDegreeOfParallelism = 3,
-                TaskScheduler = TaskScheduler.Default // You can specify a custom TaskScheduler here
-            };
-            Parallel.ForEach(Workload, parallelOptions, c =>
-            {
-                IterateWorkLoad(c, cookies, count, collection, items);
-            });
-#endif
+                Workload.ForEach(c =>
+                {
+                    var id = Workload.IndexOf(c);
+                    IterateWorkLoad(id, c, cookies, count, collection, items);
+                });
+                var hasFailures = items.Any(x => !x.Value.IsMapped());
+                if (!hasFailures) break;
+                retries++;
+                var wait = TimeSpan.FromSeconds(Math.Pow(2, retries) * 15);
+                Thread.Sleep(wait);
+            }
             Workload = new List<CaseItemDto>(items.Select(x => x.Value.Dto));
             // Cast ConcurrentDictionary to Dictionary before returning
             return Workload.ToJsonString();
         }
 
         private void IterateWorkLoad(
+            int idx,
             CaseItemDto c, 
             ReadOnlyCollection<SRC> cookies, 
             int count, 
             ConcurrentDictionary<int, string> collection,
             ConcurrentDictionary<int, CaseItemDtoMapper> cases)
         {
-            var idx = Workload.IndexOf(c);
             if (idx % 5 == 0)
             {
                 ResetPageSession();
             }
+            var instance = cases[idx];
+            if (instance.IsMapped()) return;
             var current = collection.Count;
             EchoIteration(c, current, count);
 
@@ -89,14 +91,13 @@ namespace LegalLead.PublicData.Search.Util
             {
                 var data = GetPageContent(content);
                 collection[idx] = data;
-                var instance = cases[idx];
                 instance.MappedContent = data;
                 instance.Map();
             }
         }
         private static async Task<string> GetContentWithPollyAsync(string href, ReadOnlyCollection<SRC> cookies)
         {
-            var timeoutPolicy = Policy.TimeoutAsync(15, TimeoutStrategy.Pessimistic);
+            var timeoutPolicy = Policy.TimeoutAsync(10, TimeoutStrategy.Pessimistic);
             var fallbackPolicy = Policy<string>.Handle<Exception>().FallbackAsync(string.Empty);
 
             var policyWrap = timeoutPolicy.WrapAsync(fallbackPolicy);
@@ -139,7 +140,6 @@ namespace LegalLead.PublicData.Search.Util
         {
             var baseAddress = new Uri(uri);
             var cookieContainer = new CookieContainer();
-
             var cookieJar = cookies.ToList();
             var cookieCollection = new CookieCollection();
             foreach (var cookie in cookieJar)
@@ -148,15 +148,7 @@ namespace LegalLead.PublicData.Search.Util
                 cookieCollection.Add(new DST(cookie.Name, cookie.Value));
             }
             cookieContainer.Add(baseAddress, cookieCollection);
-            var policy = Policy<string>
-                .HandleResult(response => response.Equals("error"))
-                .WaitAndRetryAsync(2, retryAttempt =>
-                {
-                    var ms = 250 * Math.Pow(2, retryAttempt);
-                    return TimeSpan.FromMilliseconds(ms);
-                });
-
-            var result = await policy.ExecuteAsync(() => GetRemotePageAsync(baseAddress, cookieContainer));
+            var result = await GetRemotePageAsync(baseAddress, cookieContainer);
             return result;
         }
 
@@ -165,7 +157,7 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 using var handler = new HttpClientHandler() { CookieContainer = cookieContainer };
-                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMilliseconds(3500) };
+                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(8) };
                 var result = await client.GetAsync(baseAddress);
                 if (result.IsSuccessStatusCode)
                 {

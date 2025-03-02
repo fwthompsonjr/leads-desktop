@@ -19,7 +19,7 @@ namespace LegalLead.PublicData.Search
             var retryPolicy = Policy
                 .Handle<Exception>() // This will handle any exception
                 .Or<TimeoutRejectedException>() // This will handle timeout exceptions
-                .WaitAndRetry(3, retryAttempt => TimeSpan.FromSeconds(3), (exception, timeSpan, retryCount, context) =>
+                .WaitAndRetry(2, retryAttempt => TimeSpan.FromSeconds(3), (exception, timeSpan, retryCount, context) =>
                 {
                     // Perform corrective action here using action.OrderId
                     PerformCorrectiveAction(action);
