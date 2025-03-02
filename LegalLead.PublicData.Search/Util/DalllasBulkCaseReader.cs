@@ -43,24 +43,27 @@ namespace LegalLead.PublicData.Search.Util
                 Debug.WriteLine("Found {0:d} cookies", cookies.Count);
             }
             var count = Workload.Count;
-            var collection = new ConcurrentDictionary<int, string>();
             var items = new ConcurrentDictionary<int, CaseItemDtoMapper>();
             Workload.ForEach(x => { 
                 items[Workload.IndexOf(x)] = new() { Dto = x };
             });
             var retries = 0;
-            var mxretries = 3;
+            var mxretries = 6;
             while (retries < mxretries)
             {
                 Workload.ForEach(c =>
                 {
                     var id = Workload.IndexOf(c);
-                    IterateWorkLoad(id, c, cookies, count, collection, items);
+                    IterateWorkLoad(id, c, cookies, count, items);
                 });
                 var hasFailures = items.Any(x => !x.Value.IsMapped());
                 if (!hasFailures) break;
+                var unresloved = items.Count(x => !x.Value.IsMapped());
+                Console.WriteLine("Found {0} items needing review.", unresloved);
                 retries++;
-                var wait = TimeSpan.FromSeconds(Math.Pow(2, retries) * 15);
+                var seconds =Math.Min( Math.Pow(2, retries) * 4, 110);
+                Console.WriteLine("Waiting {0:F2} seconds before retry.", seconds);
+                var wait = TimeSpan.FromSeconds(seconds);
                 Thread.Sleep(wait);
             }
             Workload = new List<CaseItemDto>(items.Select(x => x.Value.Dto));
@@ -73,7 +76,6 @@ namespace LegalLead.PublicData.Search.Util
             CaseItemDto c, 
             ReadOnlyCollection<SRC> cookies, 
             int count, 
-            ConcurrentDictionary<int, string> collection,
             ConcurrentDictionary<int, CaseItemDtoMapper> cases)
         {
             if (idx % 5 == 0)
@@ -82,22 +84,19 @@ namespace LegalLead.PublicData.Search.Util
             }
             var instance = cases[idx];
             if (instance.IsMapped()) return;
-            var current = collection.Count;
-            EchoIteration(c, current, count);
+            EchoIteration(c, idx, count);
 
             var content = GetContentWithPollyAsync(c.Href, cookies).GetAwaiter().GetResult();
-            collection[idx] = content;
             if (!string.IsNullOrEmpty(content))
             {
                 var data = GetPageContent(content);
-                collection[idx] = data;
                 instance.MappedContent = data;
                 instance.Map();
             }
         }
         private static async Task<string> GetContentWithPollyAsync(string href, ReadOnlyCollection<SRC> cookies)
         {
-            var timeoutPolicy = Policy.TimeoutAsync(10, TimeoutStrategy.Pessimistic);
+            var timeoutPolicy = Policy.TimeoutAsync(5, TimeoutStrategy.Pessimistic);
             var fallbackPolicy = Policy<string>.Handle<Exception>().FallbackAsync(string.Empty);
 
             var policyWrap = timeoutPolicy.WrapAsync(fallbackPolicy);
@@ -157,7 +156,7 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 using var handler = new HttpClientHandler() { CookieContainer = cookieContainer };
-                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(8) };
+                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMilliseconds(3500) };
                 var result = await client.GetAsync(baseAddress);
                 if (result.IsSuccessStatusCode)
                 {
