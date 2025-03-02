@@ -33,7 +33,7 @@ namespace LegalLead.PublicData.Search
             ShowButtons();
         }
 
-        public void Toggle(bool isPreview, SearchResult context = null)
+        public virtual void Toggle(bool isPreview, SearchResult context = null)
         {
             var manager = new PanelManager(GetPanel(), context);
             if (isPreview)
@@ -65,7 +65,7 @@ namespace LegalLead.PublicData.Search
             manager.Unload();
         }
 
-        private Panel GetPanel()
+        protected Panel GetPanel()
         {
             var collection = GetMain.Controls.Find("viewPanel", true);
             if (collection == null || collection.Length == 0) return null;
@@ -77,9 +77,9 @@ namespace LegalLead.PublicData.Search
         }
 
 
-        private class PanelManager
+        protected class PanelManager
         {
-            private readonly Panel viewPanel;
+            protected readonly Panel viewPanel;
             private readonly SearchResult context;
             public PanelManager(
                 Panel source,
@@ -101,7 +101,7 @@ namespace LegalLead.PublicData.Search
                 viewPanel.Controls.Clear();
             }
 
-            public void Populate()
+            public virtual void Populate()
             {
                 Unload();
                 if (viewPanel == null || context == null) return;

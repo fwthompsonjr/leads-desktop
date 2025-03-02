@@ -67,6 +67,7 @@
             lbProgressDate = new System.Windows.Forms.Label();
             viewPanel = new System.Windows.Forms.Panel();
             imageList1 = new System.Windows.Forms.ImageList(components);
+            menuLogView = new System.Windows.Forms.ToolStripMenuItem();
             tableLayoutPanel1.SuspendLayout();
             menuTopMenu.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -183,7 +184,7 @@
             // 
             // mnuFile
             // 
-            mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuRecentFiles, menuFileSeparator, exitToolStripMenuItem });
+            mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuLogView, menuRecentFiles, menuFileSeparator, exitToolStripMenuItem });
             mnuFile.Name = "mnuFile";
             mnuFile.Size = new System.Drawing.Size(37, 20);
             mnuFile.Text = "F&ile";
@@ -191,20 +192,20 @@
             // menuRecentFiles
             // 
             menuRecentFiles.Name = "menuRecentFiles";
-            menuRecentFiles.Size = new System.Drawing.Size(110, 22);
+            menuRecentFiles.Size = new System.Drawing.Size(180, 22);
             menuRecentFiles.Text = "Recent";
             menuRecentFiles.Visible = false;
             // 
             // menuFileSeparator
             // 
             menuFileSeparator.Name = "menuFileSeparator";
-            menuFileSeparator.Size = new System.Drawing.Size(107, 6);
+            menuFileSeparator.Size = new System.Drawing.Size(177, 6);
             menuFileSeparator.Visible = false;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
@@ -491,6 +492,12 @@
             imageList1.Images.SetKeyName(2, "user-permissions-icon.png");
             imageList1.Images.SetKeyName(3, "change-password-icon.png");
             // 
+            // menuLogView
+            // 
+            menuLogView.Name = "menuLogView";
+            menuLogView.Size = new System.Drawing.Size(180, 22);
+            menuLogView.Text = "&Logs";
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -551,6 +558,7 @@
         private System.Windows.Forms.ToolStripSeparator menuFileSeparator;
         internal System.Windows.Forms.ToolStripMenuItem mnuView;
         private System.Windows.Forms.Panel viewPanel;
+        internal System.Windows.Forms.ToolStripMenuItem menuLogView;
     }
 }
 

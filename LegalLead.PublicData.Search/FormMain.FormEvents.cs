@@ -458,6 +458,17 @@ namespace LegalLead.PublicData.Search
             OpenExcel(ref fileName);
         }
 
+
+        private void MenuLogView_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new ViewLogRequestedEvent { GetMain = this };
+            handler.Toggle(itm.Checked);
+        }
         private void TsWebDriver_Initialize()
         {
             // when data source is changed?

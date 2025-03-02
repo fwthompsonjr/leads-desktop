@@ -51,6 +51,7 @@ namespace LegalLead.PublicData.Search
             Shown += FormMain_Shown;
             SearchProcessBegin += MainForm_PostSearchDetail;
             SearchProcessComplete += MainForm_PostSearchDetail;
+            menuLogView.Click += MenuLogView_Click;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
