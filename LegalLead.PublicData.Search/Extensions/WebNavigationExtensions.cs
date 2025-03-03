@@ -1,11 +1,12 @@
 ﻿using OpenQA.Selenium;
 using Polly;
+using Polly.Retry;
 using System;
 using System.Diagnostics;
 
 namespace LegalLead.PublicData.Search.Extensions
 {
-    internal static class JavaScriptExecutorExtensions
+    internal static class WebNavigationExtensions
     {
         /// <summary>
         /// Executes JavaScript with a custom timeout and retry policy.
@@ -99,5 +100,36 @@ namespace LegalLead.PublicData.Search.Extensions
                 driver.Manage().Timeouts().PageLoad = originalTimeout;
             }
         }
+
+        public static void ReloadCurrentPageWithRetry(this IWebDriver driver)
+        {
+            // Define a retry policy with Polly
+            RetryPolicy retryPolicy = Policy
+                .Handle<WebDriverException>()
+                .WaitAndRetry(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                    (exception, timeSpan, retryCount, context) =>
+                    {
+                        Console.WriteLine($"Retry {retryCount} encountered an error: {exception.Message}. Waiting {timeSpan} before next retry.");
+                    });
+
+            retryPolicy.Execute(() =>
+            {
+                // Get the current URL
+                string currentUrl = driver.Url;
+
+                // Navigate to a blank page to clear any ongoing requests
+                driver.Navigate().GoToUrl("about:blank");
+
+                // Reload the original page
+                driver.Navigate().GoToUrl(currentUrl);
+
+                // Verify the page is loaded (you can add more checks as needed)
+                if (driver.Url != currentUrl)
+                {
+                    throw new WebDriverException("Failed to load the requested page.");
+                }
+            });
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 using HtmlAgilityPack;
 using LegalLead.PublicData.Search.Extensions;
 using Newtonsoft.Json;
+using OpenQA.Selenium;
 using Polly;
 using Polly.Timeout;
 using System;
@@ -20,7 +21,7 @@ using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    using DST = Cookie;
+    using DST = System.Net.Cookie;
     using SRC = OpenQA.Selenium.Cookie;
     using Rx = Properties.Resources;
     public class DalllasBulkCaseReader : BaseDallasSearchAction
@@ -86,7 +87,7 @@ namespace LegalLead.PublicData.Search.Util
             if (instance.IsMapped()) return;
             EchoIteration(c, idx, count);
 
-            var content = GetContentWithPollyAsync(c.Href, cookies).GetAwaiter().GetResult();
+            var content = GetContentWithPollyAsync(Driver, c.Href, cookies).GetAwaiter().GetResult();
             if (!string.IsNullOrEmpty(content))
             {
                 var data = GetPageContent(content);
@@ -94,10 +95,17 @@ namespace LegalLead.PublicData.Search.Util
                 instance.Map();
             }
         }
-        private static async Task<string> GetContentWithPollyAsync(string href, ReadOnlyCollection<SRC> cookies)
+        private static async Task<string> GetContentWithPollyAsync(IWebDriver driver, string href, ReadOnlyCollection<SRC> cookies)
         {
-            var timeoutPolicy = Policy.TimeoutAsync(5, TimeoutStrategy.Pessimistic);
-            var fallbackPolicy = Policy<string>.Handle<Exception>().FallbackAsync(string.Empty);
+            var timeoutPolicy = Policy.TimeoutAsync(6, TimeoutStrategy.Pessimistic);
+            var fallbackPolicy = Policy<string>
+                .Handle<Exception>()
+                .Or<TimeoutRejectedException>() // Handle timeout exceptions
+                .FallbackAsync(async (cancellationToken) =>
+                {
+                    await Task.Run(() => { driver.ReloadCurrentPageWithRetry(); });
+                    return string.Empty;
+                });
 
             var policyWrap = timeoutPolicy.WrapAsync(fallbackPolicy);
 
