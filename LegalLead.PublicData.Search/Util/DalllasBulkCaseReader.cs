@@ -1,7 +1,6 @@
 using HtmlAgilityPack;
 using LegalLead.PublicData.Search.Extensions;
 using Newtonsoft.Json;
-using OpenQA.Selenium;
 using Polly;
 using Polly.Timeout;
 using System;
@@ -22,13 +21,12 @@ using Thompson.RecordSearch.Utility.Extensions;
 namespace LegalLead.PublicData.Search.Util
 {
     using DST = System.Net.Cookie;
-    using SRC = OpenQA.Selenium.Cookie;
     using Rx = Properties.Resources;
+    using SRC = OpenQA.Selenium.Cookie;
     public class DalllasBulkCaseReader : BaseDallasSearchAction
     {
         public override int OrderId => 80;
-        public IWebInteractive Interactive { get; set; }
-        public List<CaseItemDto> Workload { get; set; }
+        public List<CaseItemDto> Workload { get; } = [];
 
         public override object Execute()
         {
@@ -45,7 +43,8 @@ namespace LegalLead.PublicData.Search.Util
             }
             var count = Workload.Count;
             var items = new ConcurrentDictionary<int, CaseItemDtoMapper>();
-            Workload.ForEach(x => { 
+            Workload.ForEach(x =>
+            {
                 items[Workload.IndexOf(x)] = new() { Dto = x };
             });
             var retries = 0;
@@ -60,23 +59,25 @@ namespace LegalLead.PublicData.Search.Util
                 var hasFailures = items.Any(x => !x.Value.IsMapped());
                 if (!hasFailures) break;
                 var unresloved = items.Count(x => !x.Value.IsMapped());
-                Console.WriteLine("Found {0} items needing review.", unresloved);
+                Console.WriteLine($"Found {unresloved} items needing review.");
                 retries++;
-                var seconds =Math.Min( Math.Pow(2, retries) * 4, 75);
-                Console.WriteLine("Waiting {0:F2} seconds before retry.", seconds);
+                var seconds = Math.Min(Math.Pow(2, retries) * 4, 75);
+                Console.WriteLine($"Waiting {seconds:F2} seconds before retry.");
                 var wait = TimeSpan.FromSeconds(seconds);
                 Thread.Sleep(wait);
             }
-            Workload = new List<CaseItemDto>(items.Select(x => x.Value.Dto));
+            Workload.Clear();
+            Workload.AddRange(items.Select(x => x.Value.Dto));
             // Cast ConcurrentDictionary to Dictionary before returning
             return Workload.ToJsonString();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]
         private void IterateWorkLoad(
             int idx,
-            CaseItemDto c, 
-            ReadOnlyCollection<SRC> cookies, 
-            int count, 
+            CaseItemDto c,
+            ReadOnlyCollection<SRC> cookies,
+            int count,
             ConcurrentDictionary<int, CaseItemDtoMapper> cases)
         {
             if (idx % 5 == 0)
@@ -87,7 +88,7 @@ namespace LegalLead.PublicData.Search.Util
             if (instance.IsMapped()) return;
             EchoIteration(c, idx, count);
 
-            var content = GetContentWithPollyAsync(Driver, c.Href, cookies).GetAwaiter().GetResult();
+            var content = GetContentWithPollyAsync(c.Href, cookies).GetAwaiter().GetResult();
             if (!string.IsNullOrEmpty(content))
             {
                 var data = GetPageContent(content);
@@ -95,7 +96,7 @@ namespace LegalLead.PublicData.Search.Util
                 instance.Map();
             }
         }
-        private static async Task<string> GetContentWithPollyAsync(IWebDriver driver, string href, ReadOnlyCollection<SRC> cookies)
+        private static async Task<string> GetContentWithPollyAsync(string href, ReadOnlyCollection<SRC> cookies)
         {
             var timeoutPolicy = Policy.TimeoutAsync(6, TimeoutStrategy.Pessimistic);
             var fallbackPolicy = Policy<string>
@@ -103,7 +104,7 @@ namespace LegalLead.PublicData.Search.Util
                 .Or<TimeoutRejectedException>() // Handle timeout exceptions
                 .FallbackAsync(async (cancellationToken) =>
                 {
-                    await Task.Run(() => { driver.ReloadCurrentPageWithRetry(); });
+                    await Task.Run(() => { Thread.Sleep(TimeSpan.FromMinutes(1)); }, cancellationToken);
                     return string.Empty;
                 });
 
@@ -189,9 +190,11 @@ namespace LegalLead.PublicData.Search.Util
             var caseStyle = string.Empty;
             var paragraphs = node.SelectNodes(HtmlSelectors.ParagraghTextPrimary);
             if (paragraphs == null) return obj.ToJsonString();
-            if (paragraphs.Count > 0) {
+            if (paragraphs.Count > 0)
+            {
                 var target = paragraphs.FirstOrDefault(s => s.InnerText.Contains(pipe));
-                if (target != null) { 
+                if (target != null)
+                {
                     var a = target.InnerText.IndexOf(pipe);
                     caseStyle = target.InnerText[(a + 1)..].Trim();
                 }
@@ -219,7 +222,7 @@ namespace LegalLead.PublicData.Search.Util
             var pln = find[0];
             var paragraph = Closest(pln, "p");
             if (paragraph == null) { return obj.ToJsonString(); }
-            Console.WriteLine("     - Reading case: {0}", cs);
+            Console.WriteLine($"     - Reading case: {cs}");
             obj.Plaintiff = paragraph.InnerText.Replace("PLAINTIFF", "").Trim();
             /* get defendant address */
             var dvparty = node.SelectSingleNode(HtmlSelectors.DivPartyInformationBody);
@@ -233,14 +236,14 @@ namespace LegalLead.PublicData.Search.Util
                 var dvp = Closest(f, "div");
                 if (dvp == null) { return false; }
                 var txt = dvp?.InnerText?.Trim() ?? string.Empty;
-                partytypes.ForEach(p => { if (txt.IndexOf(p) >= 0) { found = true; } });
+                partytypes.ForEach(p => { if (txt.Contains(p)) { found = true; } });
                 if (!found) { return false; }
                 return f.InnerHtml.IndexOf("<span") < 0;
             }).ToList();
-            if (!parties.Any()) return obj.ToJsonString();
+            if (parties.Count == 0) return obj.ToJsonString();
             var addr = parties[0].InnerText.Trim();
             addr = addr.Replace(Environment.NewLine, "|").Trim();
-            while (addr.IndexOf("||") >= 0) { addr = addr.Replace("||", "|").Trim(); }
+            while (addr.Contains("||")) { addr = addr.Replace("||", "|").Trim(); }
             obj.Address = addr;
             return obj.ToJsonString();
         }
@@ -295,7 +298,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             if (node == null) { return null; }
             var parent = node.ParentNode;
-            while (parent != null && parent.Name.ToLower() != elementName)
+            while (parent != null && !parent.Name.Equals(elementName, StringComparison.OrdinalIgnoreCase))
             {
                 parent = parent.ParentNode;
             }
