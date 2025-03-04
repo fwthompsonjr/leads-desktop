@@ -53,7 +53,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
-                Driver.NavigateWithRetry(TimeSpan.FromSeconds(10), uri, fallback);
+                Driver.NavigateWithRetry(TimeSpan.FromSeconds(8), uri, fallback);
                 var content = TryFetchCaseData(executor, js);
                 return content;
             }

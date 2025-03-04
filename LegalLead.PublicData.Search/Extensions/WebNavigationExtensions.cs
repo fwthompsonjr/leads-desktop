@@ -96,8 +96,20 @@ namespace LegalLead.PublicData.Search.Extensions
             }
             finally
             {
+                ResetTimeout(driver, originalTimeout);
+            }
+        }
+
+        private static void ResetTimeout(IWebDriver driver, TimeSpan originalTimeout)
+        {
+            try
+            {
                 // Restore the original page-load timeout
                 driver.Manage().Timeouts().PageLoad = originalTimeout;
+            }
+            catch (Exception)
+            {
+                // no action taken
             }
         }
 

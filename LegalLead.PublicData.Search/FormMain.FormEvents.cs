@@ -538,13 +538,17 @@ namespace LegalLead.PublicData.Search
                 var cfidx = Convert.ToInt32(
                     configIndex,
                     CultureInfo.CurrentCulture);
-                if (cfidx < cboWebsite.Items.Count)
+                if (cfidx < cboWebsite.Items.Count && cfidx >= 0)
                 {
                     cboWebsite.SelectedIndex = cfidx;
                     CboWebsite_SelectedValueChanged(null, null);
                 }
             }
-            if (!string.IsNullOrEmpty(contextIndex) && int.TryParse(contextIndex, out var subContextIndex))
+            if (
+                !string.IsNullOrEmpty(contextIndex) && 
+                int.TryParse(contextIndex, out var subContextIndex) && 
+                subContextIndex >= 0 && 
+                subContextIndex < cboSearchType.Items.Count)
             {
                 cboSearchType.SelectedIndex = subContextIndex;
             }

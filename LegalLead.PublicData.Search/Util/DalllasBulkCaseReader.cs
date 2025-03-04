@@ -61,7 +61,7 @@ namespace LegalLead.PublicData.Search.Util
                 var unresloved = items.Count(x => !x.Value.IsMapped());
                 Console.WriteLine($"Found {unresloved} items needing review.");
                 retries++;
-                var seconds = Math.Min(Math.Pow(2, retries) * 4, 75);
+                var seconds = Math.Min(30, Math.Min(Math.Pow(2, retries) * 4, 75));
                 Console.WriteLine($"Waiting {seconds:F2} seconds before retry.");
                 var wait = TimeSpan.FromSeconds(seconds);
                 Thread.Sleep(wait);
@@ -86,7 +86,8 @@ namespace LegalLead.PublicData.Search.Util
             }
             var instance = cases[idx];
             if (instance.IsMapped()) return;
-            EchoIteration(c, idx, count);
+            var ii = Math.Min(idx + 1, count);
+            EchoIteration(c, ii, count);
 
             var content = GetContentWithPollyAsync(c.Href, cookies).GetAwaiter().GetResult();
             if (!string.IsNullOrEmpty(content))

@@ -182,14 +182,7 @@ namespace LegalLead.PublicData.Search.Util
                         isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
                         if (a is DallasSetupParameters)
                         {
-                            var response = iterator.SetParameter(collection);
-                            if (response is string json)
-                            {
-                                var actual = json.ToInstance<SetParameterResponse>();
-                                if (actual != null && actual.Result) {
-                                    collection[actual.Id].IsExecuted = true;
-                                }
-                            }
+                            iterator.SetParameter(collection);
                         }
                     });
                 }

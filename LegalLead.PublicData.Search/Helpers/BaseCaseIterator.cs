@@ -44,7 +44,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var js = JsContentScript.Replace("~0", officer.Name);
             var actual = JsExecutor.ExecuteScript(js);
             if (actual is not bool response) return (new { Id = -1, Result = false }).ToJsonString();
-            selected.IsExecuted = true;
+            if (response) selected.IsExecuted = true;
             return (new { selected.Id, Result = response}).ToJsonString();
         }
 
