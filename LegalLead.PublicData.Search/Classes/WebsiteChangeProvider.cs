@@ -41,7 +41,7 @@ namespace LegalLead.PublicData.Search.Classes
         {
             get
             {
-                return _changeProviders ?? (_changeProviders = GetProviders());
+                return _changeProviders ??= GetProviders();
             }
         }
 

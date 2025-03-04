@@ -62,7 +62,7 @@ namespace LegalLead.PublicData.Search
             button = new Button { 
                 Name = "logReturnButton", 
                 AutoSize = true, 
-                Text = "Return",
+                Text = FieldLabels.ButtonText,
                 Padding = new Padding(2),
                 Dock = DockStyle.Fill
             };
@@ -189,16 +189,15 @@ namespace LegalLead.PublicData.Search
                         currentItem.EndTime = null;
                         fetchRequestItems.Add(currentItem);
                     }
-
                     currentItem = new FetchRequestItem
                     {
                         Id = logViews.IndexOf(logView),
-                        StartTime = DateTime.ParseExact(logView.Date, "s", CultureInfo.CurrentCulture)
+                        StartTime = GetLogDate(logView.Date),
                     };
                 }
                 else if (logView.LogEntry.Contains(endingFetchToken) && currentItem != null)
                 {
-                    currentItem.EndTime = DateTime.ParseExact(logView.Date, "s", CultureInfo.CurrentCulture);
+                    currentItem.EndTime = GetLogDate(logView.Date);
                     Assert.IsFalse(string.IsNullOrEmpty(currentItem.ElapsedTime));
                     fetchRequestItems.Add(currentItem);
                     currentItem = null;
@@ -215,6 +214,19 @@ namespace LegalLead.PublicData.Search
             return fetchRequestItems;
         }
 
+        private static DateTime GetLogDate(string dte)
+        {
+            DateTime loggingDt;
+            if (dte.Contains('.'))
+            {
+                loggingDt = DateTime.ParseExact(dte, Program.logDateFormat, CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                loggingDt = DateTime.ParseExact(dte, "s", CultureInfo.CurrentCulture);
+            }
+            return loggingDt;
+        }
         private class LogView
         {
             public string Date { get; set; }
@@ -235,8 +247,12 @@ namespace LegalLead.PublicData.Search
                 }
             }
         }
-
+        private static class FieldLabels
+        {
+            public const string ButtonText = "Return";
+        }
         private readonly static string AppBasePath = AppDomain.CurrentDomain.BaseDirectory;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "SYSLIB1045:Convert to 'GeneratedRegexAttribute'.", Justification = "<Pending>")]
         private readonly static Regex FileSplitRegex = new(@"(?=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})");
     }
 }

@@ -450,7 +450,9 @@ namespace LegalLead.PublicData.Search
                     }
                 }
                 itm.Checked = !itm.Checked;
+                var admin = IsAccountAdmin();
                 var handler = new PreviewSearchRequestedEvent { GetMain = this };
+                handler.UseMaskedData = !admin;
                 handler.Toggle(itm.Checked, item);
                 return;
             }

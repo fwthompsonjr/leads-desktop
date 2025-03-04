@@ -10,6 +10,7 @@ namespace LegalLead.PublicData.Search
 {
     public class PreviewSearchRequestedEvent : WebsiteChangeEvent
     {
+        public bool UseMaskedData { get; set; } = true;
         public override string Name => @"Preview";
         public override void Change()
         {
@@ -35,7 +36,7 @@ namespace LegalLead.PublicData.Search
 
         public virtual void Toggle(bool isPreview, SearchResult context = null)
         {
-            var manager = new PanelManager(GetPanel(), context);
+            var manager = new PanelManager(GetPanel(), context, UseMaskedData);
             if (isPreview)
             {
                 Change();
@@ -77,17 +78,14 @@ namespace LegalLead.PublicData.Search
         }
 
 
-        protected class PanelManager
+        protected class PanelManager(
+            Panel source,
+            SearchResult search = null,
+            bool useMaskedData = true)
         {
-            protected readonly Panel viewPanel;
-            private readonly SearchResult context;
-            public PanelManager(
-                Panel source,
-                SearchResult search = null)
-            {
-                viewPanel = source;
-                context = search;
-            }
+            protected readonly Panel viewPanel = source;
+            private readonly SearchResult context = search;
+            private readonly bool isMasked = useMaskedData;
             public void Unload()
             {
 
@@ -160,10 +158,10 @@ namespace LegalLead.PublicData.Search
                     {
                         Name = "viewPanelDataGrid",
                         Dock = DockStyle.Fill,
-                        Padding = new Padding(5)
+                        Padding = new Padding(5),
+                        Tag = context.AddressList
                     };
-                    viewPanelDataGrid.Tag = context.AddressList;
-                    context.AddressList.BindGrid(viewPanelDataGrid);
+                    context.AddressList.BindGrid(viewPanelDataGrid, isMasked);
                     // Add the DataGridView to the TableLayoutPanel with ColumnSpan = 2
                     viewPanelTableLayout.Controls.Add(viewPanelDataGrid, 0, collection.Count);
                     viewPanelTableLayout.SetColumnSpan(viewPanelDataGrid, 3);

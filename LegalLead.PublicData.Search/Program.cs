@@ -17,11 +17,12 @@ namespace LegalLead.PublicData.Search
     static class Program
     {
         internal static FormMain mainForm;
+        internal static string logDateFormat = "yyyy-MM-ddTHH:mm:ss.fff";
         static internal FormLogin loginForm;
         private static List<WebNavigationKey> _dentonKeys;
         public static List<WebNavigationKey> DentonCustomKeys
         {
-            get { return _dentonKeys ??= new List<WebNavigationKey>(); }
+            get { return _dentonKeys ??= []; }
             set { _dentonKeys = value; }
         }
         /// <summary>
@@ -115,13 +116,14 @@ namespace LegalLead.PublicData.Search
             try
             {
                 // Check if the log file size exceeds the maximum size
-                FileInfo logFileInfo = new FileInfo(LogFilePath);
+                FileInfo logFileInfo = new(LogFilePath);
                 if (logFileInfo.Exists && logFileInfo.Length > MaxLogFileSize)
                 {
                     ArchiveLogFile();
                 }
                 using StreamWriter writer = new(LogFilePath, true);
-                string formattedLogEntry = $"{DateTime.Now:s}: {logEntry}";
+                string formattedDate = DateTime.Now.ToString(logDateFormat, CultureInfo.CurrentCulture);
+                string formattedLogEntry = $"{formattedDate}: {logEntry}";
                 writer.WriteLine(formattedLogEntry);
             }
             catch (Exception)
@@ -141,6 +143,7 @@ namespace LegalLead.PublicData.Search
         private static class ControlExtensions
         {
             [System.Runtime.InteropServices.DllImport("user32.dll")]
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "SYSLIB1054:Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time", Justification = "<Pending>")]
             public static extern bool LockWindowUpdate(IntPtr hWndLock);
 
             public static void Suspend(Control control)
