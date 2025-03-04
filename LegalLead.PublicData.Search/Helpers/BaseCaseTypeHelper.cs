@@ -1,4 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Enumerations;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 
 namespace LegalLead.PublicData.Search.Helpers
@@ -13,6 +16,9 @@ namespace LegalLead.PublicData.Search.Helpers
             JsExecutor = executor;
             _ = ParameterList;
         }
+
+        public abstract string JsScript { get; protected set; }
+        public override string JsContentScript { get; protected set; }
         public override string Name { get; }
         public override int SearchLimit => ParameterList.Count - 1;
         protected abstract List<string> ParameterList { get; }

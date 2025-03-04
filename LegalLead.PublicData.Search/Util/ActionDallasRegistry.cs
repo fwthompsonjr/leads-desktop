@@ -21,7 +21,7 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountySearchAction>().Add<DallasNavigateSearch>().Named("perform-search");
             For<ICountySearchAction>().Add<DallasSetPager>().Named("set-max-rows");
             For<ICountySearchAction>().Add<DallasFetchCaseItems>().Named("get-case-list");
-            For<ICountySearchAction>().Add<DallasFetchCaseStyle>().Named("get-case-style");
+            // For<ICountySearchAction>().Add<DallasFetchCaseStyle>().Named("get-case-style");
         }
     }
 }

@@ -223,7 +223,7 @@ namespace LegalLead.PublicData.Search.Util
                     DefaultValue = "true"
                 },
                 new SettingLookupDto {
-                    Name = "Database Minimun Persistence:",
+                    Name = "Database Minimum Persistence:",
                     DefaultValue = "5"
                 },
             }.ToList();

@@ -45,7 +45,6 @@
             btnViewInvoice = new System.Windows.Forms.Button();
             lbInvoiceName = new System.Windows.Forms.Label();
             btnPayInvoice = new System.Windows.Forms.Button();
-            imageList1 = new System.Windows.Forms.ImageList(components);
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             toolStrip1.SuspendLayout();
@@ -236,12 +235,6 @@
             btnPayInvoice.UseVisualStyleBackColor = true;
             btnPayInvoice.Visible = false;
             // 
-            // imageList1
-            // 
-            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // FsInvoiceHistory
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -272,7 +265,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel tslbDataStatus;
         private System.Windows.Forms.Label lbRecordCount;
-        private System.Windows.Forms.ImageList imageList1;
+        // private System.Windows.Forms.ImageList imageList1;
         private Microsoft.Web.WebView2.WinForms.WebView2 wbViewer;
         private System.Windows.Forms.Button btnViewInvoice;
         private System.Windows.Forms.Label lbInvoiceName;

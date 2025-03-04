@@ -17,7 +17,7 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {
-    using winforms = System.Windows.Forms;
+    using WinFrm = System.Windows.Forms;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "<Pending>")]
     public partial class FormMain : Form
@@ -25,7 +25,7 @@ namespace LegalLead.PublicData.Search
         #region Private Members
 
         private readonly string SubmitButtonText;
-        ToolTip toolTip1 = new ToolTip();
+        ToolTip toolTip1 = new();
 
         #endregion
 
@@ -51,6 +51,7 @@ namespace LegalLead.PublicData.Search
             Shown += FormMain_Shown;
             SearchProcessBegin += MainForm_PostSearchDetail;
             SearchProcessComplete += MainForm_PostSearchDetail;
+            menuLogView.Click += MenuLogView_Click;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
@@ -87,6 +88,7 @@ namespace LegalLead.PublicData.Search
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]
         private void ButtonDentonSetting_VisibleChanged(object sender, EventArgs e)
         {
             char semicolon = ';';
@@ -225,7 +227,7 @@ namespace LegalLead.PublicData.Search
                     .Where(w => { return int.TryParse(w, out var _); })
                     .Select(s => int.Parse(s, CultureInfo.CurrentCulture))
                     .ToList();
-                if (!webid.Any())
+                if (webid.Count == 0)
                 {
                     // remove all websites from cboWebsite
                     // and disable the controls
@@ -274,8 +276,8 @@ namespace LegalLead.PublicData.Search
             var collection = tableLayoutPanel1.Controls;
             foreach (Control control in collection)
             {
-                if (control.Visible && control is winforms.ComboBox cx) { cx.Enabled = isEnabled; }
-                if (control.Visible && control is winforms.Button btn) { btn.Enabled = isEnabled; }
+                if (control.Visible && control is WinFrm.ComboBox cx) { cx.Enabled = isEnabled; }
+                if (control.Visible && control is WinFrm.Button btn) { btn.Enabled = isEnabled; }
                 if (control.Visible && control is DateTimePicker dpicker) { dpicker.Enabled = isEnabled; }
             }
         }
@@ -357,7 +359,7 @@ namespace LegalLead.PublicData.Search
             var processes = new List<string> { processName };
             if (processName.Contains(','))
             {
-                processes = processName.Split(',').ToList();
+                processes = [.. processName.Split(',')];
             }
             processes.ForEach(Kill);
         }
@@ -397,6 +399,8 @@ namespace LegalLead.PublicData.Search
         private static class ControlExtensions
         {
             [System.Runtime.InteropServices.DllImport("user32.dll")]
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability",
+                "SYSLIB1054:Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time", Justification = "<Pending>")]
             public static extern bool LockWindowUpdate(IntPtr hWndLock);
 
             public static void Suspend(Control control)

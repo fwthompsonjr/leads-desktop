@@ -450,7 +450,9 @@ namespace LegalLead.PublicData.Search
                     }
                 }
                 itm.Checked = !itm.Checked;
+                var admin = IsAccountAdmin();
                 var handler = new PreviewSearchRequestedEvent { GetMain = this };
+                handler.UseMaskedData = !admin;
                 handler.Toggle(itm.Checked, item);
                 return;
             }
@@ -458,6 +460,17 @@ namespace LegalLead.PublicData.Search
             OpenExcel(ref fileName);
         }
 
+
+        private void MenuLogView_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new ViewLogRequestedEvent { GetMain = this };
+            handler.Toggle(itm.Checked);
+        }
         private void TsWebDriver_Initialize()
         {
             // when data source is changed?
@@ -514,9 +527,10 @@ namespace LegalLead.PublicData.Search
 #if DEBUG
         private void DebugFormLoad()
         {
-
+            const string subContextId = "form-sub-context-id";
             // change selected index based upon appSetting
             var configIndex = ConfigurationManager.AppSettings[CommonKeyIndexes.FormContextId];
+            var contextIndex = ConfigurationManager.AppSettings[subContextId];
             var startDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartDate];
             var endDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormEndDate];
             if (!string.IsNullOrEmpty(configIndex))
@@ -524,11 +538,19 @@ namespace LegalLead.PublicData.Search
                 var cfidx = Convert.ToInt32(
                     configIndex,
                     CultureInfo.CurrentCulture);
-                if (cfidx < cboWebsite.Items.Count)
+                if (cfidx < cboWebsite.Items.Count && cfidx >= 0)
                 {
                     cboWebsite.SelectedIndex = cfidx;
                     CboWebsite_SelectedValueChanged(null, null);
                 }
+            }
+            if (
+                !string.IsNullOrEmpty(contextIndex) && 
+                int.TryParse(contextIndex, out var subContextIndex) && 
+                subContextIndex >= 0 && 
+                subContextIndex < cboSearchType.Items.Count)
+            {
+                cboSearchType.SelectedIndex = subContextIndex;
             }
             if (!string.IsNullOrEmpty(startDate))
             {
@@ -538,6 +560,21 @@ namespace LegalLead.PublicData.Search
             {
                 dteEnding.Value = DateTime.Parse(endDate, CultureInfo.CurrentCulture.DateTimeFormat);
             }
+            WriteAdminOverrides();
+        }
+        private static void WriteAdminOverrides()
+        {
+            const string category = "admin";
+            var settings = new List<UserSettingChangeViewModel>();
+            var map = new[] { "Open Headless:", "Database Search:", "Database Minimum Persistence:" };
+            for (var i = 0; i < map.Length; i++)
+            {
+                var keyName = $"debug-admin-setting-{i}";
+                var keyValue = ConfigurationManager.AppSettings[keyName];
+                if (string.IsNullOrWhiteSpace(keyValue)) continue;
+                settings.Add(new() { Category = category, Name = map[i], Value = keyValue });
+            }
+            settings.ForEach(x => { SettingsWriter.Change(x); });
         }
 #endif
         private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)

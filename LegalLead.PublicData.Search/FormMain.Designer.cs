@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ButtonDentonSetting = new System.Windows.Forms.Button();
@@ -37,6 +36,7 @@
             button1 = new System.Windows.Forms.Button();
             menuTopMenu = new System.Windows.Forms.MenuStrip();
             mnuFile = new System.Windows.Forms.ToolStripMenuItem();
+            menuLogView = new System.Windows.Forms.ToolStripMenuItem();
             menuRecentFiles = new System.Windows.Forms.ToolStripMenuItem();
             menuFileSeparator = new System.Windows.Forms.ToolStripSeparator();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,7 +66,6 @@
             lbNotes = new System.Windows.Forms.Label();
             lbProgressDate = new System.Windows.Forms.Label();
             viewPanel = new System.Windows.Forms.Panel();
-            imageList1 = new System.Windows.Forms.ImageList(components);
             tableLayoutPanel1.SuspendLayout();
             menuTopMenu.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -183,10 +182,16 @@
             // 
             // mnuFile
             // 
-            mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuRecentFiles, menuFileSeparator, exitToolStripMenuItem });
+            mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuLogView, menuRecentFiles, menuFileSeparator, exitToolStripMenuItem });
             mnuFile.Name = "mnuFile";
             mnuFile.Size = new System.Drawing.Size(37, 20);
             mnuFile.Text = "F&ile";
+            // 
+            // menuLogView
+            // 
+            menuLogView.Name = "menuLogView";
+            menuLogView.Size = new System.Drawing.Size(110, 22);
+            menuLogView.Text = "&Logs";
             // 
             // menuRecentFiles
             // 
@@ -481,16 +486,6 @@
             viewPanel.Size = new System.Drawing.Size(904, 29);
             viewPanel.TabIndex = 19;
             // 
-            // imageList1
-            // 
-            imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            imageList1.ImageStream = (System.Windows.Forms.ImageListStreamer)resources.GetObject("imageList1.ImageStream");
-            imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            imageList1.Images.SetKeyName(0, "search-history-icon.png");
-            imageList1.Images.SetKeyName(1, "user-settings-icon.png");
-            imageList1.Images.SetKeyName(2, "user-permissions-icon.png");
-            imageList1.Images.SetKeyName(3, "change-password-icon.png");
-            // 
             // FormMain
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -542,7 +537,7 @@
         internal System.Windows.Forms.ToolStripStatusLabel tsStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel tsUserName;
         private System.Windows.Forms.ToolStripSplitButton tsSettingMenuButton;
-        private System.Windows.Forms.ImageList imageList1;
+        // private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.MenuStrip menuTopMenu;
         private System.Windows.Forms.ToolStripMenuItem mnuFile;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -551,6 +546,7 @@
         private System.Windows.Forms.ToolStripSeparator menuFileSeparator;
         internal System.Windows.Forms.ToolStripMenuItem mnuView;
         private System.Windows.Forms.Panel viewPanel;
+        internal System.Windows.Forms.ToolStripMenuItem menuLogView;
     }
 }
 
