@@ -614,18 +614,27 @@ namespace LegalLead.PublicData.Search
             var source = GetParameter();
             var message = GetMessage(source);
 
-            Console.WriteLine(InjectCourtLocation(message));
+            Console.WriteLine(message);
 
         }
-        protected string InjectCourtLocation(string message)
+        protected string InjectCourtLocation(string message, bool isretry = false)
         {
-            if (!cboSearchType.Visible) return message;
-            if (cboSearchType.SelectedItem is not DropDown caseStatus) return message;
-            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-            var subLocation = $" Search Type: {textInfo.ToTitleCase(caseStatus.Name.ToLower())}";
-            message = message.Replace(CommonKeyIndexes.DashedLine, subLocation);
-            message += $"{Environment.NewLine}{CommonKeyIndexes.DashedLine}";
-            return message;
+            try
+            {
+                if (!cboSearchType.Visible) return message;
+                if (cboSearchType.SelectedItem is not DropDown caseStatus) return message;
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                var subLocation = $" Search Type: {textInfo.ToTitleCase(caseStatus.Name.ToLower())}";
+                message = message.Replace(CommonKeyIndexes.DashedLine, subLocation);
+                message += $"{Environment.NewLine}{CommonKeyIndexes.DashedLine}";
+                return message;
+            }
+            catch (Exception)
+            {
+                if (isretry) throw;
+                var mssg = Invoke(() => { return InjectCourtLocation(message, true); });
+                return mssg;
+            }
         }
         private static string GetSourceName(WebNavigationParameter source)
         {

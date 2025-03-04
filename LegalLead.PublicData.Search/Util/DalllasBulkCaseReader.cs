@@ -50,8 +50,8 @@ namespace LegalLead.PublicData.Search.Util
             });
             var retries = 0;
             var mxretries = 6;
-            const int relaxInternal = 15;
-            const int relaxThreshold = 2;
+            const int relaxInternal = 25;
+            const int relaxThreshold = 4;
             while (retries < mxretries)
             {
                 Workload.ForEach(c =>
@@ -67,7 +67,7 @@ namespace LegalLead.PublicData.Search.Util
                         consecutiveFailureCount++;
                         if (consecutiveFailureCount > relaxThreshold)
                         {
-                            Console.WriteLine($"Detected website response failure. Waiting {relaxInternal:F2} seconds.");
+                            Console.WriteLine($"Detected website response failure.{Environment.NewLine}Waiting {relaxInternal:F2} seconds.");
                             Thread.Sleep(TimeSpan.FromSeconds(relaxInternal));
                             consecutiveFailureCount = 0;
                         }
