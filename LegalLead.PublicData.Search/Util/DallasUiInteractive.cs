@@ -39,6 +39,7 @@ namespace LegalLead.PublicData.Search.Util
 
         public List<PersonAddress> People { get; private set; } = [];
         public List<CaseItemDto> Items { get; private set; } = [];
+        public bool IsDistrictFilterActive { get; set; }
         protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = [];
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
@@ -168,6 +169,11 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
+                bool isDistrict = collection.Any(x => x.Officer.Court.StartsWith("DC"));
+                if (isDistrict && !IsDistrictFilterActive) {
+                    collection.ForEach(c => c.IsExecuted = true);
+                    collection.RemoveAll(x => x.Id > 0);
+                }
                 var limit = collection.Count;
                 foreach (var item in collection)
                 {

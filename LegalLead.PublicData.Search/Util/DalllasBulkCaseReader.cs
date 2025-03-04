@@ -43,6 +43,7 @@ namespace LegalLead.PublicData.Search.Util
             }
             var count = Workload.Count;
             var items = new ConcurrentDictionary<int, CaseItemDtoMapper>();
+            var consecutiveFailureCount = 0;
             Workload.ForEach(x =>
             {
                 items[Workload.IndexOf(x)] = new() { Dto = x };
@@ -54,7 +55,20 @@ namespace LegalLead.PublicData.Search.Util
                 Workload.ForEach(c =>
                 {
                     var id = Workload.IndexOf(c);
-                    IterateWorkLoad(id, c, cookies, count, items);
+                    var w = IterateWorkLoad(id, c, cookies, count, items);
+                    if (w == 0)
+                    {
+                        consecutiveFailureCount = 0;
+}
+                    else
+                    {
+                        consecutiveFailureCount++;
+                        if (consecutiveFailureCount > 3)
+                        {
+                            Thread.Sleep(TimeSpan.FromSeconds(65));
+                            consecutiveFailureCount = 0;
+                        }
+                    }
                 });
                 var hasFailures = items.Any(x => !x.Value.IsMapped());
                 if (!hasFailures) break;
@@ -73,7 +87,7 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]
-        private void IterateWorkLoad(
+        private int IterateWorkLoad(
             int idx,
             CaseItemDto c,
             ReadOnlyCollection<SRC> cookies,
@@ -85,7 +99,7 @@ namespace LegalLead.PublicData.Search.Util
                 ResetPageSession();
             }
             var instance = cases[idx];
-            if (instance.IsMapped()) return;
+            if (instance.IsMapped()) return 1;
             var ii = Math.Min(idx + 1, count);
             EchoIteration(c, ii, count);
 
@@ -95,7 +109,9 @@ namespace LegalLead.PublicData.Search.Util
                 var data = GetPageContent(content);
                 instance.MappedContent = data;
                 instance.Map();
+                return 1;
             }
+            return 0;
         }
         private static async Task<string> GetContentWithPollyAsync(string href, ReadOnlyCollection<SRC> cookies)
         {

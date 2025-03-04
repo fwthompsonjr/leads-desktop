@@ -23,6 +23,7 @@ namespace LegalLead.PublicData.Search.Helpers
         public override List<DallasJusticeOfficer> Officers { get; }
         public override string JsContentScript { get; protected set; }
         public override string Name => "DISTRICT";
+        public bool IsDistrictFilterActive { get; set; }
         public override ExecutionResponseType SetSearchParameter()
         {
             try
@@ -31,6 +32,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 if (JusticeOfficers.Count == 0) return ExecutionResponseType.None;
                 if (SearchIndex < 0 || SearchIndex > JusticeOfficers.Count - 1) return ExecutionResponseType.IndexOfOutBounds;
                 var officer = JusticeOfficers[SearchIndex];
+                if (!IsDistrictFilterActive) { return ExecutionResponseType.Success; }
                 Console.WriteLine(" - Court location: {0}", officer.Court);
                 var js = JsSearchContent.Replace("~0", officer.Name);
                 var actual = JsExecutor.ExecuteScript(js);
