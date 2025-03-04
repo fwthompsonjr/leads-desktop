@@ -50,6 +50,8 @@ namespace LegalLead.PublicData.Search.Util
             });
             var retries = 0;
             var mxretries = 6;
+            const int relaxInternal = 15;
+            const int relaxThreshold = 2;
             while (retries < mxretries)
             {
                 Workload.ForEach(c =>
@@ -63,9 +65,10 @@ namespace LegalLead.PublicData.Search.Util
                     else
                     {
                         consecutiveFailureCount++;
-                        if (consecutiveFailureCount > 3)
+                        if (consecutiveFailureCount > relaxThreshold)
                         {
-                            Thread.Sleep(TimeSpan.FromSeconds(65));
+                            Console.WriteLine($"Detected website response failure. Waiting {relaxInternal:F2} seconds.");
+                            Thread.Sleep(TimeSpan.FromSeconds(relaxInternal));
                             consecutiveFailureCount = 0;
                         }
                     }
@@ -75,7 +78,7 @@ namespace LegalLead.PublicData.Search.Util
                 var unresloved = items.Count(x => !x.Value.IsMapped());
                 Console.WriteLine($"Found {unresloved} items needing review.");
                 retries++;
-                var seconds = Math.Min(30, Math.Min(Math.Pow(2, retries) * 4, 75));
+                var seconds = Math.Max(30, Math.Min(Math.Pow(2, retries) * 4, 75));
                 Console.WriteLine($"Waiting {seconds:F2} seconds before retry.");
                 var wait = TimeSpan.FromSeconds(seconds);
                 Thread.Sleep(wait);
@@ -99,18 +102,15 @@ namespace LegalLead.PublicData.Search.Util
                 ResetPageSession();
             }
             var instance = cases[idx];
-            if (instance.IsMapped()) return 1;
+            if (instance.IsMapped()) return 0;
             var ii = Math.Min(idx + 1, count);
             EchoIteration(c, ii, count);
 
             var content = GetContentWithPollyAsync(c.Href, cookies).GetAwaiter().GetResult();
-            if (!string.IsNullOrEmpty(content))
-            {
-                var data = GetPageContent(content);
-                instance.MappedContent = data;
-                instance.Map();
-                return 1;
-            }
+            if (string.IsNullOrEmpty(content) || content.Equals("error")) return 1;
+            var data = GetPageContent(content);
+            instance.MappedContent = data;
+            instance.Map();
             return 0;
         }
         private static async Task<string> GetContentWithPollyAsync(string href, ReadOnlyCollection<SRC> cookies)

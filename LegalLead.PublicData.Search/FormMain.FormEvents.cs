@@ -605,7 +605,7 @@ namespace LegalLead.PublicData.Search
                 + Environment.NewLine +
                 CommonKeyIndexes.DashedLine;
 
-            Console.WriteLine(message);
+            Console.WriteLine(InjectCourtLocation(message));
 
         }
 
@@ -614,8 +614,18 @@ namespace LegalLead.PublicData.Search
             var source = GetParameter();
             var message = GetMessage(source);
 
-            Console.WriteLine(message);
+            Console.WriteLine(InjectCourtLocation(message));
 
+        }
+        protected string InjectCourtLocation(string message)
+        {
+            if (!cboSearchType.Visible) return message;
+            if (cboSearchType.SelectedItem is not DropDown caseStatus) return message;
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            var subLocation = $" Search Type: {textInfo.ToTitleCase(caseStatus.Name.ToLower())}";
+            message = message.Replace(CommonKeyIndexes.DashedLine, subLocation);
+            message += $"{Environment.NewLine}{CommonKeyIndexes.DashedLine}";
+            return message;
         }
         private static string GetSourceName(WebNavigationParameter source)
         {
