@@ -1,10 +1,10 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
-
 namespace LegalLead.PublicData.Search.Classes
 {
-    internal static class CommonFolderHelper
+    public static class CommonFolderHelper
     {
         const string prefix = "data_rqst_";
         public static string MoveToCommon(string originalFileName)
@@ -20,7 +20,39 @@ namespace LegalLead.PublicData.Search.Classes
             File.Copy(originalFileName, fullName, true);
             return fullName;
         }
+        public static List<FileInfo> GetFiles()
+        {
+            var commonPath = CommonFolder;
+            var localPath = LocalFolder;
+            if (!Directory.Exists(commonPath) && !Directory.Exists(localPath)) { return []; }
+            var files = new List<FileInfo>();
+            if (Directory.Exists(localPath))
+            {
+                files.AddRange(new DirectoryInfo(localPath).GetFiles("*.xlsx", SearchOption.AllDirectories));
+            }
+            if (Directory.Exists(commonPath))
+            {
+                files.AddRange(new DirectoryInfo(commonPath).GetFiles("*.xlsx"));
+            }
+            files.RemoveAll(IsNotExcelPackage);
+            files.Sort((a, b) => a.FullName.CompareTo(b.FullName));
+            return files;
+        }
+        private static bool IsNotExcelPackage(FileInfo fileInfo)
+        {
+            var isValid = ExcelExtensions.IsValidExcelPackage(fileInfo.FullName);
+            return !isValid;
+        }
 
+        private static string LocalFolder
+        {
+            get
+            {
+                if (localDataFolder != null) { return localDataFolder; }
+                localDataFolder = GetLocalFolder();
+                return localDataFolder;
+            }
+        }
         private static string CommonFolder
         {
             get
@@ -32,6 +64,7 @@ namespace LegalLead.PublicData.Search.Classes
         }
 
         private static string commonFolder;
+        private static string localDataFolder = null;
         private static string GetCommonFolder()
         {
             bool ismapped = false;
@@ -55,6 +88,15 @@ namespace LegalLead.PublicData.Search.Classes
                 }
             });
             return folderName;
+        }
+
+        private static string GetLocalFolder()
+        {
+            string localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            if (!Directory.Exists(localAppDataPath)) return string.Empty;
+            string leadPath = Path.Combine(localAppDataPath, "LegalLead");
+            if (!Directory.Exists(leadPath)) return string.Empty;
+            return leadPath;
         }
     }
 }
