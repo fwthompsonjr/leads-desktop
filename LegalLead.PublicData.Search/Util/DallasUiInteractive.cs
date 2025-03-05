@@ -75,6 +75,7 @@ namespace LegalLead.PublicData.Search.Util
                 }
                 Iterate(driver, parameters, dates, common, postcommon);
                 if (ExecutionCancelled || People.Count == 0) return result;
+                People.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled));
                 result.PeopleList = People;
                 result.Result = GetExcelFileName();
                 result.CaseList = JsonConvert.SerializeObject(People);

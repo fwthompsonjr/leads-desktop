@@ -6,7 +6,8 @@ database record clean update
    that preventing complete capture of all dates within the search parameters
    
 2. remove any duplicate records within the time-span
-3. 
+3. create ui for admin.
+	allow view/approve data by date
 
 */
 

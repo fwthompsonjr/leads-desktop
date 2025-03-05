@@ -1,6 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -151,7 +152,9 @@ namespace LegalLead.PublicData.Search
                     if (i == 0) continue;
                     viewPanelTableLayout.SetColumnSpan(current.Content, 2);
                 }
-                if (context.AddressList != null && context.AddressList.Count > 0)
+                var addresses = context.AddressList == null ?[] : context.AddressList;
+                addresses.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
+                if (addresses != null && addresses.Count > 0)
                 {
                     // Create and add the DataGridView
                     DataGridView viewPanelDataGrid = new()
@@ -159,9 +162,9 @@ namespace LegalLead.PublicData.Search
                         Name = "viewPanelDataGrid",
                         Dock = DockStyle.Fill,
                         Padding = new Padding(5),
-                        Tag = context.AddressList
+                        Tag = addresses
                     };
-                    context.AddressList.BindGrid(viewPanelDataGrid, isMasked);
+                    addresses.BindGrid(viewPanelDataGrid, isMasked);
                     // Add the DataGridView to the TableLayoutPanel with ColumnSpan = 2
                     viewPanelTableLayout.Controls.Add(viewPanelDataGrid, 0, collection.Count);
                     viewPanelTableLayout.SetColumnSpan(viewPanelDataGrid, 3);
@@ -209,26 +212,73 @@ namespace LegalLead.PublicData.Search
                     grid.Refresh();
                     return;
                 }
-                var groupedData = query.GroupBy(c => new { c.Court, c.DateFiled })
-                       .Select(g => new
-                       {
-                           g.Key.Court,
-                           g.Key.DateFiled,
-                           Count = g.Count()
-                       }).ToList();
+
+                var groupedData = query.GroupBy(c => new { c.Court, c.CaseType, c.DateFiled })
+                    .Select(g => new SummaryDto
+                    {
+                        Court = g.Key.Court,
+                        CaseType = g.Key.CaseType,
+                        DateFiled = g.Key.DateFiled,
+                        Count = g.Count()
+                    }).ToList();
+                
+                var subtotals = groupedData.GroupBy(c => c.Court)
+                    .Select(g => new SummaryDto
+                    {
+                        Court = g.Key,
+                        CaseType = "Sub Total:",
+                        Count = g.Sum(x => x.Count)
+                    }).ToList();
+                var sum = groupedData.Sum(x => x.Count);
+                
                 groupedData.Sort((a, b) =>
                 {
                     var aa = a.Court.CompareTo(b.Court);
                     if (aa != 0) return aa;
+                    var bb = a.CaseType.CompareTo(b.CaseType);
+                    if (bb != 0) return bb;
                     return a.DateFiled.CompareTo(b.DateFiled);
                 });
-                grid.DataSource = groupedData;
+
+                var courts = groupedData.Select(x => x.Court).Distinct().ToList();
+                var finalList = new List<SummaryDto>();
+                foreach (var court in courts)
+                {
+                    finalList.AddRange(groupedData.FindAll(x => x.Court == court));
+                    var subitem = subtotals.Find(x => x.Court == court);
+                    if (subitem != null)
+                    {
+                        subitem.Court = $" + {court} - Subtotal";
+                        subitem.CaseType = "";
+                        finalList.Add(subitem);
+                    }
+                }
+                finalList.Add(new() { Court = "Grand Total", Count = sum });
+                grid.DataSource = finalList;
+
+                // Set the column properties
+                grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                grid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                for (int i = 1; i < 4; i++)
+                {
+                    grid.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    grid.Columns[i].Width = i == 1 ? 300 : 100; // Set a fixed width for the first (3) column
+                    if (i == 1) continue;
+                    grid.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
                 grid.Refresh();
             }
             private class LabelPair
             {
                 public Control Caption { get; set; }
                 public Control Content { get; set; }
+            }
+            private class SummaryDto
+            {
+                public string Court { get; set; }
+                public string CaseType { get; set; }
+                public string DateFiled { get; set; }
+                public int Count { get; set; }
             }
         }
     }

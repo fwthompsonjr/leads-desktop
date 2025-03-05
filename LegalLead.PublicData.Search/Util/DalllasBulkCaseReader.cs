@@ -43,45 +43,27 @@ namespace LegalLead.PublicData.Search.Util
             }
             var count = Workload.Count;
             var items = new ConcurrentDictionary<int, CaseItemDtoMapper>();
-            var consecutiveFailureCount = 0;
             Workload.ForEach(x =>
             {
                 items[Workload.IndexOf(x)] = new() { Dto = x };
             });
             var retries = 0;
-            var mxretries = 6;
-            const int relaxInternal = 25;
-            const int relaxThreshold = 4;
-            while (retries < mxretries)
+            while (items.Any(x => !x.Value.IsMapped()))
             {
                 Workload.ForEach(c =>
                 {
                     var id = Workload.IndexOf(c);
-                    var w = IterateWorkLoad(id, c, cookies, count, items);
-                    if (w == 0)
-                    {
-                        consecutiveFailureCount = 0;
-}
-                    else
-                    {
-                        consecutiveFailureCount++;
-                        if (consecutiveFailureCount > relaxThreshold)
-                        {
-                            Console.WriteLine($"Detected website response failure.{Environment.NewLine}Waiting {relaxInternal:F2} seconds.");
-                            Thread.Sleep(TimeSpan.FromSeconds(relaxInternal));
-                            consecutiveFailureCount = 0;
-                        }
-                    }
+                    IterateWorkLoad(id, c, cookies, count, items);
                 });
-                var hasFailures = items.Any(x => !x.Value.IsMapped());
-                if (!hasFailures) break;
                 var unresloved = items.Count(x => !x.Value.IsMapped());
+                if (unresloved == 0) break;
                 Console.WriteLine($"Found {unresloved} items needing review.");
-                retries++;
-                var seconds = Math.Max(30, Math.Min(Math.Pow(2, retries) * 4, 75));
+                var seconds = Math.Max(15, Math.Min(Math.Pow(2, retries) * 4, 45));
                 Console.WriteLine($"Waiting {seconds:F2} seconds before retry.");
                 var wait = TimeSpan.FromSeconds(seconds);
                 Thread.Sleep(wait);
+                Driver.ReloadCurrentPageWithRetry();
+                retries++;
             }
             Workload.Clear();
             Workload.AddRange(items.Select(x => x.Value.Dto));

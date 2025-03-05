@@ -401,6 +401,16 @@ namespace LegalLead.PublicData.Search
                 var list = GetObject<List<SearchResult>>(Tag);
                 list.ForEach(x =>
                 {
+                    var addresses = x.AddressList;
+                    addresses.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
+                    x.AddressList = addresses;
+                    addresses.ForEach(a =>
+                    {
+                        if (DateTime.TryParse(a.DateFiled, CultureInfo.CurrentCulture.DateTimeFormat, out var date))
+                        {
+                            a.DateFiled = $"{date:d}";
+                        }
+                    });
                     for (int i = 0; i < targets.Count; i++)
                     {
                         var t = targets[i];

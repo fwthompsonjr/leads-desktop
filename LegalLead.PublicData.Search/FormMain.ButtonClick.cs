@@ -304,6 +304,18 @@ namespace LegalLead.PublicData.Search
                 }
                 CaseData.WebsiteId = siteData.Id;
                 // write search count to api
+                var addresses = CaseData.PeopleList;
+                if (addresses != null && addresses.Count > 0) {
+                    addresses.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
+                    addresses.ForEach(a =>
+                    {
+                        if (DateTime.TryParse(a.DateFiled, CultureInfo.CurrentCulture.DateTimeFormat, out var date))
+                        {
+                            a.DateFiled = $"{date:d}";
+                        }
+                    });
+                    CaseData.PeopleList = addresses;
+                }
                 var count = CaseData.PeopleList.Count;
                 if (count > 0)
                 {
@@ -317,7 +329,6 @@ namespace LegalLead.PublicData.Search
                     UsageIncrementer.IncrementUsage(userName, countyName, adjustedCount, searchRange);
                     UsageReader.WriteUserRecord();
                 }
-
                 var isHarrisCriminal = caseSelectionIndex == 1 && siteData.Id == (int)SourceType.HarrisCivil;
                 if (!isHarrisCriminal && !nonactors.Contains(siteData.Id))
                 {

@@ -45,6 +45,7 @@ namespace LegalLead.PublicData.Search.Helpers
             if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(token)) return null;
             using var client = GetClient(token);
             var response = httpService.PostAsJson<QueryDbRequest, List<QueryDbResponse>>(client, uri, queryDb);
+            response.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled));
             return response;
         }
 
