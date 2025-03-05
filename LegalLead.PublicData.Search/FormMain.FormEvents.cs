@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
@@ -436,6 +437,18 @@ namespace LegalLead.PublicData.Search
                     t.Visible = t.Enabled;
                 });
                 menuFileSeparator.Visible = menuRecentFiles.Visible;
+                menuOpenFile.Enabled = false;
+#if !DEBUG
+                mnuView.Visible = false;
+#endif
+                _ = LoadFileNamesAsync().ContinueWith(_ =>
+                {
+                    // Ensure this runs on the UI thread
+                    Invoke(() =>
+                    {
+                        menuOpenFile.Enabled = true;
+                    });
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
             catch (Exception)
             {

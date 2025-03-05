@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace LegalLead.PublicData.Search
         #region Private Members
 
         private readonly string SubmitButtonText;
+        private List<FileInfo> fileCollection;
         ToolTip toolTip1 = new();
 
         #endregion
@@ -54,9 +56,18 @@ namespace LegalLead.PublicData.Search
             SearchProcessComplete += MainForm_PostSearchDetail;
             menuLogView.Click += MenuLogView_Click;
             menuOpenFile.Click += MenuOpenFile_Click;
+            menuOpenFile.Enabled = false;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
-            SetStatus(StatusType.Ready);
+            SetStatus(StatusType.Ready); 
+            _ = LoadFileNamesAsync().ContinueWith(_ =>
+            {
+                // Ensure this runs on the UI thread
+                Invoke(() =>
+                {
+                    menuOpenFile.Enabled = true;
+                });
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void MenuOpenFile_Click(object sender, EventArgs e)
@@ -66,10 +77,15 @@ namespace LegalLead.PublicData.Search
                 return;
             }
             itm.Checked = !itm.Checked;
-            var handler = new OpenFilesRequestedEvent { GetMain = this };
+            var handler = new OpenFilesRequestedEvent(fileCollection) { GetMain = this };
             handler.Toggle(itm.Checked);
         }
 
+        private async Task LoadFileNamesAsync()
+        {
+            // Populate fileCollection with files from CommonFolderHelper asynchronously
+            fileCollection = await Task.Run(CommonFolderHelper.GetFiles);
+        }
         #endregion
 
         #region Form Event Handlers

@@ -36,6 +36,7 @@
             button1 = new System.Windows.Forms.Button();
             menuTopMenu = new System.Windows.Forms.MenuStrip();
             mnuFile = new System.Windows.Forms.ToolStripMenuItem();
+            menuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             menuLogView = new System.Windows.Forms.ToolStripMenuItem();
             menuRecentFiles = new System.Windows.Forms.ToolStripMenuItem();
             menuFileSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -66,7 +67,6 @@
             lbNotes = new System.Windows.Forms.Label();
             lbProgressDate = new System.Windows.Forms.Label();
             viewPanel = new System.Windows.Forms.Panel();
-            menuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             tableLayoutPanel1.SuspendLayout();
             menuTopMenu.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -188,29 +188,35 @@
             mnuFile.Size = new System.Drawing.Size(37, 20);
             mnuFile.Text = "F&ile";
             // 
+            // menuOpenFile
+            // 
+            menuOpenFile.Name = "menuOpenFile";
+            menuOpenFile.Size = new System.Drawing.Size(110, 22);
+            menuOpenFile.Text = "&Open";
+            // 
             // menuLogView
             // 
             menuLogView.Name = "menuLogView";
-            menuLogView.Size = new System.Drawing.Size(180, 22);
+            menuLogView.Size = new System.Drawing.Size(110, 22);
             menuLogView.Text = "&Logs";
             // 
             // menuRecentFiles
             // 
             menuRecentFiles.Name = "menuRecentFiles";
-            menuRecentFiles.Size = new System.Drawing.Size(180, 22);
+            menuRecentFiles.Size = new System.Drawing.Size(110, 22);
             menuRecentFiles.Text = "Recent";
             menuRecentFiles.Visible = false;
             // 
             // menuFileSeparator
             // 
             menuFileSeparator.Name = "menuFileSeparator";
-            menuFileSeparator.Size = new System.Drawing.Size(177, 6);
+            menuFileSeparator.Size = new System.Drawing.Size(107, 6);
             menuFileSeparator.Visible = false;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
@@ -486,12 +492,6 @@
             viewPanel.Name = "viewPanel";
             viewPanel.Size = new System.Drawing.Size(904, 29);
             viewPanel.TabIndex = 19;
-            // 
-            // menuOpenFile
-            // 
-            menuOpenFile.Name = "menuOpenFile";
-            menuOpenFile.Size = new System.Drawing.Size(180, 22);
-            menuOpenFile.Text = "&Open";
             // 
             // FormMain
             // 

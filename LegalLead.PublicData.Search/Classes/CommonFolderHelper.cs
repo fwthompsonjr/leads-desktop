@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 namespace LegalLead.PublicData.Search.Classes
 {
     public static class CommonFolderHelper
@@ -22,17 +23,19 @@ namespace LegalLead.PublicData.Search.Classes
         }
         public static List<FileInfo> GetFiles()
         {
-            var commonPath = CommonFolder;
-            var localPath = LocalFolder;
+            var commonPath = CommonFolder; // this is from program-data
+            var localPath = LocalFolder; // this is from local-app-data
             if (!Directory.Exists(commonPath) && !Directory.Exists(localPath)) { return []; }
             var files = new List<FileInfo>();
-            if (Directory.Exists(localPath))
-            {
-                files.AddRange(new DirectoryInfo(localPath).GetFiles("*.xlsx", SearchOption.AllDirectories));
-            }
             if (Directory.Exists(commonPath))
             {
                 files.AddRange(new DirectoryInfo(commonPath).GetFiles("*.xlsx"));
+            }
+            if (Directory.Exists(localPath))
+            {
+                var localFiles = new DirectoryInfo(localPath).GetFiles("*.xlsx", SearchOption.AllDirectories).ToList();
+                localFiles.RemoveAll(x => files.Exists(f => f.Name.Equals(x.Name)));
+                files.AddRange(localFiles);
             }
             files.RemoveAll(IsNotExcelPackage);
             files.Sort((a, b) => a.FullName.CompareTo(b.FullName));
