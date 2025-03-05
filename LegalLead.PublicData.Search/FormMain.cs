@@ -1,4 +1,5 @@
-﻿using LegalLead.PublicData.Search.Helpers;
+﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using System;
@@ -52,9 +53,21 @@ namespace LegalLead.PublicData.Search
             SearchProcessBegin += MainForm_PostSearchDetail;
             SearchProcessComplete += MainForm_PostSearchDetail;
             menuLogView.Click += MenuLogView_Click;
+            menuOpenFile.Click += MenuOpenFile_Click;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
+        }
+
+        private void MenuOpenFile_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new OpenFilesRequestedEvent { GetMain = this };
+            handler.Toggle(itm.Checked);
         }
 
         #endregion
