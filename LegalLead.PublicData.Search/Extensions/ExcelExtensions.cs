@@ -5,7 +5,6 @@ using OfficeOpenXml;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search.Extensions
 {
@@ -38,7 +37,7 @@ namespace LegalLead.PublicData.Search.Extensions
             var worksheet = package.Workbook.Worksheets[0];
             var rows = worksheet.Dimension.Rows;
             var list = new List<QueryDbResult>();
-            for(var r = 2; r < rows; r++)
+            for (var r = 2; r < rows; r++)
             {
                 list.Add(new()
                 {
@@ -96,11 +95,12 @@ namespace LegalLead.PublicData.Search.Extensions
                 {
                     if (!plaintiffNames.Contains(cellText)) return false;
                 }
-                else {
+                else
+                {
                     var expectedValue = expectedHeaders[columnId];
                     if (!expectedValue.Equals(cellText)) return false;
                 }
-                
+
             }
 
             return true;
@@ -111,14 +111,14 @@ namespace LegalLead.PublicData.Search.Extensions
             if (package == null) return false;
             return IsValidExcelPackage(package);
         }
-        
+
         private static string GetCellValue(this ExcelWorksheet worksheet, int row, int col)
         {
             var cellValue = worksheet.GetValue(row, col);
             if (cellValue is not string text) return string.Empty;
             return text;
         }
-        
+
         private static bool IsAccountAdmin()
         {
             return GetAccountIndexes().Equals("-1");

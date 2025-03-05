@@ -305,7 +305,8 @@ namespace LegalLead.PublicData.Search
                 CaseData.WebsiteId = siteData.Id;
                 // write search count to api
                 var addresses = CaseData.PeopleList;
-                if (addresses != null && addresses.Count > 0) {
+                if (addresses != null && addresses.Count > 0)
+                {
                     addresses.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
                     addresses.ForEach(a =>
                     {

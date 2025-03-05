@@ -1,13 +1,11 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.PublicData.Search.Interfaces;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Extensions;
-using System.Runtime;
-using LegalLead.PublicData.Search.Interfaces;
-using System.Threading;
-using OpenQA.Selenium.Support.UI;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -56,7 +54,7 @@ namespace LegalLead.PublicData.Search.Util
                 throw;
             }
         }
-        
+
         protected override string ScriptName { get; } = "click search";
 
         private void GetSettings()
@@ -74,7 +72,8 @@ namespace LegalLead.PublicData.Search.Util
             if (SettingResponse == null || !SettingResponse.IsValid() || CaseTypeIterator == null) return;
             SettingResponse.ResetNavigation(Driver);
             var executor = GetJavaScriptExecutor();
-            SettingResponse.ControlMap.ForEach(control => {
+            SettingResponse.ControlMap.ForEach(control =>
+            {
                 var js = $"document.getElementById('{control.Name}').value = '{control.Value}'";
                 executor.ExecuteScript(js);
             });
@@ -139,7 +138,8 @@ namespace LegalLead.PublicData.Search.Util
                     // Wait until the URL ends with the expected value
                     wait.Until(d => !d.Url.Contains(expectedUrlEnding));
                 }
-                catch (Exception ex) { 
+                catch (Exception ex)
+                {
                     Debug.WriteLine(ex);
                 }
             }

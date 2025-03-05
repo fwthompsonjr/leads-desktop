@@ -1,10 +1,10 @@
 ﻿
 using LegalLead.PublicData.Search.Interfaces;
-using Polly.Timeout;
+using LegalLead.PublicData.Search.Util;
 using Polly;
+using Polly.Timeout;
 using System;
 using System.Diagnostics;
-using LegalLead.PublicData.Search.Util;
 namespace LegalLead.PublicData.Search
 {
 
@@ -52,5 +52,5 @@ namespace LegalLead.PublicData.Search
                 navigateSearch.RemediateSearch();
             }
         }
-    } 
+    }
 }

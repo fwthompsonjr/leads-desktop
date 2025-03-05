@@ -451,10 +451,13 @@ namespace LegalLead.PublicData.Search
             }
             var item = GetObject<SearchResult>(itm.Tag);
             if (item == null) return;
-            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view")) {
+            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view"))
+            {
                 var id = mnuView.DropDownItems.IndexOf(itm);
-                if (id != -1) {
-                    for (int i = 0; i < mnuView.DropDownItems.Count; i++) { 
+                if (id != -1)
+                {
+                    for (int i = 0; i < mnuView.DropDownItems.Count; i++)
+                    {
                         if (i == id) continue;
                         if (mnuView.DropDownItems[i] is ToolStripMenuItem obj) { obj.Checked = false; }
                     }
@@ -555,9 +558,9 @@ namespace LegalLead.PublicData.Search
                 }
             }
             if (
-                !string.IsNullOrEmpty(contextIndex) && 
-                int.TryParse(contextIndex, out var subContextIndex) && 
-                subContextIndex >= 0 && 
+                !string.IsNullOrEmpty(contextIndex) &&
+                int.TryParse(contextIndex, out var subContextIndex) &&
+                subContextIndex >= 0 &&
                 subContextIndex < cboSearchType.Items.Count)
             {
                 cboSearchType.SelectedIndex = subContextIndex;

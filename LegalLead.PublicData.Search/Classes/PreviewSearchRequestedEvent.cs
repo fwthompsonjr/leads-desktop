@@ -152,7 +152,7 @@ namespace LegalLead.PublicData.Search
                     if (i == 0) continue;
                     viewPanelTableLayout.SetColumnSpan(current.Content, 2);
                 }
-                var addresses = context.AddressList == null ?[] : context.AddressList;
+                var addresses = context.AddressList == null ? [] : context.AddressList;
                 addresses.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
                 if (addresses != null && addresses.Count > 0)
                 {
@@ -221,7 +221,7 @@ namespace LegalLead.PublicData.Search
                         DateFiled = g.Key.DateFiled,
                         Count = g.Count()
                     }).ToList();
-                
+
                 var subtotals = groupedData.GroupBy(c => c.Court)
                     .Select(g => new SummaryDto
                     {
@@ -230,7 +230,7 @@ namespace LegalLead.PublicData.Search
                         Count = g.Sum(x => x.Count)
                     }).ToList();
                 var sum = groupedData.Sum(x => x.Count);
-                
+
                 groupedData.Sort((a, b) =>
                 {
                     var aa = a.Court.CompareTo(b.Court);

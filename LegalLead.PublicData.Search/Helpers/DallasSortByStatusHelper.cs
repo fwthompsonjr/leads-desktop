@@ -1,11 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Util;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Helpers
 {

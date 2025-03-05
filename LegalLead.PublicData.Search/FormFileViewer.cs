@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,7 +31,8 @@ namespace LegalLead.PublicData.Search
             _ = LoadFileNamesAsync().ContinueWith(_ =>
             {
                 // Ensure this runs on the UI thread
-                Invoke(() => {
+                Invoke(() =>
+                {
                     dataGridFiles.Enabled = true;
                 });
             }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -107,9 +107,11 @@ namespace LegalLead.PublicData.Search
 
             // Clear existing rows
             dataGridFiles.Columns.Clear();
-            var dataSource = fileCollection.Select(x => new FileView { 
+            var dataSource = fileCollection.Select(x => new FileView
+            {
                 Date = $"{x.CreationTime:g}",
-                FileName = x.Name }).ToList();
+                FileName = x.Name
+            }).ToList();
             dataGridFiles.DataSource = dataSource;
             dataGridFiles.Refresh();
         }
