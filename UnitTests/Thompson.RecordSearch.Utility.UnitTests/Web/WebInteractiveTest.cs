@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
@@ -106,7 +107,7 @@ namespace Thompson.RecordSearch.Utility.Tests
                 sttg.Keys.Add(districtSearch);
             }
             var webactive = new WebInteractive(sttg, startDate, endingDate);
-            var found = webactive.Fetch();
+            var found = webactive.Fetch(CancellationToken.None);
             Assert.IsNotNull(found);
 
             WriteToExcel(found);
@@ -127,7 +128,7 @@ namespace Thompson.RecordSearch.Utility.Tests
             var startDate = DateTime.Now.Date.AddDays(-4);
             var endingDate = DateTime.Now.Date.AddDays(-1);
             var webactive = new WebInteractive(sttg, startDate, endingDate);
-            var found = webactive.Fetch();
+            var found = webactive.Fetch(CancellationToken.None);
             Assert.IsNotNull(found);
 
             WriteToExcel(found);

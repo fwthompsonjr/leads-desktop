@@ -1,3 +1,4 @@
+using LegalLead.PublicData.Search.Extensions;
 using System;
 
 namespace LegalLead.PublicData.Search.Util
@@ -29,7 +30,7 @@ namespace LegalLead.PublicData.Search.Util
                 .Replace("{2}", Parameters.CourtLocator);
             var arr = new string[] { StatusScript, script };
             var cmmd = string.Join(Environment.NewLine, arr);
-            executor.ExecuteScript(cmmd);
+            Driver.ExecuteScriptWithRetry(executor, TimeSpan.FromSeconds(5), cmmd);
             return true;
         }
 

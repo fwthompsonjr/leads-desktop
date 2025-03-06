@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using LegalLead.PublicData.Search.Extensions;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics;
@@ -35,7 +36,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var content = string.Join(Environment.NewLine, sortscript);
             const string command = "return typeSort.isSorted();";
             var js = string.Concat(content, Environment.NewLine, command);
-            var response = JsExecutor.ExecuteScript(js);
+            var response = Driver.ExecuteScriptWithRetry(JsExecutor, TimeSpan.FromSeconds(5), js);
             if (response is not bool isSorted) return false;
             return isSorted;
         }

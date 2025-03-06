@@ -21,11 +21,16 @@ namespace legallead.search.tests.util
         {
             var driver = new Mock<IWebDriver>();
             var navigation = new Mock<INavigation>();
+            var options = new Mock<IOptions>();
+            var timeouts = new Mock<ITimeouts>();
             var parameters = new DallasSearchProcess();
             var startDt = DateTime.Now;
             var endingDt = DateTime.Now.AddDays(3);
             parameters.SetSearchParameters(startDt, endingDt, "JUSTICE");
             driver.Setup(x => x.Navigate()).Returns(navigation.Object);
+            driver.Setup(x => x.Manage()).Returns(options.Object);
+            options.Setup(x => x.Timeouts()).Returns(timeouts.Object);
+            timeouts.Setup(x => x.PageLoad).Returns(TimeSpan.FromSeconds(1));
             navigation.Setup(x => x.GoToUrl(It.IsAny<Uri>())).Verifiable();
             var service = new MockDallasSetupParameters
             {

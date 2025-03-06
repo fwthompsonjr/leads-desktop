@@ -2,7 +2,7 @@
 using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
-using OfficeOpenXml.Table;
+using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
@@ -22,6 +23,9 @@ namespace LegalLead.PublicData.Search
 {
     public partial class FormMain : Form
     {
+
+        public event EventHandler<SearchContext> SearchProcessBegin;
+        public event EventHandler<SearchContext> SearchProcessComplete;
 
         internal void SetDentonStatusLabelFromSetting()
         {
@@ -66,6 +70,22 @@ namespace LegalLead.PublicData.Search
                 CommonKeyIndexes.CriminalCivilAndFamily.Split(',')[subItemId]);
             }
             tsStatusLabel.Text = sb.ToString();
+        }
+
+
+        protected virtual void OnSearchProcessBegin(SearchContext context)
+        {
+            SearchProcessBegin?.Invoke(this, context);
+        }
+
+        protected virtual void OnSearchProcessComplete(SearchContext context)
+        {
+            SearchProcessComplete?.Invoke(this, context);
+        }
+
+        private static void MainForm_PostSearchDetail(object sender, SearchContext e)
+        {
+            dbHelper.PostFileDetail(e);
         }
 
         private void CboWebsite_SelectedValueChanged(object sender, EventArgs e)
@@ -165,7 +185,7 @@ namespace LegalLead.PublicData.Search
                 style.Height = height;
                 style.SizeType = SizeType.Absolute;
             }
-            
+
         }
 
         private void WebSiteUsageValidation()
@@ -369,27 +389,66 @@ namespace LegalLead.PublicData.Search
             // remove all items from the tab strip
             try
             {
-                tsDropFileList.DropDownItems.Clear();
-                menuRecentFiles.DropDownItems.Clear();
+                var targets = new List<ToolStripItem>{
+                    tsDropFileList,
+                    menuRecentFiles,
+                    mnuView
+                };
+                targets.ForEach(t =>
+                {
+                    if (t is ToolStripDropDownItem drop) drop.DropDownItems.Clear();
+                    if (t is ToolStripMenuItem menu) menu.DropDownItems.Clear();
+                });
                 var list = GetObject<List<SearchResult>>(Tag);
                 list.ForEach(x =>
                 {
-                    var button = new ToolStripMenuItem
+                    var addresses = x.AddressList;
+                    addresses.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
+                    x.AddressList = addresses;
+                    addresses.ForEach(a =>
                     {
-                        Visible = true,
-                        Tag = x,
-                        Text = x.Search,
-                        DisplayStyle = ToolStripItemDisplayStyle.Text
-                    };
-                    button.Click += Button_Click;
-                    tsDropFileList.DropDownItems.Add(button);
-                    menuRecentFiles.DropDownItems.Add(button);
+                        if (DateTime.TryParse(a.DateFiled, CultureInfo.CurrentCulture.DateTimeFormat, out var date))
+                        {
+                            a.DateFiled = $"{date:d}";
+                        }
+                    });
+                    for (int i = 0; i < targets.Count; i++)
+                    {
+                        var t = targets[i];
+                        var button = new ToolStripMenuItem
+                        {
+                            Visible = true,
+                            Tag = x,
+                            Text = x.Search,
+                            DisplayStyle = ToolStripItemDisplayStyle.Text
+                        };
+                        button.Click += Button_Click;
+                        if (t is ToolStripDropDownItem drop) drop.DropDownItems.Add(button);
+                        if (t is ToolStripMenuItem menu)
+                        {
+                            if (i == 2) { button.Name = $"view_button_{list.IndexOf(x):D2}"; }
+                            menu.DropDownItems.Add(button);
+                        }
+                    }
                 });
-                tsDropFileList.Enabled = list.Count > 0;
-                tsDropFileList.Visible = tsDropFileList.Enabled;
-                menuRecentFiles.Enabled = list.Count > 0;
-                menuRecentFiles.Visible = menuRecentFiles.Enabled;
+                targets.ForEach(t =>
+                {
+                    t.Enabled = list.Count > 0;
+                    t.Visible = t.Enabled;
+                });
                 menuFileSeparator.Visible = menuRecentFiles.Visible;
+                menuOpenFile.Enabled = false;
+#if !DEBUG
+                mnuView.Visible = false;
+#endif
+                _ = LoadFileNamesAsync().ContinueWith(_ =>
+                {
+                    // Ensure this runs on the UI thread
+                    Invoke(() =>
+                    {
+                        menuOpenFile.Enabled = true;
+                    });
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
             catch (Exception)
             {
@@ -399,16 +458,45 @@ namespace LegalLead.PublicData.Search
 
         private void Button_Click(object sender, EventArgs e)
         {
-            if (sender == null)
+            if (sender is not ToolStripMenuItem itm)
             {
                 return;
             }
-
-            var item = GetObject<SearchResult>(((ToolStripMenuItem)sender).Tag);
+            var item = GetObject<SearchResult>(itm.Tag);
+            if (item == null) return;
+            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view"))
+            {
+                var id = mnuView.DropDownItems.IndexOf(itm);
+                if (id != -1)
+                {
+                    for (int i = 0; i < mnuView.DropDownItems.Count; i++)
+                    {
+                        if (i == id) continue;
+                        if (mnuView.DropDownItems[i] is ToolStripMenuItem obj) { obj.Checked = false; }
+                    }
+                }
+                itm.Checked = !itm.Checked;
+                var admin = IsAccountAdmin();
+                var handler = new PreviewSearchRequestedEvent { GetMain = this };
+                handler.UseMaskedData = !admin;
+                handler.Toggle(itm.Checked, item);
+                return;
+            }
             var fileName = item.ResultFileName;
             OpenExcel(ref fileName);
         }
 
+
+        private void MenuLogView_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new ViewLogRequestedEvent { GetMain = this };
+            handler.Toggle(itm.Checked);
+        }
         private void TsWebDriver_Initialize()
         {
             // when data source is changed?
@@ -465,9 +553,10 @@ namespace LegalLead.PublicData.Search
 #if DEBUG
         private void DebugFormLoad()
         {
-
+            const string subContextId = "form-sub-context-id";
             // change selected index based upon appSetting
             var configIndex = ConfigurationManager.AppSettings[CommonKeyIndexes.FormContextId];
+            var contextIndex = ConfigurationManager.AppSettings[subContextId];
             var startDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartDate];
             var endDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormEndDate];
             if (!string.IsNullOrEmpty(configIndex))
@@ -475,11 +564,19 @@ namespace LegalLead.PublicData.Search
                 var cfidx = Convert.ToInt32(
                     configIndex,
                     CultureInfo.CurrentCulture);
-                if (cfidx < cboWebsite.Items.Count)
+                if (cfidx < cboWebsite.Items.Count && cfidx >= 0)
                 {
                     cboWebsite.SelectedIndex = cfidx;
                     CboWebsite_SelectedValueChanged(null, null);
                 }
+            }
+            if (
+                !string.IsNullOrEmpty(contextIndex) &&
+                int.TryParse(contextIndex, out var subContextIndex) &&
+                subContextIndex >= 0 &&
+                subContextIndex < cboSearchType.Items.Count)
+            {
+                cboSearchType.SelectedIndex = subContextIndex;
             }
             if (!string.IsNullOrEmpty(startDate))
             {
@@ -489,6 +586,21 @@ namespace LegalLead.PublicData.Search
             {
                 dteEnding.Value = DateTime.Parse(endDate, CultureInfo.CurrentCulture.DateTimeFormat);
             }
+            WriteAdminOverrides();
+        }
+        private static void WriteAdminOverrides()
+        {
+            const string category = "admin";
+            var settings = new List<UserSettingChangeViewModel>();
+            var map = new[] { "Open Headless:", "Database Search:", "Database Minimum Persistence:" };
+            for (var i = 0; i < map.Length; i++)
+            {
+                var keyName = $"debug-admin-setting-{i}";
+                var keyValue = ConfigurationManager.AppSettings[keyName];
+                if (string.IsNullOrWhiteSpace(keyValue)) continue;
+                settings.Add(new() { Category = category, Name = map[i], Value = keyValue });
+            }
+            settings.ForEach(x => { SettingsWriter.Change(x); });
         }
 #endif
         private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
@@ -519,7 +631,7 @@ namespace LegalLead.PublicData.Search
                 + Environment.NewLine +
                 CommonKeyIndexes.DashedLine;
 
-            Console.WriteLine(message);
+            Console.WriteLine(InjectCourtLocation(message));
 
         }
 
@@ -530,6 +642,25 @@ namespace LegalLead.PublicData.Search
 
             Console.WriteLine(message);
 
+        }
+        protected string InjectCourtLocation(string message, bool isretry = false)
+        {
+            try
+            {
+                if (!cboSearchType.Visible) return message;
+                if (cboSearchType.SelectedItem is not DropDown caseStatus) return message;
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                var subLocation = $" Search Type: {textInfo.ToTitleCase(caseStatus.Name.ToLower())}";
+                message = message.Replace(CommonKeyIndexes.DashedLine, subLocation);
+                message += $"{Environment.NewLine}{CommonKeyIndexes.DashedLine}";
+                return message;
+            }
+            catch (Exception)
+            {
+                if (isretry) throw;
+                var mssg = Invoke(() => { return InjectCourtLocation(message, true); });
+                return mssg;
+            }
         }
         private static string GetSourceName(WebNavigationParameter source)
         {
@@ -652,7 +783,7 @@ namespace LegalLead.PublicData.Search
         {
             this.Invoke(new Action(() =>
             {
-                var args = new EventArgs{};
+                var args = new EventArgs { };
                 ComboBox_DataSourceChanged(null, args);
             }));
         }

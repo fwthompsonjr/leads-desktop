@@ -1,6 +1,5 @@
 ﻿using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -103,7 +102,7 @@ namespace LegalLead.PublicData.Search
                 items.ForEach(i =>
                 {
                     if (!statusData.Exists(x => x.Id == i.Id)) statusData.Add(i);
-                }); 
+                });
             }
         }
 

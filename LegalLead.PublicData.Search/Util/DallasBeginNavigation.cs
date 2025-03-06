@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Extensions;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Thompson.RecordSearch.Utility.Classes;
 
@@ -16,7 +17,7 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
             Uri uri = GetUri(destination);
 
-            Driver.Navigate().GoToUrl(uri);
+            Driver.NavigateWithRetry(TimeSpan.FromSeconds(5), uri);
             return true;
         }
 

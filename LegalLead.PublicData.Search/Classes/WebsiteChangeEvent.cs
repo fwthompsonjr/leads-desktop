@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Dto;
@@ -41,6 +42,14 @@ namespace LegalLead.PublicData.Search
                 GetMain.ButtonDentonSetting.Text = CommonKeyIndexes.PasswordLabel;
             }
             defaultDef.Apply();
+            HideProgress();
+        }
+
+        protected void HideProgress()
+        {
+            const string progressBar = "progressBar1";
+            var controls = GetMain.Controls.Find(progressBar, true).ToList();
+            controls.ForEach(control => { control.Visible = false; });
         }
 
         private void ToggleComboBoxBinding(ComboBoxEx cbo, bool isCustomBindingNeeded, int countyId = 60)
@@ -76,11 +85,6 @@ namespace LegalLead.PublicData.Search
             cbo.SelectedIndexChanged += GetMain.CboSearchType_SelectedIndexChanged;
         }
 
-        protected static void ApplyRowStyles(TableLayoutRowStyleCollection styles, int websiteId)
-        {
-            var styleProviders = RowStyleChangeProvider.RowChangeProviders;
-            // styleProviders.ForEach(p => p.ApplyStyles(styles, websiteId));
-        }
 
         public void MapLabels(TableLayoutRowStyleCollection styles)
         {

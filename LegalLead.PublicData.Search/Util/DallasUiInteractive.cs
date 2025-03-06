@@ -26,7 +26,7 @@ namespace LegalLead.PublicData.Search.Util
     {
         public DallasUiInteractive(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters)
         {
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            ArgumentNullException.ThrowIfNull(parameters);
             StartDate = FetchKeyedData(parameters.Keys, "StartDate");
             EndingDate = FetchKeyedData(parameters.Keys, "EndDate");
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
@@ -37,13 +37,14 @@ namespace LegalLead.PublicData.Search.Util
             ActionItems.AddRange(collection);
         }
 
-        public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
-        public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
-        protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = new List<DallasCaseStyleDto>();
+        public List<PersonAddress> People { get; private set; } = [];
+        public List<CaseItemDto> Items { get; private set; } = [];
+        public bool IsDistrictFilterActive { get; set; }
+        protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = [];
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
         protected string CourtType { get; set; }
-        private readonly List<ICountySearchAction> ActionItems = new();
+        private readonly List<ICountySearchAction> ActionItems = [];
         public override WebFetchResult Fetch(CancellationToken token)
         {
             try
@@ -56,15 +57,25 @@ namespace LegalLead.PublicData.Search.Util
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, true, true);
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
+                var bulkReader = new DalllasBulkCaseReader
+                {
+                    Driver = driver,
+                    Interactive = this,
+                    Parameters = parameters,
+                };
+                postcommon.Add(bulkReader);
+
+
                 var result = new WebFetchResult();
                 var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", "Exclude Weekend From Search:", true);
-                var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday }; 
+                var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday };
                 if (excludeWeekend)
                 {
                     dates.RemoveAll(d => weekends.Contains(d.DayOfWeek));
                 }
                 Iterate(driver, parameters, dates, common, postcommon);
                 if (ExecutionCancelled || People.Count == 0) return result;
+                People.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled));
                 result.PeopleList = People;
                 result.Result = GetExcelFileName();
                 result.CaseList = JsonConvert.SerializeObject(People);
@@ -96,13 +107,21 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
-                if (driver == null) throw new ArgumentNullException(nameof(driver));
-                if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-                if (dates == null) throw new ArgumentNullException(nameof(dates));
-                if (common == null) throw new ArgumentNullException(nameof(common));
-                if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
+                ArgumentNullException.ThrowIfNull(driver);
+                ArgumentNullException.ThrowIfNull(parameters);
+                ArgumentNullException.ThrowIfNull(dates);
+                ArgumentNullException.ThrowIfNull(common);
+                ArgumentNullException.ThrowIfNull(postcommon);
 
                 IterateDateRange(driver, parameters, dates, common);
+                postcommon.ForEach(p =>
+                {
+                    if (p is DalllasBulkCaseReader bulk)
+                    {
+                        bulk.Workload.Clear();
+                        bulk.Workload.AddRange(Items);
+                    }
+                });
                 IterateItems(driver, parameters, postcommon);
             }
             catch (Exception ex)
@@ -119,11 +138,11 @@ namespace LegalLead.PublicData.Search.Util
 
         protected virtual void IterateDateRange(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-            if (dates == null) throw new ArgumentNullException(nameof(dates));
-            if (common == null) throw new ArgumentNullException(nameof(common));
-            bool isCaptchaNeeded = true; 
+            ArgumentNullException.ThrowIfNull(driver);
+            ArgumentNullException.ThrowIfNull(parameters);
+            ArgumentNullException.ThrowIfNull(dates);
+            ArgumentNullException.ThrowIfNull(common);
+            bool isCaptchaNeeded = true;
             var exec = (IJavaScriptExecutor)driver;
             var iterator = IterationProvider.GetIterator(
                 CourtType,
@@ -134,24 +153,54 @@ namespace LegalLead.PublicData.Search.Util
                 Console.WriteLine("Searching for records on date: {0:d}", d);
                 parameters.SetSearchParameters(d, d, CourtType);
                 iterator.SearchIndex = 0;
-                this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}");
-                do
+                var collection = iterator.GetCollection().FindAll(x => !x.IsExecuted);
+                while (collection.Any(a => !a.IsExecuted))
                 {
-                    common.ForEach(a =>
-                    {
-                        isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
-                        if (a is DallasSetupParameters)
-                        {
-                            iterator.SetSearchParameter();
-                        }
-                    });
-                    iterator.SearchIndex++;
-                    this.EchoProgess(0, iterator.SearchLimit, iterator.SearchIndex, "", false, "", $"{d:M/d}-{iterator.SearchIndex}");
-                } while (iterator.SearchIndex < iterator.SearchLimit);
+                    isCaptchaNeeded = IterateCourtLocations(driver, parameters, common, d, isCaptchaNeeded, iterator, collection);
+                    collection = collection.FindAll(x => !x.IsExecuted);
+                }
+
                 this.EchoProgess(0, 0, 0, dateNotification: "hide");
             });
             this.CompleteProgess();
             parameters.SetSearchParameters(dates[0], dates[^1], CourtType);
+        }
+
+        private bool IterateCourtLocations(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, DateTime d, bool isCaptchaNeeded, ICaseTypeIterator iterator, List<CaseTypeExecutionTracker> collection)
+        {
+            try
+            {
+                bool isDistrict = collection.Any(x => x.Officer.Court.StartsWith("DC"));
+                if (isDistrict && !IsDistrictFilterActive)
+                {
+                    collection.ForEach(c => c.IsExecuted = true);
+                    collection.RemoveAll(x => x.Id > 0);
+                }
+                var limit = collection.Count;
+                foreach (var item in collection)
+                {
+                    iterator.SearchIndex = collection.IndexOf(item) + 1;
+                    this.EchoProgess(0, limit, iterator.SearchIndex, "", false, "", $"{d:M/d}-{iterator.SearchIndex}");
+                    common.ForEach(a =>
+                    {
+                        if (a is DallasNavigateSearch navSearch)
+                        {
+                            navSearch.CaseTypeIterator = iterator;
+                        }
+                        isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
+                        if (a is DallasSetupParameters)
+                        {
+                            iterator.SetParameter(collection);
+                        }
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                // take no action on error here
+            }
+
+            return isCaptchaNeeded;
         }
 
         private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
@@ -176,6 +225,10 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
+                if (a is DallasNavigateSearch navigateSearch)
+                {
+                    return SearchActionWrapper.Execute(navigateSearch);
+                }
                 return a.Execute();
             }
             catch (Exception e)
@@ -191,55 +244,43 @@ namespace LegalLead.PublicData.Search.Util
 
         protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-            if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
+            ArgumentNullException.ThrowIfNull(driver);
+            ArgumentNullException.ThrowIfNull(parameters);
+            ArgumentNullException.ThrowIfNull(postcommon);
             if (ExecutionCancelled) return;
-            var count = Items.Count;
             Items.Sort((a, b) => a.FileDate.CompareTo(b.FileDate));
-
-            Items.ForEach(i =>
+            postcommon.ForEach(a =>
             {
-                var c = Items.IndexOf(i) + 1;
-                EchoIteration(i, c, count);
-                postcommon.ForEach(a =>
+                var resp = ExecuteAction(a);
+                if (resp is string json)
                 {
-                    Populate(a, driver, parameters, i.Href);
-                    var response = ExecuteAction(a);
-                    if (a is DallasFetchCaseStyle _ && response is string cases)
-                    {
-                        var info = GetStyle(cases);
-                        if (info != null)
-                        {
-                            i.CaseStyle = info.CaseStyle;
-                            i.Plaintiff = info.Plaintiff;
-                            if (!string.IsNullOrWhiteSpace(info.Address)) { CaseStyles.Add(info); }
-                            AppendPerson(i);
-                        }
-                    }
-                });
+                    var list = json.ToInstance<List<CaseItemDto>>();
+                    if (list != null) Items = list;
+                }
             });
+
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
+            CaseStyles = [];
             casenumbers.ForEach(i =>
             {
+                var sources = Items.FindAll(x => x.CaseNumber.Equals(i));
+                var source = sources[0];
+                if (sources.Count > 1 || sources.Any(x => !string.IsNullOrEmpty(x.Address)))
+                {
+                    source = sources.Find(x => !string.IsNullOrEmpty(x.Address));
+                }
+                CaseStyles.Add(new() { Address = source.Address, CaseStyle = source.CaseStyle, Plaintiff = source.Plaintiff });
                 var p = People.Find(x => x.CaseNumber == i);
                 if (p == null)
                 {
-                    var source = Items.Find(x => x.CaseNumber == i);
-                    if (source != null) { AppendPerson(source); }
+                    var itmDto = Items.Find(x => x.CaseNumber == i);
+                    if (itmDto != null) { AppendPerson(itmDto); }
                 }
             });
             this.EchoProgess(0, 0, 0, dateNotification: "hide");
             this.CompleteProgess();
         }
 
-        private void EchoIteration(CaseItemDto dto, int current, int max)
-        {
-            var d1 = dto.FileDate;
-            var dateformat = CultureInfo.CurrentCulture.DateTimeFormat;
-            if (DateTime.TryParse(d1, dateformat, DateTimeStyles.AssumeLocal, out var dte1)) d1 = dte1.ToString("M/d", dateformat);
-            this.EchoProgess(0, max, current, $"{d1} - Reading item {current} of {max}.", true, dateNotification: d1);
-        }
         private void Populate(ICountySearchAction a, IWebDriver driver, DallasSearchProcess parameters, string uri = "")
         {
             a.Driver = driver;
@@ -269,8 +310,21 @@ namespace LegalLead.PublicData.Search.Util
         private void AppendPerson(CaseItemDto dto)
         {
             var person = dto.FromDto();
-            var address = GetAddress(CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase)));
-            if (address != null && address.Any())
+            var target = CaseStyles.Find(c => c.CaseStyle.Equals(dto.CaseStyle, StringComparison.OrdinalIgnoreCase));
+            if (target == null && !string.IsNullOrEmpty(dto.CaseStyle))
+            {
+                CaseStyles.Add(new()
+                {
+                    Address = dto.Address,
+                    CaseStyle = dto.CaseStyle,
+                    Plaintiff = dto.Plaintiff
+                });
+                AppendPerson(dto);
+                return;
+            }
+            var address = GetAddress(target);
+
+            if (address != null && address.Count != 0)
             {
                 var ln = address.Count - 1;
                 var last = address[ln].Trim();
@@ -296,7 +350,7 @@ namespace LegalLead.PublicData.Search.Util
             if (dto == null || string.IsNullOrEmpty(dto.Address)) return null;
             var data = dto.Address;
             while (data.Contains(doublepipe)) { data = data.Replace(doublepipe, pipe); }
-            return data.Split('|').ToList();
+            return [.. data.Split('|')];
         }
 
         private static string FetchKeyedItem(List<WebNavigationKey> keys, string keyname)
@@ -319,27 +373,12 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 var data = JsonConvert.DeserializeObject<List<CaseItemDto>>(json);
-                if (data == null) return new List<CaseItemDto>();
+                if (data == null) return [];
                 return data;
             }
             catch (Exception)
             {
-                return new List<CaseItemDto>();
-            }
-        }
-
-        [ExcludeFromCodeCoverage]
-        private static DallasCaseStyleDto GetStyle(string json)
-        {
-            try
-            {
-                var data = JsonConvert.DeserializeObject<DallasCaseStyleDto>(json);
-                if (data == null) return null;
-                return data;
-            }
-            catch (Exception)
-            {
-                return null;
+                return [];
             }
         }
 
@@ -411,8 +450,23 @@ namespace LegalLead.PublicData.Search.Util
         private class FallbackIterator : BaseCaseIterator
         {
             public override string Name => "FALLBACK";
+
+            public override List<Common.DallasJusticeOfficer> Officers => throw new NotImplementedException();
+
+            public override string JsContentScript { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
         }
 
+        private class SetParameterResponse
+        {
+            // conflicting lint from (sonarqube, ide) messages are forcing duplicate suppression methods
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+            [SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "Setter is needed for data-binding")]
+
+            public int Id { get; set; }
+            [SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "Setter is needed for data-binding")]
+            public bool Result { get; set; }
+#pragma warning restore IDE0079 // Remove unnecessary suppression
+        }
         private static readonly SessionSettingPersistence SettingsWriter =
             SessionPersistenceContainer
             .GetContainer

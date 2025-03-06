@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{AB526DB3-E334-4C6B-A634-1A890F63AADF}</ProjectGuid>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <AssemblyTitle>LegalLead.Resources</AssemblyTitle>
     <Product>LegalLead.Resources</Product>
     <NeutralLanguage>en</NeutralLanguage>
     <Copyright>Copyright ©  2019</Copyright>
-    <AssemblyVersion>2.8.10.0</AssemblyVersion>
-    <FileVersion>2.8.10.0</FileVersion>
+    <AssemblyVersion>2.8.11.0</AssemblyVersion>
+    <FileVersion>2.8.11.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

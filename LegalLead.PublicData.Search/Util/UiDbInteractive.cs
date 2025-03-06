@@ -223,7 +223,7 @@ namespace LegalLead.PublicData.Search.Util
                     DefaultValue = "true"
                 },
                 new SettingLookupDto {
-                    Name = "Database Minimun Persistence:",
+                    Name = "Database Minimum Persistence:",
                     DefaultValue = "5"
                 },
             }.ToList();
@@ -362,23 +362,7 @@ namespace LegalLead.PublicData.Search.Util
         }
         private static List<QueryDbResponse> ConvertFrom(List<PersonAddress> addresses)
         {
-            var list = new List<QueryDbResponse>();
-            if (addresses == null) return list;
-            addresses.ForEach(a => list.Add(new QueryDbResponse
-            {
-                Name = a.Name ?? string.Empty,
-                Zip = a.Zip ?? string.Empty,
-                Address1 = a.Address1 ?? string.Empty,
-                Address2 = a.Address2 ?? string.Empty,
-                Address3 = a.Address3 ?? string.Empty,
-                CaseNumber = a.CaseNumber ?? string.Empty,
-                DateFiled = a.DateFiled ?? string.Empty,
-                Court = a.Court ?? string.Empty,
-                CaseType = a.CaseType ?? string.Empty,
-                CaseStyle = a.CaseStyle ?? string.Empty,
-                Plaintiff = a.Plantiff ?? string.Empty,
-            }));
-            return list;
+            return addresses.ConvertFrom();
         }
         private static bool IsEmpty(PersonAddress a)
         {
@@ -549,7 +533,17 @@ namespace LegalLead.PublicData.Search.Util
             public WebFetchResult Filter()
             {
                 var people = Current.PeopleList;
-                if (people == null || people.Count == 0) return Current;
+                if (people == null) return Current;
+                people.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
+                people.ForEach(a =>
+                {
+                    if (DateTime.TryParse(a.DateFiled, CultureInfo.CurrentCulture.DateTimeFormat, out var date))
+                    {
+                        a.DateFiled = $"{date:d}";
+                    }
+                });
+                Current.PeopleList = people;
+                if (people.Count == 0) return Current;
                 var limits = UsagePersistence.GetUsageLimit(Current.WebsiteId);
                 if (limits == null || limits.MaxRecords == -1) return Current;
                 var setting = UsagePersistence.GetUsage(Current.WebsiteId);

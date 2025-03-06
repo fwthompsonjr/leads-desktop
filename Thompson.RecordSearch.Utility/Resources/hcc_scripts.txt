@@ -20,7 +20,9 @@
 	"usage-get-limits": "db/usage-get-monthly-limit",
 	"usage-get-history": "db/usage-get-history",
 	"usage-get-summary": "db/usage-get-summary",
-	"usage-set-limit": "db/usage-set-monthly-limit"
+	"usage-set-limit": "db/usage-set-monthly-limit",
+	"content-get": "db/get-search-file",
+	"content-save": "db/save-search-file"
   },
   "invoice": {
 	"uri": "http://api.legallead.co/db-invoice/",

@@ -45,6 +45,8 @@ namespace legallead.search.tests.classes
             Assert.False(string.IsNullOrEmpty(sut.UsageGetHistoryUrl));
             Assert.False(string.IsNullOrEmpty(sut.UsageGetSummaryUrl));
             Assert.False(string.IsNullOrEmpty(sut.UsageSetLimitUrl));
+            Assert.False(string.IsNullOrEmpty(sut.ContentGetUrl));
+            Assert.False(string.IsNullOrEmpty(sut.ContentSaveUrl));
         }
 
         [Fact]
