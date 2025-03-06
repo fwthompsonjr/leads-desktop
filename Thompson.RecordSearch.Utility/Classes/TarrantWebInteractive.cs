@@ -124,26 +124,7 @@ namespace Thompson.RecordSearch.Utility.Classes
 
                 var caseList = cases.ToList();
                 people = fetched.PeopleList;
-                people.ForEach(p =>
-                {
-                    var source = caseList.Find(c => c.Case.Equals(p.CaseNumber, StringComparison.CurrentCultureIgnoreCase));
-                    if (source == null)
-                    {
-                        return;
-                    }
-
-                    if (string.IsNullOrEmpty(source.PageHtml))
-                    {
-                        return;
-                    }
-
-                    var dto = DataPointLocatorDto.Load(source.PageHtml);
-                    p.CaseStyle = dto.DataPoints
-                        .First(f =>
-                            f.Name.Equals(CommonKeyIndexes.CaseStyle,
-                            StringComparison.CurrentCultureIgnoreCase)).Result;
-                });
-                // people = ExtractPeople(cases);
+                MapDataPointFromCaseList(people, caseList);
 
 
 
@@ -165,6 +146,41 @@ namespace Thompson.RecordSearch.Utility.Classes
             {
                 driver.Quit();
                 driver.Dispose();
+            }
+        }
+
+        private static void MapDataPointFromCaseList(List<PersonAddress> people, List<HLinkDataRow> caseList)
+        {
+            try
+            {
+                /* 
+                this is a legacy process
+                that may have been used to map case details from xml file
+                consider refactor or remove
+                */
+                people.ForEach(p =>
+                    {
+                        var source = caseList.Find(c => c.Case.Equals(p.CaseNumber, StringComparison.CurrentCultureIgnoreCase));
+                        if (source == null)
+                        {
+                            return;
+                        }
+
+                        if (string.IsNullOrEmpty(source.PageHtml))
+                        {
+                            return;
+                        }
+
+                        var dto = DataPointLocatorDto.Load(source.PageHtml);
+                        p.CaseStyle = dto.DataPoints
+                            .First(f =>
+                                f.Name.Equals(CommonKeyIndexes.CaseStyle,
+                                StringComparison.CurrentCultureIgnoreCase)).Result;
+                    });
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
 
