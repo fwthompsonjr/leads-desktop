@@ -7,8 +7,8 @@
     <Product>LegalLead.Resources</Product>
     <NeutralLanguage>en</NeutralLanguage>
     <Copyright>Copyright ©  2019</Copyright>
-    <AssemblyVersion>2.8.10.0</AssemblyVersion>
-    <FileVersion>2.8.10.0</FileVersion>
+    <AssemblyVersion>2.8.11.0</AssemblyVersion>
+    <FileVersion>2.8.11.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

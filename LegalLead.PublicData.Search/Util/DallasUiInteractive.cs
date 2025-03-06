@@ -39,6 +39,7 @@ namespace LegalLead.PublicData.Search.Util
 
         public List<PersonAddress> People { get; private set; } = [];
         public List<CaseItemDto> Items { get; private set; } = [];
+        public bool IsDistrictFilterActive { get; set; }
         protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = [];
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
@@ -74,6 +75,7 @@ namespace LegalLead.PublicData.Search.Util
                 }
                 Iterate(driver, parameters, dates, common, postcommon);
                 if (ExecutionCancelled || People.Count == 0) return result;
+                People.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled));
                 result.PeopleList = People;
                 result.Result = GetExcelFileName();
                 result.CaseList = JsonConvert.SerializeObject(People);
@@ -168,6 +170,12 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
+                bool isDistrict = collection.Any(x => x.Officer.Court.StartsWith("DC"));
+                if (isDistrict && !IsDistrictFilterActive)
+                {
+                    collection.ForEach(c => c.IsExecuted = true);
+                    collection.RemoveAll(x => x.Id > 0);
+                }
                 var limit = collection.Count;
                 foreach (var item in collection)
                 {
@@ -250,7 +258,7 @@ namespace LegalLead.PublicData.Search.Util
                     if (list != null) Items = list;
                 }
             });
-            
+
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
             CaseStyles = [];
             casenumbers.ForEach(i =>
@@ -315,7 +323,7 @@ namespace LegalLead.PublicData.Search.Util
                 return;
             }
             var address = GetAddress(target);
-            
+
             if (address != null && address.Count != 0)
             {
                 var ln = address.Count - 1;
@@ -447,7 +455,7 @@ namespace LegalLead.PublicData.Search.Util
 
             public override string JsContentScript { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
         }
-        
+
         private class SetParameterResponse
         {
             // conflicting lint from (sonarqube, ide) messages are forcing duplicate suppression methods

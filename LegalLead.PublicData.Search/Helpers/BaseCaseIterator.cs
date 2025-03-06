@@ -24,7 +24,8 @@ namespace LegalLead.PublicData.Search.Helpers
         public List<CaseTypeExecutionTracker> GetCollection()
         {
             var collection = new List<CaseTypeExecutionTracker>();
-            Officers.ForEach(jo => {
+            Officers.ForEach(jo =>
+            {
                 collection.Add(new()
                 {
                     Id = Officers.IndexOf(jo),
@@ -45,7 +46,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var actual = JsExecutor.ExecuteScript(js);
             if (actual is not bool response) return (new { Id = -1, Result = false }).ToJsonString();
             if (response) selected.IsExecuted = true;
-            return (new { selected.Id, Result = response}).ToJsonString();
+            return (new { selected.Id, Result = response }).ToJsonString();
         }
 
         public virtual ExecutionResponseType SetSearchParameter()

@@ -14,7 +14,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 
@@ -48,23 +47,22 @@ namespace LegalLead.PublicData.Search.Util
                 items[Workload.IndexOf(x)] = new() { Dto = x };
             });
             var retries = 0;
-            var mxretries = 6;
-            while (retries < mxretries)
+            while (items.Any(x => !x.Value.IsMapped()))
             {
                 Workload.ForEach(c =>
                 {
                     var id = Workload.IndexOf(c);
                     IterateWorkLoad(id, c, cookies, count, items);
                 });
-                var hasFailures = items.Any(x => !x.Value.IsMapped());
-                if (!hasFailures) break;
                 var unresloved = items.Count(x => !x.Value.IsMapped());
+                if (unresloved == 0) break;
                 Console.WriteLine($"Found {unresloved} items needing review.");
-                retries++;
-                var seconds = Math.Min(30, Math.Min(Math.Pow(2, retries) * 4, 75));
+                var seconds = Math.Max(15, Math.Min(Math.Pow(2, retries) * 4, 45));
                 Console.WriteLine($"Waiting {seconds:F2} seconds before retry.");
                 var wait = TimeSpan.FromSeconds(seconds);
                 Thread.Sleep(wait);
+                Driver.ReloadCurrentPageWithRetry();
+                retries++;
             }
             Workload.Clear();
             Workload.AddRange(items.Select(x => x.Value.Dto));
@@ -73,7 +71,7 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]
-        private void IterateWorkLoad(
+        private int IterateWorkLoad(
             int idx,
             CaseItemDto c,
             ReadOnlyCollection<SRC> cookies,
@@ -85,17 +83,16 @@ namespace LegalLead.PublicData.Search.Util
                 ResetPageSession();
             }
             var instance = cases[idx];
-            if (instance.IsMapped()) return;
+            if (instance.IsMapped()) return 0;
             var ii = Math.Min(idx + 1, count);
             EchoIteration(c, ii, count);
 
             var content = GetContentWithPollyAsync(c.Href, cookies).GetAwaiter().GetResult();
-            if (!string.IsNullOrEmpty(content))
-            {
-                var data = GetPageContent(content);
-                instance.MappedContent = data;
-                instance.Map();
-            }
+            if (string.IsNullOrEmpty(content) || content.Equals("error")) return 1;
+            var data = GetPageContent(content);
+            instance.MappedContent = data;
+            instance.Map();
+            return 0;
         }
         private static async Task<string> GetContentWithPollyAsync(string href, ReadOnlyCollection<SRC> cookies)
         {

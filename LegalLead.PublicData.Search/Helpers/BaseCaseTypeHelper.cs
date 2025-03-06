@@ -1,7 +1,4 @@
-﻿using LegalLead.PublicData.Search.Common;
-using LegalLead.PublicData.Search.Enumerations;
-using OpenQA.Selenium;
-using System;
+﻿using OpenQA.Selenium;
 using System.Collections.Generic;
 
 namespace LegalLead.PublicData.Search.Helpers

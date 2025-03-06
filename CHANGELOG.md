@@ -1,26 +1,28 @@
-# Release | 2.8.10.0 - Dallas county max record search revision
+# Release | 2.8.11.0 - Legal Lead - Dallas County - Revisions
 
 ## Problem Statement:
-As a user,  
-I want to retrieve all available records for a given court  
-So that I have the most complete set of records for marketing
-
-### New Behaviors:
-1. *Dallas County*: Alter method to set max rows
-1. *Dallas County*: Add method to wait for table populated before fetching case detail
-1. *Dallas County*: Add setting to exclude weekends from search
-1. *Dallas County*: Add retry logic with pause when fetching address details
-1. *Interface*: Added top level menu navigation
-1. *Interface*: Removed pop-up window when search completes
-1. *Interface*: Added Button to Open Excel after search completes
+1. Dallas JP
+When searching JP courts
+Court look up is experiencing timeouts
+Which causes some courts to be excluded from results.
+Added process to ensure proper mapping of judicial officer.
+Added loop to iterate all courts until records are ensured.
+2. Dallas District
+When searching distict courts
+Court lookup is excluding cases
+Removed court iteration to pull all while still filtering by single date.
+3. Dallas Read Details
+When reading details page from website
+Page timeouts are causing the read to fail
+Added retry loop to ensure that all expected cases are fetched
 
 ### Component Checks:
-1. Test search dallas county - county courts - single date
-1. Test search dallas county - county courts - multiple dates
-1. Test search dallas county - county courts - include weekends
-1. Test search dallas county - district courts - single date
-1. Test search dallas county - district courts - multiple dates
-1. Test search dallas county - district courts - include weekends
-1. Test search dallas county - justice courts - single date
-1. Test search dallas county - justice courts - multiple dates
-1. Test search dallas county - justice courts - include weekends
+- Dallas Justice
+Tested ability to fetch all courts
+Tested sequence of page read
+- Dallas District
+Tested ability to fetch all records
+Tested sequence of page read
+- Dallas County
+Tested ability to fetch all courts
+Tested sequence of page read

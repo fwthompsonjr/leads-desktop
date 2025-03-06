@@ -36,6 +36,7 @@
             button1 = new System.Windows.Forms.Button();
             menuTopMenu = new System.Windows.Forms.MenuStrip();
             mnuFile = new System.Windows.Forms.ToolStripMenuItem();
+            menuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             menuLogView = new System.Windows.Forms.ToolStripMenuItem();
             menuRecentFiles = new System.Windows.Forms.ToolStripMenuItem();
             menuFileSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -182,10 +183,16 @@
             // 
             // mnuFile
             // 
-            mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuLogView, menuRecentFiles, menuFileSeparator, exitToolStripMenuItem });
+            mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuOpenFile, menuLogView, menuRecentFiles, menuFileSeparator, exitToolStripMenuItem });
             mnuFile.Name = "mnuFile";
             mnuFile.Size = new System.Drawing.Size(37, 20);
             mnuFile.Text = "F&ile";
+            // 
+            // menuOpenFile
+            // 
+            menuOpenFile.Name = "menuOpenFile";
+            menuOpenFile.Size = new System.Drawing.Size(110, 22);
+            menuOpenFile.Text = "&Open";
             // 
             // menuLogView
             // 
@@ -547,6 +554,7 @@
         internal System.Windows.Forms.ToolStripMenuItem mnuView;
         private System.Windows.Forms.Panel viewPanel;
         internal System.Windows.Forms.ToolStripMenuItem menuLogView;
+        internal System.Windows.Forms.ToolStripMenuItem menuOpenFile;
     }
 }
 

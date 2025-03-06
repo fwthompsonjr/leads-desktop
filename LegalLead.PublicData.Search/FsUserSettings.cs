@@ -46,8 +46,9 @@ namespace LegalLead.PublicData.Search
                 txKeyValue2,
                 txKeyValue3
             };
-            keyvaluelist.ForEach(x => { 
-                x.TextChanged += TxKeyValue_TextChanged; 
+            keyvaluelist.ForEach(x =>
+            {
+                x.TextChanged += TxKeyValue_TextChanged;
                 x.DoubleClick += TxKeyValue_DoubleClick;
             });
             var controls = tableLayoutPanel1.Controls;

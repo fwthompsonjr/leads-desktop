@@ -370,114 +370,118 @@ $expected = @(
 );
 
 $canExecute = $true;
-
-## Section: Input Valiadtion
-Write-Host "Begining input validations:"
-foreach($expectation in $expected) {
-	$isfound = doesFileExist -item $expectation
-	if ($isfound -eq $false) {
-		$canExecute = $false;
-		break
-	} else {
-		Write-Host " . $($expectation.name) verified" -ForegroundColor Green
+$originalPath = Get-Location
+try {
+	Set-Location $scriptDir
+	## Section: Input Valiadtion
+	Write-Host "Begining input validations:"
+	foreach($expectation in $expected) {
+		$isfound = doesFileExist -item $expectation
+		if ($isfound -eq $false) {
+			$canExecute = $false;
+			break
+		} else {
+			Write-Host " . $($expectation.name) verified" -ForegroundColor Green
+		}
 	}
-}
-if ($canExecute -eq $false) {
-	Write-Host "One or more expected files are missing." -ForegroundColor Red
-	return;
-}
-Write-Host "Completed input validations:"
+	if ($canExecute -eq $false) {
+		Write-Host "One or more expected files are missing." -ForegroundColor Red
+		return;
+	}
+	Write-Host "Completed input validations:"
 
-## Section: Get Release Version Numbers
-Write-Host "Begining release creation process:"
-$project_list = (getProjectList -directory $scriptDir)
-$project_version = (getProjectVersion -project $projectFile)
-$tagNumber = $project_version;
+	## Section: Get Release Version Numbers
+	Write-Host "Begining release creation process:"
+	$project_list = (getProjectList -directory $scriptDir)
+	$project_version = (getProjectVersion -project $projectFile)
+	$tagNumber = $project_version;
 
-## Section: Update *.csproj files and get new tag
-if ($includeProjectUpdates -eq $true)
-{
+	## Section: Update *.csproj files and get new tag
+	if ($includeProjectUpdates -eq $true)
+	{
 	
-	if ($null -eq $project_list) {
-		throw "Unable to find project list in target directory"
-	}
-	Write-Host " . Found ( $($project_list.Count) project files to convert ):" -ForegroundColor Green
-	if ($null -eq $project_version) {
-		throw "Unable to find project version number"
-	}
-	Write-Host " .. Current version $project_version"
-	$revisionType = getNextProjectVersion -current $project_version
-	$tagNumber = $revisionType.tag;
-	Write-Host " .. $($revisionType.change) $($revisionType.tag)"
+		if ($null -eq $project_list) {
+			throw "Unable to find project list in target directory"
+		}
+		Write-Host " . Found ( $($project_list.Count) project files to convert ):" -ForegroundColor Green
+		if ($null -eq $project_version) {
+			throw "Unable to find project version number"
+		}
+		Write-Host " .. Current version $project_version"
+		$revisionType = getNextProjectVersion -current $project_version
+		$tagNumber = $revisionType.tag;
+		Write-Host " .. $($revisionType.change) $($revisionType.tag)"
 
-	$project_converted_count = 0;
-	$project_list | ForEach-Object {
-		$target_file = $_.FullName;
-		Write-Host " .. setting tag for $($_.Name)"
-		$converted = (setVersionNumber -project $target_file -tag $tagNumber);
-		if ($converted -eq $true) { $project_converted_count++ }
+		$project_converted_count = 0;
+		$project_list | ForEach-Object {
+			$target_file = $_.FullName;
+			Write-Host " .. setting tag for $($_.Name)"
+			$converted = (setVersionNumber -project $target_file -tag $tagNumber);
+			if ($converted -eq $true) { $project_converted_count++ }
+		}
+		if ($project_converted_count -ne $project_list.Count) {
+			rollbackChanges
+			throw "failure updating project files."
+		}
+		else {
+			Write-Host "Saving project number updates."
+			## commitChanges -text "$tagNumber : updating project to prepare release"
+		}
 	}
-	if ($project_converted_count -ne $project_list.Count) {
+
+	## Section: Get Change text
+	if ($updateReleaseNotes -eq $true)
+	{
+		Write-Host "Generating release notes."
+		$changetext = getChangeLogText -tag $tagNumber
+		$markdown = generateMarkDown -block $changetext
+		$jsonitem = generateChangeJson -block $changetext -tag $tagNumber
+		$jsupdated = updateVersionFile -target $versionLogFile -itm $jsonitem
+		if ($jsupdated -eq $false ) {
+			rollbackChanges
+			throw "Failed to update setup version notes."
+		}
+		$mdupdated = updateMarkDownFile -target $changeLogFile -text $markdown
+		if ($mdupdated -eq $false ) {
+			rollbackChanges
+			throw "Failed to update change log."
+		}
+	}
+
+	## Section: Update installer scripts
+	$canExecute = (vbsUpdateScriptFile -target $launchExeFile -tag $tagNumber)
+	if ($canExecute -ne $true) {
 		rollbackChanges
-		throw "failure updating project files."
+		throw "Failed to update launch file script."
 	}
-	else {
-		Write-Host "Saving project number updates."
-		## commitChanges -text "$tagNumber : updating project to prepare release"
-	}
-}
-
-## Section: Get Change text
-if ($updateReleaseNotes -eq $true)
-{
-	Write-Host "Generating release notes."
-	$changetext = getChangeLogText -tag $tagNumber
-	$markdown = generateMarkDown -block $changetext
-	$jsonitem = generateChangeJson -block $changetext -tag $tagNumber
-	$jsupdated = updateVersionFile -target $versionLogFile -itm $jsonitem
-	if ($jsupdated -eq $false ) {
+	$canExecute = (vbsUpdateScriptFile -target $uninstallExeFile -tag $tagNumber);
+	if ($canExecute -ne $true) {
 		rollbackChanges
-		throw "Failed to update setup version notes."
+		throw "Failed to update uninstall file script."
 	}
-	$mdupdated = updateMarkDownFile -target $changeLogFile -text $markdown
-	if ($mdupdated -eq $false ) {
+
+	## Section: Update installer project
+	$canExecute = (updateSetupProjectFile -target $setupProjectFile -tag $tagNumber);
+	if ($canExecute -ne $true) {
 		rollbackChanges
-		throw "Failed to update change log."
+		throw "Failed to update setup project file script."
 	}
+
+	## Section: Delete installation.zip
+	$canExecute = (deleteInstaller -target $installZipFile);
+	if ($canExecute -ne $true) {
+		rollbackChanges
+		throw "Failed to remove installation artifacts."
+	}
+
+	## Section: Build setup project
+	buildSolution
+	$message = "$tagNumber | Prepare artifacts for $tagNumber release"
+	commitChanges -text $message
+
+	buildRelease
+	$message = "$tagNumber | Publish artifacts for $tagNumber release"
+	commitChanges -text $message
+} finally {
+	Set-Location $originalPath
 }
-
-## Section: Update installer scripts
-$canExecute = (vbsUpdateScriptFile -target $launchExeFile -tag $tagNumber)
-if ($canExecute -ne $true) {
-	rollbackChanges
-	throw "Failed to update launch file script."
-}
-$canExecute = (vbsUpdateScriptFile -target $uninstallExeFile -tag $tagNumber);
-if ($canExecute -ne $true) {
-	rollbackChanges
-	throw "Failed to update uninstall file script."
-}
-
-## Section: Update installer project
-$canExecute = (updateSetupProjectFile -target $setupProjectFile -tag $tagNumber);
-if ($canExecute -ne $true) {
-	rollbackChanges
-	throw "Failed to update setup project file script."
-}
-
-## Section: Delete installation.zip
-$canExecute = (deleteInstaller -target $installZipFile);
-if ($canExecute -ne $true) {
-	rollbackChanges
-	throw "Failed to remove installation artifacts."
-}
-
-## Section: Build setup project
-buildSolution
-$message = "$tagNumber | Prepare artifacts for $tagNumber release"
-commitChanges -text $message
-
-buildRelease
-$message = "$tagNumber | Publish artifacts for $tagNumber release"
-commitChanges -text $message
-

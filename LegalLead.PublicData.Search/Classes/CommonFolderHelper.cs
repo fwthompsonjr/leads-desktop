@@ -1,10 +1,12 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-
+using System.Linq;
 namespace LegalLead.PublicData.Search.Classes
 {
-    internal static class CommonFolderHelper
+    public static class CommonFolderHelper
     {
         const string prefix = "data_rqst_";
         public static string MoveToCommon(string originalFileName)
@@ -20,7 +22,56 @@ namespace LegalLead.PublicData.Search.Classes
             File.Copy(originalFileName, fullName, true);
             return fullName;
         }
-
+        public static List<FileInfo> GetFiles()
+        {
+            var commonPath = CommonFolder; // this is from program-data
+            var localPath = LocalFolder; // this is from local-app-data
+            if (!Directory.Exists(commonPath) && !Directory.Exists(localPath)) { return []; }
+            var files = new List<FileInfo>();
+            AddFilesFromDirectory(commonPath, files, SearchOption.TopDirectoryOnly);
+            AddFilesFromDirectory(localPath, files, SearchOption.AllDirectories, true);
+            files.RemoveAll(IsNotExcelPackage);
+            files.Sort((a, b) => {
+                var aa = a.Name.CompareTo(b.Name);
+                if (aa != 0) return aa;
+                return b.CreationTime.CompareTo(a.CreationTime);
+                });
+            return files;
+        }
+        private static bool IsNotExcelPackage(FileInfo fileInfo)
+        {
+            var isValid = ExcelExtensions.IsValidExcelPackage(fileInfo.FullName);
+            return !isValid;
+        }
+        private static void AddFilesFromDirectory(string path, List<FileInfo> files, SearchOption option, bool removeDuplicates = false)
+        {
+            try
+            {
+                if (Directory.Exists(path))
+                {
+                    var newFiles = new DirectoryInfo(path).GetFiles("*.xlsx", option).ToList();
+                    if (removeDuplicates)
+                    {
+                        newFiles.RemoveAll(x => files.Exists(f => f.Name.Equals(x.Name)));
+                    }
+                    files.AddRange(newFiles);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                Debug.WriteLine($"Error accessing {path}: {ex.Message}");
+            }
+        }
+        private static string LocalFolder
+        {
+            get
+            {
+                if (localDataFolder != null) { return localDataFolder; }
+                localDataFolder = GetLocalFolder();
+                return localDataFolder;
+            }
+        }
         private static string CommonFolder
         {
             get
@@ -32,6 +83,7 @@ namespace LegalLead.PublicData.Search.Classes
         }
 
         private static string commonFolder;
+        private static string localDataFolder = null;
         private static string GetCommonFolder()
         {
             bool ismapped = false;
@@ -55,6 +107,15 @@ namespace LegalLead.PublicData.Search.Classes
                 }
             });
             return folderName;
+        }
+
+        private static string GetLocalFolder()
+        {
+            string localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            if (!Directory.Exists(localAppDataPath)) return string.Empty;
+            string leadPath = Path.Combine(localAppDataPath, "LegalLead");
+            if (!Directory.Exists(leadPath)) return string.Empty;
+            return leadPath;
         }
     }
 }

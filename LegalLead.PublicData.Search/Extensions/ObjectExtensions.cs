@@ -56,7 +56,7 @@ namespace LegalLead.PublicData.Search.Extensions
         }
         public static void BindGrid(this List<QueryDbResponse> source, DataGridView view, bool isMasked = false)
         {
-            
+
             // Clear existing columns
             view.Columns.Clear();
             if (isMasked)
@@ -96,19 +96,19 @@ namespace LegalLead.PublicData.Search.Extensions
             return data == null
                 ? throw new ArgumentNullException(nameof(data))
                 : data.Select(item => new QueryDbResponse
-            {
-                DateFiled = item.DateFiled,
-                CaseNumber = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.CaseNumber](item),
-                Name = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Name](item),
-                Address1 = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Address1](item),
-                Address2 = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Address2](item),
-                Address3 = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Address3](item),
-                Zip = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Zip](item),
-                Court = item.Court,
-                CaseType = item.CaseType,
-                CaseStyle = "** redacted **",
-                Plaintiff = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Plaintiff](item)
-            });
+                {
+                    DateFiled = item.DateFiled,
+                    CaseNumber = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.CaseNumber](item),
+                    Name = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Name](item),
+                    Address1 = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Address1](item),
+                    Address2 = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Address2](item),
+                    Address3 = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Address3](item),
+                    Zip = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Zip](item),
+                    Court = item.Court,
+                    CaseType = item.CaseType,
+                    CaseStyle = "** redacted **",
+                    Plaintiff = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Plaintiff](item)
+                });
         }
         private static class ObfuscationStrategies
         {

@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility;
 using Thompson.RecordSearch.Utility.Classes;
@@ -401,6 +402,16 @@ namespace LegalLead.PublicData.Search
                 var list = GetObject<List<SearchResult>>(Tag);
                 list.ForEach(x =>
                 {
+                    var addresses = x.AddressList;
+                    addresses.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
+                    x.AddressList = addresses;
+                    addresses.ForEach(a =>
+                    {
+                        if (DateTime.TryParse(a.DateFiled, CultureInfo.CurrentCulture.DateTimeFormat, out var date))
+                        {
+                            a.DateFiled = $"{date:d}";
+                        }
+                    });
                     for (int i = 0; i < targets.Count; i++)
                     {
                         var t = targets[i];
@@ -426,6 +437,18 @@ namespace LegalLead.PublicData.Search
                     t.Visible = t.Enabled;
                 });
                 menuFileSeparator.Visible = menuRecentFiles.Visible;
+                menuOpenFile.Enabled = false;
+#if !DEBUG
+                mnuView.Visible = false;
+#endif
+                _ = LoadFileNamesAsync().ContinueWith(_ =>
+                {
+                    // Ensure this runs on the UI thread
+                    Invoke(() =>
+                    {
+                        menuOpenFile.Enabled = true;
+                    });
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
             catch (Exception)
             {
@@ -441,10 +464,13 @@ namespace LegalLead.PublicData.Search
             }
             var item = GetObject<SearchResult>(itm.Tag);
             if (item == null) return;
-            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view")) {
+            if (!string.IsNullOrEmpty(itm.Name) && itm.Name.StartsWith("view"))
+            {
                 var id = mnuView.DropDownItems.IndexOf(itm);
-                if (id != -1) {
-                    for (int i = 0; i < mnuView.DropDownItems.Count; i++) { 
+                if (id != -1)
+                {
+                    for (int i = 0; i < mnuView.DropDownItems.Count; i++)
+                    {
                         if (i == id) continue;
                         if (mnuView.DropDownItems[i] is ToolStripMenuItem obj) { obj.Checked = false; }
                     }
@@ -545,9 +571,9 @@ namespace LegalLead.PublicData.Search
                 }
             }
             if (
-                !string.IsNullOrEmpty(contextIndex) && 
-                int.TryParse(contextIndex, out var subContextIndex) && 
-                subContextIndex >= 0 && 
+                !string.IsNullOrEmpty(contextIndex) &&
+                int.TryParse(contextIndex, out var subContextIndex) &&
+                subContextIndex >= 0 &&
                 subContextIndex < cboSearchType.Items.Count)
             {
                 cboSearchType.SelectedIndex = subContextIndex;
@@ -605,7 +631,7 @@ namespace LegalLead.PublicData.Search
                 + Environment.NewLine +
                 CommonKeyIndexes.DashedLine;
 
-            Console.WriteLine(message);
+            Console.WriteLine(InjectCourtLocation(message));
 
         }
 
@@ -616,6 +642,25 @@ namespace LegalLead.PublicData.Search
 
             Console.WriteLine(message);
 
+        }
+        protected string InjectCourtLocation(string message, bool isretry = false)
+        {
+            try
+            {
+                if (!cboSearchType.Visible) return message;
+                if (cboSearchType.SelectedItem is not DropDown caseStatus) return message;
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                var subLocation = $" Search Type: {textInfo.ToTitleCase(caseStatus.Name.ToLower())}";
+                message = message.Replace(CommonKeyIndexes.DashedLine, subLocation);
+                message += $"{Environment.NewLine}{CommonKeyIndexes.DashedLine}";
+                return message;
+            }
+            catch (Exception)
+            {
+                if (isretry) throw;
+                var mssg = Invoke(() => { return InjectCourtLocation(message, true); });
+                return mssg;
+            }
         }
         private static string GetSourceName(WebNavigationParameter source)
         {

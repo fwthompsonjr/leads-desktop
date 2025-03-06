@@ -533,7 +533,17 @@ namespace LegalLead.PublicData.Search.Util
             public WebFetchResult Filter()
             {
                 var people = Current.PeopleList;
-                if (people == null || people.Count == 0) return Current;
+                if (people == null) return Current;
+                people.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled) || string.IsNullOrWhiteSpace(x.Court));
+                people.ForEach(a =>
+                {
+                    if (DateTime.TryParse(a.DateFiled, CultureInfo.CurrentCulture.DateTimeFormat, out var date))
+                    {
+                        a.DateFiled = $"{date:d}";
+                    }
+                });
+                Current.PeopleList = people;
+                if (people.Count == 0) return Current;
                 var limits = UsagePersistence.GetUsageLimit(Current.WebsiteId);
                 if (limits == null || limits.MaxRecords == -1) return Current;
                 var setting = UsagePersistence.GetUsage(Current.WebsiteId);

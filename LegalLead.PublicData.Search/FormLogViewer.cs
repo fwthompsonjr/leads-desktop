@@ -27,21 +27,24 @@ namespace LegalLead.PublicData.Search
         private void InitializeComponents()
         {
             // Initialize controls
-            tableLayoutPanel = new TableLayoutPanel {
+            tableLayoutPanel = new TableLayoutPanel
+            {
                 Name = "logTableLayoutPanel",
                 ColumnCount = 3,
                 RowCount = 3,
                 Dock = DockStyle.Fill,
                 Padding = new Padding(2)
             };
-            comboBox = new ComboBox {
+            comboBox = new ComboBox
+            {
                 Name = "logComboBox",
                 Dock = DockStyle.Fill
             };
-            dataGridView = new DataGridView { 
+            dataGridView = new DataGridView
+            {
                 Name = "logGridView",
                 Dock = DockStyle.Fill,
-                ReadOnly = true 
+                ReadOnly = true
             };
             dataGridSummary = new DataGridView
             {
@@ -50,7 +53,8 @@ namespace LegalLead.PublicData.Search
                 ReadOnly = true,
                 Padding = new Padding(2)
             };
-            textBox = new TextBox { 
+            textBox = new TextBox
+            {
                 Name = "logTextBox",
                 Dock = DockStyle.Fill,
                 AutoSize = true,
@@ -59,9 +63,10 @@ namespace LegalLead.PublicData.Search
                 ScrollBars = ScrollBars.Vertical,
                 Padding = new Padding(2)
             };
-            button = new Button { 
-                Name = "logReturnButton", 
-                AutoSize = true, 
+            button = new Button
+            {
+                Name = "logReturnButton",
+                AutoSize = true,
                 Text = FieldLabels.ButtonText,
                 Padding = new Padding(2),
                 Dock = DockStyle.Fill
@@ -115,7 +120,8 @@ namespace LegalLead.PublicData.Search
 
             var logEntries = FileSplitRegex.Split(fileContent)
                                   .Where(part => !string.IsNullOrWhiteSpace(part))
-                                  .Select(part => {
+                                  .Select(part =>
+                                  {
                                       var dateEndIndex = part.IndexOf(": ");
                                       return new LogView
                                       {
@@ -125,7 +131,8 @@ namespace LegalLead.PublicData.Search
                                   })
                                   .ToList();
 
-            logEntries.Sort((a, b) => {
+            logEntries.Sort((a, b) =>
+            {
                 var aa = a.Date.CompareTo(b.Date);
                 if (aa != 0) return aa;
                 return a.LogEntry.CompareTo(b.LogEntry);
