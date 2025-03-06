@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -126,6 +127,7 @@ namespace LegalLead.PublicData.Search
             tbxFilterContext.TextChanged += TextBoxFilter_TextChanged;
             dataGridFiles.RowHeaderMouseClick += DataGridFiles_RowHeaderMouseClick;
             dataGridFiles.RowEnter += DataGridFiles_RowEnter;
+            dataGridFiles.CellContentClick += DataGridFiles_CellContentClick;
             // Set up TableLayoutPanel
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
@@ -139,6 +141,7 @@ namespace LegalLead.PublicData.Search
 
             // Set up SplitContainer
             splitContainer.Panel1Collapsed = false;
+            splitContainer.Panel1MinSize = 375;
             splitContainer.Panel2Collapsed = true;
 
             // Add controls to headerLayoutPanel
@@ -178,11 +181,20 @@ namespace LegalLead.PublicData.Search
             dataGridFiles.MultiSelect = false;
             dataGridFiles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridFiles.ReadOnly = true;
+            DataGridViewButtonColumn buttonColumn = new()
+            {
+                HeaderText = "Open File",
+                Text = "Open",
+                UseColumnTextForButtonValue = true
+            };
+            dataGridFiles.Columns.Add(buttonColumn);
             // Set the column properties
             dataGridFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridFiles.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridFiles.Columns[0].Width = 150; // Set a fixed width for the first column
             dataGridFiles.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridFiles.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridFiles.Columns[2].Width = 80; // Set a fixed width for the last column
             dataGridFiles.Refresh();
         }
         private void Button_Click(object sender, EventArgs e)
@@ -201,41 +213,71 @@ namespace LegalLead.PublicData.Search
         }
         private void DataGridFiles_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // Get the selected row index
-            int rowIndex = e.RowIndex;
-            // check if process can execute
-            if (rowIndex < 0 || !dataGridFiles.Enabled) return;
-            // check the requested row is not currently the bound row
-            if (dataGridSummary.Tag is int currentId && currentId == rowIndex) return;
-            dataGridFiles.Enabled = false;
-            var requestedFile = fileCollection[rowIndex];
-            var selectedRow = dataGridFiles.Rows[rowIndex];
-            if (selectedRow.Tag is List<QueryDbResult> results)
+            lock (harmony)
             {
+                // Get the selected row index
+                int rowIndex = e.RowIndex;
+                // check if process can execute
+                if (rowIndex < 0 || !dataGridFiles.Enabled) return;
+                // check the requested row is not currently the bound row
+                if (dataGridSummary.Tag is int currentId && currentId == rowIndex) return;
+                dataGridFiles.Enabled = false;
+                var requestedFile = fileCollection[rowIndex];
+                var selectedRow = dataGridFiles.Rows[rowIndex];
+                if (selectedRow.Tag is List<QueryDbResult> results)
+                {
+                    dataGridSummary.Columns.Clear();
+                    dataGridSummary.DataSource = results;
+                    dataGridSummary.Refresh();
+                    dataGridSummary.Tag = rowIndex;
+                    dataGridFiles.Enabled = true;
+                    return;
+                }
+                var collection = requestedFile.GetDataSource() ?? [];
+                selectedRow.Tag = collection;
                 dataGridSummary.Columns.Clear();
-                dataGridSummary.DataSource = results;
+                dataGridSummary.DataSource = collection;
                 dataGridSummary.Refresh();
                 dataGridSummary.Tag = rowIndex;
-                dataGridFiles.Enabled = true;
-                return;
+                dataGridFiles.Enabled = true; 
             }
-            var collection = requestedFile.GetDataSource() ?? [];
-            selectedRow.Tag = collection;
-            dataGridSummary.Columns.Clear();
-            dataGridSummary.DataSource = collection;
-            dataGridSummary.Refresh();
-            dataGridSummary.Tag = rowIndex;
-            dataGridFiles.Enabled = true;
         }
 
+        private void DataGridFiles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            lock (harmony)
+            {
+                const int buttonColumnId = 0;
+                if (e == null) return;
+                if (e.RowIndex < 0) return;
+                if (e.ColumnIndex != buttonColumnId) return;
+                int rowIndex = e.RowIndex;
+                var requestedFile = fileCollection[rowIndex];
+                if (!File.Exists(requestedFile.FullName)) return;
+
+                // Disable the button cell
+                if (dataGridFiles.Rows[rowIndex].Cells[buttonColumnId] is not DataGridViewButtonCell buttonCell) return;
+                if (buttonCell.Tag is bool isWorking && isWorking) return;
+                buttonCell.Tag = true;
+
+                _ = Task.Run(() =>
+                {
+                    OpenFile(requestedFile);
+                    buttonCell.Tag = false;
+                }); 
+            }
+        }
 
         private void DataGridFiles_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (e == null) return;
-            if (e.RowIndex < 0) { return; }
-            var mouse = new MouseEventArgs(MouseButtons.None, 0, 0, 0, 0);
-            var args = new DataGridViewCellMouseEventArgs(e.ColumnIndex, e.RowIndex, 0, 0, mouse);
-            DataGridFiles_RowHeaderMouseClick(sender, args);
+            lock (harmony)
+            {
+                if (e == null) return;
+                if (e.RowIndex < 0) { return; }
+                var mouse = new MouseEventArgs(MouseButtons.None, 0, 0, 0, 0);
+                var args = new DataGridViewCellMouseEventArgs(e.ColumnIndex, e.RowIndex, 0, 0, mouse);
+                DataGridFiles_RowHeaderMouseClick(sender, args); 
+            }
         }
 
         private void TextBoxFilter_TextChanged(object sender, EventArgs e)
@@ -243,7 +285,7 @@ namespace LegalLead.PublicData.Search
             if (!dataGridFiles.Enabled) return;
             dataGridFiles.Enabled = false;
             string filterText = tbxFilterContext.Text?.Trim().ToLower();
-            var fieldId = cboFilterContext.SelectedIndex;
+            var fieldId = cboFilterContext.SelectedIndex + 1;
             CurrencyManager currencyManager = (CurrencyManager)BindingContext[dataGridFiles.DataSource];
             currencyManager.SuspendBinding();
             foreach (DataGridViewRow row in dataGridFiles.Rows)
@@ -261,10 +303,23 @@ namespace LegalLead.PublicData.Search
             currencyManager.ResumeBinding();
             dataGridFiles.Enabled = true;
         }
+        private static void OpenFile(FileInfo fileInfo)
+        {
+            using Process p = new ();
+            p.StartInfo = new ProcessStartInfo(fileInfo.FullName)
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+            // No need to wait for the process to exit
+        }
+
         private class FileView
         {
             public string Date { get; set; }
             public string FileName { get; set; }
         }
+
+        private static readonly object harmony = new object ();
     }
 }
