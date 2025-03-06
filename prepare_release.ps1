@@ -51,6 +51,17 @@ function promptForList($typeName)
 	return [string]::Join( $nl, $arr );
 }
 
+function promptForBuildReady()
+{
+	$stp = "stop";
+	$promptText = "Waiting for notification of build completion. (stop) when complete: "
+	$arr = @();
+	$lne = Read-Host -Prompt $promptText
+	while ($lne -ne $stp) {
+		$lne = Read-Host -Prompt $promptText
+	}
+}
+
 function getChangeLogText($tag){
 	$title =  Read-Host -Prompt "Enter release title: "
 	$changes = (promptForList -typeName "Problem Statement")
@@ -476,6 +487,8 @@ try {
 
 	## Section: Build setup project
 	buildSolution
+	promptForBuildReady
+
 	$message = "$tagNumber | Prepare artifacts for $tagNumber release"
 	commitChanges -text $message
 

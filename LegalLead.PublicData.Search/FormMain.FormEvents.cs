@@ -480,6 +480,11 @@ namespace LegalLead.PublicData.Search
                 var handler = new PreviewSearchRequestedEvent { GetMain = this };
                 handler.UseMaskedData = !admin;
                 handler.Toggle(itm.Checked, item);
+                if (itm.Checked) return;
+                for (int i = 0; i < 2; i++)
+                {
+                    CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
+                }
                 return;
             }
             var fileName = item.ResultFileName;
@@ -496,6 +501,11 @@ namespace LegalLead.PublicData.Search
             itm.Checked = !itm.Checked;
             var handler = new ViewLogRequestedEvent { GetMain = this };
             handler.Toggle(itm.Checked);
+            if (itm.Checked) return;
+            for (int i = 0; i < 2; i++)
+            {
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty); 
+            }
         }
         private void TsWebDriver_Initialize()
         {
@@ -645,7 +655,7 @@ namespace LegalLead.PublicData.Search
         }
         protected string InjectCourtLocation(string message, bool isretry = false)
         {
-            try
+            var response = Invoke(() =>
             {
                 if (!cboSearchType.Visible) return message;
                 if (cboSearchType.SelectedItem is not DropDown caseStatus) return message;
@@ -654,13 +664,8 @@ namespace LegalLead.PublicData.Search
                 message = message.Replace(CommonKeyIndexes.DashedLine, subLocation);
                 message += $"{Environment.NewLine}{CommonKeyIndexes.DashedLine}";
                 return message;
-            }
-            catch (Exception)
-            {
-                if (isretry) throw;
-                var mssg = Invoke(() => { return InjectCourtLocation(message, true); });
-                return mssg;
-            }
+            });
+            return response;
         }
         private static string GetSourceName(WebNavigationParameter source)
         {
