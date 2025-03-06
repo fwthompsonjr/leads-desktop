@@ -1,6 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 namespace LegalLead.PublicData.Search.Classes
@@ -27,18 +28,14 @@ namespace LegalLead.PublicData.Search.Classes
             var localPath = LocalFolder; // this is from local-app-data
             if (!Directory.Exists(commonPath) && !Directory.Exists(localPath)) { return []; }
             var files = new List<FileInfo>();
-            if (Directory.Exists(commonPath))
-            {
-                files.AddRange(new DirectoryInfo(commonPath).GetFiles("*.xlsx"));
-            }
-            if (Directory.Exists(localPath))
-            {
-                var localFiles = new DirectoryInfo(localPath).GetFiles("*.xlsx", SearchOption.AllDirectories).ToList();
-                localFiles.RemoveAll(x => files.Exists(f => f.Name.Equals(x.Name)));
-                files.AddRange(localFiles);
-            }
+            AddFilesFromDirectory(commonPath, files, SearchOption.TopDirectoryOnly);
+            AddFilesFromDirectory(localPath, files, SearchOption.AllDirectories, true);
             files.RemoveAll(IsNotExcelPackage);
-            files.Sort((a, b) => a.FullName.CompareTo(b.FullName));
+            files.Sort((a, b) => {
+                var aa = a.Name.CompareTo(b.Name);
+                if (aa != 0) return aa;
+                return b.CreationTime.CompareTo(a.CreationTime);
+                });
             return files;
         }
         private static bool IsNotExcelPackage(FileInfo fileInfo)
@@ -46,7 +43,26 @@ namespace LegalLead.PublicData.Search.Classes
             var isValid = ExcelExtensions.IsValidExcelPackage(fileInfo.FullName);
             return !isValid;
         }
-
+        private static void AddFilesFromDirectory(string path, List<FileInfo> files, SearchOption option, bool removeDuplicates = false)
+        {
+            try
+            {
+                if (Directory.Exists(path))
+                {
+                    var newFiles = new DirectoryInfo(path).GetFiles("*.xlsx", option).ToList();
+                    if (removeDuplicates)
+                    {
+                        newFiles.RemoveAll(x => files.Exists(f => f.Name.Equals(x.Name)));
+                    }
+                    files.AddRange(newFiles);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                Debug.WriteLine($"Error accessing {path}: {ex.Message}");
+            }
+        }
         private static string LocalFolder
         {
             get
