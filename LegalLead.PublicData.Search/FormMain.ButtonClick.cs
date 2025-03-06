@@ -207,7 +207,11 @@ namespace LegalLead.PublicData.Search
             var cbindx = siteData.Id != 30 ? 0 : GetCaseSelectionIndex(cboCaseType.SelectedItem);
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(webmgr, siteData, searchItem, cbindx);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(webmgr, siteData, searchItem, cbindx);
+                });
+                
             }).ConfigureAwait(true);
         }
 
