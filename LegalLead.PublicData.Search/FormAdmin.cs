@@ -1,4 +1,5 @@
-﻿using LegalLead.PublicData.Search.Interfaces;
+﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,51 @@ namespace LegalLead.PublicData.Search
         {
             InitializeComponent();
             splitContainer.Panel2Collapsed = true;
+            gridUsers.CellContentClick += GridUsers_CellContentClick;
+            InitializeChildPanelControls();
+            InitializeParentMenuButtons();
+        }
+
+        private void GridUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            lock (harmony)
+            {
+                var isTagSet = false;
+                try
+                {
+                    if (e.RowIndex < 0) return;
+                    if (sender is not DataGridView gridView) return;
+                    if (gridView.Columns[e.ColumnIndex].Name != "EditAccount") return;
+                    if (gridView.DataSource is not List<GetAccountsResponse> accounts) return;
+                    var item = accounts[e.RowIndex];
+                    cboUserAction.Tag = item;
+                    isTagSet = true;
+                }
+                finally
+                {
+                    if (!isTagSet) cboUserAction.Tag = null;
+                } 
+            }
+
+        }
+
+        private void InitializeChildPanelControls()
+        {
+            var items = GetAccountActions();
+            cboUserAction.DataSource = items;
+            cboUserAction.DisplayMember = "DisplayName";
+            cboUserAction.ValueMember = "Id";
+            cboUserAction.SelectedIndex = 0;
+            cboUserAction.SelectedIndexChanged += CboUserAction_SelectedIndexChanged;
+        }
+
+        private void InitializeParentMenuButtons()
+        {
             var models = GetOperations();
-            if (models.Length > 0) {
-                foreach (var model in models) {
+            if (models.Length > 0)
+            {
+                foreach (var model in models)
+                {
                     var tsItem = new ToolStripButton
                     {
                         Text = model.DisplayName,
@@ -23,21 +66,29 @@ namespace LegalLead.PublicData.Search
                     };
                     tsItem.Click += TsItem_Click;
                     toolStrip.Items.Add(tsItem);
+                    if (model.Method == UserManagementMethod.GetAccounts)
+                    {
+                        tsItem.PerformClick();
+                    }
                 }
             }
-            var items = GetAccountActions();
-            cboUserAction.DataSource = items;
-            cboUserAction.DisplayMember = "DisplayName";
-            cboUserAction.ValueMember = "Id";
-            cboUserAction.SelectedIndex = 0;
-            cboUserAction.SelectedIndexChanged += CboUserAction_SelectedIndexChanged;
-            CboUserAction_SelectedIndexChanged(null, null);
         }
 
         private void CboUserAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboUserAction.SelectedItem is not UserManagementMethodModel model) return;
-            grid.Visible = model.Id != 1000;
+            lock (harmony)
+            {
+                if (cboUserAction.SelectedItem is not UserManagementMethodModel model) return;
+                if (cboUserAction.Tag is not GetAccountsResponse rsp || model.Id == 1000)
+                {
+                    grid.Visible = false;
+                    return;
+                }
+                var api = UserManagementContainer.GetContainer.GetInstance<IUserManager>(model.Name);
+                var response = api.FetchData(new Models.AdminDbRequest { UserId = rsp.Id });
+                api.BindGrid(grid, response);
+                grid.Visible = true;
+            }
         }
 
         private void TsItem_Click(object sender, EventArgs e)
@@ -50,6 +101,8 @@ namespace LegalLead.PublicData.Search
             tsContext.Text = model.DisplayName;
             tsPosition.Text = string.Empty;
             splitContainer.Panel2Collapsed = model.Method != UserManagementMethod.GetAccounts;
+            if (splitContainer.Panel2Collapsed) return;
+            splitContainer.SplitterDistance = 200;
         }
 
         private void TsReturn_Click(object sender, EventArgs e)
@@ -115,5 +168,6 @@ namespace LegalLead.PublicData.Search
             };
             public UserManagementMethod Method { get; set; } = method;
         }
+        private static readonly object harmony = new();
     }
 }
