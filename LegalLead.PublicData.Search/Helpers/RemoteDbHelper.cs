@@ -18,6 +18,15 @@ namespace LegalLead.PublicData.Search.Helpers
         }
         private readonly IHttpService httpService;
 
+        public AdminDbResponse Admin(AdminDbRequest findDb)
+        {
+            var uri = GetAddress("admin");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(token)) return null;
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<AdminDbRequest, AdminDbResponse>(client, uri, findDb);
+            return response;
+        }
         public FindDbResponse Begin(FindDbRequest findDb)
         {
             var uri = GetAddress("begin");
@@ -275,6 +284,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var uri = provider.Url;
             return name switch
             {
+                "admin" => $"{uri}{provider.AdminUrl}",
                 "begin" => $"{uri}{provider.BeginUrl}",
                 "complete" => $"{uri}{provider.CompleteUrl}",
                 "query" => $"{uri}{provider.QueryUrl}",

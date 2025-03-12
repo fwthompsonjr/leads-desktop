@@ -32,6 +32,7 @@ namespace Thompson.RecordSearch.Utility.Dto
     public class DbUriModel
     {
         [JsonProperty("uri")] public string Url { get; set; }
+        [JsonProperty("admin")] public string AdminUrl { get; set; }
         [JsonProperty("begin")] public string BeginUrl { get; set; }
         [JsonProperty("complete")] public string CompleteUrl { get; set; }
         [JsonProperty("query")] public string QueryUrl { get; set; }

@@ -18,5 +18,6 @@ namespace LegalLead.PublicData.Search.Interfaces
         KeyValuePair<bool, string> Upload(UploadDbRequest uploadDb);
         void PostFileDetail(SearchContext context);
         SearchContext GetFileDetail(SearchContext context);
+        AdminDbResponse Admin(AdminDbRequest findDb);
     }
 }

@@ -22,7 +22,8 @@
 	"usage-get-summary": "db/usage-get-summary",
 	"usage-set-limit": "db/usage-set-monthly-limit",
 	"content-get": "db/get-search-file",
-	"content-save": "db/save-search-file"
+	"content-save": "db/save-search-file",
+	"admin": "admin/execute"
   },
   "invoice": {
 	"uri": "http://api.legallead.co/db-invoice/",
