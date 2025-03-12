@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Util;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -42,7 +44,9 @@ namespace LegalLead.PublicData.Search
         {
             if (sender is not ToolStripButton btn) return;
             if (btn.Tag is not UserManagementMethodModel model) return;
-            
+            var api = UserManagementContainer.GetContainer.GetInstance<IUserManager>(model.Name);
+            var response = api.FetchData(new Models.AdminDbRequest());
+            api.BindGrid(gridUsers, response);
             tsContext.Text = model.DisplayName;
             tsPosition.Text = string.Empty;
             splitContainer.Panel2Collapsed = model.Method != UserManagementMethod.GetAccounts;
