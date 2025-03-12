@@ -115,6 +115,10 @@ namespace LegalLead.PublicData.Search
                     UsageReader.WriteUserRecord();
                     ApplySavedSettings();
                     CboWebsite_SelectedValueChanged(null, null);
+                    var isAdmin = IsAccountAdmin();
+                    if (!isAdmin) return;
+                    mnuAdmin.Visible = isAdmin;
+                    mnuViewUsers.Click += MnuViewUsers_Click;
                     break;
                 default:
                     Close();
@@ -155,7 +159,23 @@ namespace LegalLead.PublicData.Search
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            // method is intentionally left blank
+            // intentionally left blank
+        }
+
+        private void MnuViewUsers_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new ManageUsersRequestedEvent() { GetMain = this };
+            handler.Toggle(itm.Checked);
+            if (itm.Checked) return;
+            for (int i = 0; i < 2; i++)
+            {
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
+            }
         }
 
         private void ExportDataToolStripMenuItem_Click(object sender, EventArgs e)
