@@ -504,7 +504,7 @@ namespace LegalLead.PublicData.Search
             if (itm.Checked) return;
             for (int i = 0; i < 2; i++)
             {
-                CboWebsite_SelectedValueChanged(this, EventArgs.Empty); 
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
             }
         }
         private void TsWebDriver_Initialize()

@@ -59,7 +59,7 @@ namespace LegalLead.PublicData.Search
             menuOpenFile.Enabled = false;
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
-            SetStatus(StatusType.Ready); 
+            SetStatus(StatusType.Ready);
             _ = LoadFileNamesAsync().ContinueWith(_ =>
             {
                 // Ensure this runs on the UI thread

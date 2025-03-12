@@ -7,9 +7,9 @@ using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
-    public class UserManagerGetAccounts : BaseUserManager, IUserManager
+    public class UserManagerGetCounty : BaseUserManager, IUserManager
     {
-        protected override string MethodName => "GetAccounts";
+        protected override string MethodName => "GetCounty";
 
         public void BindGrid(DataGridView gridView, AdminDbResponse response)
         {
@@ -25,27 +25,25 @@ namespace LegalLead.PublicData.Search.Helpers
                     BindResponse(gridView, response);
                     return;
                 }
-                var rows = response.Message.ToInstance<List<GetAccountsResponse>>() ?? [];
+                var rows = response.Message.ToInstance<List<GetCountyResponse>>() ?? [];
                 gridView.DataSource = rows;
-                DataGridViewButtonColumn buttonColumn = new()
-                {
-                    HeaderText = "Edit Account",
-                    Text = "Edit",
-                    UseColumnTextForButtonValue = true,
-                    Name = "EditAccount",
-                    DataPropertyName = "EditAccount",
-                };
-                gridView.Columns.Add(buttonColumn);
+
                 gridView.Columns["Id"].Visible = false;
+                gridView.Columns["CountyId"].Visible = false;
+                gridView.Columns["RwId"].Visible = false;
+                gridView.Columns["LeadUserId"].Visible = false;
+                gridView.Columns["Phrase"].Visible = false;
+                gridView.Columns["Vector"].Visible = false;
+                gridView.Columns["Token"].Visible = false;
                 gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                gridView.Columns["Email"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                gridView.Columns["Email"].Width = 250; // Set a fixed width for the first column
-                gridView.Columns["UserName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                gridView.Columns["EditAccount"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                gridView.Columns["EditAccount"].Width = 80; // Set a fixed width for the last column
+                gridView.Columns["CountyName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                gridView.Columns["CountyName"].Width = 250; // Set a fixed width for the first column
+                gridView.Columns["MonthlyUsage"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                gridView.Columns["CreateDate"].Width = 150; // Set a fixed width for the last column
                 for (var col = 0; col < gridView.Columns.Count; col++)
                 {
-                    gridView.Columns[col].ReadOnly = true;
+                    var name = gridView.Columns[col].Name;
+                    gridView.Columns[col].ReadOnly = !name.Equals("MonthlyUsage");
                 }
 
             }

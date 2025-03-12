@@ -36,7 +36,7 @@ namespace LegalLead.PublicData.Search
                 finally
                 {
                     if (!isTagSet) cboUserAction.Tag = null;
-                } 
+                }
             }
 
         }
@@ -114,7 +114,8 @@ namespace LegalLead.PublicData.Search
         {
             var processes = Enum.GetValues<UserManagementMethod>();
             var list = new List<UserManagementMethodModel>();
-            foreach (var process in processes) {
+            foreach (var process in processes)
+            {
                 var model = new UserManagementMethodModel(process);
                 if (model.Id < 100) list.Add(model);
             }

@@ -30,7 +30,8 @@ namespace LegalLead.PublicData.Search.Helpers
         protected static void BindResponse(DataGridView gridView, AdminDbResponse response)
         {
             var data = new[] { response };
-            if (gridView.ColumnCount > 0) { 
+            if (gridView.ColumnCount > 0)
+            {
                 gridView.Columns.Clear();
             }
             gridView.DataSource = data;

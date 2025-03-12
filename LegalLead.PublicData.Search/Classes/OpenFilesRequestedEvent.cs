@@ -8,7 +8,7 @@ namespace LegalLead.PublicData.Search.Classes
     {
         public OpenFilesRequestedEvent()
         {
-            
+
         }
         public OpenFilesRequestedEvent(List<FileInfo> collection)
         {

@@ -211,7 +211,7 @@ namespace LegalLead.PublicData.Search
                 {
                     await ProcessAsync(webmgr, siteData, searchItem, cbindx);
                 });
-                
+
             }).ConfigureAwait(true);
         }
 
