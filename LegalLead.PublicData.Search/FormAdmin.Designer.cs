@@ -91,6 +91,7 @@
             tsReturn.Padding = new System.Windows.Forms.Padding(2);
             tsReturn.Size = new System.Drawing.Size(60, 37);
             tsReturn.Text = "Return";
+            tsReturn.Click += TsReturn_Click;
             // 
             // statusStrip1
             // 
