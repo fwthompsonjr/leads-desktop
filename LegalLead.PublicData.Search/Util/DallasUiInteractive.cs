@@ -57,7 +57,7 @@ namespace LegalLead.PublicData.Search.Util
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, true, true);
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
-                var bulkReader = new DalllasBulkCaseReader
+                var bulkReader = new DallasBulkCaseReader
                 {
                     Driver = driver,
                     Interactive = this,
@@ -116,7 +116,7 @@ namespace LegalLead.PublicData.Search.Util
                 IterateDateRange(driver, parameters, dates, common);
                 postcommon.ForEach(p =>
                 {
-                    if (p is DalllasBulkCaseReader bulk)
+                    if (p is DallasBulkCaseReader bulk)
                     {
                         bulk.Workload.Clear();
                         bulk.Workload.AddRange(Items);

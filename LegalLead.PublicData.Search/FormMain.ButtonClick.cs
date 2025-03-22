@@ -114,7 +114,11 @@ namespace LegalLead.PublicData.Search
             var indx = siteData.Id == 30 ? 1 : 0;
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dweb, siteData, searchItem, indx);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(dweb, siteData, searchItem, indx);
+                });
+
             }).ConfigureAwait(true);
         }
 
@@ -131,7 +135,11 @@ namespace LegalLead.PublicData.Search
             var dweb = new BexarUiInteractive(wb);
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dweb, siteData, searchItem);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(dweb, siteData, searchItem);
+                });
+
             }).ConfigureAwait(true);
         }
 
@@ -153,7 +161,10 @@ namespace LegalLead.PublicData.Search
                 CurrentRequest);
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dbweb, siteData, searchItem);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(dbweb, siteData, searchItem);
+                });
             }).ConfigureAwait(true);
         }
 
@@ -167,7 +178,10 @@ namespace LegalLead.PublicData.Search
             var dweb = search.GetUiInteractive();
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dweb, siteData, searchItem);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(dweb, siteData, searchItem);
+                });
             }).ConfigureAwait(true);
         }
 

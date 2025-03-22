@@ -133,8 +133,9 @@ namespace LegalLead.PublicData.Search
             }
             list.Sort((a, b) =>
             {
-                if (a.Id == 1000) return -1;
-                return (a.Id.CompareTo(b.Id));
+                var aa = b.Id.CompareTo(a.Id);
+                if (aa != 0) return aa;
+                return (a.DisplayName.CompareTo(b.DisplayName));
             });
             return [.. list];
         }
@@ -143,11 +144,11 @@ namespace LegalLead.PublicData.Search
             GetAccounts = 1,
             GetPricing = 2,
             GetCounty = 101,
-            GetProfile = 102,
-            GetInvoice = 103,
-            GetSearch = 104,
             UpdateProfile = 201,
             UpdateUsageLimit = 202,
+            GetProfile = 502,
+            GetInvoice = 503,
+            GetSearch = 504,
             None = 1000,
         }
 

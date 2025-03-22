@@ -22,7 +22,7 @@ namespace LegalLead.PublicData.Search.Util
     using DST = System.Net.Cookie;
     using Rx = Properties.Resources;
     using SRC = OpenQA.Selenium.Cookie;
-    public class DalllasBulkCaseReader : BaseDallasSearchAction
+    public class DallasBulkCaseReader : BaseDallasSearchAction
     {
         public override int OrderId => 80;
         public List<CaseItemDto> Workload { get; } = [];

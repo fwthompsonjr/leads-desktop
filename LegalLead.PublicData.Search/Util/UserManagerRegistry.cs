@@ -11,7 +11,7 @@ namespace LegalLead.PublicData.Search.Util
             For<IUserManager>().Add<UserManagerGetAccounts>().Named("GetAccounts");
             For<IUserManager>().Add<UserManagerGetPricing>().Named("GetPricing");
             For<IUserManager>().Add<UserManagerGetCounty>().Named("GetCounty");
-            For<IUserManager>().Add<UserManagerNonActive>().Named("GetProfile");
+            For<IUserManager>().Add<UserManagerGetProfile>().Named("GetProfile");
             For<IUserManager>().Add<UserManagerNonActive>().Named("GetInvoice");
             For<IUserManager>().Add<UserManagerNonActive>().Named("GetSearch");
             For<IUserManager>().Add<UserManagerNonActive>().Named("UpdateProfile");
