@@ -33,7 +33,7 @@ namespace LegalLead.PublicData.Search
         #endregion
 
         #region Custom Properties
-
+        protected List<ToolStripItem> RestartItems = new List<ToolStripItem>();
         protected WebFetchResult CaseData { get; set; }
         private FindDbRequest CurrentRequest { get; set; } = null;
 
@@ -57,6 +57,28 @@ namespace LegalLead.PublicData.Search
             menuLogView.Click += MenuLogView_Click;
             menuOpenFile.Click += MenuOpenFile_Click;
             menuOpenFile.Enabled = false;
+            var splitButtonSeparator = new ToolStripSeparator
+            {
+                Padding = new Padding(2)
+            };
+            var splitButtonSeparator1 = new ToolStripSeparator
+            {
+                Padding = new Padding(2)
+            };
+            CustomSplitButton splitButton = new ()
+            {
+                Text = "Restart",
+                Visible = true,
+                AutoSize = true,
+                Padding = new Padding(2)
+            };
+            splitButton.ButtonClick += MenuRestart_Click;
+            statusStrip1.Items.Insert(3, splitButtonSeparator);
+            statusStrip1.Items.Insert(4, splitButton);
+            statusStrip1.Items.Insert(5, splitButtonSeparator1);
+            RestartItems.Add(splitButton);
+            RestartItems.Add(splitButtonSeparator);
+            RestartItems.Add(splitButtonSeparator1);
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
             SetStatus(StatusType.Ready);
@@ -314,6 +336,7 @@ namespace LegalLead.PublicData.Search
                 toolStripStatus.ForeColor = v.Color;
                 var enabled = status != StatusType.Running;
                 SetControlEnabledState(enabled);
+                RestartItems.ForEach(x => { x.Visible = status == StatusType.Running; });
                 Refresh();
             }
             catch (Exception)
@@ -507,6 +530,23 @@ namespace LegalLead.PublicData.Search
                 ctrl.BackColor = originalBackColor;
                 ctrl.ForeColor = originalForeColor;
             });
+        }
+
+        private void MenuRestart_Click(object sender, EventArgs e)
+        {
+            string applicationPath = Application.ExecutablePath;
+            Process.Start(applicationPath);
+            KillProcess("geckodriver");
+            Application.Exit();
+        }
+        private class CustomSplitButton : ToolStripSplitButton
+        {
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+                // Hide the drop-down arrow
+                e.Graphics.FillRectangle(new SolidBrush(this.BackColor), this.Width - 15, 0, 15, this.Height);
+            }
         }
     }
 }
