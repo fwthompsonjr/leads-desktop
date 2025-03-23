@@ -46,6 +46,8 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("usage-set-limit")] public string UsageSetLimitUrl { get; set; } = string.Empty;
         [JsonProperty("content-get")] public string ContentGetUrl { get; set; } = string.Empty;
         [JsonProperty("content-save")] public string ContentSaveUrl { get; set; } = string.Empty;
+        [JsonProperty("process-offline")] public string BeginSearchUrl { get; set; }
+        [JsonProperty("process-offline-status")] public string SearchStatusUrl { get; set; }
     }
 
     public class InvoiceUriModel

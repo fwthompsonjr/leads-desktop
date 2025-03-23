@@ -19,5 +19,7 @@ namespace LegalLead.PublicData.Search.Interfaces
         void PostFileDetail(SearchContext context);
         SearchContext GetFileDetail(SearchContext context);
         AdminDbResponse Admin(AdminDbRequest findDb);
+        ProcessOfflineResponse BeginSearch(ProcessOfflineRequest request);
+        ProcessOfflineResponse GetSearchStatus(ProcessOfflineResponse request);
     }
 }

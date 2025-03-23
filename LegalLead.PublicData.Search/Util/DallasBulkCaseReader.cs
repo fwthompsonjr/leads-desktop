@@ -1,5 +1,7 @@
 using HtmlAgilityPack;
 using LegalLead.PublicData.Search.Extensions;
+using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Models;
 using Newtonsoft.Json;
 using Polly;
 using Polly.Timeout;
@@ -41,6 +43,33 @@ namespace LegalLead.PublicData.Search.Util
                 Debug.WriteLine("Found {0:d} cookies", cookies.Count);
             }
             var count = Workload.Count;
+            var remote = new ProcessOfflineRequest
+            {
+                Count = count,
+                Workload = Workload.ToJsonString(),
+                Cookies = cookies.ToJsonString(),
+                RequestId = this.Interactive.TrackingIndex ?? string.Empty,
+            };
+            var offline = ProcessOfflineHelper.BeginSearch(remote);
+            if (offline.IsValid)
+            {
+                var logged = new List<string>();
+                Console.WriteLine("Reading case details {0}", count);
+                var status = ProcessOfflineHelper.SearchStatus(offline);
+                while(!status.IsCompleted)
+                {
+                    Thread.Sleep(2000);
+                    status = ProcessOfflineHelper.SearchStatus(offline);
+                    EchoStatusMessages(logged, status);
+                    if (status.IsCompleted)
+                    {
+                        break;
+                    }
+                    _ = Task.Run(() => Driver.ReloadCurrentPageWithRetry());
+                }
+                if (string.IsNullOrEmpty(status.Content)) return Workload.ToJsonString();
+                return status.Content;
+            }
             var items = new ConcurrentDictionary<int, CaseItemDtoMapper>();
             Workload.ForEach(x =>
             {
@@ -68,6 +97,17 @@ namespace LegalLead.PublicData.Search.Util
             Workload.AddRange(items.Select(x => x.Value.Dto));
             // Cast ConcurrentDictionary to Dictionary before returning
             return Workload.ToJsonString();
+        }
+
+        private static void EchoStatusMessages(List<string> logged, ProcessOfflineResponse status)
+        {
+            status.Messages.RemoveAll(logged.Contains);
+            if (status.Messages.Count > 0)
+            {
+                var arr = string.Join(Environment.NewLine, status.Messages);
+                Console.WriteLine(arr);
+                logged.AddRange(status.Messages);
+            }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]

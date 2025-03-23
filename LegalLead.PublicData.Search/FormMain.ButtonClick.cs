@@ -282,6 +282,7 @@ namespace LegalLead.PublicData.Search
                 webmgr.ReportProgress = TryShowProgress;
                 webmgr.ReportProgessComplete = TryHideProgress;
                 var interactive = GetDbInteractive(webmgr, siteData.Id);
+                interactive.TrackingIndex = trackingItem.Id;
                 using var tokenSource = new CancellationTokenSource();
                 var token = tokenSource.Token;
 

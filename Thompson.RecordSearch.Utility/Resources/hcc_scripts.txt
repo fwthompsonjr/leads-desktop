@@ -9,7 +9,7 @@
 	"count": "app/count-hcc-data"
   },
   "db": {
-	"uri": "http://api.legallead.co/",
+	"uri": "https://localhost:44345/",
 	"begin": "db/begin",
 	"complete": "db/complete",
 	"query": "db/find",
@@ -23,6 +23,8 @@
 	"usage-set-limit": "db/usage-set-monthly-limit",
 	"content-get": "db/get-search-file",
 	"content-save": "db/save-search-file",
+	"process-offline": "db/process-offline",
+	"process-offline-status": "db/process-offline-status",
 	"admin": "admin/execute"
   },
   "invoice": {

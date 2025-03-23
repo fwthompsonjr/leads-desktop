@@ -225,6 +225,24 @@ namespace LegalLead.PublicData.Search.Helpers
              ?? context;
             return response;
         }
+
+        public ProcessOfflineResponse BeginSearch(ProcessOfflineRequest request)
+        {
+            var uri = GetAddress("process-offline");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<ProcessOfflineRequest, ProcessOfflineResponse>(client, uri, request);
+            return response ?? new();
+        }
+        public ProcessOfflineResponse GetSearchStatus(ProcessOfflineResponse request)
+        {
+            var uri = GetAddress("process-offline-status");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<ProcessOfflineResponse, ProcessOfflineResponse>(client, uri, request);
+            return response ?? new();
+        }
+
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
             var list = new List<List<T>>();
@@ -298,6 +316,8 @@ namespace LegalLead.PublicData.Search.Helpers
                 "usage-set-limit" => $"{uri}{provider.UsageSetLimitUrl}",
                 "content-get" => $"{uri}{provider.ContentGetUrl}",
                 "content-save" => $"{uri}{provider.ContentSaveUrl}",
+                "process-offline" => $"{uri}{provider.BeginSearchUrl}",
+                "process-offline-status" => $"{uri}{provider.SearchStatusUrl}",
                 _ => string.Empty
             };
         }
