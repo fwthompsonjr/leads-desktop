@@ -54,6 +54,8 @@ namespace LegalLead.PublicData.Search.Util
             if (offline.IsValid)
             {
                 var logged = new List<string>();
+                var searchDate = Workload[0].FileDate;
+                var tracking = new StatusTrackingDto { FileDate = searchDate };
                 Console.WriteLine("Reading case details {0}", count);
                 var status = ProcessOfflineHelper.SearchStatus(offline);
                 while(!status.IsCompleted)
@@ -61,6 +63,7 @@ namespace LegalLead.PublicData.Search.Util
                     Thread.Sleep(2000);
                     status = ProcessOfflineHelper.SearchStatus(offline);
                     EchoStatusMessages(logged, status);
+                    tracking = EchoProgressMessages(tracking, status);
                     if (status.IsCompleted)
                     {
                         break;
@@ -108,6 +111,22 @@ namespace LegalLead.PublicData.Search.Util
                 Console.WriteLine(arr);
                 logged.AddRange(status.Messages);
             }
+        }
+
+        private StatusTrackingDto EchoProgressMessages(StatusTrackingDto current, ProcessOfflineResponse status)
+        {
+            if (status.RecordCount == 0 && status.TotalProcessed == 0) return current;
+            if (current.RecordCount == status.RecordCount && current.TotalProcessed == status.TotalProcessed) return current;
+            current.RecordCount = status.RecordCount;
+            current.TotalProcessed = status.TotalProcessed;
+            if (current.TotalProcessed == current.RecordCount)
+            {
+                Interactive.CompleteProgess();
+                return current;
+            }
+            Interactive.EchoProgess(0, current.RecordCount, current.TotalProcessed, "<no-console>", false, "", current.FileDate);
+            Interactive.EchoProgess(0, current.RecordCount, current.TotalProcessed, "<no-console>");
+            return current;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]
@@ -341,6 +360,12 @@ namespace LegalLead.PublicData.Search.Util
                 parent = parent.ParentNode;
             }
             return parent;
+        }
+        private class StatusTrackingDto
+        {
+            public string FileDate { get; set; }
+            public int RecordCount { get; set; }
+            public int TotalProcessed { get; set; }
         }
     }
 }
