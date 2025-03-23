@@ -42,6 +42,8 @@
             cboUserAction = new System.Windows.Forms.ComboBox();
             lbAction = new System.Windows.Forms.Label();
             grid = new System.Windows.Forms.DataGridView();
+            label1 = new System.Windows.Forms.Label();
+            lbUserName = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             toolStrip.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -63,12 +65,13 @@
             tableLayoutPanel1.Controls.Add(splitContainer, 0, 1);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(700, 474);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // toolStrip
@@ -78,7 +81,7 @@
             toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsReturn });
             toolStrip.Location = new System.Drawing.Point(0, 0);
             toolStrip.Name = "toolStrip";
-            toolStrip.Size = new System.Drawing.Size(800, 40);
+            toolStrip.Size = new System.Drawing.Size(700, 30);
             toolStrip.TabIndex = 0;
             toolStrip.Text = "toolStrip";
             // 
@@ -89,7 +92,7 @@
             tsReturn.ImageTransparentColor = System.Drawing.Color.Magenta;
             tsReturn.Name = "tsReturn";
             tsReturn.Padding = new System.Windows.Forms.Padding(2);
-            tsReturn.Size = new System.Drawing.Size(60, 37);
+            tsReturn.Size = new System.Drawing.Size(50, 27);
             tsReturn.Text = "Return";
             tsReturn.Click += TsReturn_Click;
             // 
@@ -97,9 +100,10 @@
             // 
             statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsContext, tsSeparator, tsPosition });
-            statusStrip1.Location = new System.Drawing.Point(0, 420);
+            statusStrip1.Location = new System.Drawing.Point(0, 452);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(800, 30);
+            statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
+            statusStrip1.Size = new System.Drawing.Size(700, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -107,27 +111,28 @@
             // 
             tsContext.Name = "tsContext";
             tsContext.Padding = new System.Windows.Forms.Padding(2);
-            tsContext.Size = new System.Drawing.Size(64, 24);
+            tsContext.Size = new System.Drawing.Size(53, 17);
             tsContext.Text = "Context";
             // 
             // tsSeparator
             // 
             tsSeparator.Margin = new System.Windows.Forms.Padding(2);
             tsSeparator.Name = "tsSeparator";
-            tsSeparator.Size = new System.Drawing.Size(13, 26);
+            tsSeparator.Size = new System.Drawing.Size(10, 18);
             tsSeparator.Text = "|";
             // 
             // tsPosition
             // 
             tsPosition.Name = "tsPosition";
             tsPosition.Padding = new System.Windows.Forms.Padding(2);
-            tsPosition.Size = new System.Drawing.Size(65, 24);
+            tsPosition.Size = new System.Drawing.Size(54, 17);
             tsPosition.Text = "Position";
             // 
             // splitContainer
             // 
             splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            splitContainer.Location = new System.Drawing.Point(3, 43);
+            splitContainer.Location = new System.Drawing.Point(3, 32);
+            splitContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             splitContainer.Name = "splitContainer";
             splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -140,8 +145,9 @@
             // 
             splitContainer.Panel2.AutoScroll = true;
             splitContainer.Panel2.Controls.Add(tableLayoutPanel2);
-            splitContainer.Size = new System.Drawing.Size(794, 374);
-            splitContainer.SplitterDistance = 264;
+            splitContainer.Size = new System.Drawing.Size(694, 418);
+            splitContainer.SplitterDistance = 295;
+            splitContainer.SplitterWidth = 3;
             splitContainer.TabIndex = 2;
             // 
             // gridUsers
@@ -149,27 +155,31 @@
             gridUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridUsers.Dock = System.Windows.Forms.DockStyle.Fill;
             gridUsers.Location = new System.Drawing.Point(0, 0);
+            gridUsers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             gridUsers.Name = "gridUsers";
             gridUsers.RowHeadersWidth = 51;
-            gridUsers.Size = new System.Drawing.Size(794, 264);
+            gridUsers.Size = new System.Drawing.Size(694, 295);
             gridUsers.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel2.Controls.Add(cboUserAction, 1, 0);
             tableLayoutPanel2.Controls.Add(lbAction, 0, 0);
             tableLayoutPanel2.Controls.Add(grid, 0, 2);
+            tableLayoutPanel2.Controls.Add(label1, 0, 1);
+            tableLayoutPanel2.Controls.Add(lbUserName, 1, 1);
             tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 3;
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new System.Drawing.Size(794, 106);
+            tableLayoutPanel2.Size = new System.Drawing.Size(694, 120);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // cboUserAction
@@ -177,19 +187,19 @@
             cboUserAction.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             cboUserAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboUserAction.FormattingEnabled = true;
-            cboUserAction.Location = new System.Drawing.Point(103, 3);
-            cboUserAction.Margin = new System.Windows.Forms.Padding(3, 3, 3, 5);
+            cboUserAction.Location = new System.Drawing.Point(91, 2);
+            cboUserAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 4);
             cboUserAction.Name = "cboUserAction";
-            cboUserAction.Size = new System.Drawing.Size(688, 28);
+            cboUserAction.Size = new System.Drawing.Size(600, 23);
             cboUserAction.TabIndex = 0;
             // 
             // lbAction
             // 
             lbAction.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lbAction.AutoSize = true;
-            lbAction.Location = new System.Drawing.Point(3, 5);
+            lbAction.Location = new System.Drawing.Point(3, 3);
             lbAction.Name = "lbAction";
-            lbAction.Size = new System.Drawing.Size(94, 20);
+            lbAction.Size = new System.Drawing.Size(82, 15);
             lbAction.TabIndex = 1;
             lbAction.Text = "Select view:";
             // 
@@ -200,19 +210,40 @@
             grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableLayoutPanel2.SetColumnSpan(grid, 2);
             grid.Dock = System.Windows.Forms.DockStyle.Fill;
-            grid.Location = new System.Drawing.Point(5, 45);
-            grid.Margin = new System.Windows.Forms.Padding(5);
+            grid.Location = new System.Drawing.Point(4, 56);
+            grid.Margin = new System.Windows.Forms.Padding(4);
             grid.Name = "grid";
             grid.RowHeadersWidth = 51;
-            grid.Size = new System.Drawing.Size(784, 56);
+            grid.Size = new System.Drawing.Size(686, 60);
             grid.TabIndex = 2;
+            // 
+            // label1
+            // 
+            label1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(3, 29);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(82, 15);
+            label1.TabIndex = 3;
+            label1.Text = "User:";
+            // 
+            // lbUserName
+            // 
+            lbUserName.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lbUserName.AutoSize = true;
+            lbUserName.Location = new System.Drawing.Point(91, 29);
+            lbUserName.Name = "lbUserName";
+            lbUserName.Size = new System.Drawing.Size(600, 15);
+            lbUserName.TabIndex = 4;
+            lbUserName.Text = "-";
             // 
             // FormAdmin
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(800, 450);
+            ClientSize = new System.Drawing.Size(700, 474);
             Controls.Add(tableLayoutPanel1);
+            Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             Name = "FormAdmin";
             Text = "FormAdmin";
             tableLayoutPanel1.ResumeLayout(false);
@@ -247,5 +278,7 @@
         private System.Windows.Forms.ComboBox cboUserAction;
         private System.Windows.Forms.Label lbAction;
         private System.Windows.Forms.DataGridView grid;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbUserName;
     }
 }

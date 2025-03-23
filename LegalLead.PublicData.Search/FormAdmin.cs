@@ -9,6 +9,9 @@ namespace LegalLead.PublicData.Search
 {
     public partial class FormAdmin : Form
     {
+
+        private EventHandler<GetAccountsResponse> OnTagChanged;
+
         public FormAdmin()
         {
             InitializeComponent();
@@ -16,6 +19,17 @@ namespace LegalLead.PublicData.Search
             gridUsers.CellContentClick += GridUsers_CellContentClick;
             InitializeChildPanelControls();
             InitializeParentMenuButtons();
+            OnTagChanged += TagModified;
+        }
+
+        private void TagModified(object sender, GetAccountsResponse e)
+        {
+            if (cboUserAction.Tag == null) {
+                lbUserName.Text = "-";
+                return; 
+            }
+            lbUserName.Text = e.UserName;
+            CboUserAction_SelectedIndexChanged(null, null);
         }
 
         private void GridUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -29,9 +43,14 @@ namespace LegalLead.PublicData.Search
                     if (sender is not DataGridView gridView) return;
                     if (gridView.Columns[e.ColumnIndex].Name != "EditAccount") return;
                     if (gridView.DataSource is not List<GetAccountsResponse> accounts) return;
+                    foreach (DataGridViewRow row in gridView.Rows) {
+                        if (row.Index < 0) continue;
+                        row.Selected = row.Index == e.RowIndex;
+                    }
                     var item = accounts[e.RowIndex];
                     cboUserAction.Tag = item;
                     isTagSet = true;
+                    OnTagChanged?.Invoke(null, item);
                 }
                 finally
                 {
@@ -143,12 +162,12 @@ namespace LegalLead.PublicData.Search
         {
             GetAccounts = 1,
             GetPricing = 2,
-            GetCounty = 101,
+            GetCounty = 150,
+            GetProfile = 140,
+            GetSearch = 120,
+            GetInvoice = 110,
             UpdateProfile = 201,
             UpdateUsageLimit = 202,
-            GetProfile = 502,
-            GetInvoice = 503,
-            GetSearch = 504,
             None = 1000,
         }
 
