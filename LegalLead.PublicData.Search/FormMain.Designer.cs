@@ -47,6 +47,7 @@
             mnuView = new System.Windows.Forms.ToolStripMenuItem();
             mnuAdmin = new System.Windows.Forms.ToolStripMenuItem();
             mnuViewUsers = new System.Windows.Forms.ToolStripMenuItem();
+            mnuRegisterAccount = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             tsWebDriver = new System.Windows.Forms.ToolStripDropDownButton();
             tsDropFileList = new System.Windows.Forms.ToolStripDropDownButton();
@@ -251,7 +252,7 @@
             // 
             // mnuAdmin
             // 
-            mnuAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { mnuViewUsers });
+            mnuAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { mnuViewUsers, mnuRegisterAccount });
             mnuAdmin.Name = "mnuAdmin";
             mnuAdmin.Size = new System.Drawing.Size(55, 20);
             mnuAdmin.Text = "A&dmin";
@@ -260,8 +261,14 @@
             // mnuViewUsers
             // 
             mnuViewUsers.Name = "mnuViewUsers";
-            mnuViewUsers.Size = new System.Drawing.Size(102, 22);
+            mnuViewUsers.Size = new System.Drawing.Size(180, 22);
             mnuViewUsers.Text = "Users";
+            // 
+            // mnuRegisterAccount
+            // 
+            mnuRegisterAccount.Name = "mnuRegisterAccount";
+            mnuRegisterAccount.Size = new System.Drawing.Size(180, 22);
+            mnuRegisterAccount.Text = "Register";
             // 
             // statusStrip1
             // 
@@ -307,7 +314,7 @@
             // tsUserName
             // 
             tsUserName.Name = "tsUserName";
-            tsUserName.Size = new System.Drawing.Size(616, 35);
+            tsUserName.Size = new System.Drawing.Size(647, 35);
             tsUserName.Spring = true;
             tsUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             tsUserName.Visible = false;
@@ -589,6 +596,7 @@
         internal System.Windows.Forms.ToolStripMenuItem mnuViewUsers;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem menuRestart;
+        private System.Windows.Forms.ToolStripMenuItem mnuRegisterAccount;
     }
 }
 
