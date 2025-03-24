@@ -1,5 +1,6 @@
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -243,16 +244,18 @@ namespace LegalLead.PublicData.Search.Helpers
             return response ?? new();
         }
 
-        public object RegisterAccount(RegisterAccountModel model)
+        public LeadUserModel RegisterAccount(RegisterAccountModel model)
         {
-            var uri = GetAddress("process-offline");
+            var uri = GetAddress("register-account");
             var token = GetToken();
             var payload = new
             {
-
+                userName = model.UserName,
+                password = model.Password,
+                email = model.Email,
             };
             using var client = GetClient(token);
-            var response = httpService.PostAsJson<ProcessOfflineRequest, ProcessOfflineResponse>(client, uri, request);
+            var response = httpService.PostAsJson<object, LeadUserModel>(client, uri, payload);
             return response ?? new();
         }
 

@@ -1,4 +1,6 @@
-﻿using LegalLead.PublicData.Search.Models;
+﻿using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Models;
+using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,12 +33,14 @@ namespace LegalLead.PublicData.Search
                 if (ModelValidator.Validate(userModel, out List<ValidationResult> results))
                 {
                     lbStatus.Text = "Processing input";
+                    var response = dbHelper.RegisterAccount(userModel);
+                    var isCreated = !string.IsNullOrEmpty(response.Id);
+                    var statusMessage = isCreated ? "Account registration completed" : "Error processing request";
+                    lbStatus.Text = statusMessage;
+                    return;
                 }
-                else
-                {
-                    string errorMessages = string.Join(Environment.NewLine, results.Select(r => r.ErrorMessage));
-                    lbStatus.Text = $"Validation failed:\n{errorMessages}";
-                }
+                string errorMessages = string.Join(Environment.NewLine, results.Select(r => r.ErrorMessage));
+                lbStatus.Text = $"Validation failed:\n{errorMessages}";
             }
             finally
             {
@@ -65,5 +69,9 @@ namespace LegalLead.PublicData.Search
                 return Validator.TryValidateObject(model, context, results, true);
             }
         }
+
+
+        private static readonly IRemoteDbHelper dbHelper
+            = ActionSettingContainer.GetContainer.GetInstance<IRemoteDbHelper>();
     }
 }

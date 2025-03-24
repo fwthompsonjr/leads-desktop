@@ -1,6 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Interfaces
 {
@@ -21,5 +22,6 @@ namespace LegalLead.PublicData.Search.Interfaces
         AdminDbResponse Admin(AdminDbRequest findDb);
         ProcessOfflineResponse BeginSearch(ProcessOfflineRequest request);
         ProcessOfflineResponse GetSearchStatus(ProcessOfflineResponse request);
+        LeadUserModel RegisterAccount(RegisterAccountModel model);
     }
 }
