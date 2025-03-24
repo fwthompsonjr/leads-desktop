@@ -44,6 +44,7 @@
             grid = new System.Windows.Forms.DataGridView();
             label1 = new System.Windows.Forms.Label();
             lbUserName = new System.Windows.Forms.Label();
+            buttonSaveChanges = new System.Windows.Forms.Button();
             tableLayoutPanel1.SuspendLayout();
             toolStrip.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -163,14 +164,16 @@
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnCount = 3;
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             tableLayoutPanel2.Controls.Add(cboUserAction, 1, 0);
             tableLayoutPanel2.Controls.Add(lbAction, 0, 0);
             tableLayoutPanel2.Controls.Add(grid, 0, 2);
             tableLayoutPanel2.Controls.Add(label1, 0, 1);
             tableLayoutPanel2.Controls.Add(lbUserName, 1, 1);
+            tableLayoutPanel2.Controls.Add(buttonSaveChanges, 2, 1);
             tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -185,6 +188,7 @@
             // cboUserAction
             // 
             cboUserAction.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            tableLayoutPanel2.SetColumnSpan(cboUserAction, 2);
             cboUserAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboUserAction.FormattingEnabled = true;
             cboUserAction.Location = new System.Drawing.Point(91, 2);
@@ -208,7 +212,7 @@
             grid.AllowUserToAddRows = false;
             grid.AllowUserToDeleteRows = false;
             grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLayoutPanel2.SetColumnSpan(grid, 2);
+            tableLayoutPanel2.SetColumnSpan(grid, 3);
             grid.Dock = System.Windows.Forms.DockStyle.Fill;
             grid.Location = new System.Drawing.Point(4, 56);
             grid.Margin = new System.Windows.Forms.Padding(4);
@@ -233,9 +237,19 @@
             lbUserName.AutoSize = true;
             lbUserName.Location = new System.Drawing.Point(91, 29);
             lbUserName.Name = "lbUserName";
-            lbUserName.Size = new System.Drawing.Size(600, 15);
+            lbUserName.Size = new System.Drawing.Size(520, 15);
             lbUserName.TabIndex = 4;
             lbUserName.Text = "-";
+            // 
+            // buttonSaveChanges
+            // 
+            buttonSaveChanges.Location = new System.Drawing.Point(617, 25);
+            buttonSaveChanges.Name = "buttonSaveChanges";
+            buttonSaveChanges.Size = new System.Drawing.Size(74, 23);
+            buttonSaveChanges.TabIndex = 5;
+            buttonSaveChanges.Text = "Save";
+            buttonSaveChanges.UseVisualStyleBackColor = true;
+            buttonSaveChanges.Visible = false;
             // 
             // FormAdmin
             // 
@@ -280,5 +294,6 @@
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbUserName;
+        private System.Windows.Forms.Button buttonSaveChanges;
     }
 }

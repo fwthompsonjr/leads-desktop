@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
@@ -103,12 +104,17 @@ namespace LegalLead.PublicData.Search
                 if (cboUserAction.Tag is not GetAccountsResponse rsp || model.Id == 1000)
                 {
                     grid.Visible = false;
+                    buttonSaveChanges.Visible = false;
                     return;
                 }
                 var api = UserManagementContainer.GetContainer.GetInstance<IUserManager>(model.Name);
                 var response = api.FetchData(new Models.AdminDbRequest { UserId = rsp.Id });
                 api.BindGrid(grid, response);
                 grid.Visible = true;
+                var allowEdits = new int[] { 
+                    (int)UserManagementMethod.GetCounty, 
+                    (int)UserManagementMethod.GetProfile };
+                buttonSaveChanges.Visible = allowEdits.Contains(model.Id);
             }
         }
 
