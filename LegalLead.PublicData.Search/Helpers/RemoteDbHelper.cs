@@ -243,6 +243,19 @@ namespace LegalLead.PublicData.Search.Helpers
             return response ?? new();
         }
 
+        public object RegisterAccount(RegisterAccountModel model)
+        {
+            var uri = GetAddress("process-offline");
+            var token = GetToken();
+            var payload = new
+            {
+
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<ProcessOfflineRequest, ProcessOfflineResponse>(client, uri, request);
+            return response ?? new();
+        }
+
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
             var list = new List<List<T>>();
@@ -318,6 +331,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "content-save" => $"{uri}{provider.ContentSaveUrl}",
                 "process-offline" => $"{uri}{provider.BeginSearchUrl}",
                 "process-offline-status" => $"{uri}{provider.SearchStatusUrl}",
+                "register-account" => $"{uri}{provider.RegisterAccountUrl}",
                 _ => string.Empty
             };
         }

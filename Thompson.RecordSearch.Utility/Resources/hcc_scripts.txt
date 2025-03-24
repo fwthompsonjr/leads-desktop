@@ -27,6 +27,7 @@
 	"content-save": "db/save-search-file",
 	"process-offline": "db/process-offline",
 	"process-offline-status": "db/process-offline-status",
+	"register-account": "app/create-account",
 	"admin": "admin/execute"
   },
   "invoice": {

@@ -48,6 +48,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("content-save")] public string ContentSaveUrl { get; set; } = string.Empty;
         [JsonProperty("process-offline")] public string BeginSearchUrl { get; set; }
         [JsonProperty("process-offline-status")] public string SearchStatusUrl { get; set; }
+        [JsonProperty("register-account")] public string RegisterAccountUrl { get; set; }
     }
 
     public class InvoiceUriModel
