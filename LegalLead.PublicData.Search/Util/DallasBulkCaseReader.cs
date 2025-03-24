@@ -58,7 +58,7 @@ namespace LegalLead.PublicData.Search.Util
                 var tracking = new StatusTrackingDto { FileDate = searchDate };
                 Console.WriteLine("Reading case details {0}", count);
                 var status = ProcessOfflineHelper.SearchStatus(offline);
-                while(!status.IsCompleted)
+                while (!status.IsCompleted)
                 {
                     Thread.Sleep(2000);
                     status = ProcessOfflineHelper.SearchStatus(offline);

@@ -1,7 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;

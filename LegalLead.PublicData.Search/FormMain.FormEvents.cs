@@ -569,8 +569,8 @@ namespace LegalLead.PublicData.Search
             var contextIndex = ConfigurationManager.AppSettings[subContextId];
             var startDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartDate];
             var endDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormEndDate];
-            if (!string.IsNullOrEmpty(configIndex) && 
-                int.TryParse(configIndex, out var cfidx) && 
+            if (!string.IsNullOrEmpty(configIndex) &&
+                int.TryParse(configIndex, out var cfidx) &&
                 cfidx < cboWebsite.Items.Count &&
                 cfidx >= 0)
             {
@@ -582,7 +582,8 @@ namespace LegalLead.PublicData.Search
                 cboWebsite.DataSource is List<WebNavigationParameter> webSource)
             {
                 var id = webSource.FindIndex(x => x.Name.Contains(websiteName));
-                if (id != -1) {
+                if (id != -1)
+                {
                     cboWebsite.SelectedIndex = id;
                     CboWebsite_SelectedValueChanged(null, null);
                 }

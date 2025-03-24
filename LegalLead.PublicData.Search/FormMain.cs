@@ -65,7 +65,7 @@ namespace LegalLead.PublicData.Search
             {
                 Padding = new Padding(2)
             };
-            CustomSplitButton splitButton = new ()
+            CustomSplitButton splitButton = new()
             {
                 Text = "Restart",
                 Visible = true,

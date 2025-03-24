@@ -1,6 +1,5 @@
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;

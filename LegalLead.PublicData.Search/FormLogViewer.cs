@@ -94,7 +94,7 @@ namespace LegalLead.PublicData.Search
             // Add event handlers
             comboBox.SelectedIndexChanged += ComboBox_SelectedIndexChanged;
             dataGridView.RowEnter += DataGridView_SelectionChanged;
-            
+
             button.Click += Button_Click;
             // Add TableLayoutPanel to Form
             Controls.Add(tableLayoutPanel);
@@ -108,7 +108,7 @@ namespace LegalLead.PublicData.Search
             if (indx < 0 || indx > summary.Count - 1) return;
             if (!dataGridSummary.Focused) return;
             var selected = summary[indx];
-            if (string.IsNullOrEmpty(selected.EndingComment)) 
+            if (string.IsNullOrEmpty(selected.EndingComment))
                 textBox.Text = selected.StartingComment;
             else
             {

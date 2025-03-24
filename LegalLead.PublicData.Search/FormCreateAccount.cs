@@ -2,7 +2,6 @@
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using LegalLead.PublicData.Search.Util;
-using StructureMap.Query;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

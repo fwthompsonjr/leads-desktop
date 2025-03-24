@@ -24,9 +24,10 @@ namespace LegalLead.PublicData.Search
 
         private void TagModified(object sender, GetAccountsResponse e)
         {
-            if (cboUserAction.Tag == null) {
+            if (cboUserAction.Tag == null)
+            {
                 lbUserName.Text = "-";
-                return; 
+                return;
             }
             lbUserName.Text = e.UserName;
             CboUserAction_SelectedIndexChanged(null, null);
@@ -43,7 +44,8 @@ namespace LegalLead.PublicData.Search
                     if (sender is not DataGridView gridView) return;
                     if (gridView.Columns[e.ColumnIndex].Name != "EditAccount") return;
                     if (gridView.DataSource is not List<GetAccountsResponse> accounts) return;
-                    foreach (DataGridViewRow row in gridView.Rows) {
+                    foreach (DataGridViewRow row in gridView.Rows)
+                    {
                         if (row.Index < 0) continue;
                         row.Selected = row.Index == e.RowIndex;
                     }
