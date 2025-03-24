@@ -141,6 +141,7 @@ namespace LegalLead.PublicData.Search
                     if (!isAdmin) return;
                     mnuAdmin.Visible = isAdmin;
                     mnuViewUsers.Click += MnuViewUsers_Click;
+                    mnuRegisterAccount.Click += MnuRegisterAccount_Click;
                     break;
                 default:
                     Close();
@@ -200,6 +201,21 @@ namespace LegalLead.PublicData.Search
             }
         }
 
+        private void MnuRegisterAccount_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new RegisterAccountAdminRequestedEvent() { GetMain = this };
+            handler.Toggle(itm.Checked);
+            if (itm.Checked) return;
+            for (int i = 0; i < 2; i++)
+            {
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
+            }
+        }
         private void ExportDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (CaseData == null)

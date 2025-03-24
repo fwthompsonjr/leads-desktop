@@ -63,7 +63,7 @@
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 7;
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
@@ -77,7 +77,7 @@
             // tbxConfirmPwd
             // 
             tbxConfirmPwd.Dock = System.Windows.Forms.DockStyle.Fill;
-            tbxConfirmPwd.Location = new System.Drawing.Point(150, 154);
+            tbxConfirmPwd.Location = new System.Drawing.Point(150, 144);
             tbxConfirmPwd.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             tbxConfirmPwd.Name = "tbxConfirmPwd";
             tbxConfirmPwd.PasswordChar = '*';
@@ -88,18 +88,17 @@
             // txUserName
             // 
             txUserName.Dock = System.Windows.Forms.DockStyle.Fill;
-            txUserName.Enabled = false;
             txUserName.Location = new System.Drawing.Point(150, 10);
             txUserName.Margin = new System.Windows.Forms.Padding(10);
             txUserName.MaxLength = 255;
             txUserName.Name = "txUserName";
             txUserName.Size = new System.Drawing.Size(560, 23);
-            txUserName.TabIndex = 10;
+            txUserName.TabIndex = 1;
             // 
             // btnSubmit
             // 
             btnSubmit.Dock = System.Windows.Forms.DockStyle.Fill;
-            btnSubmit.Location = new System.Drawing.Point(150, 199);
+            btnSubmit.Location = new System.Drawing.Point(150, 189);
             btnSubmit.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             btnSubmit.Name = "btnSubmit";
             btnSubmit.Size = new System.Drawing.Size(560, 37);
@@ -120,7 +119,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(10, 64);
+            label2.Location = new System.Drawing.Point(10, 54);
             label2.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(39, 15);
@@ -130,7 +129,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(10, 109);
+            label3.Location = new System.Drawing.Point(10, 99);
             label3.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(60, 15);
@@ -140,7 +139,7 @@
             // tbxPwd
             // 
             tbxPwd.Dock = System.Windows.Forms.DockStyle.Fill;
-            tbxPwd.Location = new System.Drawing.Point(150, 109);
+            tbxPwd.Location = new System.Drawing.Point(150, 99);
             tbxPwd.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             tbxPwd.Name = "tbxPwd";
             tbxPwd.PasswordChar = '*';
@@ -151,7 +150,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(10, 154);
+            label4.Location = new System.Drawing.Point(10, 144);
             label4.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(107, 15);
@@ -163,22 +162,22 @@
             lbStatus.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(lbStatus, 3);
             lbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            lbStatus.Location = new System.Drawing.Point(10, 254);
+            lbStatus.Location = new System.Drawing.Point(10, 244);
             lbStatus.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             lbStatus.Name = "lbStatus";
-            lbStatus.Size = new System.Drawing.Size(780, 157);
+            lbStatus.Size = new System.Drawing.Size(780, 167);
             lbStatus.TabIndex = 14;
             lbStatus.Text = "Ready";
             // 
             // txEmail
             // 
             txEmail.Dock = System.Windows.Forms.DockStyle.Fill;
-            txEmail.Location = new System.Drawing.Point(150, 65);
+            txEmail.Location = new System.Drawing.Point(150, 55);
             txEmail.Margin = new System.Windows.Forms.Padding(10);
             txEmail.MaxLength = 255;
             txEmail.Name = "txEmail";
             txEmail.Size = new System.Drawing.Size(560, 23);
-            txEmail.TabIndex = 41;
+            txEmail.TabIndex = 2;
             // 
             // FormCreateAccount
             // 

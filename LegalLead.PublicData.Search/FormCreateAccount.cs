@@ -1,11 +1,14 @@
-﻿using LegalLead.PublicData.Search.Interfaces;
+﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using LegalLead.PublicData.Search.Util;
+using StructureMap.Query;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search
 {
@@ -22,6 +25,7 @@ namespace LegalLead.PublicData.Search
 
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
+            const StringComparison oic = StringComparison.OrdinalIgnoreCase;
             if (!btnSubmit.Enabled) return;
             try
             {
@@ -33,8 +37,26 @@ namespace LegalLead.PublicData.Search
                 if (ModelValidator.Validate(userModel, out List<ValidationResult> results))
                 {
                     lbStatus.Text = "Processing input";
-                    var response = dbHelper.RegisterAccount(userModel);
-                    var isCreated = !string.IsNullOrEmpty(response.Id);
+                    var list = GetUsers();
+                    if (list == null)
+                    {
+                        lbStatus.Text = "User validation failed";
+                        return;
+                    }
+                    if (list.Exists(x => x.UserName.Equals(userModel.UserName, oic)))
+                    {
+                        lbStatus.Text = $"Invalid username. {userModel.UserName}. Entry already exists with this user name";
+                        return;
+                    }
+                    if (list.Exists(x => x.Email.Equals(userModel.Email, oic)))
+                    {
+                        lbStatus.Text = $"Invalid email. {userModel.Email}. Entry already exists with this email.";
+                        return;
+                    }
+
+                    dbHelper.RegisterAccount(userModel);
+                    list = GetUsers();
+                    var isCreated = list.Exists(x => x.UserName.Equals(userModel.UserName, StringComparison.OrdinalIgnoreCase));
                     var statusMessage = isCreated ? "Account registration completed" : "Error processing request";
                     lbStatus.Text = statusMessage;
                     return;
@@ -51,6 +73,7 @@ namespace LegalLead.PublicData.Search
         private void FormCreateAccount_Load(object sender, EventArgs e)
         {
             BindModelToControls();
+            txUserName.Focus();
         }
 
         private void BindModelToControls()
@@ -59,6 +82,15 @@ namespace LegalLead.PublicData.Search
             txEmail.DataBindings.Add("Text", userModel, "Email");
             tbxPwd.DataBindings.Add("Text", userModel, "Password");
             tbxConfirmPwd.DataBindings.Add("Text", userModel, "ConfirmPassword");
+        }
+        private static List<GetAccountsResponse> GetUsers()
+        {
+
+            var api = UserManagementContainer.GetContainer.GetInstance<IUserManager>("GetAccounts");
+            var response = api.FetchData(new Models.AdminDbRequest());
+            if (!response.IsSuccess) return null;
+            return response.Message.ToInstance<List<GetAccountsResponse>>();
+
         }
         private static class ModelValidator
         {
