@@ -26,7 +26,10 @@ namespace LegalLead.PublicData.Search.Helpers
                 Message = "API response was empty. Please verify values and resubmit"
             };
         }
+        public virtual void SaveGrid(DataGridView gridView)
+        {
 
+        }
         protected static void BindResponse(DataGridView gridView, AdminDbResponse response)
         {
             var data = new[] { response };
@@ -46,6 +49,9 @@ namespace LegalLead.PublicData.Search.Helpers
                 gridView.Columns[col].ReadOnly = true;
             }
         }
+
+
+
         protected static readonly IRemoteDbHelper dbHelper
             = ActionSettingContainer.GetContainer.GetInstance<IRemoteDbHelper>();
     }

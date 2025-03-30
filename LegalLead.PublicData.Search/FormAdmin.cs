@@ -18,9 +18,44 @@ namespace LegalLead.PublicData.Search
             InitializeComponent();
             splitContainer.Panel2Collapsed = true;
             gridUsers.CellContentClick += GridUsers_CellContentClick;
+            grid.CellValueChanged += Grid_CellValueChanged;
             InitializeChildPanelControls();
             InitializeParentMenuButtons();
             OnTagChanged += TagModified;
+            buttonSaveChanges.Click += ButtonSaveChanges_Click;
+        }
+
+        private void Grid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (grid.IsCurrentCellDirty)
+            {
+                grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void ButtonSaveChanges_Click(object sender, EventArgs e)
+        {
+            if (!buttonSaveChanges.Enabled) return;
+            lock (harmony)
+            {
+                buttonSaveChanges.Enabled = false;
+                try
+                {
+                    if (cboUserAction.SelectedItem is not UserManagementMethodModel model) return;
+                    if (cboUserAction.Tag is not GetAccountsResponse rsp || model.Id == 1000) return;
+
+                    var api = UserManagementContainer.GetContainer.GetInstance<IUserManager>(model.Name);
+                    api.SaveGrid(grid);
+
+                    var response = api.FetchData(new Models.AdminDbRequest { UserId = rsp.Id });
+                    api.BindGrid(grid, response);
+
+                }
+                finally
+                {
+                    buttonSaveChanges.Enabled = true;
+                }
+            }
         }
 
         private void TagModified(object sender, GetAccountsResponse e)
@@ -31,6 +66,7 @@ namespace LegalLead.PublicData.Search
                 return;
             }
             lbUserName.Text = e.UserName;
+            if (cboUserAction.SelectedIndex == 0) cboUserAction.SelectedIndex = 1;
             CboUserAction_SelectedIndexChanged(null, null);
         }
 
@@ -111,8 +147,8 @@ namespace LegalLead.PublicData.Search
                 var response = api.FetchData(new Models.AdminDbRequest { UserId = rsp.Id });
                 api.BindGrid(grid, response);
                 grid.Visible = true;
-                var allowEdits = new int[] { 
-                    (int)UserManagementMethod.GetCounty, 
+                var allowEdits = new int[] {
+                    (int)UserManagementMethod.GetCounty,
                     (int)UserManagementMethod.GetProfile };
                 buttonSaveChanges.Visible = allowEdits.Contains(model.Id);
             }

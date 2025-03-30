@@ -7,5 +7,6 @@ namespace LegalLead.PublicData.Search.Interfaces
     {
         AdminDbResponse FetchData(AdminDbRequest request);
         void BindGrid(DataGridView gridView, AdminDbResponse response);
+        void SaveGrid(DataGridView gridView);
     }
 }

@@ -37,7 +37,6 @@ namespace LegalLead.PublicData.Search.Helpers
                 gridView.Columns["InvoiceUri"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 for (var col = 0; col < gridView.Columns.Count; col++)
                 {
-                    var name = gridView.Columns[col].Name;
                     gridView.Columns[col].ReadOnly = true;
                 }
 
