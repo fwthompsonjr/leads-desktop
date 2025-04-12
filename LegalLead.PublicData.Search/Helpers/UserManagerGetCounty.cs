@@ -4,6 +4,7 @@ using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 
@@ -74,15 +75,19 @@ namespace LegalLead.PublicData.Search.Helpers
                 if (IsItemChanged(x, source[changes.IndexOf(x)])) worklist.Add(x);
             });
             if (worklist.Count == 0) return;
+            var translated = worklist.Select(s => new
+            {
+                s.Id,
+                s.LeadUserId,
+                s.MonthlyUsage
+            });
             AdminDbRequest saveRequest = new()
             {
                 MethodName = "UpdateUsageLimit",
-                Payload = worklist.ToJsonString(),
+                Payload = translated.ToJsonString(),
                 UserId = worklist[0].LeadUserId,
             };
             dbHelper.Admin(saveRequest);
-
-            Debug.WriteLine("Found {0} records changed", worklist.Count);
         }
 
         private static bool IsItemChanged(GetCountyResponse userData, GetCountyResponse current)

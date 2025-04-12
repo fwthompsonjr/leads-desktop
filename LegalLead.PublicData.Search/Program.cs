@@ -84,10 +84,22 @@ namespace LegalLead.PublicData.Search
             }
             catch (Exception)
             {
+                SetTextAlternate(sb);
+            }
+        }
+
+        private static void SetTextAlternate(StringBuilder sb)
+        {
+            try
+            {
                 mainForm.txConsole.Invoke((MethodInvoker)delegate
                 {
                     SetText(sb);
                 });
+            }
+            catch
+            {
+                // suppress error
             }
         }
 
