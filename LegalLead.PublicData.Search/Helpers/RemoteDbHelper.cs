@@ -1,3 +1,4 @@
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using System;
@@ -232,7 +233,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var token = GetToken();
             using var client = GetClient(token);
             var response = httpService.PostAsJson<ProcessOfflineRequest, ProcessOfflineResponse>(client, uri, request);
-            return response ?? new();
+            return response.ReplacePipe() ?? new();
         }
         public ProcessOfflineResponse GetSearchStatus(ProcessOfflineResponse request)
         {
@@ -240,7 +241,7 @@ namespace LegalLead.PublicData.Search.Helpers
             var token = GetToken();
             using var client = GetClient(token);
             var response = httpService.PostAsJson<ProcessOfflineResponse, ProcessOfflineResponse>(client, uri, request);
-            return response ?? new();
+            return response.ReplacePipe() ?? new();
         }
 
         public LeadUserModel RegisterAccount(RegisterAccountModel model)
@@ -314,7 +315,11 @@ namespace LegalLead.PublicData.Search.Helpers
         private static string GetAddress(string name)
         {
             var provider = AddressBuilder.DbModel;
-            var uri = provider.Url;
+#if DEBUG
+            var uri = provider.GetUri();
+#else
+            var uri = provider.RemoteUrl;
+#endif
             return name switch
             {
                 "admin" => $"{uri}{provider.AdminUrl}",

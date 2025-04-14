@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Linq;
 
 namespace Thompson.RecordSearch.Utility.Dto
 {
@@ -32,6 +34,9 @@ namespace Thompson.RecordSearch.Utility.Dto
     public class DbUriModel
     {
         [JsonProperty("uri")] public string Url { get; set; }
+        [JsonProperty("remote-uri")] public string RemoteUrl { get; set; }
+
+        [JsonProperty("debug-uri")] public string DebugUrl { get; set; }
         [JsonProperty("admin")] public string AdminUrl { get; set; }
         [JsonProperty("begin")] public string BeginUrl { get; set; }
         [JsonProperty("complete")] public string CompleteUrl { get; set; }
@@ -49,6 +54,15 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("process-offline")] public string BeginSearchUrl { get; set; }
         [JsonProperty("process-offline-status")] public string SearchStatusUrl { get; set; }
         [JsonProperty("register-account")] public string RegisterAccountUrl { get; set; }
+        public string GetUri()
+        {
+            var collection = "remote,debug".Split(',');
+            if (string.IsNullOrWhiteSpace(Url)) return Url;
+            if (!collection.Contains(Url)) return Url;
+            if (Url.Equals(collection[0])) return RemoteUrl;
+            if (Url.Equals(collection[1])) return DebugUrl;
+            return Url;
+        }
     }
 
     public class InvoiceUriModel

@@ -9,7 +9,7 @@
 	"count": "app/count-hcc-data"
   },
   "db": {
-	"uri": "http://api.legallead.co/",
+	"uri": "remote",
 	"remote-uri": "http://api.legallead.co/",
 	"debug-uri": "https://localhost:44345/",
 	"begin": "db/begin",
