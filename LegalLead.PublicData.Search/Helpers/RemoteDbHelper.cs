@@ -235,6 +235,17 @@ namespace LegalLead.PublicData.Search.Helpers
             var response = httpService.PostAsJson<ProcessOfflineRequest, ProcessOfflineResponse>(client, uri, request);
             return response.ReplacePipe() ?? new();
         }
+
+        public void UpdateSearchContext(ProcessOfflineRequest request, string context)
+        {
+            var uri = GetAddress("process-offline-set-context");
+            if (string.IsNullOrEmpty(uri)) return;
+            var token = GetToken();
+            request.Workload = context;
+            using var client = GetClient(token);
+            httpService.PostAsJson<ProcessOfflineRequest, object>(client, uri, request);
+        }
+
         public ProcessOfflineResponse GetSearchStatus(ProcessOfflineResponse request)
         {
             var uri = GetAddress("process-offline-status");
@@ -246,7 +257,7 @@ namespace LegalLead.PublicData.Search.Helpers
 
         public List<OfflineStatusResponse> GetOfflineRequests(OfflineStatusRequest request)
         {
-            var uri = GetAddress("process-offline-status");
+            var uri = GetAddress("get-offline-requests");
             var token = GetToken();
             using var client = GetClient(token);
             var response = httpService.PostAsJson<OfflineStatusRequest, List<OfflineStatusResponse>>(client, uri, request);
@@ -354,6 +365,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "process-offline" => $"{uri}{provider.BeginSearchUrl}",
                 "process-offline-status" => $"{uri}{provider.SearchStatusUrl}",
                 "get-offline-requests" => $"{uri}{provider.OfflineStatusUrl}",
+                "process-offline-set-context" => $"{uri}{provider.OfflineCountyTypeUrl}",
                 "register-account" => $"{uri}{provider.RegisterAccountUrl}",
                 _ => string.Empty
             };

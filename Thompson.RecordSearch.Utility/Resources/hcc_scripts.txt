@@ -9,7 +9,7 @@
 	"count": "app/count-hcc-data"
   },
   "db": {
-	"uri": "remote",
+	"uri": "debug",
 	"remote-uri": "http://api.legallead.co/",
 	"debug-uri": "https://localhost:44345/",
 	"begin": "db/begin",
@@ -28,6 +28,8 @@
 	"process-offline": "db/process-offline",
 	"process-offline-status": "db/process-offline-status",
 	"get-offline-requests": "db/get-offline-requests",
+	"process-offline-set-context": "db/process-offline-set-context",
+	"get-offline-download-status": "db/get-offline-download-status",
 	"register-account": "app/create-account",
 	"admin": "admin/execute"
   },

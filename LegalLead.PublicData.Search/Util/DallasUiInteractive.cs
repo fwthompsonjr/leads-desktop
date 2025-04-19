@@ -44,7 +44,7 @@ namespace LegalLead.PublicData.Search.Util
         protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = [];
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
-        protected string CourtType { get; set; }
+        internal string CourtType { get; set; }
         private readonly List<ICountySearchAction> ActionItems = [];
         public override WebFetchResult Fetch(CancellationToken token)
         {

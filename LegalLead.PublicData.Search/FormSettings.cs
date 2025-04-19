@@ -41,6 +41,7 @@ namespace LegalLead.PublicData.Search
                 2 => new FsUserSettings { TopLevel = false },
                 3 => new FsSearchHistory { TopLevel = false },
                 4 => new FsInvoiceHistory { TopLevel = false },
+                5 => new FsOfflineHistory { TopLevel = false },
                 _ => null
             };
             if (form == null) return;

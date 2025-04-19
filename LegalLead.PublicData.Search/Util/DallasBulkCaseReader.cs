@@ -50,7 +50,12 @@ namespace LegalLead.PublicData.Search.Util
                 Cookies = cookies.ToJsonString(),
                 RequestId = this.Interactive.TrackingIndex ?? string.Empty,
             };
-            var offline = ProcessOfflineHelper.BeginSearch(remote);
+            var courtType = string.Empty;
+            if (this.Interactive is DallasUiInteractive _wb)
+            {
+                courtType = _wb.CourtType;
+            }
+            var offline = ProcessOfflineHelper.BeginSearch(remote, courtType);
             if (OfflineProcessing) {
                 Console.WriteLine("Offline record processing enabled. Check Requests for status.");
                 return "[]"; 

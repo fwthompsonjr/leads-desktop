@@ -7,9 +7,14 @@ namespace LegalLead.PublicData.Search.Helpers
 {
     internal static class ProcessOfflineHelper
     {
-        public static ProcessOfflineResponse BeginSearch(ProcessOfflineRequest request)
+        public static ProcessOfflineResponse BeginSearch(ProcessOfflineRequest request, string subContext = "")
         {
+            var items = new List<string> { "COUNTY", "DISTRICT", "JUSTICE" };
             var response = dbHelper.BeginSearch(request);
+            if (items.Contains(subContext))
+            {
+                dbHelper.UpdateSearchContext(request, subContext);
+            }
             return response;
         }
         public static ProcessOfflineResponse SearchStatus(ProcessOfflineResponse request)

@@ -114,7 +114,7 @@ namespace LegalLead.PublicData.Search.Util
                     GenerateExcelFile(result, startDt, endingDt);
                     return result;
                 }
-
+                _web.TrackingIndex = this.TrackingIndex;
                 result = _web.Fetch(token);
                 result.WebsiteId = DataSearchParameters.CountyId;
                 var filter1 = new PeopleFilterService(result);

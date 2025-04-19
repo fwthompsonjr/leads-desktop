@@ -7,5 +7,6 @@
         string Read();
         bool Write(string content);
         string GetAccountPermissions();
+        string GetAccountId();
     }
 }
