@@ -28,7 +28,7 @@ namespace LegalLead.PublicData.Search.Util
     {
         public override int OrderId => 80;
         public List<CaseItemDto> Workload { get; } = [];
-
+        public bool OfflineProcessing { get; set; }
         public override object Execute()
         {
             if (Parameters == null || Driver == null)
@@ -51,6 +51,10 @@ namespace LegalLead.PublicData.Search.Util
                 RequestId = this.Interactive.TrackingIndex ?? string.Empty,
             };
             var offline = ProcessOfflineHelper.BeginSearch(remote);
+            if (OfflineProcessing) {
+                Console.WriteLine("Offline record processing enabled. Check Requests for status.");
+                return "[]"; 
+            }
             if (offline.IsValid)
             {
                 var logged = new List<string>();

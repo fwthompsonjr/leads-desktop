@@ -27,6 +27,7 @@
 	"content-save": "db/save-search-file",
 	"process-offline": "db/process-offline",
 	"process-offline-status": "db/process-offline-status",
+	"get-offline-requests": "db/get-offline-requests",
 	"register-account": "app/create-account",
 	"admin": "admin/execute"
   },

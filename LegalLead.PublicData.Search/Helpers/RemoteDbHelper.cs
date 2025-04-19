@@ -244,6 +244,21 @@ namespace LegalLead.PublicData.Search.Helpers
             return response.ReplacePipe() ?? new();
         }
 
+        public List<OfflineStatusResponse> GetOfflineRequests(OfflineStatusRequest request)
+        {
+            var uri = GetAddress("process-offline-status");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<OfflineStatusRequest, List<OfflineStatusResponse>>(client, uri, request);
+            if (response == null || response.Count == 0) return [];
+            response.ForEach(r =>
+            {
+                r.OfflineRequestId = r.OfflineId;
+                r.ReplacePipe();
+            });
+            return response;
+        }
+
         public LeadUserModel RegisterAccount(RegisterAccountModel model)
         {
             var uri = GetAddress("register-account");
@@ -338,6 +353,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "content-save" => $"{uri}{provider.ContentSaveUrl}",
                 "process-offline" => $"{uri}{provider.BeginSearchUrl}",
                 "process-offline-status" => $"{uri}{provider.SearchStatusUrl}",
+                "get-offline-requests" => $"{uri}{provider.OfflineStatusUrl}",
                 "register-account" => $"{uri}{provider.RegisterAccountUrl}",
                 _ => string.Empty
             };

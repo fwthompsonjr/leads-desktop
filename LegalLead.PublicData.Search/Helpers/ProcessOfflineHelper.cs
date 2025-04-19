@@ -1,6 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using LegalLead.PublicData.Search.Util;
+using System.Collections.Generic;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
@@ -14,6 +15,11 @@ namespace LegalLead.PublicData.Search.Helpers
         public static ProcessOfflineResponse SearchStatus(ProcessOfflineResponse request)
         {
             var response = dbHelper.GetSearchStatus(request);
+            return response;
+        }
+        public static List<OfflineStatusResponse> GetRequests(string leadId)
+        {
+            var response = dbHelper.GetOfflineRequests(new() { LeadId = leadId });
             return response;
         }
         private static readonly IRemoteDbHelper dbHelper

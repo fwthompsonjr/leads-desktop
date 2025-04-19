@@ -375,6 +375,11 @@ namespace LegalLead.PublicData.Search
             }
             catch (Exception ex)
             {
+                if (IsOfflineProcess(ex, tracking.CountyId))
+                {
+                    SetStatus(StatusType.Ready);
+                    return;
+                }
                 SetStatus(StatusType.Error);
                 Console.WriteLine(CommonKeyIndexes.UnexpectedErrorOccurred);
                 Console.WriteLine(ex.Message);
@@ -388,6 +393,16 @@ namespace LegalLead.PublicData.Search
                 ClearProgressDate();
                 TryHideProgress();
             }
+        }
+
+        private static bool IsOfflineProcess(Exception ex, int countyId = 0)
+        {
+            var offlineIndexes = new List<int> {
+                    (int)SourceType.DallasCounty,
+                };
+            if (ex is not KeyNotFoundException) return false;
+            if (!offlineIndexes.Contains(countyId)) return false;
+            return SettingsWriter.GetSettingOrDefault("search", "Allow Offline Data Processing:", true);
         }
 
         private static string GetShortName(WebFetchResult web)

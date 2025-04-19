@@ -80,6 +80,12 @@ namespace LegalLead.PublicData.Search.Helpers
                     Value = "true",
                     Index = 3},
                 new(){
+                    Category = "search",
+                    Name = "Allow Offline Data Processing:",
+                    DataType = "Bool",
+                    Value = "true",
+                    Index = 4},
+                new(){
                     Category = "admin",
                     Name = "Open Headless:",
                     Index = 10,
