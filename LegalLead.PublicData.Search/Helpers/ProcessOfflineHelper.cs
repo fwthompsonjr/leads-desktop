@@ -22,6 +22,16 @@ namespace LegalLead.PublicData.Search.Helpers
             var response = dbHelper.GetSearchStatus(request);
             return response;
         }
+        /*
+        need ability to get download status
+        */
+
+        public static string DownloadStatus(ProcessOfflineResponse request)
+        {
+            var response = dbHelper.GetDownloadStatus(request);
+            return response;
+        }
+
         public static List<OfflineStatusResponse> GetRequests(string leadId)
         {
             var response = dbHelper.GetOfflineRequests(new() { LeadId = leadId });

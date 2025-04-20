@@ -25,5 +25,6 @@ namespace LegalLead.PublicData.Search.Interfaces
         LeadUserModel RegisterAccount(RegisterAccountModel model);
         List<OfflineStatusResponse> GetOfflineRequests(OfflineStatusRequest request);
         void UpdateSearchContext(ProcessOfflineRequest request, string context);
+        string GetDownloadStatus(ProcessOfflineResponse request);
     }
 }

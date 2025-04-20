@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Extensions
 {
@@ -62,6 +65,8 @@ namespace Thompson.RecordSearch.Utility.Extensions
             }
         }
 
+
+
         private static string GetUniqueName(string name, Dictionary<string, int> columns)
         {
             if (!IsDuplicateName(name, columns)) return name;
@@ -92,7 +97,6 @@ namespace Thompson.RecordSearch.Utility.Extensions
                 // ignoring errors from this method
             }
         }
-
 
         private static readonly CultureInfo culture = new CultureInfo("en-US");
     }
