@@ -55,6 +55,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("process-offline-status")] public string SearchStatusUrl { get; set; }
         [JsonProperty("get-offline-requests")] public string OfflineStatusUrl { get; set; }
         [JsonProperty("get-offline-download-status")] public string DownloadStatusUrl { get; set; }
+        [JsonProperty("set-offline-download-complete")] public string DownloadIsCompletedUrl { get; set; }
         [JsonProperty("process-offline-set-context")] public string OfflineCountyTypeUrl { get; set; }
         [JsonProperty("register-account")] public string RegisterAccountUrl { get; set; }
         public string GetUri()

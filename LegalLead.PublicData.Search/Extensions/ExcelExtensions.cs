@@ -13,7 +13,8 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Models;
-
+using Thompson.RecordSearch.Utility.Extensions;
+using System.Globalization;
 namespace LegalLead.PublicData.Search.Extensions
 {
     internal static class ExcelExtensions
@@ -120,15 +121,23 @@ namespace LegalLead.PublicData.Search.Extensions
             return IsValidExcelPackage(package);
         }
 
-        public static string GenerateExcelFileName(this List<PersonAddress> people, int websiteId, string countyName, string courtType, string trackingIndex, bool isTest = false)
+        public static string GenerateExcelFileName(this List<PersonAddress> people,
+            GenExcelFileParameter context,
+            bool isTest = false)
         {
+            var websiteId = context.WebsiteId;
+            string countyName = context.CountyName;
+            string courtType = context.CourtType;
+            string trackingIndex = context.TrackingIndex;
+            DateTime startDate = context.StartDate;
+            DateTime endDate = context.EndDate;
             var folder = GetExcelDirectoryName;
             var name = DallasSearchProcess.GetCourtName(courtType);
-            var fmt = $"{countyName}_{name}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            var fmt = $"{countyName}_{name}_{GetDateString(startDate)}_{GetDateString(endDate)}";
             var fullName = GetUniqueFileName(folder, fmt, Path.Combine(folder, $"{fmt}.xlsx"));
             var writer = new ExcelWriter();
             var content = writer.ConvertToPersonTable(addressList: people, worksheetName: "addresses", websiteId: websiteId);
-            var courtlist = People.Select(p =>
+            var courtlist = people.Select(p =>
             {
                 if (string.IsNullOrEmpty(p.Court)) return string.Empty;
                 var find = GetCourtAddress(websiteId, name, p.Court);
@@ -222,7 +231,7 @@ namespace LegalLead.PublicData.Search.Extensions
                 10 => AlternateCourtLookupService.GetAddress(websiteId, courtName),
                 20 => AlternateCourtLookupService.GetAddress(websiteId, courtName),
                 30 => AlternateCourtLookupService.GetAddress(websiteId, courtName),
-                40 => HccCourtLookupService.GetAddress(websiteId, courtName),
+                40 => HccCourtLookupService.GetAddress(courtName),
                 60 => DallasCourtLookupService.GetAddress(courtType, courtName),
                 70 => TravisCourtLookupService.GetAddress(courtType, courtName),
                 80 => BexarCourtLookupService.GetAddress(courtType, courtName),
@@ -235,5 +244,6 @@ namespace LegalLead.PublicData.Search.Extensions
             };
             return address;
         }
+        private static readonly CultureInfo culture = new CultureInfo("en-US");
     }
 }

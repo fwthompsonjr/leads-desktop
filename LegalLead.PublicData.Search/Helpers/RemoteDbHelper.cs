@@ -264,6 +264,15 @@ namespace LegalLead.PublicData.Search.Helpers
             return response.ToJsonString();
         }
 
+        public string FlagDownloadCompleted(object request)
+        {
+            var uri = GetAddress("set-offline-download-complete");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, object>(client, uri, request);
+            return response.ToJsonString();
+        }
+
         public List<OfflineStatusResponse> GetOfflineRequests(OfflineStatusRequest request)
         {
             var uri = GetAddress("get-offline-requests");
@@ -376,6 +385,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "get-offline-requests" => $"{uri}{provider.OfflineStatusUrl}",
                 "process-offline-set-context" => $"{uri}{provider.OfflineCountyTypeUrl}",
                 "get-offline-download-status" => $"{uri}{provider.DownloadStatusUrl}",
+                "set-offline-download-complete" => $"{uri}{provider.DownloadIsCompletedUrl}",
                 "register-account" => $"{uri}{provider.RegisterAccountUrl}",
                 _ => string.Empty
             };

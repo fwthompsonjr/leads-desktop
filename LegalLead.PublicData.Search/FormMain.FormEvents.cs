@@ -383,7 +383,7 @@ namespace LegalLead.PublicData.Search
             fs.ShowDialog();
         }
 
-        private void ComboBox_DataSourceChanged(object sender, EventArgs e)
+        internal void ComboBox_DataSourceChanged(object sender, EventArgs e)
         {
             // when data source is changed?
             // remove all items from the tab strip

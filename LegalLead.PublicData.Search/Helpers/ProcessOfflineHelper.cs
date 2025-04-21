@@ -22,9 +22,6 @@ namespace LegalLead.PublicData.Search.Helpers
             var response = dbHelper.GetSearchStatus(request);
             return response;
         }
-        /*
-        need ability to get download status
-        */
 
         public static string DownloadStatus(ProcessOfflineResponse request)
         {
@@ -32,6 +29,11 @@ namespace LegalLead.PublicData.Search.Helpers
             return response;
         }
 
+        public static string FlagDownloadCompleted(object request)
+        {
+            var response = dbHelper.FlagDownloadCompleted(request);
+            return response;
+        }
         public static List<OfflineStatusResponse> GetRequests(string leadId)
         {
             var response = dbHelper.GetOfflineRequests(new() { LeadId = leadId });
