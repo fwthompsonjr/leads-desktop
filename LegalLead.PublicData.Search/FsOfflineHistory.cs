@@ -231,6 +231,10 @@ namespace LegalLead.PublicData.Search
                 grid.Rows[current.Id].ErrorText = "Failed to update status. Please retry";
                 return current; 
             }
+            /*
+             * NOTE: need to push the filename to remote with tracking id.
+             * this ensures that when invoice is paid that user can see their records if not an admin.
+            */
             var mainFrm = Program.mainForm;
             if (mainFrm == null) return current;
             var mainTg = mainFrm.Tag.ToJsonString();
