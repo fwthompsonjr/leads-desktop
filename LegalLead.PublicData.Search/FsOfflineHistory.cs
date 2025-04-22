@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
+using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -222,6 +223,8 @@ namespace LegalLead.PublicData.Search
                     current.FileName = nwName;
                     current.NewNameCompleted = true;
                 }
+                context.RecordCount = list.Count;
+                context.FileName = current.FileName;
                 return AddItemToMainForm(context, current, grid);
             }
             catch
@@ -238,19 +241,25 @@ namespace LegalLead.PublicData.Search
                 grid.Rows[current.Id].ErrorText = "Failed to update status. Please retry";
                 return current;
             }
-            /*
-             * NOTE: need to push the filename to remote with tracking id.
-             * this ensures that when invoice is paid that user can see their records if not an admin.
-            */
             var mainFrm = Program.mainForm;
             if (mainFrm == null) return current;
             var mainTg = mainFrm.Tag.ToJsonString();
             if (string.IsNullOrEmpty(mainTg)) return current;
             var tagged = mainTg.ToInstance<List<SearchResult>>();
             if (tagged == null) return current;
+            var member = (SourceType)context.WebsiteId;
+            var userName = GetUserName();
+            var searchRange = $"{context.StartDate:d} to {context.EndDate:d}";
             var countyName = culture.TextInfo.ToTitleCase(context.CountyName.ToLower());
             var searchDt = context.StartDate.ToShortDateString() + " - " + context.EndDate.ToShortTimeString();
             var courtType = culture.TextInfo.ToTitleCase(context.CourtType.ToLower());
+            // update tracking
+            var trackingId = context.TrackingIndex;
+            if (string.IsNullOrWhiteSpace(userName)) { userName = "unknown"; }
+            dbHelper.CompleteUsage(trackingId, context.RecordCount, context.GetShortName());
+            var countyNm = member.GetCountyName();
+            UsageIncrementer.IncrementUsage(userName, countyNm, context.RecordCount, searchRange);
+            UsageReader.WriteUserRecord();
             var dta = new SearchResult
             {
                 StartDate = $"{context.StartDate:d}",
@@ -294,94 +303,8 @@ namespace LegalLead.PublicData.Search
             if (flag == null || string.IsNullOrWhiteSpace(flag.Content)) return false;
             var sts = flag.Content.ToInstance<DownloadFlagStatus>();
             if (sts == null || !sts.IsCompleted) return false;
-            return true;
-        }
-        private class DownloadFlagResponse
-        {
-            public string RequestId { get; set; } = string.Empty;
-            public string Content { get; set; } = string.Empty;
-        }
-
-        private class DownloadFlagStatus
-        {
-            public string RequestId { get; set; } = string.Empty;
             
-            public bool IsCompleted { get; set; }
-        }
-        private class GridHistoryView(OfflineStatusResponse source, int index = 0)
-        {
-            public int Id { get { return index; } }
-            public DateTime? StartDate { get; set; } = source.CreateDate;
-            public string CountyName { get; set; } = source.CountyName;
-            public string CourtType { get; set; } = source.CourtType ?? "-";
-            public string DatesSearched { get; set; } = GetDateRange(source);
-            public bool IsComplete { get; set; } = source.IsCompleted;
-            public decimal PercentComplete { get; set; } = source.PercentComplete.GetValueOrDefault();
-            public int RecordCount { get; set; } = source.RecordCount;
-            public DateTime? LastUpdate { get; set; } = source.LastUpdate;
-            public string FileName { get; set; } = string.Empty;
-            public bool NewNameCompleted { get; set; } = false;
-        }
-        private class DownloadPermissionResponse
-        {
-            private List<CaseItemDto> caseItems;
-            public string Id { get; set; }
-            public string RequestId { get; set; }
-            public string Content { get; set; }
-            public string Workload { get; set; }
-            public bool CanDownload { get; set; }
-            public int? CountyId { get; set; }
-            public string CountyName { get; set; }
-            public string CourtType { get; set; }
-            public int? ItemCount { get; set; }
-            public bool Populate()
-            {
-                if (caseItems != null) return caseItems.Count != 0;
-                var content = Content;
-                var dto = content.ToInstance<DownloadContentDto>();
-                if (dto == null) return false;
-                Workload = dto.Workload;
-                CanDownload = dto.CanDownload;
-                CountyId = dto.CountyId.GetValueOrDefault(60);
-                CountyName = (string.IsNullOrEmpty(dto.CountyName) ? "Dallas" : dto.CountyName).ToUpper();
-                CourtType = string.IsNullOrEmpty(dto.CourtType) ? "COUNTY" : dto.CourtType;
-                ItemCount = dto.ItemCount;
-                Id = dto.Id;
-                var items = dto.Workload.ToInstance<List<CaseItemDto>>();
-                if (!dto.CanDownload || items == null)
-                {
-                    caseItems = [];
-                    return false;
-                }
-                caseItems = items ?? [];
-                if (caseItems.Count > 0)
-                {
-                    var caseNumber = items.Find(x => !string.IsNullOrEmpty(x.CaseNumber))?.CaseNumber;
-                    if (caseNumber == null || !caseNumber.Contains('-')) return true;
-                    var caseIndex = caseNumber.Split('-')[0];
-                    CourtType = caseIndex switch
-                    {
-                        "CC" => "COUNTY",
-                        "JPC" => "JUSTICE",
-                        "DC" => "DISTRICT",
-                        _ => CourtType,
-                    };
-                }
-                return true;
-            }
-
-        }
-
-        private class DownloadContentDto
-        {
-            public string Id { get; set; }
-            public string RequestId { get; set; }
-            public string Workload { get; set; }
-            public bool CanDownload { get; set; }
-            public int? CountyId { get; set; }
-            public string CountyName { get; set; }
-            public string CourtType { get; set; }
-            public int? ItemCount { get; set; }
+            return true;
         }
         private static string GetDateRange(OfflineStatusResponse source)
         {
@@ -394,11 +317,27 @@ namespace LegalLead.PublicData.Search
             return response;
         }
 
+        private static string GetUserName()
+        {
+            var container = AuthenicationContainer.GetContainer;
+            var userservice = container.GetInstance<SessionUserPersistence>();
+            return userservice.GetUserName();
+        }
+
         private static readonly ISessionPersistance UserAccountReader =
             SessionPersistenceContainer
             .GetContainer
             .GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
 
+        private static readonly IRemoteDbHelper dbHelper
+            = ActionSettingContainer.GetContainer.GetInstance<IRemoteDbHelper>();
+
+        private static readonly SessionUsagePersistence UsageIncrementer
+            = SessionPersistenceContainer.GetContainer
+            .GetInstance<SessionUsagePersistence>();
+        private static readonly SessionMonthToDatePersistence UsageReader
+            = SessionPersistenceContainer.GetContainer
+            .GetInstance<SessionMonthToDatePersistence>();
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
             if (sender is not System.Windows.Forms.Button btn) return;
