@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using Thompson.RecordSearch.Utility.Classes;
 
 namespace Thompson.RecordSearch.Utility.Extensions
 {

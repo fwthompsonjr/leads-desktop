@@ -6,15 +6,13 @@ using LegalLead.PublicData.Search.Util;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using Thompson.RecordSearch.Utility.Classes;
-using Thompson.RecordSearch.Utility.Models;
 using Thompson.RecordSearch.Utility.Extensions;
-using System.Globalization;
+using Thompson.RecordSearch.Utility.Models;
 namespace LegalLead.PublicData.Search.Extensions
 {
     internal static class ExcelExtensions

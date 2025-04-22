@@ -1,9 +1,6 @@
-﻿using LegalLead.PublicData.Search.Classes;
-using LegalLead.PublicData.Search.Interfaces;
+﻿using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -63,7 +60,8 @@ namespace LegalLead.PublicData.Search.Helpers
             var uri = GetAddress("status");
             var token = GetToken();
             if (string.IsNullOrEmpty(uri)) return;
-            _ = Task.Run(() => {
+            _ = Task.Run(() =>
+            {
                 rows.ForEach(row =>
                 {
                     var request = new

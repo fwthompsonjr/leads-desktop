@@ -1,9 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -71,7 +69,8 @@ namespace LegalLead.PublicData.Search.Helpers
             var source = json.ToInstance<List<GetCountyResponse>>();
             if (source == null) return;
             var worklist = new List<GetCountyResponse>();
-            changes.ForEach(x => {
+            changes.ForEach(x =>
+            {
                 if (IsItemChanged(x, source[changes.IndexOf(x)])) worklist.Add(x);
             });
             if (worklist.Count == 0) return;

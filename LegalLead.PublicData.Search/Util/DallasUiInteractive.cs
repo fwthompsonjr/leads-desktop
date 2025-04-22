@@ -71,7 +71,7 @@ namespace LegalLead.PublicData.Search.Util
 
                 var result = new WebFetchResult();
                 var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", "Exclude Weekend From Search:", true);
-                
+
                 var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday };
                 if (excludeWeekend)
                 {

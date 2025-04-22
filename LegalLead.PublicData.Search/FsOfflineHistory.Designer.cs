@@ -89,7 +89,7 @@
             btnSubmit.TabIndex = 42;
             btnSubmit.Text = "Reload";
             btnSubmit.UseVisualStyleBackColor = true;
-            btnSubmit.Click += btnSubmit_Click;
+            btnSubmit.Click += BtnSubmit_Click;
             // 
             // lbStatus
             // 

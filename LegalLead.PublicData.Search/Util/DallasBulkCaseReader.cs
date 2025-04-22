@@ -56,9 +56,10 @@ namespace LegalLead.PublicData.Search.Util
                 courtType = _wb.CourtType;
             }
             var offline = ProcessOfflineHelper.BeginSearch(remote, courtType);
-            if (OfflineProcessing) {
+            if (OfflineProcessing)
+            {
                 Console.WriteLine("Offline record processing enabled. Check Requests for status.");
-                return "[]"; 
+                return "[]";
             }
             if (offline.IsValid)
             {

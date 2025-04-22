@@ -5,23 +5,29 @@ using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Forms;
-using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning", 
+        "S3459:Unassigned members should be removed", 
+        Justification = "unassigned fields needs to deserialize json responses")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning",
+        "S1144:Unassigned set accessor",
+        Justification = "fields needed to deserialize json responses")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning",
+        "S3878:simplify collection of elements",
+        Justification = "")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Warning",
+        "CA1303:Put localized strings in resource table",
+        Justification = "tech debit to be addressed")]
     public partial class FsOfflineHistory : Form
     {
         private readonly string leadUserId;
@@ -46,7 +52,7 @@ namespace LegalLead.PublicData.Search
             {
 
                 grid.Columns.Clear();
-                
+
                 var view = new List<GridHistoryView>();
                 data.ForEach(d =>
                 {
@@ -73,7 +79,8 @@ namespace LegalLead.PublicData.Search
                 grid.Columns["NewNameCompleted"].Visible = false;
                 grid.Refresh();
                 var buttonId = grid.Columns[downLoad].Index;
-                for (int i = 0; i < data.Count; i++) {
+                for (int i = 0; i < data.Count; i++)
+                {
                     var cell = grid[buttonId, i];
                     if (cell is not DataGridViewButtonCell btnCell) continue;
                     btnCell.Value = downLoad;
@@ -91,7 +98,7 @@ namespace LegalLead.PublicData.Search
         {
             if (!grid.Enabled) return;
             try
-            {   
+            {
                 grid.Enabled = false;
                 if (e.RowIndex < 0) return;
                 if (grid.Columns[e.ColumnIndex].Name != downLoad) return;
@@ -100,7 +107,7 @@ namespace LegalLead.PublicData.Search
                     OpenFile(e.RowIndex);
                     return;
                 }
-                if (grid.DataSource is not List<GridHistoryView> accounts) return;
+                if (grid.DataSource is not List<GridHistoryView> _) return;
                 if (grid.Tag is not string src) return;
                 var db = src.ToInstance<List<OfflineStatusResponse>>();
                 if (db == null) return;
@@ -183,7 +190,7 @@ namespace LegalLead.PublicData.Search
             if (workitem == null || !workitem.Populate()) return default;
             return workitem;
         }
-        private GridHistoryView UpdateMissingFields(int itemId, List<OfflineStatusResponse> data, GridHistoryView item)
+        private static GridHistoryView UpdateMissingFields(int itemId, List<OfflineStatusResponse> data, GridHistoryView item)
         {
             var source = data[itemId];
             var detail = GetDownloadDetail(source.RequestId);
@@ -226,10 +233,10 @@ namespace LegalLead.PublicData.Search
         private static GridHistoryView AddItemToMainForm(GenExcelFileParameter context, GridHistoryView current, DataGridView grid)
         {
             grid.Rows[current.Id].ErrorText = "";
-            if (!CompleteDbRecord(current, grid)) 
+            if (!CompleteDbRecord(current, grid))
             {
                 grid.Rows[current.Id].ErrorText = "Failed to update status. Please retry";
-                return current; 
+                return current;
             }
             /*
              * NOTE: need to push the filename to remote with tracking id.
@@ -242,7 +249,7 @@ namespace LegalLead.PublicData.Search
             var tagged = mainTg.ToInstance<List<SearchResult>>();
             if (tagged == null) return current;
             var countyName = culture.TextInfo.ToTitleCase(context.CountyName.ToLower());
-            var searchDt = context.StartDate.ToShortDateString() + " - " + context.EndDate.ToShortTimeString(); 
+            var searchDt = context.StartDate.ToShortDateString() + " - " + context.EndDate.ToShortTimeString();
             var courtType = culture.TextInfo.ToTitleCase(context.CourtType.ToLower());
             var dta = new SearchResult
             {
@@ -291,13 +298,14 @@ namespace LegalLead.PublicData.Search
         }
         private class DownloadFlagResponse
         {
-            public string RequestId { get; set; }
-            public string Content { get; set; }
+            public string RequestId { get; set; } = string.Empty;
+            public string Content { get; set; } = string.Empty;
         }
 
         private class DownloadFlagStatus
         {
-            public string RequestId { get; set; }
+            public string RequestId { get; set; } = string.Empty;
+            
             public bool IsCompleted { get; set; }
         }
         private class GridHistoryView(OfflineStatusResponse source, int index = 0)
@@ -316,20 +324,19 @@ namespace LegalLead.PublicData.Search
         }
         private class DownloadPermissionResponse
         {
-            private List<CaseItemDto>? caseItems;
-            public List<CaseItemDto> Items => caseItems ?? [];
+            private List<CaseItemDto> caseItems;
             public string Id { get; set; }
             public string RequestId { get; set; }
             public string Content { get; set; }
             public string Workload { get; set; }
             public bool CanDownload { get; set; }
             public int? CountyId { get; set; }
-            public string? CountyName { get; set; }
-            public string? CourtType { get; set; }
+            public string CountyName { get; set; }
+            public string CourtType { get; set; }
             public int? ItemCount { get; set; }
             public bool Populate()
             {
-                if (caseItems != null) return caseItems.Any();
+                if (caseItems != null) return caseItems.Count != 0;
                 var content = Content;
                 var dto = content.ToInstance<DownloadContentDto>();
                 if (dto == null) return false;
@@ -362,7 +369,7 @@ namespace LegalLead.PublicData.Search
                 }
                 return true;
             }
-            
+
         }
 
         private class DownloadContentDto
@@ -372,8 +379,8 @@ namespace LegalLead.PublicData.Search
             public string Workload { get; set; }
             public bool CanDownload { get; set; }
             public int? CountyId { get; set; }
-            public string? CountyName { get; set; }
-            public string? CourtType { get; set; }
+            public string CountyName { get; set; }
+            public string CourtType { get; set; }
             public int? ItemCount { get; set; }
         }
         private static string GetDateRange(OfflineStatusResponse source)
@@ -392,7 +399,7 @@ namespace LegalLead.PublicData.Search
             .GetContainer
             .GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
 
-        private void btnSubmit_Click(object sender, EventArgs e)
+        private void BtnSubmit_Click(object sender, EventArgs e)
         {
             if (sender is not System.Windows.Forms.Button btn) return;
             if (!btn.Enabled) return;
@@ -408,6 +415,6 @@ namespace LegalLead.PublicData.Search
         }
 
         private const string downLoad = "Download";
-        private static CultureInfo culture = new CultureInfo("en-US"); 
+        private static readonly CultureInfo culture = new("en-US");
     }
 }
