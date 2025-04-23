@@ -1,23 +1,13 @@
-﻿using LegalLead.PublicData.Search.Classes;
-using LegalLead.PublicData.Search.Extensions;
-using LegalLead.PublicData.Search.Helpers;
-using LegalLead.PublicData.Search.Interfaces;
-using LegalLead.PublicData.Search.Models;
+﻿using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning", 
-        "S3459:Unassigned members should be removed", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning",
+        "S3459:Unassigned members should be removed",
         Justification = "unassigned fields needs to deserialize json responses")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning",
         "S1144:Unassigned set accessor",
@@ -39,7 +29,7 @@ namespace LegalLead.PublicData.Search
         private class DownloadFlagStatus
         {
             public string RequestId { get; set; } = string.Empty;
-            
+
             public bool IsCompleted { get; set; }
         }
         private class GridHistoryView(OfflineStatusResponse source, int index = 0)

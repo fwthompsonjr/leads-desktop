@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Dto;
@@ -17,8 +16,8 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning", 
-        "S3459:Unassigned members should be removed", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning",
+        "S3459:Unassigned members should be removed",
         Justification = "unassigned fields needs to deserialize json responses")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("SQ Warning",
         "S1144:Unassigned set accessor",
@@ -303,7 +302,7 @@ namespace LegalLead.PublicData.Search
             if (flag == null || string.IsNullOrWhiteSpace(flag.Content)) return false;
             var sts = flag.Content.ToInstance<DownloadFlagStatus>();
             if (sts == null || !sts.IsCompleted) return false;
-            
+
             return true;
         }
         private static string GetDateRange(OfflineStatusResponse source)

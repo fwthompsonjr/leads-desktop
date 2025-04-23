@@ -1,5 +1,4 @@
 ﻿using System;
-using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
