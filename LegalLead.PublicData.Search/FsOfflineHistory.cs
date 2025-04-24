@@ -40,8 +40,16 @@ namespace LegalLead.PublicData.Search
             }
             leadUserId = leadId;
             grid.ReadOnly = true;
-            BindRecords();
+            grid.Visible = false;
             grid.CellContentClick += Grid_CellContentClick;
+            Shown += FsOfflineHistory_Shown;
+        }
+
+        private void FsOfflineHistory_Shown(object sender, EventArgs e)
+        {
+            grid.Visible = false;
+            BindRecords();
+            grid.Visible = true;
         }
 
         private void BindRecords()
@@ -52,18 +60,14 @@ namespace LegalLead.PublicData.Search
             {
 
                 grid.Columns.Clear();
-
+                grid.Tag = data.ToJsonString();
                 var view = new List<GridHistoryView>();
                 data.ForEach(d =>
                 {
                     var itemId = data.IndexOf(d);
                     var item = new GridHistoryView(d, itemId);
+                    item = UpdateMissingFields(itemId, data, item);
                     view.Add(item);
-
-                    _ = Task.Run(() =>
-                    {
-                        item = UpdateMissingFields(itemId, data, item);
-                    });
                 });
                 grid.DataSource = null;
                 grid.DataSource = view;
@@ -78,22 +82,48 @@ namespace LegalLead.PublicData.Search
                 grid.Columns["FileName"].Visible = false;
                 grid.Columns["NewNameCompleted"].Visible = false;
                 grid.Refresh();
-                var buttonId = grid.Columns[downLoad].Index;
                 for (int i = 0; i < data.Count; i++)
                 {
-                    var cell = grid[buttonId, i];
-                    if (cell is not DataGridViewButtonCell btnCell) continue;
-                    btnCell.Value = downLoad;
+                    GenerateContent(i);
                 }
                 grid.Refresh();
             }
             finally
             {
-                grid.Tag = data.ToJsonString();
                 grid.Enabled = true;
             }
         }
-
+        private void GenerateContent(int rowIndex)
+        {
+            var columnIndex = grid.Columns[downLoad].Index;
+            if (grid.DataSource is not List<GridHistoryView> _) return;
+            if (grid.Tag is not string src) return;
+            var db = src.ToInstance<List<OfflineStatusResponse>>();
+            if (db == null) return;
+            if (grid.Rows[rowIndex].Tag is GridHistoryView itm && itm.IsComplete) return;
+            var item = db[rowIndex];
+            if (!item.IsCompleted) return;
+            var workitem = GetDownloadDetail(item.RequestId);
+            if (workitem == null) return;
+            var list = workitem.Workload.ToInstance<List<CaseItemDto>>();
+            if (list == null) return;
+            var obj = new GridHistoryView(new(), rowIndex);
+            var context = new GenExcelFileParameter
+            {
+                WebsiteId = workitem.CountyId.GetValueOrDefault(60),
+                CountyName = workitem.CountyName,
+                CourtType = workitem.CourtType,
+                TrackingIndex = workitem.RequestId,
+                StartDate = item.SearchStartDate.GetValueOrDefault(),
+                EndDate = item.SearchEndDate.GetValueOrDefault(),
+            };
+            obj = ConvertToWorksheet(context, list, obj, grid); // set flag true, if item is downloaded
+            grid.Rows[rowIndex].Tag = obj;
+            if (obj.IsComplete && grid[columnIndex, rowIndex] is DataGridViewButtonCell cell)
+            {
+                cell.Value = "View";
+            }
+        }
         private void Grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!grid.Enabled) return;
@@ -107,33 +137,7 @@ namespace LegalLead.PublicData.Search
                     OpenFile(e.RowIndex);
                     return;
                 }
-                if (grid.DataSource is not List<GridHistoryView> _) return;
-                if (grid.Tag is not string src) return;
-                var db = src.ToInstance<List<OfflineStatusResponse>>();
-                if (db == null) return;
-                if (grid.Rows[e.RowIndex].Tag is GridHistoryView itm && itm.IsComplete) return;
-                var item = db[e.RowIndex];
-                if (!item.IsCompleted) return;
-                var workitem = GetDownloadDetail(item.RequestId);
-                if (workitem == null) return;
-                var list = workitem.Workload.ToInstance<List<CaseItemDto>>();
-                if (list == null) return;
-                var obj = new GridHistoryView(new(), e.RowIndex);
-                var context = new GenExcelFileParameter
-                {
-                    WebsiteId = workitem.CountyId.GetValueOrDefault(60),
-                    CountyName = workitem.CountyName,
-                    CourtType = workitem.CourtType,
-                    TrackingIndex = workitem.RequestId,
-                    StartDate = item.SearchStartDate.GetValueOrDefault(),
-                    EndDate = item.SearchEndDate.GetValueOrDefault(),
-                };
-                obj = ConvertToWorksheet(context, list, obj, grid); // set flag true, if item is downloaded
-                grid.Rows[e.RowIndex].Tag = obj;
-                if (obj.IsComplete && grid[e.ColumnIndex, e.RowIndex] is DataGridViewButtonCell cell)
-                {
-                    cell.Value = "View";
-                }
+                GenerateContent(e.RowIndex);
             }
             finally
             {
