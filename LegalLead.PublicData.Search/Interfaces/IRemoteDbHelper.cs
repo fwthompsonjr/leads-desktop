@@ -27,5 +27,6 @@ namespace LegalLead.PublicData.Search.Interfaces
         void UpdateSearchContext(ProcessOfflineRequest request, string context);
         string GetDownloadStatus(ProcessOfflineResponse request);
         string FlagDownloadCompleted(object request);
+        List<OfflineSearchTypeResponse> GetRequestSearchDetails(string leadId);
     }
 }

@@ -120,6 +120,14 @@ namespace LegalLead.PublicData.Search.Extensions
             response.Messages.AddRange(msg);
             return response;
         }
+
+        public static DateTime ToCentralTime(this DateTime source)
+        {
+            TimeZoneInfo centralTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime centralTime = TimeZoneInfo.ConvertTimeFromUtc(source, centralTimeZone);
+            return centralTime;
+        }
+
         private static class ObfuscationStrategies
         {
             public static readonly Dictionary<string, Func<QueryDbResponse, string>> Strategies = new()

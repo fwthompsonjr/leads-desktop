@@ -31,6 +31,7 @@
 	"process-offline-set-context": "db/process-offline-set-context",
 	"get-offline-download-status": "db/get-offline-download-status",
 	"set-offline-download-complete": "db/set-offline-download-complete",
+	"get-offline-request-search-details": "db/get-offline-request-search-details",
 	"register-account": "app/create-account",
 	"admin": "admin/execute"
   },

@@ -45,12 +45,6 @@ namespace LegalLead.PublicData.Search
             Shown += FsOfflineHistory_Shown;
         }
 
-        private void FsOfflineHistory_Shown(object sender, EventArgs e)
-        {
-            grid.Visible = false;
-            BindRecords();
-            grid.Visible = true;
-        }
 
         private void BindRecords()
         {
@@ -81,9 +75,10 @@ namespace LegalLead.PublicData.Search
                 grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 grid.Columns["FileName"].Visible = false;
                 grid.Columns["NewNameCompleted"].Visible = false;
-                grid.Refresh();
                 for (int i = 0; i < data.Count; i++)
                 {
+                    var src = data[i];
+                    if (!src.IsCompleted) continue;
                     GenerateContent(i);
                 }
                 grid.Refresh();
@@ -124,27 +119,6 @@ namespace LegalLead.PublicData.Search
                 cell.Value = "View";
             }
         }
-        private void Grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (!grid.Enabled) return;
-            try
-            {
-                grid.Enabled = false;
-                if (e.RowIndex < 0) return;
-                if (grid.Columns[e.ColumnIndex].Name != downLoad) return;
-                if (CanOpenFile(e.RowIndex, e.ColumnIndex))
-                {
-                    OpenFile(e.RowIndex);
-                    return;
-                }
-                GenerateContent(e.RowIndex);
-            }
-            finally
-            {
-                grid.Enabled = true;
-            }
-        }
-
         private bool CanOpenFile(int rowIndex, int downloadColumnIndex)
         {
             if (grid.Enabled) return false;
@@ -185,6 +159,7 @@ namespace LegalLead.PublicData.Search
             };
             p.Start();
         }
+
         private static DownloadPermissionResponse GetDownloadDetail(string requestId)
         {
             var request = new ProcessOfflineResponse { RequestId = requestId };
@@ -271,7 +246,7 @@ namespace LegalLead.PublicData.Search
                 ResultFileName = current.FileName,
                 SearchDate = searchDt,
             };
-            dta.Search = $"{dta.SearchDate} : {dta.Website} ({courtType}) from {dta.StartDate} to {dta.EndDate}";
+            dta.Search = $"{DateTime.Now:d} : {dta.Website} ({courtType}) from {dta.StartDate} to {dta.EndDate}";
             tagged.Add(dta);
             mainFrm.Tag = tagged;
             mainFrm.ComboBox_DataSourceChanged(null, null);
@@ -341,20 +316,6 @@ namespace LegalLead.PublicData.Search
         private static readonly SessionMonthToDatePersistence UsageReader
             = SessionPersistenceContainer.GetContainer
             .GetInstance<SessionMonthToDatePersistence>();
-        private void BtnSubmit_Click(object sender, EventArgs e)
-        {
-            if (sender is not System.Windows.Forms.Button btn) return;
-            if (!btn.Enabled) return;
-            try
-            {
-                btn.Enabled = false;
-                BindRecords();
-            }
-            finally
-            {
-                btn.Enabled = true;
-            }
-        }
 
         private const string downLoad = "Download";
         private static readonly CultureInfo culture = new("en-US");

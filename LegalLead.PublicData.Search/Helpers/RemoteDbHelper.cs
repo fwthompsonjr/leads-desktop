@@ -288,6 +288,17 @@ namespace LegalLead.PublicData.Search.Helpers
             return response;
         }
 
+        public List<OfflineSearchTypeResponse> GetRequestSearchDetails(string leadId)
+        {
+
+            var uri = GetAddress("get-offline-request-search-details");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, List<OfflineSearchTypeResponse>>(client, uri, new { LeadId = leadId });
+            if (response == null || response.Count == 0) return [];
+            return response;
+        }
+
         public LeadUserModel RegisterAccount(RegisterAccountModel model)
         {
             var uri = GetAddress("register-account");
@@ -386,6 +397,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "process-offline-set-context" => $"{uri}{provider.OfflineCountyTypeUrl}",
                 "get-offline-download-status" => $"{uri}{provider.DownloadStatusUrl}",
                 "set-offline-download-complete" => $"{uri}{provider.DownloadIsCompletedUrl}",
+                "get-offline-request-search-details" => $"{uri}{provider.SearchDetailsUrl}",
                 "register-account" => $"{uri}{provider.RegisterAccountUrl}",
                 _ => string.Empty
             };
