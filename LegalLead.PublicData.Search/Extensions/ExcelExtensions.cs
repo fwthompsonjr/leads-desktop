@@ -206,7 +206,7 @@ namespace LegalLead.PublicData.Search.Extensions
 
         private static string GetDateString(DateTime date)
         {
-            const string fmt = "yyMMdd";
+            const string fmt = "MMddyy";
             return date.ToString(fmt, culture);
         }
 

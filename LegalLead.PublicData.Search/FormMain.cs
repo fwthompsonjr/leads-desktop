@@ -56,6 +56,8 @@ namespace LegalLead.PublicData.Search
             SearchProcessComplete += MainForm_PostSearchDetail;
             menuLogView.Click += MenuLogView_Click;
             menuOpenFile.Click += MenuOpenFile_Click;
+            menuOffline.Click += MenuRequestsView_Click;
+            menuOffline.Visible = true;
             menuOpenFile.Enabled = false;
             var splitButtonSeparator = new ToolStripSeparator
             {

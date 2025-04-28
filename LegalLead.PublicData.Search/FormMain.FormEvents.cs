@@ -507,6 +507,21 @@ namespace LegalLead.PublicData.Search
                 CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
             }
         }
+        private void MenuRequestsView_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new ViewOfflineRequestsEvent { GetMain = this };
+            handler.Toggle(itm.Checked);
+            if (itm.Checked) return;
+            for (int i = 0; i < 2; i++)
+            {
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
+            }
+        }
         private void TsWebDriver_Initialize()
         {
             // when data source is changed?

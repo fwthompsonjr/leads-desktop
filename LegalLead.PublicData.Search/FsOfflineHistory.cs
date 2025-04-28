@@ -41,10 +41,13 @@ namespace LegalLead.PublicData.Search
             leadUserId = leadId;
             grid.ReadOnly = true;
             grid.Visible = false;
+            lbStatus.Text = "Fetching records. Please wait.";
             grid.CellContentClick += Grid_CellContentClick;
+            grid.RowEnter += Grid_RowEnter;
             Shown += FsOfflineHistory_Shown;
         }
 
+        private int DownloadCount { get; set; }
 
         private void BindRecords()
         {
@@ -52,14 +55,14 @@ namespace LegalLead.PublicData.Search
             var data = ProcessOfflineHelper.GetRequests(leadUserId);
             try
             {
-
+                lbStatus.Text = "Fetching records. Please wait.";
                 grid.Columns.Clear();
                 grid.Tag = data.ToJsonString();
                 var view = new List<GridHistoryView>();
                 data.ForEach(d =>
                 {
                     var itemId = data.IndexOf(d);
-                    var item = new GridHistoryView(d, itemId);
+                    var item = new GridHistoryView(d, itemId + 1);
                     item = UpdateMissingFields(itemId, data, item);
                     view.Add(item);
                 });
@@ -75,13 +78,24 @@ namespace LegalLead.PublicData.Search
                 grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 grid.Columns["FileName"].Visible = false;
                 grid.Columns["NewNameCompleted"].Visible = false;
+                grid.Columns[downLoad].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                var columnRight = new[] { "Id", "PercentComplete", "RecordCount" };
+                var columnFull = new[] { "StartDate", "DatesSearched", "LastUpdate" };
+                foreach (var column in columnRight) {
+                    grid.Columns[column].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
+                foreach (var column in columnFull)
+                {
+                    grid.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                }
                 for (int i = 0; i < data.Count; i++)
                 {
                     var src = data[i];
                     if (!src.IsCompleted) continue;
-                    GenerateContent(i);
+                    if (grid.Visible) GenerateContent(i);
                 }
                 grid.Refresh();
+                lbStatus.Text = "Ready";
             }
             finally
             {
@@ -95,13 +109,28 @@ namespace LegalLead.PublicData.Search
             if (grid.Tag is not string src) return;
             var db = src.ToInstance<List<OfflineStatusResponse>>();
             if (db == null) return;
-            if (grid.Rows[rowIndex].Tag is GridHistoryView itm && itm.IsComplete) return;
+            // clear error-text
+            grid.Rows[rowIndex].ErrorText = "";
+            if (grid.Rows[rowIndex].Tag is GridHistoryView itm && itm.IsComplete) {
+                grid.Rows[rowIndex].ErrorText = "Unable to Download/View. Process is not completed.";
+                return; 
+            }
             var item = db[rowIndex];
-            if (!item.IsCompleted) return;
+            if (!item.IsCompleted) {
+                grid.Rows[rowIndex].ErrorText = "Unable to Download/View. Process is not completed.";
+                return; 
+            }
             var workitem = GetDownloadDetail(item.RequestId);
-            if (workitem == null) return;
+            if (workitem == null) {
+                grid.Rows[rowIndex].ErrorText = "Unable to Download/View. Record data is not available.";
+                return; 
+            }
             var list = workitem.Workload.ToInstance<List<CaseItemDto>>();
-            if (list == null) return;
+            if (list == null)
+            {
+                grid.Rows[rowIndex].ErrorText = "Unable to Download/View. Record data is not available.";
+                return;
+            }
             var obj = new GridHistoryView(new(), rowIndex);
             var context = new GenExcelFileParameter
             {
@@ -117,6 +146,8 @@ namespace LegalLead.PublicData.Search
             if (obj.IsComplete && grid[columnIndex, rowIndex] is DataGridViewButtonCell cell)
             {
                 cell.Value = "View";
+                DownloadCount++;
+                lbProcessed.Text = $"{DownloadCount} Record(s) downloaded.";
             }
         }
         private bool CanOpenFile(int rowIndex, int downloadColumnIndex)
@@ -213,10 +244,11 @@ namespace LegalLead.PublicData.Search
 
         private static GridHistoryView AddItemToMainForm(GenExcelFileParameter context, GridHistoryView current, DataGridView grid)
         {
-            grid.Rows[current.Id].ErrorText = "";
+            int currentId = current.Id;
+            grid.Rows[currentId].ErrorText = "";
             if (!CompleteDbRecord(current, grid))
             {
-                grid.Rows[current.Id].ErrorText = "Failed to update status. Please retry";
+                grid.Rows[currentId].ErrorText = "Failed to update status. Please retry";
                 return current;
             }
             var mainFrm = Program.mainForm;
@@ -256,11 +288,12 @@ namespace LegalLead.PublicData.Search
         private static bool CompleteDbRecord(GridHistoryView current, DataGridView grid)
         {
             if (current == null) return false;
+            int currentId = current.Id;
             if (grid.Tag is not string json) return false;
             var db = json.ToInstance<List<OfflineStatusResponse>>();
             if (db == null) return false;
-            if (current.Id < 0 || current.Id > db.Count - 1) return false;
-            var item = db[current.Id];
+            if (currentId < 0 || currentId > db.Count - 1) return false;
+            var item = db[currentId];
             var dte = $"{DateTime.UtcNow:G}";
             var payload = new
             {

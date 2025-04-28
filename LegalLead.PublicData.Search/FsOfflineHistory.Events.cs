@@ -1,6 +1,7 @@
 ﻿using LegalLead.PublicData.Search.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -23,7 +24,13 @@ namespace LegalLead.PublicData.Search
                 btn.Enabled = true;
             }
         }
-		
+
+        private void Button_Click(object sender, EventArgs e)
+        {
+            if (Program.mainForm == null) return;
+            Program.mainForm.menuOffline.PerformClick();
+        }
+
         private void FsOfflineHistory_Shown(object sender, EventArgs e)
         {
             grid.Visible = false;
@@ -52,5 +59,25 @@ namespace LegalLead.PublicData.Search
             }
         }
 
+
+        private void Grid_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!grid.Enabled) return;
+            try
+            {
+                if (e.RowIndex < 0) return;
+                var rowId = e.RowIndex;
+                var rc = grid.Rows.Count;
+                // Record x of y : Dallas Justice
+                lbStatus.Text = $"Record: {rowId + 1} of {rc}";
+                if (grid.Rows[rowId].DataBoundItem is not GridHistoryView itm) return;
+                lbStatus.Text = $"Record: {rowId + 1} of {rc}, {itm.CountyName} {textConverter.ToTitleCase(itm.CourtType.ToLower())} {itm.DatesSearched}";
+            }
+            finally
+            {
+                grid.Enabled = true;
+            }
+        }
+        private static readonly TextInfo textConverter = new CultureInfo("en-US", false).TextInfo;
     }
 }

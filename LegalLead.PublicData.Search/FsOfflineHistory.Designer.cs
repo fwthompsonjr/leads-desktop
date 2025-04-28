@@ -30,10 +30,12 @@
         {
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             btnSubmit = new System.Windows.Forms.Button();
+            btnReturn = new System.Windows.Forms.Button();
             lbStatus = new System.Windows.Forms.Label();
             grid = new System.Windows.Forms.DataGridView();
             lbRecordCount = new System.Windows.Forms.Label();
             lbInvoiceName = new System.Windows.Forms.Label();
+            lbProcessed = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
             SuspendLayout();
@@ -48,10 +50,12 @@
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             tableLayoutPanel1.Controls.Add(btnSubmit, 0, 2);
+            tableLayoutPanel1.Controls.Add(btnReturn, 0, 2);
             tableLayoutPanel1.Controls.Add(lbStatus, 0, 3);
             tableLayoutPanel1.Controls.Add(grid, 0, 1);
             tableLayoutPanel1.Controls.Add(lbRecordCount, 4, 2);
             tableLayoutPanel1.Controls.Add(lbInvoiceName, 3, 2);
+            tableLayoutPanel1.Controls.Add(lbProcessed, 4, 3);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -78,15 +82,27 @@
             btnSubmit.UseVisualStyleBackColor = true;
             btnSubmit.Click += BtnSubmit_Click;
             // 
+            // btnReturn
+            // 
+            btnReturn.Dock = System.Windows.Forms.DockStyle.Fill;
+            btnReturn.Location = new System.Drawing.Point(150, 369);
+            btnReturn.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            btnReturn.Name = "btnReturn";
+            btnReturn.Size = new System.Drawing.Size(120, 27);
+            btnReturn.TabIndex = 42;
+            btnReturn.Text = "Return";
+            btnReturn.UseVisualStyleBackColor = true;
+            btnReturn.Click += Button_Click;
+            // 
             // lbStatus
             // 
             lbStatus.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan(lbStatus, 6);
+            tableLayoutPanel1.SetColumnSpan(lbStatus, 4);
             lbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             lbStatus.Location = new System.Drawing.Point(10, 414);
             lbStatus.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             lbStatus.Name = "lbStatus";
-            lbStatus.Size = new System.Drawing.Size(780, 27);
+            lbStatus.Size = new System.Drawing.Size(580, 27);
             lbStatus.TabIndex = 14;
             lbStatus.Text = "Ready";
             // 
@@ -125,6 +141,17 @@
             lbInvoiceName.Size = new System.Drawing.Size(174, 15);
             lbInvoiceName.TabIndex = 50;
             // 
+            // lbProcessed
+            // 
+            lbProcessed.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(lbProcessed, 2);
+            lbProcessed.Dock = System.Windows.Forms.DockStyle.Fill;
+            lbProcessed.Location = new System.Drawing.Point(610, 414);
+            lbProcessed.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            lbProcessed.Name = "lbProcessed";
+            lbProcessed.Size = new System.Drawing.Size(180, 27);
+            lbProcessed.TabIndex = 51;
+            // 
             // FsOfflineHistory
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -147,5 +174,7 @@
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Label lbRecordCount;
         private System.Windows.Forms.Label lbInvoiceName;
+        private System.Windows.Forms.Label lbProcessed;
+        private System.Windows.Forms.Button btnReturn;
     }
 }
