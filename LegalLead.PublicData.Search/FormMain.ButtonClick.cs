@@ -275,7 +275,7 @@ namespace LegalLead.PublicData.Search
             {
                 if (isAdmin)
                 {
-                    var displayMode = SettingsWriter.GetSettingOrDefault("admin", "Open Headless:", true);
+                    var displayMode = SettingsWriter.GetSettingOrDefault("admin", SettingConstants.AdminFieldNames.AllowBrowserDisplay, true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
                 webmgr.TrackingIndex = trackingItem.Id;
@@ -293,7 +293,6 @@ namespace LegalLead.PublicData.Search
                 }, token).ConfigureAwait(true);
 
                 var nonactors = new List<int> {
-                    (int)SourceType.CollinCounty,
                     (int)SourceType.DallasCounty,
                     (int)SourceType.TravisCounty,
                     (int)SourceType.TarrantCounty,
@@ -402,7 +401,10 @@ namespace LegalLead.PublicData.Search
                 };
             if (ex is not KeyNotFoundException) return false;
             if (!offlineIndexes.Contains(countyId)) return false;
-            return SettingsWriter.GetSettingOrDefault("search", "Allow Offline Data Processing:", true);
+            return SettingsWriter.GetSettingOrDefault(
+                "search",
+                SettingConstants.SearchFieldNames.AllowOfflineProcessing,
+                true);
         }
 
         private static string GetShortName(WebFetchResult web)

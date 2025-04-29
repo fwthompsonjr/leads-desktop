@@ -625,7 +625,10 @@ namespace LegalLead.PublicData.Search
         {
             const string category = "admin";
             var settings = new List<UserSettingChangeViewModel>();
-            var map = new[] { "Open Headless:", "Database Search:", "Database Minimum Persistence:" };
+            var map = new[] { 
+                SettingConstants.AdminFieldNames.AllowBrowserDisplay,
+                SettingConstants.AdminFieldNames.AllowDbSearching,
+                SettingConstants.AdminFieldNames.DbMinimumPersistenceDays };
             for (var i = 0; i < map.Length; i++)
             {
                 var keyName = $"debug-admin-setting-{i}";
@@ -821,9 +824,18 @@ namespace LegalLead.PublicData.Search
             const string settingName = "search";
             var settings = new List<UserSettingChangeViewModel>()
             {
-                new(){ Category = settingName, Name = "Last County:", Value = siteName },
-                new(){ Category = settingName, Name = "Start Date:", Value = startDate },
-                new(){ Category = settingName, Name = "End Date:", Value = endDate },
+                new(){ 
+                    Category = settingName, 
+                    Name = SettingConstants.SearchFieldNames.LastCounty,
+                    Value = siteName },
+                new(){ 
+                    Category = settingName, 
+                    Name = SettingConstants.SearchFieldNames.StartDate,
+                    Value = startDate },
+                new(){ 
+                    Category = settingName, 
+                    Name = SettingConstants.SearchFieldNames.EndDate,
+                    Value = endDate },
             };
             settings.ForEach(x => { SettingsWriter.Change(x); });
         }
@@ -837,7 +849,6 @@ namespace LegalLead.PublicData.Search
             = SessionPersistenceContainer
             .GetContainer
             .GetInstance<SessionApiFilePersistence>();
-        // private static readonly string customMessages = 
 
     }
 }

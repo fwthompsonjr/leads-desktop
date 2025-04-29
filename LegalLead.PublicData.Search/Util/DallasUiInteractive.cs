@@ -58,7 +58,9 @@ namespace LegalLead.PublicData.Search.Util
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, true, true);
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
-                OfflineProcessingEnabled = SettingsWriter.GetSettingOrDefault("search", "Allow Offline Data Processing:", true);
+                OfflineProcessingEnabled = SettingsWriter.GetSettingOrDefault("search",
+                    SettingConstants.SearchFieldNames.AllowOfflineProcessing, 
+                    true);
                 var bulkReader = new DallasBulkCaseReader
                 {
                     Driver = driver,
@@ -70,7 +72,7 @@ namespace LegalLead.PublicData.Search.Util
 
 
                 var result = new WebFetchResult();
-                var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", "Exclude Weekend From Search:", true);
+                var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", SettingConstants.SearchFieldNames.ExcludeWeekends, true);
 
                 var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday };
                 if (excludeWeekend)

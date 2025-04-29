@@ -86,7 +86,7 @@ namespace LegalLead.PublicData.Search
                 }
                 foreach (var column in columnFull)
                 {
-                    grid.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                    grid.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 }
                 for (int i = 0; i < data.Count; i++)
                 {

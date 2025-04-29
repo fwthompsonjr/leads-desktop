@@ -31,7 +31,8 @@ namespace LegalLead.PublicData.Search.Util
             _web = interactive;
             _dbsvc = db;
             DataSearchParameters = request;
-            var settings = MapDbSettings();
+            var canProcessOffline = offlineIndexes.Contains(request.CountyId);
+            var settings = MapDbSettings(canProcessOffline);
             UseRemoteDb = settings.UseRemoteDb;
             RemoteMinDayInterval = settings.RemoteMinDayInterval;
         }
@@ -214,17 +215,23 @@ namespace LegalLead.PublicData.Search.Util
             DeleteTempFiles(tmp.Result);
         }
 
-        private DataSetting MapDbSettings()
+        private DataSetting MapDbSettings(bool toggleForOfflineProcessing = false)
         {
-            var list = sourceData.FindAll(x => x.Category == "admin");
+            // NOTE: Offline Search when enabled will search db before attempt to read website (API).
+            var list = sourceData.FindAll(x => x.Category == "admin" || 
+                (x.Category == "search" && x.Name == SettingConstants.SearchFieldNames.AllowOfflineProcessing));
             var lookups = new[] {
                 new SettingLookupDto {
-                    Name = "Database Search:",
+                    Name = SettingConstants.AdminFieldNames.AllowDbSearching,
                     DefaultValue = "true"
                 },
                 new SettingLookupDto {
-                    Name = "Database Minimum Persistence:",
+                    Name = SettingConstants.AdminFieldNames.DbMinimumPersistenceDays,
                     DefaultValue = "5"
+                },
+                new SettingLookupDto {
+                    Name = SettingConstants.SearchFieldNames.AllowOfflineProcessing,
+                    DefaultValue = "true"
                 },
             }.ToList();
             foreach (var lookup in lookups)
@@ -232,7 +239,12 @@ namespace LegalLead.PublicData.Search.Util
                 var src = list.Find(x => x.Name == lookup.Name);
                 lookup.Value = src?.Value ?? string.Empty;
             }
+            var useOfflineDb = lookups[2].GetValue();
             var useDb = lookups[0].GetValue();
+            if (toggleForOfflineProcessing)
+            {
+                useDb = useOfflineDb.ToLower().Equals("true") ? "false" : lookups[0].GetValue();
+            }
             var minDayInterval = lookups[1].GetValue();
             var bUseDb = bool.TryParse(useDb, out var bUse);
             var bMinDays = int.TryParse(minDayInterval, out var minInterval);
@@ -616,6 +628,9 @@ namespace LegalLead.PublicData.Search.Util
         private readonly List<UserSettingChangeModel> sourceData =
             UserDataReader.GetList<UserSettingChangeModel>();
 
+        private static readonly List<int> offlineIndexes = new List<int> {
+        (int)SourceType.DallasCounty,
+    };
         #endregion
 
         #region Private Enum
