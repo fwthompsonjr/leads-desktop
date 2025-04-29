@@ -1,9 +1,12 @@
 ﻿namespace Thompson.RecordSearch.Utility.Web
 {
     using OpenQA.Selenium;
+    using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
+    using OpenQA.Selenium.Support.UI;
     using System;
     using System.Diagnostics;
     using System.Threading;
+    using Thompson.RecordSearch.Utility.Classes;
     using Thompson.RecordSearch.Utility.Dto;
     using Byy = OpenQA.Selenium.By;
 
@@ -35,7 +38,6 @@
             {
                 return;
             }
-            //document.getElementById('personlist').value=Person_ID;
             var jse = (IJavaScriptExecutor)driver;
             jse.ExecuteScript(jv.setIndex);
             jse.ExecuteScript(jv.change);
