@@ -278,6 +278,9 @@ namespace LegalLead.PublicData.Search
                     var displayMode = SettingsWriter.GetSettingOrDefault("admin", SettingConstants.AdminFieldNames.AllowBrowserDisplay, true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
+                if (siteData.Id == (int)SourceType.TarrantCounty) {
+                    webmgr.DriverReadHeadless = false;
+                }
                 webmgr.TrackingIndex = trackingItem.Id;
                 webmgr.ReportProgress = TryShowProgress;
                 webmgr.ReportProgessComplete = TryHideProgress;
@@ -295,7 +298,6 @@ namespace LegalLead.PublicData.Search
                 var nonactors = new List<int> {
                     (int)SourceType.DallasCounty,
                     (int)SourceType.TravisCounty,
-                    (int)SourceType.TarrantCounty,
                     (int)SourceType.BexarCounty,
                     (int)SourceType.HarrisCivil,
                     (int)SourceType.HidalgoCounty,
