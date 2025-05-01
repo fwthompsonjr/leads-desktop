@@ -234,7 +234,7 @@ namespace LegalLead.PublicData.Search
         {
             var fallbak = GetMaxDateFallback();
             if (!IsAccountAdmin()) return fallbak;
-            const string findDate = "Extended Date Range:";
+            const string findDate = SettingConstants.AdminFieldNames.ExtendedDateMaxDays;
             var changeModel = UserDataReader.GetList<UserSettingChangeModel>();
             var model = changeModel.Find(x => x.Index == 16 && x.Name == findDate);
             if (model == null || !int.TryParse(model.Value, out var number)) return fallbak;

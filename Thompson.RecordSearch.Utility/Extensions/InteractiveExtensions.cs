@@ -21,8 +21,9 @@ namespace Thompson.RecordSearch.Utility.Extensions
             string percentageMessage = "",
             string dateNotification = "")
         {
-            if (string.IsNullOrEmpty(message) && max > 0) message = $"Item {current} of {max}";
-            if (!string.IsNullOrEmpty(message)) Console.WriteLine(message);
+            bool constructMessage = string.IsNullOrEmpty(message) && max > 0;
+            if (constructMessage) message = $"Item {current} of {max}";
+            if (!string.IsNullOrEmpty(message) && !message.Equals("<no-console>")) Console.WriteLine(message);
             web?.ReportProgress?.Invoke(min, max, current, dateNotification);
             if (!calcPercentage) return;
             if (!string.IsNullOrEmpty(percentageMessage)) Console.WriteLine(percentageMessage);

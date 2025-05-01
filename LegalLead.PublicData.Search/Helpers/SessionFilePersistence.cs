@@ -1,9 +1,11 @@
 ﻿using LegalLead.PublicData.Search.Interfaces;
+using System;
 using System.IO;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Interfaces;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Helpers
 {
@@ -25,6 +27,15 @@ namespace LegalLead.PublicData.Search.Helpers
             }
         }
 
+
+        public string GetAccountId()
+        {
+            var bo = Read().ToInstance<LeadUserSecurityBo>();
+            if (bo == null) return string.Empty;
+            var index = bo.User.Id;
+            if (!Guid.TryParse(index, out var _)) return string.Empty;
+            return index;
+        }
         public virtual string GetAccountCredential(string county = "")
         {
             lock (locker)

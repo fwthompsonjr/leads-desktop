@@ -118,27 +118,34 @@ namespace LegalLead.PublicData.Search.Extensions
             // Define a retry policy with Polly
             RetryPolicy retryPolicy = Policy
                 .Handle<WebDriverException>()
-                .WaitAndRetry(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                .WaitAndRetry(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                     (exception, timeSpan, retryCount, context) =>
                     {
-                        Console.WriteLine($"Retry {retryCount} encountered an error: {exception.Message}. Waiting {timeSpan} before next retry.");
+                        // Console.WriteLine($"Retry {retryCount} encountered an error: {exception.Message}. Waiting {timeSpan} before next retry.");
                     });
 
             retryPolicy.Execute(() =>
             {
-                // Get the current URL
-                string currentUrl = driver.Url;
-
-                // Navigate to a blank page to clear any ongoing requests
-                driver.Navigate().GoToUrl("about:blank");
-
-                // Reload the original page
-                driver.Navigate().GoToUrl(currentUrl);
-
-                // Verify the page is loaded (you can add more checks as needed)
-                if (driver.Url != currentUrl)
+                try
                 {
-                    throw new WebDriverException("Failed to load the requested page.");
+                    // Get the current URL
+                    string currentUrl = driver.Url;
+
+                    // Navigate to a blank page to clear any ongoing requests
+                    driver.Navigate().GoToUrl("about:blank");
+
+                    // Reload the original page
+                    driver.Navigate().GoToUrl(currentUrl);
+
+                    // Verify the page is loaded (you can add more checks as needed)
+                    if (driver.Url != currentUrl)
+                    {
+                        throw new WebDriverException("Failed to load the requested page.");
+                    }
+                }
+                catch (Exception)
+                {
+                    // suppress any unexpected errors here.
                 }
             });
         }

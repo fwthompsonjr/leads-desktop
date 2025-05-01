@@ -40,10 +40,11 @@ namespace LegalLead.PublicData.Search.Util
         public List<PersonAddress> People { get; private set; } = [];
         public List<CaseItemDto> Items { get; private set; } = [];
         public bool IsDistrictFilterActive { get; set; }
+        protected bool OfflineProcessingEnabled { get; set; }
         protected List<DallasCaseStyleDto> CaseStyles { get; private set; } = [];
         protected bool ExecutionCancelled { get; set; }
         protected bool DisplayDialogue { get; set; }
-        protected string CourtType { get; set; }
+        internal string CourtType { get; set; }
         private readonly List<ICountySearchAction> ActionItems = [];
         public override WebFetchResult Fetch(CancellationToken token)
         {
@@ -57,24 +58,29 @@ namespace LegalLead.PublicData.Search.Util
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, true, true);
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
-                var bulkReader = new DalllasBulkCaseReader
+                OfflineProcessingEnabled = SettingsWriter.GetSettingOrDefault("search",
+                    SettingConstants.SearchFieldNames.AllowOfflineProcessing, 
+                    true);
+                var bulkReader = new DallasBulkCaseReader
                 {
                     Driver = driver,
                     Interactive = this,
                     Parameters = parameters,
+                    OfflineProcessing = OfflineProcessingEnabled,
                 };
                 postcommon.Add(bulkReader);
 
 
                 var result = new WebFetchResult();
-                var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", "Exclude Weekend From Search:", true);
+                var excludeWeekend = SettingsWriter.GetSettingOrDefault("search", SettingConstants.SearchFieldNames.ExcludeWeekends, true);
+
                 var weekends = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday };
                 if (excludeWeekend)
                 {
                     dates.RemoveAll(d => weekends.Contains(d.DayOfWeek));
                 }
                 Iterate(driver, parameters, dates, common, postcommon);
-                if (ExecutionCancelled || People.Count == 0) return result;
+                if (OfflineProcessingEnabled || ExecutionCancelled || People.Count == 0) return result;
                 People.RemoveAll(x => string.IsNullOrWhiteSpace(x.DateFiled));
                 result.PeopleList = People;
                 result.Result = GetExcelFileName();
@@ -116,7 +122,7 @@ namespace LegalLead.PublicData.Search.Util
                 IterateDateRange(driver, parameters, dates, common);
                 postcommon.ForEach(p =>
                 {
-                    if (p is DalllasBulkCaseReader bulk)
+                    if (p is DallasBulkCaseReader bulk)
                     {
                         bulk.Workload.Clear();
                         bulk.Workload.AddRange(Items);

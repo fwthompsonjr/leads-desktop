@@ -1,5 +1,7 @@
 using HtmlAgilityPack;
 using LegalLead.PublicData.Search.Extensions;
+using LegalLead.PublicData.Search.Helpers;
+using LegalLead.PublicData.Search.Models;
 using Newtonsoft.Json;
 using Polly;
 using Polly.Timeout;
@@ -22,11 +24,11 @@ namespace LegalLead.PublicData.Search.Util
     using DST = System.Net.Cookie;
     using Rx = Properties.Resources;
     using SRC = OpenQA.Selenium.Cookie;
-    public class DalllasBulkCaseReader : BaseDallasSearchAction
+    public class DallasBulkCaseReader : BaseDallasSearchAction
     {
         public override int OrderId => 80;
         public List<CaseItemDto> Workload { get; } = [];
-
+        public bool OfflineProcessing { get; set; }
         public override object Execute()
         {
             if (Parameters == null || Driver == null)
@@ -41,6 +43,46 @@ namespace LegalLead.PublicData.Search.Util
                 Debug.WriteLine("Found {0:d} cookies", cookies.Count);
             }
             var count = Workload.Count;
+            var remote = new ProcessOfflineRequest
+            {
+                Count = count,
+                Workload = Workload.ToJsonString(),
+                Cookies = cookies.ToJsonString(),
+                RequestId = this.Interactive.TrackingIndex ?? string.Empty,
+            };
+            var courtType = string.Empty;
+            if (this.Interactive is DallasUiInteractive _wb)
+            {
+                courtType = _wb.CourtType;
+            }
+            var offline = ProcessOfflineHelper.BeginSearch(remote, courtType);
+            if (OfflineProcessing)
+            {
+                Console.WriteLine("Offline record processing enabled. Check Requests for status.");
+                return "[]";
+            }
+            if (offline.IsValid)
+            {
+                var logged = new List<string>();
+                var searchDate = Workload[0].FileDate;
+                var tracking = new StatusTrackingDto { FileDate = searchDate };
+                Console.WriteLine("Reading case details {0}", count);
+                var status = ProcessOfflineHelper.SearchStatus(offline);
+                while (!status.IsCompleted)
+                {
+                    Thread.Sleep(2000);
+                    status = ProcessOfflineHelper.SearchStatus(offline);
+                    EchoStatusMessages(logged, status);
+                    tracking = EchoProgressMessages(tracking, status);
+                    if (status.IsCompleted)
+                    {
+                        break;
+                    }
+                    _ = Task.Run(() => Driver.ReloadCurrentPageWithRetry());
+                }
+                if (string.IsNullOrEmpty(status.Content)) return Workload.ToJsonString();
+                return status.Content;
+            }
             var items = new ConcurrentDictionary<int, CaseItemDtoMapper>();
             Workload.ForEach(x =>
             {
@@ -68,6 +110,33 @@ namespace LegalLead.PublicData.Search.Util
             Workload.AddRange(items.Select(x => x.Value.Dto));
             // Cast ConcurrentDictionary to Dictionary before returning
             return Workload.ToJsonString();
+        }
+
+        private static void EchoStatusMessages(List<string> logged, ProcessOfflineResponse status)
+        {
+            status.Messages.RemoveAll(logged.Contains);
+            if (status.Messages.Count > 0)
+            {
+                var arr = string.Join(Environment.NewLine, status.Messages);
+                Console.WriteLine(arr);
+                logged.AddRange(status.Messages);
+            }
+        }
+
+        private StatusTrackingDto EchoProgressMessages(StatusTrackingDto current, ProcessOfflineResponse status)
+        {
+            if (status.RecordCount == 0 && status.TotalProcessed == 0) return current;
+            if (current.RecordCount == status.RecordCount && current.TotalProcessed == status.TotalProcessed) return current;
+            current.RecordCount = status.RecordCount;
+            current.TotalProcessed = status.TotalProcessed;
+            if (current.TotalProcessed == current.RecordCount)
+            {
+                Interactive.CompleteProgess();
+                return current;
+            }
+            Interactive.EchoProgess(0, current.RecordCount, current.TotalProcessed, "<no-console>", false, "", current.FileDate);
+            Interactive.EchoProgess(0, current.RecordCount, current.TotalProcessed, "<no-console>");
+            return current;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD002:Avoid problematic synchronous waits", Justification = "<Pending>")]
@@ -301,6 +370,12 @@ namespace LegalLead.PublicData.Search.Util
                 parent = parent.ParentNode;
             }
             return parent;
+        }
+        private class StatusTrackingDto
+        {
+            public string FileDate { get; set; }
+            public int RecordCount { get; set; }
+            public int TotalProcessed { get; set; }
         }
     }
 }

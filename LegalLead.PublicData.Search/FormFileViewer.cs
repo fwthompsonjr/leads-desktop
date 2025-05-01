@@ -34,7 +34,7 @@ namespace LegalLead.PublicData.Search
             dataGridSummary.Refresh();
             splitContainer.Panel2Collapsed = false;
             if (collection != null)
-            { 
+            {
                 fileCollection = collection;
             }
 
@@ -239,7 +239,7 @@ namespace LegalLead.PublicData.Search
                 dataGridSummary.DataSource = collection;
                 dataGridSummary.Refresh();
                 dataGridSummary.Tag = rowIndex;
-                dataGridFiles.Enabled = true; 
+                dataGridFiles.Enabled = true;
             }
         }
 
@@ -264,7 +264,7 @@ namespace LegalLead.PublicData.Search
                 {
                     OpenFile(requestedFile);
                     buttonCell.Tag = false;
-                }); 
+                });
             }
         }
 
@@ -276,7 +276,7 @@ namespace LegalLead.PublicData.Search
                 if (e.RowIndex < 0) { return; }
                 var mouse = new MouseEventArgs(MouseButtons.None, 0, 0, 0, 0);
                 var args = new DataGridViewCellMouseEventArgs(e.ColumnIndex, e.RowIndex, 0, 0, mouse);
-                DataGridFiles_RowHeaderMouseClick(sender, args); 
+                DataGridFiles_RowHeaderMouseClick(sender, args);
             }
         }
 
@@ -305,7 +305,7 @@ namespace LegalLead.PublicData.Search
         }
         private static void OpenFile(FileInfo fileInfo)
         {
-            using Process p = new ();
+            using Process p = new();
             p.StartInfo = new ProcessStartInfo(fileInfo.FullName)
             {
                 UseShellExecute = true
@@ -320,6 +320,6 @@ namespace LegalLead.PublicData.Search
             public string FileName { get; set; }
         }
 
-        private static readonly object harmony = new object ();
+        private static readonly object harmony = new object();
     }
 }

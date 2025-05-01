@@ -1,11 +1,18 @@
-﻿using LegalLead.PublicData.Search.Helpers;
+﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
+using LegalLead.PublicData.Search.Util;
 using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-
+using System.Reflection;
+using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Extensions;
+using Thompson.RecordSearch.Utility.Models;
 namespace LegalLead.PublicData.Search.Extensions
 {
     internal static class ExcelExtensions
@@ -112,6 +119,42 @@ namespace LegalLead.PublicData.Search.Extensions
             return IsValidExcelPackage(package);
         }
 
+        public static string GenerateExcelFileName(this List<PersonAddress> people,
+            GenExcelFileParameter context,
+            bool isTest = false)
+        {
+            var websiteId = context.WebsiteId;
+            string countyName = context.CountyName;
+            string courtType = context.CourtType;
+            string trackingIndex = context.TrackingIndex;
+            DateTime startDate = context.StartDate;
+            DateTime endDate = context.EndDate;
+            var folder = GetExcelDirectoryName;
+            var name = DallasSearchProcess.GetCourtName(courtType);
+            var fmt = $"{countyName}_{name}_{GetDateString(startDate)}_{GetDateString(endDate)}";
+            var fullName = GetUniqueFileName(folder, fmt, Path.Combine(folder, $"{fmt}.xlsx"));
+            var writer = new ExcelWriter();
+            var content = writer.ConvertToPersonTable(addressList: people, worksheetName: "addresses", websiteId: websiteId);
+            var courtlist = people.Select(p =>
+            {
+                if (string.IsNullOrEmpty(p.Court)) return string.Empty;
+                var find = GetCourtAddress(websiteId, name, p.Court);
+                if (string.IsNullOrEmpty(find)) return string.Empty;
+                return find;
+            }).ToList();
+            content.TransferColumn("County", "fname");
+            content.TransferColumn("CourtAddress", "lname");
+            content.PopulateColumn("CourtAddress", courtlist);
+            content.SecureContent(trackingIndex);
+            using (var ms = new MemoryStream())
+            {
+                content.SaveAs(ms);
+                var data = ms.ToArray();
+                if (!isTest) File.WriteAllBytes(fullName, data);
+            }
+            return fullName;
+
+        }
         private static string GetCellValue(this ExcelWorksheet worksheet, int row, int col)
         {
             var cellValue = worksheet.GetValue(row, col);
@@ -144,6 +187,7 @@ namespace LegalLead.PublicData.Search.Extensions
             return columnId;
         }
         private static int? plaintiffColumnIndex;
+        private static string excelDirectoyName = null;
 
         private static readonly string[] expectedHeaders = {
             "Name", "FirstName", "LastName", "Zip", "Address1", "Address2", "Address3",
@@ -151,5 +195,53 @@ namespace LegalLead.PublicData.Search.Extensions
             "County", "CourtAddress"
         };
         private static readonly string[] plaintiffNames = { "Plantiff", "Plaintiff" };
+        private static string GetExcelDirectoryName => excelDirectoyName ??= ExcelDirectoyName();
+        private static string ExcelDirectoyName()
+        {
+            var appFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var xmlFolder = Path.Combine(appFolder, "data");
+            if (!Directory.Exists(xmlFolder)) Directory.CreateDirectory(xmlFolder);
+            return xmlFolder;
+        }
+
+        private static string GetDateString(DateTime date)
+        {
+            const string fmt = "MMddyy";
+            return date.ToString(fmt, culture);
+        }
+
+        private static string GetUniqueFileName(string folder, string fmt, string fullName)
+        {
+            int idx = 1;
+            while (File.Exists(fullName))
+            {
+                fullName = Path.Combine(folder, $"{fmt}_{idx:D4}.xlsx");
+                idx++;
+            }
+            return fullName;
+        }
+
+        private static string GetCourtAddress(int websiteId, string courtType, string courtName)
+        {
+            var address = websiteId switch
+            {
+                1 => AlternateCourtLookupService.GetAddress(websiteId, courtName),
+                10 => AlternateCourtLookupService.GetAddress(websiteId, courtName),
+                20 => AlternateCourtLookupService.GetAddress(websiteId, courtName),
+                30 => AlternateCourtLookupService.GetAddress(websiteId, courtName),
+                40 => HccCourtLookupService.GetAddress(courtName),
+                60 => DallasCourtLookupService.GetAddress(courtType, courtName),
+                70 => TravisCourtLookupService.GetAddress(courtType, courtName),
+                80 => BexarCourtLookupService.GetAddress(courtType, courtName),
+                90 => HidalgoCourtLookupService.GetAddress(courtType, courtName),
+                100 => ElPasoCourtLookupService.GetAddress(courtType, courtName),
+                110 => FortBendCourtLookupService.GetAddress(courtType, courtName),
+                120 => WilliamsonCourtLookupService.GetAddress(courtType, courtName),
+                130 => GraysonCourtLookupService.GetAddress(courtType, courtName),
+                _ => AlternateCourtLookupService.GetAddress(websiteId, courtName),
+            };
+            return address;
+        }
+        private static readonly CultureInfo culture = new CultureInfo("en-US");
     }
 }

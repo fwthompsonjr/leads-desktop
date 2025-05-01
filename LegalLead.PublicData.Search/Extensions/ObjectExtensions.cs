@@ -110,6 +110,24 @@ namespace LegalLead.PublicData.Search.Extensions
                     Plaintiff = ObfuscationStrategies.Strategies[QueryDbResponseFieldName.Plaintiff](item)
                 });
         }
+
+        public static ProcessOfflineResponse ReplacePipe(this ProcessOfflineResponse response)
+        {
+            if (response == null) return null;
+            if (response.Messages.Count == 0) return response;
+            var msg = new List<string>(response.Messages.Select(x => x.Replace('|', ':')));
+            response.Messages.Clear();
+            response.Messages.AddRange(msg);
+            return response;
+        }
+
+        public static DateTime ToCentralTime(this DateTime source)
+        {
+            TimeZoneInfo centralTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime centralTime = TimeZoneInfo.ConvertTimeFromUtc(source, centralTimeZone);
+            return centralTime;
+        }
+
         private static class ObfuscationStrategies
         {
             public static readonly Dictionary<string, Func<QueryDbResponse, string>> Strategies = new()

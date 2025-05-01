@@ -22,6 +22,7 @@ namespace LegalLead.PublicData.Search
         {
             InitializeComponents();
             LoadLogFiles();
+            dataGridSummary.RowEnter += DataGridSummary_RowEnter;
         }
 
         private void InitializeComponents()
@@ -93,9 +94,27 @@ namespace LegalLead.PublicData.Search
             // Add event handlers
             comboBox.SelectedIndexChanged += ComboBox_SelectedIndexChanged;
             dataGridView.RowEnter += DataGridView_SelectionChanged;
+
             button.Click += Button_Click;
             // Add TableLayoutPanel to Form
             Controls.Add(tableLayoutPanel);
+        }
+
+        private void DataGridSummary_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+
+            var indx = e.RowIndex;
+            if (dataGridSummary.DataSource is not List<FetchRequestItem> summary) return;
+            if (indx < 0 || indx > summary.Count - 1) return;
+            if (!dataGridSummary.Focused) return;
+            var selected = summary[indx];
+            if (string.IsNullOrEmpty(selected.EndingComment))
+                textBox.Text = selected.StartingComment;
+            else
+            {
+                var arr = new string[] { selected.StartingComment, selected.EndingComment, $"Duration := {selected.ElapsedTime} minutes" };
+                textBox.Text = string.Join(Environment.NewLine, arr);
+            }
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -159,6 +178,15 @@ namespace LegalLead.PublicData.Search
             }
             dataGridSummary.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridSummary.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            var custom = new List<string>() { "StartingComment", "EndingComment" };
+            custom.ForEach(heading =>
+            {
+                if (dataGridSummary.Columns[heading] != null)
+                {
+                    dataGridSummary.Columns[heading].Visible = false;
+                }
+
+            });
         }
 
         private void DataGridView_SelectionChanged(object sender, DataGridViewCellEventArgs e)
@@ -181,8 +209,6 @@ namespace LegalLead.PublicData.Search
 
         private static List<FetchRequestItem> CollectFetchRequestItems(List<LogView> logViews)
         {
-            const string startingFetchToken = "Starting fetch request: ";
-            const string endingFetchToken = "Ending fetch request:";
             var fetchRequestItems = new List<FetchRequestItem>();
             FetchRequestItem currentItem = null;
 
@@ -200,11 +226,13 @@ namespace LegalLead.PublicData.Search
                     {
                         Id = logViews.IndexOf(logView),
                         StartTime = GetLogDate(logView.Date),
+                        StartingComment = logView.LogEntry
                     };
                 }
                 else if (logView.LogEntry.Contains(endingFetchToken) && currentItem != null)
                 {
                     currentItem.EndTime = GetLogDate(logView.Date);
+                    currentItem.EndingComment = logView.LogEntry;
                     Assert.IsFalse(string.IsNullOrEmpty(currentItem.ElapsedTime));
                     fetchRequestItems.Add(currentItem);
                     currentItem = null;
@@ -253,6 +281,9 @@ namespace LegalLead.PublicData.Search
                     return timeSpan.TotalMinutes.ToString("F2", CultureInfo.CurrentCulture.NumberFormat);
                 }
             }
+            public string StartingComment { get; set; }
+            public string EndingComment { get; set; }
+
         }
         private static class FieldLabels
         {
@@ -261,5 +292,8 @@ namespace LegalLead.PublicData.Search
         private readonly static string AppBasePath = AppDomain.CurrentDomain.BaseDirectory;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "SYSLIB1045:Convert to 'GeneratedRegexAttribute'.", Justification = "<Pending>")]
         private readonly static Regex FileSplitRegex = new(@"(?=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})");
+
+        private const string startingFetchToken = "Starting fetch request: ";
+        private const string endingFetchToken = "Ending fetch request:";
     }
 }
