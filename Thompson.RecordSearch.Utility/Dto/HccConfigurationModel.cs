@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Linq;
 
 namespace Thompson.RecordSearch.Utility.Dto
 {
@@ -32,6 +34,10 @@ namespace Thompson.RecordSearch.Utility.Dto
     public class DbUriModel
     {
         [JsonProperty("uri")] public string Url { get; set; }
+        [JsonProperty("remote-uri")] public string RemoteUrl { get; set; }
+
+        [JsonProperty("debug-uri")] public string DebugUrl { get; set; }
+        [JsonProperty("admin")] public string AdminUrl { get; set; }
         [JsonProperty("begin")] public string BeginUrl { get; set; }
         [JsonProperty("complete")] public string CompleteUrl { get; set; }
         [JsonProperty("query")] public string QueryUrl { get; set; }
@@ -45,6 +51,23 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("usage-set-limit")] public string UsageSetLimitUrl { get; set; } = string.Empty;
         [JsonProperty("content-get")] public string ContentGetUrl { get; set; } = string.Empty;
         [JsonProperty("content-save")] public string ContentSaveUrl { get; set; } = string.Empty;
+        [JsonProperty("process-offline")] public string BeginSearchUrl { get; set; }
+        [JsonProperty("process-offline-status")] public string SearchStatusUrl { get; set; }
+        [JsonProperty("get-offline-requests")] public string OfflineStatusUrl { get; set; }
+        [JsonProperty("get-offline-download-status")] public string DownloadStatusUrl { get; set; }
+        [JsonProperty("set-offline-download-complete")] public string DownloadIsCompletedUrl { get; set; }
+        [JsonProperty("process-offline-set-context")] public string OfflineCountyTypeUrl { get; set; }
+        [JsonProperty("get-offline-request-search-details")] public string SearchDetailsUrl { get; set; }
+        [JsonProperty("register-account")] public string RegisterAccountUrl { get; set; }
+        public string GetUri()
+        {
+            var collection = "remote,debug".Split(',');
+            if (string.IsNullOrWhiteSpace(Url)) return Url;
+            if (!collection.Contains(Url)) return Url;
+            if (Url.Equals(collection[0])) return RemoteUrl;
+            if (Url.Equals(collection[1])) return DebugUrl;
+            return Url;
+        }
     }
 
     public class InvoiceUriModel

@@ -1,3 +1,4 @@
+using LegalLead.PublicData.Search.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -21,10 +22,11 @@ namespace LegalLead.PublicData.Search
         {
             public LastUserSearchHandler()
             {
+                const string src = SettingConstants.Categories.Search;
                 DateTime? fallbackDt = null;
-                _websiteName = SettingsWriter.GetSettingOrDefault("search", "Last County:", string.Empty);
-                _startingDate = SettingsWriter.GetSettingOrDefault("search", "Start Date:", fallbackDt);
-                _endingDate = SettingsWriter.GetSettingOrDefault("search", "End Date:", fallbackDt);
+                _websiteName = SettingsWriter.GetSettingOrDefault(src, SettingConstants.SearchFieldNames.LastCounty, string.Empty);
+                _startingDate = SettingsWriter.GetSettingOrDefault(src, SettingConstants.SearchFieldNames.StartDate, fallbackDt);
+                _endingDate = SettingsWriter.GetSettingOrDefault(src, SettingConstants.SearchFieldNames.EndDate, fallbackDt);
             }
 
             private readonly string _websiteName;

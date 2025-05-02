@@ -114,7 +114,11 @@ namespace LegalLead.PublicData.Search
             var indx = siteData.Id == 30 ? 1 : 0;
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dweb, siteData, searchItem, indx);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(dweb, siteData, searchItem, indx);
+                });
+
             }).ConfigureAwait(true);
         }
 
@@ -131,7 +135,11 @@ namespace LegalLead.PublicData.Search
             var dweb = new BexarUiInteractive(wb);
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dweb, siteData, searchItem);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(dweb, siteData, searchItem);
+                });
+
             }).ConfigureAwait(true);
         }
 
@@ -153,7 +161,10 @@ namespace LegalLead.PublicData.Search
                 CurrentRequest);
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dbweb, siteData, searchItem);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(dbweb, siteData, searchItem);
+                });
             }).ConfigureAwait(true);
         }
 
@@ -167,7 +178,10 @@ namespace LegalLead.PublicData.Search
             var dweb = search.GetUiInteractive();
             _ = Task.Run(async () =>
             {
-                await ProcessAsync(dweb, siteData, searchItem);
+                await Invoke(async () =>
+                {
+                    await ProcessAsync(dweb, siteData, searchItem);
+                });
             }).ConfigureAwait(true);
         }
 
@@ -211,7 +225,7 @@ namespace LegalLead.PublicData.Search
                 {
                     await ProcessAsync(webmgr, siteData, searchItem, cbindx);
                 });
-                
+
             }).ConfigureAwait(true);
         }
 
@@ -261,13 +275,17 @@ namespace LegalLead.PublicData.Search
             {
                 if (isAdmin)
                 {
-                    var displayMode = SettingsWriter.GetSettingOrDefault("admin", "Open Headless:", true);
+                    var displayMode = SettingsWriter.GetSettingOrDefault("admin", SettingConstants.AdminFieldNames.AllowBrowserDisplay, true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
+                }
+                if (siteData.Id == (int)SourceType.TarrantCounty) {
+                    webmgr.DriverReadHeadless = false;
                 }
                 webmgr.TrackingIndex = trackingItem.Id;
                 webmgr.ReportProgress = TryShowProgress;
                 webmgr.ReportProgessComplete = TryHideProgress;
                 var interactive = GetDbInteractive(webmgr, siteData.Id);
+                interactive.TrackingIndex = trackingItem.Id;
                 using var tokenSource = new CancellationTokenSource();
                 var token = tokenSource.Token;
 
@@ -278,10 +296,8 @@ namespace LegalLead.PublicData.Search
                 }, token).ConfigureAwait(true);
 
                 var nonactors = new List<int> {
-                    (int)SourceType.CollinCounty,
                     (int)SourceType.DallasCounty,
                     (int)SourceType.TravisCounty,
-                    (int)SourceType.TarrantCounty,
                     (int)SourceType.BexarCounty,
                     (int)SourceType.HarrisCivil,
                     (int)SourceType.HidalgoCounty,
@@ -360,6 +376,11 @@ namespace LegalLead.PublicData.Search
             }
             catch (Exception ex)
             {
+                if (IsOfflineProcess(ex, tracking.CountyId))
+                {
+                    SetStatus(StatusType.Ready);
+                    return;
+                }
                 SetStatus(StatusType.Error);
                 Console.WriteLine(CommonKeyIndexes.UnexpectedErrorOccurred);
                 Console.WriteLine(ex.Message);
@@ -373,6 +394,19 @@ namespace LegalLead.PublicData.Search
                 ClearProgressDate();
                 TryHideProgress();
             }
+        }
+
+        private static bool IsOfflineProcess(Exception ex, int countyId = 0)
+        {
+            var offlineIndexes = new List<int> {
+                    (int)SourceType.DallasCounty,
+                };
+            if (ex is not KeyNotFoundException) return false;
+            if (!offlineIndexes.Contains(countyId)) return false;
+            return SettingsWriter.GetSettingOrDefault(
+                "search",
+                SettingConstants.SearchFieldNames.AllowOfflineProcessing,
+                true);
         }
 
         private static string GetShortName(WebFetchResult web)

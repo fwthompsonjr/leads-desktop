@@ -33,7 +33,7 @@ namespace LegalLead.PublicData.Search
         #endregion
 
         #region Custom Properties
-
+        protected List<ToolStripItem> RestartItems = new List<ToolStripItem>();
         protected WebFetchResult CaseData { get; set; }
         private FindDbRequest CurrentRequest { get; set; } = null;
 
@@ -56,10 +56,34 @@ namespace LegalLead.PublicData.Search
             SearchProcessComplete += MainForm_PostSearchDetail;
             menuLogView.Click += MenuLogView_Click;
             menuOpenFile.Click += MenuOpenFile_Click;
+            menuOffline.Click += MenuRequestsView_Click;
+            menuOffline.Visible = true;
             menuOpenFile.Enabled = false;
+            var splitButtonSeparator = new ToolStripSeparator
+            {
+                Padding = new Padding(2)
+            };
+            var splitButtonSeparator1 = new ToolStripSeparator
+            {
+                Padding = new Padding(2)
+            };
+            CustomSplitButton splitButton = new()
+            {
+                Text = "Restart",
+                Visible = true,
+                AutoSize = true,
+                Padding = new Padding(2)
+            };
+            splitButton.ButtonClick += MenuRestart_Click;
+            statusStrip1.Items.Insert(3, splitButtonSeparator);
+            statusStrip1.Items.Insert(4, splitButton);
+            statusStrip1.Items.Insert(5, splitButtonSeparator1);
+            RestartItems.Add(splitButton);
+            RestartItems.Add(splitButtonSeparator);
+            RestartItems.Add(splitButtonSeparator1);
             BindComboBoxes();
             SetDentonStatusLabelFromSetting();
-            SetStatus(StatusType.Ready); 
+            SetStatus(StatusType.Ready);
             _ = LoadFileNamesAsync().ContinueWith(_ =>
             {
                 // Ensure this runs on the UI thread
@@ -115,6 +139,11 @@ namespace LegalLead.PublicData.Search
                     UsageReader.WriteUserRecord();
                     ApplySavedSettings();
                     CboWebsite_SelectedValueChanged(null, null);
+                    var isAdmin = IsAccountAdmin();
+                    if (!isAdmin) return;
+                    mnuAdmin.Visible = isAdmin;
+                    mnuViewUsers.Click += MnuViewUsers_Click;
+                    mnuRegisterAccount.Click += MnuRegisterAccount_Click;
                     break;
                 default:
                     Close();
@@ -155,9 +184,40 @@ namespace LegalLead.PublicData.Search
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            // method is intentionally left blank
+            // intentionally left blank
         }
 
+        private void MnuViewUsers_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new ManageUsersRequestedEvent() { GetMain = this };
+            handler.Toggle(itm.Checked);
+            if (itm.Checked) return;
+            for (int i = 0; i < 2; i++)
+            {
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
+            }
+        }
+
+        private void MnuRegisterAccount_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new RegisterAccountAdminRequestedEvent() { GetMain = this };
+            handler.Toggle(itm.Checked);
+            if (itm.Checked) return;
+            for (int i = 0; i < 2; i++)
+            {
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
+            }
+        }
         private void ExportDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (CaseData == null)
@@ -294,6 +354,7 @@ namespace LegalLead.PublicData.Search
                 toolStripStatus.ForeColor = v.Color;
                 var enabled = status != StatusType.Running;
                 SetControlEnabledState(enabled);
+                RestartItems.ForEach(x => { x.Visible = status == StatusType.Running; });
                 Refresh();
             }
             catch (Exception)
@@ -487,6 +548,23 @@ namespace LegalLead.PublicData.Search
                 ctrl.BackColor = originalBackColor;
                 ctrl.ForeColor = originalForeColor;
             });
+        }
+
+        private void MenuRestart_Click(object sender, EventArgs e)
+        {
+            string applicationPath = Application.ExecutablePath;
+            Process.Start(applicationPath);
+            KillProcess("geckodriver");
+            Application.Exit();
+        }
+        private class CustomSplitButton : ToolStripSplitButton
+        {
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+                // Hide the drop-down arrow
+                e.Graphics.FillRectangle(new SolidBrush(this.BackColor), this.Width - 15, 0, 15, this.Height);
+            }
         }
     }
 }

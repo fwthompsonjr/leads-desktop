@@ -383,7 +383,7 @@ namespace LegalLead.PublicData.Search
             fs.ShowDialog();
         }
 
-        private void ComboBox_DataSourceChanged(object sender, EventArgs e)
+        internal void ComboBox_DataSourceChanged(object sender, EventArgs e)
         {
             // when data source is changed?
             // remove all items from the tab strip
@@ -504,7 +504,22 @@ namespace LegalLead.PublicData.Search
             if (itm.Checked) return;
             for (int i = 0; i < 2; i++)
             {
-                CboWebsite_SelectedValueChanged(this, EventArgs.Empty); 
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
+            }
+        }
+        private void MenuRequestsView_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem itm)
+            {
+                return;
+            }
+            itm.Checked = !itm.Checked;
+            var handler = new ViewOfflineRequestsEvent { GetMain = this };
+            handler.Toggle(itm.Checked);
+            if (itm.Checked) return;
+            for (int i = 0; i < 2; i++)
+            {
+                CboWebsite_SelectedValueChanged(this, EventArgs.Empty);
             }
         }
         private void TsWebDriver_Initialize()
@@ -569,14 +584,22 @@ namespace LegalLead.PublicData.Search
             var contextIndex = ConfigurationManager.AppSettings[subContextId];
             var startDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormStartDate];
             var endDate = ConfigurationManager.AppSettings[CommonKeyIndexes.FormEndDate];
-            if (!string.IsNullOrEmpty(configIndex))
+            if (!string.IsNullOrEmpty(configIndex) &&
+                int.TryParse(configIndex, out var cfidx) &&
+                cfidx < cboWebsite.Items.Count &&
+                cfidx >= 0)
             {
-                var cfidx = Convert.ToInt32(
-                    configIndex,
-                    CultureInfo.CurrentCulture);
-                if (cfidx < cboWebsite.Items.Count && cfidx >= 0)
+                cboWebsite.SelectedIndex = cfidx;
+                CboWebsite_SelectedValueChanged(null, null);
+            }
+            if (!string.IsNullOrEmpty(configIndex) &&
+                configIndex is string websiteName &&
+                cboWebsite.DataSource is List<WebNavigationParameter> webSource)
+            {
+                var id = webSource.FindIndex(x => x.Name.Contains(websiteName));
+                if (id != -1)
                 {
-                    cboWebsite.SelectedIndex = cfidx;
+                    cboWebsite.SelectedIndex = id;
                     CboWebsite_SelectedValueChanged(null, null);
                 }
             }
@@ -602,7 +625,10 @@ namespace LegalLead.PublicData.Search
         {
             const string category = "admin";
             var settings = new List<UserSettingChangeViewModel>();
-            var map = new[] { "Open Headless:", "Database Search:", "Database Minimum Persistence:" };
+            var map = new[] { 
+                SettingConstants.AdminFieldNames.AllowBrowserDisplay,
+                SettingConstants.AdminFieldNames.AllowDbSearching,
+                SettingConstants.AdminFieldNames.DbMinimumPersistenceDays };
             for (var i = 0; i < map.Length; i++)
             {
                 var keyName = $"debug-admin-setting-{i}";
@@ -798,9 +824,18 @@ namespace LegalLead.PublicData.Search
             const string settingName = "search";
             var settings = new List<UserSettingChangeViewModel>()
             {
-                new(){ Category = settingName, Name = "Last County:", Value = siteName },
-                new(){ Category = settingName, Name = "Start Date:", Value = startDate },
-                new(){ Category = settingName, Name = "End Date:", Value = endDate },
+                new(){ 
+                    Category = settingName, 
+                    Name = SettingConstants.SearchFieldNames.LastCounty,
+                    Value = siteName },
+                new(){ 
+                    Category = settingName, 
+                    Name = SettingConstants.SearchFieldNames.StartDate,
+                    Value = startDate },
+                new(){ 
+                    Category = settingName, 
+                    Name = SettingConstants.SearchFieldNames.EndDate,
+                    Value = endDate },
             };
             settings.ForEach(x => { SettingsWriter.Change(x); });
         }
@@ -814,7 +849,6 @@ namespace LegalLead.PublicData.Search
             = SessionPersistenceContainer
             .GetContainer
             .GetInstance<SessionApiFilePersistence>();
-        // private static readonly string customMessages = 
 
     }
 }

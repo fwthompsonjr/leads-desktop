@@ -31,11 +31,12 @@ namespace LegalLead.PublicData.Search.Classes
             AddFilesFromDirectory(commonPath, files, SearchOption.TopDirectoryOnly);
             AddFilesFromDirectory(localPath, files, SearchOption.AllDirectories, true);
             files.RemoveAll(IsNotExcelPackage);
-            files.Sort((a, b) => {
+            files.Sort((a, b) =>
+            {
                 var aa = a.Name.CompareTo(b.Name);
                 if (aa != 0) return aa;
                 return b.CreationTime.CompareTo(a.CreationTime);
-                });
+            });
             return files;
         }
         private static bool IsNotExcelPackage(FileInfo fileInfo)

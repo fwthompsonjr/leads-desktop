@@ -1,3 +1,4 @@
+using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using System;
@@ -18,6 +19,15 @@ namespace LegalLead.PublicData.Search.Helpers
         }
         private readonly IHttpService httpService;
 
+        public AdminDbResponse Admin(AdminDbRequest findDb)
+        {
+            var uri = GetAddress("admin");
+            var token = GetToken();
+            if (string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(token)) return null;
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<AdminDbRequest, AdminDbResponse>(client, uri, findDb);
+            return response;
+        }
         public FindDbResponse Begin(FindDbRequest findDb)
         {
             var uri = GetAddress("begin");
@@ -216,6 +226,94 @@ namespace LegalLead.PublicData.Search.Helpers
              ?? context;
             return response;
         }
+
+        public ProcessOfflineResponse BeginSearch(ProcessOfflineRequest request)
+        {
+            var uri = GetAddress("process-offline");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<ProcessOfflineRequest, ProcessOfflineResponse>(client, uri, request);
+            return response.ReplacePipe() ?? new();
+        }
+
+        public void UpdateSearchContext(ProcessOfflineRequest request, string context)
+        {
+            var uri = GetAddress("process-offline-set-context");
+            if (string.IsNullOrEmpty(uri)) return;
+            var token = GetToken();
+            request.Workload = context;
+            using var client = GetClient(token);
+            httpService.PostAsJson<ProcessOfflineRequest, object>(client, uri, request);
+        }
+
+        public ProcessOfflineResponse GetSearchStatus(ProcessOfflineResponse request)
+        {
+            var uri = GetAddress("process-offline-status");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<ProcessOfflineResponse, ProcessOfflineResponse>(client, uri, request);
+            return response.ReplacePipe() ?? new();
+        }
+
+        public string GetDownloadStatus(ProcessOfflineResponse request)
+        {
+            var uri = GetAddress("get-offline-download-status");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<ProcessOfflineResponse, object>(client, uri, request);
+            return response.ToJsonString();
+        }
+
+        public string FlagDownloadCompleted(object request)
+        {
+            var uri = GetAddress("set-offline-download-complete");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, object>(client, uri, request);
+            return response.ToJsonString();
+        }
+
+        public List<OfflineStatusResponse> GetOfflineRequests(OfflineStatusRequest request)
+        {
+            var uri = GetAddress("get-offline-requests");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<OfflineStatusRequest, List<OfflineStatusResponse>>(client, uri, request);
+            if (response == null || response.Count == 0) return [];
+            response.ForEach(r =>
+            {
+                r.OfflineRequestId = r.OfflineId;
+                r.ReplacePipe();
+            });
+            return response;
+        }
+
+        public List<OfflineSearchTypeResponse> GetRequestSearchDetails(string leadId)
+        {
+
+            var uri = GetAddress("get-offline-request-search-details");
+            var token = GetToken();
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, List<OfflineSearchTypeResponse>>(client, uri, new { LeadId = leadId });
+            if (response == null || response.Count == 0) return [];
+            return response;
+        }
+
+        public LeadUserModel RegisterAccount(RegisterAccountModel model)
+        {
+            var uri = GetAddress("register-account");
+            var token = GetToken();
+            var payload = new
+            {
+                userName = model.UserName,
+                password = model.Password,
+                email = model.Email,
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, LeadUserModel>(client, uri, payload);
+            return response ?? new();
+        }
+
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
             var list = new List<List<T>>();
@@ -272,9 +370,14 @@ namespace LegalLead.PublicData.Search.Helpers
         private static string GetAddress(string name)
         {
             var provider = AddressBuilder.DbModel;
-            var uri = provider.Url;
+#if DEBUG
+            var uri = provider.GetUri();
+#else
+            var uri = provider.RemoteUrl;
+#endif
             return name switch
             {
+                "admin" => $"{uri}{provider.AdminUrl}",
                 "begin" => $"{uri}{provider.BeginUrl}",
                 "complete" => $"{uri}{provider.CompleteUrl}",
                 "query" => $"{uri}{provider.QueryUrl}",
@@ -288,6 +391,14 @@ namespace LegalLead.PublicData.Search.Helpers
                 "usage-set-limit" => $"{uri}{provider.UsageSetLimitUrl}",
                 "content-get" => $"{uri}{provider.ContentGetUrl}",
                 "content-save" => $"{uri}{provider.ContentSaveUrl}",
+                "process-offline" => $"{uri}{provider.BeginSearchUrl}",
+                "process-offline-status" => $"{uri}{provider.SearchStatusUrl}",
+                "get-offline-requests" => $"{uri}{provider.OfflineStatusUrl}",
+                "process-offline-set-context" => $"{uri}{provider.OfflineCountyTypeUrl}",
+                "get-offline-download-status" => $"{uri}{provider.DownloadStatusUrl}",
+                "set-offline-download-complete" => $"{uri}{provider.DownloadIsCompletedUrl}",
+                "get-offline-request-search-details" => $"{uri}{provider.SearchDetailsUrl}",
+                "register-account" => $"{uri}{provider.RegisterAccountUrl}",
                 _ => string.Empty
             };
         }
