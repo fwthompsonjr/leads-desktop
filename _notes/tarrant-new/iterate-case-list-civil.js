@@ -6,9 +6,9 @@ DateFiled
 Court
 CaseType
 */
-let criminal_case_reader = {
+let civil_case_reader = {
 	get_rows: function () {
-		let headers = Array.prototype.slice.call(document.getElementsByTagName("th"), 0);
+		let headers = Array.prototype.slice.call(document.getElementsByTagName('th'), 0);
 		let firstheader = headers.find(h => h.getAttribute('class') == 'ssSearchResultHeader' && h.innerText.trim() == 'Case Number');
 		if (null == firstheader) return null;
 		let headingrow = firstheader.parentElement;
@@ -35,36 +35,40 @@ let criminal_case_reader = {
 			let lastitem = items[items.length - 1];
 			pg = pg.substring(0, pg.length - lastitem.length);
 		}
-		lnk = "".concat(pg, lnk);
+		lnk = ''.concat(pg, lnk);
 		return lnk;
 	},
 	get_data: function (rw) {
-		let cells = Array.prototype.slice.call(rw.getElementsByTagName('td'), 0);
-		let caseNo = String(cells[0].innerText);
-		let caseStyle = String(cells[2].innerText);
-		let dateFiled = String(cells[3].firstChild.innerText)
-		let court = String(cells[3].lastChild.innerText);
-		let caseType = String(cells[4].firstChild.innerText);
-		let uri = String(criminal_case_reader.get_uri(cells[0]));
-		return {
-			"uri": uri,
-			"caseNumber": caseNo,
-			"caseStyle": caseStyle,
-			"caseType": caseType,
-			"court": court,
-			"dateFiled": dateFiled
-		}
+        try {
+            let cells = Array.prototype.slice.call(rw.getElementsByTagName('td'), 0);
+            let caseNo = String(cells[0].innerText);
+            let caseStyle = String(cells[2].innerText);
+            let dateFiled = String(cells[3].firstChild.innerText)
+            let court = String(cells[3].lastChild.innerText);
+            let caseType = String(cells[4].firstChild.innerText);
+            let uri = String(justice_case_reader.get_uri(cells[0]));
+            return {
+                'uri': uri,
+                'caseNumber': caseNo,
+                'caseStyle': caseStyle,
+                'caseType': caseType,
+                'court': court,
+                'dateFiled': dateFiled
+            }
+        } catch {
+			return null;
+        }
 	},
 	get_cases: function () {
 		let cases = [];
-		let rws = criminal_case_reader.get_rows();
+		let rws = justice_case_reader.get_rows();
 		if (null == rws) return cases;
 		rws.forEach(rw => {
-			let dt = criminal_case_reader.get_data(rw);
-			cases.push(dt);
+			let dt = justice_case_reader.get_data(rw);
+			if (null != dt) cases.push(dt);
 		})
 		return cases;
 	}
 }
-let data = criminal_case_reader.get_cases();
-console.log(JSON.stringify(data));
+let data = justice_case_reader.get_cases();
+return JSON.stringify(data);
