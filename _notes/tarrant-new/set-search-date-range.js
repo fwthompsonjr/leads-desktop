@@ -10,7 +10,7 @@ const click_event = new Event('click', { bubbles: true });
 const date_filed = 'Date Filed'
 let cbo = document.getElementById('SearchBy');
 let opts = Array.prototype.slice.call(cbo.getElementsByTagName('option'), 0);
-let radio_buttons = Array.prototype.slice.call(cbo.getElementsByTagName('input'), 0);
+let radio_buttons = Array.prototype.slice.call(document.getElementsByTagName('input'), 0);
 radio_buttons = radio_buttons.filter(x => x.getAttribute('name') == 'CaseStatusType')
 let open_option = radio_buttons.find(x => x.id == 'OpenOption');
 let dateIndex = opts.findIndex(x => x.innerText == date_filed);
@@ -24,3 +24,5 @@ tboxes[1].value = date1
 for (let tbx in tboxes) {
     tbx.dispatchEvent(change_event);
 }
+let bttn = document.getElementById('SearchSubmit');
+bttn.click();
