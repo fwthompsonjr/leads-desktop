@@ -1,5 +1,5 @@
-let date0 = '04/28/2025';
-let date1 = '04/29/2025';
+let date0 = '{0}';
+let date1 = '{1}';
 let tboxes = [
     document.getElementById('DateFiledOnAfter'),
     document.getElementById('DateFiledOnBefore')
@@ -21,8 +21,6 @@ cbo.dispatchEvent(change_event);
 
 tboxes[0].value = date0
 tboxes[1].value = date1
-for (let tbx in tboxes) {
-    tbx.dispatchEvent(change_event);
-}
+
 let bttn = document.getElementById('SearchSubmit');
 bttn.click();

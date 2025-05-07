@@ -2,8 +2,19 @@ let dvs = Array.prototype.slice.call(document.getElementsByTagName('div'), 0);
 dvs = dvs.filter(d => d.classList.contains('ssCaseDetailSectionTitle'));
 let party_info = dvs.find(x => x.innerText.trim() == 'Party Information')
 let party_table = party_info.closest('table');
-var table_rows = Array.prototype.slice.call(party_table.getElementsByTagName('tr'), 0);
-table_rows = table_rows.filter(x => x.innerHTML.indexOf('class="ssTableHeader"') > 0 && x.innerText.indexOf('Lead Attorneys') == -1);
+let table_rows = Array.prototype.slice.call(party_table.getElementsByTagName('tr'), 0);
+table_rows = table_rows.filter(x => {
+    let thdrs = Array.prototype.slice.call(x.getElementsByTagName('th'), 0)
+        .filter(h => h.classList.contains('ssTableHeader'));
+    if (thdrs.length == 0) return false;
+    return x.innerText.indexOf('Lead Attorneys') == -1;
+});
+function get_case_number() {
+    const caseNoPrefix = 'Case No.';
+    let dvs = Array.prototype.slice.call(document.getElementsByTagName('div'), 0);
+    dvs = dvs.filter(d => d.classList.contains('ssCaseDetailCaseNbr'));
+    return dvs[0].innerText.replace(caseNoPrefix, '').trim();
+}
 
 function get_case_style() {
     tbls = Array.prototype.slice.call(document.getElementsByTagName('table'), 0)
@@ -38,19 +49,30 @@ function get_address(tr) {
         while (html.indexOf(nbs) >= 0) { html = html.replace(nbs, ' ').trim(); }
         while (html.indexOf(br) >= 0) { html = html.replace(br, ppe).trim(); }
         while (html.indexOf(dbppe) >= 0) { html = html.replace(dbppe, ppe).trim(); }
+        let arr = [];
+        let items = html.split(ppe);
+        for (let i = 0; i < items.length; i++) {
+            let current = String(items[i].trim());
+            if (current.length > 0) { arr.push(current); }
+        }
+        html = arr.join(ppe);
         return html;
     } catch {
         return '';
     }
-
 }
+let caseNumber = get_case_number();
 let caseStyle = get_case_style();
 let people = [];
-for (let tr in table_rows) {
+for (let a = 0; a < table_rows.length; a++) {
+    let tr = table_rows[a];
     let person = {
-        "type": tr.cells[0].innerText.trim(),
-        "name": tr.cells[1].innerText.trim(),
-        "address": get_address(tr)
+        'index': a,
+        'caseNumber': caseNumber,
+        'caseStyle': caseStyle,
+        'type': tr.cells[0].innerText.trim(),
+        'name': tr.cells[1].innerText.trim(),
+        'address': get_address(tr)
     }
     people.push(person);
 }
