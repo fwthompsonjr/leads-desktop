@@ -31,7 +31,7 @@
 				"    human_check_found = txt.indexOf('confirm you are human') > 0;",
 				"}",
 				"var rsp = {",
-				"    hasCaptcha = human_check_found",
+				"    'hasCaptcha': human_check_found",
 				"}",
 				"return JSON.stringify(rsp);"
 			]
@@ -87,7 +87,7 @@
 				"            let dateFiled = String(cells[3].firstChild.innerText)",
 				"            let court = String(cells[3].lastChild.innerText);",
 				"            let caseType = String(cells[4].firstChild.innerText);",
-				"            let uri = String(justice_case_reader.get_uri(cells[0]));",
+				"            let uri = String(civil_case_reader.get_uri(cells[0]));",
 				"            return {",
 				"                'uri': uri,",
 				"                'caseNumber': caseNo,",
@@ -102,16 +102,16 @@
 				"    },",
 				"    get_cases: function () {",
 				"        let cases = [];",
-				"        let rws = justice_case_reader.get_rows();",
+				"        let rws = civil_case_reader.get_rows();",
 				"        if (null == rws) return cases;",
 				"        rws.forEach(rw => {",
-				"            let dt = justice_case_reader.get_data(rw);",
+				"            let dt = civil_case_reader.get_data(rw);",
 				"            if (null != dt) cases.push(dt);",
 				"        })",
 				"        return cases;",
 				"    }",
 				"}",
-				"let data = justice_case_reader.get_cases();",
+				"let data = civil_case_reader.get_cases();",
 				"return JSON.stringify(data);"
 			]
 		},

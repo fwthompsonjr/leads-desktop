@@ -34,7 +34,15 @@ namespace LegalLead.PublicData.Search.Helpers
             var requested = scripts.Find(x => x.Name.Equals(key, StringComparison.OrdinalIgnoreCase));
             if (requested == null) return string.Empty;
             var jscontent = string.Join(Environment.NewLine, requested.JsonData);
-            return string.Format(CultureInfo.CurrentCulture, jscontent, args);
+            if (args.Length <= 0) return jscontent;
+            var builder = new StringBuilder(jscontent);
+            for (var i = 0; i < args.Length; i++)
+            {
+                var find = string.Concat("{", $"{i}", "}");
+                var replace = Convert.ToString(args[i], CultureInfo.CurrentCulture);
+                builder.Replace(find, replace);
+            }
+            return builder.ToString();
         }
         private static string ConfigurationJs => _configurationJs ??= GetConfigurationJs();
         private static string _configurationJs;

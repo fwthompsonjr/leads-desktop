@@ -69,6 +69,7 @@ namespace LegalLead.PublicData.Search
                     case (int)SourceType.FortBendCounty:
                     case (int)SourceType.WilliamsonCounty:
                     case (int)SourceType.GraysonCounty:
+                    case (int)SourceType.TarrantCounty:
                         CommonButtonExecution(siteData, searchItem);
                         break;
                     default:
@@ -104,6 +105,7 @@ namespace LegalLead.PublicData.Search
             var wb = new WebNavigationParameter { Keys = keys };
             IWebInteractive dweb = siteData.Id switch
             {
+                10 => new TarrantRvUiInteractive(wb),
                 30 => new HccUiInteractive(wb),
                 130 => new GraysonUiInteractive(wb),
                 120 => new WilliamsonUiInteractive(wb),

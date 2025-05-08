@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
@@ -61,7 +62,7 @@ namespace LegalLead.PublicData.Search.Util
         protected bool SetContext(IWebDriver driver, TarrantReadMode readMode, int locationId)
         {
             const string scriptName = "set-search-context";
-            var searchType = BoProvider.GetSearchName(readMode);
+            var searchType = $"{(int)readMode}";
             string courtLocation = BoProvider.GetLocationName(locationId);
             if (driver is not IJavaScriptExecutor exec) return false;
             var jscript = BoProvider.GetJs(scriptName, searchType, courtLocation);
@@ -73,7 +74,20 @@ namespace LegalLead.PublicData.Search.Util
             const string scriptName = "set-search-date-parameters";
             if (driver is not IJavaScriptExecutor exec) return false;
             var jscript = BoProvider.GetJs(scriptName, $"{startDate:d}", $"{endingDate:d}");
-            return ExecuteScriptWithWait(driver, exec, jscript);
+            exec.ExecuteScript(jscript);
+            var finder = By.XPath("//td[@class='ssHeaderTitleBanner']");
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(500),
+            };
+            wait.Until(d =>
+            {
+                var element = d.TryFindElement(finder);
+                if (element == null || string.IsNullOrEmpty(element.Text)) return false;
+                return element.Text.Equals("Case Records Search Results", StringComparison.OrdinalIgnoreCase);
+            });
+            if (IsCaptchaRequested(driver)) { return PromptUser(); }
+            return true;
         }
 
         protected void ReadPersonDetails(IWebDriver driver, List<CaseItemDto> cases)
@@ -120,7 +134,10 @@ namespace LegalLead.PublicData.Search.Util
                     PollingInterval = TimeSpan.FromMilliseconds(500),
                 };
                 wait.Until(d => !d.Url.Equals(currentUri, StringComparison.OrdinalIgnoreCase));
-                if (IsCaptchaRequested(driver)) { return PromptUser(); }
+                driver.WaitForDocumentReady(exec, TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(500));
+                if (IsCaptchaRequested(driver)) { 
+                    return PromptUser(); 
+                }
                 return true;
             }
             catch

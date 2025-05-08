@@ -96,7 +96,7 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     if (!IsDateRangeComplete)
                     {
-                        isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, common, a);
+                        isCaptchaNeeded = IterateCommonActions(isCaptchaNeeded, driver, parameters, a);
                         var unmapped = Items.FindAll(x => string.IsNullOrEmpty(x.CourtDate));
                         unmapped.ForEach(m => { m.CourtDate = d.ToString("d", CultureInfo.CurrentCulture); });
                     }
@@ -125,9 +125,8 @@ namespace LegalLead.PublicData.Search.Util
             });
         }
 
-        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> common, ICountySearchAction a)
+        private bool IterateCommonActions(bool isCaptchaNeeded, IWebDriver driver, DallasSearchProcess parameters, ICountySearchAction a)
         {
-            var count = common.Count - 1;
             Populate(a, driver, parameters);
             if (a is TarrantFetchPersonDetail addressing)
             {
@@ -136,7 +135,6 @@ namespace LegalLead.PublicData.Search.Util
             }
             var response = a.Execute();
             if (a is TarrantFetchCaseList _ && response is string cases) Items.AddRange(GetData(cases));
-            if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
             return isCaptchaNeeded;
         }
 
