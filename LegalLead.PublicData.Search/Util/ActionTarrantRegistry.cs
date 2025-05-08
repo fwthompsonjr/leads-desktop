@@ -15,11 +15,11 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountyCodeReader>().Add<CountyCodeReaderService>().Singleton();
             For<ITarrantConfigurationBoProvider>().Add<TarrantConfigurationBoProvider>().Singleton();
 
-            For<ICountySearchAction>().Add<HidalgoBeginNavigation>().Named("begin");
-            For<ICountySearchAction>().Add<HidalgoNavigateCourtPage>().Named("begin-search");
-            For<ICountySearchAction>().Add<HidalgoSetParameters>().Named("set-parameters");
-            For<ICountySearchAction>().Add<HidalgoNoCountVerification>().Named("check-no-count");
-            For<ICountySearchAction>().Add<HidalgoFetchCaseList>().Named("get-case-list");
+            For<ICountySearchAction>().Add<TarrantBeginNavigation>().Named("begin");
+            For<ICountySearchAction>().Add<TarrantSetSearchContext>().Named("begin-search");
+            For<ICountySearchAction>().Add<TarrantSetSearchDateParameters>().Named("set-parameters");
+            For<ICountySearchAction>().Add<TarrantFetchCaseList>().Named("get-case-list");
+            For<ICountySearchAction>().Add<TarrantFetchPersonDetail>().Named("get-person-list");
         }
     }
 }

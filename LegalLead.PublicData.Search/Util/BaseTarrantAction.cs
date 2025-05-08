@@ -11,12 +11,29 @@ using Thompson.RecordSearch.Utility.Dto;
 
 namespace LegalLead.PublicData.Search.Util
 {
+    using Rx = Properties.Resources;
     public class BaseTarrantAction
     {
+        #region Fields
+
         protected readonly ITarrantConfigurationBoProvider BoProvider
             = ActionTarrantContainer.GetContainer.GetInstance<ITarrantConfigurationBoProvider>();
-        protected string HumanScriptJs => humanScript ??= GetHumanScriptJs();
+        private const string HumanScriptName = "is-human-page";
+        protected static string ERR_DRIVER_UNAVAILABLE => Rx.ERR_DRIVER_UNAVAILABLE;
+        protected static string ERR_START_DATE_MISSING => Rx.ERR_START_DATE_MISSING;
+        protected static string ERR_END_DATE_MISSING => Rx.ERR_END_DATE_MISSING;
+        private static string humanScript;
+
+        #endregion
+        #region Properties
+
         public Func<bool> PromptUser { get; set; }
+        protected string HumanScriptJs => humanScript ??= GetHumanScriptJs();
+
+        #endregion
+
+        #region Protected Methods
+
 
         protected bool IsCaptchaRequested(IWebDriver driver)
         {
@@ -26,6 +43,20 @@ namespace LegalLead.PublicData.Search.Util
             var model = JsonConvert.DeserializeObject<HumanResponseModel>(result);
             if (model is null) return false;
             return model.HasCaptcha;
+        }
+        protected bool BeginNavigation(IWebDriver driver)
+        {
+            var homePage = BoProvider.BasePage;
+            try
+            {
+                NavigatePage(driver, homePage);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
         protected bool SetContext(IWebDriver driver, TarrantReadMode readMode, int locationId)
         {
@@ -56,47 +87,11 @@ namespace LegalLead.PublicData.Search.Util
             });
         }
 
-        private static void ReadPersonDetails(IWebDriver driver, CaseItemDto c, IJavaScriptExecutor exec, string jscript)
-        {
-            try
-            {
-
-                var uri = c.Href;
-                if (!Uri.TryCreate(uri, UriKind.Absolute, out var url)) return;
-
-                var currentUri = driver.Url;
-                driver.Navigate().GoToUrl(url);
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5))
-                {
-                    PollingInterval = TimeSpan.FromMilliseconds(500),
-                };
-                wait.Until(d => !d.Url.Equals(currentUri, StringComparison.OrdinalIgnoreCase));
-                var jsresponse = exec.ExecuteScript(jscript);
-                AppendPersonDetail(c, jsresponse);
-            }
-            catch 
-            {
-                // silently continue on errors in person read
-            }
-        }
-
-        private static void AppendPersonDetail(CaseItemDto c, object jsresponse)
-        {
-            if (jsresponse is not string json) return;
-            var people = JsonConvert.DeserializeObject<List<TarrantPersonDto>>(json);
-            if (people == null || people.Count == 0) return;
-            var person = people.Find(p =>
-            {
-                if (string.IsNullOrEmpty(p.Name)) return false;
-                return p.Type.Equals("Defendant", StringComparison.OrdinalIgnoreCase);// Defendant 
-            }) ?? people[0];
-            c.Address = person.Address;
-        }
-
         protected List<CaseItemDto> ReadCaseItems(IWebDriver driver, TarrantReadMode readMode)
         {
             var list = new List<CaseItemDto>();
-            string scriptName = readMode switch {
+            string scriptName = readMode switch
+            {
                 TarrantReadMode.Civil => "civil-case-reader",
                 TarrantReadMode.Criminal => "criminal-case-reader",
                 _ => "civil-case-reader"
@@ -109,6 +104,9 @@ namespace LegalLead.PublicData.Search.Util
             data.ForEach(d => AppendCaseDetail(d, list));
             return list;
         }
+
+        #endregion
+        #region Private Methods
 
         private bool ExecuteScriptWithWait(IWebDriver driver, IJavaScriptExecutor exec, string jscript)
         {
@@ -131,6 +129,57 @@ namespace LegalLead.PublicData.Search.Util
             }
         }
 
+        private string GetHumanScriptJs()
+        {
+            return BoProvider.GetJs(HumanScriptName);
+        }
+
+        #endregion
+        
+        #region Private Static Methods
+
+        private static void ReadPersonDetails(IWebDriver driver, CaseItemDto c, IJavaScriptExecutor exec, string jscript)
+        {
+            try
+            {
+
+                var uri = c.Href;
+                NavigatePage(driver, uri);
+                var jsresponse = exec.ExecuteScript(jscript);
+                AppendPersonDetail(c, jsresponse);
+            }
+            catch
+            {
+                // silently continue on errors in person read
+            }
+        }
+
+        private static void AppendPersonDetail(CaseItemDto c, object jsresponse)
+        {
+            if (jsresponse is not string json) return;
+            var people = JsonConvert.DeserializeObject<List<TarrantPersonDto>>(json);
+            if (people == null || people.Count == 0) return;
+            var person = people.Find(p =>
+            {
+                if (string.IsNullOrEmpty(p.Name)) return false;
+                return p.Type.Equals("Defendant", StringComparison.OrdinalIgnoreCase);// Defendant 
+            }) ?? people[0];
+            c.Address = person.Address;
+        }
+
+        private static void NavigatePage(IWebDriver driver, string targetUrl)
+        {
+            if (!Uri.TryCreate(targetUrl, UriKind.Absolute, out var url))
+                throw new ArgumentOutOfRangeException(nameof(targetUrl));
+
+            var currentUri = driver.Url;
+            driver.Navigate().GoToUrl(url);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5))
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(500),
+            };
+            wait.Until(d => !d.Url.Equals(currentUri, StringComparison.OrdinalIgnoreCase));
+        }
 
         private static void AppendCaseDetail(TarrantCaseItemDto d, List<CaseItemDto> list)
         {
@@ -146,13 +195,11 @@ namespace LegalLead.PublicData.Search.Util
             dto.SetPartyNameFromCaseStyle();
             list.Add(dto);
         }
-        private string GetHumanScriptJs()
-        {
-            return BoProvider.GetJs(HumanScriptName);
-        }
+        #endregion
 
-        private string humanScript;
-        private const string HumanScriptName = "is-human-page";
+
+        #region Classes
+
         private sealed class HumanResponseModel
         {
             [JsonProperty("hasCaptcha")] public bool HasCaptcha { get; set; }
@@ -177,5 +224,7 @@ namespace LegalLead.PublicData.Search.Util
             [JsonProperty("address")]
             public string Address { get; set; }
         }
+
+        #endregion
     }
 }
