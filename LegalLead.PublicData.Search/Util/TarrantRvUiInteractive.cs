@@ -5,13 +5,16 @@ using Newtonsoft.Json;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
 {
+    using Rx = Properties.Resources;
     internal class TarrantRvUiInteractive : BaseUiInteractive
     {
         public TarrantRvUiInteractive(WebNavigationParameter parameters) : base(parameters)
@@ -21,6 +24,11 @@ namespace LegalLead.PublicData.Search.Util
             collection.Sort((a, b) => a.OrderId.CompareTo(b.OrderId));
             ActionItems.AddRange(collection);
             ActionItems.ForEach(a => a.Interactive = this);
+            // bind prompt behavior
+            ActionItems.ForEach(a =>
+            {
+                if (a is BaseTarrantAction tarrant) tarrant.PromptUser = UserPrompt;
+            });
         }
 
         public override WebFetchResult Fetch(CancellationToken token)
@@ -43,7 +51,7 @@ namespace LegalLead.PublicData.Search.Util
 
         protected override string GetCourtAddress(string courtType, string court)
         {
-            return HidalgoCourtLookupService.GetAddress(courtType, court);
+            return TarrantCourtLookupService.GetAddress(court);
         }
 
         protected virtual void Iterate(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common, List<ICountySearchAction> postcommon)
@@ -121,14 +129,27 @@ namespace LegalLead.PublicData.Search.Util
         {
             var count = common.Count - 1;
             Populate(a, driver, parameters);
-            var response = a.Execute();
-            if (a is HidalgoFetchCaseList _ && response is string cases) Items.AddRange(GetData(cases));
-            if (a is HidalgoNoCountVerification _ && response is bool hasNoCount && hasNoCount)
+            if (a is TarrantFetchPersonDetail addressing)
             {
-                IsDateRangeComplete = true;
+                addressing.Items.Clear();
+                addressing.Items.AddRange(Items);
             }
+            var response = a.Execute();
+            if (a is TarrantFetchCaseList _ && response is string cases) Items.AddRange(GetData(cases));
             if (common.IndexOf(a) != count) Thread.Sleep(750); // add pause to be more human in interaction
             return isCaptchaNeeded;
+        }
+
+        [ExcludeFromCodeCoverage]
+        private bool UserPrompt()
+        {
+            var response = DialogResult.None;
+            while (response != DialogResult.OK)
+            {
+                response = MessageBox.Show(Rx.UI_CAPTCHA_DESCRIPTION, Rx.UI_CAPTCHA_TITLE, MessageBoxButtons.OKCancel);
+                if (response == DialogResult.Cancel) break;
+            }
+            return response == DialogResult.OK;
         }
     }
 }
