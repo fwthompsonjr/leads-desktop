@@ -13,6 +13,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             if (Parameters == null || Driver == null)
                 throw new NullReferenceException(ERR_DRIVER_UNAVAILABLE);
+            Web = Interactive;
             var alldata = new List<CaseItemDto>(Items);
             ReadPersonDetails(Driver, alldata);
             return JsonConvert.SerializeObject(alldata);

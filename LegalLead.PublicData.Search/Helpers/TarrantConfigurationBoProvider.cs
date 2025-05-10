@@ -28,6 +28,15 @@ namespace LegalLead.PublicData.Search.Helpers
             if (locationId < 0 || locationId > locations.Count - 1) return locations[1];
             return locations[locationId];
         }
+        public int GetLocationIndex(string locationName)
+        {
+            int fallbackIndex = 1;
+            if (string.IsNullOrEmpty(locationName)) return fallbackIndex;
+            var locations = ConfigurationBo.Configuration.Locations;
+            var findIndex = locations.FindIndex(x => x.Equals(locationName, StringComparison.OrdinalIgnoreCase));
+            if (findIndex < 0) return fallbackIndex;
+            return findIndex;
+        }
         public string GetJs(string key, params object[] args)
         {
             var scripts = ConfigurationBo.Scripts;

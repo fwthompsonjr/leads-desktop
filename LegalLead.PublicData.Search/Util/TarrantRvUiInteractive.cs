@@ -40,11 +40,12 @@ namespace LegalLead.PublicData.Search.Util
             var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate);
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
+            parameters.UserSelectedCourtType = UserSelectedCourtType;
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
             if (People.Count == 0) return result;
             result.PeopleList = People;
-            result.Result = GenerateExcelFile(countyName, 90);
+            result.Result = GenerateExcelFile(countyName, 10);
             result.CaseList = JsonConvert.SerializeObject(People);
             return result;
         }

@@ -31,6 +31,11 @@ namespace LegalLead.PublicData.Search.Util
             StartDate = FetchKeyedData(parameters.Keys, "StartDate");
             EndingDate = FetchKeyedData(parameters.Keys, "EndDate");
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
+            var userSelectedItem = FetchKeyedItem(parameters.Keys, "UserSelectedCourtType");
+            if (!string.IsNullOrEmpty(userSelectedItem))
+            {
+                UserSelectedCourtType = userSelectedItem;
+            }
         }
         [ExcludeFromCodeCoverage(Justification = "Interacts with system, creating web browser component")]
         public virtual IWebDriver GetDriver(bool headless = false)
@@ -81,7 +86,7 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         protected string CourtType { get; set; }
-
+        protected string UserSelectedCourtType { get; set; } = "All JP Courts";
         protected bool IsDateRangeComplete { get; set; }
 
         protected static string GetExcelDirectoryName => excelDirectoyName ??= ExcelDirectoyName();

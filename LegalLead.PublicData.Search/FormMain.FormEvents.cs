@@ -152,7 +152,7 @@ namespace LegalLead.PublicData.Search
                 labelCboCaseType.Visible = false;
                 labelCourts.Visible = true;
                 cboCourts.Visible = true;
-
+                if (cboCourts.SelectedIndex == 0) cboCourts.SelectedIndex = 1;
                 for (int i = 4; i < 7; i++)
                 {
                     var height = i == 6 ? 40f : 0f;

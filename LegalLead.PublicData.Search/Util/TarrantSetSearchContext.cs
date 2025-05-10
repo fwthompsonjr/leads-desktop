@@ -12,7 +12,11 @@ namespace LegalLead.PublicData.Search.Util
             if (Parameters == null || Driver == null)
                 throw new NullReferenceException(ERR_DRIVER_UNAVAILABLE);
             var context = new SearchContextParameters(Parameters);
-            return SetContext(Driver, context.ReadMode, context.LocationId);
+            var locationName = Parameters.UserSelectedCourtType;
+            var locationIndex = BoProvider.GetLocationIndex(locationName);
+            var actualName = BoProvider.GetLocationName(locationIndex);
+            Console.WriteLine("Searching: {0}", actualName);
+            return SetContext(Driver, context.ReadMode, locationIndex);
         }
 
 
@@ -25,18 +29,6 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     var isCriminal = _source.CourtType.Equals("Criminal");
                     return isCriminal ? TarrantReadMode.Criminal : TarrantReadMode.Civil;
-                }
-            }
-            public int LocationId
-            {
-                get
-                {
-                    var locationName = _source.CourtLocator;
-                    var locationId = locationName switch
-                    {
-                        _ => 1,
-                    };
-                    return locationId; // default
                 }
             }
         }

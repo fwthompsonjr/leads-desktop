@@ -9,6 +9,7 @@ namespace LegalLead.PublicData.Search.Interfaces
         string BasePage { get; }
 
         string GetJs(string key, params object[] args);
+        int GetLocationIndex(string locationName);
         string GetLocationName(int locationId);
         string GetSearchName(TarrantReadMode readMode);
     }

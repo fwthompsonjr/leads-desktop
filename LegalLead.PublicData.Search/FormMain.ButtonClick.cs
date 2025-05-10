@@ -102,6 +102,24 @@ namespace LegalLead.PublicData.Search
                 new() { Name = "EndDate", Value = searchItem.EndDate },
                 new() { Name = "CourtType", Value = searchType }
             };
+            if (siteData.Id == 10)
+            {
+                var courtName = Invoke(() =>
+                {
+                    var idx = cboCourts.SelectedIndex;
+                    var fallback = "All JP Courts";
+                    if (idx < 0) return fallback;
+                    if (cboCourts.DataSource is List<Option> list)
+                    {
+                        return list[idx].Name;
+                    } 
+                    else
+                    {
+                        return fallback;
+                    }
+                });
+                keys.Add(new () { Name = "UserSelectedCourtType", Value = courtName });
+            }
             var wb = new WebNavigationParameter { Keys = keys };
             IWebInteractive dweb = siteData.Id switch
             {
@@ -307,6 +325,7 @@ namespace LegalLead.PublicData.Search
                     (int)SourceType.FortBendCounty,
                     (int)SourceType.WilliamsonCounty,
                     (int)SourceType.GraysonCounty,
+                    (int)SourceType.TarrantCounty,
                 };
 
                 ProcessEndingMessage();

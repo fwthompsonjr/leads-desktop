@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -18,6 +19,7 @@ namespace LegalLead.PublicData.Search.Util
             var context = new SearchContextParameters(Parameters);
             var current = ReadCaseItems(Driver, context.ReadMode);
             if (current != null && current.Count > 0) { alldata.AddRange(current); }
+            this.Interactive.EchoProgess(0, current.Count, 1, $"Found {current.Count} records.");
             return JsonConvert.SerializeObject(alldata);
         }
         private sealed class SearchContextParameters(DallasSearchProcess source)

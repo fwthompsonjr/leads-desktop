@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Util
 {
@@ -24,13 +25,13 @@ namespace LegalLead.PublicData.Search.Util
         protected static string ERR_START_DATE_MISSING => Rx.ERR_START_DATE_MISSING;
         protected static string ERR_END_DATE_MISSING => Rx.ERR_END_DATE_MISSING;
         private static string humanScript;
-
+        
         #endregion
         #region Properties
 
         public Func<bool> PromptUser { get; set; }
         protected string HumanScriptJs => humanScript ??= GetHumanScriptJs();
-
+        protected IWebInteractive Web { get; set; }
         #endregion
 
         #region Protected Methods
@@ -82,9 +83,16 @@ namespace LegalLead.PublicData.Search.Util
             };
             wait.Until(d =>
             {
-                var element = d.TryFindElement(finder);
-                if (element == null || string.IsNullOrEmpty(element.Text)) return false;
-                return element.Text.Equals("Case Records Search Results", StringComparison.OrdinalIgnoreCase);
+                try
+                {
+                    var element = d.TryFindElement(finder);
+                    if (element == null || string.IsNullOrEmpty(element.Text)) return false;
+                    return element.Text.Equals("Case Records Search Results", StringComparison.OrdinalIgnoreCase);
+                }
+                catch (Exception)
+                {
+                    return true;
+                }
             });
             if (IsCaptchaRequested(driver)) { return PromptUser(); }
             return true;
@@ -95,9 +103,14 @@ namespace LegalLead.PublicData.Search.Util
             const string scriptName = "fetch-search-address-details";
             if (driver is not IJavaScriptExecutor exec) return;
             var jscript = BoProvider.GetJs(scriptName);
+            var count = cases.Count;
+            if (count == 0) return;
+            var filingDate = cases[0].FileDate;
             cases.ForEach(c =>
             {
                 ReadPersonDetails(driver, c, exec, jscript);
+                var position = cases.IndexOf(c) + 1;
+                Web?.EchoProgess(0, count, position, $"{filingDate} : Reading {position} of {count} records.");
             });
         }
 
