@@ -77,7 +77,7 @@ namespace LegalLead.PublicData.Search.Util
             var jscript = BoProvider.GetJs(scriptName, $"{startDate:d}", $"{endingDate:d}");
             exec.ExecuteScript(jscript);
             var finder = By.XPath("//td[@class='ssHeaderTitleBanner']");
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15))
             {
                 PollingInterval = TimeSpan.FromMilliseconds(500),
             };
@@ -87,7 +87,7 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     var element = d.TryFindElement(finder);
                     if (element == null || string.IsNullOrEmpty(element.Text)) return false;
-                    return element.Text.Equals("Case Records Search Results", StringComparison.OrdinalIgnoreCase);
+                    return element.Text.Contains("Case Records Search Results", StringComparison.OrdinalIgnoreCase);
                 }
                 catch (Exception)
                 {
