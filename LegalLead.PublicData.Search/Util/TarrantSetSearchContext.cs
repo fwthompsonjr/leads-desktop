@@ -27,7 +27,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 get
                 {
-                    var isCriminal = _source.CourtType.Equals("Criminal");
+                    var isCriminal = _source.UserSelectedSearchName.Equals("Criminal");
                     return isCriminal ? TarrantReadMode.Criminal : TarrantReadMode.Civil;
                 }
             }

@@ -64,9 +64,19 @@ namespace LegalLead.PublicData.Search.Util
                 if (dates == null) throw new ArgumentNullException(nameof(dates));
                 if (common == null) throw new ArgumentNullException(nameof(common));
                 if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
-
-                IterateDateRange(driver, parameters, dates, common);
-                IterateItems(driver, parameters, postcommon);
+                const string crimimal = "Criminal";
+                var searchNames = new List<string>() { "Civil", crimimal };
+                if (!parameters.UserSelectedCourtType.Contains("JP "))
+                {
+                    searchNames.RemoveAll(x => x.Equals(crimimal));
+                }
+                searchNames.ForEach(x =>
+                {
+                    Console.WriteLine($"Searching {x} cases");
+                    parameters.UserSelectedSearchName = x;
+                    IterateDateRange(driver, parameters, dates, common);
+                    IterateItems(driver, parameters, postcommon);
+                });
             }
             catch (Exception ex)
             {

@@ -14,6 +14,7 @@ namespace LegalLead.PublicData.Search.Classes
         public string EndingDate { get; protected set; }
         public string CourtLocator { get; protected set; }
         public string CourtType { get; protected set; }
+        public string UserSelectedSearchName { get; set; } = "Civil";
         public string UserSelectedCourtType { get; set; } = "All JP Courts";
 
         public void SetSearchParameters(DateTime? startDate, DateTime? endDate, string courtType)
