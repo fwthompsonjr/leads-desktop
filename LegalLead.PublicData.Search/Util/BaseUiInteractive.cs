@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
@@ -59,6 +60,7 @@ namespace LegalLead.PublicData.Search.Util
             var folder = GetExcelDirectoryName;
             var name = DallasSearchProcess.GetCourtName(CourtType);
             var fmt = $"{countyName}_{name}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            fmt = GetContextFileName(websiteId, countyName, fmt);
             var fullName = GetUniqueFileName(folder, fmt, Path.Combine(folder, $"{fmt}.xlsx"));
             var writer = new ExcelWriter();
             var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: websiteId);
@@ -80,6 +82,21 @@ namespace LegalLead.PublicData.Search.Util
                 if (!isTest) File.WriteAllBytes(fullName, data);
             }
             return fullName;
+        }
+        private string GetContextFileName(int websiteId, string countyName, string calculatedName)
+        {
+            if (websiteId != 10) return calculatedName;
+            var context = UserSelectedSearchName.ToUpperInvariant();
+            var filter = "JUSTICE";
+            if (UserSelectedCourtType.Contains("Probate")) filter = "PROBATE";
+            if (UserSelectedCourtType.Contains("CCL")) filter = "COUNTY";
+            if (UserSelectedCourtType.Contains("JP") && !UserSelectedCourtType.Contains("All"))
+            {
+                var indx = UserSelectedCourtType.Split(' ')[^1];
+                filter = string.Concat(filter, "_", indx);
+            }
+            var newName = $"{countyName}_{context}_{filter}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            return newName;
         }
 
         protected string CourtType { get; set; }
