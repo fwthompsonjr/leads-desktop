@@ -57,8 +57,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
-    <AssemblyVersion>2.8.13.0</AssemblyVersion>
-    <FileVersion>2.8.13.0</FileVersion>
+    <AssemblyVersion>2.8.14.0</AssemblyVersion>
+    <FileVersion>2.8.14.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
