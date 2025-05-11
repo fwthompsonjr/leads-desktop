@@ -143,7 +143,7 @@ namespace LegalLead.PublicData.Search.Util
 
         private static string FetchKeyedItem(List<WebNavigationKey> keys, string keyname)
         {
-            var item = (keys.Find(x => x.Name == keyname)?.Value) ?? throw new ArgumentOutOfRangeException(nameof(keyname));
+            var item = (keys.Find(x => x.Name == keyname)?.Value) ?? string.Empty;
             return item;
         }
 
