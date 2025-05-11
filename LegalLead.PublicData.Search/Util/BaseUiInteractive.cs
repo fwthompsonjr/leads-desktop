@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
@@ -20,18 +21,20 @@ namespace LegalLead.PublicData.Search.Util
 {
     public abstract class BaseUiInteractive : BaseWebIneractive
     {
-        public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
-        public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
-        protected List<CaseItemDto> CaseStyles { get; private set; } = new List<CaseItemDto>();
-        protected readonly List<ICountySearchAction> ActionItems = new();
+        public List<PersonAddress> People { get; private set; } = [];
+        public List<CaseItemDto> Items { get; private set; } = [];
+        protected List<CaseItemDto> CaseStyles { get; private set; } = [];
+        protected readonly List<ICountySearchAction> ActionItems = [];
 
         protected BaseUiInteractive(WebNavigationParameter parameters)
         {
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            ArgumentNullException.ThrowIfNull(parameters);
             StartDate = FetchKeyedData(parameters.Keys, "StartDate");
             EndingDate = FetchKeyedData(parameters.Keys, "EndDate");
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
+            AssignOptionalKeyValues(parameters);
         }
+
         [ExcludeFromCodeCoverage(Justification = "Interacts with system, creating web browser component")]
         public virtual IWebDriver GetDriver(bool headless = false)
         {
@@ -57,6 +60,7 @@ namespace LegalLead.PublicData.Search.Util
             var folder = GetExcelDirectoryName;
             var name = DallasSearchProcess.GetCourtName(CourtType);
             var fmt = $"{countyName}_{name}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            fmt = GetContextFileName(websiteId, countyName, fmt);
             var fullName = GetUniqueFileName(folder, fmt, Path.Combine(folder, $"{fmt}.xlsx"));
             var writer = new ExcelWriter();
             var content = writer.ConvertToPersonTable(addressList: People, worksheetName: "addresses", websiteId: websiteId);
@@ -79,9 +83,25 @@ namespace LegalLead.PublicData.Search.Util
             }
             return fullName;
         }
+        private string GetContextFileName(int websiteId, string countyName, string calculatedName)
+        {
+            if (websiteId != 10) return calculatedName;
+            var context = UserSelectedSearchName.ToUpperInvariant();
+            var filter = "JUSTICE";
+            if (UserSelectedCourtType.Contains("Probate")) filter = "PROBATE";
+            if (UserSelectedCourtType.Contains("CCL")) filter = "COUNTY";
+            if (UserSelectedCourtType.Contains("JP") && !UserSelectedCourtType.Contains("All"))
+            {
+                var indx = UserSelectedCourtType.Split(' ')[^1];
+                filter = string.Concat(filter, "_", indx);
+            }
+            var newName = $"{countyName}_{context}_{filter}_{GetDateString(StartDate)}_{GetDateString(EndingDate)}";
+            return newName;
+        }
 
         protected string CourtType { get; set; }
-
+        protected string UserSelectedCourtType { get; set; } = "All JP Courts";
+        protected string UserSelectedSearchName { get; set; } = "Civil";
         protected bool IsDateRangeComplete { get; set; }
 
         protected static string GetExcelDirectoryName => excelDirectoyName ??= ExcelDirectoyName();
@@ -98,18 +118,32 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 var data = JsonConvert.DeserializeObject<List<CaseItemDto>>(json);
-                if (data == null) return new List<CaseItemDto>();
+                if (data == null) return [];
                 return data;
             }
             catch (Exception)
             {
-                return new List<CaseItemDto>();
+                return [];
+            }
+        }
+
+        private void AssignOptionalKeyValues(WebNavigationParameter parameters)
+        {
+            var userSelectedItem = FetchKeyedItem(parameters.Keys, "UserSelectedCourtType");
+            var userSelectedContext = FetchKeyedItem(parameters.Keys, "UserSelectedSearchName");
+            if (!string.IsNullOrEmpty(userSelectedItem))
+            {
+                UserSelectedCourtType = userSelectedItem;
+            }
+            if (!string.IsNullOrEmpty(userSelectedContext))
+            {
+                UserSelectedSearchName = userSelectedContext;
             }
         }
 
         private static string FetchKeyedItem(List<WebNavigationKey> keys, string keyname)
         {
-            var item = (keys.Find(x => x.Name == keyname)?.Value) ?? throw new ArgumentOutOfRangeException(nameof(keyname));
+            var item = (keys.Find(x => x.Name == keyname)?.Value) ?? string.Empty;
             return item;
         }
 

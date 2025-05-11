@@ -154,4 +154,10 @@
   <data name="invoice-no-data" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\invoice-no-data.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="tarrant-scripts-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_setup\tarrant-scripts-js.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tarrant-address-list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_setup\tarrant-address-list.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

@@ -1,10 +1,6 @@
-﻿using LegalLead.PublicData.Search.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using Thompson.RecordSearch.Utility.Dto;
-using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search
 {
@@ -37,7 +33,7 @@ namespace LegalLead.PublicData.Search
             BindRecords();
             grid.Visible = true;
         }
-		
+
         private void Grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!grid.Enabled) return;

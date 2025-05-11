@@ -1,7 +1,7 @@
-﻿using LegalLead.PublicData.Search.Interfaces;
+﻿using LegalLead.PublicData.Search.Extensions;
+using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
 using LegalLead.PublicData.Search.Util;
-using LegalLead.PublicData.Search.Extensions;
 using System.Collections.Generic;
 
 namespace LegalLead.PublicData.Search.Helpers
@@ -50,7 +50,8 @@ namespace LegalLead.PublicData.Search.Helpers
             response.ForEach(r =>
             {
                 var src = details.Find(x => (x.Id ?? "").Equals(r.OfflineId));
-                if (src != null && string.IsNullOrEmpty(r.CourtType)) { 
+                if (src != null && string.IsNullOrEmpty(r.CourtType))
+                {
                     r.CourtType = src.SearchType;
                 }
                 if (src != null && r.RecordCount == 0)

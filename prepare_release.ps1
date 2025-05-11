@@ -54,11 +54,20 @@ function promptForList($typeName)
 function promptForBuildReady()
 {
 	$stp = "stop";
-	$promptText = "Waiting for notification of build completion. (stop) when complete: "
+	$btxt = "Type ($stp) when above checks completed: "
+	$blist = @(
+		"Waiting for notification of build completion. ",
+		"1. publish legallead.publicdata.search",
+		"2. verify configuration in setup project",
+		"3. build setup installation",
+		"4. update zip files, if needed.",
+		$btxt
+	);
+	$promptText = [string]::Join( [Environment]::NewLine, $blist);
 	$arr = @();
 	$lne = Read-Host -Prompt $promptText
 	while ($lne -ne $stp) {
-		$lne = Read-Host -Prompt $promptText
+		$lne = Read-Host -Prompt $btxt
 	}
 }
 

@@ -1,0 +1,61 @@
+[
+	{
+		"name": "default",
+		"address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+	},
+	{
+		"name": "County Court at Law No. 1",
+		"fullName": "County Court at Law No. 1",
+		"address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+	},
+	{
+		"name": "County Court at Law No. 2",
+		"fullName": "County Court at Law No. 2",
+		"address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+	},
+	{
+		"name": "County Court at Law No. 3",
+		"fullName": "County Court at Law No. 3",
+		"address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+	},
+	{
+		"name": "JP No. 1",
+		"fullName": "JP No. 1",
+		"address": "100 West Weatherford, Fort Worth, TX 76196-0240"
+	},
+	{
+		"name": "JP No. 2",
+		"fullName": "JP No. 2",
+		"address": "701 East Abram Street, Suite 200, Arlington, Texas 76010"
+	},
+	{
+		"name": "JP No. 3",
+		"fullName": "JP No. 3",
+		"address": "Northeast Courthouse, 645 Grapevine Highway, Suite 220, Hurst, Texas 76054"
+	},
+	{
+		"name": "JP No. 4",
+		"fullName": "JP No. 4",
+		"address": "6713 Telephone Road, Suite 201, Lake Worth Texas 76135"
+	},
+	{
+		"name": "JP No. 5",
+		"fullName": "JP No. 5",
+		"address": "350 W. Belknap, Room 112-C, Fort Worth, Texas 76196"
+	},
+	{
+		"name": "JP No. 6",
+		"fullName": "JP No. 6",
+		"address": "6559 Granbury Road, Fort Worth, Texas 76133"
+	},
+	{
+		"name": "JP No. 7",
+		"fullName": "JP No. 7",
+		"address": "1105 E. Broad Street, Suite 202, Mansfield Texas 76063"
+	},
+	{
+		"name": "JP No. 8",
+		"fullName": "JP No. 8",
+		"address": "Poly Subcourthouse, 3500 Miller Avenue, Fort Worth, Texas 76119"
+	}
+]

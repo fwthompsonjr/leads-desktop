@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -81,7 +80,8 @@ namespace LegalLead.PublicData.Search
                 grid.Columns[downLoad].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 var columnRight = new[] { "Id", "PercentComplete", "RecordCount" };
                 var columnFull = new[] { "StartDate", "DatesSearched", "LastUpdate" };
-                foreach (var column in columnRight) {
+                foreach (var column in columnRight)
+                {
                     grid.Columns[column].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                 }
                 foreach (var column in columnFull)
@@ -111,19 +111,22 @@ namespace LegalLead.PublicData.Search
             if (db == null) return;
             // clear error-text
             grid.Rows[rowIndex].ErrorText = "";
-            if (grid.Rows[rowIndex].Tag is GridHistoryView itm && itm.IsComplete) {
+            if (grid.Rows[rowIndex].Tag is GridHistoryView itm && itm.IsComplete)
+            {
                 grid.Rows[rowIndex].ErrorText = "Unable to Download/View. Process is not completed.";
-                return; 
+                return;
             }
             var item = db[rowIndex];
-            if (!item.IsCompleted) {
+            if (!item.IsCompleted)
+            {
                 grid.Rows[rowIndex].ErrorText = "Unable to Download/View. Process is not completed.";
-                return; 
+                return;
             }
             var workitem = GetDownloadDetail(item.RequestId);
-            if (workitem == null) {
+            if (workitem == null)
+            {
                 grid.Rows[rowIndex].ErrorText = "Unable to Download/View. Record data is not available.";
-                return; 
+                return;
             }
             var list = workitem.Workload.ToInstance<List<CaseItemDto>>();
             if (list == null)
