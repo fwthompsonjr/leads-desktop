@@ -34,6 +34,7 @@ namespace LegalLead.PublicData.Search
         {
             try
             {
+                if (max == 0 || current > max) return;
                 ShowProgress(min, max, current, dateIndication);
             }
             catch

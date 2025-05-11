@@ -218,7 +218,7 @@ namespace LegalLead.PublicData.Search.Util
         private DataSetting MapDbSettings(bool toggleForOfflineProcessing = false)
         {
             // NOTE: Offline Search when enabled will search db before attempt to read website (API).
-            var list = sourceData.FindAll(x => x.Category == "admin" || 
+            var list = sourceData.FindAll(x => x.Category == "admin" ||
                 (x.Category == "search" && x.Name == SettingConstants.SearchFieldNames.AllowOfflineProcessing));
             var lookups = new[] {
                 new SettingLookupDto {

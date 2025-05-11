@@ -69,6 +69,7 @@ namespace LegalLead.PublicData.Search
                     case (int)SourceType.FortBendCounty:
                     case (int)SourceType.WilliamsonCounty:
                     case (int)SourceType.GraysonCounty:
+                    case (int)SourceType.TarrantCounty:
                         CommonButtonExecution(siteData, searchItem);
                         break;
                     default:
@@ -101,9 +102,14 @@ namespace LegalLead.PublicData.Search
                 new() { Name = "EndDate", Value = searchItem.EndDate },
                 new() { Name = "CourtType", Value = searchType }
             };
+            if (siteData.Id == 10)
+            {
+                TarrantSetUserSelections(keys);
+            }
             var wb = new WebNavigationParameter { Keys = keys };
             IWebInteractive dweb = siteData.Id switch
             {
+                10 => new TarrantRvUiInteractive(wb),
                 30 => new HccUiInteractive(wb),
                 130 => new GraysonUiInteractive(wb),
                 120 => new WilliamsonUiInteractive(wb),
@@ -120,6 +126,36 @@ namespace LegalLead.PublicData.Search
                 });
 
             }).ConfigureAwait(true);
+        }
+
+        private void TarrantSetUserSelections(List<WebNavigationKey> keys)
+        {
+            var courtName = Invoke(() =>
+            {
+                var idx = cboCourts.SelectedIndex;
+                var fallback = new TarrantUserOption();
+                if (idx < 0) return fallback;
+                if (cboCourts.DataSource is List<Option> list)
+                {
+                    fallback.Index = idx;
+                    fallback.Name = list[idx].Name;
+                    return fallback;
+                }
+                else
+                {
+                    return fallback;
+                }
+            });
+            var searchMode = Invoke(() =>
+            {
+                var isCriminalSearch = chkCrimalCases.Visible && chkCrimalCases.Checked;
+                var fallback = "Civil";
+                return isCriminalSearch ? "Criminal" : fallback;
+
+            });
+            keys.Add(new() { Name = "UserSelectedCourtIndex", Value = $"{courtName.Index}" });
+            keys.Add(new() { Name = "UserSelectedCourtType", Value = courtName.Name });
+            keys.Add(new() { Name = "UserSelectedSearchName", Value = searchMode });
         }
 
         private void BexarButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
@@ -249,9 +285,9 @@ namespace LegalLead.PublicData.Search
                 ReportProgessComplete = TryHideProgress,
                 StartDate = dteStart.Value.Date,
                 EndingDate = dteEnding.Value.Date,
-                TrackingIndex = interactive.TrackingIndex
+                TrackingIndex = interactive.TrackingIndex,
+                Parameters = interactive.Parameters ?? new()
             };
-            response.Parameters = interactive.Parameters ?? new();
             return response;
         }
 
@@ -278,7 +314,8 @@ namespace LegalLead.PublicData.Search
                     var displayMode = SettingsWriter.GetSettingOrDefault("admin", SettingConstants.AdminFieldNames.AllowBrowserDisplay, true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
-                if (siteData.Id == (int)SourceType.TarrantCounty) {
+                if (siteData.Id == (int)SourceType.TarrantCounty)
+                {
                     webmgr.DriverReadHeadless = false;
                 }
                 webmgr.TrackingIndex = trackingItem.Id;
@@ -305,6 +342,7 @@ namespace LegalLead.PublicData.Search
                     (int)SourceType.FortBendCounty,
                     (int)SourceType.WilliamsonCounty,
                     (int)SourceType.GraysonCounty,
+                    (int)SourceType.TarrantCounty,
                 };
 
                 ProcessEndingMessage();
@@ -422,5 +460,10 @@ namespace LegalLead.PublicData.Search
 
         private static readonly IRemoteDbHelper dbHelper
             = ActionSettingContainer.GetContainer.GetInstance<IRemoteDbHelper>();
+        private sealed class TarrantUserOption
+        {
+            public int Index { get; set; } = 1;
+            public string Name { get; set; } = "All JP Courts";
+        }
     }
 }

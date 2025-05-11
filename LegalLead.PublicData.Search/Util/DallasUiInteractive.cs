@@ -59,7 +59,7 @@ namespace LegalLead.PublicData.Search.Util
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 OfflineProcessingEnabled = SettingsWriter.GetSettingOrDefault("search",
-                    SettingConstants.SearchFieldNames.AllowOfflineProcessing, 
+                    SettingConstants.SearchFieldNames.AllowOfflineProcessing,
                     true);
                 var bulkReader = new DallasBulkCaseReader
                 {
@@ -304,13 +304,7 @@ namespace LegalLead.PublicData.Search.Util
                 Thread.Sleep(100);
                 return true;
             }
-            var response = DialogResult.None;
-            while (response != DialogResult.OK)
-            {
-                response = MessageBox.Show(Rx.UI_CAPTCHA_DESCRIPTION, Rx.UI_CAPTCHA_TITLE, MessageBoxButtons.OKCancel);
-                if (response == DialogResult.Cancel) break;
-            }
-            return response == DialogResult.OK;
+            return DisplayUserCaptchaHelper.UserPrompt();
         }
 
         private void AppendPerson(CaseItemDto dto)

@@ -153,6 +153,26 @@ namespace LegalLead.PublicData.Search.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] tarrant_address_list {
+            get {
+                object obj = ResourceManager.GetObject("tarrant-address-list", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] tarrant_scripts_js {
+            get {
+                object obj = ResourceManager.GetObject("tarrant-scripts-js", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to var obj = {
         ///	&apos;defendant&apos;: &apos;&apos;,
         ///	&apos;casestyle&apos;: &apos;&apos;,

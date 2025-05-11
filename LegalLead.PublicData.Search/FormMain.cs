@@ -33,7 +33,7 @@ namespace LegalLead.PublicData.Search
         #endregion
 
         #region Custom Properties
-        protected List<ToolStripItem> RestartItems = new List<ToolStripItem>();
+        protected List<ToolStripItem> RestartItems = [];
         protected WebFetchResult CaseData { get; set; }
         private FindDbRequest CurrentRequest { get; set; } = null;
 
@@ -518,7 +518,7 @@ namespace LegalLead.PublicData.Search
         }
 
 
-        private async Task SoftBlinkAsync(Control ctrl, Color c1, Color c2, short CycleTime_ms, bool BkClr)
+        private async Task SoftBlinkAsync(Button ctrl, Color c1, Color c2, short CycleTime_ms, bool BkClr)
         {
             await Invoke(async () =>
             {
