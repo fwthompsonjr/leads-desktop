@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Extensions;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -244,13 +245,7 @@ namespace LegalLead.PublicData.Search.Util
                 Thread.Sleep(100);
                 return true;
             }
-            var response = DialogResult.None;
-            while (response != DialogResult.OK)
-            {
-                response = MessageBox.Show(Rx.UI_CAPTCHA_DESCRIPTION, Rx.UI_CAPTCHA_TITLE, MessageBoxButtons.OKCancel);
-                if (response == DialogResult.Cancel) break;
-            }
-            return response == DialogResult.OK;
+            return DisplayUserCaptchaHelper.UserPrompt();
         }
 
         private void AppendPerson(CaseItemDto dto)

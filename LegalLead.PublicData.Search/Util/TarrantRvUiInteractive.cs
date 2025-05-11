@@ -1,5 +1,6 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -66,9 +67,15 @@ namespace LegalLead.PublicData.Search.Util
                 ArgumentNullException.ThrowIfNull(dates);
                 ArgumentNullException.ThrowIfNull(common);
                 ArgumentNullException.ThrowIfNull(postcommon);
-
-                Console.WriteLine($"Searching {parameters.UserSelectedCourtType} cases");
-                IterateDateRange(driver, parameters, dates, common);
+                var originalType = parameters.UserSelectedCourtType;
+                var collection = GetCourtLocationItems(parameters.UserSelectedCourtType);
+                collection.ForEach(c =>
+                {
+                    parameters.UserSelectedCourtType = c;
+                    Console.WriteLine($"Searching {parameters.UserSelectedCourtType} cases");
+                    IterateDateRange(driver, parameters, dates, common);
+                });
+                parameters.UserSelectedCourtType = originalType;
                 IterateItems(driver, parameters, postcommon);
 
             }
@@ -159,13 +166,17 @@ namespace LegalLead.PublicData.Search.Util
         [ExcludeFromCodeCoverage]
         private bool UserPrompt()
         {
-            var response = DialogResult.None;
-            while (response != DialogResult.OK)
-            {
-                response = MessageBox.Show(Rx.UI_CAPTCHA_DESCRIPTION, Rx.UI_CAPTCHA_TITLE, MessageBoxButtons.OKCancel);
-                if (response == DialogResult.Cancel) break;
-            }
-            return response == DialogResult.OK;
+            return DisplayUserCaptchaHelper.UserPrompt();
+        }
+
+        private static List<string> GetCourtLocationItems(string requested)
+        {
+            var items = new List<string> { requested };
+            if (!requested.Equals("All JP Courts")) return items;
+            var indexes = new List<int>{1, 2, 3, 4, 5, 6, 7, 8}
+            .Select(x => $"JP No. {x}");
+            return [.. indexes];
+
         }
     }
 }

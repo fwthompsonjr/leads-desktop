@@ -81,10 +81,11 @@
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnCount = 4;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             tableLayoutPanel1.Controls.Add(ButtonDentonSetting, 0, 7);
             tableLayoutPanel1.Controls.Add(dteStart, 2, 2);
             tableLayoutPanel1.Controls.Add(dteEnding, 2, 3);
@@ -108,10 +109,10 @@
             tableLayoutPanel1.Controls.Add(lbNotes, 2, 10);
             tableLayoutPanel1.Controls.Add(lbProgressDate, 1, 9);
             tableLayoutPanel1.Controls.Add(viewPanel, 0, 13);
-            tableLayoutPanel1.Controls.Add(chkCrimalCases, 1, 6);
+            tableLayoutPanel1.Controls.Add(chkCrimalCases, 3, 6);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 14;
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
@@ -136,9 +137,9 @@
             tableLayoutPanel1.SetColumnSpan(ButtonDentonSetting, 2);
             ButtonDentonSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             ButtonDentonSetting.Location = new System.Drawing.Point(4, 320);
-            ButtonDentonSetting.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            ButtonDentonSetting.Margin = new System.Windows.Forms.Padding(4);
             ButtonDentonSetting.Name = "ButtonDentonSetting";
-            ButtonDentonSetting.Size = new System.Drawing.Size(222, 38);
+            ButtonDentonSetting.Size = new System.Drawing.Size(142, 38);
             ButtonDentonSetting.TabIndex = 14;
             ButtonDentonSetting.Tag = "7";
             ButtonDentonSetting.Text = "Settings";
@@ -147,31 +148,34 @@
             // 
             // dteStart
             // 
+            tableLayoutPanel1.SetColumnSpan(dteStart, 2);
             dteStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            dteStart.Location = new System.Drawing.Point(234, 95);
+            dteStart.Location = new System.Drawing.Point(154, 95);
             dteStart.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             dteStart.Name = "dteStart";
-            dteStart.Size = new System.Drawing.Size(672, 23);
+            dteStart.Size = new System.Drawing.Size(752, 23);
             dteStart.TabIndex = 2;
             dteStart.Tag = "2";
             // 
             // dteEnding
             // 
+            tableLayoutPanel1.SetColumnSpan(dteEnding, 2);
             dteEnding.Dock = System.Windows.Forms.DockStyle.Fill;
-            dteEnding.Location = new System.Drawing.Point(234, 141);
+            dteEnding.Location = new System.Drawing.Point(154, 141);
             dteEnding.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             dteEnding.Name = "dteEnding";
-            dteEnding.Size = new System.Drawing.Size(672, 23);
+            dteEnding.Size = new System.Drawing.Size(752, 23);
             dteEnding.TabIndex = 3;
             dteEnding.Tag = "3";
             // 
             // button1
             // 
+            tableLayoutPanel1.SetColumnSpan(button1, 2);
             button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            button1.Location = new System.Drawing.Point(234, 320);
-            button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            button1.Location = new System.Drawing.Point(154, 320);
+            button1.Margin = new System.Windows.Forms.Padding(4);
             button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(672, 38);
+            button1.Size = new System.Drawing.Size(752, 38);
             button1.TabIndex = 4;
             button1.Tag = "7";
             button1.Text = "Get Data";
@@ -180,7 +184,7 @@
             // 
             // menuTopMenu
             // 
-            tableLayoutPanel1.SetColumnSpan(menuTopMenu, 3);
+            tableLayoutPanel1.SetColumnSpan(menuTopMenu, 4);
             menuTopMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             menuTopMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { mnuFile, mnuSettings, mnuView, mnuAdmin });
             menuTopMenu.Location = new System.Drawing.Point(0, 0);
@@ -282,7 +286,7 @@
             // 
             // statusStrip1
             // 
-            tableLayoutPanel1.SetColumnSpan(statusStrip1, 3);
+            tableLayoutPanel1.SetColumnSpan(statusStrip1, 4);
             statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsWebDriver, tsDropFileList, toolStripStatus, tsStatusLabel, tsUserName, tsSettingMenuButton });
@@ -342,23 +346,24 @@
             // 
             // cboWebsite
             // 
+            tableLayoutPanel1.SetColumnSpan(cboWebsite, 2);
             cboWebsite.Dock = System.Windows.Forms.DockStyle.Fill;
             cboWebsite.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             cboWebsite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboWebsite.FormattingEnabled = true;
-            cboWebsite.Location = new System.Drawing.Point(234, 49);
+            cboWebsite.Location = new System.Drawing.Point(154, 49);
             cboWebsite.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboWebsite.Name = "cboWebsite";
-            cboWebsite.Size = new System.Drawing.Size(672, 24);
+            cboWebsite.Size = new System.Drawing.Size(752, 24);
             cboWebsite.TabIndex = 6;
             cboWebsite.Tag = "1";
             // 
             // txConsole
             // 
-            tableLayoutPanel1.SetColumnSpan(txConsole, 3);
+            tableLayoutPanel1.SetColumnSpan(txConsole, 4);
             txConsole.Dock = System.Windows.Forms.DockStyle.Fill;
             txConsole.Location = new System.Drawing.Point(4, 366);
-            txConsole.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            txConsole.Margin = new System.Windows.Forms.Padding(4);
             txConsole.Multiline = true;
             txConsole.Name = "txConsole";
             txConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -368,27 +373,29 @@
             // 
             // cboSearchType
             // 
+            tableLayoutPanel1.SetColumnSpan(cboSearchType, 2);
             cboSearchType.Dock = System.Windows.Forms.DockStyle.Fill;
             cboSearchType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             cboSearchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboSearchType.FormattingEnabled = true;
-            cboSearchType.Location = new System.Drawing.Point(234, 187);
+            cboSearchType.Location = new System.Drawing.Point(154, 187);
             cboSearchType.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboSearchType.Name = "cboSearchType";
-            cboSearchType.Size = new System.Drawing.Size(672, 24);
+            cboSearchType.Size = new System.Drawing.Size(752, 24);
             cboSearchType.TabIndex = 10;
             cboSearchType.Tag = "4";
             // 
             // cboCaseType
             // 
+            tableLayoutPanel1.SetColumnSpan(cboCaseType, 2);
             cboCaseType.Dock = System.Windows.Forms.DockStyle.Fill;
             cboCaseType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             cboCaseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboCaseType.FormattingEnabled = true;
-            cboCaseType.Location = new System.Drawing.Point(234, 233);
+            cboCaseType.Location = new System.Drawing.Point(154, 233);
             cboCaseType.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboCaseType.Name = "cboCaseType";
-            cboCaseType.Size = new System.Drawing.Size(672, 24);
+            cboCaseType.Size = new System.Drawing.Size(752, 24);
             cboCaseType.TabIndex = 12;
             cboCaseType.Tag = "5";
             // 
@@ -398,20 +405,21 @@
             cboCourts.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             cboCourts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboCourts.FormattingEnabled = true;
-            cboCourts.Location = new System.Drawing.Point(234, 279);
+            cboCourts.Location = new System.Drawing.Point(154, 279);
             cboCourts.Margin = new System.Windows.Forms.Padding(4, 9, 4, 4);
             cboCourts.Name = "cboCourts";
-            cboCourts.Size = new System.Drawing.Size(672, 24);
+            cboCourts.Size = new System.Drawing.Size(602, 24);
             cboCourts.TabIndex = 13;
             cboCourts.Tag = "6";
             // 
             // progressBar1
             // 
             progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            progressBar1.Location = new System.Drawing.Point(236, 434);
+            tableLayoutPanel1.SetColumnSpan(progressBar1, 2);
+            progressBar1.Location = new System.Drawing.Point(156, 434);
             progressBar1.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new System.Drawing.Size(668, 23);
+            progressBar1.Size = new System.Drawing.Size(748, 23);
             progressBar1.TabIndex = 16;
             progressBar1.Tag = "9";
             // 
@@ -478,6 +486,7 @@
             // labelCourts
             // 
             labelCourts.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(labelCourts, 2);
             labelCourts.Location = new System.Drawing.Point(11, 281);
             labelCourts.Margin = new System.Windows.Forms.Padding(11, 11, 4, 0);
             labelCourts.Name = "labelCourts";
@@ -492,10 +501,10 @@
             labelProgress.AutoSize = true;
             labelProgress.Location = new System.Drawing.Point(3, 438);
             labelProgress.Name = "labelProgress";
-            labelProgress.Size = new System.Drawing.Size(84, 15);
+            labelProgress.Size = new System.Drawing.Size(54, 15);
             labelProgress.TabIndex = 15;
             labelProgress.Tag = "9";
-            labelProgress.Text = "Progress:";
+            labelProgress.Text = "Progress";
             // 
             // label5
             // 
@@ -503,7 +512,7 @@
             label5.AutoSize = true;
             label5.Location = new System.Drawing.Point(3, 488);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(84, 15);
+            label5.Size = new System.Drawing.Size(54, 15);
             label5.TabIndex = 15;
             label5.Tag = "10";
             label5.Text = "Notes:";
@@ -512,11 +521,12 @@
             // 
             lbNotes.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lbNotes.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(lbNotes, 2);
             lbNotes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             lbNotes.ForeColor = System.Drawing.SystemColors.GrayText;
-            lbNotes.Location = new System.Drawing.Point(233, 488);
+            lbNotes.Location = new System.Drawing.Point(153, 488);
             lbNotes.Name = "lbNotes";
-            lbNotes.Size = new System.Drawing.Size(674, 15);
+            lbNotes.Size = new System.Drawing.Size(754, 15);
             lbNotes.TabIndex = 15;
             lbNotes.Tag = "10";
             // 
@@ -524,15 +534,15 @@
             // 
             lbProgressDate.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lbProgressDate.AutoSize = true;
-            lbProgressDate.Location = new System.Drawing.Point(93, 438);
+            lbProgressDate.Location = new System.Drawing.Point(63, 438);
             lbProgressDate.Name = "lbProgressDate";
-            lbProgressDate.Size = new System.Drawing.Size(134, 15);
+            lbProgressDate.Size = new System.Drawing.Size(84, 15);
             lbProgressDate.TabIndex = 17;
             lbProgressDate.Tag = "9";
             // 
             // viewPanel
             // 
-            tableLayoutPanel1.SetColumnSpan(viewPanel, 3);
+            tableLayoutPanel1.SetColumnSpan(viewPanel, 4);
             viewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             viewPanel.Location = new System.Drawing.Point(3, 575);
             viewPanel.Name = "viewPanel";
@@ -543,12 +553,12 @@
             // 
             chkCrimalCases.Anchor = System.Windows.Forms.AnchorStyles.Top;
             chkCrimalCases.AutoSize = true;
-            chkCrimalCases.Location = new System.Drawing.Point(105, 282);
+            chkCrimalCases.Location = new System.Drawing.Point(769, 282);
             chkCrimalCases.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             chkCrimalCases.Name = "chkCrimalCases";
-            chkCrimalCases.Size = new System.Drawing.Size(109, 19);
+            chkCrimalCases.Size = new System.Drawing.Size(132, 19);
             chkCrimalCases.TabIndex = 20;
-            chkCrimalCases.Text = "Criminal Search";
+            chkCrimalCases.Text = "Misdemeanors Only";
             chkCrimalCases.UseVisualStyleBackColor = true;
             chkCrimalCases.Visible = false;
             // 
@@ -560,7 +570,7 @@
             Controls.Add(tableLayoutPanel1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuTopMenu;
-            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            Margin = new System.Windows.Forms.Padding(4);
             Name = "FormMain";
             Text = "Document Search";
             Load += FormMain_Load;
