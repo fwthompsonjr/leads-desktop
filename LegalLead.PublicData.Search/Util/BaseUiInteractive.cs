@@ -20,23 +20,20 @@ namespace LegalLead.PublicData.Search.Util
 {
     public abstract class BaseUiInteractive : BaseWebIneractive
     {
-        public List<PersonAddress> People { get; private set; } = new List<PersonAddress>();
-        public List<CaseItemDto> Items { get; private set; } = new List<CaseItemDto>();
-        protected List<CaseItemDto> CaseStyles { get; private set; } = new List<CaseItemDto>();
-        protected readonly List<ICountySearchAction> ActionItems = new();
+        public List<PersonAddress> People { get; private set; } = [];
+        public List<CaseItemDto> Items { get; private set; } = [];
+        protected List<CaseItemDto> CaseStyles { get; private set; } = [];
+        protected readonly List<ICountySearchAction> ActionItems = [];
 
         protected BaseUiInteractive(WebNavigationParameter parameters)
         {
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            ArgumentNullException.ThrowIfNull(parameters);
             StartDate = FetchKeyedData(parameters.Keys, "StartDate");
             EndingDate = FetchKeyedData(parameters.Keys, "EndDate");
             CourtType = FetchKeyedItem(parameters.Keys, "CourtType");
-            var userSelectedItem = FetchKeyedItem(parameters.Keys, "UserSelectedCourtType");
-            if (!string.IsNullOrEmpty(userSelectedItem))
-            {
-                UserSelectedCourtType = userSelectedItem;
-            }
+            AssignOptionalKeyValues(parameters);
         }
+
         [ExcludeFromCodeCoverage(Justification = "Interacts with system, creating web browser component")]
         public virtual IWebDriver GetDriver(bool headless = false)
         {
@@ -87,6 +84,7 @@ namespace LegalLead.PublicData.Search.Util
 
         protected string CourtType { get; set; }
         protected string UserSelectedCourtType { get; set; } = "All JP Courts";
+        protected string UserSelectedSearchName { get; set; } = "Civil";
         protected bool IsDateRangeComplete { get; set; }
 
         protected static string GetExcelDirectoryName => excelDirectoyName ??= ExcelDirectoyName();
@@ -103,12 +101,26 @@ namespace LegalLead.PublicData.Search.Util
             try
             {
                 var data = JsonConvert.DeserializeObject<List<CaseItemDto>>(json);
-                if (data == null) return new List<CaseItemDto>();
+                if (data == null) return [];
                 return data;
             }
             catch (Exception)
             {
-                return new List<CaseItemDto>();
+                return [];
+            }
+        }
+
+        private void AssignOptionalKeyValues(WebNavigationParameter parameters)
+        {
+            var userSelectedItem = FetchKeyedItem(parameters.Keys, "UserSelectedCourtType");
+            var userSelectedContext = FetchKeyedItem(parameters.Keys, "UserSelectedSearchName");
+            if (!string.IsNullOrEmpty(userSelectedItem))
+            {
+                UserSelectedCourtType = userSelectedItem;
+            }
+            if (!string.IsNullOrEmpty(userSelectedContext))
+            {
+                UserSelectedSearchName = userSelectedContext;
             }
         }
 

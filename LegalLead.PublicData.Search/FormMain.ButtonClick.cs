@@ -104,21 +104,7 @@ namespace LegalLead.PublicData.Search
             };
             if (siteData.Id == 10)
             {
-                var courtName = Invoke(() =>
-                {
-                    var idx = cboCourts.SelectedIndex;
-                    var fallback = "All JP Courts";
-                    if (idx < 0) return fallback;
-                    if (cboCourts.DataSource is List<Option> list)
-                    {
-                        return list[idx].Name;
-                    } 
-                    else
-                    {
-                        return fallback;
-                    }
-                });
-                keys.Add(new () { Name = "UserSelectedCourtType", Value = courtName });
+                TarrantSetUserSelections(keys);
             }
             var wb = new WebNavigationParameter { Keys = keys };
             IWebInteractive dweb = siteData.Id switch
@@ -140,6 +126,36 @@ namespace LegalLead.PublicData.Search
                 });
 
             }).ConfigureAwait(true);
+        }
+
+        private void TarrantSetUserSelections(List<WebNavigationKey> keys)
+        {
+            var courtName = Invoke(() =>
+            {
+                var idx = cboCourts.SelectedIndex;
+                var fallback = new TarrantUserOption();
+                if (idx < 0) return fallback;
+                if (cboCourts.DataSource is List<Option> list)
+                {
+                    fallback.Index = idx;
+                    fallback.Name = list[idx].Name;
+                    return fallback;
+                }
+                else
+                {
+                    return fallback;
+                }
+            });
+            var searchMode = Invoke(() =>
+            {
+                var isCriminalSearch = chkCrimalCases.Visible && chkCrimalCases.Checked;
+                var fallback = "Civil";
+                return isCriminalSearch ? "Criminal" : fallback;
+                
+            });
+            keys.Add(new() { Name = "UserSelectedCourtIndex", Value = $"{courtName.Index}" });
+            keys.Add(new() { Name = "UserSelectedCourtType", Value = courtName.Name });
+            keys.Add(new() { Name = "UserSelectedSearchName", Value = searchMode });
         }
 
         private void BexarButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
@@ -269,9 +285,9 @@ namespace LegalLead.PublicData.Search
                 ReportProgessComplete = TryHideProgress,
                 StartDate = dteStart.Value.Date,
                 EndingDate = dteEnding.Value.Date,
-                TrackingIndex = interactive.TrackingIndex
+                TrackingIndex = interactive.TrackingIndex,
+                Parameters = interactive.Parameters ?? new()
             };
-            response.Parameters = interactive.Parameters ?? new();
             return response;
         }
 
@@ -443,5 +459,10 @@ namespace LegalLead.PublicData.Search
 
         private static readonly IRemoteDbHelper dbHelper
             = ActionSettingContainer.GetContainer.GetInstance<IRemoteDbHelper>();
+        private sealed class TarrantUserOption
+        {
+            public int Index { get; set; } = 1;
+            public string Name { get; set; } = "All JP Courts";
+        }
     }
 }

@@ -96,7 +96,8 @@ namespace LegalLead.PublicData.Search
             {
                 return;
             }
-
+            chkCrimalCases.Visible = false;
+            chkCrimalCases.Checked = false;
             changeHandler.Change();
             DentonSettingHandler();
             CustomNoteHandler();
@@ -139,6 +140,7 @@ namespace LegalLead.PublicData.Search
             var harrisId = (int)SourceType.HarrisCivil;
             var tarrantId = (int)SourceType.TarrantCounty;
             var tableStyles = tableLayoutPanel1.RowStyles;
+            chkCrimalCases.Visible = false;
             if (nav.Id == collinId)
             {
                 CboSearchType_SelectedIndexChanged(this, EventArgs.Empty);
@@ -152,6 +154,7 @@ namespace LegalLead.PublicData.Search
                 labelCboCaseType.Visible = false;
                 labelCourts.Visible = true;
                 cboCourts.Visible = true;
+                chkCrimalCases.Visible = true;
                 if (cboCourts.SelectedIndex == 0) cboCourts.SelectedIndex = 1;
                 for (int i = 4; i < 7; i++)
                 {
@@ -477,8 +480,11 @@ namespace LegalLead.PublicData.Search
                 }
                 itm.Checked = !itm.Checked;
                 var admin = IsAccountAdmin();
-                var handler = new PreviewSearchRequestedEvent { GetMain = this };
-                handler.UseMaskedData = !admin;
+                var handler = new PreviewSearchRequestedEvent
+                {
+                    GetMain = this,
+                    UseMaskedData = !admin
+                };
                 handler.Toggle(itm.Checked, item);
                 if (itm.Checked) return;
                 for (int i = 0; i < 2; i++)

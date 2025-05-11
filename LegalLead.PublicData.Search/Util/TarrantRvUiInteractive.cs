@@ -10,6 +10,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility.Dto;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
@@ -41,6 +43,7 @@ namespace LegalLead.PublicData.Search.Util
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
             parameters.UserSelectedCourtType = UserSelectedCourtType;
+            parameters.UserSelectedSearchName = UserSelectedSearchName;
             var result = new WebFetchResult();
             Iterate(driver, parameters, dates, common, postcommon);
             if (People.Count == 0) return result;
@@ -59,24 +62,16 @@ namespace LegalLead.PublicData.Search.Util
         {
             try
             {
-                if (driver == null) throw new ArgumentNullException(nameof(driver));
-                if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-                if (dates == null) throw new ArgumentNullException(nameof(dates));
-                if (common == null) throw new ArgumentNullException(nameof(common));
-                if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
-                const string crimimal = "Criminal";
-                var searchNames = new List<string>() { "Civil", crimimal };
-                if (!parameters.UserSelectedCourtType.Contains("JP "))
-                {
-                    searchNames.RemoveAll(x => x.Equals(crimimal));
-                }
-                searchNames.ForEach(x =>
-                {
-                    Console.WriteLine($"Searching {x} cases");
-                    parameters.UserSelectedSearchName = x;
-                    IterateDateRange(driver, parameters, dates, common);
-                    IterateItems(driver, parameters, postcommon);
-                });
+                ArgumentNullException.ThrowIfNull(driver);
+                ArgumentNullException.ThrowIfNull(parameters);
+                ArgumentNullException.ThrowIfNull(dates);
+                ArgumentNullException.ThrowIfNull(common);
+                ArgumentNullException.ThrowIfNull(postcommon);
+
+                Console.WriteLine($"Searching {parameters.UserSelectedCourtType} cases");
+                IterateDateRange(driver, parameters, dates, common);
+                IterateItems(driver, parameters, postcommon);
+
             }
             catch (Exception ex)
             {
@@ -92,10 +87,11 @@ namespace LegalLead.PublicData.Search.Util
 
         protected virtual void IterateDateRange(IWebDriver driver, DallasSearchProcess parameters, List<DateTime> dates, List<ICountySearchAction> common)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-            if (dates == null) throw new ArgumentNullException(nameof(dates));
-            if (common == null) throw new ArgumentNullException(nameof(common));
+            ArgumentNullException.ThrowIfNull(driver);
+            ArgumentNullException.ThrowIfNull(parameters);
+            ArgumentNullException.ThrowIfNull(dates);
+            ArgumentNullException.ThrowIfNull(common);
+
             bool isCaptchaNeeded = true;
 
             dates.ForEach(d =>
@@ -119,9 +115,9 @@ namespace LegalLead.PublicData.Search.Util
 
         protected virtual void IterateItems(IWebDriver driver, DallasSearchProcess parameters, List<ICountySearchAction> postcommon)
         {
-            if (driver == null) throw new ArgumentNullException(nameof(driver));
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
-            if (postcommon == null) throw new ArgumentNullException(nameof(postcommon));
+            ArgumentNullException.ThrowIfNull(driver);
+            ArgumentNullException.ThrowIfNull(parameters);
+            ArgumentNullException.ThrowIfNull(postcommon);
             var nonames = Items.FindAll(x => string.IsNullOrWhiteSpace(x.PartyName) && !string.IsNullOrWhiteSpace(x.CaseStyle));
             nonames.ForEach(n => n.SetPartyNameFromCaseStyle());
             var casenumbers = Items.Select(s => s.CaseNumber).Distinct().ToList();
@@ -142,10 +138,21 @@ namespace LegalLead.PublicData.Search.Util
             if (a is TarrantFetchPersonDetail addressing)
             {
                 addressing.Items.Clear();
-                addressing.Items.AddRange(Items);
+                var notProcessed = Items.FindAll(i =>
+                {
+                    if (i is CaseItemDtoTraker t) return !t.IsProcessed;
+                    return true;
+                });
+                addressing.Items.AddRange(notProcessed);
             }
             var response = a.Execute();
-            if (a is TarrantFetchCaseList _ && response is string cases) Items.AddRange(GetData(cases));
+            if (a is TarrantFetchCaseList _ && response is string cases) {
+                var foundCases = GetData(cases);
+                if (foundCases == null || foundCases.Count == 0) return isCaptchaNeeded;
+                var trackingJs = foundCases.ToJsonString();
+                var trackingList = trackingJs.ToInstance<List<CaseItemDtoTraker>>();
+                Items.AddRange(trackingList);
+            }
             return isCaptchaNeeded;
         }
 

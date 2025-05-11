@@ -1,4 +1,5 @@
-﻿using LegalLead.PublicData.Search.Common;
+﻿using LegalLead.PublicData.Search.Classes;
+using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Enumerations;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
@@ -7,6 +8,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -109,6 +112,7 @@ namespace LegalLead.PublicData.Search.Util
             cases.ForEach(c =>
             {
                 ReadPersonDetails(driver, c, exec, jscript);
+                if (c is CaseItemDtoTraker trk) { trk.IsProcessed = true; }
                 var position = cases.IndexOf(c) + 1;
                 Web?.EchoProgess(0, count, position, $"{filingDate} : Reading {position} of {count} records.");
             });
@@ -174,7 +178,13 @@ namespace LegalLead.PublicData.Search.Util
             {
 
                 var uri = c.Href;
-                NavigatePage(driver, uri);
+                var navigationSuccess = NavigatePage(driver, uri);
+                if (!navigationSuccess)
+                {
+                    // go back
+                    driver.Navigate().Back();
+                    NavigateByLinkClick(driver, c.CaseNumber);
+                }
                 var jsresponse = exec.ExecuteScript(jscript);
                 AppendPersonDetail(c, jsresponse);
             }
@@ -195,15 +205,41 @@ namespace LegalLead.PublicData.Search.Util
                 return p.Type.Equals("Defendant", StringComparison.OrdinalIgnoreCase);// Defendant 
             }) ?? people[0];
             c.Address = person.Address;
+            if (!string.IsNullOrEmpty(c.PartyName)) return;
+            if (string.IsNullOrEmpty(person.CaseStyle) || string.IsNullOrEmpty(person.Name)) return;
+            c.CaseStyle = person.CaseStyle;
+            c.SetPartyNameFromCaseStyle(true);
         }
 
-        private static void NavigatePage(IWebDriver driver, string targetUrl)
+        private static bool NavigatePage(IWebDriver driver, string targetUrl)
         {
             if (!Uri.TryCreate(targetUrl, UriKind.Absolute, out var url))
                 throw new ArgumentOutOfRangeException(nameof(targetUrl));
 
             var currentUri = driver.Url;
             driver.Navigate().GoToUrl(url);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5))
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(500),
+            };
+            wait.Until(d => !d.Url.Equals(currentUri, StringComparison.OrdinalIgnoreCase));
+            // check for an error has occurred
+            return !driver.Url.Contains("ErrorOccured");
+        }
+
+        private static void NavigateByLinkClick(IWebDriver driver, string caseNumber)
+        {
+            if (driver is not IJavaScriptExecutor executor) return;
+            var finder = By.XPath("//a[@style='color: blue']");
+            var links = driver.TryFindElements(finder);
+            if (links == null || links.Count == 0) return;
+            var numbers = links.Select(x => x.Text).ToList();
+            var indx = numbers.FindIndex(x => x.Equals(caseNumber));
+            if (indx == -1) return;
+            var targetLink = links[indx];
+
+            var currentUri = driver.Url;
+            executor.ExecuteScript("arguments[0].click()", targetLink);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5))
             {
                 PollingInterval = TimeSpan.FromMilliseconds(500),

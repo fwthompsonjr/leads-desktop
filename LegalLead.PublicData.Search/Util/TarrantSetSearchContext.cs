@@ -15,7 +15,7 @@ namespace LegalLead.PublicData.Search.Util
             var locationName = Parameters.UserSelectedCourtType;
             var locationIndex = BoProvider.GetLocationIndex(locationName);
             var actualName = BoProvider.GetLocationName(locationIndex);
-            Console.WriteLine("Searching: {0}", actualName);
+            Console.WriteLine($"Searching: {actualName}");
             return SetContext(Driver, context.ReadMode, locationIndex);
         }
 
