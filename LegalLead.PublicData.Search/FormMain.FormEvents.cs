@@ -631,7 +631,7 @@ namespace LegalLead.PublicData.Search
         {
             const string category = "admin";
             var settings = new List<UserSettingChangeViewModel>();
-            var map = new[] { 
+            var map = new[] {
                 SettingConstants.AdminFieldNames.AllowBrowserDisplay,
                 SettingConstants.AdminFieldNames.AllowDbSearching,
                 SettingConstants.AdminFieldNames.DbMinimumPersistenceDays };
@@ -830,16 +830,16 @@ namespace LegalLead.PublicData.Search
             const string settingName = "search";
             var settings = new List<UserSettingChangeViewModel>()
             {
-                new(){ 
-                    Category = settingName, 
+                new(){
+                    Category = settingName,
                     Name = SettingConstants.SearchFieldNames.LastCounty,
                     Value = siteName },
-                new(){ 
-                    Category = settingName, 
+                new(){
+                    Category = settingName,
                     Name = SettingConstants.SearchFieldNames.StartDate,
                     Value = startDate },
-                new(){ 
-                    Category = settingName, 
+                new(){
+                    Category = settingName,
                     Name = SettingConstants.SearchFieldNames.EndDate,
                     Value = endDate },
             };

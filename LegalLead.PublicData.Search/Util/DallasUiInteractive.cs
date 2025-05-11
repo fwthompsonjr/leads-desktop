@@ -59,7 +59,7 @@ namespace LegalLead.PublicData.Search.Util
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
                 var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
                 OfflineProcessingEnabled = SettingsWriter.GetSettingOrDefault("search",
-                    SettingConstants.SearchFieldNames.AllowOfflineProcessing, 
+                    SettingConstants.SearchFieldNames.AllowOfflineProcessing,
                     true);
                 var bulkReader = new DallasBulkCaseReader
                 {

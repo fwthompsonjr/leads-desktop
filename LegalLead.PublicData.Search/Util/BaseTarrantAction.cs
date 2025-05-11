@@ -9,7 +9,6 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -28,7 +27,7 @@ namespace LegalLead.PublicData.Search.Util
         protected static string ERR_START_DATE_MISSING => Rx.ERR_START_DATE_MISSING;
         protected static string ERR_END_DATE_MISSING => Rx.ERR_END_DATE_MISSING;
         private static string humanScript;
-        
+
         #endregion
         #region Properties
 
@@ -152,8 +151,9 @@ namespace LegalLead.PublicData.Search.Util
                 };
                 wait.Until(d => !d.Url.Equals(currentUri, StringComparison.OrdinalIgnoreCase));
                 driver.WaitForDocumentReady(exec, TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(500));
-                if (IsCaptchaRequested(driver)) { 
-                    return PromptUser(); 
+                if (IsCaptchaRequested(driver))
+                {
+                    return PromptUser();
                 }
                 return true;
             }
@@ -169,7 +169,7 @@ namespace LegalLead.PublicData.Search.Util
         }
 
         #endregion
-        
+
         #region Private Static Methods
 
         private static void ReadPersonDetails(IWebDriver driver, CaseItemDto c, IJavaScriptExecutor exec, string jscript)

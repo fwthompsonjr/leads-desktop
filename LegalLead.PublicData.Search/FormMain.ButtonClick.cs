@@ -151,7 +151,7 @@ namespace LegalLead.PublicData.Search
                 var isCriminalSearch = chkCrimalCases.Visible && chkCrimalCases.Checked;
                 var fallback = "Civil";
                 return isCriminalSearch ? "Criminal" : fallback;
-                
+
             });
             keys.Add(new() { Name = "UserSelectedCourtIndex", Value = $"{courtName.Index}" });
             keys.Add(new() { Name = "UserSelectedCourtType", Value = courtName.Name });
@@ -314,7 +314,8 @@ namespace LegalLead.PublicData.Search
                     var displayMode = SettingsWriter.GetSettingOrDefault("admin", SettingConstants.AdminFieldNames.AllowBrowserDisplay, true);
                     if (!displayMode) { webmgr.DriverReadHeadless = false; }
                 }
-                if (siteData.Id == (int)SourceType.TarrantCounty) {
+                if (siteData.Id == (int)SourceType.TarrantCounty)
+                {
                     webmgr.DriverReadHeadless = false;
                 }
                 webmgr.TrackingIndex = trackingItem.Id;

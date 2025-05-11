@@ -6,7 +6,7 @@ namespace LegalLead.PublicData.Search.Models
     public class TarrantConfigurationModel
     {
         [JsonProperty("basePage")]
-        public string BasePage { get; set; }  = string.Empty;
+        public string BasePage { get; set; } = string.Empty;
 
         [JsonProperty("locations")]
         public List<string> Locations { get; set; } = [];

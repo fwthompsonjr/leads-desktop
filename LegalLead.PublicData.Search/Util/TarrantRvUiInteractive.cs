@@ -10,7 +10,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
@@ -146,7 +145,8 @@ namespace LegalLead.PublicData.Search.Util
                 addressing.Items.AddRange(notProcessed);
             }
             var response = a.Execute();
-            if (a is TarrantFetchCaseList _ && response is string cases) {
+            if (a is TarrantFetchCaseList _ && response is string cases)
+            {
                 var foundCases = GetData(cases);
                 if (foundCases == null || foundCases.Count == 0) return isCaptchaNeeded;
                 var trackingJs = foundCases.ToJsonString();

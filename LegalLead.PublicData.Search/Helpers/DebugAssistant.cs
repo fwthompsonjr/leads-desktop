@@ -24,9 +24,12 @@ namespace LegalLead.PublicData.Search.Helpers
         }
         public static void UpdateSettings()
         {
-            var change = new UserSettingChangeViewModel { 
-                Category = "admin", 
-                Name = SettingConstants.AdminFieldNames.AllowBrowserDisplay, Value = "true" };
+            var change = new UserSettingChangeViewModel
+            {
+                Category = "admin",
+                Name = SettingConstants.AdminFieldNames.AllowBrowserDisplay,
+                Value = "true"
+            };
             SettingsWriter.Change(change);
         }
         private static string GetToken()
