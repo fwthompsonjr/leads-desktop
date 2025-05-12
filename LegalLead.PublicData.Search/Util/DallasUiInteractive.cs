@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;
@@ -21,7 +20,6 @@ using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    using Rx = Properties.Resources;
     public class DallasUiInteractive : DallasWebInteractive
     {
         public DallasUiInteractive(WebNavigationParameter parameters, bool displayDialogue = true) : base(parameters)

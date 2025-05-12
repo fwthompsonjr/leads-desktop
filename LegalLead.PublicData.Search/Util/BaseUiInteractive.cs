@@ -10,7 +10,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.DriverFactory;
 using Thompson.RecordSearch.Utility.Dto;

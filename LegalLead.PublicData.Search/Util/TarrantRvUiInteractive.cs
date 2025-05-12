@@ -10,13 +10,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    using Rx = Properties.Resources;
     internal class TarrantRvUiInteractive : BaseUiInteractive
     {
         public TarrantRvUiInteractive(WebNavigationParameter parameters) : base(parameters)
@@ -173,7 +171,7 @@ namespace LegalLead.PublicData.Search.Util
         {
             var items = new List<string> { requested };
             if (!requested.Equals("All JP Courts")) return items;
-            var indexes = new List<int>{1, 2, 3, 4, 5, 6, 7, 8}
+            var indexes = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 }
             .Select(x => $"JP No. {x}");
             return [.. indexes];
 
