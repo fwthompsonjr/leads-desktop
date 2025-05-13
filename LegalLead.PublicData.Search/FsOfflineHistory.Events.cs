@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -10,15 +11,22 @@ namespace LegalLead.PublicData.Search
         {
             if (sender is not System.Windows.Forms.Button btn) return;
             if (!btn.Enabled) return;
-            try
-            {
-                btn.Enabled = false;
-                BindRecords();
-            }
-            finally
-            {
-                btn.Enabled = true;
-            }
+
+            btn.Enabled = false;
+            var bw = new BackgroundWorker();
+            bw.DoWork += Bw_DoWork;
+            bw.RunWorkerCompleted += Bw_RunWorkerCompleted;
+            bw.RunWorkerAsync();
+        }
+
+        private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnSubmit.Enabled = true;
+        }
+
+        private void Bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Invoke(() => { BindRecords(); });
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -37,6 +45,7 @@ namespace LegalLead.PublicData.Search
         private void Grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!grid.Enabled) return;
+            var backgroundRunning = false;
             try
             {
                 grid.Enabled = false;
@@ -47,14 +56,26 @@ namespace LegalLead.PublicData.Search
                     OpenFile(e.RowIndex);
                     return;
                 }
-                GenerateContent(e.RowIndex);
+
+                var bwContent = new BackgroundWorker();
+                bwContent.DoWork += BwContent_DoWork;
+                bwContent.RunWorkerCompleted += Bw_RunWorkerCompleted;
+                backgroundRunning = true;
+                bwContent.RunWorkerAsync(e);
             }
             finally
             {
-                grid.Enabled = true;
+                if(!backgroundRunning) grid.Enabled = true;
             }
         }
 
+        private void BwContent_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (e.Argument is DataGridViewCellEventArgs args)
+            {
+                Invoke(() => { GenerateContent(args.RowIndex); });
+            }
+        }
 
         private void Grid_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
