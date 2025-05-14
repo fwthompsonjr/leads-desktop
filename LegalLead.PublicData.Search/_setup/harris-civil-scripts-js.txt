@@ -1,0 +1,34 @@
+{
+	"configuration": {
+		"basePage": "https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil"
+	},
+	"scripts": [
+		{
+			"name": "set-search-context",
+			"json": [
+			]
+		},
+		{
+			"name": "set-search-date-parameters",
+			"json": [
+				"let date0 = '{0}';",
+				"let date1 = '{1}';",
+			]
+		},
+		{
+			"name": "fetch-search-case-details",
+			"json": [
+			]
+		},
+		{
+			"name": "fetch-search-address-details",
+			"json": [
+			]
+		},
+		{
+			"name": "navigate-next-page",
+			"json": [
+			]
+		}
+	]
+}
