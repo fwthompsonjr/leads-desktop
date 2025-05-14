@@ -13,7 +13,7 @@ namespace LegalLead.PublicData.Search.Util
             For<IHttpService>().Add<HttpService>().Singleton();
             For<ICountyCodeService>().Add<CountyCodeService>().Singleton();
             For<ICountyCodeReader>().Add<CountyCodeReaderService>().Singleton();
-            For<ITarrantConfigurationBoProvider>().Add<TarrantConfigurationBoProvider>().Singleton();
+            For<IHarrisCivilConfigurationBoProvider>().Add<HarrisCivilConfigurationBoProvider>().Singleton();
 
             For<ICountySearchAction>().Add<TarrantBeginNavigation>().Named("begin");
             For<ICountySearchAction>().Add<TarrantSetSearchContext>().Named("begin-search");

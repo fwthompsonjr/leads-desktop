@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace LegalLead.PublicData.Search.Models
 {
-    public class TarrantConfigurationBo
+    public class HarrisCivilConfigurationBo
     {
         [JsonProperty("configuration")]
-        public TarrantConfigurationModel Configuration { get; set; }
+        public HarrisCivilConfigurationModel Configuration { get; set; }
 
         [JsonProperty("scripts")]
         public List<CommonJsScriptModel> Scripts { get; set; }

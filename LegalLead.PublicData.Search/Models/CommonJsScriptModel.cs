@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LegalLead.PublicData.Search.Models
 {
-    public class TarrantJsScriptModel
+    public class CommonJsScriptModel
     {
         [JsonProperty("name")]
         public string Name { get; set; } = string.Empty;
