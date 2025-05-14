@@ -8,7 +8,7 @@ function replaceTabs($stringWithTabs) {
     return $newString;
 }
 $nl = [Environment]::NewLine
-$src = "C:\_d\lead-old\_notes\tarrant-new\get-defendant-address.js";
+$src = "C:\_d\lead-old\_notes\harris-new\next-page-navigation.js";
 $shortName = [System.IO.Path]::GetFileNameWithoutExtension( $src );
 [string]$content = [System.IO.File]::ReadAllText( $src );
 $lines = $content.Split( $nl, [System.StringSplitOptions]::RemoveEmptyEntries);

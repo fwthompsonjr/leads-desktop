@@ -25,4 +25,4 @@ let read_status_label = {
         }
     }
 }
-read_status_label.execute();
+return read_status_label.execute();

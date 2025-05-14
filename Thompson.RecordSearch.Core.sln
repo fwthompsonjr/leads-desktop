@@ -83,6 +83,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Notes", "_Notes", "{02EA68
 		_notes\harris-new\form-submit.js = _notes\harris-new\form-submit.js
 		_notes\harris-new\get-record-count.js = _notes\harris-new\get-record-count.js
 		_notes\harris-new\read-case-address.js = _notes\harris-new\read-case-address.js
+		_notes\harris-new\read-case-style.js = _notes\harris-new\read-case-style.js
 		_notes\set-context.js = _notes\set-context.js
 		_notes\harris-new\set-parameters.js = _notes\harris-new\set-parameters.js
 	EndProjectSection
@@ -158,7 +159,7 @@ Global
 		{F2941B1B-F45A-4BB8-B93D-52E6C11AEE08} = {9A80FA49-0C8D-4EDB-9861-5CA8DF4FEA3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 		                SolutionGuid = {27100864-AF8E-4354-A9C4-947AD10A21C4}
+		SolutionGuid = {24F5A630-BF7B-4B57-8A67-0EC1C19E8640}
 	EndGlobalSection
 EndGlobal

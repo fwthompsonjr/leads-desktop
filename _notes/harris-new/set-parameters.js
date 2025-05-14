@@ -11,8 +11,8 @@ let set_parameters = {
         'ctl00_ContentPlaceHolder1_txtTo'
     ],
     'control_values': [
-        '04/28/2025',
-        '05/05/2025'
+        '{0}',
+        '{1}'
     ],
     'set_value': function (id) {
         let name = set_parameters.controls[id];
@@ -36,4 +36,4 @@ let set_parameters = {
         }
     }
 }
-set_parameters.populate();
+return set_parameters.populate();
