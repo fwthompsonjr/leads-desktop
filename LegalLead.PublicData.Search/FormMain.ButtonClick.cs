@@ -39,15 +39,21 @@ namespace LegalLead.PublicData.Search
                 var siteData = (WebNavigationParameter)cboWebsite.SelectedItem;
                 var sourceMember = (SourceType)siteData.Id;
                 CurrentRequest = sourceMember.GetDbRequest(this, startDate);
+                var cbindx = GetCaseSelectionIndex(cboCaseType.SelectedItem);
+                var websiteName = siteData.Name;
+                if (cbindx == 0 && siteData.Id == 30)
+                {
+                    websiteName = "Harris Criminal Courts";
+                }
                 var searchItem = new SearchResult
                 {
                     Id = GetObject<List<SearchResult>>(Tag).Count + 1,
-                    Website = siteData.Name,
+                    Website = websiteName,
                     EndDate = endingDate.ToShortDateString(),
                     StartDate = startDate.ToShortDateString(),
                     SearchDate = DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString(),
                 };
-                searchItem.Search = $"{searchItem.SearchDate} : {searchItem.Website} from {searchItem.StartDate} to {searchItem.EndDate}";
+                searchItem.Search = $"{searchItem.SearchDate} : {websiteName} from {searchItem.StartDate} to {searchItem.EndDate}";
                 switch (siteData.Id)
                 {
                     case (int)SourceType.BexarCounty:
@@ -60,7 +66,6 @@ namespace LegalLead.PublicData.Search
                         TravisButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
                     case (int)SourceType.HarrisCivil:
-                        var cbindx = GetCaseSelectionIndex(cboCaseType.SelectedItem);
                         CommonButtonExecution(siteData, searchItem, cbindx);
                         break;
                     case (int)SourceType.HidalgoCounty:
