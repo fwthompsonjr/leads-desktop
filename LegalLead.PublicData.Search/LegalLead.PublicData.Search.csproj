@@ -223,4 +223,7 @@
     <Compile Remove="obj\x64\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Remove="obj\x64\Release\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Util\Actions\" />
+  </ItemGroup>
 </Project>
