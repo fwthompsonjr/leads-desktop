@@ -39,15 +39,21 @@ namespace LegalLead.PublicData.Search
                 var siteData = (WebNavigationParameter)cboWebsite.SelectedItem;
                 var sourceMember = (SourceType)siteData.Id;
                 CurrentRequest = sourceMember.GetDbRequest(this, startDate);
+                var cbindx = GetCaseSelectionIndex(cboCaseType.SelectedItem);
+                var websiteName = siteData.Name;
+                if (cbindx == 0 && siteData.Id == 30)
+                {
+                    websiteName = "Harris Criminal Courts";
+                }
                 var searchItem = new SearchResult
                 {
                     Id = GetObject<List<SearchResult>>(Tag).Count + 1,
-                    Website = siteData.Name,
+                    Website = websiteName,
                     EndDate = endingDate.ToShortDateString(),
                     StartDate = startDate.ToShortDateString(),
                     SearchDate = DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString(),
                 };
-                searchItem.Search = $"{searchItem.SearchDate} : {searchItem.Website} from {searchItem.StartDate} to {searchItem.EndDate}";
+                searchItem.Search = $"{searchItem.SearchDate} : {websiteName} from {searchItem.StartDate} to {searchItem.EndDate}";
                 switch (siteData.Id)
                 {
                     case (int)SourceType.BexarCounty:
@@ -60,9 +66,7 @@ namespace LegalLead.PublicData.Search
                         TravisButtonExecution(siteData, searchItem, startDate, endingDate);
                         break;
                     case (int)SourceType.HarrisCivil:
-                        var cbindx = GetCaseSelectionIndex(cboCaseType.SelectedItem);
-                        if (cbindx == 0) NonDallasButtonExecution(siteData, searchItem, startDate, endingDate);
-                        else CommonButtonExecution(siteData, searchItem);
+                        CommonButtonExecution(siteData, searchItem, cbindx);
                         break;
                     case (int)SourceType.HidalgoCounty:
                     case (int)SourceType.ElPasoCounty:
@@ -93,7 +97,7 @@ namespace LegalLead.PublicData.Search
             }
         }
 
-        private void CommonButtonExecution(WebNavigationParameter siteData, SearchResult searchItem)
+        private void CommonButtonExecution(WebNavigationParameter siteData, SearchResult searchItem, int caseSelectionIndex = 0)
         {
             var index = cboSearchType.SelectedIndex;
             var searchType = DallasSearchProcess.GetCourtName(index);
@@ -107,17 +111,24 @@ namespace LegalLead.PublicData.Search
                 TarrantSetUserSelections(keys);
             }
             var wb = new WebNavigationParameter { Keys = keys };
-            IWebInteractive dweb = siteData.Id switch
+            int calculcatedSiteIndex = siteData.Id;
+            if (calculcatedSiteIndex == 30 && caseSelectionIndex != 0 )
+            {
+                calculcatedSiteIndex = 35;
+            }
+
+            IWebInteractive dweb = calculcatedSiteIndex switch
             {
                 10 => new TarrantRvUiInteractive(wb),
                 30 => new HccUiInteractive(wb),
+                35 => new HarrisRvInteractive(wb),
                 130 => new GraysonUiInteractive(wb),
                 120 => new WilliamsonUiInteractive(wb),
                 110 => new FortBendUiInteractive(wb),
                 100 => new ElPasoUiInteractive(wb),
                 _ => new HidalgoUiInteractive(wb)
             };
-            var indx = siteData.Id == 30 ? 1 : 0;
+            var indx = calculcatedSiteIndex == 30 ? 1 : 0;
             _ = Task.Run(async () =>
             {
                 await Invoke(async () =>

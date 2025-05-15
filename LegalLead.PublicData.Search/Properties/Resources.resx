@@ -160,4 +160,10 @@
   <data name="tarrant-address-list" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_setup\tarrant-address-list.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="harris-civil-address-list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_setup\harris-civil-address-list.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="harris-civil-scripts-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_setup\harris-civil-scripts-js.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

@@ -9,6 +9,6 @@ namespace LegalLead.PublicData.Search.Models
         public TarrantConfigurationModel Configuration { get; set; }
 
         [JsonProperty("scripts")]
-        public List<TarrantJsScriptModel> Scripts { get; set; }
+        public List<CommonJsScriptModel> Scripts { get; set; }
     }
 }
