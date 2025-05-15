@@ -71,7 +71,6 @@ namespace Thompson.RecordSearch.Utility.Extensions
             catch (Exception)
             {
                 return default;
-                throw;
             }
         }
 

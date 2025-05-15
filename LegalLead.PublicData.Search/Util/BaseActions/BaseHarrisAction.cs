@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Thompson.RecordSearch.Utility.Classes;
 using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Extensions;
@@ -59,7 +60,10 @@ namespace LegalLead.PublicData.Search.Util
         {
             const string scriptName = "set-search-date-parameters";
             if (driver is not IJavaScriptExecutor exec) return false;
-            var jscript = BoProvider.GetJs(scriptName);
+            var builder = new StringBuilder(BoProvider.GetJs(scriptName));
+            builder.Replace("{0}", $"{startDate:d}");
+            builder.Replace("{1}", $"{endingDate:d}");
+            var jscript = builder.ToString();
             var response = exec.ExecuteScript(jscript);
             if (response is not string json) return false;
             var rsp = json.ToInstance<SetContextDto>();
@@ -84,7 +88,8 @@ namespace LegalLead.PublicData.Search.Util
             if (driver is not IJavaScriptExecutor exec) return 0;
             var jscript = BoProvider.GetJs(scriptName);
             var response = exec.ExecuteScript(jscript);
-            if (response is not GetRecordCountDto dto) return 0;
+            if (response is not string payload) return 0;
+            var dto = payload.ToInstance<GetRecordCountDto>() ?? new();
             return dto.RecordCount;
         }
 
@@ -96,7 +101,10 @@ namespace LegalLead.PublicData.Search.Util
             if (driver is not IJavaScriptExecutor exec) return data;
             var jscript = BoProvider.GetJs(caseScript);
             var response = exec.ExecuteScript(jscript);
-            if (response is not List<HarrisCaseStyleDto> casedtos) return data;
+            if (response is not string payload) return data;
+            var casesResponse = payload.ToInstance<GetCaseStyleResponse>();
+            if (null == casesResponse) return data;
+            var casedtos = casesResponse.Data;
             if (casedtos.Count == 0) return data;
             var filingDt = casedtos[0].DateFiled;
             Console.WriteLine($"{filingDt} : Found {casedtos.Count} records");
@@ -113,9 +121,14 @@ namespace LegalLead.PublicData.Search.Util
                     CaseStatus = c.StatusCode
                 });
             });
+
+            Console.WriteLine($"{filingDt} : Reading address details.");
             jscript = BoProvider.GetJs(personScript);
             response = exec.ExecuteScript(jscript);
-            if (response is not List<HarrisCaseAddressDto> people) return data;
+            if (response is not string jspayload) return data;
+            var addressesResponse = jspayload.ToInstance<GetCaseAddressResponse>();
+            if (addressesResponse == null) return data;
+            var people = addressesResponse.Data;
             people.ForEach(p =>
             {
                 var target = data.Find(x => x.CaseNumber == p.CaseNumber);
@@ -135,8 +148,8 @@ namespace LegalLead.PublicData.Search.Util
             if (driver is not IJavaScriptExecutor exec) return false;
             var jscript = BoProvider.GetJs(scriptName, "read");
             var response = exec.ExecuteScript(jscript);
-            if (response is not NavigateNextDto nav
-                || !nav.IsOk) return false;
+            if (response is not string json) return false;
+            var nav = json.ToInstance<NavigateNextDto>() ?? new();
             return nav.HasNextPage;
         }
 
@@ -182,16 +195,44 @@ namespace LegalLead.PublicData.Search.Util
             [JsonProperty("result")]
             public bool IsOk { get; set; }
         }
-        private sealed class GetRecordCountDto : SetContextDto
+        private sealed class GetRecordCountDto
         {
+            [JsonProperty("name")]
+            public string Name { get; set; } = string.Empty;
+
+            [JsonProperty("result")]
+            public bool IsOk { get; set; }
 
             [JsonProperty("rowCount")]
             public int RecordCount { get; set; }
         }
-        private sealed class NavigateNextDto : SetContextDto
+        private sealed class NavigateNextDto
         {
+            [JsonProperty("name")]
+            public string Name { get; set; } = string.Empty;
+
+            [JsonProperty("result")]
+            public bool IsOk { get; set; }
             [JsonProperty("hasNextPage")]
             public bool HasNextPage { get; set; }
+        }
+        private sealed class GetCaseStyleResponse
+        {
+            [JsonProperty("name")]
+            public string Name { get; set; }
+            [JsonProperty("data")]
+            public List<HarrisCaseStyleDto> Data { get; set; } = [];
+            [JsonProperty("result")]
+            public bool IsOk { get; set; }
+        }
+        private sealed class GetCaseAddressResponse
+        {
+            [JsonProperty("name")]
+            public string Name { get; set; }
+            [JsonProperty("data")]
+            public List<HarrisCaseAddressDto> Data { get; set; } = [];
+            [JsonProperty("result")]
+            public bool IsOk { get; set; }
         }
         private sealed class HarrisCaseStyleDto
         {

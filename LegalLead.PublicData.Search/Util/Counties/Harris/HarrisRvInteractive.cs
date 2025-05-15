@@ -1,23 +1,17 @@
 ﻿using LegalLead.PublicData.Search.Classes;
 using LegalLead.PublicData.Search.Common;
-using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using System.Windows.Forms;
-using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
 {
-    using Rx = Properties.Resources;
     internal class HarrisRvInteractive : BaseUiInteractive
     {
         public HarrisRvInteractive(WebNavigationParameter parameters) : base(parameters)

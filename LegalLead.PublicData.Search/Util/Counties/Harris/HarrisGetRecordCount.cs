@@ -15,7 +15,7 @@ namespace LegalLead.PublicData.Search.Util
             {
                 Interactive.EchoProgess(0, found, 1, $"Found {found} records.");
             }
-            return GetSearchRecordCount(Driver);
+            return found;
         }
     }
 }

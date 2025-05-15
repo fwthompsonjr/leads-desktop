@@ -15,11 +15,12 @@ namespace LegalLead.PublicData.Search.Util
             For<ICountyCodeReader>().Add<CountyCodeReaderService>().Singleton();
             For<IHarrisCivilConfigurationBoProvider>().Add<HarrisCivilConfigurationBoProvider>().Singleton();
 
-            For<ICountySearchAction>().Add<TarrantBeginNavigation>().Named("begin");
-            For<ICountySearchAction>().Add<TarrantSetSearchContext>().Named("begin-search");
-            For<ICountySearchAction>().Add<TarrantSetSearchDateParameters>().Named("set-parameters");
-            For<ICountySearchAction>().Add<TarrantFetchCaseList>().Named("get-case-list");
-            For<ICountySearchAction>().Add<TarrantFetchPersonDetail>().Named("get-person-list");
+            For<ICountySearchAction>().Add<HarrisBeginNavigation>().Named("begin");
+            For<ICountySearchAction>().Add<HarrisSetSearchContext>().Named("begin-search");
+            For<ICountySearchAction>().Add<HarrisSetSearchDateParameters>().Named("set-parameters");
+            For<ICountySearchAction>().Add<HarrisSubmitSearch>().Named("submit-form");
+            For<ICountySearchAction>().Add<HarrisGetRecordCount>().Named("get-record-count");
+            For<ICountySearchAction>().Add<HarrisFetchPersonDetail>().Named("get-person-list");
         }
     }
 }
