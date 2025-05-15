@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Globalization;
 
 namespace LegalLead.PublicData.Search.Util
@@ -17,6 +18,11 @@ namespace LegalLead.PublicData.Search.Util
             if (string.IsNullOrEmpty(Parameters.EndingDate) || !DateTime.TryParse(Parameters.EndingDate,
                 CultureInfo.CurrentCulture, out var endingDt))
                 throw new NullReferenceException(ERR_END_DATE_MISSING);
+
+            var find = By.Id("ctl00_ContentPlaceHolder1_ddlCourt");
+            var canExecute = WaitForExists(Driver, find);
+            if (!canExecute) return false;
+
             return SetDateParameters(Driver, startDt, endingDt);
         }
     }

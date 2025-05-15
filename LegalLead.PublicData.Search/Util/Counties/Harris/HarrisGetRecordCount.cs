@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using Thompson.RecordSearch.Utility.Extensions;
 
 namespace LegalLead.PublicData.Search.Util
@@ -10,6 +11,12 @@ namespace LegalLead.PublicData.Search.Util
         {
             if (Parameters == null || Driver == null)
                 throw new NullReferenceException(ERR_DRIVER_UNAVAILABLE);
+
+
+            var find = By.Id("ctl00_ContentPlaceHolder1_lblCount");
+            var canExecute = WaitForExists(Driver, find);
+            if (!canExecute) return 0;
+
             int found = GetSearchRecordCount(Driver);
             if (found > 0)
             {

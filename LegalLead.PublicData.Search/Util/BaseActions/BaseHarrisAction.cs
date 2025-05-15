@@ -164,8 +164,37 @@ namespace LegalLead.PublicData.Search.Util
         }
         #endregion
 
-        #region Private Static Methods
+        #region Static Methods
 
+
+        protected static bool WaitForExists(IWebDriver driver, By find, bool useCollection = false)
+        {
+            try
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(500),
+                };
+                wait.Until(x =>
+                {
+                    if (useCollection)
+                    {
+                        var collection = x.TryFindElements(find);
+                        return collection != null;
+                    }
+                    else
+                    {
+                        var element = x.TryFindElement(find);
+                        return element != null; 
+                    }
+                });
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
         private static bool NavigatePage(IWebDriver driver, string targetUrl)
         {
