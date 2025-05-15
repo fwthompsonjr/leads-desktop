@@ -78,6 +78,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "legallead.search.tests", "UnitTests\legallead.search.tests\legallead.search.tests.csproj", "{F2941B1B-F45A-4BB8-B93D-52E6C11AEE08}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Notes", "_Notes", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		_notes\harris-new\form-submit.js = _notes\harris-new\form-submit.js
+		_notes\harris-new\get-record-count.js = _notes\harris-new\get-record-count.js
+		_notes\harris-new\read-case-address.js = _notes\harris-new\read-case-address.js
+		_notes\harris-new\read-case-style.js = _notes\harris-new\read-case-style.js
+		_notes\set-context.js = _notes\set-context.js
+		_notes\harris-new\set-parameters.js = _notes\harris-new\set-parameters.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU

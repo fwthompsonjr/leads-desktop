@@ -416,11 +416,11 @@ namespace LegalLead.PublicData.Search
 
         private static int GetCaseSelectionIndex(object selectedItem)
         {
-            var fallback = 0;
+            var fallback = 1;
             if (selectedItem == null) return fallback;
             if (selectedItem is not Option ddp) return fallback;
             if (!ddp.Name.Contains("criminal")) return fallback;
-            return 1;
+            return 0;
         }
 
         private static void ShowNoDataErrorBox()
