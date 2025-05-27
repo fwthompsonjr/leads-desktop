@@ -18,7 +18,7 @@ namespace LegalLead.PublicData.Search.Util
             if (IsNoCount(executor)) return null;
             try
             {
-
+                TryHideElements(executor);
                 js = VerifyScript(js);
                 var content = executor.ExecuteScript(js);
                 return Convert.ToString(content, CultureInfo.CurrentCulture);

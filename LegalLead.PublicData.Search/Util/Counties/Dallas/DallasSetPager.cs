@@ -21,8 +21,10 @@ namespace LegalLead.PublicData.Search.Util
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
 
             const string noElementId = "ui-tabs-1";
-            WaitForTabs(noElementId);
+            WaitForTabs(noElementId, executor);
             if (IsNoCount(executor)) return true;
+
+            TryHideElements(executor);
             var casehelper = new DallasSortByCaseTypeHelper(Driver, executor);
             var rowcounter = new DallasGetRecordCountHelper(Driver, executor, js);
 
@@ -31,7 +33,7 @@ namespace LegalLead.PublicData.Search.Util
             return true;
         }
 
-        private void WaitForTabs(string elementId)
+        private void WaitForTabs(string elementId, IJavaScriptExecutor executor = null)
         {
             try
             {
@@ -39,7 +41,10 @@ namespace LegalLead.PublicData.Search.Util
                 {
                     PollingInterval = TimeSpan.FromMilliseconds(800)
                 };
-                wait.Until(w => { return w.TryFindElements(By.Id(elementId)) != null; });
+                wait.Until(w => {
+                    if (executor != null && IsNoCount(executor)) return true;
+                    return w.TryFindElements(By.Id(elementId)) != null; 
+                });
             }
             catch
             {

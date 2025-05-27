@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Util
@@ -33,6 +34,7 @@ namespace LegalLead.PublicData.Search.Util
             var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));
             var postcommon = ActionItems.FindAll(a => postsearchtypes.Contains(a.GetType()));
             var result = new WebFetchResult();
+            ExpectedRecords = 0;
             Iterate(driver, parameters, dates, common, postcommon);
             if (People.Count == 0) return result;
             result.PeopleList = People;
@@ -128,14 +130,18 @@ namespace LegalLead.PublicData.Search.Util
             {
                 var find = actions.Find(a => a.GetType() == typeof(HarrisFetchPersonDetail));
                 if (find is HarrisFetchPersonDetail personFetch) personFetch.ExpectedRecords = expectedCount;
+                ExpectedRecords += expectedCount;
+                if (ExpectedRecords > 0) this.EchoProgess(1, ExpectedRecords, Math.Max(1, Items.Count));
             }
             if (a is HarrisFetchPersonDetail _ && response is string cases)
             {
                 var foundCases = GetData(cases);
                 if (foundCases == null || foundCases.Count == 0) return isCaptchaNeeded;
                 Items.AddRange(foundCases);
+                if (ExpectedRecords > 0) this.EchoProgess(1, ExpectedRecords, Math.Max(1, Items.Count));
             }
             return isCaptchaNeeded;
         }
+        private int ExpectedRecords = 0;
     }
 }

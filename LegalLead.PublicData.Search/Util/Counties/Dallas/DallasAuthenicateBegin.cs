@@ -1,10 +1,14 @@
-﻿using LegalLead.PublicData.Search.Helpers;
+﻿using LegalLead.PublicData.Search.Common;
+using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
+using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using Thompson.RecordSearch.Utility.Classes;
+using Thompson.RecordSearch.Utility.Dto;
 using Thompson.RecordSearch.Utility.Interfaces;
 
 namespace LegalLead.PublicData.Search.Util
@@ -39,7 +43,18 @@ namespace LegalLead.PublicData.Search.Util
             if (string.IsNullOrEmpty(_credential)) return false;
 
             js = VerifyScript(js);
-            executor.ExecuteScript(js);
+            ExecuteScriptWithWait(Driver, executor, js);
+            Thread.Sleep(1000);
+            if (IsCaptchaRequested(Driver))
+            {
+                var handleCaptcha = DisplayUserCaptchaHelper.UserPrompt();
+                if (!handleCaptcha) return false;
+            }
+            return FindUserName();
+        }
+
+        private bool FindUserName()
+        {
             try
             {
                 var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
@@ -51,12 +66,12 @@ namespace LegalLead.PublicData.Search.Util
                     var uid = d.TryFindElement(By.Id("UserName"));
                     return uid != null;
                 });
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
-            return true;
         }
 
         protected string _credential;
@@ -90,7 +105,54 @@ namespace LegalLead.PublicData.Search.Util
             return item.Locator.Query;
         }
 
+        protected bool IsCaptchaRequested(IWebDriver driver)
+        {
+            if (driver is not IJavaScriptExecutor exec) return false;
+            var response = exec.ExecuteScript(HumanScriptJs);
+            if (response is not string result) return false;
+            var model = JsonConvert.DeserializeObject<HumanResponseModel>(result);
+            if (model is null) return false;
+            return model.HasCaptcha;
+        }
+
         protected override string ScriptName { get; } = "login process 01";
         protected ISessionPersistance SessionPersistance { get; set; }
+
+
+        private bool ExecuteScriptWithWait(IWebDriver driver, IJavaScriptExecutor exec, string jscript)
+        {
+            if (string.IsNullOrWhiteSpace(jscript)) return false;
+            var currentUri = driver.Url;
+            try
+            {
+                exec.ExecuteScript(jscript);
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(500),
+                };
+                wait.Until(d => !d.Url.Equals(currentUri, StringComparison.OrdinalIgnoreCase));
+                driver.WaitForDocumentReady(exec, TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(500));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        protected readonly ITarrantConfigurationBoProvider BoProvider
+            = ActionTarrantContainer.GetContainer.GetInstance<ITarrantConfigurationBoProvider>();
+        private const string HumanScriptName = "is-human-page";
+        private static string humanScript;
+        protected string HumanScriptJs => humanScript ??= GetHumanScriptJs();
+        private string GetHumanScriptJs()
+        {
+            return BoProvider.GetJs(HumanScriptName);
+        }
+        private sealed class HumanResponseModel
+        {
+            [JsonProperty("hasCaptcha")] public bool HasCaptcha { get; set; }
+        }
     }
 }
