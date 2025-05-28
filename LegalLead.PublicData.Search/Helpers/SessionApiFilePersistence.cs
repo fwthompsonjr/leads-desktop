@@ -100,10 +100,11 @@ namespace LegalLead.PublicData.Search.Helpers
                     requested.MonthlyLimit = 0;
                     return 0;
                 }
-                if (selected.MonthlyLimit == -1) return -1;
+                var selectedMonthlyLimit = selected.MonthlyLimit.GetValueOrDefault(0);
+                if (selectedMonthlyLimit == -1) return -1;
                 if (selected.MonthlyLimit != requested.MonthlyLimit)
                 {
-                    requested.MonthlyLimit = selected.MonthlyLimit;
+                    requested.MonthlyLimit = selectedMonthlyLimit;
                 }
                 if (requested.MonthlyToDate >= requested.MonthlyLimit) return 0;
                 return requested.MonthlyLimit;
