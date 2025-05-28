@@ -1,17 +1,19 @@
 ﻿using LegalLead.PublicData.Search.Common;
 using LegalLead.PublicData.Search.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
 {
     public partial class FormSettings : Form
     {
-        public FormSettings(int menuId = 0)
+        public FormSettings(int menuId = 0, bool isAdmin = false)
         {
             InitializeComponent();
             IsMdiContainer = true;
-            var options = SessionUtil.GetMenuOptions;
+            var options = GetMenu(isAdmin);
             cboSelection.DataSource = options;
             cboSelection.DisplayMember = "Name";
             cboSelection.ValueMember = "Id";
@@ -55,11 +57,24 @@ namespace LegalLead.PublicData.Search
             fschange.Show();
         }
 
-        internal void SetMenuIndex(int id)
+        internal void SetMenuIndex(int id, bool isAdmin = false)
         {
-            if (!SessionUtil.GetMenuOptions.Exists(x => x.Id == id)) return;
-            cboSelection.SelectedIndex = id;
+            var requested = GetMenu(isAdmin).Find(x => x.Id == id);
+            if (requested == null) return;
+            cboSelection.SelectedIndex = requested.SelectedIndex;
             CboSelection_SelectedIndexChanged(null, null);
+        }
+
+        private static List<SettingMenuItem> GetMenu(bool isAdmin)
+        {
+            var options = SessionUtil.GetMenuOptions.FindAll(x => isAdmin || !x.Name.Equals("County Permissions"));
+            var items = options.Select(x => new SettingMenuItem { Name = x.Name, Id = x.Id, SelectedIndex = options.IndexOf(x) });
+            return [ ..items];
+        }
+
+        private sealed class SettingMenuItem : SettingMenuModel
+        {
+            public int SelectedIndex { get; set; } = 0;
         }
     }
 }

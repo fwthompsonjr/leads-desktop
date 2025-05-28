@@ -60,6 +60,25 @@
 			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
 			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
 		</keys>
+		<keys id="40" name="Harris County Criminal">
+			<key name="baseUri">
+				<![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]>
+			</key>
+			<key name="query"><![CDATA[ID=200&NodeID=1251,1252,1253,1254,1255,1256,1260,1270,1280,1265&NodeDesc=------%20All%20District%20Courts%20------]]></key>
+			<key name="dateRangeMaxDays"><![CDATA[7]]></key>
+			<key name="startDate"><![CDATA[]]></key>
+			<key name="endDate"><![CDATA[]]></key>
+			<key name="courtIndex"><![CDATA[]]></key>
+			<key name="caseStatusIndex"><![CDATA[]]></key>
+			<key name="navigation.control.file"><![CDATA[harrisCivilMapping]]></key>
+			<key name="hlinkUri"><![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]></key>
+			<key name="personNodeXpath"><![CDATA[//*[@id='PIr11']]]></key>
+			<key name="personParentXath"><![CDATA[./..]]></key>
+			<key name="childTdXath"><![CDATA[/html/body/table[4]/tbody/tr[{0}]/td]]></key>
+			<key name="caseTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
+			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
+		</keys>
 		<keys id="60" name="Dallas County">
 			<key name="baseUri">
 				<![CDATA[https://courtsportal.dallascounty.org/DALLASPROD/Home/Dashboard/29]]>

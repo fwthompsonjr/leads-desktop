@@ -22,11 +22,9 @@ namespace LegalLead.PublicData.Search
         private void BindComboBoxes()
         {
 
-            var websites = SettingsManager.GetNavigation();
-            var caseTypes = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.CollinCountyCaseType);
-            var tarrantCourt = CaseTypeSelectionDto.GetDto(CommonKeyIndexes.TarrantCountyCaseType); //"tarrantCountyCaseType");
+            var websites = SettingsManager.GetNavigation().FindAll(x => x.Id != 40);
             cboWebsite.DataSource = websites;
-            cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;// "Name";
+            cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
             cboWebsite.ValueMember = CommonKeyIndexes.IdProperCase;
 
             cboWebsite.SelectedValueChanged += CboWebsite_SelectedValueChanged;
@@ -39,7 +37,7 @@ namespace LegalLead.PublicData.Search
         private void BindPasswords()
         {
             var pwordlist = new List<UserPassword>();
-            var history = UserAccessDto.GetListDto(CommonKeyIndexes.CollinCountyUserMap); // "collinCountyUserMap");
+            var history = UserAccessDto.GetListDto(CommonKeyIndexes.CollinCountyUserMap);
             history.ForEach(x => Append(pwordlist, x));
             var bs = new BindingSource
             {
@@ -61,6 +59,9 @@ namespace LegalLead.PublicData.Search
             });
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Qube Warning",
+            "S1656:Variables should not be self-assigned",
+            Justification = "Self assignment required to force toggle row height")]
         private void CboWebsite_SelectedValueChanged(object sender, EventArgs e)
         {
             var source = (WebNavigationParameter)cboWebsite.SelectedItem;
