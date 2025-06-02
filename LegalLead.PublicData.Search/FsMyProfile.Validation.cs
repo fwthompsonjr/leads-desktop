@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace LegalLead.PublicData.Search
 {
@@ -15,6 +16,7 @@ namespace LegalLead.PublicData.Search
         {
             txErrorMessages.Clear();
             txErrorMessages.ForeColor = Color.Black;
+            SetControlColor(false);
             var groupName = cboProfileGroup.SelectedItem as string;
             if (string.IsNullOrEmpty(groupName)) return false;
             var validationName = (groupName.StartsWith("Address")) ? "Address" : groupName;
@@ -44,6 +46,7 @@ namespace LegalLead.PublicData.Search
                 var response = validator.Validate(new() { Text = address });
                 if (!response.IsValid)
                 {
+                    SetControlColor(true);
                     var message = string.Join(Environment.NewLine, response.Messages);
                     var arr = new List<string>()
                     {
@@ -85,8 +88,19 @@ namespace LegalLead.PublicData.Search
                 }
             });
             txErrorMessages.ForeColor = isFailed ? Color.Red : Color.Black;
-            if (isFailed) txErrorMessages.Text = sb.ToString();
+            if (isFailed)
+            {
+                txErrorMessages.Text = sb.ToString();
+                SetControlColor(true);
+            }
             return !isFailed;
+        }
+
+        private void SetControlColor(bool hasError)
+        {
+            var color = hasError ? Color.Red : Color.Black;
+            var textboxes = new List<TextBox>() { tbxFieldValue01, tbxFieldValue02, tbxFieldValue03 };
+            textboxes.ForEach(t => t.ForeColor = color);
         }
 
         #region Attributes

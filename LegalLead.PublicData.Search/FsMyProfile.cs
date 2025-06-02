@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 using Thompson.RecordSearch.Utility.Extensions;
 using Thompson.RecordSearch.Utility.Models;
@@ -26,6 +28,40 @@ namespace LegalLead.PublicData.Search
             {
                 w.Leave += FieldValue_TextChanged;
             });
+            var nonfocused = new List<TextBox> {
+                tbxUserName,
+                tbxFieldName01,
+                tbxFieldName02,
+                tbxFieldName03,
+                txErrorMessages
+            };
+            nonfocused.ForEach(tbx =>
+            {
+                tbx.Enter += TextBox_Entered;
+                tbx.MouseDown += TextBox_MouseEntered;
+            });
+        }
+
+        private void TextBox_MouseEntered(object sender, MouseEventArgs e)
+        {
+            if (sender is not TextBox tbx) return;
+            var name = tbx.Name;
+            Control target = name switch
+            {
+                "tbxUserName" => cboProfileGroup,
+                "tbxFieldName01" => tbxFieldValue01,
+                "tbxFieldName02" => tbxFieldValue02,
+                "tbxFieldName03" => tbxFieldValue03,
+                "txErrorMessages" => button1,
+                _ => null,
+            };
+            if(target == null) return;
+            ActiveControl = target;
+        }
+
+        private void TextBox_Entered(object sender, EventArgs e)
+        {
+            TextBox_MouseEntered(sender, null);
         }
 
         private void FieldValue_TextChanged(object sender, EventArgs e)
@@ -72,5 +108,7 @@ namespace LegalLead.PublicData.Search
             changes.RemoveAll(x => indexes.Contains(x.Id));
             CboProfileGroup_SelectedIndexChanged(null, null);
         }
+
+
     }
 }
