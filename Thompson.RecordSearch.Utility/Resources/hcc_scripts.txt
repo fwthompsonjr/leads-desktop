@@ -33,7 +33,9 @@
 	"set-offline-download-complete": "db/set-offline-download-complete",
 	"get-offline-request-search-details": "db/get-offline-request-search-details",
 	"register-account": "app/create-account",
-	"admin": "admin/execute"
+	"admin": "admin/execute",
+	"get-my-profile": "db/get-my-profile",
+	"update-my-profile": "db/update-my-profile"
   },
   "invoice": {
 	"uri": "http://api.legallead.co/db-invoice/",

@@ -28,5 +28,7 @@ namespace LegalLead.PublicData.Search.Interfaces
         string GetDownloadStatus(ProcessOfflineResponse request);
         string FlagDownloadCompleted(object request);
         List<OfflineSearchTypeResponse> GetRequestSearchDetails(string leadId);
+        List<UserProfileModel> GetMyProfile();
+        List<UserProfileModel> UpdateMyProfile(List<UserProfileModel> changes);
     }
 }

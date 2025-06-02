@@ -314,6 +314,34 @@ namespace LegalLead.PublicData.Search.Helpers
             return response ?? new();
         }
 
+        public List<UserProfileModel> GetMyProfile()
+        {
+            var uri = GetAddress("get-my-profile");
+            var token = GetToken();
+            var payload = new
+            {
+                LeadId = GetLeadId(),
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, ProfileResponseModel>(client, uri, payload);
+            if (response == null || response.Content == null) return [];
+            return response.Content;
+        }
+
+        public List<UserProfileModel> UpdateMyProfile(List<UserProfileModel> changes)
+        {
+            var uri = GetAddress("update-my-profile");
+            var token = GetToken();
+            var payload = new
+            {
+                LeadId = GetLeadId(),
+                Updates = changes.ToJsonString()
+            };
+            using var client = GetClient(token);
+            var response = httpService.PostAsJson<object, ProfileResponseModel>(client, uri, payload);
+            if (response == null || response.Content == null) return [];
+            return response.Content;
+        }
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
             var list = new List<List<T>>();
@@ -399,10 +427,17 @@ namespace LegalLead.PublicData.Search.Helpers
                 "set-offline-download-complete" => $"{uri}{provider.DownloadIsCompletedUrl}",
                 "get-offline-request-search-details" => $"{uri}{provider.SearchDetailsUrl}",
                 "register-account" => $"{uri}{provider.RegisterAccountUrl}",
+                "get-my-profile" => $"{uri}{provider.GetProfileUrl}",
+                "update-my-profile" => $"{uri}{provider.UpdateProfileUrl}",
                 _ => string.Empty
             };
         }
         private static readonly HccConfigurationModel AddressBuilder = HccConfigurationModel.GetModel();
         private static readonly List<HolidayQueryResponse> holidayQueries = new();
+        private class ProfileResponseModel
+        {
+            public string LeadId { get; set; }
+            public List<UserProfileModel> Content { get; set; }
+        }
     }
 }

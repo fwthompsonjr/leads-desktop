@@ -216,6 +216,12 @@
     <Content Include="FsOfflineHistory.Events.cs">
       <DependentUpon>FsOfflineHistory.cs</DependentUpon>
     </Content>
+    <Content Include="FsMyProfile.Data.cs">
+      <DependentUpon>FsMyProfile.cs</DependentUpon>
+    </Content>
+    <Content Include="FsMyProfile.Validation.cs">
+      <DependentUpon>FsMyProfile.cs</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup Label="Framework48">
     <Compile Remove="obj\Integration\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />

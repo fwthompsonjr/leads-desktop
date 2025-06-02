@@ -18,9 +18,10 @@ namespace LegalLead.PublicData.Search
             cboSelection.DisplayMember = "Name";
             cboSelection.ValueMember = "Id";
             cboSelection.SelectedIndexChanged += CboSelection_SelectedIndexChanged;
-            if (options.Exists(x => x.Id == menuId))
+            var target = options.FirstOrDefault(x => x.Id == menuId);
+            if (target != null)
             {
-                cboSelection.SelectedIndex = menuId;
+                cboSelection.SelectedIndex = target.SelectedIndex;
             }
             CboSelection_SelectedIndexChanged(null, null);
         }
@@ -44,6 +45,7 @@ namespace LegalLead.PublicData.Search
                 3 => new FsSearchHistory { TopLevel = false },
                 4 => new FsInvoiceHistory { TopLevel = false },
                 5 => new FsOfflineHistory { TopLevel = false },
+                6 => new FsMyProfile { TopLevel = false },
                 _ => null
             };
             if (form == null) return;
@@ -69,6 +71,10 @@ namespace LegalLead.PublicData.Search
         {
             var options = SessionUtil.GetMenuOptions.FindAll(x => isAdmin || !x.Name.Equals("County Permissions"));
             var items = options.Select(x => new SettingMenuItem { Name = x.Name, Id = x.Id, SelectedIndex = options.IndexOf(x) });
+            var profile = items.FirstOrDefault(x => x.Name.Equals("My Profile"));
+            if (profile != null) {
+                profile.SelectedIndex = 5;
+            }
             return [ ..items];
         }
 
