@@ -130,7 +130,7 @@ namespace LegalLead.PublicData.Search.Helpers
         private static string GetAddress(string name)
         {
             var provider = AddressBuilder.InvoiceModel;
-            var uri = provider.Url;
+            var uri = $"{GetBaseUri()}db-invoice/";
             return name switch
             {
                 "fetch" => $"{uri}{provider.FetchUrl}",
@@ -139,6 +139,17 @@ namespace LegalLead.PublicData.Search.Helpers
                 "status" => $"{uri}{provider.StatusUrl}",
                 _ => string.Empty
             };
+        }
+        private static string GetBaseUri()
+        {
+
+            var provider = AddressBuilder.DbModel;
+#if DEBUG
+            var uri = provider.GetUri();
+#else
+            var uri = provider.RemoteUrl;
+#endif
+            return uri;
         }
         private static readonly HccConfigurationModel AddressBuilder = HccConfigurationModel.GetModel();
     }
