@@ -9,7 +9,7 @@
 	"count": "app/count-hcc-data"
   },
   "db": {
-	"uri": "debug",
+	"uri": "remote",
 	"remote-uri": "http://api.legallead.co/",
 	"debug-uri": "https://localhost:44345/",
 	"begin": "db/begin",
@@ -42,6 +42,8 @@
 	"fetch": "get-invoice-list",
 	"invoice-creation": "create-customer-invoice",
 	"preview": "preview-invoice",
-	"status": "get-invoice-status"
+	"status": "get-invoice-status",
+	"get-billing-mode": "get-billing-mode",
+	"set-billing-mode": "set-billing-mode"
   }
 }

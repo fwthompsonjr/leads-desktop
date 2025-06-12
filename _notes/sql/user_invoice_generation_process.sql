@@ -17,7 +17,8 @@ SET @inv01 = '944b11ff-3be5-11f0-b422-0af36f7c981d';
 SET @inv02 = '944cac46-3be5-11f0-b422-0af36f7c981d';
 
 CALL USP_LEADUSER_ROLLBACK_INVOICE ( @inv02 );
-/*
+
+
 SELECT *
   FROM DBCOUNTYINVOICELINE 
-  WHERE InvoiceId = @inv02; */
+  WHERE InvoiceId = @inv02;

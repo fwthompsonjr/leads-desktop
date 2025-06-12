@@ -101,6 +101,8 @@ namespace LegalLead.PublicData.Search.Helpers
                 "invoice-creation" => $"{uri}{provider.InvoiceGenerationUrl}",
                 "preview" => $"{uri}{provider.PreviewUrl}",
                 "status" => $"{uri}{provider.StatusUrl}",
+                "get-billing-mode" => $"{uri}{provider.GetBillingCodeUrl}",
+                "set-billing-mode" => $"{uri}{provider.SetBillingCodeUrl}",
                 _ => string.Empty
             };
         }

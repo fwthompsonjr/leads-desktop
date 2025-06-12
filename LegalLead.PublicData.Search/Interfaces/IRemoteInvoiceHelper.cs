@@ -7,5 +7,7 @@
         string PreviewInvoice(string invoiceData);
         void UpdateExcelStatus(string json);
         string GetInvoiceStatus(string invoiceData);
+        string GetBillingCode();
+        string SetBillingCode(string leadId, string billingMode);
     }
 }

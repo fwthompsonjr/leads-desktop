@@ -79,5 +79,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("invoice-creation")] public string InvoiceGenerationUrl { get; set; }
         [JsonProperty("preview")] public string PreviewUrl { get; set; }
         [JsonProperty("status")] public string StatusUrl { get; set; }
+        [JsonProperty("get-billing-mode")] public string GetBillingCodeUrl { get; set; }
+        [JsonProperty("set-billing-mode")] public string SetBillingCodeUrl { get; set; }
     }
 }
