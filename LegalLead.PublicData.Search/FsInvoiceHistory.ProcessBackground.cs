@@ -195,12 +195,21 @@ namespace LegalLead.PublicData.Search
         {
             lock (sync)
             {
+                var hasChange = false;
                 if (e.Result is not List<InvoiceStatusResponse> statuses) return;
                 statuses.ForEach(s =>
                 {
                     var item = _vwlist.Find(v => v.Id == s.Id);
-                    if (item != null) item.Status = s.Status;
+                    if (item != null)
+                    {
+                        item.Status = s.Status;
+                        if (!hasChange) hasChange = true;
+                    }
                 });
+                if (hasChange)
+                {
+                    dataGridView1.Refresh();
+                }
             }
         }
 

@@ -352,7 +352,14 @@ namespace LegalLead.PublicData.Search.Helpers
 
         private static HttpClient GetClient(string token)
         {
-            var client = new HttpClient();
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
+            var client = new HttpClient(handler);
             client.DefaultRequestHeaders.Add("LEAD_IDENTITY", token);
             return client;
         }

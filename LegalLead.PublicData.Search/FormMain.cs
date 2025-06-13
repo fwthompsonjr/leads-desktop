@@ -2,6 +2,7 @@
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
+using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -279,10 +280,12 @@ namespace LegalLead.PublicData.Search
         private void SetUserName()
         {
             var username = string.Empty;
+            var mode = InvoiceReader.GetBillingCode();
             try
             {
                 username = GetUserName();
                 if (string.IsNullOrEmpty(username)) return;
+                if (mode.Equals("TEST")) username = $"{username} | TEST";
             }
             finally
             {
@@ -488,6 +491,10 @@ namespace LegalLead.PublicData.Search
             = SessionPersistenceContainer.GetContainer
             .GetInstance<SessionMonthToDatePersistence>();
 
+
+        private static readonly IRemoteInvoiceHelper InvoiceReader = ActionSettingContainer
+        .GetContainer
+        .GetInstance<IRemoteInvoiceHelper>();
 
         #endregion
 
