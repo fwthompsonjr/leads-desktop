@@ -61,6 +61,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("register-account")] public string RegisterAccountUrl { get; set; }
         [JsonProperty("get-my-profile")] public string GetProfileUrl { get; set; }
         [JsonProperty("update-my-profile")] public string UpdateProfileUrl { get; set; }
+        [JsonProperty("get-bill-type-history")] public string BillingHistoryUrl { get; set; }
         public string GetUri()
         {
             var collection = "remote,debug".Split(',');

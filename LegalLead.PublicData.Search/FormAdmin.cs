@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search
 {
@@ -19,10 +20,25 @@ namespace LegalLead.PublicData.Search
             splitContainer.Panel2Collapsed = true;
             gridUsers.CellContentClick += GridUsers_CellContentClick;
             grid.CellValueChanged += Grid_CellValueChanged;
+
             InitializeChildPanelControls();
             InitializeParentMenuButtons();
             OnTagChanged += TagModified;
             buttonSaveChanges.Click += ButtonSaveChanges_Click;
+            testToolStripMenuItem.Click += MenuChangeBillingType_Click;
+            prodToolStripMenuItem.Click += MenuChangeBillingType_Click;
+        }
+
+        private void MenuChangeBillingType_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem menuItem) return;
+            if (menuItem.Checked) return;
+            if (grid.DataSource is not List<BillTypeHistoryModel> models || models.Count == 0) return;
+            var latestModel = models[0];
+            if (menuItem.Tag is not string billingCode) return;
+            var userId = latestModel.UserId;
+            invoiceReader.SetBillingCode(userId, billingCode);
+            CboUserAction_SelectedIndexChanged(null, null);
         }
 
         private void Grid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -136,6 +152,7 @@ namespace LegalLead.PublicData.Search
         {
             lock (harmony)
             {
+                tsButtonSetBilling.Visible = false;
                 if (cboUserAction.SelectedItem is not UserManagementMethodModel model) return;
                 if (cboUserAction.Tag is not GetAccountsResponse rsp || model.Id == 1000)
                 {
@@ -151,6 +168,13 @@ namespace LegalLead.PublicData.Search
                     (int)UserManagementMethod.GetCounty,
                     (int)UserManagementMethod.GetProfile };
                 buttonSaveChanges.Visible = allowEdits.Contains(model.Id);
+                int billingId = (int)UserManagementMethod.GetBillCode;
+                if (model.Id != billingId) return;
+                tsButtonSetBilling.Visible = true;
+                if (grid.DataSource is not List<BillTypeHistoryModel> models || models.Count == 0) return;
+                var latestModel = models[0];
+                testToolStripMenuItem.Checked = latestModel.KeyValue.Equals("Test", StringComparison.OrdinalIgnoreCase);
+                prodToolStripMenuItem.Checked = !testToolStripMenuItem.Checked;
             }
         }
 
@@ -210,6 +234,7 @@ namespace LegalLead.PublicData.Search
             GetProfile = 140,
             GetSearch = 120,
             GetInvoice = 110,
+            GetBillCode = 160,
             UpdateProfile = 201,
             UpdateUsageLimit = 202,
             None = 1000,
@@ -224,6 +249,7 @@ namespace LegalLead.PublicData.Search
                 UserManagementMethod.GetAccounts => "Accounts",
                 UserManagementMethod.GetPricing => "Pricing",
                 UserManagementMethod.GetCounty => "Counties",
+                UserManagementMethod.GetBillCode => "Billing",
                 UserManagementMethod.GetProfile => "Profile",
                 UserManagementMethod.GetSearch => "Searches",
                 UserManagementMethod.GetInvoice => "Invoices",
@@ -234,5 +260,8 @@ namespace LegalLead.PublicData.Search
             public UserManagementMethod Method { get; set; } = method;
         }
         private static readonly object harmony = new();
+        private static readonly IRemoteInvoiceHelper invoiceReader = ActionSettingContainer
+        .GetContainer
+        .GetInstance<IRemoteInvoiceHelper>();
     }
 }

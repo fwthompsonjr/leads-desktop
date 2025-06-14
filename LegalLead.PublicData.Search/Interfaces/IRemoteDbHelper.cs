@@ -30,5 +30,6 @@ namespace LegalLead.PublicData.Search.Interfaces
         List<OfflineSearchTypeResponse> GetRequestSearchDetails(string leadId);
         List<UserProfileModel> GetMyProfile();
         List<UserProfileModel> UpdateMyProfile(List<UserProfileModel> changes);
+        List<BillTypeHistoryModel> FetchBillTypeHistory(string leadId);
     }
 }

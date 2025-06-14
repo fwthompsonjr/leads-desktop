@@ -342,6 +342,28 @@ namespace LegalLead.PublicData.Search.Helpers
             if (response == null || response.Content == null) return [];
             return response.Content;
         }
+
+        public List<BillTypeHistoryModel> FetchBillTypeHistory(string leadId)
+        {
+            try
+            {
+                var uri = GetAddress("get-bill-type-history");
+                var token = GetToken();
+                var payload = new
+                {
+                    LeadId = leadId
+                };
+                using var client = GetClient(token);
+                var response = httpService.PostAsJson<object, List<BillTypeHistoryModel>>(client, uri, payload);
+                if (response == null) return [];
+                return response;
+            }
+            catch (Exception)
+            {
+                return [];
+            }
+        }
+
         private static List<List<T>> SplitList<T>(List<T> me, int size = 50)
         {
             var list = new List<List<T>>();
@@ -436,6 +458,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "register-account" => $"{uri}{provider.RegisterAccountUrl}",
                 "get-my-profile" => $"{uri}{provider.GetProfileUrl}",
                 "update-my-profile" => $"{uri}{provider.UpdateProfileUrl}",
+                "get-bill-type-history" => $"{uri}{provider.BillingHistoryUrl}",
                 _ => string.Empty
             };
         }
