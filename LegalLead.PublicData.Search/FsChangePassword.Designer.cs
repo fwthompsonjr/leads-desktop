@@ -174,7 +174,7 @@
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(107, 15);
             label4.TabIndex = 13;
-            label4.Text = "Conflrm Password:";
+            label4.Text = "Confirm Password:";
             // 
             // lbStatus
             // 

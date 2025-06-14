@@ -61,6 +61,16 @@ namespace LegalLead.PublicData.Search.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dallas_hide_elements_js {
+            get {
+                object obj = ResourceManager.GetObject("dallas-hide-elements-js", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HJyZFG5dHcmgIIcclPTVatJ2ZfaQi5YJho+8n2cxtWmQyucaQov/GUHhqnFsNqMv.
         /// </summary>
         internal static string debug_account {

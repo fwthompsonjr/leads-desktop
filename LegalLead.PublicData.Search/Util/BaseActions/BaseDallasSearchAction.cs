@@ -5,6 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Thompson.RecordSearch.Utility.Classes;
 
 namespace LegalLead.PublicData.Search.Util
@@ -84,6 +85,19 @@ namespace LegalLead.PublicData.Search.Util
                 "}"
         };
 
+        protected static void TryHideElements(IJavaScriptExecutor jsexec)
+        {
+            if (jsexec == null) return;
+            try
+            {
+                jsexec.ExecuteScript(GetHideElementJs);
+            }
+            catch (Exception)
+            {
+                // no action taken
+            }
+        }
+
         protected static bool IsNoCount(IJavaScriptExecutor jsexec)
         {
             if (jsexec == null) return false;
@@ -101,6 +115,16 @@ namespace LegalLead.PublicData.Search.Util
                 return nocountjs;
             }
         }
+        protected static string GetHideElementJs
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(hideelementjs)) return hideelementjs;
+                var bytes = Properties.Resources.dallas_hide_elements_js;
+                hideelementjs = Encoding.UTF8.GetString(bytes);
+                return hideelementjs;
+            }
+        }
         private static string nocountjs = null;
         private static readonly string[] nocountscript = new[]
         {
@@ -114,5 +138,6 @@ namespace LegalLead.PublicData.Search.Util
             "	return false; ",
             "} "
         };
+        private static string hideelementjs = null;
     }
 }

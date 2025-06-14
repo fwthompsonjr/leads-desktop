@@ -336,7 +336,8 @@ namespace LegalLead.PublicData.Search
 
             cboSearchType.SelectedIndex = Zero;
             cboCourts.SelectedIndex = Zero;
-            var menuOptions = SessionUtil.GetMenuOptions;
+            var adminAccount = IsAccountAdmin();
+            var menuOptions = SessionUtil.GetMenuOptions.FindAll(x => adminAccount || !x.Name.Equals("County Permissions"));
             var dropDownItem = tsSettingMenuButton.DropDownItems;
             dropDownItem.Clear();
             menuOptions.ForEach(item =>
@@ -379,7 +380,8 @@ namespace LegalLead.PublicData.Search
                 settings.Focus();
             }
             if (isFormOpen) return;
-            var fs = new FormSettings(model.Id)
+            var adminAccount = IsAccountAdmin();
+            var fs = new FormSettings(model.Id, adminAccount)
             {
                 StartPosition = FormStartPosition.CenterParent
             };

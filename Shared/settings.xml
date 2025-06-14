@@ -41,7 +41,7 @@
 			<key name="searchTypeSelectedIndex"><![CDATA[0]]></key>
 			<key name="criminalCaseInclusion"><![CDATA[1]]></key>
 		</keys>
-		<keys id="30" name="Harris County Civil">
+		<keys id="30" name="Harris County">
 			<key name="baseUri">
 				<![CDATA[https://www.cclerk.hctx.net/Applications/WebSearch/CourtSearch.aspx?CaseType=Civil]]>
 			</key>

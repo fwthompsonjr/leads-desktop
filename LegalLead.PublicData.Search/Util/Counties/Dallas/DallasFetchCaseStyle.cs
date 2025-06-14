@@ -27,6 +27,7 @@ namespace LegalLead.PublicData.Search.Util
 
             if (!Uri.TryCreate(PageAddress, UriKind.Absolute, out var uri))
                 throw new NullReferenceException(Rx.ERR_URI_MISSING);
+            TryHideElements(executor);
             Uri home = null;
             var homePage = GetNavigationUri();
             if (!string.IsNullOrEmpty(homePage)) home = new Uri(homePage);

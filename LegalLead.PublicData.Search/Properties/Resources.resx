@@ -166,4 +166,7 @@
   <data name="harris-civil-scripts-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\_setup\harris-civil-scripts-js.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="dallas-hide-elements-js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\_setup\dallas-hide-elements-js.txt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

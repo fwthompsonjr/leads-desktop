@@ -33,13 +33,18 @@
 	"set-offline-download-complete": "db/set-offline-download-complete",
 	"get-offline-request-search-details": "db/get-offline-request-search-details",
 	"register-account": "app/create-account",
-	"admin": "admin/execute"
+	"admin": "admin/execute",
+	"get-my-profile": "db/get-my-profile",
+	"update-my-profile": "db/update-my-profile",
+	"get-bill-type-history": "db/get-bill-type-history"
   },
   "invoice": {
 	"uri": "http://api.legallead.co/db-invoice/",
 	"fetch": "get-invoice-list",
 	"invoice-creation": "create-customer-invoice",
 	"preview": "preview-invoice",
-	"status": "get-invoice-status"
+	"status": "get-invoice-status",
+	"get-billing-mode": "get-billing-mode",
+	"set-billing-mode": "set-billing-mode"
   }
 }

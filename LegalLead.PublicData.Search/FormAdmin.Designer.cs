@@ -36,6 +36,9 @@
             tsContext = new System.Windows.Forms.ToolStripStatusLabel();
             tsSeparator = new System.Windows.Forms.ToolStripStatusLabel();
             tsPosition = new System.Windows.Forms.ToolStripStatusLabel();
+            tsButtonSetBilling = new System.Windows.Forms.ToolStripSplitButton();
+            testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            prodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             splitContainer = new System.Windows.Forms.SplitContainer();
             gridUsers = new System.Windows.Forms.DataGridView();
             tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -100,7 +103,7 @@
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsContext, tsSeparator, tsPosition });
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsContext, tsSeparator, tsPosition, tsButtonSetBilling });
             statusStrip1.Location = new System.Drawing.Point(0, 452);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
@@ -128,6 +131,32 @@
             tsPosition.Padding = new System.Windows.Forms.Padding(2);
             tsPosition.Size = new System.Drawing.Size(54, 17);
             tsPosition.Text = "Position";
+            // 
+            // tsButtonSetBilling
+            // 
+            tsButtonSetBilling.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tsButtonSetBilling.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { testToolStripMenuItem, prodToolStripMenuItem });
+            tsButtonSetBilling.Image = (System.Drawing.Image)resources.GetObject("tsButtonSetBilling.Image");
+            tsButtonSetBilling.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tsButtonSetBilling.Name = "tsButtonSetBilling";
+            tsButtonSetBilling.Size = new System.Drawing.Size(75, 20);
+            tsButtonSetBilling.Text = "Set Billing";
+            tsButtonSetBilling.ToolTipText = "Set Billing Mode";
+            tsButtonSetBilling.Visible = false;
+            // 
+            // testToolStripMenuItem
+            // 
+            testToolStripMenuItem.Name = "testToolStripMenuItem";
+            testToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            testToolStripMenuItem.Tag = "TEST";
+            testToolStripMenuItem.Text = "TEST";
+            // 
+            // prodToolStripMenuItem
+            // 
+            prodToolStripMenuItem.Name = "prodToolStripMenuItem";
+            prodToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            prodToolStripMenuItem.Tag = "PROD";
+            prodToolStripMenuItem.Text = "LIVE";
             // 
             // splitContainer
             // 
@@ -295,5 +324,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbUserName;
         private System.Windows.Forms.Button buttonSaveChanges;
+        private System.Windows.Forms.ToolStripSplitButton tsButtonSetBilling;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem prodToolStripMenuItem;
     }
 }
