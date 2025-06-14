@@ -110,6 +110,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 new () { Id = 2, Name = "User Settings" },
                 new () { Id = 3, Name = "Search History" },
                 new () { Id = 4, Name = "Invoice History" },
+                new () { Id = 6, Name = "My Profile" },
             };
     }
 }

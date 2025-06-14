@@ -59,6 +59,9 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("process-offline-set-context")] public string OfflineCountyTypeUrl { get; set; }
         [JsonProperty("get-offline-request-search-details")] public string SearchDetailsUrl { get; set; }
         [JsonProperty("register-account")] public string RegisterAccountUrl { get; set; }
+        [JsonProperty("get-my-profile")] public string GetProfileUrl { get; set; }
+        [JsonProperty("update-my-profile")] public string UpdateProfileUrl { get; set; }
+        [JsonProperty("get-bill-type-history")] public string BillingHistoryUrl { get; set; }
         public string GetUri()
         {
             var collection = "remote,debug".Split(',');
@@ -77,5 +80,7 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("invoice-creation")] public string InvoiceGenerationUrl { get; set; }
         [JsonProperty("preview")] public string PreviewUrl { get; set; }
         [JsonProperty("status")] public string StatusUrl { get; set; }
+        [JsonProperty("get-billing-mode")] public string GetBillingCodeUrl { get; set; }
+        [JsonProperty("set-billing-mode")] public string SetBillingCodeUrl { get; set; }
     }
 }

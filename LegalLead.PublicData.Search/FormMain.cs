@@ -2,6 +2,7 @@
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
 using LegalLead.PublicData.Search.Models;
+using LegalLead.PublicData.Search.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -267,7 +268,8 @@ namespace LegalLead.PublicData.Search
 
         private void ToolStripSplitButton1_ButtonClick(object sender, EventArgs e)
         {
-            var settings = new FormSettings() { StartPosition = FormStartPosition.CenterParent };
+            var adminAccount = IsAccountAdmin();
+            var settings = new FormSettings(isAdmin: adminAccount) { StartPosition = FormStartPosition.CenterParent };
             settings.ShowDialog();
         }
 
@@ -278,10 +280,12 @@ namespace LegalLead.PublicData.Search
         private void SetUserName()
         {
             var username = string.Empty;
+            var mode = InvoiceReader.GetBillingCode();
             try
             {
                 username = GetUserName();
                 if (string.IsNullOrEmpty(username)) return;
+                if (mode.Equals("TEST")) username = $"{username} | TEST";
             }
             finally
             {
@@ -331,7 +335,8 @@ namespace LegalLead.PublicData.Search
                 }
 
                 var websites = SettingsManager.GetNavigation()
-                    .FindAll(x => webid.Contains(x.Id));
+                    .FindAll(x => webid.Contains(x.Id))
+                    .FindAll(x => x.Id != 40);
                 cboWebsite.SelectedValueChanged -= CboWebsite_SelectedValueChanged;
                 cboWebsite.DataSource = websites;
                 cboWebsite.DisplayMember = CommonKeyIndexes.NameProperCase;
@@ -486,6 +491,10 @@ namespace LegalLead.PublicData.Search
             = SessionPersistenceContainer.GetContainer
             .GetInstance<SessionMonthToDatePersistence>();
 
+
+        private static readonly IRemoteInvoiceHelper InvoiceReader = ActionSettingContainer
+        .GetContainer
+        .GetInstance<IRemoteInvoiceHelper>();
 
         #endregion
 

@@ -1,0 +1,47 @@
+hide_elements_by_id = {
+"names": [
+'divCaseInformation_header',
+'CasePartiesPrintSection',
+'CauseInformationPrintSection',
+'OtherEventsPrintSection',
+'FinancialInfoPrintSection'
+],
+"toggle": function() {
+	hide_elements_by_id.names.forEach(n => {
+		let element = document.getElementById(n);
+		if (null !== element) {
+			element.style.visibility = 'hidden'; 
+		}
+	});
+}
+}
+hide_user_name = {
+"toggle": function() {
+	var drop = document.getElementById('dropdownMenu1');
+	if ( null != drop ) {
+	var arr = Array.prototype.slice.call( drop.getElementsByTagName('span'), 0 );
+	var spn = arr.find(a => a.innerText.indexOf('Welcome') >= 0); 
+	if ( null != spn) { spn.innerText = 'Welcome, User'}
+	}
+}
+}
+
+hide_case_links = {
+"toggle": function() {
+	links = document.getElementsByTagName('a'); 
+	arr_links = Array.prototype.slice.call( links, 0); 
+	arr_links = arr_links.filter(a => a.classList.contains('caseLink'));
+	arr_links.forEach(a => {
+		let trw = a.closest('tr');
+		trw.style.visibility = 'hidden';
+	});
+}
+}
+hide_all = {
+"toggle": function() {
+	hide_elements_by_id.toggle();
+	hide_user_name.toggle();
+	hide_case_links.toggle();
+}
+}
+hide_all.toggle();

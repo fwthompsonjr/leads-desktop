@@ -101,6 +101,43 @@ namespace LegalLead.PublicData.Search.Helpers
 
         }
 
+        public string GetBillingCode()
+        {
+            const string code = "TEST";
+            try
+            {
+                var request = new { RequestType = "Customer" };
+                var uri = GetAddress("get-billing-mode");
+                var token = GetToken();
+                using var client = GetClient(token);
+                var response = httpService.PostAsJson<object, BillingCodeResponse>(client, uri, request);
+                if (response == null || string.IsNullOrEmpty(response.BillingMode)) return code;
+                return response.BillingMode;
+            }
+            catch (System.Exception)
+            {
+                return code;
+            }
+        }
+
+        public string SetBillingCode(string leadId, string billingMode)
+        {
+            const string code = "TEST";
+            try
+            {
+                var request = new { Id = leadId, BillingCode = billingMode };
+                var uri = GetAddress("set-billing-mode");
+                var token = GetToken();
+                using var client = GetClient(token);
+                var response = httpService.PostAsJson<object, BillingCodeResponse>(client, uri, request);
+                if (response == null || string.IsNullOrEmpty(response.BillingMode)) return code;
+                return response.BillingMode;
+            }
+            catch (System.Exception)
+            {
+                return code;
+            }
+        }
         private static string GetLeadId()
         {
             return GetUser()?.User.Id ?? string.Empty;
@@ -108,7 +145,14 @@ namespace LegalLead.PublicData.Search.Helpers
 
         private static HttpClient GetClient(string token)
         {
-            var client = new HttpClient();
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
+            var client = new HttpClient(handler);
             client.DefaultRequestHeaders.Add("LEAD_IDENTITY", token);
             return client;
         }
@@ -130,15 +174,34 @@ namespace LegalLead.PublicData.Search.Helpers
         private static string GetAddress(string name)
         {
             var provider = AddressBuilder.InvoiceModel;
-            var uri = provider.Url;
+            var uri = $"{GetBaseUri()}db-invoice/";
             return name switch
             {
                 "fetch" => $"{uri}{provider.FetchUrl}",
                 "invoice-creation" => $"{uri}{provider.InvoiceGenerationUrl}",
                 "preview" => $"{uri}{provider.PreviewUrl}",
                 "status" => $"{uri}{provider.StatusUrl}",
+                "get-billing-mode" => $"{uri}{provider.GetBillingCodeUrl}",
+                "set-billing-mode" => $"{uri}{provider.SetBillingCodeUrl}",
                 _ => string.Empty
             };
+        }
+        private class BillingCodeResponse
+        {
+            public string UserName { get; set; } = string.Empty;
+            public string RequestedCode { get; set; } = string.Empty;
+            public string BillingMode { get; set; }
+        }
+        private static string GetBaseUri()
+        {
+
+            var provider = AddressBuilder.DbModel;
+#if DEBUG
+            var uri = provider.GetUri();
+#else
+            var uri = provider.RemoteUrl;
+#endif
+            return uri;
         }
         private static readonly HccConfigurationModel AddressBuilder = HccConfigurationModel.GetModel();
     }

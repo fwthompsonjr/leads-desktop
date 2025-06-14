@@ -53,7 +53,7 @@ namespace LegalLead.PublicData.Search.Util
 
                 using var hider = new HideProcessWindowHelper();
                 var postsearchtypes = new List<Type> { typeof(DallasFetchCaseStyle) };
-                var driver = GetDriver(DriverReadHeadless);
+                var driver = GetDriver(false);
                 var parameters = new DallasSearchProcess();
                 var dates = DallasSearchProcess.GetBusinessDays(StartDate, EndingDate, true, true);
                 var common = ActionItems.FindAll(a => !postsearchtypes.Contains(a.GetType()));

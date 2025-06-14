@@ -1,14 +1,16 @@
-# Release | 2.8.15.0 - Process Redesign for Harris County
+# Release | 2.8.16.0 - Review Harris Operation And Admin Screens
 
 ## Problem Statement:
-As an application owner
-I want the read process for Harris County Civil courts
-to follow the same pattern as other common searches
-So that Harris County is easy to maintain
-And any changes to the target website can be easily addressed.
+As an application, 
+I want to perform operations to support customers
+So that a customer can
+1. load invoices and reconcile invoices within the application
+1. perform searches for harris county
+1. execute dallas county search with captcha interaction
+1. have admin function to read and update associate customer actions
 
 ### Component Checks:
-- Wrote new process to interact with Harris Civil read
-- Added method to iterate through multiple pages when more than 200 records are available
-- Added web page wait into each search component to reduce read error
-- Performed backwards compatibility checks for Harris Criminal search
+- confirm user can execute harris civil search
+- confirm user can execute harris criminal search
+- confrim user can fetch invoices
+- confirm user can generate live invoice

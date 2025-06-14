@@ -13,8 +13,8 @@
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>law-icon.ico</ApplicationIcon>
-    <AssemblyVersion>2.8.15.0</AssemblyVersion>
-    <FileVersion>2.8.15.0</FileVersion>
+    <AssemblyVersion>2.8.16.0</AssemblyVersion>
+    <FileVersion>2.8.16.0</FileVersion>
     <PackageIcon>law-icon.png</PackageIcon>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -215,6 +215,12 @@
     </Content>
     <Content Include="FsOfflineHistory.Events.cs">
       <DependentUpon>FsOfflineHistory.cs</DependentUpon>
+    </Content>
+    <Content Include="FsMyProfile.Data.cs">
+      <DependentUpon>FsMyProfile.cs</DependentUpon>
+    </Content>
+    <Content Include="FsMyProfile.Validation.cs">
+      <DependentUpon>FsMyProfile.cs</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup Label="Framework48">

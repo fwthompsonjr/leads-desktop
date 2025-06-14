@@ -78,7 +78,14 @@ namespace LegalLead.PublicData.Search.Helpers
 
         private static HttpClient GetClient(string token)
         {
-            var client = new HttpClient();
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
+            var client = new HttpClient(handler);
             client.DefaultRequestHeaders.Add("LEAD_IDENTITY", token);
             return client;
         }
@@ -101,6 +108,8 @@ namespace LegalLead.PublicData.Search.Helpers
                 "invoice-creation" => $"{uri}{provider.InvoiceGenerationUrl}",
                 "preview" => $"{uri}{provider.PreviewUrl}",
                 "status" => $"{uri}{provider.StatusUrl}",
+                "get-billing-mode" => $"{uri}{provider.GetBillingCodeUrl}",
+                "set-billing-mode" => $"{uri}{provider.SetBillingCodeUrl}",
                 _ => string.Empty
             };
         }

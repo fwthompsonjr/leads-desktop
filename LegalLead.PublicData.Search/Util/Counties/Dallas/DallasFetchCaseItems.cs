@@ -30,6 +30,7 @@ namespace LegalLead.PublicData.Search.Util
             var executor = GetJavaScriptExecutor();
             if (Parameters == null || Driver == null || executor == null)
                 throw new NullReferenceException(Rx.ERR_DRIVER_UNAVAILABLE);
+            TryHideElements(executor);
             var alldata = new List<CaseItemDto>();
             try
             {
