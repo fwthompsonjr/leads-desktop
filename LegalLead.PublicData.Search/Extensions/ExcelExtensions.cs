@@ -146,6 +146,7 @@ namespace LegalLead.PublicData.Search.Extensions
             content.TransferColumn("CourtAddress", "lname");
             content.PopulateColumn("CourtAddress", courtlist);
             content.SecureContent(trackingIndex);
+            content.AppendDocumentProperties(context);
             using (var ms = new MemoryStream())
             {
                 content.SaveAs(ms);
