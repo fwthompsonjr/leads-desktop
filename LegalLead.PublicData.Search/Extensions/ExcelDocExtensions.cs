@@ -37,20 +37,25 @@ namespace LegalLead.PublicData.Search.Extensions
 
         public static bool HasUserNameMatch(this string filePath)
         {
-            var isAdmin = TheUserManager.IsAccountAdmin();
-            if (isAdmin) return true;
-            var hasProperties = filePath.HasDocumentProperties();
-            if (!hasProperties) return false;
-            var package = ExcelExtensions.CreateExcelPackage(filePath);
-            var prop = package.Workbook.Properties;
-            var currentUser = TheUserManager.GetUserName();
-            var element = prop.GetCustomPropertyValue(CustomPropetyNames.UserName);
-            if (element is not string actual) return false;
-            return currentUser.Equals(actual);
+            lock (locker)
+            {
+                var isAdmin = TheUserManager.IsAccountAdmin();
+                if (isAdmin) return true;
+                var hasProperties = filePath.HasDocumentProperties();
+                if (!hasProperties) return false;
+                var package = ExcelExtensions.CreateExcelPackage(filePath);
+                var prop = package.Workbook.Properties;
+                var currentUser = TheUserManager.GetUserName();
+                var element = prop.GetCustomPropertyValue(CustomPropetyNames.UserName);
+                if (element is not string actual) return false;
+                return currentUser.Equals(actual); 
+            }
         }
 
         public static bool UnlockDocument(this string filePath)
         {
+            var isAdmin = TheUserManager.IsAccountAdmin();
+            if (isAdmin) return true;
             var hasProperties = filePath.HasDocumentProperties();
             if (!hasProperties) return false;
             if (!filePath.HasUserNameMatch()) return false;
@@ -107,7 +112,7 @@ namespace LegalLead.PublicData.Search.Extensions
                     if (element == null) return false;
                     var idx = items.IndexOf(item);
                     if (idx == 0 && element is not bool _) return false;
-                    if (element is not string _) return false;
+                    if (idx > 0 && element is not string _) return false;
                 }
                 return true;
             }
@@ -300,5 +305,6 @@ namespace LegalLead.PublicData.Search.Extensions
         private static readonly IRemoteInvoiceHelper invoiceReader = ActionSettingContainer
         .GetContainer
         .GetInstance<IRemoteInvoiceHelper>();
+        private static readonly object locker = new object();
     }
 }

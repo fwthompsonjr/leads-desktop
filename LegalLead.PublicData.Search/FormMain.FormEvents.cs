@@ -748,6 +748,8 @@ namespace LegalLead.PublicData.Search
 
             var movedFile = CommonFolderHelper.MoveToCommon(xmlFile);
             if (!string.IsNullOrEmpty(movedFile) && File.Exists(movedFile)) xmlFile = movedFile;
+            var isUserMatched = movedFile.HasUserNameMatch();
+            if (isUserMatched) movedFile.UnlockDocument();
             using var p = new Process();
             p.StartInfo = new ProcessStartInfo(xmlFile)
             {
