@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -38,7 +39,6 @@ namespace LegalLead.PublicData.Search.Extensions
             var hasProperties = filePath.HasDocumentProperties();
             if (!hasProperties) return false;
             var package = ExcelExtensions.CreateExcelPackage(filePath);
-            var wbk = package.Workbook;
             var prop = package.Workbook.Properties;
             var currentUser = TheUserManager.GetUserName();
             var element = prop.GetCustomPropertyValue(CustomPropetyNames.UserName);
@@ -55,6 +55,7 @@ namespace LegalLead.PublicData.Search.Extensions
             var package = ExcelExtensions.CreateExcelPackage(filePath);
             var wbk = package.Workbook;
             var worksheet = wbk.Worksheets[0];
+            if (!worksheet.Protection.IsProtected) return true;
             // protect workbook with password
             wbk.Protection.SetPassword("");
             // protect worksheet with password
@@ -114,13 +115,18 @@ namespace LegalLead.PublicData.Search.Extensions
             {
                 var package = ExcelExtensions.CreateExcelPackage(filePath);
                 if (package == null) return false;
+                var culture = CultureInfo.CurrentCulture;
                 var prop = package.Workbook.Properties;
                 var metadata = new
                 {
-                    phrase = Convert.ToString(prop.GetCustomPropertyValue(CustomPropetyNames.DataPhrase)),
-                    vector = Convert.ToString(prop.GetCustomPropertyValue(CustomPropetyNames.DataVector)),
-                    encoded = Convert.ToString(prop.GetCustomPropertyValue(CustomPropetyNames.Data)),
+                    phrase = Convert.ToString(prop.GetCustomPropertyValue(CustomPropetyNames.DataPhrase), culture),
+                    vector = Convert.ToString(prop.GetCustomPropertyValue(CustomPropetyNames.DataVector), culture),
+                    encoded = Convert.ToString(prop.GetCustomPropertyValue(CustomPropetyNames.Data), culture),
                 };
+                var hasMetaData = !string.IsNullOrEmpty(metadata.phrase) && 
+                    !string.IsNullOrEmpty(metadata.vector) &&
+                    !string.IsNullOrEmpty(metadata.encoded);
+                if (!hasMetaData) return false;
                 var decoded = TheCryptoEngine.Decrypt(metadata.encoded, metadata.phrase, metadata.vector);
                 var obj = JsonConvert.DeserializeObject<GenExcelFileParameter>(decoded);
                 if (obj != null) excelData = obj;
