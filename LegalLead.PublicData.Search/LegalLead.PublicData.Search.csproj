@@ -57,6 +57,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup Label="PackageReferences">
+    <PackageReference Include="Bogus" Version="35.6.3" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" Version="3.3.2">
       <PrivateAssets>all</PrivateAssets>

@@ -169,7 +169,13 @@ namespace LegalLead.PublicData.Search
         {
             // Populate fileCollection with files from CommonFolderHelper asynchronously
             fileCollection ??= await Task.Run(CommonFolderHelper.GetFiles);
-
+            fileCollection.RemoveAll(f =>
+            {
+                var isUserMatched = f.FullName.HasUserNameMatch();
+                if (isUserMatched) f.FullName.UnlockDocument();
+                return !isUserMatched;
+            });
+            
             // Clear existing rows
             dataGridFiles.Columns.Clear();
             var dataSource = fileCollection.Select(x => new FileView

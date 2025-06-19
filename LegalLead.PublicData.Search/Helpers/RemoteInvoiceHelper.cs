@@ -74,6 +74,34 @@ namespace LegalLead.PublicData.Search.Helpers
             return response.ToJsonString();
         }
 
+
+        public string GetInvoicesByTrackingId(string customerId, string trackingId)
+        {
+            var fallback = string.Empty;
+            try
+            {
+                if (string.IsNullOrEmpty(customerId)) return fallback;
+                if (string.IsNullOrEmpty(trackingId)) return fallback;
+                var uri = GetAddress("get-by-tracking-id");
+                var token = GetToken();
+                if (string.IsNullOrEmpty(uri)) return fallback;
+                var request = new
+                {
+                    CustomerId = customerId,
+                    RequestType = "Customer",
+                    InvoiceId = trackingId
+                };
+                using var client = GetClient(token);
+                var response = httpService.PostAsJson<object, object>(client, uri, request);
+                if (response == null) return fallback;
+                return response.ToJsonString();
+            }
+            catch (System.Exception)
+            {
+                return fallback;
+            }
+        }
+
         public string PreviewInvoice(string invoiceData)
         {
             _ = CreateInvoice(invoiceData);
@@ -183,6 +211,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "status" => $"{uri}{provider.StatusUrl}",
                 "get-billing-mode" => $"{uri}{provider.GetBillingCodeUrl}",
                 "set-billing-mode" => $"{uri}{provider.SetBillingCodeUrl}",
+                "get-by-tracking-id" => $"{uri}{provider.FindByTrackingIdUrl}",
                 _ => string.Empty
             };
         }
