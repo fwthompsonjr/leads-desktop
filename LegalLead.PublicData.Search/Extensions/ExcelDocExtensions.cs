@@ -6,6 +6,7 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -19,17 +20,37 @@ namespace LegalLead.PublicData.Search.Extensions
             var lorem = faker.Lorem.Sentence(15).Replace(' ', '.').Substring(0, 24);
             var json = JsonConvert.SerializeObject(context);
             var encoded = TheCryptoEngine.Encrypt(json, lorem, out var vector);
-            var prop = package.Workbook.Properties;
-            prop.SetCustomPropertyValue(CustomPropetyNames.Admin, IsAccountAdmin());
+            var wb = package.Workbook;
+            var prop = wb.Properties;
+            context.WriteProperties(wb);
+            prop.SetCustomPropertyValue(CustomPropetyNames.Admin, TheUserManager.IsAccountAdmin());
+            prop.SetCustomPropertyValue(CustomPropetyNames.UserName, TheUserManager.GetUserName());
             prop.SetCustomPropertyValue(CustomPropetyNames.Data, encoded);
             prop.SetCustomPropertyValue(CustomPropetyNames.DataVector, vector);
             prop.SetCustomPropertyValue(CustomPropetyNames.DataPhrase, lorem);
+        }
+
+
+        public static bool HasUserNameMatch(this string filePath)
+        {
+            var isAdmin = TheUserManager.IsAccountAdmin();
+            if (isAdmin) return true;
+            var hasProperties = filePath.HasDocumentProperties();
+            if (!hasProperties) return false;
+            var package = ExcelExtensions.CreateExcelPackage(filePath);
+            var wbk = package.Workbook;
+            var prop = package.Workbook.Properties;
+            var currentUser = TheUserManager.GetUserName();
+            var element = prop.GetCustomPropertyValue(CustomPropetyNames.UserName);
+            if (element is not string actual) return false;
+            return currentUser.Equals(actual);
         }
 
         public static bool UnlockDocument(this string filePath)
         {
             var hasProperties = filePath.HasDocumentProperties();
             if (!hasProperties) return false;
+            if (!filePath.HasUserNameMatch()) return false;
             if (!filePath.HasSecuredData(out var _)) return false;
             var package = ExcelExtensions.CreateExcelPackage(filePath);
             var wbk = package.Workbook;
@@ -46,7 +67,11 @@ namespace LegalLead.PublicData.Search.Extensions
                 var row = worksheet.Row(i);
                 row.Hidden = false;
             }
-            package.SaveAs(new FileInfo(filePath));
+            using var ms = new MemoryStream();
+            package.SaveAs(ms);
+            var data = ms.ToArray();
+            if (File.Exists(filePath)) File.Delete(filePath);
+            File.WriteAllBytes(filePath, data);
             return true;
         }
 
@@ -64,6 +89,7 @@ namespace LegalLead.PublicData.Search.Extensions
                     CustomPropetyNames.Data,
                     CustomPropetyNames.DataVector,
                     CustomPropetyNames.DataPhrase,
+                    CustomPropetyNames.UserName,
                 };
                 foreach (var item in items)
                 {
@@ -104,6 +130,52 @@ namespace LegalLead.PublicData.Search.Extensions
             {
                 return false;
             }
+        }
+
+        private static void WriteProperties(this GenExcelFileParameter dto, ExcelWorkbook wb)
+        {
+            var description = dto.Description();
+            var props = new Dictionary<string, string>() {
+                { "Created", DateTime.UtcNow.ToString("o") },
+                { "Comments", description ?? $"{CustomPropetyNames.Prefix} Record Search" }
+            };
+
+            var keys = CommonProperties.Keys.ToList();
+            keys.ForEach(x =>
+            {
+                var kvalue = CommonProperties[x];
+                if (props.ContainsKey(x)) { kvalue = props[x]; }
+                switch (x)
+                {
+                    case "Author":
+                        wb.Properties.Author = kvalue;
+                        wb.Properties.LastModifiedBy = kvalue;
+                        wb.Properties.Subject = GetWbSubject(description, $"{dto.RecordCount}");
+                        break;
+                    case "Title":
+                        wb.Properties.Title = kvalue;
+                        break;
+                    case "Comments":
+                        wb.Properties.Comments = kvalue;
+                        break;
+                    case "Company":
+                        wb.Properties.Company = kvalue;
+                        break;
+                    case "Created":
+                        wb.Properties.Created = DateTime.UtcNow;
+                        break;
+                }
+            });
+        }
+        private static string GetWbSubject(string description, string rowcount)
+        {
+            const string fallbak = "Data inquiry";
+            if (description == null) return fallbak;
+            if (!description.Contains('-')) return fallbak;
+            if (!description.Contains(':')) return fallbak;
+            var collection = description.Split('-');
+            var countyName = collection[0].Split(':')[1].Trim();
+            return $"{countyName}, Records: {rowcount}";
         }
 
         private static class TheCryptoEngine
@@ -169,22 +241,41 @@ namespace LegalLead.PublicData.Search.Extensions
 
         private static class CustomPropetyNames
         {
-            private const string Prefix = "legallead.co";
+            internal const string Prefix = "legallead.co";
             public static readonly string Admin = $"{Prefix}.admin";
             public static readonly string Data = $"{Prefix}.data";
             public static readonly string DataVector = $"{Data}.code";
             public static readonly string DataPhrase = $"{Data}.phrase";
-        }
-        private static bool IsAccountAdmin()
-        {
-            return GetAccountIndexes().Equals("-1");
+            public static readonly string UserName = $"{Prefix}.user.name";
         }
 
-        private static string GetAccountIndexes()
+        private static class TheUserManager
         {
-            var container = SessionPersistenceContainer.GetContainer;
-            var instance = container.GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
-            return instance.GetAccountPermissions();
+            public static bool IsAccountAdmin()
+            {
+                return GetAccountIndexes().Equals("-1");
+            }
+
+            public static string GetUserName()
+            {
+                return userReader.GetUserName();
+            }
+
+            private static string GetAccountIndexes()
+            {
+                return userReader.GetAccountPermissions();
+            }
+
+            private static readonly ISessionPersistance userReader
+                = SessionPersistenceContainer.GetContainer.GetInstance<ISessionPersistance>(ApiHelper.ApiMode);
         }
+
+        private static readonly Dictionary<string, string> CommonProperties = new() {
+        { "Author", CustomPropetyNames.Prefix },
+        { "Title", $"{CustomPropetyNames.Prefix} Record Search" },
+        { "Created", "" },
+        { "Comments", "" },
+        { "Company", CustomPropetyNames.Prefix },
+        };
     }
 }

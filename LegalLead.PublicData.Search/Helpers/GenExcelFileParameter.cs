@@ -24,5 +24,16 @@ namespace LegalLead.PublicData.Search.Helpers
             if (string.IsNullOrWhiteSpace(extn)) extn = string.Empty;
             return string.Concat(fileName, extn);
         }
+        public string Description()
+        {
+            if (string.IsNullOrWhiteSpace(CountyName)) return null;
+            if (string.IsNullOrWhiteSpace(CourtType)) return null;
+            if (StartDate.Equals(DateTime.MinValue)) return null;
+            if (EndDate.Equals(DateTime.MinValue)) return null;
+            if (RecordCount == 0) return null;
+            var startDt = $"{StartDate:d}".Replace('/', '_');
+            var endDt = $"{EndDate:d}".Replace('/', '_');
+            return $"{CountyName}_{CourtType}_{startDt}_to_{endDt} {RecordCount} records";
+        }
     }
 }

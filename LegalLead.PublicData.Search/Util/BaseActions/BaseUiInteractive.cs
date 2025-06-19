@@ -3,6 +3,7 @@ using LegalLead.PublicData.Search.Extensions;
 using LegalLead.PublicData.Search.Interfaces;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -75,6 +76,16 @@ namespace LegalLead.PublicData.Search.Util
             content.TransferColumn("CourtAddress", "lname");
             content.PopulateColumn("CourtAddress", courtlist);
             content.SecureContent(TrackingIndex);
+            content.AppendDocumentProperties(new() { 
+                CountyName = countyName, 
+                CourtType = name, 
+                StartDate = StartDate, 
+                EndDate = EndingDate, 
+                TrackingIndex = TrackingIndex,
+                FileName = fullName,
+                WebsiteId = websiteId,
+                RecordCount = People.Count,
+            });
             using (var ms = new MemoryStream())
             {
                 content.SaveAs(ms);

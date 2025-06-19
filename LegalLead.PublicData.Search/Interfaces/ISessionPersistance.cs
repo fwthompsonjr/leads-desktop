@@ -8,5 +8,6 @@
         bool Write(string content);
         string GetAccountPermissions();
         string GetAccountId();
+        string GetUserName();
     }
 }
