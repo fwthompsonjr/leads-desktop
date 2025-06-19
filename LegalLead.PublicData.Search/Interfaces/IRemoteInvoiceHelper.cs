@@ -9,5 +9,6 @@
         string GetInvoiceStatus(string invoiceData);
         string GetBillingCode();
         string SetBillingCode(string leadId, string billingMode);
+        string GetInvoicesByTrackingId(string customerId, string trackingId);
     }
 }

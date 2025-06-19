@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using LegalLead.PublicData.Search.Helpers;
 using LegalLead.PublicData.Search.Interfaces;
+using LegalLead.PublicData.Search.Util;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
@@ -10,6 +11,8 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Thompson.RecordSearch.Utility.Extensions;
+using Thompson.RecordSearch.Utility.Models;
 
 namespace LegalLead.PublicData.Search.Extensions
 {
@@ -51,11 +54,17 @@ namespace LegalLead.PublicData.Search.Extensions
             var hasProperties = filePath.HasDocumentProperties();
             if (!hasProperties) return false;
             if (!filePath.HasUserNameMatch()) return false;
-            if (!filePath.HasSecuredData(out var _)) return false;
+            if (!filePath.HasSecuredData(out var excelProperties)) return false;
             var package = ExcelExtensions.CreateExcelPackage(filePath);
             var wbk = package.Workbook;
             var worksheet = wbk.Worksheets[0];
             if (!worksheet.Protection.IsProtected) return true;
+            if (string.IsNullOrEmpty(excelProperties?.TrackingIndex)) return false;
+            var invoiceData = invoiceReader.GetInvoicesByTrackingId(TheUserManager.GetAccountId(), excelProperties.TrackingIndex);
+            var model = invoiceData.ToInstance<GetInvoiceResponse>();
+            if (model == null || model.Headers.Count == 0) return false;
+            var invoice = model.Headers[0];
+            if (!invoice.InvoiceNbr.Equals("PAID")) return false;
             // protect workbook with password
             wbk.Protection.SetPassword("");
             // protect worksheet with password
@@ -261,6 +270,10 @@ namespace LegalLead.PublicData.Search.Extensions
             {
                 return GetAccountIndexes().Equals("-1");
             }
+            public static string GetAccountId()
+            {
+                return userReader.GetAccountId();
+            }
 
             public static string GetUserName()
             {
@@ -283,5 +296,9 @@ namespace LegalLead.PublicData.Search.Extensions
         { "Comments", "" },
         { "Company", CustomPropetyNames.Prefix },
         };
+
+        private static readonly IRemoteInvoiceHelper invoiceReader = ActionSettingContainer
+        .GetContainer
+        .GetInstance<IRemoteInvoiceHelper>();
     }
 }

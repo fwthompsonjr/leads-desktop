@@ -82,5 +82,6 @@ namespace Thompson.RecordSearch.Utility.Dto
         [JsonProperty("status")] public string StatusUrl { get; set; }
         [JsonProperty("get-billing-mode")] public string GetBillingCodeUrl { get; set; }
         [JsonProperty("set-billing-mode")] public string SetBillingCodeUrl { get; set; }
+        [JsonProperty("get-by-tracking-id")] public string FindByTrackingIdUrl { get; set; }
     }
 }
