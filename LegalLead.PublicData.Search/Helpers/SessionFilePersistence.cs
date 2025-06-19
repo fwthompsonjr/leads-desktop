@@ -36,6 +36,15 @@ namespace LegalLead.PublicData.Search.Helpers
             if (!Guid.TryParse(index, out var _)) return string.Empty;
             return index;
         }
+        public string GetUserName()
+        {
+            var bo = Read().ToInstance<LeadUserSecurityBo>();
+            if (bo == null) return string.Empty;
+            var index = bo.User.Id;
+            if (!Guid.TryParse(index, out var _)) return string.Empty;
+            return bo.User.UserName;
+        }
+
         public virtual string GetAccountCredential(string county = "")
         {
             lock (locker)

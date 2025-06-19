@@ -110,6 +110,7 @@ namespace LegalLead.PublicData.Search.Helpers
                 "status" => $"{uri}{provider.StatusUrl}",
                 "get-billing-mode" => $"{uri}{provider.GetBillingCodeUrl}",
                 "set-billing-mode" => $"{uri}{provider.SetBillingCodeUrl}",
+                "get-by-tracking-id" => $"{uri}{provider.FindByTrackingIdUrl}",
                 _ => string.Empty
             };
         }

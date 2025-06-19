@@ -45,6 +45,7 @@
 	"preview": "preview-invoice",
 	"status": "get-invoice-status",
 	"get-billing-mode": "get-billing-mode",
-	"set-billing-mode": "set-billing-mode"
+	"set-billing-mode": "set-billing-mode",
+	"get-by-tracking-id": "get-invoice-by-tracking-index"
   }
 }

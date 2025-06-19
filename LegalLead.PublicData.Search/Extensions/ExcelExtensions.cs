@@ -44,28 +44,33 @@ namespace LegalLead.PublicData.Search.Extensions
             var worksheet = package.Workbook.Worksheets[0];
             var rows = worksheet.Dimension.Rows;
             var list = new List<QueryDbResult>();
+            var isLocked = worksheet.Protection.IsProtected || IsAccountAdmin();
             for (var r = 2; r < rows; r++)
             {
                 list.Add(new()
                 {
-                    Name = worksheet.GetCellValue(r, GetIndex("Name")),
+                    Name = GetRedactedValue(isLocked, worksheet.GetCellValue(r, GetIndex("Name"))),
                     Zip = worksheet.GetCellValue(r, GetIndex("Zip")),
-                    Address1 = worksheet.GetCellValue(r, GetIndex("Address1")),
-                    Address2 = worksheet.GetCellValue(r, GetIndex("Address2")),
-                    Address3 = worksheet.GetCellValue(r, GetIndex("Address3")),
-                    CaseNumber = worksheet.GetCellValue(r, GetIndex("CaseNumber")),
+                    Address1 = GetRedactedValue(isLocked, worksheet.GetCellValue(r, GetIndex("Address1"))),
+                    Address2 = GetRedactedValue(isLocked, worksheet.GetCellValue(r, GetIndex("Address2"))),
+                    Address3 = GetRedactedValue(isLocked, worksheet.GetCellValue(r, GetIndex("Address3"))),
+                    CaseNumber = GetRedactedValue(isLocked, worksheet.GetCellValue(r, GetIndex("CaseNumber"))),
                     DateFiled = worksheet.GetCellValue(r, GetIndex("Date Filed")),
                     Court = worksheet.GetCellValue(r, GetIndex("Court")),
                     CaseType = worksheet.GetCellValue(r, GetIndex("Case Type")),
-                    CaseStyle = worksheet.GetCellValue(r, GetIndex("Case Style")),
-                    Plaintiff = worksheet.GetCellValue(r, GetIndex("Plaintiff")),
+                    CaseStyle = GetRedactedValue(isLocked, worksheet.GetCellValue(r, GetIndex("Case Style"))),
+                    Plaintiff = GetRedactedValue(isLocked, worksheet.GetCellValue(r, GetIndex("Plaintiff"))),
                     County = worksheet.GetCellValue(r, GetIndex("County")),
                     CourtAddress = worksheet.GetCellValue(r, GetIndex("CourtAddress"))
                 });
             }
             return list;
         }
-
+        private static string GetRedactedValue(bool isLocked, string actualValue)
+        {
+            if (string.IsNullOrWhiteSpace(actualValue)) return actualValue;
+            return isLocked ? "REDACTED" : actualValue;
+        }
         public static ExcelPackage CreateExcelPackage(string filePath)
         {
             if (!File.Exists(filePath)) return null;
@@ -146,6 +151,7 @@ namespace LegalLead.PublicData.Search.Extensions
             content.TransferColumn("CourtAddress", "lname");
             content.PopulateColumn("CourtAddress", courtlist);
             content.SecureContent(trackingIndex);
+            content.AppendDocumentProperties(context);
             using (var ms = new MemoryStream())
             {
                 content.SaveAs(ms);
